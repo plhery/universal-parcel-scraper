@@ -101,6 +101,8 @@ describe('Foshan Qianhe tracking adapter', () => {
     expect(statusMapAnswer({ carrier: 'fsqh', providerCode: null, description: 'Synthetic wording' })).toEqual({ kind: 'unknown' });
     expect(fsqhEnglish(null, normalizeStatusWording('航班起飞，预计航班落地时间(12.03)'))).toBe('Flight departed, expected to land on 12.03');
     expect(fsqhEnglish(null, normalizeStatusWording('安排航班中'))).toBe('Arranging a flight');
+    expect(statusMap.stage(null, normalizeStatusWording('航班落地，清关中'))).toBe('customs');
+    expect(fsqhEnglish(null, normalizeStatusWording('已交仓'))).toBe('Handed to the warehouse');
   });
 
   it('links no plain-HTTP page', () => {
