@@ -1,0 +1,24 @@
+{
+  "carrier": "suocang",
+  "records": [
+    {
+      "number": "SC2026000211102",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260719033549/https://www.parcelpanel.com/couriers/suocang/",
+        "date": "2026-07-19",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's SUOCANG page shows. Suoexpress's tracker answers it with a parcel flown from Shenzhen and delivered by DHL in Germany."
+    }
+  ]
+}

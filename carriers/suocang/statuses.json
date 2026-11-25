@@ -1,0 +1,20 @@
+{
+  "carrier": "suocang",
+  "entries": [
+    {"wording": "Order Received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order's registration, days before the warehouse has the parcel."},
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order's data again, dated before the warehouse's receipt and written days later beside DHL's first row."},
+    {"code": "ARRIVAL", "wording": "Arrived at origin facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The Shenzhen warehouse's receipt, placed at SZS."},
+    {"code": "SHIPMENT", "wording": "Departed from sort facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The Shenzhen warehouse's departure, placed at SZS."},
+    {"wording": "The instruction data for this shipment have been provided by the sender to DHL electronically", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "Copied from DHL on the line into Germany: the parcel announced to DHL, on DHL's German clock, placed at DE."},
+    {"code": "CO_C_CR", "wording": "Shipment is in transit to next facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Arrived at the origin international airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Waiting for the flight", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "International flight has departed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "International flight has arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "In clearance processing", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row, after the flight's landing. Listed as a planned step."},
+    {"wording": "The shipment has been processed in the parcel center of origin", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "DHL's scan, copied, at its Reinberg hub."},
+    {"wording": "The shipment has been processed in the destination parcel center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "DHL's scan, copied."},
+    {"wording": "Loaded to movement / tour vehicle", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "DHL's scan, copied, for a trunk run or a delivery round alike, so it does not say the parcel is out for delivery."},
+    {"wording": "The shipment has been successfully delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "DHL's delivery, copied."}
+  ]
+}
