@@ -1706,6 +1706,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
+        "pattern": "^5[12]\\d{10}(?:0[1-9]|[1-8]\\d|9[0-5]|97|98)\\d{3}$",
+        "confidence": "high"
+      },
+      {
         "pattern": "^(?:[A-Z]{2}\\d{10}|[A-Z]\\d{11}|\\d{12})(?:(?:0[1-9]|[1-8]\\d|9[0-5]|97|98)\\d{3}|[BL][1-9]\\d{3})$",
         "confidence": "low",
         "servedCountriesOnly": true
@@ -75672,7 +75676,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "la-poste": ["la-poste-1","la-poste-4","la-poste-5","la-poste-6","la-poste-7","la-poste-2","la-poste-3"],
   "chronopost": ["chronopost-1","chronopost-own-suffix","chronopost-2","chronopost-5","chronopost-3","chronopost-4","chronopost-xn","chronopost-xr","chronopost-gc"],
   "gls-fr": ["gls-fr-1","gls-fr-2","gls-fr-3","gls-fr-4"],
-  "colis-prive": ["colis-prive-1","colis-prive-2"],
+  "colis-prive": ["colis-prive-3","colis-prive-1","colis-prive-2"],
   "geodis": ["geodis-1"],
   "colisweb": ["colisweb-1"],
   "c-chez-vous": ["c-chez-vous-1"],

@@ -35,6 +35,10 @@ recipient's postcode.
 - Twelve characters, or twelve and five digits, are printed by carriers everywhere. Colis Privé
   delivers only in France, Belgium and Luxembourg, so recognition asks it about them for a
   reader elsewhere only once every other candidate has missed (`servedCountriesOnly`).
+- Twelve digits from `51` or `52` followed by a French postcode have been Colis Privé's on every
+  parcel seen, like the forum's numbers in `numbers.json`, and no other carrier's rule takes them,
+  so `colis-prive-3` names Colis Privé with high confidence and recognition is not asked. Colis
+  Privé often holds such a label only hours after it is printed, after recognition has given up.
 - The postcode is what opens the page, so treat the whole value as a secret:
   never log it, quote it in an issue or put it in a fixture or `numbers.json`.
   The corpus keeps bare 12-character numbers only.

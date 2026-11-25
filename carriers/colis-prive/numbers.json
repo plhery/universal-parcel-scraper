@@ -499,6 +499,18 @@
         ]
       },
       "note": "An archived link to Colis Privé's detail page, whose numColis is this number followed by the delivery postcode. Colis Privé's own page showed the parcel's history with that postcode."
+    },
+    {
+      "number": "51000000001775001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-11-25",
+      "expect": {
+        "carrier": "colis-prive",
+        "confidence": "high"
+      },
+      "note": "Invented placeholder for colis-prive-3: twelve digits from 51 followed by a Paris postcode. Its serial is all zeros, far from the numbers in use."
     }
   ]
 }

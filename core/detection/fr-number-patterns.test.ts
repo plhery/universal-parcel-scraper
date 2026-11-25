@@ -27,6 +27,21 @@ describe('French carrier number candidates', () => {
     }
   });
 
+  it('names Colis Privé at once for twelve digits from 51 or 52 with a French postcode', () => {
+    for (const number of ['51000000001775001', '52000000001769001', '51000000001797100']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'colis-prive', confidence: 'high', candidates: ['colis-prive'] });
+      expect(recognitionAskedCarriers(number), number).toEqual([]);
+    }
+    // Other first digits, a Belgian or Luxembourg postcode or no postcode stay suggestions.
+    for (const number of ['53000000001775001', '50000000001775001', '510000000017B1000', '510000000017L9999', '510000000017']) {
+      expect(detectCarrierMatch(number).confidence, number).toBe('low');
+      expect(detectCarrierMatch(number).candidates ?? [], number).toContain('colis-prive');
+    }
+    for (const number of ['51000000001799001', '51000000001700001', '5100000000177500', '510000000017750011']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('colis-prive');
+    }
+  });
+
   it('takes Colis Privé\'s twelve characters only as at most two letters and then digits', () => {
     for (const number of ['AB123456789075001', 'A12345678901B1000', '123456789012L9999', 'AB1234567890', 'A12345678901', '123456789012']) {
       expect(detectCarrierMatch(number).candidates, number).toContain('colis-prive');
