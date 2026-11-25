@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+	iPlus ERP
+</title><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+</head>
+<body>
+    <form method="post" action="./Estatus.aspx?id=WX010008308867" id="frmDatos">
+        <div class="ip-outer-wrapper">
+            <div class="ip-wrapper">
+                <header style="height:42px;">
+                    <div class="ip-menu-logo"></div>
+                </header>
+                <div class="ip-site-titulo">
+    <span class="ip-titulo-l"><i class="fal fa-cube"></i>Rastreo</span>
+                </div>
+                <div>
+                    <div id="upDatos">
+                            <div id="upProcesando" style="display:none;">
+                                    <div class="ip-cargando-animacion">
+                                        <i class="fal fa-spinner fa-pulse fa-3x fa-fw margin-bottom" aria-hidden="true"></i>
+                                    </div>
+	</div>
+                            <div class="ip-site-info">
+    <span id="cphInfo_lInfo"></span>
+                            </div>
+                            <div class="ip-site-menu">
+                            </div>
+                            <div class="ip-site-cuerpo">
+    <div id="pFiltro">
+        <div class="ip-etiqueta">Tracking</div>
+        <div class="ip-campo">
+            <table class="dxeTextBoxSys dxeTextBox_MetropolisBlue dxeTextBoxDefaultWidthSys" id="cphCuerpo_tbTracking" style="width:100%;">
+		<tr>
+			<td class="dxic" style="width:100%;"><input class="dxeEditArea_MetropolisBlue dxeEditAreaSys" id="cphCuerpo_tbTracking_I" name="ctl00$cphCuerpo$tbTracking" onfocus="ASPx.EGotFocus(&#39;cphCuerpo_tbTracking&#39;)" onblur="ASPx.ELostFocus(&#39;cphCuerpo_tbTracking&#39;)" onchange="ASPx.EValueChanged(&#39;cphCuerpo_tbTracking&#39;)" type="text" /></td>
+		</tr>
+	</table>
+        </div>
+        <div class="ip-campo">
+            <input type="submit" name="ctl00$cphCuerpo$bRastrear" value="Rastrear" id="cphCuerpo_bRastrear" class="ip-boton-m" />                
+        </div>
+    </div>    
+    <div id="cphCuerpo_pDatos">
+        <div id="divEstatus">
+            <div>
+                <span id="cphCuerpo_lRecepcion" style="font-weight:normal;">WX010008308867</span>
+            </div>
+            <div class="ip-cabecera-estatus">            
+                <div id="div1Track" style="color: #FFFFFF">ITrack</div>
+                <div id="div4Track">
+                    <div class="ip-pb-block">
+                        <div class="ip-pb-progress">
+                            <div id="ippbfill" class="ip-pb-fill" style="width:25%"></div>
+                        </div>                    
+                        <span id="ippbRecibido" class="ip-pb-recibido" style="color: #FFFFFF">Recibido</span>
+                        <span id="ippbTransito" class="ip-pb-transito" style="color: #000000">Tránsito</span>
+                        <span id="ippbDisponible" class="ip-pb-disponible" style="color: #000000">Disponible</span>
+                        <span id="ippbEntregado" class="ip-pb-entregado" style="color: #000000">Entregado</span>                                
+                    </div>
+                </div>
+            </div>
+            <table class="dxgvControl_MetropolisBlue" id="cphCuerpo_gvEstatus" style="width:100%;border-collapse:separate;">
+			<tr>
+				<td><div class="dxgvCSD" style="height:420px;width:100%;position:relative;overflow-x:hidden;overflow-y:auto;">
+					<table id="cphCuerpo_gvEstatus_DXMainTable" class="dxgvTable_MetropolisBlue dxgvRBB" onclick="ASPx.GTableClick(&#39;cphCuerpo_gvEstatus&#39;, event);" style="width:100%;empty-cells:show;table-layout:fixed;overflow:hidden;">
+						<tr class="dxgvArm">
+							<td></td><td class="dxgvDI dxgvAIC" style="width:22px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXADRow" class="dxgvDetailRow_MetropolisBlue dxgvADR" style="display:none;">
+							<td class="dxgv dxgvDetailCell_MetropolisBlue"></td><td class="dxgvAIC dxgv" style="border-left-width:0px;border-right-width:0px;">&nbsp;</td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow0" class="dxgvDataRow_MetropolisBlue">
+							<td id="cphCuerpo_gvEstatus_tccell0_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Entregado Counter</span></div><div>2026.09.08  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  03:29 PM&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;Santo Domingo</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow1" class="dxgvDataRow_MetropolisBlue dxgvDataRowAlt_MetropolisBlue" style="background-color:#FBFCFD;">
+							<td id="cphCuerpo_gvEstatus_tccell1_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Facturado Online</span></div><div>2026.09.08  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  12:39 PM&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;Santo Domingo</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow2" class="dxgvDataRow_MetropolisBlue">
+							<td id="cphCuerpo_gvEstatus_tccell2_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Pago Confirmado</span></div><div>2026.09.08  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  12:39 PM</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow3" class="dxgvDataRow_MetropolisBlue dxgvDataRowAlt_MetropolisBlue" style="background-color:#FBFCFD;">
+							<td id="cphCuerpo_gvEstatus_tccell3_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Disponible (D07)</span></div><div>2026.09.07  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  07:00 AM</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow4" class="dxgvDataRow_MetropolisBlue">
+							<td id="cphCuerpo_gvEstatus_tccell4_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Disponible (D05)</span></div><div>2026.09.05  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  07:00 AM</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow5" class="dxgvDataRow_MetropolisBlue dxgvDataRowAlt_MetropolisBlue" style="background-color:#FBFCFD;">
+							<td id="cphCuerpo_gvEstatus_tccell5_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Disponible (D03)</span></div><div>2026.09.03  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  07:00 AM</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow6" class="dxgvDataRow_MetropolisBlue">
+							<td id="cphCuerpo_gvEstatus_tccell6_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Disponible</span></div><div>2026.08.31  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  11:19 AM&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;Santo Domingo</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow7" class="dxgvDataRow_MetropolisBlue dxgvDataRowAlt_MetropolisBlue" style="background-color:#FBFCFD;">
+							<td id="cphCuerpo_gvEstatus_tccell7_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">En Terminal</span></div><div>2026.08.31  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  11:18 AM&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;Santo Domingo</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow8" class="dxgvDataRow_MetropolisBlue">
+							<td id="cphCuerpo_gvEstatus_tccell8_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Transferencia Entrega</span></div><div>2026.08.31  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  09:46 AM&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;Santo Domingo</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow9" class="dxgvDataRow_MetropolisBlue dxgvDataRowAlt_MetropolisBlue" style="background-color:#FBFCFD;">
+							<td id="cphCuerpo_gvEstatus_tccell9_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Inicio Transferencia Entrega</span></div><div>2026.08.31  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  09:45 AM&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;Santo Domingo</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow10" class="dxgvDataRow_MetropolisBlue">
+							<td id="cphCuerpo_gvEstatus_tccell10_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Transferido</span></div><div>2026.08.29  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  06:45 PM&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;Santo Domingo</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow11" class="dxgvDataRow_MetropolisBlue dxgvDataRowAlt_MetropolisBlue" style="background-color:#FBFCFD;">
+							<td id="cphCuerpo_gvEstatus_tccell11_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Empacado</span></div><div>2026.08.29  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  05:41 PM&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;Santo Domingo</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow12" class="dxgvDataRow_MetropolisBlue">
+							<td id="cphCuerpo_gvEstatus_tccell12_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Recibido (Distribución)</span></div><div>2026.08.29  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  04:22 PM&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;Santo Domingo</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow13" class="dxgvDataRow_MetropolisBlue dxgvDataRowAlt_MetropolisBlue" style="background-color:#FBFCFD;">
+							<td id="cphCuerpo_gvEstatus_tccell13_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Aduana</span></div><div>2026.08.29  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  11:28 AM&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;Santo Domingo</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow14" class="dxgvDataRow_MetropolisBlue">
+							<td id="cphCuerpo_gvEstatus_tccell14_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Embarcado</span></div><div>2026.08.28  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  02:46 PM&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;MIAMI</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow15" class="dxgvDataRow_MetropolisBlue dxgvDataRowAlt_MetropolisBlue" style="background-color:#FBFCFD;">
+							<td id="cphCuerpo_gvEstatus_tccell15_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Empacado</span></div><div>2026.08.28  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  11:51 AM&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;MIAMI</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr><tr id="cphCuerpo_gvEstatus_DXDataRow16" class="dxgvDataRow_MetropolisBlue">
+							<td id="cphCuerpo_gvEstatus_tccell16_0" class="dxgv" style="padding-top:10px;padding-bottom:10px;border-left-width:0px;border-right-width:0px;">
+                            <div><span style="font-weight:400;">Recibido (Origen)</span></div><div>2026.08.28  &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;  11:42 AM&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;MIAMI</div>
+                        </td><td class="dxgvAIC dxgv" style="width:0px;border-left-width:0px;"></td>
+						</tr>
+					</table>
+				</div><table id="cphCuerpo_gvEstatus_LP" class="dxgvLoadingPanel_MetropolisBlue" style="left:0px;top:0px;z-index:30000;display:none;">
+					<tr>
+						<td class="dx" style="padding-right:0px;"><img class="dxlp-loadingImage dxlp-imgPosLeft" src="/DXR.axd?r=1_37-RqkBc" alt="" style="vertical-align:middle;" /></td><td class="dx" style="padding-left:0px;"><span id="cphCuerpo_gvEstatus_TL">Loading&hellip;</span></td>
+					</tr>
+				</table><div id="cphCuerpo_gvEstatus_LD" class="dxgvLoadingDiv_MetropolisBlue" style="display:none;z-index:29999;position:absolute;">
+				</div><img id="cphCuerpo_gvEstatus_IADD" class="dxGridView_gvDragAndDropArrowDown_MetropolisBlue" src="/DXR.axd?r=1_37-RqkBc" alt="|" style="position:absolute;visibility:hidden;top:-100px;" /><img id="cphCuerpo_gvEstatus_IADU" class="dxGridView_gvDragAndDropArrowUp_MetropolisBlue" src="/DXR.axd?r=1_37-RqkBc" alt="|" style="position:absolute;visibility:hidden;top:-100px;" /><img id="cphCuerpo_gvEstatus_IDHF" class="dxGridView_gvDragAndDropHideColumn_MetropolisBlue" src="/DXR.axd?r=1_37-RqkBc" alt="Hide" style="position:absolute;visibility:hidden;top:-100px;" /></td>
+			</tr>
+		</table>
+        </div>
+	</div>    
+                            </div>
+</div>
+                    <div class="ip-site-cuerpo">
+                    </div>
+                </div>
+                <div class="ip-site-accion">
+                </div>    
+                <div class="ip-site-pie">
+                </div>
+            </div>
+        </div>
+</form>
+    <div class="ip-site-cuerpo" style="padding:10px 0;">
+        <a href="https://iplus.do/" target="_blank" style="color:#333;font-size:12px;">Powered by iPlus Technology</a>
+    </div>
+</body>
+</html>

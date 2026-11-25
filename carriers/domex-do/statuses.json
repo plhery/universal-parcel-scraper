@@ -1,4 +1,89 @@
 {
   "carrier": "domex-do",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Recibido (Origen)",
+      "stage": "accepted",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Empacado",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Embarcado",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Aduana",
+      "stage": "customs",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Recibido (Distribución)",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Transferido",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Inicio Transferencia Entrega",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Transferencia Entrega",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "En Terminal",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Disponible",
+      "stage": "ready_for_pickup",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Disponible (D03)",
+      "stage": "ready_for_pickup",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Disponible (D05)",
+      "stage": "ready_for_pickup",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Disponible (D07)",
+      "stage": "ready_for_pickup",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Entregado Counter",
+      "stage": "delivered",
+      "language": "es",
+      "confirmedBy": "portal"
+    }
+  ]
 }

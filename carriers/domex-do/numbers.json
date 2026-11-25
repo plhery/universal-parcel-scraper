@@ -1,5 +1,25 @@
 {
   "carrier": "domex-do",
-  "gap": "No public page shows a Domex Expreso number.",
-  "records": []
+  "records": [
+    {
+      "number": "WX010008308867",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260828181558/https://domex-online.iplus.com.do/lg-es/ut/Estatus.aspx?id=WX010008308867",
+        "date": "2026-08-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Domex guide number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The archived Domex tracking result shows this WX guide with its Miami receipt and shipment scans. The public carrier tracker displayed the matching guide and a dated delivery history."
+    }
+  ]
 }

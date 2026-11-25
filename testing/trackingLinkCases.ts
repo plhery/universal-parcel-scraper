@@ -2604,6 +2604,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'domex', number: '00000000',
     route: /^https:\/\/domex\.lk\/Order-Details\.php\?wbno=00000000$/,
     marker: /Record Not Found!|WAYBILL INFORMATION/ },
+  // Domex Expreso's page renders the lookup on the server; its notice for an unknown guide quotes the number.
+  { carrier: 'domex-do', number: 'WX019999999999',
+    route: /^https:\/\/domex\.do\/rastreo\?guia=WX019999999999$/,
+    marker: /No encontramos|Guía Domex/ },
   // I-Trek searches the number as a pro number; its notice for an unknown one leaves the field empty.
   { carrier: 'american-west-express', number: 'ZZ0000000',
     route: /^https:\/\/awest\.freightgate\.com\/cgi-bin\/tarifftrek5\.1\/itrek\.cgi\?database=awest&type=submit&/,

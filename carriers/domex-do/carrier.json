@@ -16,19 +16,36 @@
   "timezone": "America/Santo_Domingo",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "domex-do",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://domex.do/rastreo?guia={trackingNumber}",
     "searchUrl": "https://domex.do/rastreo",
     "helpUrl": "https://domex.do/ayuda",
     "canaryUrl": "https://domex.do/rastreo",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "offset_timestamps",
+      "provider_code"
+    ]
   },
   "links": [
     {
@@ -38,6 +55,15 @@
       "pathPattern": "^/rastreo/?$",
       "params": [
         "guia"
+      ]
+    },
+    {
+      "domains": [
+        "domex-online.iplus.com.do"
+      ],
+      "pathPattern": "^/lg-es/ut/Estatus\\.aspx$",
+      "params": [
+        "id"
       ]
     }
   ],

@@ -311,6 +311,7 @@ import { statusMap as dobropost } from '../../carriers/dobropost/status.js';
 import { statusMap as dohrnTransfer } from '../../carriers/dohrn-transfer/status.js';
 import { statusMap as domainLogistics } from '../../carriers/domain-logistics/status.js';
 import { statusMap as domex } from '../../carriers/domex/status.js';
+import { statusMap as domexDo } from '../../carriers/domex-do/status.js';
 import { statusMap as dongdu } from '../../carriers/dongdu/status.js';
 import { statusMap as dpd } from '../../carriers/dpd/status.js';
 import { statusMap as dpdAt } from '../../carriers/dpd-at/status.js';
@@ -1247,7 +1248,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'courier-center': courierCenter, 'courier-it': courierIt, couriersplease: couriersPlease, 'cruz-del-sur': cruzDelSur, 'cse-russia': cseRussia, ctt, 'ctt-express': cttExpress, cttyex,
   'cyprus-post': cyprusPost, 'd-express': dExpress, dachser, 'dai-post': daiPost, 'danske-fragtmaend': danskeFragtmaend, dao, 'datian-logistics': datianLogistics, 'day-ross': dayRoss,
   dayone, 'daylight-transport': daylightTransport, 'dayton-freight': daytonFreight, dealersend, delhivery, delivro, dellin, delnext, deppon, 'der-kurier': derKurier, 'dex-pk': dexPk, dhl, 'dhl-ecommerce': dhlEcommerce, 'dhl-ecommerce-es': dhlEcommerceEs, 'dhl-ecommerce-nl': dhlEcommerceNl, 'dhl-ecommerce-pl': dhlEcommercePl, 'dhl-ecommerce-uk': dhlEcommerceUk, 'dhl-express': dhlExpress,
-  'dhl-freight': dhlFreight, dhlink, direx, 'dnipro-llc': dniproLlc, dobropost, 'dohrn-transfer': dohrnTransfer, 'domain-logistics': domainLogistics, domex, dongdu, dpd,
+  'dhl-freight': dhlFreight, dhlink, direx, 'dnipro-llc': dniproLlc, dobropost, 'dohrn-transfer': dohrnTransfer, 'domain-logistics': domainLogistics, domex, 'domex-do': domexDo, dongdu, dpd,
   'dpd-at': dpdAt, 'dpd-be': dpdBe, 'dpd-de': dpdDe, 'dpd-fr': dpdFr, 'dpd-hu': dpdHu, 'dpd-ie': dpdIe,
   'dpd-nl': dpdNl, 'dpd-pl': dpdPl, 'dpd-pt': dpdPt, 'dpd-ro': dpdRo, 'dpd-ru': dpdRu, 'dpd-uk': dpdUk, 'dpd-za': dpdZa, dpex, 'dragon-star-curier': dragonStarCurier, drop2shop, dropp, dsv, dtdc, dx, dynalogic,
   'e-commerce-international': eCommerceInternational, 'early-bird': earlyBird, 'easy-mail': easyMail,

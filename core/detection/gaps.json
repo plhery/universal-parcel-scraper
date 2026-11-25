@@ -1276,6 +1276,12 @@
     "reason": "Domex waybill numbers are bare runs of eight or nine digits, a shape many carriers share."
   },
   {
+    "carrier": "domex-do",
+    "pattern": "^WX\\d{12}$",
+    "kind": "open",
+    "reason": "Archived Domex Expreso tracking results show guides of WX and twelve digits. Detection does not offer Domex Expreso for these guides."
+  },
+  {
     "carrier": "dongjin-shipping",
     "kind": "open",
     "reason": "The guest search accepts shared container equipment identifiers. Select Dongjin Shipping explicitly."
