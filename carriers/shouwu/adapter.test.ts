@@ -606,6 +606,7 @@ describe('Shouwu International status vocabulary', () => {
     // Some lines close the wording with a full stop, and name the arrival abroad after the hand-over.
     expect(shouwuStage('Hand over to airline.')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     expect(shouwuStage('Arrived at destination airport.')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(shouwuStage('Parcel has been delivered')).toEqual({ stage: 'delivered', source: 'carrier_map' });
     expect(statusMap.stage(null, 'shipment information received.')).toBe('registered');
     // The page still shows the parcel in transit beside it, and it names no delivery.
     expect(shouwuStage('End of shipment')).toEqual({ stage: 'in_transit', source: 'carrier_map' });

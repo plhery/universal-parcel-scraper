@@ -6,6 +6,8 @@ const WORDINGS = new Map<string, Stage>(statuses.entries.map((entry) => [normali
 // GOFO's delivery, which says where the parcel was left and then how to reach GOFO's support:
 // "Delivered, Door/Yard. For delivery issues & tracking support, contact GOFO at …".
 const GOFO_DELIVERED = /^delivered, [^.]{1,60}\. for delivery issues & tracking support, contact gofo\b/;
+// The delivery naming where the parcel was left: "Delivered. Position: Front Door".
+const LEFT_AT = /^delivered\. position: \S[^.]{0,59}$/;
 
 /**
  * The stage FIRST LINE's map gives a row, by its `normalizeStatusWording` wording. The
@@ -13,7 +15,7 @@ const GOFO_DELIVERED = /^delivered, [^.]{1,60}\. for delivery issues & tracking 
  * the shared wording rules.
  */
 export function firstLineStage(_code: string | null, wording: string): Stage | undefined {
-  return WORDINGS.get(wording) ?? (GOFO_DELIVERED.test(wording) ? 'delivered' : undefined);
+  return WORDINGS.get(wording) ?? (GOFO_DELIVERED.test(wording) || LEFT_AT.test(wording) ? 'delivered' : undefined);
 }
 
 /** The stage of one FIRST LINE row an aggregator relays, with its wording unchanged; a partner's row is left to the shared rules. */

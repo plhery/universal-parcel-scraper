@@ -1395,6 +1395,7 @@
     {"wording": "The package has arrived at terminal (T1).", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The next partner's terminal, named by its number, at the minute of the hand-over."},
     {"wording": "Delivered by Mailbox", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The last mile's delivery to the letterbox; the line goes on with its delivery note and the carrier's contact details."},
     {"wording": "Arrived at GOFO Regional Destination Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "GOFO's regional facility in the United States, after its sorting centre and hours before the round."},
-    {"wording": "The driver is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "GOFO's round, after its regional facility and before the letterbox delivery."}
+    {"wording": "The driver is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "GOFO's round, after its regional facility and before the letterbox delivery."},
+    {"wording": "Parcel has been delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "The last mile's delivery, as Shouwu relays it."}
   ]
 }

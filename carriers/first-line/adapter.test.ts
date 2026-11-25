@@ -269,6 +269,13 @@ describe('FIRST LINE status vocabulary', () => {
     }
   });
 
+  it('reads its delivery naming where it left the parcel, wherever that is', () => {
+    for (const description of ['Delivered. Position: Front Door', 'Delivered. Position: Mailbox']) {
+      expect(statusMapAnswer({ carrier: 'first-line', providerCode: null, description }), description).toEqual({ kind: 'mapped', stage: 'delivered' });
+    }
+    expect(firstLineStage(null, 'delivered. position:')).toBeUndefined();
+  });
+
   it('leaves the delivering partner’s wording to the shared rules', () => {
     expect(firstLineStage(null, 'delivered')).toBeUndefined();
     expect(statusMapAnswer({ carrier: 'first-line', providerCode: null, description: 'Sample note' })).toEqual({ kind: 'unknown' });

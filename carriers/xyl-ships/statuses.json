@@ -24,6 +24,8 @@
     {"wording":"Leaving warehouse","language":"en","stage":"in_transit","confirmedBy":"live","firstSeen":"2026-11-17"},
     {"wording":"Arrived at sorting warehouse","language":"en","stage":"in_transit","confirmedBy":"live","firstSeen":"2026-11-17"},
     {"wording":"Departed from sorting center","language":"en","stage":"in_transit","confirmedBy":"live","firstSeen":"2026-11-17"},
-    {"wording":"Shipment inbound in sorting center","language":"en","stage":"in_transit","confirmedBy":"live","firstSeen":"2026-11-17"}
+    {"wording":"Shipment inbound in sorting center","language":"en","stage":"in_transit","confirmedBy":"live","firstSeen":"2026-11-17"},
+    {"wording":"Arriving at the local sorting warehouse","language":"en","stage":"in_transit","confirmedBy":"live","note":"The destination's sorting warehouse, after import clearance."},
+    {"wording":"The package is currently under inspection at locally ,awaiting release","language":"en","stage":"customs","confirmedBy":"live","note":"Customs inspects the parcel in the destination and has not released it yet."}
   ]
 }

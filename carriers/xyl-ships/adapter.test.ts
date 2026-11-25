@@ -31,6 +31,9 @@ describe('XYL-Ships tracker', () => {
       expect(xylShipsStage(null, wording), wording).toBe('customs');
     }
     expect(xylShipsStage(null, 'Customs clearance delayed: inspection pending')).toBeUndefined();
+    // Customs inspecting the parcel holds it until release; the sorting warehouse after it moves it on.
+    expect(xylShipsStage(null, 'The package is currently under inspection at locally ,awaiting release')).toBe('customs');
+    expect(xylShipsStage(null, 'Arriving at the local sorting warehouse')).toBe('in_transit');
   });
 
   it('reads the explicit absence, and keeps other refusals and malformed replies apart', () => {
