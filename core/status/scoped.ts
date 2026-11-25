@@ -35,6 +35,28 @@ export const SCOPED_WORDINGS: readonly ScopedWordingRule[] = [
     note: "The local courier's delivery round on a BUFFALO parcel, as ParcelsApp relays it: each departure came early in the "
       + "morning, the parcel was back at the depot that evening, and no round ran on the Sunday. Elsewhere a vehicle can leave for another depot.",
   },
+  // PTT's Turkish statuses in a provider's English, as 17TRACK relays them: each as PTT's own map reads the Turkish.
+  {
+    carrier: 'ptt', wording: 'ptt in the workplace', stage: 'ready_for_pickup',
+    note: "PTT's \"PTT İŞYERİNDE\": the item waits at the PTT office the scan names, after a failed delivery.",
+  },
+  {
+    carrier: 'ptt', wording: 'in intrastate transfer', stage: 'in_transit',
+    note: "PTT's \"İL İÇİ AKTARMADA\": the item sent on within a province.",
+  },
+  {
+    carrier: 'ptt', wording: 'transfer process', stage: 'in_transit',
+    note: "PTT's \"TRANSFER SÜRECİNDE\": the item sent on between offices.",
+  },
+  {
+    carrier: 'ptt', wording: 'distribution', stage: 'out_for_delivery',
+    note: "PTT's \"DAĞITIMDA\": the item out with the postman. Elsewhere the word can name a distribution centre.",
+  },
+  {
+    carrier: 'ptt', wording: 'undeliverable, address not found / left a notice', stage: 'failed_attempt',
+    note: "PTT's \"TESLİM EDİLEMEDİ\" with its reason, nobody at the address and a notice left (\"Adreste Yok/Kapalı-Haber "
+      + "Kağıdı Bırakıldı\"): a missed delivery. Elsewhere an address not found is a problem with the address.",
+  },
   {
     carrier: 'topyou', wording: 'customs clearance warehouse entry', stage: 'in_transit',
     note: "TopYou's clearance warehouse taking the parcel in hours after its import clearance and release, as TopYou's own map "

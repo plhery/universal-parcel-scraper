@@ -54,6 +54,10 @@ The pickup point is the office named by "PTT İŞYERİNDE", where an item waits 
 delivery, while it waits there or once it was collected there. An office holding an item nobody
 collected, "(MEVKUF)", is an exception. The weight is given in grams and kept in kilograms.
 
+17TRACK relays PTT's statuses in its own English, such as "PTT in the workplace" for "PTT
+İŞYERİNDE" and "Distribution" for "DAĞITIMDA". Rules scoped to PTT
+([scoped.ts](../../core/status/scoped.ts)) read those renderings as PTT's map reads the Turkish.
+
 ## Limitations
 
 The app's service accepts connections only from Turkish networks, and so does the website's

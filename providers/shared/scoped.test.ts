@@ -45,6 +45,21 @@ describe('carrier-scoped wording', () => {
     expect(classifyEvent('Customs clearance warehouse entry')).toMatchObject({ stage: 'customs' });
   });
 
+  it("reads PTT's statuses in 17TRACK's English as PTT's map reads the Turkish", () => {
+    for (const [wording, stage] of [
+      ['PTT in the workplace', 'ready_for_pickup'],
+      ['In intrastate transfer', 'in_transit'],
+      ['Transfer process', 'in_transit'],
+      ['Distribution', 'out_for_delivery'],
+      ['Undeliverable, address not found / left a notice', 'failed_attempt'],
+    ] as const) {
+      expect(scopedWordingStage(wording, { carrier: 'ptt', provider: '17TRACK' }), wording).toBe(stage);
+      expect(scopedWordingStage(wording, { carrier: 'yurtici-kargo', provider: '17TRACK' }), wording).toBeUndefined();
+    }
+    // Elsewhere a bare "Distribution" names no step.
+    expect(classifyEvent('Distribution')).toMatchObject({ stage: 'pending', stage_source: 'none' });
+  });
+
   const answer = (overrides: Partial<CarrierResult> = {}): CarrierResult => ({
     tracking_provider: 'ParcelsApp', status: 'pending', current_stage: 'pending', discovered_carrier: 'buffalo-ex',
     reported_carriers: ['Buffalo Logistics'],
