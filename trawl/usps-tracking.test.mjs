@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
-import { attachUspsTrackingCapture, forgetUspsOutageSessions, keepUspsSession, listenAfterUspsWarmup, USPS_IDLE_MS, USPS_SESSION_MAX_AGE_MS, USPS_WARMUP_MS, UspsSessions, uspsCaptureNumber, uspsOutage, uspsSessions, uspsWarmupRequest, warmUspsSessions } from './usps-tracking.mjs';
+import { attachUspsTrackingCapture, forgetUspsOutageSessions, keepUspsSession, listenAfterUspsWarmup, USPS_IDLE_MS, USPS_SESSION_MAX_AGE_MS, USPS_WARMUP_MS, UspsSessions, uspsCaptureNumber, uspsOutage, uspsSessions, uspsWarmupPeerServing, uspsWarmupRequest, warmUspsSessions } from './usps-tracking.mjs';
 
 const NUMBER = '9400111899223397910421';
 const URL = `https://tools.usps.com/tracking/${NUMBER}`;
@@ -376,7 +376,7 @@ test('the warm-up ends once both sessions are ready, through the lookup path', a
   const events = [];
   const scrapes = [];
   const warm = warmUspsSessions({ number: NUMBER, deps: { sessions: k.sessions }, sessions: k.keep, report: fields => events.push(fields),
-    scrape: (req, deps) => { scrapes.push(req); return k.keep.run(req, deps.sessions, k.scrape); } });
+    peer: async () => true, scrape: (req, deps) => { scrapes.push(req); return k.keep.run(req, deps.sessions, k.scrape); } });
   const done = {};
   warm.then(value => { done.value = value; });
   await k.advance(20_000);
@@ -385,6 +385,7 @@ test('the warm-up ends once both sessions are ready, through the lookup path', a
   await k.advance(10_000);
   assert.equal(k.keep.readyCount, 2);
   assert.equal(done.value.ready, 2);
+  assert.equal(done.value.held, true);
   assert.ok(done.value.ms >= 24_000 && done.value.ms <= 28_000, String(done.value.ms));
   assert.deepEqual(events.map(event => event.state), ['started', 'ready']);
 });
@@ -394,13 +395,17 @@ test('the warm-up gives up after its limit while USPS refuses every session', as
   const k = keeper(t, { outcomes: refusals });
   const events = [];
   const done = {};
+  let checks = 0;
   warmUspsSessions({ number: NUMBER, deps: { sessions: k.sessions }, sessions: k.keep, report: fields => events.push(fields),
+    peer: async () => { checks++; return true; },
     scrape: (req, deps) => k.keep.run(req, deps.sessions, k.scrape) }).then(value => { done.value = value; });
   await k.advance(USPS_WARMUP_MS - 5_000);
   assert.equal(done.value, undefined);
   await k.advance(10_000);
   assert.equal(done.value.ready, 0);
   assert.deepEqual(events.map(event => event.state), ['started', 'gave_up']);
+  // The other container was asked at the start and every five seconds.
+  assert.ok(checks >= 55 && checks <= 62, String(checks));
 });
 
 test('the warm-up is skipped without a USPS number or kept sessions', async () => {
@@ -408,8 +413,8 @@ test('the warm-up is skipped without a USPS number or kept sessions', async () =
     const events = [];
     let scraped = false;
     const result = await warmUspsSessions({ number, deps, sessions: new UspsSessions(), report: fields => events.push(fields),
-      scrape: () => { scraped = true; } });
-    assert.deepEqual(result, { ready: 0, ms: 0 });
+      peer: async () => true, scrape: () => { scraped = true; } });
+    assert.deepEqual(result, { held: false, ready: 0, ms: 0 });
     assert.deepEqual(events, [{ state: 'skipped', reason }]);
     assert.equal(scraped, false);
   }
@@ -421,8 +426,59 @@ test('the server opens its port after the warm-up only when a warm-up number is 
   const patched = listenAfterUspsWarmup(source);
   assert.match(patched, /^import \{ scrape as uspsWarmupScrape \} from "@trawl\/tiers"\nimport \{ warmUspsSessions \} from "\.\.\/\.\.\/\.\.\/packages\/tiers\/src\/utils\/usps-tracking\.mjs"\n/);
   assert.match(patched, /const app = createApiApp\(\)\nconst uspsWarmupNumber = process\.env\.USPS_WARMUP_NUMBER\?\.trim\(\)\nif \(!uspsWarmupNumber\) app\.listen\(PORT\)\n/);
-  assert.match(patched, /const poolReady = initPool\(\)\nif \(uspsWarmupNumber\) void poolReady\n {2}\.then\(\(\) => warmUspsSessions\(\{ number: uspsWarmupNumber, deps: getDeps\(\), scrape: uspsWarmupScrape \}\)\)\n {2}\.catch\(\(\) => \{\}\)\n {2}\.finally\(\(\) => app\.listen\(PORT\)\)\n\npoolReady\.catch/);
+  assert.ok(patched.includes('const poolReady = initPool()\nif (uspsWarmupNumber) void poolReady\n'
+    + '  .then(() => warmUspsSessions({ number: uspsWarmupNumber, deps: getDeps(), scrape: uspsWarmupScrape,\n'
+    + '    peerHost: process.env.USPS_WARMUP_PEER?.trim(), port: PORT }))\n  .catch(() => {})\n  .finally(() => app.listen(PORT))\n\npoolReady.catch'));
   assert.doesNotMatch(patched, /createApiApp\(\)\.listen/);
   assert.throws(() => listenAfterUspsWarmup(source.replace('.listen(PORT)', '.listen({ port: PORT })')), /review the USPS warm-up/);
   assert.throws(() => listenAfterUspsWarmup(source.replace('initPool()', 'initPool({})')), /review the USPS warm-up/);
+});
+
+test('without another container serving, the port opens at once and the sessions are still prepared', async t => {
+  const k = keeper(t);
+  const events = [];
+  const scrapes = [];
+  const result = await warmUspsSessions({ number: NUMBER, deps: { sessions: k.sessions }, sessions: k.keep, report: fields => events.push(fields),
+    scrape: req => { scrapes.push(req.url); return k.keep.run(req, k.sessions, k.scrape); } });
+  assert.deepEqual(result, { held: false, ready: 0, ms: 0 });
+  assert.deepEqual(events, [{ state: 'not_held', reason: 'no_peer' }]);
+  await k.advance(5_000);
+  assert.deepEqual(scrapes, [URL]);
+  assert.equal(k.keep.readyCount, 2);
+});
+
+test('the port opens at the first check after the other container stops answering', async t => {
+  const k = keeper(t, { outcomes: Object.fromEntries(Array.from({ length: 20 }, (_, n) => [n + 1, ['r', 'r', 'r']])) });
+  const events = [];
+  let serving = true;
+  const done = {};
+  warmUspsSessions({ number: NUMBER, deps: { sessions: k.sessions }, sessions: k.keep, report: fields => events.push(fields),
+    peer: async () => serving, scrape: (req, deps) => k.keep.run(req, deps.sessions, k.scrape) }).then(value => { done.value = value; });
+  await k.advance(30_000);
+  assert.equal(done.value, undefined);
+  serving = false;
+  await k.advance(6_000);
+  assert.equal(done.value.held, true);
+  assert.ok(done.value.ms >= 30_000 && done.value.ms <= 36_000, String(done.value.ms));
+  assert.deepEqual(events.map(event => event.state), ['started', 'peer_gone']);
+});
+
+test('another container serves when an address other than its own answers its health check', async () => {
+  const lookup = async (host, options) => {
+    assert.deepEqual([host, options], ['flaresolverr', { all: true }]);
+    return [{ address: '10.0.1.5', family: 4 }, { address: '10.0.1.9', family: 4 }];
+  };
+  const interfaces = () => ({ lo: [{ address: '127.0.0.1' }], eth0: [{ address: '10.0.1.5' }] });
+  const asked = [];
+  const answer = status => async url => { asked.push(url); return new Response('{}', { status }); };
+  assert.equal(await uspsWarmupPeerServing('flaresolverr', 8191, { lookup, interfaces, fetcher: answer(200) }), true);
+  assert.deepEqual(asked, ['http://10.0.1.9:8191/health']);
+  assert.equal(await uspsWarmupPeerServing('flaresolverr', 8191, { lookup, interfaces, fetcher: answer(503) }), false);
+  assert.equal(await uspsWarmupPeerServing('flaresolverr', 8191, { lookup, interfaces, fetcher: async () => { throw new Error('ECONNREFUSED'); } }), false);
+  assert.equal(await uspsWarmupPeerServing('flaresolverr', 8191, { lookup: async () => { throw new Error('ENOTFOUND'); }, interfaces }), false);
+  const alone = async () => [{ address: '10.0.1.5', family: 4 }];
+  assert.equal(await uspsWarmupPeerServing('flaresolverr', 8191, { lookup: alone, interfaces, fetcher: answer(200) }), false);
+  asked.length = 0;
+  await uspsWarmupPeerServing('flaresolverr', 8191, { lookup: async () => [{ address: 'fd00::9', family: 6 }], interfaces, fetcher: answer(200) });
+  assert.deepEqual(asked, ['http://[fd00::9]:8191/health']);
 });

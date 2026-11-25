@@ -251,7 +251,8 @@ writeFileSync(orchestratorPath, orchestrator.replace(attempt, attempt + '\n     
 writeFileSync(orchestratorPath, forgetUspsOutageSessions(readFileSync(orchestratorPath, 'utf8')));
 // USPS tracking reads go through sessions prepared ahead: USPS refuses each session's first read.
 writeFileSync(orchestratorPath, keepUspsSession(readFileSync(orchestratorPath, 'utf8')));
-// With USPS_WARMUP_NUMBER set, a new container opens its port once those sessions are ready.
+// With USPS_WARMUP_NUMBER set, a new container opens its port once those sessions are ready,
+// or at once when no other container under USPS_WARMUP_PEER is serving.
 const apiIndexPath = '/app/apps/api/src/index.ts';
 writeFileSync(apiIndexPath, listenAfterUspsWarmup(readFileSync(apiIndexPath, 'utf8')));
 

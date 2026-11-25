@@ -197,14 +197,17 @@ USPS's outage page, another page, an error or the read's timeout), a session tha
 opened with its status, and those counts on a session USPS did not let through, so refusals can be
 told apart by cause.
 
-With `USPS_WARMUP_NUMBER` set to a public USPS sample, a new container prepares these sessions
-before it opens its port: it reads that number's tracking page as a lookup would, and listens once
-both sessions are kept, or after five minutes when USPS refuses new ones. Meanwhile the container
-it replaces keeps serving, since a client that finds the new port closed connects to the other
-address under the same network alias, and a rolling deploy stops the old container only once the
-new one answers its health check. Give the health check room for the wait (start period plus
-retries times interval above five minutes). A `usps.warmup` warning records the start and whether
-the sessions were ready or the wait gave up, with its duration.
+With `USPS_WARMUP_NUMBER` set to a public USPS sample and `USPS_WARMUP_PEER` to the network alias
+clients use, a new container prepares these sessions before it opens its port while another
+container under that alias answers its health check: it reads that number's tracking page as a
+lookup would, and listens once both sessions are kept, after five minutes when USPS refuses new
+ones, or as soon as the other container stops answering. Meanwhile the container it replaces keeps
+serving, since a client that finds the new port closed connects to the other address under the same
+alias, and a rolling deploy stops the old container only once the new one answers its health check.
+A container started alone, after a reboot or a crash, opens its port at once and prepares the
+sessions in the background. Give the health check room for the wait (start period plus retries
+times interval above five minutes). A `usps.warmup` warning records whether the port was held and
+how the wait ended, with its duration.
 
 Australia Post, DHL Express, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta and ZTO use fresh contexts.
 Australia Post also uses its capture helper through a request's proxy, keeping that route's

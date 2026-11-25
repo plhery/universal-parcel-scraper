@@ -1,3 +1,6 @@
+import { lookup as dnsLookup } from 'node:dns/promises';
+import { networkInterfaces } from 'node:os';
+
 const ORIGIN = 'https://tools.usps.com';
 const OUTAGE = 'https://www.usps.com/root/global/server_responses/anyapp_outage_apology.htm';
 
@@ -300,12 +303,16 @@ export class UspsSessions {
 // One per process, however the module is reached: the server's warm-up and the orchestrator share it.
 export const uspsSessions = globalThis[Symbol.for('upc.uspsSessions')] ??= new UspsSessions();
 
-// A new container prepares its sessions before it opens its port, while the container it replaces still
+// A new container prepares its sessions before it opens its port while the container it replaces still
 // serves: a client that finds the new port closed connects to the old container under the same network
-// alias, and the deploy stops the old one once the new one answers its health check. The warm-up reads a
-// public sample's tracking page as a lookup would, and the port opens once the kept sessions are ready, or
-// after five minutes when USPS refuses new sessions for a while.
+// alias, and the deploy stops the old one once the new one answers its health check. The port stays
+// closed only while another container under that alias answers, so a restart or a reboot, with no other
+// container, opens it at once. The warm-up reads a public sample's tracking page as a lookup would, and the
+// port opens once the kept sessions are ready, when the other container stops answering, or after five
+// minutes when USPS refuses new sessions for a while.
 export const USPS_WARMUP_MS = 5 * 60_000;
+const PEER_CHECK_MS = 5_000;
+const PEER_TIMEOUT_MS = 2_000;
 const reportWarmup = fields => console.warn(JSON.stringify({ level: 'warn', event: 'usps.warmup', ...fields }));
 
 /** The warm-up's read of a tracking page, made the way the USPS adapter asks for one; null for another number. */
@@ -316,23 +323,61 @@ export function uspsWarmupRequest(number) {
   return uspsCaptureNumber(url, req) ? req : null;
 }
 
-/** Starts preparing the kept sessions through `scrape`; resolves once they are ready or after `limitMs`. */
-export async function warmUspsSessions({ number, deps, scrape, sessions = uspsSessions, limitMs = USPS_WARMUP_MS,
-  pollMs = 1_000, now = Date.now, sleep = ms => new Promise(resolve => setTimeout(resolve, ms)), report = reportWarmup }) {
+/** Whether another container under the network name `host` answers its health check on `port`. */
+export async function uspsWarmupPeerServing(host, port, { lookup = dnsLookup, interfaces = networkInterfaces,
+  fetcher = fetch, timeoutMs = PEER_TIMEOUT_MS } = {}) {
+  let addresses;
+  try { addresses = await lookup(host, { all: true }); } catch { return false; }
+  const own = new Set(Object.values(interfaces()).flat().map(entry => entry?.address));
+  for (const { address, family } of addresses) {
+    if (own.has(address)) continue;
+    const origin = family === 6 ? `http://[${address}]:${port}` : `http://${address}:${port}`;
+    try {
+      const response = await fetcher(`${origin}/health`, { signal: AbortSignal.timeout(timeoutMs) });
+      await response.body?.cancel();
+      if (response.ok) return true;
+    } catch { /* That address does not serve. */ }
+  }
+  return false;
+}
+
+/**
+ * Starts preparing the kept sessions through `scrape`. Resolves at once when no other container serves under
+ * `peerHost`, and otherwise once the sessions are ready, that container stops answering, or `limitMs` passed.
+ */
+export async function warmUspsSessions({ number, deps, scrape, peerHost, port, sessions = uspsSessions,
+  peer = peerHost ? () => uspsWarmupPeerServing(peerHost, port) : async () => false, limitMs = USPS_WARMUP_MS,
+  pollMs = 1_000, peerEveryMs = PEER_CHECK_MS, now = Date.now, sleep = ms => new Promise(resolve => setTimeout(resolve, ms)),
+  report = reportWarmup }) {
   const say = fields => { try { report(fields); } catch { /* Diagnostics never hold the port. */ } };
+  const serving = async () => { try { return await peer(); } catch { return false; } };
   const started = now();
   const req = uspsWarmupRequest(number);
   if (!req || !sessions.routes(req, deps?.sessions)) {
     say({ state: 'skipped', reason: req ? 'no_sessions' : 'invalid_number' });
-    return { ready: 0, ms: 0 };
+    return { held: false, ready: 0, ms: 0 };
   }
-  say({ state: 'started' });
+  const held = await serving();
   // The read itself waits briefly and usually ends unanswered: the sessions it starts are what count.
   void Promise.resolve().then(() => scrape(req, deps)).catch(() => {});
-  while (sessions.readyCount < sessions.readySessions && now() - started < limitMs) await sleep(pollMs);
+  if (!held) {
+    say({ state: 'not_held', reason: 'no_peer' });
+    return { held: false, ready: sessions.readyCount, ms: Math.max(0, now() - started) };
+  }
+  say({ state: 'started' });
+  let state, checked = now();
+  for (;;) {
+    if (sessions.readyCount >= sessions.readySessions) { state = 'ready'; break; }
+    if (now() - started >= limitMs) { state = 'gave_up'; break; }
+    await sleep(pollMs);
+    if (now() - checked >= peerEveryMs) {
+      checked = now();
+      if (!await serving()) { state = 'peer_gone'; break; }
+    }
+  }
   const ready = sessions.readyCount, ms = Math.max(0, now() - started);
-  say({ state: ready >= sessions.readySessions ? 'ready' : 'gave_up', ready, ms });
-  return { ready, ms };
+  say({ state, ready, ms });
+  return { held: true, ready, ms };
 }
 
 const API_LISTEN = 'const app = createApiApp().listen(PORT)\n';
@@ -348,7 +393,8 @@ export function listenAfterUspsWarmup(source) {
     .replace(API_LISTEN, 'const app = createApiApp()\nconst uspsWarmupNumber = process.env.USPS_WARMUP_NUMBER?.trim()\n'
       + 'if (!uspsWarmupNumber) app.listen(PORT)\n')
     .replace(API_POOL, API_POOL + 'if (uspsWarmupNumber) void poolReady\n'
-      + '  .then(() => warmUspsSessions({ number: uspsWarmupNumber, deps: getDeps(), scrape: uspsWarmupScrape }))\n'
+      + '  .then(() => warmUspsSessions({ number: uspsWarmupNumber, deps: getDeps(), scrape: uspsWarmupScrape,\n'
+      + '    peerHost: process.env.USPS_WARMUP_PEER?.trim(), port: PORT }))\n'
       + '  .catch(() => {})\n  .finally(() => app.listen(PORT))\n');
 }
 
