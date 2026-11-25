@@ -24,6 +24,10 @@ to BUFFALO and ParcelsApp read the departure as out for delivery, the return as 
 and the collection as in transit; elsewhere a vehicle can leave for another depot, the word can
 name a return to the sender, and a collection is the acceptance.
 
+Providers also relay BUFFALO's own statuses. Rules scoped to BUFFALO read "International Shipping",
+the parcel gone from China, and "Dispatching", at the depot before a driver takes it, as in transit
+from any provider.
+
 A depot taking the parcel back from the courier, "Returned to BUFFALO warehouse[…]" with the depot's code, is
 an exception: no round goes on.
 

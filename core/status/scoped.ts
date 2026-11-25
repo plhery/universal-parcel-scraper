@@ -35,6 +35,15 @@ export const SCOPED_WORDINGS: readonly ScopedWordingRule[] = [
     note: "The local courier's delivery round on a BUFFALO parcel, as ParcelsApp relays it: each departure came early in the "
       + "morning, the parcel was back at the depot that evening, and no round ran on the Sunday. Elsewhere a vehicle can leave for another depot.",
   },
+  {
+    carrier: 'buffalo-ex', wording: 'international shipping', stage: 'in_transit',
+    note: "BUFFALO's own status for a parcel that has left China, as its tracker shows it and providers relay it.",
+  },
+  {
+    carrier: 'buffalo-ex', wording: 'dispatching', stage: 'in_transit',
+    note: "BUFFALO's own status at its depot minutes before a driver takes the parcel, as its tracker shows it and providers "
+      + "relay it: not the round itself. Elsewhere a seller can be dispatching an order no carrier has.",
+  },
   // PTT's Turkish statuses in a provider's English, as 17TRACK relays them: each as PTT's own map reads the Turkish.
   {
     carrier: 'ptt', wording: 'ptt in the workplace', stage: 'ready_for_pickup',

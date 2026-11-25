@@ -36,6 +36,13 @@ describe('carrier-scoped wording', () => {
     // The courier collecting the parcel from BUFFALO's depot, not the sender handing it over.
     expect(scopedWordingStage('COLLECTED', { carrier: 'buffalo-ex', provider: 'ParcelsApp' })).toBe('in_transit');
     expect(classifyEvent('COLLECTED')).toMatchObject({ stage: 'accepted' });
+    // BUFFALO's own statuses, from any provider: the parcel gone from China, and its depot before the driver takes it.
+    for (const provider of ['ParcelsApp', '17TRACK']) {
+      expect(scopedWordingStage('International Shipping', { carrier: 'buffalo-ex', provider })).toBe('in_transit');
+      expect(scopedWordingStage('Dispatching', { carrier: 'buffalo-ex', provider })).toBe('in_transit');
+    }
+    expect(scopedWordingStage('Dispatching', { carrier: 'la-poste', provider: 'ParcelsApp' })).toBeUndefined();
+    expect(classifyEvent('Dispatching')).toMatchObject({ stage: 'pending', stage_source: 'none' });
     // TopYou's clearance warehouse, after the import release, from every provider that names TopYou.
     for (const provider of ['Ship24', '17TRACK']) {
       expect(scopedWordingStage('Customs clearance warehouse entry', { carrier: 'topyou', provider })).toBe('in_transit');
