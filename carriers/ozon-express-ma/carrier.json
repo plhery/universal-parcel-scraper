@@ -16,19 +16,47 @@
   "timezone": "Africa/Casablanca",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "ozon-express-ma",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://ozonexpress.ma/tracking-colis/{trackingNumber}",
     "searchUrl": "https://ozonexpress.ma/",
     "helpUrl": "https://ozonexpress.ma/contact",
     "canaryUrl": "https://ozonexpress.ma/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "scan_times",
+      "last_update",
+      "progress_rail"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times",
+      "last_update"
+    ],
+    "discarded": [
+      "progress_rail",
+      "payment_status"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "service_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

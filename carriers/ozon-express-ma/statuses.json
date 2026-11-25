@@ -1,4 +1,10 @@
 {
   "carrier": "ozon-express-ma",
-  "entries": []
+  "entries": [
+    {"wording": "Ramassé", "stage": "accepted", "language": "fr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The parcel is collected from the seller. The public sample's history lists it twice, at the seller and at the hub."},
+    {"wording": "Expédié", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The parcel leaves for the destination city."},
+    {"wording": "Reçu", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The destination city's agency has received the parcel."},
+    {"wording": "Mise en distribution", "stage": "out_for_delivery", "language": "fr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The parcel is handed to the delivery courier."},
+    {"wording": "Livré", "stage": "delivered", "language": "fr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The parcel is delivered; the tracker then shows it as the current status."}
+  ]
 }

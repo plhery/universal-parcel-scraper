@@ -3293,6 +3293,11 @@
     "reason": "Eight digits are shared by several carriers and nothing in the number points to Overseas Express."
   },
   {
+    "carrier": "ozon-express-ma",
+    "kind": "by_design",
+    "reason": "Ozon Express publishes no code layout, its sample does not follow the example on its site, and sellers may choose their own codes, so nothing in a number points to it."
+  },
+  {
     "carrier": "paack",
     "kind": "by_design",
     "reason": "Paack identifiers are retailer order numbers with no stable shape, so one can match another carrier's rule."

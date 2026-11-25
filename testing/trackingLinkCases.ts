@@ -516,6 +516,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'europochta', number: 'BY080731593842',
     route: /^https:\/\/evropochta\.by\/\?number=BY080731593842$/,
     marker: /Отслеживание|Отследить/ },
+  // Ozon Express's page shows the number from its path and looks it up on load.
+  { carrier: 'ozon-express-ma', number: 'ZZZ000000000ZZ',
+    route: /^https:\/\/ozonexpress\.ma\/tracking-colis\/ZZZ000000000ZZ$/,
+    marker: /رقم التتبع غير موجود|Numéro de suivi introuvable/ },
   { carrier: 'ozon-logistics', number: '48271635-2048-9',
     route: /^https:\/\/tracking\.ozon\.ru\/(?:\?|$)/,
     marker: /Проверка статуса вашей доставки/, renderTimeoutMs: 20_000 },

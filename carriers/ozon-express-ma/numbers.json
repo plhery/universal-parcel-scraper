@@ -1,5 +1,24 @@
 {
   "carrier": "ozon-express-ma",
-  "gap": "No public page shows an Ozon Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "MRK062629425421RX",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT21ObmVWTjBaMmN0VjIxTVpsZE9SM2xtWkVkSFFWRRAB!2m1!1s0x0:0xd0d6a311181eaf27",
+        "date": "2026-11-25",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A Google Maps review of an Ozon Express agency files a complaint to OzonExpress about this parcel, written with its last two letters in mixed case. Ozon's tracker answers it, in any case, with its steps from collection to delivery."
+    }
+  ]
 }
