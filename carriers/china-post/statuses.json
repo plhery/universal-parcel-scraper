@@ -2,6 +2,13 @@
   "carrier": "china-post",
   "entries": [
     {
+      "code": "001",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "Scan code (operationCode). 待揽收 (awaiting collection by the post): the sender has booked the item, which China Post has not taken in yet."
+    },
+    {
       "code": "713",
       "stage": "in_transit",
       "confirmedBy": "live",

@@ -663,6 +663,8 @@ describe('status map answers', () => {
     // The code decides: a delivery attempt keeps its stage under the label 运送中.
     expect(answer('china-post', '542', '运送中')).toEqual(mapped('failed_attempt'));
     expect(answer('china-post', '711', '已退回')).toEqual(mapped('returned'));
+    // An item still awaiting collection by the post is not taken in yet.
+    expect(answer('china-post', '001', '待揽收')).toEqual(mapped('registered'));
     // The acceptance dated from the collector record has no code.
     expect(answer('china-post', null, '已揽收')).toEqual(mapped('accepted'));
     expect(answer('china-post', '999', '已签收')).toEqual(mapped('delivered'));

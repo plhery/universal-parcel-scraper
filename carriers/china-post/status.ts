@@ -14,6 +14,8 @@ const EXCEPTION: ClassifiedStatus = { status: 'exception', stage: 'exception' };
 // Scan codes (`operationCode`) as the EMS app's trace service returns them for
 // China Post international mail. statuses.json records the wording of each.
 const CODES: Readonly<Record<string, ClassifiedStatus>> = {
+  // Awaiting collection by the post (待揽收): the sender has booked the item, which China Post has not taken in yet.
+  '001': { status: 'pending', stage: 'registered' },
   '713': IN_TRANSIT,
   '954': IN_TRANSIT,
   '989': IN_TRANSIT,
