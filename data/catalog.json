@@ -7450,7 +7450,8 @@
     "timezone": "America/Monterrey",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "afimex",
+      "localClocks": true
     },
     "canaryUrl": "https://afimex.net/rastrea-envio",
     "trackingSearchUrl": "https://afimex.net/rastrea-envio",
@@ -21751,7 +21752,8 @@
     "timezone": "America/Santo_Domingo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "domex-do",
+      "localClocks": true
     },
     "canaryUrl": "https://domex.do/rastreo",
     "trackingUrlTemplate": "https://domex.do/rastreo?guia={trackingNumber}",
@@ -21765,6 +21767,15 @@
         "pathPattern": "^/rastreo/?$",
         "params": [
           "guia"
+        ]
+      },
+      {
+        "domains": [
+          "domex-online.iplus.com.do"
+        ],
+        "pathPattern": "^/lg-es/ut/Estatus\\.aspx$",
+        "params": [
+          "id"
         ]
       }
     ],
@@ -28468,7 +28479,7 @@
     "timezone": "Asia/Dubai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "flipxpress"
     },
     "canaryUrl": "https://www.flipxp.com/",
     "trackingSearchUrl": "https://www.flipxp.com/track",
@@ -52698,7 +52709,8 @@
     "timezone": "Europe/Stockholm",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "premo",
+      "localClocks": true
     },
     "canaryUrl": "https://www.premo.se/paketsparning",
     "trackingUrlTemplate": "https://www.premo.se/paketsparning?id={trackingNumber}",

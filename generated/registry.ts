@@ -23,6 +23,7 @@ import { adapter as activos24 } from '../carriers/activos24/adapter.js';
 import { adapter as aerolineasArgentinasCargo } from '../carriers/aerolineas-argentinas-cargo/adapter.js';
 import { adapter as aeropost } from '../carriers/aeropost/adapter.js';
 import { adapter as aexParaguay } from '../carriers/aex-paraguay/adapter.js';
+import { adapter as afimex } from '../carriers/afimex/adapter.js';
 import { adapter as airArabiaCargo } from '../carriers/air-arabia-cargo/adapter.js';
 import { adapter as airEuropaCargo } from '../carriers/air-europa-cargo/adapter.js';
 import { adapter as airGreenland } from '../carriers/air-greenland/adapter.js';
@@ -275,6 +276,7 @@ import { adapter as dobropost } from '../carriers/dobropost/adapter.js';
 import { adapter as dohrnTransfer } from '../carriers/dohrn-transfer/adapter.js';
 import { adapter as domainLogistics } from '../carriers/domain-logistics/adapter.js';
 import { adapter as domex } from '../carriers/domex/adapter.js';
+import { adapter as domexDo } from '../carriers/domex-do/adapter.js';
 import { adapter as dongdu } from '../carriers/dongdu/adapter.js';
 import { adapter as dongjinShipping } from '../carriers/dongjin-shipping/adapter.js';
 import { adapter as doraGate } from '../carriers/dora-gate/adapter.js';
@@ -387,6 +389,7 @@ import { adapter as fleetex } from '../carriers/fleetex/adapter.js';
 import { adapter as fleetoptics } from '../carriers/fleetoptics/adapter.js';
 import { adapter as flickpost } from '../carriers/flickpost/adapter.js';
 import { adapter as flippost } from '../carriers/flippost/adapter.js';
+import { adapter as flipxpress } from '../carriers/flipxpress/adapter.js';
 import { adapter as flowProgressiveLogistics } from '../carriers/flow-progressive-logistics/adapter.js';
 import { adapter as fmTransportes } from '../carriers/fm-transportes/adapter.js';
 import { adapter as fmx } from '../carriers/fmx/adapter.js';
@@ -809,6 +812,7 @@ import { adapter as posturinn } from '../carriers/posturinn/adapter.js';
 import { adapter as ppl } from '../carriers/ppl/adapter.js';
 import { adapter as prd } from '../carriers/prd/adapter.js';
 import { adapter as precisionDeliveries } from '../carriers/precision-deliveries/adapter.js';
+import { adapter as premo } from '../carriers/premo/adapter.js';
 import { adapter as proCarrier } from '../carriers/pro-carrier/adapter.js';
 import { adapter as proconExpressLines } from '../carriers/procon-express-lines/adapter.js';
 import { adapter as profitFields } from '../carriers/profit-fields/adapter.js';
@@ -1195,6 +1199,7 @@ export const REGISTRY: RegistryDefinition = {
     "aerolineas-argentinas-cargo": aerolineasArgentinasCargo,
     "aeropost": aeropost,
     "aex-paraguay": aexParaguay,
+    "afimex": afimex,
     "air-arabia-cargo": airArabiaCargo,
     "air-europa-cargo": airEuropaCargo,
     "air-greenland": airGreenland,
@@ -1447,6 +1452,7 @@ export const REGISTRY: RegistryDefinition = {
     "dohrn-transfer": dohrnTransfer,
     "domain-logistics": domainLogistics,
     "domex": domex,
+    "domex-do": domexDo,
     "dongdu": dongdu,
     "dongjin-shipping": dongjinShipping,
     "dora-gate": doraGate,
@@ -1559,6 +1565,7 @@ export const REGISTRY: RegistryDefinition = {
     "fleetoptics": fleetoptics,
     "flickpost": flickpost,
     "flippost": flippost,
+    "flipxpress": flipxpress,
     "flow-progressive-logistics": flowProgressiveLogistics,
     "fm-transportes": fmTransportes,
     "fmx": fmx,
@@ -1981,6 +1988,7 @@ export const REGISTRY: RegistryDefinition = {
     "ppl": ppl,
     "prd": prd,
     "precision-deliveries": precisionDeliveries,
+    "premo": premo,
     "pro-carrier": proCarrier,
     "procon-express-lines": proconExpressLines,
     "profit-fields": profitFields,
@@ -2392,7 +2400,7 @@ export const REGISTRY: RegistryDefinition = {
     "aetos-courier": "universal",
     "aex-paraguay": "aex-paraguay",
     "afghan-post": "universal",
-    "afimex": "universal",
+    "afimex": "afimex",
     "agt-kurye": "universal",
     "ahamove": "universal",
     "ahl-courier": "universal",
@@ -2843,7 +2851,7 @@ export const REGISTRY: RegistryDefinition = {
     "domain-logistics": "domain-logistics",
     "domesa": "universal",
     "domex": "domex",
-    "domex-do": "universal",
+    "domex-do": "domex-do",
     "domina": "universal",
     "dongdu": "dongdu",
     "dongjin-shipping": "dongjin-shipping",
@@ -3036,7 +3044,7 @@ export const REGISTRY: RegistryDefinition = {
     "flickpost": "flickpost",
     "flight-logistics": "universal",
     "flippost": "flippost",
-    "flipxpress": "universal",
+    "flipxpress": "flipxpress",
     "fliway": "universal",
     "flow-progressive-logistics": "flow-progressive-logistics",
     "flyking": "universal",
@@ -3780,7 +3788,7 @@ export const REGISTRY: RegistryDefinition = {
     "prd": "prd",
     "precision-deliveries": "precision-deliveries",
     "premier-deliveries-uk": "universal",
-    "premo": "universal",
+    "premo": "premo",
     "primewell": "universal",
     "princesa-dos-campos": "universal",
     "prisma-courier": "universal",

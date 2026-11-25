@@ -7454,7 +7454,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Monterrey",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "afimex",
+      "localClocks": true
     },
     "canaryUrl": "https://afimex.net/rastrea-envio",
     "trackingSearchUrl": "https://afimex.net/rastrea-envio",
@@ -21755,7 +21756,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Santo_Domingo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "domex-do",
+      "localClocks": true
     },
     "canaryUrl": "https://domex.do/rastreo",
     "trackingUrlTemplate": "https://domex.do/rastreo?guia={trackingNumber}",
@@ -21769,6 +21771,15 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/rastreo/?$",
         "params": [
           "guia"
+        ]
+      },
+      {
+        "domains": [
+          "domex-online.iplus.com.do"
+        ],
+        "pathPattern": "^/lg-es/ut/Estatus\\.aspx$",
+        "params": [
+          "id"
         ]
       }
     ],
@@ -28472,7 +28483,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Dubai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "flipxpress"
     },
     "canaryUrl": "https://www.flipxp.com/",
     "trackingSearchUrl": "https://www.flipxp.com/track",
@@ -52702,7 +52713,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Stockholm",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "premo",
+      "localClocks": true
     },
     "canaryUrl": "https://www.premo.se/paketsparning",
     "trackingUrlTemplate": "https://www.premo.se/paketsparning?id={trackingNumber}",
