@@ -192,7 +192,10 @@ rest that doubles up to sixteen minutes until one is let through, and none is op
 lookup has come for half an hour. A lookup waits up to twenty seconds for a session
 being prepared; with none ready it fails without reading, since a fresh context's read is always
 refused. A `usps.session` warning records each session created, let through and ended, with its
-reason, reads and age, and each rest.
+reason, reads and age, and each rest. It also records each trial read with what it met (tracking,
+USPS's outage page, another page, an error or the read's timeout), a session that could not be
+opened with its status, and those counts on a session USPS did not let through, so refusals can be
+told apart by cause.
 
 Australia Post, DHL Express, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta and ZTO use fresh contexts.
 Australia Post also uses its capture helper through a request's proxy, keeping that route's
