@@ -17,6 +17,13 @@ const SIGNATORY = /(?:签收人|signed (?:for )?by|signatory)[\s\S]*$/i;
 // The interface replies in GBK, which has no room for some spaces: one between two words, or between a
 // month and its day ("November?4"), arrives as `?`.
 const LOST_SPACE = /(?<=[\p{L}\p{N}])\?(?=[\p{L}\p{N}])/gu;
+// GBK has no ô, ç or î either, so a French row the tracker copies from the destination's post loses them to `?` too,
+// as Colissimo's "Votre Colissimo va bient?t nous être confié !". In the words those rows use the letter comes back.
+const LOST_LETTERS: readonly (readonly [RegExp, string])[] = [
+  [/(?<=\bbient)\?(?=t\b)/gi, 'ô'], [/(?<=\b(?:entre|dé|de)p)\?(?=ts?\b)/gi, 'ô'],
+  [/(?<=\bre)\?(?=u(?:e|s|es)?\b)/gi, 'ç'], [/(?<=\bbo)\?(?=tes?\b)/gi, 'î'],
+];
+const restoreLetters = (value: string): string => LOST_LETTERS.reduce((text, [lost, letter]) => text.replace(lost, letter), value);
 
 // A partner's row can come with its markup, escaped or not: DHL's "more information<a href=…> here.</a>".
 const MARKUP = /<\/?[a-z][^<>]*>|&lt;\/?[a-z][\s\S]*?&gt;/gi;
@@ -25,7 +32,7 @@ const ENTITY = /&(?:amp|quot|#39|apos|nbsp);/g;
 
 /** Scan text without markup, a signatory or a postcode. */
 export function hualeiScanText(value: string, maxLength = 500): string {
-  return clean(value.replace(MARKUP, ' ').replace(ENTITY, (entity) => ENTITIES[entity]!).replace(LOST_SPACE, ' ').replace(SIGNATORY, '').replace(POSTCODE_COUNTRY, '$1').replace(POSTCODE_FORM, '$1')
+  return clean(restoreLetters(value.replace(MARKUP, ' ').replace(ENTITY, (entity) => ENTITIES[entity]!)).replace(LOST_SPACE, ' ').replace(SIGNATORY, '').replace(POSTCODE_COUNTRY, '$1').replace(POSTCODE_FORM, '$1')
     .replace(POSTCODE_RUN, '$1').replace(EMPTY_BRACKETS, ''), maxLength)
     .replace(/^[\s,，:：;；/]+|[\s,，:：;；/]+$/g, '');
 }

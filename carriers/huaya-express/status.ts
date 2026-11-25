@@ -1,4 +1,5 @@
 import type { Stage } from '../../core/status/index.js';
+import { countryCode } from '../../core/time/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import { jtMexicoKey } from '../gzyl/jt-mexico-rows.js';
 import statuses from './statuses.json' with { type: 'json' };
@@ -41,5 +42,15 @@ export const isHuayaDhlGermanRow = (wording: string): boolean => DHL_GERMAN_ROW.
 const US_PLACE = /^\s*US\s*,(?!\s*SYSTEM\s*,)[^,]*[A-Z][^,]*,/i;
 /** Whether a row is the US delivery partner's, at a town in the United States, on that town's wall clock. */
 export const isHuayaUsRow = (place: string): boolean => US_PLACE.test(place);
+
+// The destination's carrier's rows the tracker copies under the country's code alone ("FR"), in its language: Colissimo's,
+// PostNL's, Early Bird's. The tracker's own steps abroad under such a code are in Chinese ("航班落地，清关中" at "DE").
+const COUNTRY_PLACE = /^\s*([A-Z]{2})\s*$/;
+const HAN = /\p{Script=Han}/u;
+/** Whether a row is the destination carrier's under a country's code other than China's, on that country's wall clock. */
+export const isHuayaDestinationRow = (content: string, place: string): boolean => {
+  const country = COUNTRY_PLACE.exec(place)?.[1];
+  return country !== undefined && country !== 'CN' && countryCode(country) === country && !HAN.test(content);
+};
 
 export const statusMap: CarrierStatusMap = { stage: huayaStage, gaps: [] };

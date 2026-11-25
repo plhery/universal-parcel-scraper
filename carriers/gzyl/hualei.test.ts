@@ -317,6 +317,11 @@ describe('Hualei track interface', () => {
     // So does one between a month and its day.
     expect(hualeiScanText('Flight is expected to take off on November?4')).toBe('Flight is expected to take off on November 4');
     expect(hualeiScanText('Where is it? Arrived')).toBe('Where is it? Arrived');
+    // A French letter GBK has no room for, in the words the destination post's rows use, comes back.
+    expect(hualeiScanText('Votre Colissimo va bient?t nous être confié !')).toBe('Votre Colissimo va bientôt nous être confié !');
+    expect(hualeiScanText('Votre colis a été re?u au dép?t, puis à l\'entrep?t, avant la Bo?te aux lettres'))
+      .toBe('Votre colis a été reçu au dépôt, puis à l\'entrepôt, avant la Boîte aux lettres');
+    expect(hualeiScanText('Bientot?arrive')).toBe('Bientot arrive');
     // Longer runs, codes and clocks are not postcodes.
     expect(hualeiScanText('Flight CA123 at 10:30, bag 1234567')).toBe('Flight CA123 at 10:30, bag 1234567');
     // Nor is a date's year.

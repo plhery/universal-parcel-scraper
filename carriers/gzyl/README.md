@@ -130,7 +130,8 @@ instead.
   them over ([identity.ts](identity.ts)).
 - GBK has no room for some spaces, so a space between two words, or between a month and its day,
   can arrive as `?`; scan text reads it as the space it was, and a row stored with the `?` is taken
-  over by the same row with the space.
+  over by the same row with the space. GBK has no ô, ç or î either: in the French words a
+  destination post's rows use ("bient?t", "re?u", "dép?t", "bo?te") scan text puts the letter back.
 - A partner's row can come with its markup, escaped or not, such as DHL's help link; scan text
   keeps the words without it.
 

@@ -47,6 +47,11 @@ browser is needed.
   on Beijing time. The map reads their towns and sites, and the courier and phone of the
   collection and of the round to the recipient's home, as ellipses; J&T's collection of the cleared
   parcel is in transit.
+- The destination's carrier's rows under its country's code alone ("FR"), in its own language, as
+  Colissimo's, PostNL's or Early Bird's, come on that country's wall clock: each is written at the
+  platform's next 4-hourly poll after its local time, where Beijing time would put a letterbox
+  delivery in the night. They keep their wall clocks, which the country dates. The tracker's own
+  steps abroad under such a code are in Chinese and stay on Beijing's clock.
 - Other scan times are wall clocks without an offset on the platform's Beijing clock and are read
   on it; a row dated after the lookup is held back.
 - 17TRACK names the forwarder GZHY, which is kept as an alias.

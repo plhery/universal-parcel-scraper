@@ -2,13 +2,14 @@ import type { CarrierResult } from '../../core/result/index.js';
 import { dateDhlRows } from '../gzyl/dhl-rows.js';
 import { parseHualeiPage, parseHualeiTrack, type HualeiTenant } from '../gzyl/hualei.js';
 import { dateJtMexicoRows, isJtMexicoRow } from '../gzyl/jt-mexico-rows.js';
-import { huayaStage, isHuayaDhlGermanRow, isHuayaDhlRow, isHuayaUsRow } from './status.js';
+import { huayaStage, isHuayaDestinationRow, isHuayaDhlGermanRow, isHuayaDhlRow, isHuayaUsRow } from './status.js';
 
 export const PROVIDER = 'Huaya Express';
 export const HUAYA_ORIGIN = 'http://193.112.176.17:8082';
 export const HUAYA: HualeiTenant = {
   carrier: 'huaya-express', provider: PROVIDER, origin: HUAYA_ORIGIN, stage: huayaStage,
-  clock: ({ content, location }) => (isHuayaDhlRow(content) || isHuayaUsRow(location) || isJtMexicoRow(content) ? 'wall' : 'platform'),
+  clock: ({ content, location }) => (isHuayaDhlRow(content) || isHuayaUsRow(location) || isJtMexicoRow(content)
+    || isHuayaDestinationRow(content, location) ? 'wall' : 'platform'),
 };
 
 /** The result with the rows the tracker copies from DHL dated, each keeping its wall clock, and J&T Express Mexico's on J&T's clock in Mexico. */

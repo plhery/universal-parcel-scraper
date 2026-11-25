@@ -207,6 +207,39 @@ describe('Huaya Express tracking adapter', () => {
     expect(delivered.events![0]).toMatchObject({ stage: 'delivered', stage_source: 'carrier_map' });
   });
 
+  it('dates Colissimo’s rows under "FR" on the Paris clock, and keeps the tracker’s own Chinese rows abroad on Beijing’s', () => {
+    const reply = structuredClone(fixture('track')) as [{ data: [{ consigneeCountry: string; trackDetails: Record<string, string>[] }] }];
+    const record = reply[0].data[0];
+    const template = record.trackDetails.at(-1)!;
+    const row = (date: string, created: string, content: string, location: string) =>
+      ({ ...template, track_date: date, track_createdate: created, track_content: content, track_location: location, track_kind: '' });
+    record.consigneeCountry = 'FR';
+    // Newest first. Each was written at the platform's next 4-hourly poll after its French time; on Beijing
+    // time the letterbox delivery would come at 02:15 in Paris and wait ten hours for the poll.
+    record.trackDetails = [
+      row('2026-12-09 09:15:34', '2026-12-09 19:47:01', 'FR, Votre colis est livré dans votre boite aux lettres.', 'FR'),
+      row('2026-12-09 07:31:35', '2026-12-09 15:46:02', 'FR, Votre colis est sur son site de distribution. Nous le préparons pour le mettre en livraison.', 'FR'),
+      row('2026-12-08 10:54:14', '2026-12-08 19:46:01', 'FR, Votre Colissimo est en cours de traitement sur le site de tri local.', 'FR'),
+      row('2026-12-08 10:53:14', '2026-12-08 19:46:01', 'FR, Votre colis est en transit sur nos plateformes logistiques.', 'FR'),
+      row('2026-12-04 15:19:12', '2026-12-04 15:20:00', '航班落地，清关中', 'FR'),
+      row('2026-12-01 23:44:41', '2026-12-01 23:44:41', '到达收货点', '广州'),
+      // GBK has no ô: the tracker writes "?" in its place.
+      row('2026-12-01 17:29:00', '2026-12-02 11:16:08', 'FR, Votre Colissimo va bient?t nous être confié ! Il est en cours de préparation chez votre expéditeur.', 'FR'),
+    ];
+    const result = dateLocalClocks('huaya-express', parseHuayaTrack(reply, NUMBER, Date.parse('2026-12-09T15:00:00Z'))!);
+    expect(result).toMatchObject({ current_stage: 'delivered', last_update: '2026-12-09T09:15:34+01:00' });
+    expect(result.events!.map(({ time, time_zone, stage, stage_source }) => [time, time_zone, stage, stage_source])).toEqual([
+      ['2026-12-09T09:15:34+01:00', 'Europe/Paris', 'delivered', 'carrier_map'],
+      ['2026-12-09T07:31:35+01:00', 'Europe/Paris', 'out_for_delivery', 'carrier_map'],
+      ['2026-12-08T10:54:14+01:00', 'Europe/Paris', 'in_transit', 'carrier_map'],
+      ['2026-12-08T10:53:14+01:00', 'Europe/Paris', 'in_transit', 'carrier_map'],
+      ['2026-12-04T15:19:12+08:00', undefined, 'customs', 'carrier_map'],
+      ['2026-12-01T23:44:41+08:00', undefined, 'accepted', 'carrier_map'],
+      ['2026-12-01T17:29:00+01:00', 'Europe/Paris', 'registered', 'carrier_map'],
+    ]);
+    expect(result.events!.at(-1)!.description).toBe('Votre Colissimo va bientôt nous être confié ! Il est en cours de préparation chez votre expéditeur.');
+  });
+
   it('dates the rows it copies from J&T Express Mexico on J&T’s clock, whatever their towns, sites, courier and phone', () => {
     const reply = structuredClone(fixture('track')) as [{ data: [{ consigneeCountry: string; trackDetails: Record<string, string>[] }] }];
     const record = reply[0].data[0];
