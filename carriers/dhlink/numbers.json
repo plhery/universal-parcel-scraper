@@ -84,11 +84,8 @@
       "derivedFrom": "donated_real",
       "shapeConfirmed": "2026-10-18",
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "dhlink"
-        ]
+        "carrier": "dhlink",
+        "confidence": "high"
       },
       "note": "Made-up number in the shape of the YLUS tracking numbers DHLink's lookup finds as the parcel's tracking number, on a US line GOFO delivers. Its serial sits far beyond the range in use."
     },

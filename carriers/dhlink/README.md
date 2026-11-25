@@ -36,7 +36,8 @@ page makes.
   ten digits and `YQ`, are numbers DHLink's tracker knows when it carries the parcel. Juxi issues them and detection
   names it, but only universal providers track Juxi, so DHLink's preferred rule still has recognition ask DHLink; the
   tracker does not know Juxi's other lines. Their rules are low confidence, so
-  DHLink is asked before it is named. Providers name XZG, QYEXP, Asus International and YLE for their
+  DHLink is asked before it is named, except YLUS's: every parcel seen with such a number has been
+  DHLink's, some for days before its first scan, so that rule names DHLink at once. Providers name XZG, QYEXP, Asus International and YLE for their
   numbers, so they are aliases and their hint asks DHLink. The two letters `YF` are too thin a mark of a
   company to be one. LIB is not one either: LiBaoTongXu (莆田市利葆通旭供应链有限公司) is a Putian forwarder
   with its own tracker on the Hualei platform, and DHLink carries only some of its lines.

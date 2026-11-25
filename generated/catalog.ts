@@ -21216,7 +21216,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       },
       {
         "pattern": "^YLUS\\d{10}$",
-        "confidence": "low"
+        "confidence": "high"
       },
       {
         "pattern": "^EYT\\d{10}HZ$",

@@ -102,7 +102,7 @@
     {
       "id": "dhlink-ylus",
       "pattern": "^YLUS\\d{10}$",
-      "confidence": "low"
+      "confidence": "high"
     },
     {
       "id": "dhlink-eyt",

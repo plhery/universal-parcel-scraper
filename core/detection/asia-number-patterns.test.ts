@@ -252,10 +252,10 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     }
   });
 
-  it('asks DHLink about YLUS tracking numbers on its GOFO line without naming it from the shape', () => {
-    expect(detectCarrierMatch('YLUS9999999980')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink'] });
-    expect(detectCarrierMatch('ylus 0000 0000 01')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink'] });
-    expect(recognitionAskedCarriers('YLUS9999999980')).toEqual(['dhlink']);
+  it('names DHLink at once for YLUS tracking numbers on its GOFO line', () => {
+    expect(detectCarrierMatch('YLUS9999999980')).toMatchObject({ carrier: 'dhlink', confidence: 'high', candidates: ['dhlink'] });
+    expect(detectCarrierMatch('ylus 0000 0000 01')).toMatchObject({ carrier: 'dhlink', confidence: 'high', candidates: ['dhlink'] });
+    expect(recognitionAskedCarriers('YLUS9999999980')).toEqual([]);
     for (const number of ['YLUS000000001', 'YLUS00000000001', 'YLUK0000000001', 'XLUS0000000001', 'YLUS000000000A', 'YL0000000001YQ']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dhlink');
     }
