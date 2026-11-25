@@ -5794,12 +5794,6 @@
     "reason": "Tramaco guide numbers share their fifteen-digit shape with other carriers; a native whole-guide reply is required."
   },
   {
-    "carrier": "tiptop",
-    "pattern": "^YHC\\d{12}CN$",
-    "kind": "open",
-    "reason": "One public sample and an aggregator's carrier hint show YHC, twelve digits and CN; TipTop has no tracker of its own to confirm the family."
-  },
-  {
     "carrier": "zufall",
     "pattern": "^00340355246\\d{9}$",
     "kind": "open",

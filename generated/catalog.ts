@@ -63571,7 +63571,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingSearchUrl": "https://www.tiptop56.com/",
     "helpUrl": "https://www.tiptop56.com/aboutus/contact/",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^YHC\\d{12}CN$",
+        "confidence": "low"
+      }
+    ]
   },
   "tirupati-courier": {
     "displayName": "Shree Tirupati Courier",
@@ -76458,7 +76463,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "timely-titan": ["timely-titan-1"],
   "tinypack": [],
   "tipax": [],
-  "tiptop": [],
+  "tiptop": ["tiptop-1"],
   "tirupati-courier": [],
   "tiui": [],
   "tjw-fragt": [],

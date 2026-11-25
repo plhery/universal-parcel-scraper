@@ -30,5 +30,11 @@
     "unavailable": []
   },
   "links": [],
-  "detection": []
+  "detection": [
+    {
+      "id": "tiptop-1",
+      "pattern": "^YHC\\d{12}CN$",
+      "confidence": "low"
+    }
+  ]
 }

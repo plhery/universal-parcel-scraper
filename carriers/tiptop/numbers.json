@@ -14,9 +14,26 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "tiptop"
+        ]
       },
-      "note": "The example under the tracking box of a tracker's TipTop page, which links tiptop56.com. Not looked up: TipTop has no tracker of its own, and one sample does not make a number rule."
+      "note": "The example under the tracking box of a tracker's TipTop page, which links tiptop56.com: YHC, twelve digits and CN. Not looked up: TipTop has no tracker of its own."
+    },
+    {
+      "number": "YHC990000000017CN",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tiptop"
+        ]
+      },
+      "note": "Made-up number in the shape of a parcel the app tracked on a line to Europe, for which 17TRACK's TipTop service returned the parcel's history: YHC, twelve digits and CN. Its serial sits far beyond the range in use."
     }
   ]
 }
