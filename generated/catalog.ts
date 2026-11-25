@@ -45366,7 +45366,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "mtscn"
+      "adapter": "mtscn",
+      "recognitionRank": 42
     },
     "canaryUrl": "https://t.17track.net/",
     "linkRules": [
@@ -45384,6 +45385,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^AMTS\\d{9}FS$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^N20\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])(?:[01]\\d|2[0-3])[0-5]\\d[0-5]\\d\\d{7}$",
+        "confidence": "low"
       }
     ]
   },
@@ -75944,7 +75949,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "msc": [],
   "msg-post": [],
   "mte-xpress": [],
-  "mtscn": ["mtscn-1"],
+  "mtscn": ["mtscn-1","mtscn-2"],
   "multidrop": [],
   "multientrega": [],
   "mundi-express": [],

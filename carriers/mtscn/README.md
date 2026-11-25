@@ -52,8 +52,9 @@ stored without its dashes is not found.
 Meiteshun's waybills are AMTS, nine digits and FS, made by a Hualei number rule; MTS is
 美特顺's initials. Buyers post them on a China Post help forum, whose volunteer files them under
 a private shipping agent called MTS, and Meiteshun's tracker answers every one of them, so
-`mtscn-1` claims the shape. The tracker also accepts the shipper's reference, which no rule
-claims.
+`mtscn-1` claims the shape. The tracker also accepts the shipper's reference. Shippers' references
+of N, the order's date and time and seven digits, which the app tracked, came back as Meiteshun's
+own waybills, so `mtscn-2` suggests Meiteshun for that shape and preflight asks its tracker.
 
 ## Testing
 

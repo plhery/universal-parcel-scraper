@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { carrierIdFromName, isKnownCarrierName } from '../../core/catalog/hints.js';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NoHistoryError } from '../../core/errors/index.js';
@@ -165,5 +166,16 @@ describe('Meiteshun Logistics tracking adapter', () => {
     expect(carrierIdFromName('Meiteshun')).toBe('mtscn');
     expect(carrierIdFromName('MTS')).toBeUndefined();
     expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'mtscn', confidence: 'high' });
+  });
+
+  it('suggests itself for a shipper’s reference of N, the order’s date and time and seven digits, and preflight asks it', () => {
+    const reference = 'N209912312359599999999';
+    expect(detectCarrierMatch(reference)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['mtscn'] });
+    expect(recognitionAskedCarriers(reference)).toEqual(['mtscn']);
+    // Not a date and a time, one digit short or long, or another letter.
+    for (const number of ['N209913312359599999999', 'N209912322359599999999', 'N209912312459599999999', 'N209912312360599999999',
+      'N20991231235959999999', 'N2099123123595999999999', 'M209912312359599999999', 'N199912312359599999999']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('mtscn');
+    }
   });
 });

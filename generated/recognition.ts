@@ -333,6 +333,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "mondial-relay": 894,
   "mongol-infinity-post": 681,
   "morning-global": 682,
+  "mtscn": 42,
   "muser": 21,
   "mylerz": 904,
   "nacex": 850,

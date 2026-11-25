@@ -480,6 +480,21 @@
         "confidence": "high"
       },
       "note": "A buyer posted it as the China Post number a shop gave; the forum's volunteer answered that it is not China Post's but a private shipping agent called MTS. Meiteshun's tracker answers it as an MTS全球小包 parcel for the United States."
+    },
+    {
+      "number": "N209912312359599999999",
+      "role": "order_reference",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-25",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mtscn"
+        ]
+      },
+      "note": "Made-up shipper's reference in the shape of two the app tracked, N then the order's date and time and seven digits, which Meiteshun's tracker resolved to its own AMTS waybills. Its date sits far beyond any order."
     }
   ]
 }
