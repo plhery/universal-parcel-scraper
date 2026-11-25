@@ -6,6 +6,7 @@ import { adapter as carrier21ExpressId } from '../carriers/21-express-id/adapter
 import { adapter as carrier2go } from '../carriers/2go/adapter.js';
 import { adapter as carrier360lion } from '../carriers/360lion/adapter.js';
 import { adapter as carrier472 } from '../carriers/4-72/adapter.js';
+import { adapter as carrier4aExpress } from '../carriers/4a-express/adapter.js';
 import { adapter as carrier4sides } from '../carriers/4sides/adapter.js';
 import { adapter as carrier5post } from '../carriers/5post/adapter.js';
 import { adapter as carrier99minutos } from '../carriers/99minutos/adapter.js';
@@ -91,6 +92,7 @@ import { adapter as azerpost } from '../carriers/azerpost/adapter.js';
 import { adapter as azulCargo } from '../carriers/azul-cargo/adapter.js';
 import { adapter as bangladeshPost } from '../carriers/bangladesh-post/adapter.js';
 import { adapter as baridAlMaghrib } from '../carriers/barid-al-maghrib/adapter.js';
+import { adapter as barq } from '../carriers/barq/adapter.js';
 import { adapter as belpost } from '../carriers/belpost/adapter.js';
 import { adapter as benben } from '../carriers/benben/adapter.js';
 import { adapter as benniaoExpress } from '../carriers/benniao-express/adapter.js';
@@ -1197,6 +1199,7 @@ export const REGISTRY: RegistryDefinition = {
     "2go": carrier2go,
     "360lion": carrier360lion,
     "4-72": carrier472,
+    "4a-express": carrier4aExpress,
     "4sides": carrier4sides,
     "5post": carrier5post,
     "99minutos": carrier99minutos,
@@ -1282,6 +1285,7 @@ export const REGISTRY: RegistryDefinition = {
     "azul-cargo": azulCargo,
     "bangladesh-post": bangladeshPost,
     "barid-al-maghrib": baridAlMaghrib,
+    "barq": barq,
     "belpost": belpost,
     "benben": benben,
     "benniao-express": benniaoExpress,
@@ -2393,7 +2397,7 @@ export const REGISTRY: RegistryDefinition = {
     "360zebra": "universal",
     "3pe-express": "universal",
     "4-72": "4-72",
-    "4a-express": "universal",
+    "4a-express": "4a-express",
     "4sides": "4sides",
     "5post": "5post",
     "66post": "universal",
@@ -2554,7 +2558,7 @@ export const REGISTRY: RegistryDefinition = {
     "bangladesh-post": "bangladesh-post",
     "banling": "universal",
     "barid-al-maghrib": "barid-al-maghrib",
-    "barq": "universal",
+    "barq": "barq",
     "basic-shipping": "universal",
     "bauer-express": "universal",
     "bcs-courier": "universal",

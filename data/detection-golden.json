@@ -5500,6 +5500,34 @@
     ]
   },
   {
+    "input": "010790148121",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "japan-post",
+      "sf-express",
+      "sto",
+      "zto",
+      "yamato",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "paquetexpress",
+      "sagawa",
+      "sending"
+    ],
+    "asked": [
+      "japan-post",
+      "brt",
+      "colis-prive"
+    ]
+  },
+  {
     "input": "0108212286",
     "carrier": "unknown",
     "confidence": "low",
@@ -121519,6 +121547,17 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "XP697997460",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
     ]
   },
   {

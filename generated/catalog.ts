@@ -6167,7 +6167,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Nicosia",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "4a-express",
+      "localClocks": true
     },
     "canaryUrl": "https://cms.4aexpress.com/Query/TrackAwbNoQuery.aspx",
     "trackingSearchUrl": "https://cms.4aexpress.com/Query/TrackAwbNoQuery.aspx",
@@ -11393,7 +11394,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Riyadh",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "barq"
     },
     "canaryUrl": "https://web.barqfleet.com/en/tracking",
     "trackingUrlTemplate": "https://web.barqfleet.com/en/tracking-details?trackingId={trackingNumber}",
