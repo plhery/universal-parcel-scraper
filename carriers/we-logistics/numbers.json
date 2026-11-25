@@ -1,0 +1,24 @@
+{
+  "carrier": "we-logistics",
+  "records": [
+    {
+      "number": "WELBB1000004995YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260720012851id_/https://www.parcelpanel.com/couriers/logistics/",
+        "date": "2026-07-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's page for WE Logistics (listed as Logistics, with the site we-logistics.com) shows. WE Logistics's tracker answers it with a parcel sent from Shenzhen through Hong Kong to Israel and collected from a pick-up point there."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "carrier": "we-logistics",
+  "entries": [
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The line's order row (`IR`), before its warehouse has the parcel."},
+    {"wording": "Shenzhen,Shipment arrived at facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The line's Shenzhen warehouse takes the parcel in (`AF`)."},
+    {"wording": "Shipment departed from facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's Shenzhen warehouse dispatches the parcel (`DF`)."},
+    {"wording": "深圳总部", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "A row whose wording is only its place, the line's Shenzhen headquarters, after the warehouse dispatched the parcel."},
+    {"wording": "Parcel information received", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line abroad registers the parcel after the Shenzhen warehouse dispatched it, so the parcel stays in transit."},
+    {"wording": "transit to Airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At Hong Kong."},
+    {"wording": "handover to the airline", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At Hong Kong."},
+    {"wording": "Shipment picked up.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line abroad collects the parcel at Hong Kong, days after the Shenzhen warehouse dispatched it."},
+    {"wording": "Shipment arrived at facility and measured.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At the line's Hong Kong facility."},
+    {"wording": "Depart from facility to service provider.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The Hong Kong facility hands the parcel to the air freight agent."},
+    {"wording": "Hand over to airline.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The air freight agent's handover, without a place."},
+    {"wording": "Waiting for the flight to take off", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Without a place."},
+    {"wording": "Departure from the original airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight leaves, without a place."},
+    {"wording": "Flight departed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The same departure a minute later, in other words."},
+    {"wording": "Arrival to the destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight lands, without a place."},
+    {"wording": "Flight arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The same landing a minute later, in other words."},
+    {"wording": "Import customs clearance started", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "The parcel is held for import clearance in Israel."},
+    {"wording": "Import customs clearance complete", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Cleared, so the parcel goes on in transit."},
+    {"wording": "Received by local delivery company", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The local delivery company in Israel has the parcel, placed at the town it delivers to."},
+    {"wording": "Arrived at pick-up point. Package available for collection.", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "The parcel waits at a pick-up point for the recipient."},
+    {"wording": "Package delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "`CC`, after the parcel waited at the pick-up point: the recipient collected it."}
+  ]
+}
