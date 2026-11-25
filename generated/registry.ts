@@ -1134,6 +1134,7 @@ import { adapter as wanbexpress } from '../carriers/wanbexpress/adapter.js';
 import { adapter as wangjing3cq } from '../carriers/wangjing-3cq/adapter.js';
 import { adapter as wanjiaLogistics } from '../carriers/wanjia-logistics/adapter.js';
 import { adapter as warp } from '../carriers/warp/adapter.js';
+import { adapter as wcxex } from '../carriers/wcxex/adapter.js';
 import { adapter as weLogistics } from '../carriers/we-logistics/adapter.js';
 import { adapter as weWorldExpress } from '../carriers/we-world-express/adapter.js';
 import { adapter as wedo } from '../carriers/wedo/adapter.js';
@@ -2344,6 +2345,7 @@ export const REGISTRY: RegistryDefinition = {
     "wangjing-3cq": wangjing3cq,
     "wanjia-logistics": wanjiaLogistics,
     "warp": warp,
+    "wcxex": wcxex,
     "we-logistics": weLogistics,
     "we-world-express": weWorldExpress,
     "wedo": wedo,
@@ -4384,6 +4386,7 @@ export const REGISTRY: RegistryDefinition = {
     "ward-trucking": "universal",
     "warp": "warp",
     "wassel": "universal",
+    "wcxex": "wcxex",
     "we-logistics": "we-logistics",
     "we-world-express": "we-world-express",
     "webrinq": "universal",

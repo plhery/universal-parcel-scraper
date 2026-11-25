@@ -69642,6 +69642,47 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "wcxex": {
+    "displayName": "WCXEX",
+    "color": "#e60012",
+    "aliases": [
+      "伟成国际",
+      "Weicheng International",
+      "浙江伟成国际货运代理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "wcxex",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.wcxex.com"
+        ],
+        "pathPattern": "^/track\\.html$",
+        "params": [
+          "c"
+        ]
+      },
+      {
+        "domains": [
+          "wc.kjeclub.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "we-logistics": {
     "displayName": "WE Logistics",
     "color": "#4264c0",
@@ -75439,6 +75480,7 @@ export const CARRIER_IDS = [
   "ward-trucking",
   "warp",
   "wassel",
+  "wcxex",
   "we-logistics",
   "we-world-express",
   "webrinq",
@@ -77532,6 +77574,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ward-trucking": [],
   "warp": [],
   "wassel": [],
+  "wcxex": [],
   "we-logistics": [],
   "we-world-express": ["we-world-express-1"],
   "webrinq": [],
