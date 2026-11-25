@@ -58,8 +58,6 @@ export class PasarexTracker {
         if (!page.statusCode) throw new TransportError(PROVIDER, 'PasarEX\'s tracking page did not load');
         throw new ChallengeError(PROVIDER, 'PasarEX did not complete its checkbox');
       } catch (error) {
-        // The browser service reads the page's own 404 as an HTTP error: the tracker is gone, not the item.
-        if (error instanceof UpstreamHttpError && (error.status === 404 || error.status === 410)) throw new SchemaError(PROVIDER, 'PasarEX\'s tracking page is missing');
         if (error instanceof UpstreamHttpError) throw new UpstreamHttpError(error.provider, error.status, error.retryAfterMs);
         if (error instanceof UpstreamNetworkError) throw new UpstreamNetworkError(error.provider, error.cause);
         throw error;

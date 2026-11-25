@@ -80,7 +80,7 @@ describe('PasarEX tracking', () => {
     await expect(harness([]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
     await expect(harness([], 0).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport', message: expect.stringContaining('did not load') });
     await expect(harness([capture(null, { status: 404, body: null })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });
-    await expect(harness([], 404).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });
+    await expect(harness([], 404).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport', status: 404 });
     await expect(harness([capture({ kind: 'not_found' })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'not_found' });
   });
 });

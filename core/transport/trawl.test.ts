@@ -108,7 +108,15 @@ describe('TrawlClient.scrape', () => {
     }
     await expect(client({ html: '<html/>', tier: 1, statusCode: 200 }).scrape({ url: 'https://e.test' }, options)).rejects.toBeInstanceOf(TrawlError);
     await expect(client({ html: '<html/>', tier: 3, statusCode: 429 }).scrape({ url: 'https://e.test' }, options)).rejects.toMatchObject({ kind: 'rate_limited' });
-    await expect(client({ html: '<html/>', tier: 3, statusCode: 404 }).scrape({ url: 'https://e.test' }, options)).rejects.toBeInstanceOf(UpstreamHttpError);
+    await expect(client({ html: '<html/>', tier: 3, statusCode: 500 }).scrape({ url: 'https://e.test' }, options)).rejects.toBeInstanceOf(UpstreamHttpError);
+    // A missing page is a missing tracker, never a missing parcel.
+    for (const statusCode of [404, 410]) {
+      await expect(client({ html: '<html/>', tier: 3, statusCode }).scrape({ url: 'https://e.test' }, options)).rejects.toMatchObject({
+        name: 'TrawlError', kind: 'transport', status: statusCode, message: `The tracking page answered HTTP ${statusCode}`,
+      });
+    }
+    await expect(client({ html: '<html/>', tier: 3, statusCode: 404 }).scrape({ url: 'https://e.test' }, { ...options, allowHttpStatuses: [404], requireSolved: false }))
+      .resolves.toMatchObject({ statusCode: 404 });
     await expect(client({ html: '<html/>', tier: 1, statusCode: 200 }).scrape({ url: 'https://e.test' }, { ...options, requireSolved: false })).resolves.toMatchObject({ tier: 1 });
   });
 

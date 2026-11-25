@@ -119,7 +119,9 @@ Server-rendered tracking pages can use `trawlPageStep` after an identified brows
 challenge. It opens the same whole-identifier address, rejects redirects and oversized
 pages, and leaves identity and not-found checks to the carrier parser. A read the browser
 service gave up for lack of time fails as `budget`. Rate limits and malformed replies do not
-trigger it. HTTP recognition uses a browserless tracker instance.
+trigger it. In any browser step, a page the browser opened that answers 404 or 410 fails as
+`transport`: the tracker is missing, not the parcel. An adapter whose carrier answers an
+unknown number with such a page allows the status and reads it. HTTP recognition uses a browserless tracker instance.
 [runSteps](core/runner/index.ts) runs them in order under one time budget. A later step runs
 after a challenge, a transport failure or an inconclusive answer, and never after a definite
 one. A step that lets its signal's deadline escape fails as `budget`. An adapter whose own read fails to reach the carrier or hangs can send it once more

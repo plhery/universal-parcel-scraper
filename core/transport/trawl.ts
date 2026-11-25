@@ -308,6 +308,11 @@ export class TrawlClient {
     }
     const statusCode = Number(value.statusCode);
     if (Number.isInteger(statusCode) && statusCode >= 400 && !options.allowHttpStatuses?.includes(statusCode)) {
+      // The page the browser opened is missing, which says nothing of the parcel. A carrier that answers an unknown
+      // number with a 404 page is read by its adapter, which allows the status.
+      if (statusCode === 404 || statusCode === 410) {
+        throw new TrawlError(options.provider, `The tracking page answered HTTP ${statusCode}`, { status: statusCode });
+      }
       throw pageHttpError(options.provider, statusCode, value.responseHeaders);
     }
     const tier = Number(value.tier);

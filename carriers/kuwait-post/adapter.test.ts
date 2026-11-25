@@ -82,7 +82,7 @@ describe('Kuwait Post tracking', () => {
     await expect(harness([capture(null, { error: 'challenge-html', body: null })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
     await expect(harness([capture(null, { error: 'invalid-reply', body: null })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport' });
     await expect(harness([]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
-    await expect(harness([], 404).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });
+    await expect(harness([], 404).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport', status: 404 });
     await expect(harness([], 0).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport', message: expect.stringContaining('did not load') });
     await expect(harness([capture(refusal('no_data_found'))]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'not_found' });
     await expect(harness([capture(refusal('captcha_invalid'))]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
