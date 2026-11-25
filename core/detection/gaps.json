@@ -5041,6 +5041,12 @@
     "reason": "Two ParcelPanel samples show XingYunYi numbers as XYYEX, ten digits and YQ. No rule offers XingYunYi for the shape yet."
   },
   {
+    "carrier": "xpress-courier-link",
+    "pattern": "^\\d{7}$",
+    "kind": "by_design",
+    "reason": "ECL's tracking numbers seen are seven bare digits, a length many carriers share, and ECL publishes no layout, so nothing in the number points to ECL."
+  },
+  {
     "carrier": "xpressbees",
     "pattern": "^15\\d{13}$",
     "kind": "open",

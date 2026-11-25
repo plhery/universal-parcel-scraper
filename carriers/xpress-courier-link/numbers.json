@@ -1,5 +1,27 @@
 {
   "carrier": "xpress-courier-link",
-  "gap": "No public page shows an ECL Express Courier Link tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "6528596",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT2kwM2NuRlpiRkowV0Vzek9YcEZibXRzV0RkWGJGRRAB!2m1!1s0x0:0x879a664dd349d067",
+        "date": "2026-11-25",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "A Google Maps review of ECL gives it as the reviewer's tracking number. ECL's international tracker answers it with a shipment from Sialkot to Dubai through Lahore and Colombo, with dated scans from August and September 2025 ending in import clearance."
+    }
+  ]
 }

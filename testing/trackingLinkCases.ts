@@ -1142,6 +1142,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'comone-express', number: 'CM9900000017',
     route: /^https:\/\/www\.com1logistics\.com\/tracking\.html\?trackNo=CM9900000017$/,
     marker: /Can key in up to 5 no with \(,\) in between/ },
+  // ECL's page reads the service and the number from its address, repeats both in its form and answers on its server.
+  { carrier: 'xpress-courier-link', number: 'EC9900000017',
+    route: /^https:\/\/xpresscourierlink\.com\/tracking\/\?txtstatus=International&search=EC9900000017$/,
+    marker: /No shipment found|Track Your Shipment/ },
   // Premo's page reads the number from its address and answers on its server.
   { carrier: 'premo', number: 'PR9900000000017',
     route: /^https:\/\/www\.premo\.se\/paketsparning\?id=PR9900000000017$/,

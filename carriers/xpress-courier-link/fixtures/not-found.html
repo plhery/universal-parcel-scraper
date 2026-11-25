@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<title>Tracking &#8211; ECL</title>
+</head>
+<body class="wp-singular page-template page-template-tracking page-template-tracking-php page page-id-5865 wp-theme-conbix theme-conbix woocommerce-no-js ehf-template-conbix ehf-stylesheet-conbix elementor-default elementor-kit-9">
+<div class="tracking-page-container">
+    <section class="tracking-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>Track Your Shipment</h1>
+                    <form class="tracking-form" method="post" action="https://xpresscourierlink.com/tracking">
+                        <div class="form-group">
+                            <select name="txtstatus" class="form-control">
+                                <option value="International" selected>International</option>
+                                <option value="Domestic" >Domestic</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="search" placeholder="Enter Tracking Number" value="6528597">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Track</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+        <section class="tracking-results">
+        <div class="container">
+                            <div class="no-results-card">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h3>No shipment found</h3>
+                    <p>We couldn't find a shipment with that tracking number. Please check the number and try again.</p>
+                </div>
+                    </div>
+    </section>
+</body>
+</html>

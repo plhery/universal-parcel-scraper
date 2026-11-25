@@ -1,4 +1,16 @@
 {
   "carrier": "xpress-courier-link",
-  "entries": []
+  "entries": [
+    {"wording": "SHIPMENT INFORMATION RECEIVED", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The first scan, at the origin city: ECL has the shipment's details."},
+    {"wording": "SHIPMENT ARRIVED AT PROCESSING FACILITY", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25"},
+    {"wording": "SHIPMENT ARRIVED AT DEPARTED FACILITY", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "At the facility it leaves Pakistan from, before export clearance."},
+    {"wording": "SHIPMENT UNDER CUSTOM CLEARANCE", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Seen for export clearance at the origin; the wording does not say which side."},
+    {"wording": "SHIPMENT CLEARED FROM CUSTOM", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25"},
+    {"wording": "HANDOVER TO AIRLINES", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25"},
+    {"wording": "IN TRANSIT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25"},
+    {"wording": "SHIPMENT IN TRANSIT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25"},
+    {"wording": "SHIPMENT ARRIVED AT COLOMBO", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A transit stop on the way to Dubai."},
+    {"wording": "SHIPMENT ARRIVED AT DUBAI", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Arrived in the destination city, before import clearance."},
+    {"wording": "UNDER CUSTOM CLEARANCE PROCESS", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Import clearance at the destination."}
+  ]
 }
