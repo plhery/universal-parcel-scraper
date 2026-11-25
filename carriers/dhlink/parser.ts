@@ -132,14 +132,23 @@ function beforeDigits(part: string): string {
 }
 
 /**
+ * Mainland China's airports with international cargo flights, by IATA code ("PVG"). A list rather than the
+ * gazetteer, which the browser entry cannot load.
+ */
+const CHINA_AIRPORTS = new Set(['PVG', 'SHA', 'PEK', 'PKX', 'CAN', 'SZX', 'HGH', 'NGB', 'XMN', 'FOC', 'CTU', 'TFU', 'CKG', 'CGO',
+  'TSN', 'WUH', 'NKG', 'TAO', 'TNA', 'SHE', 'DLC', 'CSX', 'KMG', 'XIY', 'HFE', 'NNG', 'URC', 'HRB', 'SJW', 'TYN', 'WNZ', 'YIW']);
+const chinaAirport = (part: string): boolean => CHINA_AIRPORTS.has(part);
+
+/**
  * A row's place without its postcode, placeholder or forwarder's name, and
  * whether it is in China. Feeds append the destination's code to Chinese places
- * ("广州市,GB", "SHENZHEN, US"), and a code alone names no place.
+ * ("广州市,GB", "SHENZHEN, US"), Chinese airports' codes too ("PVG, US"), and a
+ * code alone names no place.
  */
 function placeOf(raw: string): { location: string; china: boolean } {
   const parts = withoutPostcodes(raw).split(/[,;]/).map((part) => beforeDigits(part.trim()))
     .filter((part) => !PLACEHOLDERS.has(part.toLowerCase()) && !FORWARDER.test(part.toLowerCase().replace(/\s+/g, '')));
-  const china = CJK.test(raw) || parts.some((part) => CHINA_NAMES.test(part.toLowerCase().replace(/\s+/g, '')));
+  const china = CJK.test(raw) || parts.some((part) => CHINA_NAMES.test(part.toLowerCase().replace(/\s+/g, '')) || chinaAirport(part));
   const kept = china ? parts.filter((part) => !COUNTRY.test(part)) : parts;
   return { location: kept.every((part) => COUNTRY.test(part)) ? '' : [...new Set(kept)].join(', '), china };
 }

@@ -371,6 +371,11 @@ describe('DHLink HTTP adapter', () => {
       row('2026-03-10 09:00:00', '2026-03-10 18:05:00', 'Sample Logistics, SHENZHEN, US', 'Package received & scanned at warehouse')]);
     expect(timeline(forwarded.events)).toEqual([['2026-03-10T18:00:00+08:00', 'WH011', 'in_transit', null],
       ['2026-03-10T09:00:00+08:00', null, 'accepted', 'SHENZHEN']]);
+    // So is an airport in China by its code, the departure read on Beijing time a day after the destination's clocks
+    // struck it. A code abroad keeps the country after it.
+    const departed = (place: string) => relayed([row('2026-03-10 09:41:57', '2026-03-11 08:00:00', place, 'Departed from origin airport')]).events![0];
+    expect(departed('PVG, US')).toMatchObject({ time: '2026-03-10T09:41:57+08:00', location: 'PVG' });
+    expect(departed('LAX, US')).toMatchObject({ location: 'LAX, US' });
   });
 
   it('keeps one row of a US partner’s scan relayed on its hub’s clock and again on UTC, on the hub’s clock', () => {

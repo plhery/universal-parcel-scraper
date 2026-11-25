@@ -123,8 +123,8 @@ page makes.
   reading of their clocks: they are read as a parcel's with no known last leg.
 - Places lose postcodes, placeholders such as a relayed label row's "SYSTEM", a forwarder's name a
   warehouse writes as its place (one ending in "EXP", "Express" or "Logistics") and the destination
-  code feeds append to Chinese places, whether written in Chinese or as a province or city in Latin
-  letters ("SHENZHEN, US"). A place naming only the destination country is the parcel's, not the
+  code feeds append to Chinese places, whether written in Chinese, as a province or city in Latin
+  letters ("SHENZHEN, US") or as an airport's code ("PVG, US"). A place naming only the destination country is the parcel's, not the
   scan's: a Canada line's airline hand-over in China reads "Canada". It is left out, and a scan
   stored with it, or with a placeholder or forwarder's name ("SYSTEM, US"), keeps its row, as
   does one stored with a forwarder's name beside its town once shown with the town alone.
