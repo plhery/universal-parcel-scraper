@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { classifyEvent, event, localEvent, result } from './result.js';
 import { statusMap } from '../status.js';
 import { hasPrivateDeliveryDetails } from '../../core/status/index.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 
 describe('shared provider result', () => {
@@ -432,6 +433,7 @@ describe('shared provider result', () => {
       ['【Milan center】Your order has been received.', 'in_transit'],
       ['Your order has been shipped from 【Milan center】.', 'in_transit'],
       ['Your order has assigned delivery drvier.', 'in_transit'],
+      ['Your order has assigned pickup driver.', 'registered'],
       ['【Milan center】Delivered, Receiver Type:【Self】.', 'delivered'],
     ] as const) {
       expect(event('2026-11-21T14:42:00+01:00', wording), wording).toMatchObject({ stage, stage_source: 'wording:provider' });
@@ -439,6 +441,9 @@ describe('shared provider result', () => {
     // A sentence iMile's map does not know, and another carrier's place in 【】, stay unread.
     expect(event('2026-11-21T14:42:00+01:00', '【Milan center】Something else.')).toMatchObject({ stage: 'pending', stage_source: 'none' });
     expect(event('2026-11-21T14:42:00+08:00', '【广州市】快件已在仓库')).toMatchObject({ stage_source: 'none' });
+    // Its cancelled collection task names no step, as iMile's map leaves it.
+    expect(event('2026-11-21T14:42:00+01:00', 'The pick-up task has been cancelled.')).toMatchObject({ stage_source: 'none' });
+    expect(statusMapAnswer({ carrier: 'unknown', description: 'The pick-up task has been cancelled.' })).toMatchObject({ kind: 'intentional_gap' });
   });
 
   it("reads DHLink's export declaration and its warehouse in China, as providers relay them", () => {

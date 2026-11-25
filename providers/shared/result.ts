@@ -802,10 +802,11 @@ function providerWordingStage(description: string): Stage | undefined {
 /**
  * iMile's own sentences as providers relay them, read as iMile's map reads them: with its centre in 【】 before or
  * inside the sentence ("【Milan center】Your order has been received.", "Your order has been shipped from 【Milan
- * center】."), or naming its driver in iMile's own misspelling ("Your order has assigned delivery drvier.").
+ * center】."), naming its driver in iMile's own misspelling ("Your order has assigned delivery drvier."), or in its
+ * own phrasing of the collection's driver ("Your order has assigned pickup driver.").
  */
 function imileRelayed(value: string): Stage | undefined {
-  return /【[^】]+】|\bdrvier\b/iu.test(value) ? imileSentenceStage('', value) ?? undefined : undefined;
+  return /【[^】]+】|\bdrvier\b|^your order has assigned pickup driver[.!]?$/iu.test(value) ? imileSentenceStage('', value) ?? undefined : undefined;
 }
 
 export function eventStage(description: string): Stage | undefined {
