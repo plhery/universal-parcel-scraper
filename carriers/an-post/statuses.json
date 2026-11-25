@@ -168,13 +168,13 @@
       "language": "en",
       "stage": "accepted",
       "confirmedBy": "live",
-      "note": "The website counts it among the codes of an item accepted into the network; code 48 has the same wording."
+      "note": "The website counts it among the codes of an item accepted into the network; code 48 has the same wording. On an item another post sent to Ireland, it follows An Post's receipt of the item (6), and the adapter reads it in transit."
     },
     {
       "code": "6",
       "stage": "accepted",
-      "confirmedBy": "bundle",
-      "note": "The app files it under item received."
+      "confirmedBy": "live",
+      "note": "The app files it under item received. Live as \"We have received your item\" on items other posts send to Ireland, after the sending post's dispatch: the adapter reads An Post's receipt of such an item as its arrival in Ireland, in transit."
     },
     {
       "code": "36",

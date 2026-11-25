@@ -57,7 +57,11 @@ guest tracking client. It is included with the maintainer's approval.
   return-to-sender codes include returns still under way, which wording narrows to an
   exception. A code seen live outranks its category: 66, filed under customs, is the local
   delivery provider's sorting abroad, in transit. The mail centre's receipt (48) after the
-  post office's hand-in (15) or another scan that moved the item is in transit. Codes neither knows take their stage, current one included, from the shared
+  post office's hand-in (15) or another scan that moved the item is in transit. An item another
+  post sent to Ireland, with that post's S10 number, reaches An Post from it after its dispatch:
+  An Post's receipt of it ("We have received your item", 6, then "We have your item", 37 or 48)
+  is its arrival in Ireland, in transit, as is a summary ahead of the history that repeats one.
+  Codes neither knows take their stage, current one included, from the shared
   wording rules. A summary ahead of the history has no code; it is staged as the scan whose
   live wording it repeats, else from the shared wording rules. Aggregators relay the scans'
   sentences without their codes, and the universal providers' map stages those the same way. `statusMap` in

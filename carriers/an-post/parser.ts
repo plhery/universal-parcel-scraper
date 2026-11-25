@@ -157,6 +157,12 @@ interface Scan extends Current {
   activity: string;
 }
 
+/** Whether the item is another post's, sent to Ireland: an S10 number of another country than Ireland. */
+const fromAbroad = (number: string) => isAnPostItemNumber(number) && !number.endsWith('IE');
+
+/** An acceptance by An Post of an item from abroad: its arrival in Ireland, in transit. */
+const arrived = (stage: AnPostStage | undefined) => (stage?.stage === 'accepted' ? { ...stage, stage: 'in_transit' as const } : stage);
+
 /** A wording that ends where the website puts the place, "…for delivery in", read without it when no place follows. */
 const placeless = (wording: string) => wording.replace(/\s+in$/, '');
 
@@ -235,6 +241,17 @@ export function parseAnPostEvents(payload: unknown, summary: AnPostSummary): Car
     }
     if (scan.event.stage && scan.event.stage !== 'registered' && scan.event.stage !== 'pending') taken = true;
   }
+  // An item another post sent to Ireland, numbered by that post, reaches An Post from it: An Post's receipt of
+  // the item ("We have received your item", "We have your item and will process it for delivery") is its
+  // arrival in Ireland, in transit, after the sending post's acceptance and dispatch.
+  const inbound = fromAbroad(summary.number);
+  if (inbound) {
+    for (const scan of scans) {
+      if (scan.event.stage !== 'accepted') continue;
+      scan.stage = arrived(scan.stage)!;
+      scan.event = { ...scan.event, stage: 'in_transit' };
+    }
+  }
   // The scans until an outbound item's dispatch abroad, or before the partner's
   // first relayed scan, are An Post's own, on Irish time. Later ones may keep
   // the destination's clock, so they keep their wall clocks.
@@ -246,7 +263,8 @@ export function parseAnPostEvents(payload: unknown, summary: AnPostSummary): Car
   });
   // Provider order is kept: relayed partner scans may keep another country's
   // clock, so the wall clocks do not reorder them.
-  const current = currentState(scans, summary);
+  const reached = currentState(scans, summary);
+  const current = inbound && !scans.includes(reached as Scan) ? { ...reached, stage: arrived(reached.stage) } : reached;
   const pickup = pickupPoint(scans, current);
   // A summary ahead of the history is no listed scan, so it keeps its wall clock.
   const time = scans.includes(current as Scan) ? (current as Scan).event.time : undefined;

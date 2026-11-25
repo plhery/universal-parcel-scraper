@@ -358,6 +358,18 @@ describe('An Post guest history', () => {
       anPostNo: 'CP000000005GB', status: delivered.activity, date: delivered.date }]), 'CP000000005GB'));
     expect(arrived.events?.map(event => event.time)).toEqual(['2026-09-24T11:01:30+01:00', '2026-09-20T18:15:54+01:00',
       '2026-09-18T23:35:51+01:00']);
+    // An Post's receipt of an item from abroad, after the sending post's dispatch, is its arrival in Ireland: in transit.
+    const receipt = scan(37, accepted.activity, '2026-09-21T06:02:11');
+    const sorted = parseAnPostEvents(eventsOf([receipt, ...inbound.slice(1)]), parseAnPostSummary(summaryOf([{ ...summaryItem(),
+      anPostNo: 'CP000000005GB', status: receipt.activity, date: receipt.date }]), 'CP000000005GB'));
+    expect(sorted).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map' });
+    expect(sorted.events?.map(event => [event.provider_code, event.stage, event.stage_source])).toEqual([
+      ['37', 'in_transit', 'carrier_map'], ['6', 'in_transit', 'carrier_map'], ['35', 'registered', 'carrier_map']]);
+    // So is a summary ahead of the history; An Post's own item keeps its acceptance.
+    const aheadAbroad = parseAnPostSummary(summaryOf([{ ...summaryItem(), anPostNo: 'CP000000005GB', status: receipt.activity,
+      date: '2026-09-22T08:00:00' }]), 'CP000000005GB');
+    expect(parseAnPostEvents(eventsOf(inbound.slice(1)), aheadAbroad)).toMatchObject({ current_stage: 'in_transit', last_update_local: '2026-09-22T08:00:00' });
+    expect(parseAnPostEvents(eventsOf(inbound.slice(1)), summaryFor(inbound[1]!)).events?.[0]).toMatchObject({ provider_code: '6', stage: 'accepted' });
     // A wall time the clocks skip names no instant.
     const skipped = scan(4, 'Your item is out for delivery', '2026-03-29T01:30:00');
     const before = parseAnPostEvents(eventsOf([skipped, scan(48, accepted.activity, '2026-03-28T23:30:12')]), summaryFor(skipped));
