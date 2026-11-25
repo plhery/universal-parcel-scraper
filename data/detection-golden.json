@@ -101670,33 +101670,43 @@
   },
   {
     "input": "JTHQ022557630284",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "jthq",
+    "confidence": "high",
+    "candidates": [
+      "jthq"
+    ]
   },
   {
     "input": "JTHQ023937990657",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "jthq",
+    "confidence": "high",
+    "candidates": [
+      "jthq"
+    ]
   },
   {
     "input": "JTHQ024154980703",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "jthq",
+    "confidence": "high",
+    "candidates": [
+      "jthq"
+    ]
   },
   {
     "input": "JTHQ024866600547",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "jthq",
+    "confidence": "high",
+    "candidates": [
+      "jthq"
+    ]
   },
   {
     "input": "JTHQ024866620735",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "jthq",
+    "confidence": "high",
+    "candidates": [
+      "jthq"
+    ]
   },
   {
     "input": "JTUK100004930604",

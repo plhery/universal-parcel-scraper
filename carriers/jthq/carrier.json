@@ -77,5 +77,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "jthq-1",
+      "pattern": "^JTHQ\\d{12}$",
+      "confidence": "high"
+    }
+  ]
 }

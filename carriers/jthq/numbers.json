@@ -15,8 +15,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "jthq",
+        "confidence": "high"
       },
       "note": "One of the example tracking numbers a tracking directory's JTHQ page shows, a different one on each load. JTHQ's lookup answers it with a parcel to Canada flown from Hong Kong to Toronto, with Canada Post's number."
     },
@@ -34,8 +34,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "jthq",
+        "confidence": "high"
       },
       "note": "Another example the same page showed. JTHQ's lookup answers it with a parcel to Canada on the same flight, with Canada Post's number."
     },
@@ -53,8 +53,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "jthq",
+        "confidence": "high"
       },
       "note": "Another example the same page showed. JTHQ's lookup answers it with a parcel to Canada out for delivery, with Canada Post's scans copied."
     },
@@ -72,8 +72,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "jthq",
+        "confidence": "high"
       },
       "note": "Another example the same page showed. JTHQ's lookup answers it with a parcel to Canada still at the Shenzhen warehouse."
     },
@@ -91,8 +91,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "jthq",
+        "confidence": "high"
       },
       "note": "An earlier example the same page showed. JTHQ's lookup answers it with a parcel to the United States delivered by USPS, with USPS's scans copied."
     }

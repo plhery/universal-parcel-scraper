@@ -38253,7 +38253,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^JTHQ\\d{12}$",
+        "confidence": "high"
+      }
+    ]
   },
   "jtl-express-id": {
     "displayName": "JTL Express",
@@ -75721,7 +75726,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jrs-express": [],
   "jrt": ["jrt-1","jrt-2"],
   "js-express": ["js-express-1","js-express-jch"],
-  "jthq": [],
+  "jthq": ["jthq-1"],
   "jtl-express-id": [],
   "jumppoint": ["jumppoint-1"],
   "jumppoint-international": ["jumppoint-international-1"],

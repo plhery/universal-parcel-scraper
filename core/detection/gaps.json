@@ -6905,11 +6905,6 @@
     "reason": "VYANG numbers are VY, twelve digits and YQ, and the only public sample comes from one tracking directory page, too few to claim the shape from other forwarders' numbers ending in YQ, so the adapter answers explicit selection or a link to its tracker."
   },
   {
-    "carrier": "jthq",
-    "kind": "open",
-    "reason": "JTHQ waybills are JTHQ and twelve digits; the only public samples come from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracking page."
-  },
-  {
     "carrier": "ed-post",
     "kind": "open",
     "reason": "ED POST numbers seen so far are YDPOZ, ten digits and YQ, and the only public samples come from one tracking directory page, too few to claim the shape from other forwarders' numbers ending in YQ, so the adapter answers explicit selection or a link to its tracker."

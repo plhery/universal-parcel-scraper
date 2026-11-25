@@ -38249,7 +38249,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^JTHQ\\d{12}$",
+        "confidence": "high"
+      }
+    ]
   },
   "jtl-express-id": {
     "displayName": "JTL Express",

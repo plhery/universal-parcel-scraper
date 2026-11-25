@@ -23,8 +23,11 @@ const response = (body: string, init: ResponseInit = {}) => new Response(body,
   { status: 200, headers: { 'content-type': 'text/html; charset=utf-8' }, ...init });
 
 describe('JTHQ numbers', () => {
-  it('claims no number by its shape and reads the number out of a link to its tracking page', () => {
-    expect(detectCarrierMatch(IN_TRANSIT)).toMatchObject({ carrier: 'unknown', confidence: 'none' });
+  it('claims JTHQ and twelve digits whole and reads the number out of a link to its tracking page', () => {
+    expect(detectCarrierMatch(IN_TRANSIT)).toMatchObject({ carrier: 'jthq', confidence: 'high', candidates: ['jthq'] });
+    for (const number of ['JTHQ02486660054', 'JTHQ0248666005470', 'JTHQ02486660054A', 'XJTHQ024866600547', 'JTH024866600547']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('jthq');
+    }
     expect(parseTrackingInput(`http://jthq.rtb56.com/track_query.aspx?track_number=${IN_TRANSIT}`))
       .toMatchObject({ trackingNumber: IN_TRANSIT, carrier: 'jthq' });
   });
