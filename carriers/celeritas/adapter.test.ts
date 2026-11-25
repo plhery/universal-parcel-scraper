@@ -90,9 +90,11 @@ describe('Celeritas tracking adapter', () => {
       .toMatchObject({ current_stage: 'in_transit', last_status_text: 'Lectura en almacén de Cruce' });
     expect(parseCeleritas(page('transit').replace('EN GESTION', 'NUEVO ESTADO'), TRANSIT))
       .toMatchObject({ current_stage: 'out_for_delivery', last_status_text: 'Envío en reparto' });
-    const shared = parseCeleritas(page('transit').replace('>Envío en reparto<', '>Envío entregado<'), TRANSIT);
+    const shared = parseCeleritas(page('transit').replace('>Envío en reparto<', '>Entregado al destinatario<'), TRANSIT);
     expect(shared).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: expect.stringMatching(/^wording:/) });
     expect(shared.delivered_at).toBeUndefined();
+    const mapped = parseCeleritas(page('transit').replace('>Envío en reparto<', '>Envío entregado<'), TRANSIT);
+    expect(mapped).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map' });
     const unknown = parseCeleritas(page('transit').replace('>Envío en reparto<', '>Bulto pesado<'), TRANSIT);
     expect(unknown).toMatchObject({ status: 'unknown', last_status_text: 'Bulto pesado' });
     expect(unknown.current_stage).toBeUndefined();
@@ -238,5 +240,10 @@ describe('Celeritas status vocabulary', () => {
     expect(celeritasHeadingStage('Envío en reparto')).toBeUndefined();
     expect(statusMap.stage('7', 'envío en reparto')).toBeUndefined();
     expect(statusMapAnswer({ carrier: 'celeritas', description: 'Pospuesta en punto' })).toEqual({ kind: 'mapped', stage: 'failed_attempt' });
+    // The sending warehouse's rows: the order received and prepared there is pending, its departure transit.
+    for (const [description, stage] of [['Pedido recibido por almacén', 'registered'], ['Pedido en preparación', 'registered'],
+      ['Salida de almacén origen', 'in_transit'], ['Envío entregado', 'delivered']] as const) {
+      expect(statusMapAnswer({ carrier: 'celeritas', description }), description).toEqual({ kind: 'mapped', stage });
+    }
   });
 });

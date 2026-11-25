@@ -8,19 +8,25 @@ function key(wording: string): string {
 
 /**
  * The scans Celeritas's tracker names, in Spanish. They carry no code. A
- * parcel the shop has registered but not handed over is pending receipt;
- * the cross-dock, origin-agency and local-platform scans are transit, also on
- * the way back. A delivery postponed at the Celeritas Point did not happen;
- * after a failed attempt the parcel waits at the transport agency for seven
- * days. An agreed delivery date leaves it waiting at the depot. A return on
- * its way to, or at, the returns warehouse is returned.
+ * parcel the shop has registered but not handed over is pending receipt, and
+ * so is an order its warehouse has received or is preparing; its departure
+ * from that warehouse, the cross-dock, origin-agency and local-platform scans
+ * are transit, also on the way back. A delivery postponed at the Celeritas
+ * Point did not happen; after a failed attempt the parcel waits at the
+ * transport agency for seven days. An agreed delivery date leaves it waiting
+ * at the depot. A return on its way to, or at, the returns warehouse is
+ * returned.
  */
 const SCANS: ReadonlyMap<string, Stage> = new Map([
   ['envio pendiente de recibir', 'registered'],
+  ['pedido recibido por almacen', 'registered'],
+  ['pedido en preparacion', 'registered'],
+  ['salida de almacen origen', 'in_transit'],
   ['lectura en almacen de cruce', 'in_transit'],
   ['envio recibido en agencia de origen', 'in_transit'],
   ['recibido en plataforma local', 'in_transit'],
   ['envio en reparto', 'out_for_delivery'],
+  ['envio entregado', 'delivered'],
   ['pospuesta en punto', 'failed_attempt'],
   ['destinatario ausente', 'failed_attempt'],
   ['entrega concertada', 'in_transit'],
