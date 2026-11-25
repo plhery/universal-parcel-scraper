@@ -273,6 +273,7 @@ import { statusMap as courierIt } from '../../carriers/courier-it/status.js';
 import { statusMap as couriersPlease } from '../../carriers/couriersplease/status.js';
 import { statusMap as cruzDelSur } from '../../carriers/cruz-del-sur/status.js';
 import { statusMap as cseRussia } from '../../carriers/cse-russia/status.js';
+import { statusMap as ctmMessagerie } from '../../carriers/ctm-messagerie/status.js';
 import { statusMap as cttExpress } from '../../carriers/ctt-express/status.js';
 import { statusMap as ctt } from '../../carriers/ctt/status.js';
 import { statusMap as cttyex } from '../../carriers/cttyex/status.js';
@@ -1250,7 +1251,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'cj-logistics': cjLogistics, 'cj-packet': cjPacket, 'closer-logistics': closerLogistics, 'cmt-express': cmtExpress, cne, codexpress, 'colis-prive': colisPrive, colisweb, 'commercive-parcel': commerciveParcel, 'comone-express': comoneExpress, 'connect-couriers': connectCouriers, consegnia, coordinadora,
   'copa-courier': copaCourier, 'cope-sensitive-freight': copeSensitiveFreight, corre, coretrails, coship,
   'correios-br': correiosBr, 'correo-argentino': correoArgentino, 'correo-uruguayo': correoUruguayo, 'correos-bolivia': correosBolivia, 'correos-chile': correosChile, 'correos-cuba': correosCuba, 'correos-de-mexico': correosDeMexico, 'correos-el-salvador': correosElSalvador, 'correos-express': correosExpress, 'correos-guatemala': correosGuatemala, 'correos-spain': correosSpain,
-  'courier-center': courierCenter, 'courier-it': courierIt, couriersplease: couriersPlease, 'cruz-del-sur': cruzDelSur, 'cse-russia': cseRussia, ctt, 'ctt-express': cttExpress, cttyex,
+  'courier-center': courierCenter, 'courier-it': courierIt, couriersplease: couriersPlease, 'cruz-del-sur': cruzDelSur, 'cse-russia': cseRussia, 'ctm-messagerie': ctmMessagerie, ctt, 'ctt-express': cttExpress, cttyex,
   'cyprus-post': cyprusPost, 'd-express': dExpress, dachser, 'dai-post': daiPost, 'danske-fragtmaend': danskeFragtmaend, dao, 'datian-logistics': datianLogistics, 'day-ross': dayRoss,
   dayone, 'daylight-transport': daylightTransport, 'dayton-freight': daytonFreight, dealersend, delhivery, delivro, dellin, delnext, deppon, 'der-kurier': derKurier, 'dex-pk': dexPk, dhl, 'dhl-ecommerce': dhlEcommerce, 'dhl-ecommerce-es': dhlEcommerceEs, 'dhl-ecommerce-nl': dhlEcommerceNl, 'dhl-ecommerce-pl': dhlEcommercePl, 'dhl-ecommerce-uk': dhlEcommerceUk, 'dhl-express': dhlExpress,
   'dhl-freight': dhlFreight, dhlink, direx, 'dnipro-llc': dniproLlc, dobropost, 'dohrn-transfer': dohrnTransfer, 'domain-logistics': domainLogistics, domex, 'domex-do': domexDo, dongdu, dpd,

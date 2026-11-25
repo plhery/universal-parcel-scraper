@@ -6906,6 +6906,12 @@
     "reason": "CTL Group's waybill numbers are plain digits, eight on its help pages, a shape many carriers print, and nothing in the number points to CTL Group. Select CTL Group explicitly or paste its tracking page link."
   },
   {
+    "carrier": "ctm-messagerie",
+    "pattern": "^\\d{7}$",
+    "kind": "by_design",
+    "reason": "CTM Messagerie's receipt numbers are bare digits, seven in the public sample, a shape many carriers print, and CTM publishes no layout, so nothing in the number points to it."
+  },
+  {
     "carrier": "hcrd",
     "kind": "open",
     "reason": "HCRD numbers are HC, ten digits and RD, and the only public samples come from one tracking directory page, too few to claim the shape from other forwarders' numbers, so the adapter answers explicit selection or a link to its tracker."

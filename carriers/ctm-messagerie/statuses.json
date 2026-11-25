@@ -1,4 +1,7 @@
 {
   "carrier": "ctm-messagerie",
-  "entries": []
+  "entries": [
+    {"wording": "Expédié - Expédition conforme", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The parcel leaves the agency or sorting centre that wrote the row, in order."},
+    {"wording": "Livré - Conforme", "stage": "delivered", "language": "fr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The parcel is delivered or handed over at the destination agency, in order."}
+  ]
 }

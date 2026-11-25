@@ -14,18 +14,48 @@
   "timezone": "Africa/Casablanca",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "ctm-messagerie",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "searchUrl": "https://ctm-messagerie.ma/fr/suivi-du-colis",
     "helpUrl": "https://ctm-messagerie.ma/fr/contact",
     "canaryUrl": "https://ctm-messagerie.ma/fr/suivi-du-colis",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "ship_date",
+      "recipient_name",
+      "destination_city"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times"
+    ],
+    "discarded": [
+      "ship_date",
+      "recipient_name",
+      "destination_city"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "sender_name",
+      "service_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
   "detection": []

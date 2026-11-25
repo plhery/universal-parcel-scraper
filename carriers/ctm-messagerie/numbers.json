@@ -1,5 +1,27 @@
 {
   "carrier": "ctm-messagerie",
-  "gap": "No public page shows a CTM Messagerie number.",
-  "records": []
+  "records": [
+    {
+      "number": "2054302",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sChdDSUhNMG9nS0VJQ0FnSUM3c1p1ZXhBRRAB!2m1!1s0x0:0xa74f8fb87a322708",
+        "date": "2026-11-25",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "A Google Maps review of a CTM Messagerie agency, about two years old, complains about the parcel under this number. CTM's tracker answers it with a dispatch and a delivery in August 2024, which fits the review's age."
+    }
+  ]
 }
