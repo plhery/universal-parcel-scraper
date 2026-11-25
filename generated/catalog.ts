@@ -44524,6 +44524,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "meitongda": {
+    "displayName": "MEITONGDA",
+    "color": "#1c3881",
+    "aliases": [
+      "美通达"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "meitongda",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "119.91.196.60"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "memphis-courier": {
     "displayName": "Memphis Courier",
     "color": "#1f3c5b",
@@ -69612,6 +69642,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "we-logistics": {
+    "displayName": "WE Logistics",
+    "color": "#4264c0",
+    "aliases": [
+      "世航国际",
+      "Shihang International"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "we-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "shgj.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "we-world-express": {
     "displayName": "We World Express",
     "color": "#2d2a77",
@@ -74640,6 +74701,7 @@ export const CARRIER_IDS = [
   "megacity-courier",
   "meihoo-pegasus",
   "meitetsu-unyu",
+  "meitongda",
   "memphis-courier",
   "mensajeros-urbanos",
   "meso-global",
@@ -75377,6 +75439,7 @@ export const CARRIER_IDS = [
   "ward-trucking",
   "warp",
   "wassel",
+  "we-logistics",
   "we-world-express",
   "webrinq",
   "wedo",
@@ -76731,6 +76794,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "megacity-courier": [],
   "meihoo-pegasus": ["meihoo-pegasus-1"],
   "meitetsu-unyu": [],
+  "meitongda": [],
   "memphis-courier": ["memphis-courier-1"],
   "mensajeros-urbanos": [],
   "meso-global": ["meso-global-1"],
@@ -77468,6 +77532,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ward-trucking": [],
   "warp": [],
   "wassel": [],
+  "we-logistics": [],
   "we-world-express": ["we-world-express-1"],
   "webrinq": [],
   "wedo": ["wedo-1"],

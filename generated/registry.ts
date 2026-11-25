@@ -684,6 +684,7 @@ import { adapter as mbeEs } from '../carriers/mbe-es/adapter.js';
 import { adapter as mdsCollivery } from '../carriers/mds-collivery/adapter.js';
 import { adapter as meest } from '../carriers/meest/adapter.js';
 import { adapter as meihooPegasus } from '../carriers/meihoo-pegasus/adapter.js';
+import { adapter as meitongda } from '../carriers/meitongda/adapter.js';
 import { adapter as memphisCourier } from '../carriers/memphis-courier/adapter.js';
 import { adapter as mesoGlobal } from '../carriers/meso-global/adapter.js';
 import { adapter as messengerCz } from '../carriers/messenger-cz/adapter.js';
@@ -1133,6 +1134,7 @@ import { adapter as wanbexpress } from '../carriers/wanbexpress/adapter.js';
 import { adapter as wangjing3cq } from '../carriers/wangjing-3cq/adapter.js';
 import { adapter as wanjiaLogistics } from '../carriers/wanjia-logistics/adapter.js';
 import { adapter as warp } from '../carriers/warp/adapter.js';
+import { adapter as weLogistics } from '../carriers/we-logistics/adapter.js';
 import { adapter as weWorldExpress } from '../carriers/we-world-express/adapter.js';
 import { adapter as wedo } from '../carriers/wedo/adapter.js';
 import { adapter as westernBid } from '../carriers/western-bid/adapter.js';
@@ -1892,6 +1894,7 @@ export const REGISTRY: RegistryDefinition = {
     "mds-collivery": mdsCollivery,
     "meest": meest,
     "meihoo-pegasus": meihooPegasus,
+    "meitongda": meitongda,
     "memphis-courier": memphisCourier,
     "meso-global": mesoGlobal,
     "messenger-cz": messengerCz,
@@ -2341,6 +2344,7 @@ export const REGISTRY: RegistryDefinition = {
     "wangjing-3cq": wangjing3cq,
     "wanjia-logistics": wanjiaLogistics,
     "warp": warp,
+    "we-logistics": weLogistics,
     "we-world-express": weWorldExpress,
     "wedo": wedo,
     "western-bid": westernBid,
@@ -3601,6 +3605,7 @@ export const REGISTRY: RegistryDefinition = {
     "megacity-courier": "universal",
     "meihoo-pegasus": "meihoo-pegasus",
     "meitetsu-unyu": "universal",
+    "meitongda": "meitongda",
     "memphis-courier": "memphis-courier",
     "mensajeros-urbanos": "universal",
     "meso-global": "meso-global",
@@ -4379,6 +4384,7 @@ export const REGISTRY: RegistryDefinition = {
     "ward-trucking": "universal",
     "warp": "warp",
     "wassel": "universal",
+    "we-logistics": "we-logistics",
     "we-world-express": "we-world-express",
     "webrinq": "universal",
     "wedo": "wedo",
