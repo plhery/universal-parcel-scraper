@@ -442,6 +442,7 @@ import { statusMap as gelExpress } from '../../carriers/gel-express/status.js';
 import { statusMap as geodis } from '../../carriers/geodis/status.js';
 import { statusMap as geodisPl } from '../../carriers/geodis-pl/status.js';
 import { statusMap as geniki } from '../../carriers/geniki-taxydromiki/status.js';
+import { statusMap as gfsExpress } from '../../carriers/gfs-express/status.js';
 import { statusMap as gigLogistics } from '../../carriers/gig-logistics/status.js';
 import { statusMap as globalDeliveryNetwork } from '../../carriers/global-delivery-network/status.js';
 import { statusMap as glsCh } from '../../carriers/gls-ch/status.js';
@@ -1306,7 +1307,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'flash-express-ph': flashExpressPh,
   'flashbird-ca': flashbirdCa,
   fleetex, fleetoptics, flippost, flipxpress, fmx, followmont, 'fm-transportes': fmTransportes, 'forward-air': forwardAir, 'forza-delivery': forzaDelivery, 'four-px': fourPx, foxpost, 'franch-express': franchExpress, fukuyama, fynex, gaash, garudavega, gati, gdex,
-  'gebrueder-weiss': gebruederWeiss, geis, 'gel-express': gelExpress, 'geniki-taxydromiki': geniki, geodis, 'geodis-pl': geodisPl, 'gig-logistics': gigLogistics, 'global-delivery-network': globalDeliveryNetwork, 'gls-ch': glsCh, 'gls-de': glsDe, 'gls-es': glsEs, 'gls-fr': glsFr, 'gls-it': glsIt, 'gls-nl': glsNl, 'gls-us': glsUs,
+  'gebrueder-weiss': gebruederWeiss, geis, 'gel-express': gelExpress, 'geniki-taxydromiki': geniki, geodis, 'geodis-pl': geodisPl, 'gfs-express': gfsExpress, 'gig-logistics': gigLogistics, 'global-delivery-network': globalDeliveryNetwork, 'gls-ch': glsCh, 'gls-de': glsDe, 'gls-es': glsEs, 'gls-fr': glsFr, 'gls-it': glsIt, 'gls-nl': glsNl, 'gls-us': glsUs,
   globalpost, 'gms-worldwide': gmsWorldwide, 'go-express': goExpress, 'go-logistics-au': goLogisticsAu, go4, gobolt, gofo, 'gofo-ca': gofoCa, 'gofo-es': gofoEs, 'gofo-fr': gofoFr, 'gofo-it': gofoIt, 'gofo-nl': gofoNl, 'gogo-xpress': gogoXpress,
   'grand-slam-express': grandSlamExpress, 'gruber-logistics': gruberLogistics, 'gs-postbox': gsPostbox, 'gsi-express': gsiExpress, 'gta-airskip': gtaAirskip, 'gtl-goto': gtlGoto, guatex, gzyl,
   hanjin, 'happy-post': happyPost, haypost, hcrd, 'hct-logistics': hctLogistics, hdgj, helthjem, heppner, hepsijet, hermes, 'hermes-at': hermesAt, 'hermes-de': hermesDe, hhh, hitch, hispapost, hjyt, 'home-delivery-team': homeDeliveryTeam, homexpress, 'hongkong-post': hongkongPost, 'hongtai-logistics': hongtaiLogistics,

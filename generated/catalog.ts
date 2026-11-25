@@ -30310,7 +30310,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Riyadh",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "gfs-express"
     },
     "canaryUrl": "https://track.gfsxpress.com/",
     "trackingUrlTemplate": "https://track.gfsxpress.com/#/track-order?trackingStr={trackingNumber}",
@@ -30324,7 +30324,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "fragment": "^/track-order\\?trackingStr=([A-Za-z0-9-]+)$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^CGD\\d{11}$",
+        "confidence": "high"
+      }
+    ]
   },
   "ghana-post": {
     "displayName": "Ghana Post",
@@ -76420,7 +76425,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "georgian-post": [],
   "geswl": [],
   "gf-logistikk": [],
-  "gfs-express": [],
+  "gfs-express": ["gfs-express-1"],
   "ghana-post": [],
   "ghapex": [],
   "ghn": [],

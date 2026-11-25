@@ -1745,6 +1745,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'bfe-express', number: 'NOTAPARCEL',
     route: /^https:\/\/www\.bfeexpress\.com\/track\?track_number=NOTAPARCEL$/,
     marker: /In Process|This number can't be found at this moment/, renderTimeoutMs: 20_000 },
+  // The tracker reads the number from its hash route, asks its gateway on load and shows the number with GFS's
+  // answer, a notice for one it does not hold.
+  { carrier: 'gfs-express', number: 'CGD58302719464',
+    route: /^https:\/\/track\.gfsxpress\.com\/#\/track-order\?trackingStr=CGD58302719464$/,
+    marker: /Trace query not available|Copy tracking data/ },
   { carrier: 'imile', number: '0000000000013',
     route: /^https:\/\/www\.imile\.com\/[^/]+\/track\/?\?waybillNo=0000000000013$/,
     marker: /TRACK YOUR ORDER|TYPE YOUR ORDER NUMBER/i },

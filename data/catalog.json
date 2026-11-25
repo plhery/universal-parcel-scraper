@@ -30306,7 +30306,7 @@
     "timezone": "Asia/Riyadh",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "gfs-express"
     },
     "canaryUrl": "https://track.gfsxpress.com/",
     "trackingUrlTemplate": "https://track.gfsxpress.com/#/track-order?trackingStr={trackingNumber}",
@@ -30320,7 +30320,12 @@
         "fragment": "^/track-order\\?trackingStr=([A-Za-z0-9-]+)$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^CGD\\d{11}$",
+        "confidence": "high"
+      }
+    ]
   },
   "ghana-post": {
     "displayName": "Ghana Post",

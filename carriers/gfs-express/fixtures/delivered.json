@@ -1,0 +1,72 @@
+{
+  "api": "dwp.silk.outerPackageTracking",
+  "code": 1001,
+  "data": [
+    {
+      "fromCountry": "Saudi Arabia",
+      "trackingNo": "CGD58302719464",
+      "tracks": [
+        {
+          "description": "Delivered",
+          "timestamp": 1795095730
+        },
+        {
+          "description": "Out for delivery",
+          "timestamp": 1795068331
+        },
+        {
+          "description": "Arrived at distribution center",
+          "timestamp": 1795036664
+        },
+        {
+          "description": "Departed from distribution center",
+          "timestamp": 1794994202
+        },
+        {
+          "description": "Arrived at distribution center",
+          "timestamp": 1794955699
+        },
+        {
+          "description": "Parcel picked up from customs",
+          "timestamp": 1794913375
+        },
+        {
+          "description": "Parcel sent",
+          "timestamp": 1794912013
+        },
+        {
+          "description": "Parcel received and inbound",
+          "timestamp": 1794910328
+        },
+        {
+          "description": "Customs Clearance Delivery",
+          "timestamp": 1794853540
+        },
+        {
+          "description": "Customs Clearance Finished",
+          "timestamp": 1794853540
+        },
+        {
+          "description": "Customs Clearance Completed",
+          "timestamp": 1794841401
+        },
+        {
+          "description": "Under Customs Clearance",
+          "timestamp": 1794728649
+        },
+        {
+          "description": "Parcel picked up from destination airport",
+          "timestamp": 1794697836
+        },
+        {
+          "description": "Data Registed",
+          "timestamp": 1794198117
+        }
+      ],
+      "toCountry": "Saudi Arabia"
+    }
+  ],
+  "dmsg": "",
+  "msg": "",
+  "v": "2"
+}

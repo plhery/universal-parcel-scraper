@@ -1,4 +1,18 @@
 {
   "carrier": "gfs-express",
-  "entries": []
+  "entries": [
+    { "wording": "Data Registed", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "GFS's first row, spelled so: the order's data reached GFS before the parcel." },
+    { "wording": "Parcel picked up from destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "GFS took the parcel at the destination airport, before customs. The shared rules read a pick-up as the first acceptance." },
+    { "wording": "Under Customs Clearance", "language": "en", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The import clearance started." },
+    { "wording": "Customs Clearance Completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The import clearance is done." },
+    { "wording": "Customs Clearance Finished", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Written after the completed clearance: the clearance is over." },
+    { "wording": "Customs Clearance Delivery", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Written after the finished clearance and before GFS's warehouse takes the parcel in: customs released it. The shared rules read it as a customs step." },
+    { "wording": "Parcel received and inbound", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "GFS's warehouse took the cleared parcel in." },
+    { "wording": "Parcel sent", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The warehouse sent the parcel on toward its delivery area." },
+    { "wording": "Parcel picked up from customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Written after the clearance rows: the parcel left customs' hands. The shared rules read it as a customs step." },
+    { "wording": "Arrived at distribution center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "At one of GFS's delivery centres." },
+    { "wording": "Departed from distribution center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Left one of GFS's delivery centres." },
+    { "wording": "Out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "With a courier for delivery." },
+    { "wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Delivered." }
+  ]
 }
