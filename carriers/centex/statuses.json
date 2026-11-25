@@ -1,0 +1,8 @@
+{
+  "carrier": "centex",
+  "entries": [
+    {"wording": "SHIPMENT INFORMATION SUBMITTED", "language": "en", "stage": "registered", "confirmedBy": "fixture", "note": "The customer's order data, before the parcel reaches the sorting centre."},
+    {"wording": "objeto postado", "language": "pt", "stage": "in_transit", "confirmedBy": "fixture", "note": "Correios recording the posting after the flight from Shenzhen has left."},
+    {"wording": "objeto entregue ao destinatário", "language": "pt", "stage": "delivered", "confirmedBy": "live"}
+  ]
+}

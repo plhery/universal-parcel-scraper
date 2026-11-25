@@ -1,0 +1,59 @@
+{
+  "id": "centex",
+  "displayName": "CENTEX",
+  "aliases": [
+    "忠进"
+  ],
+  "region": {
+    "countries": [
+      "CN",
+      "BR"
+    ]
+  },
+  "brand": {
+    "color": "#3E63BC"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "centex",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.baxida.cn/default/index/track?trackNos={trackingNumber}",
+    "searchUrl": "https://www.baxida.cn/default/index/get-track-detail",
+    "canaryUrl": "https://www.baxida.cn/default/index/get-track-detail",
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.baxida.cn",
+        "baxida.cn"
+      ],
+      "pathPattern": "^/default/index/track/?$",
+      "query": "^(?:.*&)?trackNos=([^&]+)(?=&|$)"
+    }
+  ],
+  "detection": []
+}

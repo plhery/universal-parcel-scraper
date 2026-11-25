@@ -1,0 +1,43 @@
+{
+  "carrier": "centex",
+  "records": [
+    {
+      "number": "ZJ00471201019000851",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20201101064217/http://www.baxida.cn/default/index/track?trackNos=NX031367846BR",
+        "date": "2020-11-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "CENTEX's waybill for a parcel from Shenzhen to Brazil, on an archived capture of its tracker's page. The tracker answers it with Correios's delivery in Santa Catarina."
+    },
+    {
+      "number": "NX031367846BR",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20201101064217/http://www.baxida.cn/default/index/track?trackNos=NX031367846BR",
+        "date": "2020-11-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "correios-br",
+        "confidence": "high"
+      },
+      "note": "The Correios number of the same parcel, which the archived capture looked up. CENTEX's tracker finds the parcel by it too; detection names Correios, which delivers under it."
+    }
+  ]
+}

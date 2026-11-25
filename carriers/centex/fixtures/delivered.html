@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<!-- 
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+ -->
+<title>忠进订单系统</title>
+<link href="/css/ui-lightness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet" href="/css/global.css?20140404" />
+<link type="text/css" rel="stylesheet" href="/css/public/index.css?20140404" />
+<link type="text/css" rel="stylesheet" href="/css/public/layout.css?20140404" />
+<link type="text/css" rel="stylesheet" href="/css/public/head.css?20140404" />
+<script type="text/javascript">
+var locale_message_language = 'zh_CN';
+</script>
+<script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/js/jquery-myProject.js"></script>
+<script type="text/javascript" src="/js/jquery-myAjaxForm.js"></script>
+<script type="text/javascript" src="/js/init.js?20140405"></script>
+
+<link type="text/css" rel="stylesheet" href="/css/jquery.alerts.css" />
+<script type="text/javascript" src="/js/jquery.alerts.js"></script>
+
+<link type="text/css" rel="stylesheet" href="/js/chosen/chosen.min.css" />
+<script type="text/javascript" src="/js/chosen/chosen.jquery.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+<!--
+function verc() {
+    $('.verifyCode').attr('src', '/default/index/verify-code/' + Math.random());
+}
+$(function(){
+        $(".tab").live('click',function(){
+            $(".tabContent", "#dialog-auto-alert-tip").hide();
+            $(this).parent().removeClass("chooseTag");
+            $(this).parent().siblings().addClass("chooseTag");
+            $("#"+$(this).attr("id").replace("tab_",""), "#dialog-auto-alert-tip").show();
+        });
+})
+
+	
+//-->
+</script>
+<div style="height:50px; background:#3E63BC; width:100%">
+
+</div>
+<div style='padding: 8px;margin:10px 200px;' class='nbox_c'>
+	<div class="ntitle">
+		<span style="">
+			<h2 class="ntitle" style="padding-left: 0px;">order tracking</h2>
+		</span>
+	</div>
+	<form action="/default/index/track" method='post'>
+		<textarea name="trackNos" rows="" cols="" style='width: 100%; height: 70px; overflow: auto; font-size: 13px;' placeholder='For more than one order, please use " " to Separate (20 queries are supported at the same time)'></textarea>
+		<div style='height: 5px;'></div>
+		<!--
+		         <input type="text" class="input_text keyToSearch" name="authCode" style='width:70px;' placeholder='验证码'/> 
+    	<img align="absmiddle" src="/default/index/verify-code" style='width:72px;height:23px;cursor:pointer;' class='verifyCode' onclick='verc();'></label>
+    	    	-->
+		<input type="submit" class="baseBtn submitToSearch" value="Query"><span class='msg' style='color:red;padding:0 15px;'></span>
+	</form>
+</div>
+<div id="module-table"style='margin:10px 200px;'>
+	<table cellspacing="0" cellpadding="0" width="100%" border="0" class="table-module">
+		<tbody>
+			<tr class="table-module-title">
+				<td width="175">Track number</td>
+				<td width="165">Waybill number</td>
+				<td width="165">Customer number</td>
+				<td>Destination</td>
+				<!-- <td>收件人</td> -->
+				<td width="135">Occurrence time</td>
+				<td>Place of occurrence</td>
+				<td>Latest status</td>
+				<td>Transit record</td>
+			</tr>
+		</tbody>
+		<tbody id="table-module-list-data">
+			   			<tr class="table-module-b1">
+				<td>NX031367846BR</td>
+				<td>ZJ00471201019000851</td>
+				<td>SO000000000000</td>
+				<td>BR</td>
+<!-- 				<td></td> -->
+				<td>2020-11-09 14:00:00</td>
+				<td>balneario camboriu / sc</td>
+				<td>objeto entregue ao destinatário</td>
+				<td>
+					<a href="javascript:;" onclick='alertTip($("#track_1717959").html(),800,400);'>Detail</a>
+				</td>
+			</tr>
+			<tr style='display: none;'>
+				<td colspan='8' id='track_1717959'>
+					<div class="depotTab2">
+						 <ul>
+			              <!--   <li class="chooseTag">
+			                    <a href="javascript:void(0);" id='tab_cn_1717959' class='tab' style="cursor:pointer">中文</a>
+			                </li> -->
+			                <li >
+			                    <a href="javascript:void(0);" id="tab_en_1717959" class="tab" style="cursor:pointer">English</a>
+			                </li>
+			             </ul>
+		            </div>
+		            <div class="tabContent" id="cn_1717959" style="display:none;">
+						<table cellspacing="0" cellpadding="0" width="100%" border="0" class="table-module">
+							<caption style='text-align: left;line-height:30px;'><!-- 服务商：&nbsp;&nbsp;&nbsp;&nbsp; --> Track number:NX031367846BR</caption>
+							<tbody>
+								<tr class="table-module-title">
+									<td width="135">Occurrence time</td>
+									<td>Place of occurrence</td>
+									<td>Track content</td>
+								</tr>
+							</tbody>
+														<tr>
+								<td width='135'>2020-11-09 14:00:00</td>
+								<td width='300'>balneario camboriu / sc</td>
+								<td>objeto entregue ao destinatário</td>
+							</tr>
+													</table>
+					</div>
+		            <div class="tabContent" id="en_1717959" style="display:block;">
+						<table cellspacing="0" cellpadding="0" width="100%" border="0" class="table-module">
+							<caption style='text-align: left;line-height:30px;'>Code:NX031367846BR</caption>
+							<tbody>
+								<tr class="table-module-title">
+									<td width="135">Time</td>
+									<td>Place</td>
+									<td>Content</td>
+								</tr>
+							</tbody>
+														<tr>
+								<td width='135'>2020-11-09 14:00:00</td>
+								<td width='300'>balneario camboriu / sc</td>
+								<td>objeto entregue ao destinatário</td>
+							</tr>
+													</table>
+					</div>
+				</td>
+			</tr>
+			  		</tbody>
+	</table>
+</div><script type="text/javascript" src="/js/jquery-cookie.js"></script>
+	<script type="text/javascript" src="/js/jquery.form.js"></script>
+	<script type="text/javascript" src="/js/jquery.pagination.js"></script>
+	<script type="text/javascript" src="/js/mod.js"></script>
+	<script type="text/javascript" src="/js/jquery.myLoading.js"></script>
+    <script type="text/javascript" src="/js/locale/oms-lang-en_US.js"></script>
+    <script type="text/javascript" src="/js/locale/oms-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="/js/locale/oms-lang-tr_TR.js"></script>
+    <script type="text/javascript" src="/js/locale/locale_message.js"></script>
+</body>
+</html>
