@@ -718,6 +718,47 @@ describe('USPS lookup steps', () => {
         expect(records).toEqual(['browser:ok:-', 'lookup:browser:ok']);
       });
 
+      it('reads through the resting Chrome one lookup the service failed every five minutes, and ends the others with the service\'s failure', async () => {
+        vi.useFakeTimers({ toFake: ['Date'] });
+        try {
+          const trawl = ownTrawl();
+          const endpoint = ownEndpoint();
+          const readBrowserPage = vi.fn(async () => ({ html: INTERSTITIAL_PAGE, redirected: false }));
+          const tracker = (recorder?: StepRecorder) => new USPSTracker({ trawl, browserEndpoint: endpoint, readBrowserPage, recorder });
+          await refuse(tracker, 2);
+          const failed = async () => {
+            vi.spyOn(globalThis, 'fetch').mockImplementation(async () => new Response('no session', { status: 500 }));
+            const { recorder, records } = routes();
+            await expect(tracker(recorder).fetch(DELIVERED_NUMBER)).rejects.toBeDefined();
+            vi.restoreAllMocks();
+            return records;
+          };
+          expect(await failed()).toEqual(['trawl:indeterminate:default', 'browser:challenge:-', 'trawl:indeterminate:default',
+            'lookup:trawl:indeterminate']);
+          expect(readBrowserPage).toHaveBeenCalledTimes(3);
+          expect(await failed()).toEqual(['trawl:indeterminate:default', 'lookup:trawl:indeterminate']);
+          // A paused service ends the lookup as the adapter's own pacing, at once.
+          await keepAdapterHolds({ load: async () => [{ key: `usps-outage/${serviceTag(trawl.endpoint.href)}`, until: Date.now() + 60_000 }],
+            save: async () => undefined });
+          try {
+            const fetcher = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('must not fetch'));
+            await expect(tracker().fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', reason: 'self_paced' });
+            expect(fetcher).not.toHaveBeenCalled();
+            vi.restoreAllMocks();
+          } finally {
+            resetAdapterHolds();
+          }
+          vi.setSystemTime(Date.now() + 5 * 60_000 - 1_000);
+          await failed();
+          expect(readBrowserPage).toHaveBeenCalledTimes(3);
+          vi.setSystemTime(Date.now() + 1_000);
+          expect(await failed()).toContain('browser:challenge:-');
+          expect(readBrowserPage).toHaveBeenCalledTimes(4);
+        } finally {
+          vi.useRealTimers();
+        }
+      });
+
       it('rests the Chrome when it refuses one read in three, and not for wrappers further apart', async () => {
         vi.useFakeTimers({ toFake: ['Date'] });
         try {

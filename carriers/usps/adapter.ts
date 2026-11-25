@@ -93,14 +93,18 @@ function pauseRun(run: OutageRun, until: number): void {
  * session USPS let through, and fails within a second when it holds none. The rest lasts fifteen
  * minutes. The next lookup then asks the Chrome first again; a wrapper within fifteen minutes of
  * the rest's end starts one twice as long, up to an hour. A page the Chrome loads during a rest,
- * which it reads only when the service failed, ends it. A host that keeps adapters' holds keeps
+ * which it reads only when the service failed, ends it. In a spell the service fails nearly every
+ * lookup and the Chrome loads few of them, each after about fifteen seconds on the wrapper, so
+ * during a rest it reads one lookup the service failed every five minutes at most, and the
+ * others end with the service's failure within seconds. A host that keeps adapters' holds keeps
  * the rest across restarts, which come every few minutes while a host deploys.
  */
 const CHROME_REFUSALS = 2;
 const CHROME_WINDOW_MS = 15 * 60_000;
 const CHROME_REST_MS = 15 * 60_000;
 const CHROME_LONGEST_REST_MS = 60 * 60_000;
-interface ChromeRun { key: string; refusals: number[]; restingUntil: number; restMs: number }
+const CHROME_RESTING_READ_MS = 5 * 60_000;
+interface ChromeRun { key: string; refusals: number[]; restingUntil: number; restMs: number; restingReadAt: number }
 const chromeRuns = new Map<string, ChromeRun>();
 const finite = (value: unknown): value is number => typeof value === 'number' && Number.isFinite(value);
 const chromeHolds = new HoldKind('usps-chrome', (key, _until, value) => {
@@ -117,7 +121,7 @@ const chromeHolds = new HoldKind('usps-chrome', (key, _until, value) => {
 
 function chromeRunByKey(key: string): ChromeRun {
   let run = chromeRuns.get(key);
-  if (!run) chromeRuns.set(key, run = { key, refusals: [], restingUntil: 0, restMs: CHROME_REST_MS });
+  if (!run) chromeRuns.set(key, run = { key, refusals: [], restingUntil: 0, restMs: CHROME_REST_MS, restingReadAt: 0 });
   return run;
 }
 
@@ -549,18 +553,25 @@ export class USPSTracker {
     const browser: StepSpec<CarrierResult> = { id: 'browser', enabled: !!endpoint, run: ({ remainingMs, signal }) =>
       this.#browserResult(endpoint!, number,
         Math.max(1, Math.floor(Math.min(trawl ? BROWSER_SHARE_MS : this.timeoutMs, remainingMs, 60_000))), signal) };
-    const chromeLast = !!endpoint && !!trawl && chromeRunOf(endpoint).restingUntil > Date.now();
+    const resting = endpoint && trawl && chromeRunOf(endpoint).restingUntil > Date.now() ? chromeRunOf(endpoint) : null;
     const result = await runSteps<CarrierResult>({
       // Without a caller's budget the lookup leaves the service its own time and
       // the request the allowance to bring the answer back.
       carrier: 'usps', budgetMs: context.budgetMs ?? this.timeoutMs + TRAWL_TRANSPORT_ALLOWANCE_MS, signal: context.signal,
       recorder,
     }, [
-      ...(chromeLast ? [] : [browser]),
+      ...(resting ? [] : [browser]),
       // The private Chrome's share running out leaves the browser service the rest of the lookup.
       { id: 'trawl', enabled: !!trawl, recovers: error => recoverableByDefault(error) || error instanceof BudgetExceededError, run },
-      // While the Chrome rests it reads every lookup the service could not, paused ones included.
-      ...(chromeLast ? [{ ...browser, recovers: (error: unknown) => recoverableByDefault(error) || error instanceof RateLimitedError }] : []),
+      // While the Chrome rests it reads a lookup the service could not, paused ones included, every
+      // five minutes at most. The read is claimed as it starts, so lookups running together take one.
+      ...(resting ? [{ ...browser,
+        recovers: (error: unknown) => (recoverableByDefault(error) || error instanceof RateLimitedError)
+          && Date.now() - resting.restingReadAt >= CHROME_RESTING_READ_MS,
+        run: (context: StepContext) => {
+          resting.restingReadAt = Date.now();
+          return browser.run(context);
+        } }] : []),
       // A read straight after a redirect loads tracking more often than not, and one after two still
       // about half the time, within seconds. So a redirect on the service's own route is read again
       // there, up to three reads, until three redirects in a row pause it; a redirect is never read

@@ -50,7 +50,10 @@ FLARESOLVERR_URL for browser fallback')`.
    paused, so the wait goes only where it can still help. The rest lasts fifteen minutes; the
    next lookup then asks this browser first again, and a wrapper within fifteen minutes of the
    rest's end starts one twice as long, up to an hour. A page this browser loads during a rest
-   ends it. A host that keeps adapters' holds keeps the rest across restarts.
+   ends it. In such a spell `trawl` fails nearly every lookup and this browser loads few of
+   them, so during a rest it reads one lookup `trawl` failed every five minutes at most, and the
+   others end with `trawl`'s failure within seconds. A host that keeps adapters' holds keeps the
+   rest across restarts.
 2. `trawl`: the browser service loads
    `https://tools.usps.com/tracking/…`, runs the interstitial check, and
    waits for the visible tracking number before the rendered DOM is parsed. The verification
