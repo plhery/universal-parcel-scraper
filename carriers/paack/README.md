@@ -96,6 +96,10 @@ them, so that shape only suggests Paack as well.
   instant, it is part of that step and left out; so is ParcelsApp's "We scheduled a new delivery
   attempt." beside the failure it relays. `driverAssigned` reads "Courier
   assigned", once per run. `inProgress`, "being processed by Paack", is in transit.
+- Paack can assign a courier to a parcel it has already delivered, collected at a PaackGo Point
+  for instance, while its banner stays on "Delivered" and no run follows. Such a step reads
+  "Shipment update" with its code and moves nothing. `SI014` and `SP016`, history steps with no
+  label that the page shows nothing for, keep the stage before them too.
 - `activeEvent` decides the overall status when it maps: the banner can be ahead of the
   timeline. It stays on "Out for delivery" after a failed attempt, so a newer failed attempt,
   courier run, drop-off, delivery or return in the history replaces it. Scheduling notes and

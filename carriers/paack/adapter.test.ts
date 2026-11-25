@@ -277,6 +277,28 @@ describe('Paack response normalization', () => {
       .toMatchObject({ status: 'delivered', last_status_text: 'Delivered' });
   });
 
+  it('reads a courier Paack assigns after the delivery as no run, as its page does', () => {
+    // Paack's page keeps its banner on "Delivered" when it assigns a courier to a parcel already collected at its point.
+    const result = parsePaackTrackingResponse(successRoute({
+      triggeredEventList: [
+        { id: 'SP021', label: 'driverAssigned', timestamp: '2024-07-29T09:45:03+02:00', timeline: false },
+        { id: 'SP016', timestamp: '2024-07-27T18:32:00+02:00' },
+      ],
+    }), OFFICIAL_EXAMPLE_POSTCODE);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered', expected_delivery: null });
+    expect(result.events?.slice(0, 2)).toEqual([
+      { time: '2024-07-29T07:45:03.000Z', description: 'Shipment update', provider_code: 'SP021' },
+      { time: '2024-07-28T13:02:00.000Z', description: 'Delivered', stage: 'delivered' },
+    ]);
+    // The courier of the delivery run itself, before the delivery, is still one.
+    expect(result.events).toContainEqual({ time: '2024-07-28T10:05:00.000Z', description: 'Courier assigned', stage: 'out_for_delivery' });
+    for (const code of ['SP021', 'SP016']) {
+      expect(statusMap.stage(code, 'shipment update'), code).toBeUndefined();
+      expect(statusGapNote(statusMap, code, 'shipment update'), code).toMatch(/keeps the stage/);
+    }
+    expect(statusMap.stage('SP021', 'courier assigned')).toBe('out_for_delivery');
+  });
+
   it('retains the delivery window only for a non-terminal shipment', () => {
     const result = parsePaackTrackingResponse(successRoute({
       eventList: [{

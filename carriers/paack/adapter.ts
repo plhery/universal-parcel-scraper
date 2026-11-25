@@ -37,7 +37,7 @@ import { countryCode, countryTimeZone, explicitOffsetTime, type ParsedTime } fro
 import { clean, cleanScalar, decodeText, fetchBounded, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { PAACK_EVRI_NUMBER, trackPaackThroughEvri } from './evri.js';
-import { classifyPaackEvent, PAACK_NEW_ATTEMPT } from './status.js';
+import { classifyPaackEvent, PAACK_COURIER_ASSIGNED, PAACK_NEW_ATTEMPT } from './status.js';
 
 const TRACKING_ENDPOINT = 'https://mydeliveries.paack.app/tracking/order';
 const DEFAULT_TIMEOUT_MS = 15_000;
@@ -294,9 +294,19 @@ export function parsePaackTrackingResponse(
     timestamp: number;
     sourceIndex: number;
   }> = [];
-  happenedSteps(route).forEach((rawEvent, sourceIndex) => {
-    const classified = classifyPaackEvent(rawEvent);
-    const time = normalizedTimestamp(rawEvent.timestamp ?? rawEvent.time)!;
+  const steps = happenedSteps(route).map((rawEvent) => ({
+    rawEvent,
+    read: classifyPaackEvent(rawEvent),
+    time: normalizedTimestamp(rawEvent.timestamp ?? rawEvent.time)!,
+  }));
+  // Paack can assign a courier to a parcel it has already delivered, and its page stays on "Delivered":
+  // such a step is no run, and reads like a step the map does not know.
+  const deliveredAt = Math.min(Infinity, ...steps
+    .filter(({ read }) => read.status !== 'unknown' && read.stage === 'delivered').map(({ time }) => time.timestamp));
+  steps.forEach(({ rawEvent, read, time }, sourceIndex) => {
+    const classified: typeof read = read.description === PAACK_COURIER_ASSIGNED && time.timestamp > deliveredAt
+      ? { status: 'unknown', stage: 'in_transit', description: 'Shipment update' }
+      : read;
     parsedEvents.push({
       // A state the map does not know is no step: it neither moves the parcel nor stands before its acceptance.
       event: {

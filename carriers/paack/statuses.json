@@ -138,6 +138,22 @@
       "note": "History step with no label and no status, kept off the timeline, after a new attempt was put on a round; the page has no text for it. It states no movement and keeps the stage of the scan before it."
     },
     {
+      "code": "sp016",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "History step with no label and no status, kept off the timeline, after a PaackGo Point was assigned; the page has no text for it. It states no movement and keeps the stage of the scan before it."
+    },
+    {
+      "code": "sp021",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "driverAssigned after the parcel was delivered, with the page's banner still on Delivered and no run after it. The adapter writes it as \"Shipment update\" with the code; it keeps the stage of the scan before it. Before a delivery, driverAssigned is \"Courier assigned\"."
+    },
+    {
       "code": "absent",
       "language": "en",
       "stage": "failed_attempt",

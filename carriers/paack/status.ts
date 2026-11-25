@@ -69,6 +69,8 @@ const NEW_ATTEMPT: ClassifiedPaackStatus = { status: 'exception', stage: 'failed
 /** The wording of the new attempt Paack schedules after a failed one. */
 export const PAACK_NEW_ATTEMPT = NEW_ATTEMPT.description;
 const COURIER_ASSIGNED: ClassifiedPaackStatus = { ...OUT_FOR_DELIVERY, description: 'Courier assigned' };
+/** The wording of the courier Paack assigns to each delivery run. */
+export const PAACK_COURIER_ASSIGNED = COURIER_ASSIGNED.description;
 const IN_TRANSIT: ClassifiedPaackStatus = { status: 'in_transit', stage: 'in_transit', description: 'In transit' };
 
 /** History codes that come without a label, matched whole. */
@@ -204,5 +206,14 @@ export const statusMap: CarrierStatusMap = {
     code: 'si014',
     note: 'A history step the page gives no label or status and keeps off its timeline, after a new attempt was put on a round. '
       + 'It states no movement, so it keeps the stage of the scan before it.',
+  }, {
+    code: 'sp016',
+    note: 'A history step the page gives no label or status and keeps off its timeline, after a PaackGo Point was assigned. '
+      + 'It states no movement, so it keeps the stage of the scan before it.',
+  }, {
+    code: 'sp021',
+    wording: 'shipment update',
+    note: 'A courier assigned (driverAssigned) after the parcel was delivered, while the page stays on "Delivered". '
+      + 'No run follows; it states no movement, so it keeps the stage of the scan before it.',
   }],
 };
