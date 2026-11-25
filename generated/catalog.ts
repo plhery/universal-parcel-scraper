@@ -10666,6 +10666,42 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "asl-track": {
+    "displayName": "ASL Track",
+    "color": "#17538f",
+    "aliases": [
+      "ASLTrack"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "asl-track",
+      "localClocks": true
+    },
+    "canaryUrl": "https://asltrack.com/",
+    "trackingUrlTemplate": "https://asltrack.com/track/{trackingNumber}",
+    "trackingSearchUrl": "https://asltrack.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "asltrack.com",
+          "www.asltrack.com"
+        ],
+        "path": "^/track/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^ASL\\d{11}$",
+        "confidence": "high",
+        "checksum": "luhn-digits"
+      }
+    ]
+  },
   "astral-aviation": {
     "displayName": "Astral Aviation Cargo",
     "color": "#09518b",
@@ -73357,6 +73393,7 @@ export const CARRIER_IDS = [
   "asiafly",
   "asigna",
   "asl-asia",
+  "asl-track",
   "astral-aviation",
   "asyad-express",
   "atc-express",
@@ -75439,6 +75476,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "asiafly": [],
   "asigna": [],
   "asl-asia": [],
+  "asl-track": ["asl-track-1"],
   "astral-aviation": [],
   "asyad-express": [],
   "atc-express": [],

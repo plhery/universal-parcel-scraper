@@ -1,0 +1,98 @@
+{
+  "found": true,
+  "carrier": "ASLTrack",
+  "tracking_number": "ASL42613845454",
+  "status": "delivered",
+  "estimated_delivery": null,
+  "origin": "Auburn, WA",
+  "destination": "Alvin, TX",
+  "destination_country": "US",
+  "last_event_at": "2026-09-23T15:22:00+00:00",
+  "delivered_at": "2026-09-23T15:22:00+00:00",
+  "events": [
+    {
+      "occurred_at": "2026-09-23T15:22:00+00:00",
+      "status": "delivered",
+      "description": "Delivered",
+      "location": "Alvin, US"
+    },
+    {
+      "occurred_at": "2026-09-23T10:42:00+00:00",
+      "status": "out_for_delivery",
+      "description": "Out for delivery",
+      "location": "La Marque, US"
+    },
+    {
+      "occurred_at": "2026-09-23T08:16:00+00:00",
+      "status": "in_transit",
+      "description": "Processed at sorting facility",
+      "location": "La Marque, US"
+    },
+    {
+      "occurred_at": "2026-09-23T08:09:00+00:00",
+      "status": "in_transit",
+      "description": "Arrived at sorting facility",
+      "location": "La Marque, US"
+    },
+    {
+      "occurred_at": "2026-09-23T06:09:00+00:00",
+      "status": "in_transit",
+      "description": "Processed at sorting facility",
+      "location": null
+    },
+    {
+      "occurred_at": "2026-09-23T05:52:00+00:00",
+      "status": "in_transit",
+      "description": "Departed sorting facility",
+      "location": "Humble, TX"
+    },
+    {
+      "occurred_at": "2026-09-23T00:01:00+00:00",
+      "status": "in_transit",
+      "description": "Arrived at sorting facility",
+      "location": "Humble, TX"
+    },
+    {
+      "occurred_at": "2026-09-22T18:45:00+00:00",
+      "status": "in_transit",
+      "description": "Departed sorting facility",
+      "location": "Austin, TX"
+    },
+    {
+      "occurred_at": "2026-09-22T17:57:00+00:00",
+      "status": "in_transit",
+      "description": "Arrived at sorting facility",
+      "location": "Austin, TX"
+    },
+    {
+      "occurred_at": "2026-09-22T11:02:48.62586+00:00",
+      "status": "in_transit",
+      "description": "In transit",
+      "location": null
+    },
+    {
+      "occurred_at": "2026-09-21T12:55:00+00:00",
+      "status": "in_transit",
+      "description": "Departed sorting facility",
+      "location": "Lakeland, FL"
+    },
+    {
+      "occurred_at": "2026-09-21T08:39:00+00:00",
+      "status": "in_transit",
+      "description": "Arrived at sorting facility",
+      "location": "Lakeland, FL"
+    },
+    {
+      "occurred_at": "2026-09-21T00:00:00+00:00",
+      "status": "in_transit",
+      "description": "Departed sorting facility",
+      "location": null
+    },
+    {
+      "occurred_at": "2026-09-20T23:59:00+00:00",
+      "status": "info_received",
+      "description": "Shipping label created",
+      "location": "Auburn, WA"
+    }
+  ]
+}

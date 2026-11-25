@@ -1,0 +1,17 @@
+{
+  "carrier": "asl-track",
+  "entries": [
+    {"code": "info_received", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The API's status code for a shipment whose label is made."},
+    {"code": "in_transit", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "out_for_delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
+    {"code": "delivered", "stage": "delivered", "language": "en", "confirmedBy": "live"},
+    {"code": "exception", "stage": "exception", "language": "en", "confirmedBy": "documentation", "note": "A status code the API's documentation lists."},
+    {"wording": "Shipping label created", "stage": "registered", "language": "en", "confirmedBy": "live"},
+    {"wording": "Arrived at sorting facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Processed at sorting facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Departed sorting facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "In transit", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live"}
+  ]
+}

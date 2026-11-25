@@ -1,0 +1,38 @@
+{
+  "carrier": "asl-track",
+  "records": [
+    {
+      "number": "ASL42613845454",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://asltrack.com/api",
+        "date": "2026-11-25",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "asl-track",
+        "confidence": "high"
+      },
+      "note": "The example in ASL Track's API documentation, which calls it a real shipment the endpoint returns live. The API answers it with a delivered shipment and its scans from the label to the door."
+    },
+    {
+      "number": "ASL42613845455",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "asl-track"
+        ]
+      },
+      "note": "The example with its last digit changed, which fails the Luhn check."
+    }
+  ]
+}

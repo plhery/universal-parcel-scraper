@@ -78,6 +78,7 @@ import { adapter as arkas } from '../carriers/arkas/adapter.js';
 import { adapter as arrowXl } from '../carriers/arrow-xl/adapter.js';
 import { adapter as arubaPost } from '../carriers/aruba-post/adapter.js';
 import { adapter as asendia } from '../carriers/asendia/adapter.js';
+import { adapter as aslTrack } from '../carriers/asl-track/adapter.js';
 import { adapter as astralAviation } from '../carriers/astral-aviation/adapter.js';
 import { adapter as asyadExpress } from '../carriers/asyad-express/adapter.js';
 import { adapter as atcLogistical } from '../carriers/atc-logistical/adapter.js';
@@ -1277,6 +1278,7 @@ export const REGISTRY: RegistryDefinition = {
     "arrow-xl": arrowXl,
     "aruba-post": arubaPost,
     "asendia": asendia,
+    "asl-track": aslTrack,
     "astral-aviation": astralAviation,
     "asyad-express": asyadExpress,
     "atc-logistical": atcLogistical,
@@ -2547,6 +2549,7 @@ export const REGISTRY: RegistryDefinition = {
     "asiafly": "universal",
     "asigna": "universal",
     "asl-asia": "universal",
+    "asl-track": "asl-track",
     "astral-aviation": "astral-aviation",
     "asyad-express": "asyad-express",
     "atc-express": "universal",

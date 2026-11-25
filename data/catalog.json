@@ -10662,6 +10662,42 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "asl-track": {
+    "displayName": "ASL Track",
+    "color": "#17538f",
+    "aliases": [
+      "ASLTrack"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "asl-track",
+      "localClocks": true
+    },
+    "canaryUrl": "https://asltrack.com/",
+    "trackingUrlTemplate": "https://asltrack.com/track/{trackingNumber}",
+    "trackingSearchUrl": "https://asltrack.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "asltrack.com",
+          "www.asltrack.com"
+        ],
+        "path": "^/track/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^ASL\\d{11}$",
+        "confidence": "high",
+        "checksum": "luhn-digits"
+      }
+    ]
+  },
   "astral-aviation": {
     "displayName": "Astral Aviation Cargo",
     "color": "#09518b",

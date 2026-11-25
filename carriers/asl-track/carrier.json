@@ -1,0 +1,85 @@
+{
+  "id": "asl-track",
+  "displayName": "ASL Track",
+  "aliases": [
+    "ASLTrack"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#17538f"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "asl-track",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://asltrack.com/track/{trackingNumber}",
+    "searchUrl": "https://asltrack.com/",
+    "canaryUrl": "https://asltrack.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivered_at",
+      "destination_country",
+      "origin",
+      "destination",
+      "eta",
+      "provider_code"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "provider_code"
+    ],
+    "discarded": [
+      "delivered_at",
+      "origin",
+      "destination",
+      "eta"
+    ],
+    "unavailable": [
+      "weight",
+      "recipient_name",
+      "service_name",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "asltrack.com",
+        "www.asltrack.com"
+      ],
+      "path": "^/track/([^/?#]+)/?$"
+    }
+  ],
+  "detection": [
+    {
+      "id": "asl-track-1",
+      "pattern": "^ASL\\d{11}$",
+      "confidence": "high",
+      "checksum": "luhn-digits"
+    }
+  ]
+}
