@@ -439,7 +439,7 @@ a build does not show a changed deadline or a field missing from a reply.
 
 ## License
 
-This derivative is [AGPL-3.0](LICENSE), separate from the core package's Apache license.
+This derivative is [AGPL-3.0](LICENSE), separate from the core package's licence.
 [Matching source and redistribution](SOURCE.md).
 
 Track718 has a Juxi-only helper for its guest detail page. It binds the selected Juxi carrier,

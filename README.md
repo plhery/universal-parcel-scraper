@@ -198,16 +198,10 @@ Each carrier lives in its own folder with synthetic fixtures and offline tests.
 
 ## License
 
-From version 0.1294.0, [PolyForm Noncommercial 1.0.0](LICENSE): any noncommercial use, as the
-licence defines it, is allowed. A copy, changed or not, keeps the `Required Notice:` line at
-the top of LICENSE.
+[PolyForm Noncommercial 1.0.0](LICENSE): any noncommercial use, as the licence defines it, is
+allowed. A copy, changed or not, keeps the `Required Notice:` line at the top of LICENSE.
 
-Versions up to 0.1293.2, and their `-main` prereleases, were released under
-[Apache-2.0](LICENSES/Apache-2.0.txt) and stay under it: the change is not retroactive. The
-parts that bo0tzz, bkoroglu1 and Lewis Carter contributed under Apache-2.0 also stay available
-under it; [NOTICE](NOTICE) lists them.
-
-From 0.1387.0, the carrier catalog and the tracking-number patterns, which apps bundle, are
+The carrier catalog and the tracking-number patterns, which apps bundle, are
 [AGPL-3.0-only](LICENSES/AGPL-3.0.txt); [NOTICE](NOTICE) lists their files.
 
 The optional TRAWL image is [AGPL-3.0](trawl/LICENSE). Credits are in [NOTICE](NOTICE).
