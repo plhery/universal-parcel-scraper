@@ -77,8 +77,10 @@ instead.
   Xinghe Freight's records, on the same tenant, are read the same way.
 - Rows coded `CO_C_CR` come from the platform's custom track product (轨迹定制), which writes
   them to a script: on Tianhui Hengyuan they read like China Post's scans, all on one second of
-  the minute, and on Mayi Yinfu they have the parcel abroad before it reaches the airport. They
-  are held back on every tenant and named like rows written ahead.
+  the minute, and on Mayi Yinfu they have the parcel abroad before it reaches the airport. Each is
+  written at its own clock to the second, at a fixed lead after the departure from the operations
+  centre: on ED POST a day and a second after it, while the flight rows people add come after their
+  clocks. They are held back on every tenant and named like rows written ahead.
 - A record's product (`productKindName`) is the service name, in English where every Chinese
   term of it is known ("欧洲DHL快线-A" is "Europe DHL Express Line-A"), else as written.
 - Rows carry wall clocks without an offset, abroad too, on the trackers' Beijing clock: rows
