@@ -16530,6 +16530,14 @@
     ]
   },
   {
+    "input": "1092972",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
+    ]
+  },
+  {
     "input": "109338901674",
     "carrier": "unknown",
     "confidence": "low",
@@ -63997,6 +64005,14 @@
     "confidence": "high",
     "candidates": [
       "ozon-logistics"
+    ]
+  },
+  {
+    "input": "6528596",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
     ]
   },
   {

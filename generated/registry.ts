@@ -406,6 +406,7 @@ import { adapter as fsqh } from '../carriers/fsqh/adapter.js';
 import { adapter as ftdNz } from '../carriers/ftd-nz/adapter.js';
 import { adapter as fukuyama } from '../carriers/fukuyama/adapter.js';
 import { adapter as fxdcPost } from '../carriers/fxdc-post/adapter.js';
+import { adapter as fynex } from '../carriers/fynex/adapter.js';
 import { adapter as g2Ocean } from '../carriers/g2-ocean/adapter.js';
 import { adapter as gaash } from '../carriers/gaash/adapter.js';
 import { adapter as gaintLogistic } from '../carriers/gaint-logistic/adapter.js';
@@ -1134,6 +1135,7 @@ import { adapter as xingyunyi } from '../carriers/xingyunyi/adapter.js';
 import { adapter as xlcourier } from '../carriers/xlcourier/adapter.js';
 import { adapter as xlsFutar } from '../carriers/xls-futar/adapter.js';
 import { adapter as xpoLtl } from '../carriers/xpo-ltl/adapter.js';
+import { adapter as xpressCourierLink } from '../carriers/xpress-courier-link/adapter.js';
 import { adapter as xpressLogisticsLu } from '../carriers/xpress-logistics-lu/adapter.js';
 import { adapter as xpressbees } from '../carriers/xpressbees/adapter.js';
 import { adapter as xylShips } from '../carriers/xyl-ships/adapter.js';
@@ -1582,6 +1584,7 @@ export const REGISTRY: RegistryDefinition = {
     "ftd-nz": ftdNz,
     "fukuyama": fukuyama,
     "fxdc-post": fxdcPost,
+    "fynex": fynex,
     "g2-ocean": g2Ocean,
     "gaash": gaash,
     "gaint-logistic": gaintLogistic,
@@ -2310,6 +2313,7 @@ export const REGISTRY: RegistryDefinition = {
     "xlcourier": xlcourier,
     "xls-futar": xlsFutar,
     "xpo-ltl": xpoLtl,
+    "xpress-courier-link": xpressCourierLink,
     "xpress-logistics-lu": xpressLogisticsLu,
     "xpressbees": xpressbees,
     "xyl-ships": xylShips,
@@ -3074,7 +3078,7 @@ export const REGISTRY: RegistryDefinition = {
     "furdeco": "universal",
     "furniture-logis": "universal",
     "fxdc-post": "fxdc-post",
-    "fynex": "universal",
+    "fynex": "fynex",
     "g2-ocean": "g2-ocean",
     "g4s-kenya": "universal",
     "gaash": "gaash",
@@ -4347,7 +4351,7 @@ export const REGISTRY: RegistryDefinition = {
     "xpedist": "universal",
     "xpo-ltl": "xpo-ltl",
     "xportel": "universal",
-    "xpress-courier-link": "universal",
+    "xpress-courier-link": "xpress-courier-link",
     "xpress-freight-management": "universal",
     "xpress-logistics-lu": "xpress-logistics-lu",
     "xpressbees": "xpressbees",

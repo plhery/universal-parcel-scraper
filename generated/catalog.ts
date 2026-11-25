@@ -29423,12 +29423,25 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Dubai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "fynex",
+      "localClocks": true
     },
     "canaryUrl": "https://fynexcourierdubai.com/tracking/",
+    "trackingUrlTemplate": "https://fynexcourierdubai.com/tracking/?trackno={trackingNumber}",
     "trackingSearchUrl": "https://fynexcourierdubai.com/tracking/",
     "helpUrl": "https://fynexcourierdubai.com/contacts/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "fynexcourierdubai.com",
+          "www.fynexcourierdubai.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "trackno"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "g2-ocean": {
@@ -70659,7 +70672,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Karachi",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "xpress-courier-link",
+      "localClocks": true
     },
     "canaryUrl": "https://xpresscourierlink.com/tracking/",
     "trackingUrlTemplate": "https://xpresscourierlink.com/tracking/?txtstatus=International&search={trackingNumber}",
