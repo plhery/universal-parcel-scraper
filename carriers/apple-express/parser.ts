@@ -13,8 +13,9 @@ export const PROVIDER = 'Apple Express';
 export const APPLE_EXPRESS_MAX_BYTES = 256 * 1024;
 // Apple Express's own order numbers, a sequence: eight digits, and nine once it outgrows eight.
 const ORDER = /^\d{8,9}$/;
-// The references the tracker also opens: a shipper's APPL reference, and Cainiao's for marketplace parcels.
-const REFERENCE = /^(?:APPL\d{13}|CACAINIAO\d{11})$/;
+// The references the tracker also opens: a shipper's APPL reference or thirteen digits, as Temu's
+// Canadian parcels carry, and Cainiao's for marketplace parcels.
+const REFERENCE = /^(?:APPL\d{13}|\d{13}|CACAINIAO\d{11})$/;
 // A wall clock to the second, with the fraction of a second some rows add.
 const CLOCK = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.\d{1,7})?$/;
 // The zones a row can name beside its clock, as Apple Express abbreviates them.
@@ -38,7 +39,7 @@ export function normalizeAppleExpressNumber(raw: string): AppleExpressNumber {
   const number = raw.length <= 64 ? normalizeTrackingNumber(raw).toUpperCase() : '';
   if (ORDER.test(number)) return { number, kind: 'order' };
   if (REFERENCE.test(number)) return { number, kind: 'reference' };
-  throw new InvalidInputError(PROVIDER, 'Apple Express tracks eight-digit order numbers, APPL references and Cainiao references');
+  throw new InvalidInputError(PROVIDER, 'Apple Express tracks eight-digit order numbers and its shippers\' and Cainiao\'s references');
 }
 
 /** An optional text field; anything but a string is a changed reply. */

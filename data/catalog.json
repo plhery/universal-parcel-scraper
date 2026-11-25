@@ -9958,6 +9958,11 @@
       {
         "pattern": "^APPL\\d{13}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^102\\d{10}$",
+        "confidence": "low",
+        "servedCountriesOnly": true
       }
     ]
   },

@@ -66,9 +66,12 @@ Tracked through the lookup its tracking page makes.
 Apple Express order numbers are a sequence of eight digits, a run many carriers share, so no
 rule claims them; the adapter also takes nine for when the sequence passes eight. The tracker
 also opens a parcel from a shipper's reference: `APPL` followed by thirteen digits, which
-`apple-express-1` claims, or Cainiao's `CACAINIAO` and eleven digits for marketplace parcels,
-which AliExpress detection keeps. The adapter accepts those two references only. The samples
-and their sources are in [`numbers.json`](numbers.json).
+`apple-express-1` claims, thirteen digits alone, as on Temu's parcels to Canada, or Cainiao's
+`CACAINIAO` and eleven digits for marketplace parcels, which AliExpress detection keeps.
+Thirteen digits are a run many carriers share, so `apple-express-2` only suggests those from 102,
+the series Temu's parcels carry: recognition asks Apple Express first for a lookup from Canada or
+the United States, and only as a last resort from other countries. The adapter accepts these
+three references only. The samples and their sources are in [`numbers.json`](numbers.json).
 
 ## Links
 

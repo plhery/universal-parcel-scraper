@@ -4163,6 +4163,20 @@
     "reason": "13-digit numbers starting with 1 or 250 add DPD France and Korea Post's registered letters to the three carriers sharing that length; the number stays a suggestion. Unseparated Ozon postings also share this length and remain low-confidence candidates requiring direct confirmation."
   },
   {
+    "shape": "9{13} starting with 1 or 250 that fails the Ukrposhta check, ending 7, 8 or 9",
+    "carriers": [
+      "correos-chile",
+      "dpd-fr",
+      "korea-post",
+      "yunda",
+      "econt",
+      "paquetexpress",
+      "ozon-logistics",
+      "apple-express"
+    ],
+    "reason": "13-digit numbers starting with 1 or 250 add DPD France and Korea Post's registered letters to the three carriers sharing that length; the number stays a suggestion. Unseparated Ozon postings also share this length and remain low-confidence candidates requiring direct confirmation. Apple Express's shipper references from 102, on Temu's parcels to Canada, add it as a suggestion its own tracker confirms."
+  },
+  {
     "shape": "Twelve digits that pass the FedEx check",
     "carriers": [
       "brt",

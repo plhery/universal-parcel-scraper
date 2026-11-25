@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
@@ -16,6 +17,7 @@ const ORDER = '12345679';
 const REFERENCE = 'APPL1234067890124';
 const LISTED = '123456789';
 const CAINIAO = 'CACAINIAO12345678901';
+const TEMU = '1029999999999';
 const UNKNOWN = '00000000';
 
 type Row = Record<string, unknown>;
@@ -326,6 +328,25 @@ describe('Apple Express numbers', () => {
     for (const number of [ORDER, LISTED, CAINIAO]) {
       expect(detectCarrierMatch(number).carrier, number).not.toBe('apple-express');
     }
+  });
+
+  it('suggests a Temu reference from 102, asks it first from its own countries and last from others', async () => {
+    expect(detectCarrierMatch(TEMU)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch(TEMU).candidates).toContain('apple-express');
+    for (const country of ['CA', 'US']) expect(recognitionCandidates(TEMU, { countryHint: country })[0]?.carrier, country).toBe('apple-express');
+    const elsewhere = recognitionCandidates(TEMU, { countryHint: 'FR' }).map(({ carrier }) => carrier);
+    expect(elsewhere).toContain('apple-express');
+    for (const number of ['1039999999999', '102999999999', '10299999999999', 'X029999999999']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('apple-express');
+    }
+    const fetcher = vi.fn<typeof fetch>(service({
+      [appleExpressOrdersUrl(TEMU)]: listed(TEMU, ORDER),
+      [appleExpressOrderUrl(ORDER)]: changed('delivered', (body) => { body.orderDetails.reference = TEMU; }),
+    }));
+    await expect(carrier(fetcher).recognize!(TEMU)).resolves.toMatchObject({ known: true });
+    await expect(carrier(fetcher).track({ number: TEMU }))
+      .resolves.toMatchObject({ current_stage: 'delivered', canonical_tracking_number: ORDER });
+    expect(normalizeAppleExpressNumber('1039999999999')).toEqual({ number: '1039999999999', kind: 'reference' });
   });
 });
 

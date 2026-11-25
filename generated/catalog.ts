@@ -9962,6 +9962,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^APPL\\d{13}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^102\\d{10}$",
+        "confidence": "low",
+        "servedCountriesOnly": true
       }
     ]
   },
@@ -75414,7 +75419,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "apg-global": [],
   "apm-logistics": [],
   "apollo-budbiler": [],
-  "apple-express": ["apple-express-1"],
+  "apple-express": ["apple-express-1","apple-express-2"],
   "apx-logistics": [],
   "aquantuo": [],
   "aquiline": ["aquiline-1"],

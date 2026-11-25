@@ -121,6 +121,12 @@
       "id": "apple-express-1",
       "pattern": "^APPL\\d{13}$",
       "confidence": "high"
+    },
+    {
+      "id": "apple-express-2",
+      "pattern": "^102\\d{10}$",
+      "confidence": "low",
+      "servedCountriesOnly": true
     }
   ]
 }
