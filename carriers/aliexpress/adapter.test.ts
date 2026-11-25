@@ -781,6 +781,10 @@ describe('Cainiao projection', () => {
       'delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit',
     ]);
     expect(journey(['GTMS_DEL_FAILURE', 'GTMS_DO_DEPART'])).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+    // A missed delivery relayed only as the next attempt to come is one too, and the next round follows it.
+    expect(journey(['GTMS_RE_DELIVERING', 'GTMS_DO_DEPART'])).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+    expect(journey(['GTMS_DO_DEPART', 'GTMS_RE_DELIVERING']).current_stage).toBe('out_for_delivery');
+    expect(statusMap.stage('GTMS_RE_DELIVERING', 'a new delivery attempt is ongoing')).toBe('failed_attempt');
     // A pickup point that would not take the parcel in is a failed attempt; one that signed for it holds it for the recipient.
     const atPoint = journey(['PUDO_DELIVERY', 'PUDO_DELIVERY_FAILURE', 'LM_DELIVERY_DEPART']);
     expect(atPoint).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup' });

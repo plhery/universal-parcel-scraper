@@ -559,6 +559,14 @@
       "note": "The courier could not leave the parcel at the pickup point (closed); Ecoscooting words the same scan as a failed delivery to the parcelshop."
     },
     {
+      "code": "GTMS_RE_DELIVERING",
+      "wording": "A new delivery attempt is ongoing",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "Relays the delivering courier's missed delivery: Correos's own reply states \"Realizado intento de entrega\" at the same instant, and the feed has no failure scan of its own for that attempt; the next round follows days later."
+    },
+    {
       "code": "GSTA_INBOUND",
       "wording": "Arrived at pick-up point. Package available for collection.",
       "language": "en",

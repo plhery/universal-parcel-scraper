@@ -134,6 +134,9 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['GSTA_SIGN', 'delivered'],
   // The courier could not deliver and tries again: a failed attempt, below.
   ['GTMS_DEL_FAILURE', 'exception'],
+  // "A new delivery attempt is ongoing": Cainiao's relay of the courier's missed delivery, with no failure scan of its
+  // own for that attempt, whose next round follows: a failed attempt, below.
+  ['GTMS_RE_DELIVERING', 'exception'],
   // "Delivered to PUDO Failure": the courier could not leave it at the pickup point (closed): a failed attempt, below.
   ['PUDO_DELIVERY_FAILURE', 'exception'],
   // "Delivery Failed": the last-mile gateway's failed round, with the reason in its longer wording: a failed attempt, below.
@@ -186,7 +189,7 @@ export function cainiaoActionStage(code: string): Stage | undefined {
   if (code === 'PU_PICKUP_SUCCESS' || code === 'PU_SIGN_IN_SUCCESS') return 'accepted';
   // Cainiao's last-mile gateway words it "Delivery Attempt Failure" in its
   // `delivery_failed` group (seen live through Ecoscooting, another client).
-  if (['GTMS_DEL_FAILURE', 'LM_DELIVERY_FAILURE', 'PUDO_DELIVERY_FAILURE'].includes(code)) return 'failed_attempt';
+  if (['GTMS_DEL_FAILURE', 'GTMS_RE_DELIVERING', 'LM_DELIVERY_FAILURE', 'PUDO_DELIVERY_FAILURE'].includes(code)) return 'failed_attempt';
   if (code === 'RT_INBOUND' || code === 'RT_EX_SIGNED') return 'returned';
   const status = CAINIAO_ACTION_STATUS.get(code);
   return status ? cainiaoStageByStatus()[status] : undefined;

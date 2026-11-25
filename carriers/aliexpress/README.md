@@ -94,6 +94,8 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
   recipient collecting the parcel.
 - `GTMS_DEL_FAILURE` is a missed delivery: the parcel is an `exception` at the `failed_attempt`
   stage, as Cainiao's last-mile gateway also reports it for [Ecoscooting](../ecoscooting/README.md).
+  `GTMS_RE_DELIVERING`, "A new delivery attempt is ongoing", relays the courier's missed delivery
+  without a failure scan of its own, so it is a failed attempt too.
 - Each scan is staged by its own action code, so pickup availability stays distinct from the
   delivery round after collection. The destination's customs entry and import clearance start
   remain customs until release. Export clearance runs at the departure hub before the parcel
