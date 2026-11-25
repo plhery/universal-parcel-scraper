@@ -7011,5 +7011,10 @@
     "carrier": "bulongguoji",
     "kind": "open",
     "reason": "BULONGGUOJI numbers seen so far are BL, twelve digits and YQ, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "sdh-express",
+    "kind": "open",
+    "reason": "Lightning Monkey numbers seen so far are SDH and ten digits, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
   }
 ]

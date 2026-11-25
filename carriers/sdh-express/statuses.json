@@ -1,0 +1,19 @@
+{
+  "carrier": "sdh-express",
+  "entries": [
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order's data, before the warehouse has the parcel."},
+    {"code": "ARRIVAL", "wording": "Arrive at the delivery point", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The warehouse's receipt in Hangzhou, where the shipper hands the parcel over; the delivery point is not the recipient's."},
+    {"code": "SHIPMENT", "wording": "Cargo leaving the operation center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The Hangzhou warehouse's departure."},
+    {"code": "CO_C_CR", "wording": "Arrive at the sorting center for operation and transfer", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "arrive at international airport to abroad", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Shipment started the customs clearance process at origin", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row: export clearance in China, a routine step before the flight. Listed as a planned step."},
+    {"wording": "departed from airport of origin", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight's departure from Hong Kong, written ahead with the landing: listed as a planned step."},
+    {"wording": "arrived at airport of destination", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight's landing in Los Angeles, written ahead with the departure: listed as a planned step."},
+    {"wording": "custom clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance in the United States done, after the landing."},
+    {"wording": "CONSIGNMENT RECEIVED BY OVERSEAS FORWARDER", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's partner in the United States takes the parcel after the clearance."},
+    {"wording": "SHIPMENT RECEIVED BY DELIVERY FACILITY", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The delivering carrier's facility, which the line does not name."},
+    {"wording": "Shipment onforwarded by delivery facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The delivering carrier's facility sending the parcel on."},
+    {"wording": "The delivery company is processing it", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The delivering carrier, unnamed, has the parcel: not a delivery round."},
+    {"wording": "The post office is in operation", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The post office in the United States has the parcel: not a delivery round."}
+  ]
+}

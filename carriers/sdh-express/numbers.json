@@ -1,0 +1,24 @@
+{
+  "carrier": "sdh-express",
+  "records": [
+    {
+      "number": "SDH0095088014",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260521194744/https://www.parcelpanel.com/couriers/sdhexpress/",
+        "date": "2026-05-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's SDH Express page shows. Lightning Monkey's tracker answers it with a parcel sent from Hangzhou, flown from Hong Kong to Los Angeles and with a post office in the United States."
+    }
+  ]
+}
