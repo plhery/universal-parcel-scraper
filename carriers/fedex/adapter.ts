@@ -69,6 +69,11 @@ const API_TIMEOUT_MS = 15_000;
 const MAX_EVENTS_TO_INSPECT = 500;
 const MAX_EVENTS_TO_RETURN = 100;
 const HOUR_MS = 3_600_000;
+const DAY_MS = 24 * HOUR_MS;
+// A reused number's current shipment shows activity within this long, while every other shipment under it ended over
+// ENDED_MS ago.
+const CURRENT_MS = 60 * DAY_MS;
+const ENDED_MS = 180 * DAY_MS;
 // The least time a browser read of the page needs; a successful one takes 10 to 20 seconds. A route worker serves one
 // lookup per browser: while every one is busy, the lookup waits only as long as this much of its budget would remain
 // for the browser afterwards, and it reads again after a refused tracking call only with this much left.
@@ -359,6 +364,47 @@ function errorCode(error: unknown): string {
   return isRecord(error) ? cleanScalar(error.code).toLocaleUpperCase('en-US') : '';
 }
 
+/** The newest calendar day these values name, or null without one. */
+function newestDay(values: readonly unknown[]): number | null {
+  let newest: number | null = null;
+  for (const value of values) {
+    const day = /^(\d{4})-(\d{2})-(\d{2})/.exec(cleanScalar(value));
+    const at = day ? Date.UTC(Number(day[1]), Number(day[2]) - 1, Number(day[3])) : NaN;
+    if (Number.isFinite(at) && (newest === null || at > newest)) newest = at;
+  }
+  return newest;
+}
+
+/**
+ * FedEx reuses numbers and lists every shipment it keeps under one. The one with activity in the last 60 days is
+ * the shipment tracked now when every other one ended over 180 days ago, and when all of them ended that long ago
+ * the number has no current shipment (null). Any other choice stays refused: the qualifier is opaque and picking
+ * one risks another recipient's parcel.
+ */
+function currentMatch<Match>(matches: readonly Match[], activity: (match: Match) => number | null, readAt: number): Match | null {
+  if (matches.length === 1) return matches[0]!;
+  const days = matches.map(activity);
+  const ended = (day: number | null) => day !== null && readAt - day > ENDED_MS;
+  if (days.every(ended)) return null;
+  const current = days.flatMap((day, index) => day !== null && readAt - day <= CURRENT_MS ? [index] : []);
+  if (current.length === 1 && days.every((day, index) => index === current[0] || ended(day))) return matches[current[0]!]!;
+  throw new SchemaError('FedEx', 'FedEx returned several shipments for this number');
+}
+
+/** A page package's dates and its scans' days. */
+function pageActivity(item: JsonObject): number | null {
+  const scans = Array.isArray(item.scanEventList) ? item.scanEventList.filter(isRecord) : [];
+  return newestDay([item.shipDt, item.tenderedDt, item.pickupDt, item.actDeliveryDt, item.lastScanDateTime, ...scans.map((scan) => scan.date)]);
+}
+
+/** The page package that answers for the number, or null when FedEx keeps only ended shipments under it. */
+function pageShipment(packages: readonly JsonObject[], number: string, readAt: number): JsonObject | null {
+  const matches = packages.filter((item) =>
+    cleanScalar(item.trackingNbr).replace(/[\s.-]/g, '').toLocaleUpperCase('en-US') === number);
+  if (matches.length === 0) throw new SchemaError('FedEx', 'FedEx did not return the requested parcel');
+  return currentMatch(matches, pageActivity, readAt);
+}
+
 /** An empty answer proves nothing either way, so it stays a retryable unknown. */
 function notLocated(): CarrierResult {
   return {
@@ -507,14 +553,8 @@ export function parseFedExTrackingResponse(payload: unknown, trackingNumber: str
     }
     return notLocated();
   }
-  const matches = packages.filter((item) =>
-    cleanScalar(item.trackingNbr).replace(/[\s.-]/g, '').toLocaleUpperCase('en-US') === number);
-  if (matches.length !== 1) {
-    throw new SchemaError('FedEx', matches.length === 0
-      ? 'FedEx did not return the requested parcel'
-      : 'FedEx returned several shipments for this number');
-  }
-  const shipment = matches[0]!;
+  const shipment = pageShipment(packages, number, readAt);
+  if (!shipment) return notLocated();
   const scans = Array.isArray(shipment.scanEventList) ? shipment.scanEventList.filter(isRecord) : [];
   const errors = Array.isArray(shipment.errorList) ? shipment.errorList.filter(isRecord) : [];
   const codes = errors.map(errorCode).join(' ');
@@ -591,12 +631,12 @@ export function parseFedExApiResponse(payload: unknown, trackingNumber: string, 
   const results = complete.filter((entry) => bound(entry.trackingNumber))
     .flatMap((entry) => Array.isArray(entry.trackResults) ? entry.trackResults.filter(isRecord) : [])
     .filter((result) => bound(isRecord(result.trackingNumberInfo) ? result.trackingNumberInfo.trackingNumber : undefined));
-  if (results.length !== 1) {
-    throw new SchemaError('FedEx', results.length === 0
-      ? 'FedEx did not return the requested parcel'
-      : 'FedEx returned several shipments for this number');
-  }
-  const result = results[0]!;
+  if (results.length === 0) throw new SchemaError('FedEx', 'FedEx did not return the requested parcel');
+  const result = currentMatch(results, (match) => newestDay([
+    ...(Array.isArray(match.dateAndTimes) ? match.dateAndTimes.filter(isRecord).map((entry) => entry.dateTime) : []),
+    ...(Array.isArray(match.scanEvents) ? match.scanEvents.filter(isRecord).map((scan) => scan.date) : []),
+  ]), readAt);
+  if (!result) return notLocated();
   const code = errorCode(result.error);
   if (/AUTHENTICAT|AUTHORIZATION/.test(code)) {
     throw new InputRequiredError('FedEx', 'recipient verification', 'FedEx requires recipient verification for this shipment');
@@ -882,9 +922,12 @@ export class FedExTracker {
         // A later status can omit scans that this same lookup already received.
         // It keeps that history only when it still fits the newer status and clock.
         if (result.summary_only === true) {
-          const qualifier = (data: unknown): unknown => isRecord(data) && isRecord(data.output) && Array.isArray(data.output.packages)
-            ? data.output.packages.filter(isRecord).find(item => cleanScalar(item.trackingNbr).replace(/[\s.-]/g, '') === number)?.trackingQualifier
-            : undefined;
+          const qualifier = (data: unknown): unknown => {
+            try {
+              return isRecord(data) && isRecord(data.output) && Array.isArray(data.output.packages)
+                ? pageShipment(data.output.packages.filter(isRecord), number, Date.now())?.trackingQualifier : undefined;
+            } catch { return undefined; }
+          };
           const currentQualifier = qualifier(payload);
           for (const earlier of responses.slice(index + 1)) {
             if (typeof currentQualifier !== 'string' || !currentQualifier.trim()) break;

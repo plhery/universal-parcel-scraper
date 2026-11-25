@@ -100,9 +100,11 @@ fallback')`.
   label for, then "Label created" again. A scan-less status before movement stays a summary.
 - A recipient-gated shipment (`TRACKING.AUTHORIZATION.ERROR`) raises `InputRequiredError`
   instead of retrying a verification the adapter cannot supply.
-- Results bind strictly to `trackingNbr`. Several matches (same digits, different
-  qualifiers) are refused: the qualifier is opaque and picking one risks another
-  recipient's parcel.
+- Results bind strictly to `trackingNbr`. FedEx reuses numbers and lists every shipment it
+  keeps under one, each with its own opaque qualifier. The one with activity in the last 60
+  days is read when every other one ended over 180 days ago; when all of them ended that long
+  ago the number has no current shipment yet, a retryable unknown. Any other set of matches
+  is refused, since picking one risks another recipient's parcel.
 - Opt-in browser recognition uses the same lookup and requires dated shipment activity.
   It returns the history with its confirmation so callers can reuse it after identification.
 - Status uses `keyStatusCD` / scan `statusCD` first, then substring matches on the prose. A

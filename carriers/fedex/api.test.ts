@@ -200,8 +200,12 @@ describe('FedEx official API reply', () => {
     const duplicated = apiFixture();
     const results = (duplicated.output as { completeTrackResults: { trackResults: unknown[] }[] }).completeTrackResults[0]!.trackResults;
     results.push(structuredClone(results[0]));
-    expect(() => parseFedExApiResponse(duplicated, DELIVERED_NUMBER))
+    expect(() => parseFedExApiResponse(duplicated, DELIVERED_NUMBER, Date.parse('2026-09-10T00:00:00Z')))
       .toThrow(expect.objectContaining({ name: 'SchemaError', message: 'FedEx returned several shipments for this number' }));
+    // A reused number: the shipment a year before is set aside for the one tracked now.
+    results[1] = JSON.parse(JSON.stringify(results[1]).replaceAll('2026-', '2025-'));
+    expect(parseFedExApiResponse(duplicated, DELIVERED_NUMBER, Date.parse('2026-09-10T00:00:00Z')))
+      .toMatchObject({ status: 'delivered', current_stage: 'delivered' });
     for (const payload of [null, {}, { output: {} }, { errors: [{ code: 'SYSTEM.UNAVAILABLE.EXCEPTION' }] }]) {
       expect(() => parseFedExApiResponse(payload, DELIVERED_NUMBER)).toThrow(expect.objectContaining({ name: 'SchemaError' }));
     }

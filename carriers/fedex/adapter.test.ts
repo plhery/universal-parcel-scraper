@@ -571,6 +571,29 @@ describe('FedEx structured response', () => {
     expect(serialized).not.toContain('XMEMA');
   });
 
+  it("reads a reused number's current shipment, and none while every one under it has ended", () => {
+    const packageOf = (payload: Record<string, unknown>) => ((payload.output as Record<string, unknown>).packages as Record<string, unknown>[])[0]!;
+    const aged = (shipment: Record<string, unknown>, from: string, to: string) =>
+      JSON.parse(JSON.stringify(shipment).replaceAll(from, to)) as Record<string, unknown>;
+    const delivered = packageOf(deliveredFixture());
+    const current: Record<string, unknown> = { ...packageOf(inTransitFixture()), trackingNbr: DELIVERED_NUMBER };
+    const reply = (...packages: Record<string, unknown>[]) => ({ output: { packages } });
+    const readAt = Date.parse('2026-10-01T00:00:00Z');
+    // A delivery a year before, beside a shipment scanned this week: the one tracked now.
+    const reused = parseFedExTrackingResponse(reply(aged(delivered, '2026-', '2025-'), current), DELIVERED_NUMBER, readAt);
+    expect(reused).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
+    expect(reused.events?.length).toBe((current.scanEventList as unknown[]).length);
+    // Only shipments that ended long ago: no current one yet, so the lookup is retried.
+    expect(parseFedExTrackingResponse(reply(aged(delivered, '2026-', '2025-'), aged(current, '2026-', '2025-')), DELIVERED_NUMBER, readAt))
+      .toMatchObject({ status: 'unknown', events: [] });
+    // A delivery four months before is not old enough to set aside.
+    expect(() => parseFedExTrackingResponse(reply(aged(delivered, '2026-09', '2026-06'), current), DELIVERED_NUMBER, readAt))
+      .toThrow('several shipments');
+    // Nor is a shipment without any date.
+    const undated = { trackingNbr: DELIVERED_NUMBER, keyStatus: 'Label created', keyStatusCD: 'OC', scanEventList: [] };
+    expect(() => parseFedExTrackingResponse(reply(undated, current), DELIVERED_NUMBER, readAt)).toThrow('several shipments');
+  });
+
   it('fails closed on another parcel, duplicates and invalid envelopes', () => {
     const other = deliveredFixture();
     ((((other.output as Record<string, unknown>).packages as Record<string, unknown>[])[0]!)).trackingNbr = '999999999997';
@@ -580,7 +603,7 @@ describe('FedEx structured response', () => {
     ((duplicated.output as Record<string, unknown>).packages as unknown[]).push(
       ((deliveredFixture().output as Record<string, unknown>).packages as unknown[])[0],
     );
-    expect(() => parseFedExTrackingResponse(duplicated, DELIVERED_NUMBER))
+    expect(() => parseFedExTrackingResponse(duplicated, DELIVERED_NUMBER, Date.parse('2026-10-01T00:00:00Z')))
       .toThrow('several shipments');
     expect(() => parseFedExTrackingResponse({ output: {} }, DELIVERED_NUMBER))
       .toThrow('invalid tracking response');
