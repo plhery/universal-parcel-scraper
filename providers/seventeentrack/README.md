@@ -205,6 +205,12 @@ carrier.
   several. A delivery with no place is the delivering carrier's, on the destination's clock: on
   Beijing's, Swiss Post's came seven hours before its arrival at the delivery point. Juxi's own
   rows, in China or with no place, keep 17TRACK's reading.
+- FIRST LINE's group's leg (carrier key 191047, `1ST`) dates the line's rows in China and Hong
+  Kong on Beijing's clock, to the second, and relays the destination's rows at their wall
+  clocks under the same `+08:00`: so read, an arrival at a Paris airport came seven hours
+  early, before the customs scans that follow it. A row placed outside China and Hong Kong
+  keeps its wall clock in `local_time`, as the
+  [FIRST LINE adapter](../../carriers/first-line/README.md) keeps it.
 - DAI Post's leg (carrier key 100790) shows the tracker's clocks, each the scan's local time,
   and 17TRACK puts one offset on all of them: `+01:00` on a parcel from London, on its
   Singapore and Brisbane scans too. A scan is read as the

@@ -673,6 +673,30 @@ describe('17TRACK result parsing', () => {
     expect(parse17TrackResponse(reply(100999, [row('15:51:00', 'Shenzhen')]), number).events?.[0]?.time).toBe('2026-05-07T15:51:00.000Z');
   });
 
+  it("keeps the wall clocks of FIRST LINE's rows at the destination, which 17TRACK labels with Beijing's +08:00", () => {
+    // So read, an arrival at a Paris airport came seven hours early, before the customs scans that follow it.
+    const row = (date: string, time: string, description: string, location: string) => ({
+      time_iso: `${date}T${time}+08:00`, time_utc: null, time_raw: { date, time, timezone: null },
+      description, location, stage: null, sub_status: 'InTransit_Other' });
+    const reply = (key: number, name: string, events: unknown[]): Payload => ({ meta: { code: 200 }, shipments: [{ number, code: 200,
+      shipment: { latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key, name, country: 'CN' }, events }] } } }] });
+    const parsed = parse17TrackResponse(reply(191047, '1ST', [
+      row('2026-05-12', '13:20:00', 'The package has been transferred to the service provider', 'CDG'),
+      row('2026-05-12', '08:05:00', 'The package is being submitted for customs clearance', 'CDG'),
+      row('2026-05-11', '19:40:00', 'Arrived at destination airport', 'CDG'),
+      row('2026-05-09', '21:10:00', 'Hand over to airline', 'Hong Kong'),
+      row('2026-05-06', '22:15:30', 'Barcode scanning', 'SHENZHEN'),
+      row('2026-05-04', '16:45:12', 'Forecast has been received', ''),
+    ]), number);
+    expect(parsed.events?.map((event) => [event.time ?? `local ${event.local_time}`, event.time_zone])).toEqual([
+      ['local 2026-05-12T13:20:00', undefined], ['local 2026-05-12T08:05:00', undefined], ['local 2026-05-11T19:40:00', undefined],
+      ['2026-05-09T13:10:00.000Z', undefined], ['2026-05-06T14:15:30.000Z', undefined], ['2026-05-04T08:45:12.000Z', undefined]]);
+    expect(parsed.undated_event_count).toBeUndefined();
+    // Another feed keeps 17TRACK's reading.
+    expect(parse17TrackResponse(reply(100999, 'Example', [row('2026-05-11', '19:40:00', 'Arrived at destination airport', 'CDG')]), number)
+      .events?.[0]?.time).toBe('2026-05-11T11:40:00.000Z');
+  });
+
   it("reads Juxi Express's copies of a local carrier's scans abroad on their place's clock, and its own rows as labeled", () => {
     // 17TRACK labels the leg's wall clocks +08:00: so read, USPS's departure from Chicago came ten hours before USPS's own acceptance there.
     const row = (date: string, time: string, description: string, location: string) => ({
