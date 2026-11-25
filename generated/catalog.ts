@@ -23952,6 +23952,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "ed-post": {
+    "displayName": "ED POST",
+    "color": "#c94c40",
+    "aliases": [
+      "易德国际",
+      "Yide International",
+      "易德供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ed-post"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.666post.com",
+          "666post.com"
+        ],
+        "pathPattern": "^/(?:sz56t/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "edi-express": {
     "displayName": "EDI Express",
     "color": "#bf1e2d",
@@ -73173,6 +73205,7 @@ export const CARRIER_IDS = [
   "ecourier",
   "ecourier-uk",
   "ecparcel",
+  "ed-post",
   "edi-express",
   "eek-logistikk",
   "ees-logistics",
@@ -75239,6 +75272,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ecourier": ["ecourier-1"],
   "ecourier-uk": [],
   "ecparcel": [],
+  "ed-post": [],
   "edi-express": [],
   "eek-logistikk": [],
   "ees-logistics": [],

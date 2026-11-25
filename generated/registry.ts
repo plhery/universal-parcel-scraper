@@ -312,6 +312,7 @@ import { adapter as ecomLogistics } from '../carriers/ecom-logistics/adapter.js'
 import { adapter as econt } from '../carriers/econt/adapter.js';
 import { adapter as ecoscooting } from '../carriers/ecoscooting/adapter.js';
 import { adapter as ecourier } from '../carriers/ecourier/adapter.js';
+import { adapter as edPost } from '../carriers/ed-post/adapter.js';
 import { adapter as ediExpress } from '../carriers/edi-express/adapter.js';
 import { adapter as egxpress } from '../carriers/egxpress/adapter.js';
 import { adapter as egyptPost } from '../carriers/egypt-post/adapter.js';
@@ -1483,6 +1484,7 @@ export const REGISTRY: RegistryDefinition = {
     "econt": econt,
     "ecoscooting": ecoscooting,
     "ecourier": ecourier,
+    "ed-post": edPost,
     "edi-express": ediExpress,
     "egxpress": egxpress,
     "egypt-post": egyptPost,
@@ -2900,6 +2902,7 @@ export const REGISTRY: RegistryDefinition = {
     "ecourier": "ecourier",
     "ecourier-uk": "universal",
     "ecparcel": "universal",
+    "ed-post": "ed-post",
     "edi-express": "edi-express",
     "eek-logistikk": "universal",
     "ees-logistics": "universal",
