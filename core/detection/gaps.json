@@ -6930,5 +6930,10 @@
     "carrier": "jgex",
     "kind": "open",
     "reason": "JGEX numbers seen so far are JG and twelve digits, and the only public sample comes from one tracking directory page, too few to claim the shape from other forwarders' numbers, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "wokexp",
+    "kind": "open",
+    "reason": "Wokexp numbers seen so far are WLYK and ten digits, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
   }
 ]

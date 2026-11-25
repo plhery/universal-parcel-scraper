@@ -1,0 +1,17 @@
+{
+  "carrier": "wokexp",
+  "entries": [
+    {"wording": "Shipment received and processed at original facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The warehouse's receipt in China, written once by the line and once by the warehouse (`ARRIVAL`)."},
+    {"wording": "shipment packed and ready for outbond", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Packed in China for the line; the tracker writes outbound as outbond."},
+    {"wording": "Departure from the original facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "In China."},
+    {"wording": "Export customs declaration completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Export clearance in China."},
+    {"wording": "Depart from the original airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight leaves China."},
+    {"wording": "Arrive at the destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight lands, at Amsterdam."},
+    {"wording": "IN transit to warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's row placed in Italy, before Poste Italiane's first scan."},
+    {"wording": "In transito", "language": "it", "stage": "in_transit", "confirmedBy": "live", "note": "Poste Italiane's scan, copied, alone or followed by its sentence."},
+    {"wording": "In transito, la spedizione è in transito", "language": "it", "stage": "in_transit", "confirmedBy": "live", "note": "Poste Italiane's scan with its sentence, copied."},
+    {"wording": "In consegna", "language": "it", "stage": "out_for_delivery", "confirmedBy": "live", "note": "Poste Italiane's scan, copied, alone or followed by its sentence."},
+    {"wording": "In consegna, la spedizione è in consegna", "language": "it", "stage": "out_for_delivery", "confirmedBy": "live", "note": "Poste Italiane's scan with its sentence, copied."},
+    {"wording": "Consegnata, la spedizione è stata consegnata", "language": "it", "stage": "delivered", "confirmedBy": "live", "note": "Poste Italiane's delivery, copied, placed at its delivery office."}
+  ]
+}

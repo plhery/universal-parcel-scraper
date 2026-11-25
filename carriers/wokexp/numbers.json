@@ -1,0 +1,24 @@
+{
+  "carrier": "wokexp",
+  "records": [
+    {
+      "number": "WLYK0000082627",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250708142128/https://www.parcelpanel.com/couriers/wokexp/",
+        "date": "2025-07-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's Wokexp page shows. Wokexp's tracker answers it with a parcel flown to Amsterdam and delivered by Poste Italiane in Italy."
+    }
+  ]
+}
