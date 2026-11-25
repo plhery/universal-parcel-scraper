@@ -301,6 +301,9 @@ describe('TSJY status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'tsjy', providerCode: null, description: '已下单' })).toEqual({ kind: 'mapped', stage: 'accepted' });
     // A line handing the parcel back to TSJY holds the journey up; the shared rules would end it as a return.
     expect(tsjyStage('包裹已退件')).toEqual({ stage: 'exception', source: 'carrier_map' });
+    // That line's warehouse sending the parcel on is the map's, not the shared rules' guess.
+    expect(tsjyStage('货物出库 Left Origin Facility.')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(statusMapAnswer({ carrier: 'tsjy', providerCode: null, description: '货物出库 left origin facility.' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // An own step nobody recorded keeps no stage.
     expect(tsjyStage('仓库已称重')).toBeNull();
   });
