@@ -13984,6 +13984,37 @@
       }
     ]
   },
+  "bulongguoji": {
+    "displayName": "BULONGGUOJI",
+    "color": "#fd1916",
+    "aliases": [
+      "Bulong Guoji",
+      "布龙国际",
+      "深圳市布龙国际供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bulongguoji"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "106.52.54.99"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "burd-delivery": {
     "displayName": "Burd Delivery",
     "color": "#ec008c",
@@ -34357,6 +34388,39 @@
       }
     ]
   },
+  "huayutong": {
+    "displayName": "Huayutong",
+    "color": "#0a94dd",
+    "aliases": [
+      "HYT",
+      "华羽通",
+      "深圳华羽通",
+      "深圳市华羽通国际供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "huayutong",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "szhyt.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "hub-delivery": {
     "displayName": "HUB Delivery",
     "color": "#000000",
@@ -38721,6 +38785,40 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "jytd": {
+    "displayName": "Jieyi Tongda",
+    "color": "#29c2eb",
+    "aliases": [
+      "JYTD",
+      "JYD",
+      "捷易通达",
+      "捷易通达国际物流",
+      "深圳市捷易通达国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jytd",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "123.207.50.250"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "k-line-roro": {
     "displayName": "K Line Global RoRo",
     "color": "#bd212a",
@@ -39106,6 +39204,38 @@
         "pathPattern": "^/(?:en|cn|hk)/(?:logistics-tracking|track-trace)/?$",
         "params": [
           "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "keke-international": {
+    "displayName": "Keke International",
+    "color": "#c9151e",
+    "aliases": [
+      "科科国际",
+      "科科国际物流",
+      "浙江科科国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "keke-international",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "ywkk.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
         ]
       }
     ],
@@ -57067,6 +57197,68 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "sdh-express": {
+    "displayName": "Lightning Monkey",
+    "color": "#e50015",
+    "aliases": [
+      "SDH Express",
+      "闪电猴",
+      "闪电猴跨境物流",
+      "浙江闪电猴供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sdh-express"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "182.254.152.160"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "sdk-express": {
+    "displayName": "SDK Express",
+    "color": "#073b7e",
+    "aliases": [
+      "斯德克",
+      "斯德克（深圳）国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sdk-express"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "8.129.105.101"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "sea-legend-line": {
     "displayName": "Sea Legend Line",
     "color": "#003e80",
@@ -71453,6 +71645,38 @@
       }
     ]
   },
+  "xys-logistics": {
+    "displayName": "XYS Logistics",
+    "color": "#002cc0",
+    "aliases": [
+      "XYS",
+      "新源晟",
+      "新源晟（深圳）国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xys-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "szxys.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "yalidine": {
     "displayName": "Yalidine",
     "color": "#d62e2f",
@@ -71634,6 +71858,36 @@
         "pathPattern": "^/inquiry/?$",
         "params": [
           "deliveryNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "ycex": {
+    "displayName": "YCEX",
+    "color": "#1a218b",
+    "aliases": [
+      "永财国际物流",
+      "广州永财国际供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ycex"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "159.75.78.252"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
         ]
       }
     ],

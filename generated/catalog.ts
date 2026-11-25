@@ -13988,6 +13988,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "bulongguoji": {
+    "displayName": "BULONGGUOJI",
+    "color": "#fd1916",
+    "aliases": [
+      "Bulong Guoji",
+      "布龙国际",
+      "深圳市布龙国际供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bulongguoji"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "106.52.54.99"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "burd-delivery": {
     "displayName": "Burd Delivery",
     "color": "#ec008c",
@@ -34361,6 +34392,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "huayutong": {
+    "displayName": "Huayutong",
+    "color": "#0a94dd",
+    "aliases": [
+      "HYT",
+      "华羽通",
+      "深圳华羽通",
+      "深圳市华羽通国际供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "huayutong",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "szhyt.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "hub-delivery": {
     "displayName": "HUB Delivery",
     "color": "#000000",
@@ -38725,6 +38789,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "jytd": {
+    "displayName": "Jieyi Tongda",
+    "color": "#29c2eb",
+    "aliases": [
+      "JYTD",
+      "JYD",
+      "捷易通达",
+      "捷易通达国际物流",
+      "深圳市捷易通达国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jytd",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "123.207.50.250"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "k-line-roro": {
     "displayName": "K Line Global RoRo",
     "color": "#bd212a",
@@ -39110,6 +39208,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/(?:en|cn|hk)/(?:logistics-tracking|track-trace)/?$",
         "params": [
           "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "keke-international": {
+    "displayName": "Keke International",
+    "color": "#c9151e",
+    "aliases": [
+      "科科国际",
+      "科科国际物流",
+      "浙江科科国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "keke-international",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "ywkk.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
         ]
       }
     ],
@@ -57071,6 +57201,68 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "sdh-express": {
+    "displayName": "Lightning Monkey",
+    "color": "#e50015",
+    "aliases": [
+      "SDH Express",
+      "闪电猴",
+      "闪电猴跨境物流",
+      "浙江闪电猴供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sdh-express"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "182.254.152.160"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "sdk-express": {
+    "displayName": "SDK Express",
+    "color": "#073b7e",
+    "aliases": [
+      "斯德克",
+      "斯德克（深圳）国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sdk-express"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "8.129.105.101"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "sea-legend-line": {
     "displayName": "Sea Legend Line",
     "color": "#003e80",
@@ -71457,6 +71649,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "xys-logistics": {
+    "displayName": "XYS Logistics",
+    "color": "#002cc0",
+    "aliases": [
+      "XYS",
+      "新源晟",
+      "新源晟（深圳）国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xys-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "szxys.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "yalidine": {
     "displayName": "Yalidine",
     "color": "#d62e2f",
@@ -71638,6 +71862,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/inquiry/?$",
         "params": [
           "deliveryNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "ycex": {
+    "displayName": "YCEX",
+    "color": "#1a218b",
+    "aliases": [
+      "永财国际物流",
+      "广州永财国际供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ycex"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "159.75.78.252"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
         ]
       }
     ],
@@ -73495,6 +73749,7 @@ export const CARRIER_IDS = [
   "buffalo-ex",
   "buho-logistics",
   "bulgarian-posts",
+  "bulongguoji",
   "burd-delivery",
   "burundi-post",
   "buslog",
@@ -74083,6 +74338,7 @@ export const CARRIER_IDS = [
   "huahan",
   "huaqi-express",
   "huaya-express",
+  "huayutong",
   "hub-delivery",
   "hub-group-final-mile",
   "huiyu",
@@ -74209,6 +74465,7 @@ export const CARRIER_IDS = [
   "just-ship-sg",
   "juxi-express",
   "jy-express",
+  "jytd",
   "k-line-roro",
   "kaizen-express",
   "kakao-t-same-day",
@@ -74221,6 +74478,7 @@ export const CARRIER_IDS = [
   "kazpost",
   "kdz-express",
   "kec-ecommerce",
+  "keke-international",
   "kenya-airways-cargo",
   "kerry-express-tw",
   "kerry-tj",
@@ -74749,6 +75007,8 @@ export const CARRIER_IDS = [
   "scg-express",
   "schaeflein",
   "schneider",
+  "sdh-express",
+  "sdk-express",
   "sea-legend-line",
   "seaboard-marine",
   "seabourne-logistics",
@@ -75175,12 +75435,14 @@ export const CARRIER_IDS = [
   "xwwt",
   "xyl",
   "xyl-ships",
+  "xys-logistics",
   "yalidine",
   "yamato-america",
   "yandex-delivery",
   "yang-ming",
   "yaoqi-logistics",
   "yc-delivery",
+  "ycex",
   "ycs-logistics",
   "ydh",
   "yfhex",
@@ -75578,6 +75840,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "buffalo-ex": ["buffalo-ex-1"],
   "buho-logistics": [],
   "bulgarian-posts": ["bulgarian-posts-1","bulgarian-posts-s10"],
+  "bulongguoji": [],
   "burd-delivery": [],
   "burundi-post": [],
   "buslog": [],
@@ -76166,6 +76429,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "huahan": ["huahan-1"],
   "huaqi-express": [],
   "huaya-express": ["huaya-express-1"],
+  "huayutong": [],
   "hub-delivery": [],
   "hub-group-final-mile": [],
   "huiyu": ["huiyu-1"],
@@ -76292,6 +76556,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "just-ship-sg": [],
   "juxi-express": ["juxi-express-1","juxi-express-2"],
   "jy-express": [],
+  "jytd": [],
   "k-line-roro": [],
   "kaizen-express": [],
   "kakao-t-same-day": [],
@@ -76304,6 +76569,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "kazpost": ["kazpost-s10"],
   "kdz-express": [],
   "kec-ecommerce": [],
+  "keke-international": [],
   "kenya-airways-cargo": [],
   "kerry-express-tw": [],
   "kerry-tj": [],
@@ -76832,6 +77098,8 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "scg-express": ["scg-express-1"],
   "schaeflein": [],
   "schneider": [],
+  "sdh-express": [],
+  "sdk-express": [],
   "sea-legend-line": [],
   "seaboard-marine": [],
   "seabourne-logistics": [],
@@ -77258,12 +77526,14 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xwwt": [],
   "xyl": [],
   "xyl-ships": ["xyl-ships-1","xyl-ships-2","xyl-ships-3"],
+  "xys-logistics": [],
   "yalidine": ["yalidine-1"],
   "yamato-america": [],
   "yandex-delivery": [],
   "yang-ming": [],
   "yaoqi-logistics": [],
   "yc-delivery": [],
+  "ycex": [],
   "ycs-logistics": [],
   "ydh": ["ydh-1"],
   "yfhex": [],

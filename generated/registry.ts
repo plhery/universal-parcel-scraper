@@ -131,6 +131,7 @@ import { adapter as bringPosten } from '../carriers/bring-posten/adapter.js';
 import { adapter as bringerParcel } from '../carriers/bringer-parcel/adapter.js';
 import { adapter as brt } from '../carriers/brt/adapter.js';
 import { adapter as bulgarianPosts } from '../carriers/bulgarian-posts/adapter.js';
+import { adapter as bulongguoji } from '../carriers/bulongguoji/adapter.js';
 import { adapter as burdDelivery } from '../carriers/burd-delivery/adapter.js';
 import { adapter as bussgods } from '../carriers/bussgods/adapter.js';
 import { adapter as byhd } from '../carriers/byhd/adapter.js';
@@ -511,6 +512,7 @@ import { adapter as huaExpress } from '../carriers/hua-express/adapter.js';
 import { adapter as huahan } from '../carriers/huahan/adapter.js';
 import { adapter as huaqiExpress } from '../carriers/huaqi-express/adapter.js';
 import { adapter as huayaExpress } from '../carriers/huaya-express/adapter.js';
+import { adapter as huayutong } from '../carriers/huayutong/adapter.js';
 import { adapter as huiyu } from '../carriers/huiyu/adapter.js';
 import { adapter as hunterExpress } from '../carriers/hunter-express/adapter.js';
 import { adapter as huuneh } from '../carriers/huuneh/adapter.js';
@@ -583,11 +585,13 @@ import { adapter as jumppoint } from '../carriers/jumppoint/adapter.js';
 import { adapter as jumppointInternational } from '../carriers/jumppoint-international/adapter.js';
 import { adapter as junfengInternational } from '../carriers/junfeng-international/adapter.js';
 import { adapter as justShipSg } from '../carriers/just-ship-sg/adapter.js';
+import { adapter as jytd } from '../carriers/jytd/adapter.js';
 import { adapter as kLineRoro } from '../carriers/k-line-roro/adapter.js';
 import { adapter as kargolife } from '../carriers/kargolife/adapter.js';
 import { adapter as kargoturk } from '../carriers/kargoturk/adapter.js';
 import { adapter as kazpost } from '../carriers/kazpost/adapter.js';
 import { adapter as kecEcommerce } from '../carriers/kec-ecommerce/adapter.js';
+import { adapter as kekeInternational } from '../carriers/keke-international/adapter.js';
 import { adapter as kenyaAirwaysCargo } from '../carriers/kenya-airways-cargo/adapter.js';
 import { adapter as kex } from '../carriers/kex/adapter.js';
 import { adapter as kexExpressHk } from '../carriers/kex-express-hk/adapter.js';
@@ -902,6 +906,8 @@ import { adapter as sapxExpress } from '../carriers/sapx-express/adapter.js';
 import { adapter as sarjakContainerLines } from '../carriers/sarjak-container-lines/adapter.js';
 import { adapter as satUkraine } from '../carriers/sat-ukraine/adapter.js';
 import { adapter as saudiPost } from '../carriers/saudi-post/adapter.js';
+import { adapter as sdhExpress } from '../carriers/sdh-express/adapter.js';
+import { adapter as sdkExpress } from '../carriers/sdk-express/adapter.js';
 import { adapter as seaLegendLine } from '../carriers/sea-legend-line/adapter.js';
 import { adapter as seaboardMarine } from '../carriers/seaboard-marine/adapter.js';
 import { adapter as seino } from '../carriers/seino/adapter.js';
@@ -1160,12 +1166,14 @@ import { adapter as xpressLogisticsLu } from '../carriers/xpress-logistics-lu/ad
 import { adapter as xpressbees } from '../carriers/xpressbees/adapter.js';
 import { adapter as xsExpress } from '../carriers/xs-express/adapter.js';
 import { adapter as xylShips } from '../carriers/xyl-ships/adapter.js';
+import { adapter as xysLogistics } from '../carriers/xys-logistics/adapter.js';
 import { adapter as yalidine } from '../carriers/yalidine/adapter.js';
 import { adapter as yamato } from '../carriers/yamato/adapter.js';
 import { adapter as yandexDelivery } from '../carriers/yandex-delivery/adapter.js';
 import { adapter as yangMing } from '../carriers/yang-ming/adapter.js';
 import { adapter as yanwen } from '../carriers/yanwen/adapter.js';
 import { adapter as yaoqiLogistics } from '../carriers/yaoqi-logistics/adapter.js';
+import { adapter as ycex } from '../carriers/ycex/adapter.js';
 import { adapter as ycsLogistics } from '../carriers/ycs-logistics/adapter.js';
 import { adapter as ydh } from '../carriers/ydh/adapter.js';
 import { adapter as yilongLogistics } from '../carriers/yilong-logistics/adapter.js';
@@ -1331,6 +1339,7 @@ export const REGISTRY: RegistryDefinition = {
     "bringer-parcel": bringerParcel,
     "brt": brt,
     "bulgarian-posts": bulgarianPosts,
+    "bulongguoji": bulongguoji,
     "burd-delivery": burdDelivery,
     "bussgods": bussgods,
     "byhd": byhd,
@@ -1711,6 +1720,7 @@ export const REGISTRY: RegistryDefinition = {
     "huahan": huahan,
     "huaqi-express": huaqiExpress,
     "huaya-express": huayaExpress,
+    "huayutong": huayutong,
     "huiyu": huiyu,
     "hunter-express": hunterExpress,
     "huuneh": huuneh,
@@ -1783,11 +1793,13 @@ export const REGISTRY: RegistryDefinition = {
     "jumppoint-international": jumppointInternational,
     "junfeng-international": junfengInternational,
     "just-ship-sg": justShipSg,
+    "jytd": jytd,
     "k-line-roro": kLineRoro,
     "kargolife": kargolife,
     "kargoturk": kargoturk,
     "kazpost": kazpost,
     "kec-ecommerce": kecEcommerce,
+    "keke-international": kekeInternational,
     "kenya-airways-cargo": kenyaAirwaysCargo,
     "kex": kex,
     "kex-express-hk": kexExpressHk,
@@ -2102,6 +2114,8 @@ export const REGISTRY: RegistryDefinition = {
     "sarjak-container-lines": sarjakContainerLines,
     "sat-ukraine": satUkraine,
     "saudi-post": saudiPost,
+    "sdh-express": sdhExpress,
+    "sdk-express": sdkExpress,
     "sea-legend-line": seaLegendLine,
     "seaboard-marine": seaboardMarine,
     "seino": seino,
@@ -2360,12 +2374,14 @@ export const REGISTRY: RegistryDefinition = {
     "xpressbees": xpressbees,
     "xs-express": xsExpress,
     "xyl-ships": xylShips,
+    "xys-logistics": xysLogistics,
     "yalidine": yalidine,
     "yamato": yamato,
     "yandex-delivery": yandexDelivery,
     "yang-ming": yangMing,
     "yanwen": yanwen,
     "yaoqi-logistics": yaoqiLogistics,
+    "ycex": ycex,
     "ycs-logistics": ycsLogistics,
     "ydh": ydh,
     "yilong-logistics": yilongLogistics,
@@ -2652,6 +2668,7 @@ export const REGISTRY: RegistryDefinition = {
     "buffalo-ex": "universal",
     "buho-logistics": "universal",
     "bulgarian-posts": "bulgarian-posts",
+    "bulongguoji": "bulongguoji",
     "burd-delivery": "burd-delivery",
     "burundi-post": "universal",
     "buslog": "universal",
@@ -3277,6 +3294,7 @@ export const REGISTRY: RegistryDefinition = {
     "huahan": "huahan",
     "huaqi-express": "huaqi-express",
     "huaya-express": "huaya-express",
+    "huayutong": "huayutong",
     "hub-delivery": "universal",
     "hub-group-final-mile": "universal",
     "huiyu": "huiyu",
@@ -3409,6 +3427,7 @@ export const REGISTRY: RegistryDefinition = {
     "just-ship-sg": "just-ship-sg",
     "juxi-express": "universal",
     "jy-express": "universal",
+    "jytd": "jytd",
     "k-line-roro": "k-line-roro",
     "kaizen-express": "universal",
     "kakao-t-same-day": "universal",
@@ -3421,6 +3440,7 @@ export const REGISTRY: RegistryDefinition = {
     "kazpost": "kazpost",
     "kdz-express": "universal",
     "kec-ecommerce": "kec-ecommerce",
+    "keke-international": "keke-international",
     "kenya-airways-cargo": "kenya-airways-cargo",
     "kerry-express-tw": "universal",
     "kerry-tj": "universal",
@@ -3973,6 +3993,8 @@ export const REGISTRY: RegistryDefinition = {
     "scg-express": "universal",
     "schaeflein": "universal",
     "schneider": "universal",
+    "sdh-express": "sdh-express",
+    "sdk-express": "sdk-express",
     "sea-legend-line": "sea-legend-line",
     "seaboard-marine": "seaboard-marine",
     "seabourne-logistics": "universal",
@@ -4419,6 +4441,7 @@ export const REGISTRY: RegistryDefinition = {
     "xwwt": "universal",
     "xyl": "universal",
     "xyl-ships": "xyl-ships",
+    "xys-logistics": "xys-logistics",
     "yalidine": "yalidine",
     "yamato": "yamato",
     "yamato-america": "universal",
@@ -4427,6 +4450,7 @@ export const REGISTRY: RegistryDefinition = {
     "yanwen": "yanwen",
     "yaoqi-logistics": "yaoqi-logistics",
     "yc-delivery": "universal",
+    "ycex": "ycex",
     "ycs-logistics": "ycs-logistics",
     "ydh": "ydh",
     "yfhex": "universal",
