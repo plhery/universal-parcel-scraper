@@ -6,6 +6,7 @@ import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { delayedFetcher } from '../../core/testing/hang.js';
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, TAKESEND_LOOKUP, TakesendTracker } from './adapter.js';
 import { normalizeTakesendNumber, parseTakesend } from './parser.js';
@@ -54,6 +55,29 @@ describe('Take Send HTTP adapter', () => {
     // Take Send's own name in the place column is no place.
     expect(result.events!.some((event) => event.location)).toBe(false);
     expect(detectCarrierMatch(PARTNER)).toMatchObject({ carrier: 'ywe', confidence: 'high' });
+  });
+
+  it('reads its rows abroad on their place’s clock, and leaves a country of several clocks to its place', () => {
+    const abroad = fixture('in-transit').replace(/(<trackitem index="trackitem_0_0")[^>]*\/>/, '$1 sdate="2026-09-08 17:45:00" place="US" intro="Customs Clearance Completed" statusname="" statusnameus="" />'
+      + '<trackitem index="trackitem_0_a" sdate="2026-09-08 12:40:00" place="US" intro="Arrived at destination airport" statusname="" statusnameus="" />'
+      + '<trackitem index="trackitem_0_b" sdate="2026-09-07 08:30:00" place="HK" intro="Next stop destination airport" statusname="" statusnameus="" />');
+    const result = parseTakesend(abroad, NUMBER);
+    expect(result.events!.slice(0, 4)).toEqual([
+      expect.objectContaining({ local_time: '2026-09-08T17:45:00', location: 'US' }),
+      expect.objectContaining({ local_time: '2026-09-08T12:40:00', location: 'US' }),
+      expect.objectContaining({ time: '2026-09-07T08:30:00+08:00', time_zone: 'Asia/Hong_Kong', time_zone_basis: 'place', location: 'HK' }),
+      expect.objectContaining({ time: '2026-09-06T15:56:50+08:00', time_zone: 'Asia/Shanghai', time_zone_basis: 'carrier' }),
+    ]);
+    expect(result.events![0]).not.toHaveProperty('time');
+    expect(result).toMatchObject({ last_update: null, last_update_local: '2026-09-08T17:45:00' });
+  });
+
+  it('has its rows in the United States dated on the destination’s clock', () => {
+    const abroad = fixture('in-transit').replace(/(<trackitem index="trackitem_0_0")[^>]*\/>/, '$1 sdate="2026-09-08 12:40:00" place="US" intro="Arrived at destination airport" statusname="" statusnameus="" />'
+      + '<trackitem index="trackitem_0_b" sdate="2026-09-07 08:30:00" place="HK" intro="Next stop destination airport" statusname="" statusnameus="" />');
+    const result = dateLocalClocks('takesend', parseTakesend(abroad, NUMBER));
+    expect(result.events![0]).toMatchObject({ local_time: '2026-09-08T12:40:00', time: '2026-09-08T12:40:00-04:00', time_zone: 'America/New_York' });
+    expect(result.last_update).toBe('2026-09-08T12:40:00-04:00');
   });
 
   it.each([

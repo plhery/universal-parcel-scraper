@@ -20,9 +20,13 @@ comes back echoed alone, without `transbillid` or scans; that echo is not found.
 
 ## Notes
 
-The scans are Take Send's own in China and keep Beijing's wall clock. Take Send writes its own
-name in the place column of its distribution-centre scans, which is no place, so no scan has a
-location. Scans are staged by their wording; a scan the map does not know takes the wording
+Take Send's scans in China keep Beijing's wall clock. Its scans placed at another country's code,
+from the flight's last stop to the destination's import clearance, keep that place's: read on
+Beijing's, a parcel landed in the United States four hours after its last stop in Hong Kong, and
+customs worked through the night. A country with one clock dates them; the United States' wall
+clock is left to the shared clock stage, which dates it on the destination's. Take Send writes its
+own name in the place column of its distribution-centre scans, which is no place, so those scans
+have no location. Scans are staged by their wording; a scan the map does not know takes the wording
 classifier, and a record without one takes its `trackstatus` code, whose labels come from the
 page's script.
 

@@ -62426,7 +62426,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "takesend",
       "recognitionRank": 986,
-      "recognitionPattern": "^TS2\\d(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{7}$"
+      "recognitionPattern": "^TS2\\d(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{7}$",
+      "localClocks": true
     },
     "canaryUrl": "https://t.17track.net/",
     "helpUrl": "https://www.takesend.com/kefu/",

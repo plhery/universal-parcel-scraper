@@ -5,7 +5,7 @@ import { detectCarrierMatch, normalizeTrackingNumber } from '../../core/detectio
 import { InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus } from '../../core/status/index.js';
-import { countryCode } from '../../core/time/index.js';
+import { countryCode, countryTimeZone, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
 import { chinaClock } from '../china-post/parser.js';
 import { takesendStage, takesendStatusStage } from './status.js';
@@ -56,6 +56,21 @@ function handoff(track: Cheerio<Element>, number: string): Pick<CarrierResult, '
 }
 
 /**
+ * A scan's clock. Take Send's scans in China are on Beijing's wall clock. Its scans placed at
+ * another country's code, from the flight's last stop to the destination's customs, carry that
+ * place's wall clock: read on Beijing's, a parcel landed in the United States four hours after
+ * its last stop in Hong Kong. A country with one clock dates them; another keeps the wall clock
+ * alone, for the facade to date by its place.
+ */
+function scanClock(local: string, place: string): Pick<CarrierEvent, 'local_time' | 'time' | 'time_zone' | 'time_zone_basis'> {
+  const country = countryCode(place);
+  if (!country || country === 'CN') return chinaClock(local);
+  const zone = countryTimeZone(country);
+  const time = zone ? isoTime(local, zone) : null;
+  return time ? { local_time: local, time: time.iso, time_zone: zone!, time_zone_basis: 'place' } : { local_time: local };
+}
+
+/**
  * The reply of the Kingtrans K5 tracker's `WebTrack?action=repeat` for one number: one `track`
  * under `xdoc/xout`, bound to the number by `searchBillid`. A record carries `transbillid` and its
  * scans as `trackitem`, newest first; a number the tracker does not know comes back echoed alone.
@@ -84,8 +99,7 @@ export function parseTakesend(xml: string, raw: string): CarrierResult {
     if (!description) throw new SchemaError(PROVIDER, 'Take Send returned an empty scan');
     const place = attribute(item, 'place', 200);
     const staged = takesendStage(description);
-    // The scans seen are Take Send's own in China, on Beijing's clock.
-    return { ...chinaClock(clock(attribute(item, 'sdate', 32))), description,
+    return { ...scanClock(clock(attribute(item, 'sdate', 32)), place), description,
       ...(place && !OWN_NAME.test(place) ? { location: place } : {}),
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) };
   });
@@ -96,7 +110,8 @@ export function parseTakesend(xml: string, raw: string): CarrierResult {
   const country = countryCode(attribute(track, 'country', 80));
   return { status: current ? languageStageStatus(current.stage) : 'unknown',
     ...(current ? { current_stage: current.stage, current_stage_source: current.source } : {}),
-    last_status_text: newest.description!, last_update: newest.time ?? null, expected_delivery: null,
+    last_status_text: newest.description!, last_update: newest.time ?? null,
+    ...(newest.time ? {} : { last_update_local: newest.local_time }), expected_delivery: null,
     ...(country ? { destination_country: country } : {}), ...partner,
     events: events.slice(0, 100), ...(events.length > 100 ? { history_truncated: true } : {}) };
 }
