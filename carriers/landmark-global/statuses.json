@@ -224,6 +224,13 @@
       "note": "Landmark's facility grouping the parcel, days after its processing and before its outgoing scan."
     },
     {
+      "wording": "Grouped at partner facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A partner's facility grouping the parcel, as Landmark's own facility does, within the hour of its data and processing."
+    },
+    {
       "wording": "Arrived last mile HUB",
       "language": "en",
       "stage": "in_transit",

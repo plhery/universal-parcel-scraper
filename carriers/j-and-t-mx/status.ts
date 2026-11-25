@@ -9,6 +9,17 @@ import statuses from './statuses.json' with { type: 'json' };
 const LABELS: ReadonlyMap<string, Stage> = new Map((statuses.entries as readonly { wording: string; stage: string }[])
   .map((entry) => [normalizeStatusWording(entry.wording), entry.stage as Stage]));
 
+// The labels of a Spanish reply and those of an English one for the same scans, as the tracker lists them at one instant
+// and place; both in `normalizeStatusWording` form.
+const ENGLISH: ReadonlyMap<string, string> = new Map(([
+  ['Recolectado', 'Pick-up'], ['En tránsito', 'Shipped'], ['En ruta de entrega', 'Delivery'],
+] as const).map(([spanish, english]) => [normalizeStatusWording(spanish), normalizeStatusWording(english)]));
+
+/** The English label of a scan the tracker labels in Spanish, both in `normalizeStatusWording` form. */
+export function jAndTMxEnglish(label: string): string | undefined {
+  return ENGLISH.get(label);
+}
+
 /** The stage J&T Express Mexico's labels give a scan. */
 export function jAndTMxMappedStage(label: string): Stage | undefined {
   return LABELS.get(normalizeStatusWording(label));

@@ -17,6 +17,10 @@
     {"wording": "custom clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance in the United States, at the place US. Written to the minute, so it keeps its wall clock."},
     {"wording": "Accepted at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "USPS's first scan, copied after the flight and before the import clearance: USPS takes the parcel over from the line, which accepted it in China days before."},
     {"wording": "Arrived at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's facility, copied after its acceptance and before the import clearance."},
-    {"wording": "On the Way, Departed USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS sending the parcel on from its facility, copied after the import clearance."}
+    {"wording": "On the Way, Departed USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS sending the parcel on from its facility, copied after the import clearance."},
+    {"wording": "Departed USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS sending the parcel on from a facility, copied after the import clearance."},
+    {"wording": "Arrived at Post Office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The delivering post office's receipt, copied before USPS's round."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "USPS's round, copied after the post office's receipt."},
+    {"wording": "Delivered, Parcel Locker", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "USPS's delivery into a parcel locker, copied as the last row."}
   ]
 }

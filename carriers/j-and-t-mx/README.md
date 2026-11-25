@@ -28,7 +28,9 @@ digits of the recipient's or sender's phone the tracker asks for.
 
 ## Notes
 
-- The reply's language follows the reader's: Spanish, English or Chinese, Spanish otherwise.
+- The reply's language follows the reader's: Spanish, English or Chinese, Spanish otherwise. A
+  parcel read in two languages gets each scan in both, so a scan in one takes over the row stored
+  in the other at the same instant and place when its label translates the stored one.
 - A scan's description is the label the page lists it under. `statuses.json` maps the labels
   seen in replies; the shared wording rules stage any other.
 - A scan's location is the place set apart in brackets at the head of its sentence. The rest of

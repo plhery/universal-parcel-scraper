@@ -53,7 +53,7 @@ describe('Kun Express tracking adapter', () => {
     expect(result.events!.map(({ time, local_time, description, location, provider_code, stage, stage_source }) =>
       [time ?? local_time, description, location, provider_code, stage, stage_source])).toEqual([
       ['2026-03-10T11:55:00', 'Delivered, In/At Mailbox', 'SAMPLETOWN, NY', undefined, 'delivered', 'wording:language'],
-      ['2026-03-10T08:30:00', 'Out for Delivery', 'SAMPLETOWN, NY', undefined, 'out_for_delivery', 'wording:language'],
+      ['2026-03-10T08:30:00', 'Out for Delivery', 'SAMPLETOWN, NY', undefined, 'out_for_delivery', 'carrier_map'],
       ['2026-03-09', 'In Transit to Next Facility', undefined, undefined, 'in_transit', 'wording:language'],
       ['2026-03-08T21:07:00', 'Arrived at USPS Regional Facility', 'EXAMPLE NY DISTRIBUTION CENTER', undefined, 'in_transit', 'wording:language'],
       ['2026-03-07T09:04:00', 'Accepted at USPS Origin Facility', 'SAMPLE CITY, CA', undefined, 'accepted', 'wording:language'],

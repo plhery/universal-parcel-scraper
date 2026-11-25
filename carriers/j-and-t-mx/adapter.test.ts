@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { activeRequirements } from '../../core/catalog/index.js';
 import { normalizeCarrierInputs } from '../../core/catalog/inputs.js';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { InputRequiredError, NoHistoryError, UpstreamHttpError } from '../../core/errors/index.js';
@@ -208,5 +209,20 @@ describe('J&T Express Mexico HTTP adapter', () => {
     expect(statusMapAnswer({ carrier: 'j-and-t-mx', providerCode: null, description: 'en tránsito' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'j-and-t-mx', providerCode: null, description: 'En ruta de entrega' })).toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
     expect(statusMapAnswer({ carrier: 'j-and-t-mx', providerCode: null, description: 'Entregado' })).toEqual({ kind: 'unknown' });
+    // An English reply's labels for the same scans: "Delivery" is the round, at the instant of "En ruta de entrega".
+    for (const [label, stage] of [['Pick-up', 'accepted'], ['Shipped', 'in_transit'], ['Delivery', 'out_for_delivery']]) {
+      expect(statusMapAnswer({ carrier: 'j-and-t-mx', providerCode: null, description: label! }), label).toEqual({ kind: 'mapped', stage });
+    }
+  });
+
+  it('lets a scan labelled in the other language take over its stored row at the same place', () => {
+    const policy = sameInstantIdentityPolicy('j-and-t-mx', { supportsScanMatching: true });
+    const spanish = { stage: 'out_for_delivery', description: 'En ruta de entrega', location: 'EXAMPLE', providerCode: '' };
+    const english = { ...spanish, description: 'Delivery' };
+    expect(policy).toMatchObject({ storedSources: ['j-and-t-mx'], requireProviderCode: false, matchEachScan: true });
+    expect(policy?.matches?.(english, spanish)).toBe(true);
+    expect(policy?.matches?.(spanish, english)).toBe(true);
+    expect(policy?.matches?.({ ...english, description: 'Shipped' }, spanish)).toBe(false);
+    expect(policy?.matches?.(english, { ...spanish, location: 'OTHER' })).toBe(false);
   });
 });

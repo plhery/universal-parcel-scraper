@@ -3,6 +3,9 @@
   "entries": [
     {"wording": "Recolectado", "language": "es", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-23", "note": "The courier's collection from the sender, the history's first scan, before the scans in transit."},
     {"wording": "En tránsito", "language": "es", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-23", "note": "Each move between J&T's facilities after the collection, the label repeated scan after scan."},
-    {"wording": "En ruta de entrega", "language": "es", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The delivering branch's round, after the moves in transit."}
+    {"wording": "En ruta de entrega", "language": "es", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The delivering branch's round, after the moves in transit."},
+    {"wording": "Pick-up", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "\"Recolectado\" in an English reply: the collection, at the same instant and place."},
+    {"wording": "Shipped", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "\"En tránsito\" in an English reply, repeated scan after scan."},
+    {"wording": "Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "\"En ruta de entrega\" in an English reply: the round, at the same instant and place, not the delivery."}
   ]
 }
