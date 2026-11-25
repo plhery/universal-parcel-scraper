@@ -145,12 +145,24 @@ describe('SXW Express tracking adapter', () => {
     ] });
     const result = parseHualeiTrack(payload, NUMBER, SXW, Date.parse('2026-11-20T12:00:00Z'))!;
     expect(result.events?.map((event) => [event.time, event.local_time])).toEqual([
-      [undefined, '2026-11-20T14:40:00'], [undefined, '2026-11-20T10:30:00'], [undefined, '2026-11-18T21:15:00'],
+      [undefined, '2026-11-20T14:40:00'], [undefined, '2026-11-20T10:30:00'], ['2026-11-18T21:15:00+11:00', '2026-11-18T21:15:00'],
       ['2026-11-18T20:40:00+08:00', undefined], ['2026-11-17T05:40:00+08:00', undefined],
     ]);
-    // Places date them on Melbourne's clock.
+    // Places date the landing on Melbourne's clock; Australia Post's row is on the east coast's.
+    expect(result.events?.[2]).toMatchObject({ time_zone: 'Australia/Sydney', time_zone_basis: 'destination' });
     expect(dateLocalClocks('sxw-express', result).events?.slice(0, 3).map((event) => event.time))
       .toEqual(['2026-11-20T14:40:00+11:00', '2026-11-20T10:30:00+11:00', '2026-11-18T21:15:00+11:00']);
+
+    // To Brisbane: Australia Post's own row is at 20:15 there, which SXW copies at 21:15 on the east
+    // coast's summer clock; the landing keeps Brisbane's clock.
+    payload[0].data[0].trackDetails[0].track_location = 'BNE';
+    payload[0].data[0].trackDetails[1].track_location = 'BNE';
+    payload[0].data[0].trackDetails[2].track_location = 'UNDERWOOD QLD';
+    const brisbane = dateLocalClocks('sxw-express', parseHualeiTrack(payload, NUMBER, SXW, Date.parse('2026-11-20T12:00:00Z'))!);
+    expect(brisbane.events?.slice(0, 3).map((event) => [event.time, event.time_zone])).toEqual([
+      ['2026-11-20T14:40:00+10:00', 'Australia/Brisbane'], ['2026-11-20T10:30:00+10:00', 'Australia/Brisbane'],
+      ['2026-11-18T21:15:00+11:00', 'Australia/Sydney'],
+    ]);
     // A suburb and state the gazetteer does not place in Australia is no row abroad.
     payload[0].data[0].trackDetails[2].track_location = 'EXAMPLE NOWHERE VIC';
     payload[0].data[0].trackDetails.splice(0, 2);

@@ -1,7 +1,7 @@
 import { countryCode } from '../../core/time/index.js';
 import { airportTimeZone, locatePlace } from '../../places/index.js';
-import { countryZones } from '../../places/zones.js';
-import type { HualeiRow, HualeiTenant } from '../gzyl/hualei.js';
+import { countryZones, mainZone } from '../../places/zones.js';
+import type { HualeiRow, HualeiTenant, HualeiZoneClock } from '../gzyl/hualei.js';
 import { sxwEnglish, sxwStage } from './status.js';
 
 export const PROVIDER = 'SXW Express';
@@ -9,6 +9,12 @@ export const SXW_ORIGIN = 'http://www.sxwexpress.cn:8082';
 
 // Australia Post's rows, which SXW copies with the suburb and its state alone.
 const AUSTRALIAN_STATE = /(?:^|[\s,])(?:ACT|NSW|NT|QLD|SA|TAS|VIC|WA)(?:\s+\d{4})?$/;
+// SXW copies them on the clock of Australia's east coast wherever the suburb lies: its copy of a
+// Queensland row reads an hour later than Australia Post's own, a Victorian row the same.
+const AUSTRALIA_POST_CLOCK: HualeiZoneClock = { zone: mainZone('AU') ?? 'Australia/Sydney', basis: 'destination' };
+
+/** A row SXW copies from Australia Post: a suburb and its state that the gazetteer places in Australia. */
+const australiaPost = (place: string): boolean => AUSTRALIAN_STATE.test(place) && locatePlace(place)?.country === 'AU';
 
 /**
  * A row placed abroad: its place ends in the code of a country other than China ("…, GB", "AU"), is
@@ -23,7 +29,7 @@ function abroad(location: string): boolean {
     const zone = airportTimeZone(place);
     return zone !== null && !countryZones('CN').includes(zone);
   }
-  return AUSTRALIAN_STATE.test(place) && locatePlace(place)?.country === 'AU';
+  return australiaPost(place);
 }
 
 const arrivals = new WeakMap<readonly HualeiRow[], string | null>();
@@ -33,14 +39,16 @@ const arrivals = new WeakMap<readonly HualeiRow[], string | null>();
  * copies the delivery carrier's rows after them the same way: from the
  * earliest row placed abroad on, a row keeps its wall clock. Read on Beijing's
  * clock, an Australian row would come before the platform wrote it, and Royal
- * Mail dates the acceptance SXW copies at that wall clock in the UK.
+ * Mail dates the acceptance SXW copies at that wall clock in the UK. Australia
+ * Post's rows are on Australia's east coast clock, whatever their place.
  */
-function sxwClock(row: HualeiRow, rows: readonly HualeiRow[]): 'platform' | 'wall' {
+function sxwClock(row: HualeiRow, rows: readonly HualeiRow[]): 'platform' | 'wall' | HualeiZoneClock {
   if (!arrivals.has(rows)) {
     arrivals.set(rows, rows.filter((other) => abroad(other.location)).map((other) => other.clock).sort()[0] ?? null);
   }
   const arrival = arrivals.get(rows);
-  return arrival && row.clock >= arrival ? 'wall' : 'platform';
+  if (!arrival || row.clock < arrival) return 'platform';
+  return australiaPost(row.location.trim()) ? AUSTRALIA_POST_CLOCK : 'wall';
 }
 
 /**

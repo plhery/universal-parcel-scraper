@@ -54,10 +54,10 @@ export interface HualeiTenant {
   readonly wallClocks?: true;
   /**
    * How a row's clock reads where the record settles it row by row: on the
-   * platform's clock, as a wall clock, or as its day alone, given the record's
-   * rows. It takes the place of `wallClocks`.
+   * platform's clock, as a wall clock, as its day alone, or as a wall clock on a
+   * zone the tenant knows, given the record's rows. It takes the place of `wallClocks`.
    */
-  readonly clock?: (row: HualeiRow, rows: readonly HualeiRow[]) => 'platform' | 'wall' | 'day';
+  readonly clock?: (row: HualeiRow, rows: readonly HualeiRow[]) => 'platform' | 'wall' | 'day' | HualeiZoneClock;
   /**
    * Whether a row's wording repeats another's, in the same minute, place and
    * kind, with more around it: the row then counts once, as the other. Two rows
@@ -274,6 +274,9 @@ export interface HualeiRow {
   readonly clock: string; readonly content: string; readonly location: string; readonly code: string; readonly written?: string;
 }
 
+/** A wall clock on a zone the tenant knows, and how that zone was chosen (`time_zone_basis`). */
+export interface HualeiZoneClock { readonly zone: string; readonly basis: 'destination' | 'carrier' }
+
 /** When the platform wrote a row, on its own clock, which only the track interface says. */
 function writtenAt(row: HualeiRow): string | undefined {
   const match = CLOCK.exec(row.written ?? '');
@@ -379,8 +382,10 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
       return;
     }
     const written = writtenAt(row);
+    const zoned = typeof reading === 'object' ? isoTime(local, reading.zone)?.iso : undefined;
     kept.push({ clock: local, index, notice, ...(english ? { english } : {}), event: {
-      ...(reading === 'platform' ? { time: placed.iso } : { local_time: reading === 'day' ? local.slice(0, 10) : local }), description,
+      ...(reading === 'platform' ? { time: placed.iso } : { local_time: reading === 'day' ? local.slice(0, 10) : local }),
+      ...(zoned && typeof reading === 'object' ? { time: zoned, time_zone: reading.zone, time_zone_basis: reading.basis } : {}), description,
       ...(location ? { location } : {}),
       ...(row.code ? { provider_code: row.code } : {}),
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),

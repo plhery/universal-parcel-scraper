@@ -33,6 +33,9 @@ The site's tracking page is SXW's own tenant of the Hualei (华磊) platform at
   the platform wrote it, and Royal Mail dates the acceptance SXW copies at that wall clock in the
   UK. The identity policy lets such a row take over the one earlier releases stored on Beijing's
   clock.
+- Australia Post's rows are on the clock of Australia's east coast wherever the suburb lies: SXW's
+  copy of a Queensland row reads an hour later than Australia Post's own, a Victorian row the
+  same. They are dated on that clock, while the line's own rows at an airport keep the airport's.
 - The seller can take a parcel back at the origin ("Returned parcel has been recieved by shipper")
   and send it again under the same waybill. The row reads as returned while it is the newest; once
   rows follow it, it is an exception and the rows after it lead, since an app holds a return over
