@@ -1,6 +1,7 @@
 import { createDecipheriv, createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, BfeExpressTracker, bfeRequestBody } from './adapter.js';
@@ -166,5 +167,15 @@ describe('BFE Express tracking', () => {
     const metadata = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
     expect(metadata.tracking.steps).toEqual(instance.steps);
     await expect(instance.track({ number: 'NOTAPARCEL' }, {})).rejects.toMatchObject({ reason: 'portal_not_found' });
+  });
+
+  it('is asked in preflight about its CK numbers, alone in its own countries', () => {
+    // Colis Privé's rule fits some of them too; it is asked only where it delivers, or with no country known.
+    const shared = 'CK512604827391546';
+    for (const countryHint of ['PE', 'AR', 'UY']) {
+      expect(recognitionAskedCarriers(shared, { countryHint }), countryHint).toEqual(['bfe-express']);
+    }
+    expect(recognitionAskedCarriers(shared)).toEqual(['colis-prive', 'bfe-express']);
+    expect(recognitionAskedCarriers(NUMBER, { countryHint: 'PE' })).toEqual(['bfe-express']);
   });
 });

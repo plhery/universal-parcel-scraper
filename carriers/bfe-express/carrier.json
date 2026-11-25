@@ -23,7 +23,10 @@
     "adapter": "bfe-express",
     "steps": [
       "direct"
-    ]
+    ],
+    "recognition": {
+      "rank": 41
+    }
   },
   "capabilities": [
     "history",
