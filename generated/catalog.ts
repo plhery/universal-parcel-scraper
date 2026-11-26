@@ -61650,6 +61650,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "srj": {
+    "displayName": "SRJ",
+    "color": "#FC7F01",
+    "aliases": [
+      "Siruijie",
+      "思睿捷",
+      "Suzhou Siruijie Supply Chain Management",
+      "苏州思睿捷供应链管理有限责任公司",
+      "上海思睿捷国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "srj",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "st-courier": {
     "displayName": "ST Courier",
     "color": "#c7262f",
@@ -67692,6 +67716,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "unicon-express-us": {
+    "displayName": "UNICON Express USA",
+    "color": "#00576A",
+    "aliases": [
+      "联合速递",
+      "UnionExpressUSA"
+    ],
+    "countries": [
+      "US",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "unicon-express-us",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.kuaidi100.com/all/lhexpressus.shtml",
+    "linkRules": [
+      {
+        "domains": [
+          "www.lianhesudi.com",
+          "lianhesudi.com",
+          "www.lhexpressus.com",
+          "lhexpressus.com"
+        ],
+        "pathPattern": "^/index\\.php$",
+        "query": "^(?=(?:.*&)?s=/Index/chaxun(?:&|$))(?:.*&)?sn=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
   "union-express": {
     "displayName": "Union Express",
     "color": "#f82626",
@@ -72656,6 +72713,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "ylexp": {
+    "displayName": "Yi Long Express",
+    "color": "#F24701",
+    "aliases": [
+      "YLEXP",
+      "颐龙快递",
+      "颐龙速递"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ylexp",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "yol-kargo": {
     "displayName": "Yol Kargo",
     "color": "#f66814",
@@ -73165,6 +73244,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "z1-express": {
+    "displayName": "Z1 Express",
+    "color": "#173D7E",
+    "aliases": [
+      "宙一物流",
+      "Z1Express"
+    ],
+    "countries": [
+      "CN",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "z1-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.z1express.com",
+          "z1express.com"
+        ],
+        "pathPattern": "^/index\\.php$",
+        "query": "^(?=(?:.*&)?c=Search(?:&|$))(?=(?:.*&)?a=track(?:&|$))(?:.*&)?trackNumber=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
   },
   "zajel": {
     "displayName": "Zajel",
@@ -75599,6 +75709,7 @@ export const CARRIER_IDS = [
   "spx-vn",
   "sri-lanka-post",
   "srilankan-cargo",
+  "srj",
   "st-courier",
   "stallion-express",
   "starex-az",
@@ -75779,6 +75890,7 @@ export const CARRIER_IDS = [
   "ues-uy",
   "ukp-worldwide",
   "umac-cargo",
+  "unicon-express-us",
   "union-express",
   "unipost-express",
   "united-africa-feeder-line",
@@ -75932,6 +76044,7 @@ export const CARRIER_IDS = [
   "yingtu",
   "yitu",
   "yji",
+  "ylexp",
   "yol-kargo",
   "yongma-logis",
   "yoseus",
@@ -75949,6 +76062,7 @@ export const CARRIER_IDS = [
   "ywe",
   "yypost",
   "z-leading",
+  "z1-express",
   "zajel",
   "zajil",
   "zecheng",
@@ -77700,6 +77814,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "spx-vn": ["spx-vn-1","spx-vn-2"],
   "sri-lanka-post": [],
   "srilankan-cargo": [],
+  "srj": [],
   "st-courier": [],
   "stallion-express": ["stallion-express-1","stallion-express-2"],
   "starex-az": [],
@@ -77880,6 +77995,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ues-uy": ["ues-uy-1"],
   "ukp-worldwide": ["ukp-worldwide-1"],
   "umac-cargo": [],
+  "unicon-express-us": [],
   "union-express": [],
   "unipost-express": [],
   "united-africa-feeder-line": [],
@@ -78033,6 +78149,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yingtu": [],
   "yitu": [],
   "yji": [],
+  "ylexp": [],
   "yol-kargo": [],
   "yongma-logis": [],
   "yoseus": [],
@@ -78050,6 +78167,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ywe": ["ywe-1"],
   "yypost": ["yypost-1"],
   "z-leading": ["z-leading-1"],
+  "z1-express": [],
   "zajel": [],
   "zajil": [],
   "zecheng": ["zecheng-1"],

@@ -995,6 +995,7 @@ import { adapter as spxTh } from '../carriers/spx-th/adapter.js';
 import { adapter as spxTw } from '../carriers/spx-tw/adapter.js';
 import { adapter as spxVn } from '../carriers/spx-vn/adapter.js';
 import { adapter as srilankanCargo } from '../carriers/srilankan-cargo/adapter.js';
+import { adapter as srj } from '../carriers/srj/adapter.js';
 import { adapter as stCourier } from '../carriers/st-courier/adapter.js';
 import { adapter as stallionExpress } from '../carriers/stallion-express/adapter.js';
 import { adapter as starexAz } from '../carriers/starex-az/adapter.js';
@@ -1098,6 +1099,7 @@ import { adapter as ubiSmartParcel } from '../carriers/ubi-smart-parcel/adapter.
 import { adapter as ukpWorldwide } from '../carriers/ukp-worldwide/adapter.js';
 import { adapter as ukrposhta } from '../carriers/ukrposhta/adapter.js';
 import { adapter as umacCargo } from '../carriers/umac-cargo/adapter.js';
+import { adapter as uniconExpressUs } from '../carriers/unicon-express-us/adapter.js';
 import { adapter as unipostExpress } from '../carriers/unipost-express/adapter.js';
 import { adapter as unitedAfricaFeederLine } from '../carriers/united-africa-feeder-line/adapter.js';
 import { adapter as unitedDeliveryService } from '../carriers/united-delivery-service/adapter.js';
@@ -1191,6 +1193,7 @@ import { adapter as ydh } from '../carriers/ydh/adapter.js';
 import { adapter as yilongLogistics } from '../carriers/yilong-logistics/adapter.js';
 import { adapter as yitu } from '../carriers/yitu/adapter.js';
 import { adapter as yji } from '../carriers/yji/adapter.js';
+import { adapter as ylexp } from '../carriers/ylexp/adapter.js';
 import { adapter as yolKargo } from '../carriers/yol-kargo/adapter.js';
 import { adapter as youbangExpress } from '../carriers/youbang-express/adapter.js';
 import { adapter as yto } from '../carriers/yto/adapter.js';
@@ -1204,6 +1207,7 @@ import { adapter as ywbz } from '../carriers/ywbz/adapter.js';
 import { adapter as ywd } from '../carriers/ywd/adapter.js';
 import { adapter as ywe } from '../carriers/ywe/adapter.js';
 import { adapter as yypost } from '../carriers/yypost/adapter.js';
+import { adapter as z1Express } from '../carriers/z1-express/adapter.js';
 import { adapter as zajil } from '../carriers/zajil/adapter.js';
 import { adapter as zecheng } from '../carriers/zecheng/adapter.js';
 import { adapter as zeleris } from '../carriers/zeleris/adapter.js';
@@ -2215,6 +2219,7 @@ export const REGISTRY: RegistryDefinition = {
     "spx-tw": spxTw,
     "spx-vn": spxVn,
     "srilankan-cargo": srilankanCargo,
+    "srj": srj,
     "st-courier": stCourier,
     "stallion-express": stallionExpress,
     "starex-az": starexAz,
@@ -2318,6 +2323,7 @@ export const REGISTRY: RegistryDefinition = {
     "ukp-worldwide": ukpWorldwide,
     "ukrposhta": ukrposhta,
     "umac-cargo": umacCargo,
+    "unicon-express-us": uniconExpressUs,
     "unipost-express": unipostExpress,
     "united-africa-feeder-line": unitedAfricaFeederLine,
     "united-delivery-service": unitedDeliveryService,
@@ -2411,6 +2417,7 @@ export const REGISTRY: RegistryDefinition = {
     "yilong-logistics": yilongLogistics,
     "yitu": yitu,
     "yji": yji,
+    "ylexp": ylexp,
     "yol-kargo": yolKargo,
     "youbang-express": youbangExpress,
     "yto": yto,
@@ -2424,6 +2431,7 @@ export const REGISTRY: RegistryDefinition = {
     "ywd": ywd,
     "ywe": ywe,
     "yypost": yypost,
+    "z1-express": z1Express,
     "zajil": zajil,
     "zecheng": zecheng,
     "zeleris": zeleris,
@@ -4146,6 +4154,7 @@ export const REGISTRY: RegistryDefinition = {
     "spx-vn": "spx-vn",
     "sri-lanka-post": "universal",
     "srilankan-cargo": "srilankan-cargo",
+    "srj": "srj",
     "st-courier": "st-courier",
     "stallion-express": "stallion-express",
     "starex-az": "starex-az",
@@ -4335,6 +4344,7 @@ export const REGISTRY: RegistryDefinition = {
     "ukp-worldwide": "ukp-worldwide",
     "ukrposhta": "ukrposhta",
     "umac-cargo": "umac-cargo",
+    "unicon-express-us": "unicon-express-us",
     "union-express": "universal",
     "unipost-express": "unipost-express",
     "united-africa-feeder-line": "united-africa-feeder-line",
@@ -4494,6 +4504,7 @@ export const REGISTRY: RegistryDefinition = {
     "yingtu": "universal",
     "yitu": "yitu",
     "yji": "yji",
+    "ylexp": "ylexp",
     "yol-kargo": "yol-kargo",
     "yongma-logis": "universal",
     "yoseus": "universal",
@@ -4514,6 +4525,7 @@ export const REGISTRY: RegistryDefinition = {
     "ywe": "ywe",
     "yypost": "yypost",
     "z-leading": "universal",
+    "z1-express": "z1-express",
     "zajel": "universal",
     "zajil": "zajil",
     "zecheng": "zecheng",
