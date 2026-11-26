@@ -227,11 +227,14 @@ describe('Ecoscooting parcel history', () => {
     for (const value of [{ success: 'false', errorCode: 'P-011-0201-00-00-502', errorMsg: 'query logisticOrder by mailNo error' }, { success: true }, {}]) {
       expect(() => parseEcoscooting(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     }
-    // Only the order query names the reason: a label not yet announced gets it too.
+    // Only the answers for a number without an order name the reason: a label not yet announced gets them too.
     expect(() => parseEcoscooting({ success: 'false', errorCode: 'P-011-0201-00-00-502', errorMsg: 'query logisticOrder by mailNo error' }, NUMBER))
       .toThrow(expect.objectContaining({ reason: 'portal_not_found' }));
-    expect(() => parseEcoscooting({ success: 'false', errorCode: 'S99', errorMsg: 'gateway error' }, NUMBER))
-      .toThrow(expect.objectContaining({ kind: 'indeterminate', reason: undefined }));
+    expect(() => parseEcoscooting({ success: 'false', errorCode: 'B00604', errorMsg: 'Logistics tracking number out of scope' }, NUMBER))
+      .toThrow(expect.objectContaining({ kind: 'indeterminate', reason: 'portal_not_found' }));
+    for (const value of [{ success: 'false', errorCode: 'S99', errorMsg: 'gateway error' }, { success: 'false', errorCode: 'B00502', errorMsg: 'System error' }]) {
+      expect(() => parseEcoscooting(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate', reason: undefined }));
+    }
   });
   it('recognizes a label it tracks and asks nothing for a number it does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(JSON.stringify(fixture())))
@@ -392,11 +395,25 @@ describe('Ecoscooting direct retrieval', () => {
     expect(dropped).toHaveBeenCalledTimes(2);
     fakeBudgetClock();
     const { fetcher, ended } = delayedFetcher([{ afterMs: Infinity }, { afterMs: Infinity }]);
-    const spent = expect(new EcoscootingTracker({ fetcher }).fetch(NUMBER, { budgetMs: 120 })).rejects.toThrow();
-    await vi.advanceTimersByTimeAsync(120);
+    const spent = expect(new EcoscootingTracker({ fetcher }).fetch(NUMBER, { budgetMs: 15_000 })).rejects.toThrow();
+    await vi.advanceTimersByTimeAsync(15_000);
     await spent;
     // Half of the budget, then the retry until it ends.
-    expect(ended).toEqual([60, 120]);
+    expect(ended).toEqual([7_500, 15_000]);
+  });
+  it('gives the first query the time a parcel history takes, or the whole of a shorter budget', async () => {
+    fakeBudgetClock();
+    const hanging = delayedFetcher([{ afterMs: Infinity }, { afterMs: Infinity }]);
+    const spent = expect(new EcoscootingTracker({ fetcher: hanging.fetcher }).fetch(NUMBER, { budgetMs: 4_000 })).rejects.toThrow();
+    await vi.advanceTimersByTimeAsync(4_000);
+    await spent;
+    expect(hanging.ended).toEqual([3_000, 4_000]);
+    // Recognition's three seconds: a history sent after two arrives.
+    const slow = delayedFetcher([{ afterMs: 2_000, reply: () => new Response(JSON.stringify(fixture())) }]);
+    const read = new EcoscootingTracker({ fetcher: slow.fetcher }).fetch(NUMBER, { budgetMs: 3_000 });
+    await vi.advanceTimersByTimeAsync(2_000);
+    await expect(read).resolves.toMatchObject({ status: 'delivered' });
+    expect(slow.fetcher).toHaveBeenCalledOnce();
   });
   it.each([[404, 'transport'], [410, 'transport'], [403, 'challenge'], [429, 'rate_limited'], [503, 'maintenance']])('keeps HTTP %s distinct from parcel absence', async (status, kind) => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('Failure', { status: Number(status) }));

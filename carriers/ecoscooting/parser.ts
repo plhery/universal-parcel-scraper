@@ -23,6 +23,12 @@ const COLLECTION_CODES = new Set(['GTMS_PUDO_SIGNED', 'PUDO_SIGN_SUCCESS']);
 const PICKUP_POINT_CODES = new Set(['GTMS_PUDO_INBOUND', 'GTMS_STA_SIGNED', 'GTMS_PUDO_SIGNED', 'GTMS_PUDO_OVERDUE',
   'PUDO_INBOUND', 'PUDO_DELIVERY', 'PUDO_SIGN_SUCCESS', 'PUDO_OVERDUE']);
 
+/**
+ * The gateway's answers for a number it holds no order under: the older order query error, and
+ * `B00604` that replaced it, which a made-up number, an expired label and a stray word all get.
+ */
+const UNKNOWN_ORDER: ReadonlySet<string> = new Set(['query logisticOrder by mailNo error', 'Logistics tracking number out of scope']);
+
 export function normalizeEcoscootingNumber(raw: string): string {
   return ecoscootingRequestNumber(raw);
 }
@@ -33,7 +39,7 @@ export function parseEcoscooting(payload: unknown, rawNumber: string): CarrierRe
   // The same query error is returned for absent and unavailable orders. It
   // neither identifies a parcel nor proves that Ecoscooting does not know it.
   if (payload.success !== 'true') throw new IndeterminateError('Ecoscooting', 'Ecoscooting could not complete the tracking query',
-    payload.errorMsg === 'query logisticOrder by mailNo error' ? { reason: 'portal_not_found' } : {});
+    typeof payload.errorMsg === 'string' && UNKNOWN_ORDER.has(payload.errorMsg) ? { reason: 'portal_not_found' } : {});
   if (!isRecord(payload.packageParam)) throw new SchemaError('Ecoscooting', 'Ecoscooting returned a different parcel');
   // A SHEIN package number is the shop's order: the listing names it beside
   // Ecoscooting's own label, 18 digits in Spain or a `CN` reference in

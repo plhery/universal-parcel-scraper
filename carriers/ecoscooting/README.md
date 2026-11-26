@@ -7,15 +7,20 @@ anonymous tracking client.
 
 One bounded form POST uses the Cainiao gateway configuration published in the
 website. No account or session bootstrap is needed. The response must identify
-the requested parcel. The gateway's query error also occurs for unavailable
-orders and remains inconclusive rather than proving absence, with the reason
-`portal_not_found`: a label is unknown until the sender announces it. A parcel announced
+the requested parcel. The gateway answers a number it holds no order under with
+`B00604` ("Logistics tracking number out of scope"), formerly an order query
+error; a made-up number and an expired label get it alike. It remains
+inconclusive rather than proving absence, with the reason `portal_not_found`: a
+label is unknown until the sender announces it. Any other error, such as
+`B00502` ("System error"), has no reason. A parcel announced
 but not yet handed over is listed without scans, which reads as no history yet
 rather than a failure, as Ecoscooting's own page shows it ("No trajectory").
 Recognition knows such a parcel, since the listing names it.
 
 The `retry` step sends the form once more when it fails to reach the gateway or
-hangs. The first try gets half of the budget, so the retry fits in the rest.
+hangs. The first try gets half of the budget, so the retry fits in the rest, but
+at least the 3 s a parcel's history can take to arrive, or the whole of a shorter
+budget such as recognition's: half of that would cut the reply short.
 
 ## Notes
 

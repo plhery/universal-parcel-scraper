@@ -8,16 +8,22 @@ import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/
 import { normalizeEcoscootingNumber, parseEcoscooting } from './parser.js';
 
 const ENDPOINT = 'https://de-link.cainiao.com/gateway/link.do';
+/** The gateway takes up to about this long to send a parcel's history. */
+const REPLY_MS = 3_000;
 
 export class EcoscootingTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
   async fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeEcoscootingNumber(raw);
     // A query that fails to reach the gateway, or hangs, gets one more try:
-    // the first gets half of the budget, so the retry fits in the rest.
+    // the first gets half of the budget, so the retry fits in the rest. It
+    // gets at least the time a parcel's history takes, or the whole of a
+    // shorter budget such as recognition's: half of it would cut that reply
+    // short for a retry with no time to receive it either.
     return runSteps({ carrier: 'ecoscooting', budgetMs: context.budgetMs ?? 15_000, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [
-      { id: 'direct', run: ({ signal, remainingMs }) => this.read(raw, number, signal, firstAttemptMs(remainingMs)) },
+      { id: 'direct', run: ({ signal, remainingMs }) => this.read(raw, number, signal,
+        Math.max(firstAttemptMs(remainingMs), Math.min(remainingMs, REPLY_MS))) },
       networkRetryStep(({ signal, remainingMs }) => this.read(raw, number, signal, remainingMs)),
     ]);
   }
