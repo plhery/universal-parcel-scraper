@@ -77,6 +77,32 @@ describe('Track123 public courier history', () => {
     const fedex = fixture(); fedex.data.landWaybillLists[0]!.localDetails[0]!.address = 'EXAMPLE,100-0001';
     expect(parseTrack123Response(fedex, NUMBER).events).toMatchObject([{ time: '2026-01-08T15:00:00.000Z' }]);
   });
+  it("reads China Post's copies of the destination post's scans on the country they name, or on their wall clock alone", () => {
+    const china = (...rows: [string, string, string][]) => ({ code: '00000', data: { landWaybillLists: [{ trackingNo: NUMBER,
+      localProviderCode: 'china-post', localProviderEnName: 'China Post', querying: false, nodeStatus: 'NORMAL_QUERY',
+      localDetails: rows.map(([eventTime, eventTimeUtc, eventDetail]) => ({ trackingNo: NUMBER, eventTime, timezone: '+08:00', eventTimeUtc,
+        eventDetail, address: '' })) }] } });
+    const departed = ['2026-01-09 20:58:00', '2026-01-09 12:58:00', '离开【法国】处理中心'] as [string, string, string];
+    const arrived = ['2026-01-08 08:47:00', '2026-01-08 00:47:00', '到达寄达地处理中心'] as [string, string, string];
+    const exported = ['2026-01-05 14:16:00', '2026-01-05 06:16:00', '出口海关/放行'] as [string, string, string];
+    expect(parseTrack123Response(china(departed, arrived, exported), NUMBER, 'china-post').events).toMatchObject([
+      { time: '2026-01-09T19:58:00.000Z', local_time: '2026-01-09T20:58:00', time_zone: 'Europe/Paris', time_zone_basis: 'place' },
+      { time: '2026-01-08T07:47:00.000Z', local_time: '2026-01-08T08:47:00', time_zone: 'Europe/Paris', time_zone_basis: 'neighbour' },
+      { time: '2026-01-05T06:16:00.000Z', local_time: '2026-01-05T14:16:00' },
+    ]);
+    // With no country named, the destination post's scan keeps its wall clock; China Post's own keeps the label.
+    const [unplaced, origin] = parseTrack123Response(china(arrived, exported), NUMBER, 'china-post').events!;
+    expect(unplaced).toMatchObject({ local_time: '2026-01-08T08:47:00' }); expect(unplaced).not.toHaveProperty('time');
+    expect(origin).toMatchObject({ time: '2026-01-05T06:16:00.000Z' });
+    // A country on several clocks lends none.
+    for (const row of parseTrack123Response(china(['2026-01-09 20:58:00', '2026-01-09 12:58:00', '离开【美国】处理中心'], arrived), NUMBER,
+      'china-post').events!) {
+      expect(row).not.toHaveProperty('time'); expect(row).not.toHaveProperty('time_zone');
+    }
+    // Another courier's rows in the same words keep Track123's label.
+    expect(parseTrack123Response({ ...china(arrived), data: { landWaybillLists: [{ ...china(arrived).data.landWaybillLists[0]!, localProviderCode: 'fedex' }] } },
+      NUMBER).events).toMatchObject([{ time: '2026-01-08T00:47:00.000Z' }]);
+  });
   it('is opt-in, and asked only about the carrier the lookup is for when its courier page is listed', () => {
     expect(universalPlan({ carriers: ['fedex'], trackingNumber: NUMBER }).sources).not.toContain('Track123');
     expect(universalPlan({ carriers: ['fedex'], trackingNumber: NUMBER, enableTrack123: true }).sources).toContain('Track123');
