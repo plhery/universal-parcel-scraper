@@ -75,6 +75,7 @@ import { adapter as aramexAu } from '../carriers/aramex-au/adapter.js';
 import { adapter as aramexNz } from '../carriers/aramex-nz/adapter.js';
 import { adapter as arasKargo } from '../carriers/aras-kargo/adapter.js';
 import { adapter as arkas } from '../carriers/arkas/adapter.js';
+import { adapter as arriival } from '../carriers/arriival/adapter.js';
 import { adapter as arrowXl } from '../carriers/arrow-xl/adapter.js';
 import { adapter as arubaPost } from '../carriers/aruba-post/adapter.js';
 import { adapter as asendia } from '../carriers/asendia/adapter.js';
@@ -91,6 +92,7 @@ import { adapter as averitt } from '../carriers/averitt/adapter.js';
 import { adapter as aymakan } from '../carriers/aymakan/adapter.js';
 import { adapter as azerpost } from '../carriers/azerpost/adapter.js';
 import { adapter as azulCargo } from '../carriers/azul-cargo/adapter.js';
+import { adapter as babyxpress } from '../carriers/babyxpress/adapter.js';
 import { adapter as bangladeshPost } from '../carriers/bangladesh-post/adapter.js';
 import { adapter as baridAlMaghrib } from '../carriers/barid-al-maghrib/adapter.js';
 import { adapter as barq } from '../carriers/barq/adapter.js';
@@ -921,6 +923,7 @@ import { adapter as seko } from '../carriers/seko/adapter.js';
 import { adapter as sendex } from '../carriers/sendex/adapter.js';
 import { adapter as sending } from '../carriers/sending/adapter.js';
 import { adapter as sendle } from '../carriers/sendle/adapter.js';
+import { adapter as sendyExpress } from '../carriers/sendy-express/adapter.js';
 import { adapter as sengiExpress } from '../carriers/sengi-express/adapter.js';
 import { adapter as sentralCargo } from '../carriers/sentral-cargo/adapter.js';
 import { adapter as serpost } from '../carriers/serpost/adapter.js';
@@ -971,6 +974,7 @@ import { adapter as southeasternFreightLines } from '../carriers/southeastern-fr
 import { adapter as southwesternMotorTransport } from '../carriers/southwestern-motor-transport/adapter.js';
 import { adapter as spExpress } from '../carriers/sp-express/adapter.js';
 import { adapter as sparkKz } from '../carriers/spark-kz/adapter.js';
+import { adapter as spcWorldwideExpress } from '../carriers/spc-worldwide-express/adapter.js';
 import { adapter as spedire } from '../carriers/spedire/adapter.js';
 import { adapter as speditionMoeller } from '../carriers/spedition-moeller/adapter.js';
 import { adapter as speeDee } from '../carriers/spee-dee/adapter.js';
@@ -1160,6 +1164,7 @@ import { adapter as xExpressRs } from '../carriers/x-express-rs/adapter.js';
 import { adapter as xcargo } from '../carriers/xcargo/adapter.js';
 import { adapter as xdeLogistics } from '../carriers/xde-logistics/adapter.js';
 import { adapter as xdp } from '../carriers/xdp/adapter.js';
+import { adapter as xendnow } from '../carriers/xendnow/adapter.js';
 import { adapter as xgs } from '../carriers/xgs/adapter.js';
 import { adapter as xindus } from '../carriers/xindus/adapter.js';
 import { adapter as xingheFreight } from '../carriers/xinghe-freight/adapter.js';
@@ -1290,6 +1295,7 @@ export const REGISTRY: RegistryDefinition = {
     "aramex-nz": aramexNz,
     "aras-kargo": arasKargo,
     "arkas": arkas,
+    "arriival": arriival,
     "arrow-xl": arrowXl,
     "aruba-post": arubaPost,
     "asendia": asendia,
@@ -1306,6 +1312,7 @@ export const REGISTRY: RegistryDefinition = {
     "aymakan": aymakan,
     "azerpost": azerpost,
     "azul-cargo": azulCargo,
+    "babyxpress": babyxpress,
     "bangladesh-post": bangladeshPost,
     "barid-al-maghrib": baridAlMaghrib,
     "barq": barq,
@@ -2136,6 +2143,7 @@ export const REGISTRY: RegistryDefinition = {
     "sendex": sendex,
     "sending": sending,
     "sendle": sendle,
+    "sendy-express": sendyExpress,
     "sengi-express": sengiExpress,
     "sentral-cargo": sentralCargo,
     "serpost": serpost,
@@ -2186,6 +2194,7 @@ export const REGISTRY: RegistryDefinition = {
     "southwestern-motor-transport": southwesternMotorTransport,
     "sp-express": spExpress,
     "spark-kz": sparkKz,
+    "spc-worldwide-express": spcWorldwideExpress,
     "spedire": spedire,
     "spedition-moeller": speditionMoeller,
     "spee-dee": speeDee,
@@ -2375,6 +2384,7 @@ export const REGISTRY: RegistryDefinition = {
     "xcargo": xcargo,
     "xde-logistics": xdeLogistics,
     "xdp": xdp,
+    "xendnow": xendnow,
     "xgs": xgs,
     "xindus": xindus,
     "xinghe-freight": xingheFreight,
@@ -2570,6 +2580,7 @@ export const REGISTRY: RegistryDefinition = {
     "arco-spedizioni": "universal",
     "ark-express": "universal",
     "arkas": "arkas",
+    "arriival": "arriival",
     "arrow-express": "universal",
     "arrow-xl": "arrow-xl",
     "aruba-post": "aruba-post",
@@ -2599,6 +2610,7 @@ export const REGISTRY: RegistryDefinition = {
     "azems": "universal",
     "azerpost": "azerpost",
     "azul-cargo": "azul-cargo",
+    "babyxpress": "babyxpress",
     "baikal-service": "universal",
     "bangladesh-post": "bangladesh-post",
     "banling": "universal",
@@ -4023,6 +4035,7 @@ export const REGISTRY: RegistryDefinition = {
     "sending": "sending",
     "sendle": "sendle",
     "sendo-kg": "universal",
+    "sendy-express": "sendy-express",
     "sengi-express": "sengi-express",
     "sentral-cargo": "sentral-cargo",
     "senyu": "universal",
@@ -4106,6 +4119,7 @@ export const REGISTRY: RegistryDefinition = {
     "southwestern-motor-transport": "southwestern-motor-transport",
     "sp-express": "sp-express",
     "spark-kz": "spark-kz",
+    "spc-worldwide-express": "spc-worldwide-express",
     "sped-trans": "universal",
     "spedire": "spedire",
     "spedition-moeller": "spedition-moeller",
@@ -4436,6 +4450,7 @@ export const REGISTRY: RegistryDefinition = {
     "xd-express": "universal",
     "xde-logistics": "xde-logistics",
     "xdp": "xdp",
+    "xendnow": "xendnow",
     "xgs": "xgs",
     "xindus": "xindus",
     "xinghe-freight": "xinghe-freight",

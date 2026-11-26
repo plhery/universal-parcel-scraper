@@ -10451,6 +10451,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "arriival": {
+    "displayName": "Arriival",
+    "color": "#0088d0",
+    "countries": [
+      "MY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "arriival",
+      "localClocks": true
+    },
+    "canaryUrl": "https://arriival.com/tracking/",
+    "trackingUrlTemplate": "https://arriival.com/tracking/?no={trackingNumber}",
+    "trackingSearchUrl": "https://arriival.com/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "arriival.com",
+          "www.arriival.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "no"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "arrow-express": {
     "displayName": "Arrow Express",
     "color": "#014fb1",
@@ -11356,6 +11386,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/+Rastreio\\.aspx$",
         "params": [
           "n"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "babyxpress": {
+    "displayName": "BabyXpress",
+    "color": "#072F60",
+    "aliases": [
+      "Baby Xpress",
+      "Baby Xpress Sdn. Bhd."
+    ],
+    "countries": [
+      "MY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "babyxpress"
+    },
+    "canaryUrl": "https://babyxpress-my.delyva.app/customer/track",
+    "trackingUrlTemplate": "https://babyxpress-my.delyva.app/customer/track?trackingNo={trackingNumber}",
+    "trackingSearchUrl": "https://babyxpress-my.delyva.app/customer/track",
+    "linkRules": [
+      {
+        "domains": [
+          "babyxpress-my.delyva.app"
+        ],
+        "pathPattern": "^/customer/track/?$",
+        "params": [
+          "trackingNo",
+          "tracking"
         ]
       }
     ],
@@ -57877,6 +57940,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "sendy-express": {
+    "displayName": "Sendy Express",
+    "color": "#0a5cff",
+    "aliases": [
+      "Sendy",
+      "Sendy Express Malaysia"
+    ],
+    "countries": [
+      "MY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sendy-express"
+    },
+    "canaryUrl": "https://www.sendy.com.my/en/track",
+    "trackingUrlTemplate": "https://www.sendy.com.my/en/track/{trackingNumber}",
+    "trackingSearchUrl": "https://www.sendy.com.my/en/track",
+    "helpUrl": "https://www.sendy.com.my/en#contact_us",
+    "linkRules": [
+      {
+        "domains": [
+          "www.sendy.com.my",
+          "sendy.com.my"
+        ],
+        "path": "^/(?:en|ms|cn)/track/([A-Za-z0-9-]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "sengi-express": {
     "displayName": "Sengi Express",
     "color": "#1a44a4",
@@ -60616,6 +60710,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingSearchUrl": "https://spark.kz/",
     "helpUrl": "https://spark.kz/en/contacts",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "spc-worldwide-express": {
+    "displayName": "SPC Worldwide Express",
+    "color": "#6D468B",
+    "aliases": [
+      "SPC",
+      "SPC Worldwide Express Sdn Bhd"
+    ],
+    "countries": [
+      "MY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "spc-worldwide-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.spcworldwidexp.com",
+          "spcworldwidexp.com"
+        ],
+        "pathPattern": "^/tracking2\\.aspx$",
+        "params": [
+          "ref"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "sped-trans": {
@@ -71157,6 +71283,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "xendnow": {
+    "displayName": "XendNow",
+    "color": "#652C8F",
+    "aliases": [
+      "XendNow Courier Service",
+      "Xend Sdn Bhd"
+    ],
+    "countries": [
+      "MY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xendnow",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.xendnow.my/trace.aspx",
+    "trackingUrlTemplate": "https://www.xendnow.my/trace.aspx?key={trackingNumber}",
+    "trackingSearchUrl": "https://www.xendnow.my/trace.aspx",
+    "linkRules": [
+      {
+        "domains": [
+          "www.xendnow.my",
+          "xendnow.my"
+        ],
+        "pathPattern": "^/trace\\.aspx$",
+        "params": [
+          "key"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "xgs": {
     "displayName": "XGS",
     "color": "#20326e",
@@ -73955,6 +74115,7 @@ export const CARRIER_IDS = [
   "arco-spedizioni",
   "ark-express",
   "arkas",
+  "arriival",
   "arrow-express",
   "arrow-xl",
   "aruba-post",
@@ -73981,6 +74142,7 @@ export const CARRIER_IDS = [
   "azems",
   "azerpost",
   "azul-cargo",
+  "babyxpress",
   "baikal-service",
   "bangladesh-post",
   "banling",
@@ -75334,6 +75496,7 @@ export const CARRIER_IDS = [
   "sending",
   "sendle",
   "sendo-kg",
+  "sendy-express",
   "sengi-express",
   "sentral-cargo",
   "senyu",
@@ -75413,6 +75576,7 @@ export const CARRIER_IDS = [
   "southwestern-motor-transport",
   "sp-express",
   "spark-kz",
+  "spc-worldwide-express",
   "sped-trans",
   "spedire",
   "spedition-moeller",
@@ -75727,6 +75891,7 @@ export const CARRIER_IDS = [
   "xd-express",
   "xde-logistics",
   "xdp",
+  "xendnow",
   "xgs",
   "xindus",
   "xinghe-freight",
@@ -76051,6 +76216,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "arco-spedizioni": [],
   "ark-express": ["ark-express-1"],
   "arkas": [],
+  "arriival": [],
   "arrow-express": [],
   "arrow-xl": [],
   "aruba-post": ["aruba-post-s10"],
@@ -76077,6 +76243,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "azems": [],
   "azerpost": [],
   "azul-cargo": [],
+  "babyxpress": [],
   "baikal-service": [],
   "bangladesh-post": ["bangladesh-post-s10"],
   "banling": [],
@@ -77430,6 +77597,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sending": ["sending-1"],
   "sendle": ["sendle-1"],
   "sendo-kg": [],
+  "sendy-express": [],
   "sengi-express": ["sengi-express-1","sengi-express-2"],
   "sentral-cargo": [],
   "senyu": [],
@@ -77509,6 +77677,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "southwestern-motor-transport": [],
   "sp-express": ["sp-express-1"],
   "spark-kz": [],
+  "spc-worldwide-express": [],
   "sped-trans": [],
   "spedire": [],
   "spedition-moeller": [],
@@ -77823,6 +77992,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xd-express": [],
   "xde-logistics": [],
   "xdp": ["xdp-1"],
+  "xendnow": [],
   "xgs": [],
   "xindus": [],
   "xinghe-freight": ["xinghe-freight-1","xinghe-freight-truncated"],
