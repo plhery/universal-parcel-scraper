@@ -2,8 +2,11 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import sharp from 'sharp';
 import { describe, expect, it, vi } from 'vitest';
+import { recognitionAskedCarriers, recognitionCandidates } from '../../core/catalog/recognition.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { outsideCountryLast } from '../../core/testing/recognition.js';
 import { adapter, YundaTracker } from './adapter.js';
 import { solveYundaSlider } from './challenge.js';
 import { normalizeYundaNumber, parseYunda } from './parser.js';
@@ -205,6 +208,27 @@ describe('Yunda anonymous retrieval', () => {
     expect(new URL(String(fetcher.mock.calls[0]![0])).searchParams.get('randomStr')).not.toBe(new URL(String(fetcher.mock.calls[3]![0])).searchParams.get('randomStr'));
   });
 
+  it('recognizes a waybill by its scans, keeps an empty answer inconclusive and asks nothing about another form', async () => {
+    const environment = { recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null };
+    await expect(adapter({ ...environment, fetcher: transport() }).recognize!(NUMBER, { budgetMs: 5000 })).resolves.toMatchObject({ known: true });
+    const answers = transport();
+    const empty = vi.fn<typeof fetch>().mockImplementation(async (url, init) => String(url).endsWith('/v2.record/search')
+      ? new Response(JSON.stringify({ code: 200, data: { order: [], logistic: [] } })) : answers(url, init));
+    await expect(adapter({ ...environment, fetcher: empty }).recognize!(NUMBER, { budgetMs: 5000 })).rejects.toMatchObject({ kind: 'indeterminate' });
+    const unasked = vi.fn<typeof fetch>();
+    await expect(adapter({ ...environment, fetcher: unasked }).recognize!('0000000001', { budgetMs: 5000 })).resolves.toEqual({ known: false });
+    expect(unasked).not.toHaveBeenCalled();
+  });
+  it('is asked about fifteen digits first from China and last from elsewhere, and never about thirteen', () => {
+    const waybill = '469999999999990';
+    expect(detectCarrierMatch(waybill).candidates).toContain('yunda');
+    expect(recognitionAskedCarriers(waybill, { countryHint: 'CN' })[0]).toBe('yunda');
+    for (const countryHint of [undefined, 'IT', 'FR', 'RU', 'US']) {
+      expect(outsideCountryLast(waybill, 'yunda', { countryHint }), String(countryHint)).toBe(true);
+    }
+    expect(detectCarrierMatch(NUMBER).candidates).toContain('yunda');
+    expect(recognitionCandidates(NUMBER, { countryHint: 'CN' }).map(({ carrier }) => carrier)).not.toContain('yunda');
+  });
   it('never follows a session redirect to another site', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('', { status: 302, headers: { Location: 'https://example.invalid/login' } }));
     await expect(new YundaTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport' });

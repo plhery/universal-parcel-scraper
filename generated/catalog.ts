@@ -4679,6 +4679,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "yunda",
+      "recognitionRank": 541,
+      "recognitionPattern": "^\\d{15}$",
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://web.yundaex.com/infoInquiry",

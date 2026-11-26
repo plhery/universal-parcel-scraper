@@ -548,6 +548,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "yamato": 14,
   "ycs-logistics": 718,
   "youbang-express": 39,
+  "yunda": 541,
   "yurtici-kargo": 430,
   "zecheng": 725,
   "zeleris": 230,

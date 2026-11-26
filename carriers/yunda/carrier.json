@@ -20,6 +20,11 @@
     "steps": [
       "direct"
     ],
+    "recognition": {
+      "rank": 541,
+      "pattern": "^\\d{15}$",
+      "servedCountriesOnly": true
+    },
     "localClocks": true
   },
   "capabilities": [
