@@ -33,9 +33,10 @@ Both replies must identify the requested `mailPieceId`. Missing or failed
 details cannot become a history result; a valid empty events feed is marked
 `summary_only`. Browser launch, queueing and retrieval share the caller's
 deadline and cancellation signal, and the browser closes after each lookup.
-A lookup takes at most 30 seconds of that deadline. An edge refusal or
-interactive CAPTCHA can trigger one retry in a fresh context when at least
-15 seconds remain. The retry requests the same history and records the first
+A lookup takes at most 30 seconds of that deadline, or 50 seconds while visual
+recovery works on a task it can read: the extra time goes only to solving and
+to the history after an accepted answer. An edge refusal or interactive CAPTCHA
+can trigger one retry in a fresh context when at least 15 of the 30 seconds remain. The retry requests the same history and records the first
 challenge as its recovery reason. Rate limits, schema errors and confirmed
 answers are not retried. An unavailable browser fails fast.
 
@@ -172,17 +173,21 @@ tokens stay outside Git.
 
 ## Limitations
 
-`ROYAL_MAIL_GEMINI_API_KEY` opts into single-drag hCaptcha recovery through Google
-Gemini Flash-Lite. Only the cropped verification widget reaches Google. The adapter
-writes no keys, images, answers or issued proof to files or logs. Recovery keeps the original
-guest session and lookup deadline, with one model request per lookup and no new attempt
-after a verification refusal. A task it cannot read, such as a click or multi-page task, does
-not spend that request: the retry's fresh context often meets a drag task instead, though
-little time is left for the model by then.
-Ambiguous plans, changed images, multi-page tasks, click tasks and unsupported layouts remain
+`ROYAL_MAIL_GEMINI_API_KEY` opts into hCaptcha recovery through Google Gemini
+Flash-Lite, for one drag or for clicks on a task's targets. Only the cropped verification
+widget reaches Google. The adapter writes no keys, images, answers or issued proof to files
+or logs. Recovery keeps the original guest session, with one solving attempt per lookup and
+no new attempt after a verification refusal. A click task may span two pages: after its first
+page is answered, Next shows the second, whose image is read afresh, with at most two model
+requests and twelve clicks per lookup. A task it cannot read, such as typed text, a third page
+or another layout, is exchanged for another through hCaptcha's own refresh, at most three
+times and only while six seconds remain before the 30-second cap. An unreadable task does
+not spend the attempt: the retry's fresh context may meet a readable one.
+Ambiguous plans, a plan whose action differs from the prompt, and changed images remain
 challenges for provider fallback.
-An image from a widget refresh is discarded before inference; the frame, generation,
-prompt and image geometry must still match before input or submission.
+An image from a widget refresh the adapter did not ask for is discarded before inference;
+the frame, generation, prompt and image geometry must still match before input, Next or
+submission.
 
 `ROYAL_MAIL_GEMINI_LOG_VERIFICATION=1` writes fixed verification labels, counts,
 timing and a bound-history flag to stderr. Accepted verification without history

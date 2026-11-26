@@ -49,10 +49,15 @@ export function royalMailDestination(summary: unknown): { summary?: { destinatio
 /** Observe the application's request; its issued session stays in the browser. */
 export async function captureRoyalMailReply(page: Page, url: string, number: string, phase: 'summary' | 'events',
   signal: AbortSignal, timeoutMs: number, trigger: () => Promise<void>,
-  recover?: (signal: AbortSignal, remainingMs: number) => Promise<boolean>): Promise<Record<string, unknown>> {
-  const expires = performance.now() + timeoutMs;
+  recover?: (signal: AbortSignal, remainingMs: number) => Promise<boolean>,
+  solvingMs?: () => number): Promise<Record<string, unknown>> {
+  let expires = performance.now() + timeoutMs;
   const finished = new AbortController();
-  const deadline = AbortSignal.any([signal, finished.signal, AbortSignal.timeout(Math.max(1, Math.floor(timeoutMs)))]);
+  const timer = new AbortController();
+  const arm = (ms: number) => setTimeout(() => timer.abort(new DOMException('Royal Mail tracking response timed out', 'TimeoutError')),
+    Math.max(1, Math.floor(ms)));
+  let clock = arm(timeoutMs);
+  const deadline = AbortSignal.any([signal, finished.signal, timer.signal]);
   deadline.throwIfAborted();
   let active = true;
   let refresh = false;
@@ -129,6 +134,14 @@ export async function captureRoyalMailReply(page: Page, url: string, number: str
       if (await page.locator(CAPTCHA_CHALLENGE).count().catch(() => 0)) {
         interactive = true;
         if (!recovered) {
+          // A solver at work may hold the reply to the lookup's own deadline; one that cannot
+          // read the task, or whose attempt is spent, returns at once.
+          const solving = recover && solvingMs ? solvingMs() : 0;
+          if (solving > expires - performance.now()) {
+            clearTimeout(clock);
+            expires = performance.now() + solving;
+            clock = arm(solving);
+          }
           if (recover && await recover(deadline, Math.max(0, expires - performance.now()))) recovered = true;
           else {
             if (active) reject(new ChallengeError(PROVIDER, 'Royal Mail asked for an interactive CAPTCHA'));
@@ -158,6 +171,7 @@ export async function captureRoyalMailReply(page: Page, url: string, number: str
     page.off('response', received);
     page.off('requestfailed', failed);
     deadline.removeEventListener('abort', aborted);
+    clearTimeout(clock);
     finished.abort();
   }
 }
@@ -178,6 +192,7 @@ export function fetchRoyalMailInBrowser(number: string, executablePath: string, 
       const page = await context.newPage();
       recovery = vision ? royalMailVisionRecovery(page, vision, session, remainingMs) : undefined;
       const timeout = () => Math.min(10_000, remainingMs());
+      const solvingMs = recovery ? () => remainingMs() - 500 : undefined;
       // The consent manager withholds hCaptcha's frame unless functional cookies
       // are allowed, and the tracking application sends nothing without its token.
       // Allow that category alone.
@@ -239,12 +254,12 @@ export function fetchRoyalMailInBrowser(number: string, executablePath: string, 
         Math.min(15_000, remainingMs()), async () => {
           if (await input.inputValue() !== number) throw new TransportError(PROVIDER, 'Royal Mail tracking form was reset');
           await page.locator('#submit:not(:disabled)').click({ timeout: timeout() });
-        }, recovery?.solve);
+        }, recovery?.solve, solvingMs);
       // The summary issues an API session. The application's details handler
       // uses it, or performs its own CAPTCHA refresh when the session expires.
       parseRoyalMailTrackingResponse({ mailPieces: summary }, number);
       const history = fullHistory ? await captureRoyalMailReply(page, royalMailEventsApiUrl(number), number, 'events', session,
-        Math.min(15_000, remainingMs()), () => page.locator('#btn-more-details').click({ timeout: timeout() }), recovery?.solve) : undefined;
+        Math.min(15_000, remainingMs()), () => page.locator('#btn-more-details').click({ timeout: timeout() }), recovery?.solve, solvingMs) : undefined;
       session.throwIfAborted();
       const result = { ...parseRoyalMailTrackingResponse({ mailPieces: { ...summary, ...(history ?? {}),
         summary: { ...(summary.summary as Record<string, unknown>), ...(history?.summary as Record<string, unknown> | undefined) } } }, number),

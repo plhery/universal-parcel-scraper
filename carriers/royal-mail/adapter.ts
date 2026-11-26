@@ -1,12 +1,12 @@
 import { recognizeFromBrowserLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { BudgetExceededError, ChallengeError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { cleanScalar, TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { fetchRoyalMailInBrowser, royalMailDestination } from './browser.js';
-import type { RoyalMailCaptchaOptions, RoyalMailVerificationRecord } from './vision.js';
+import type { RoyalMailCaptchaOptions, RoyalMailVerificationRecord, RoyalMailVisionContext } from './vision.js';
 import { normalizeRoyalMailNumber, parseRoyalMailTrackingHtml, parseRoyalMailTrackingResponse,
   royalMailEstimate, royalMailEventsApiUrl, royalMailSummaryApiUrl, royalMailTrackingUrl, royalMailUnconfirmed } from './parser.js';
 import { retryAfterMs } from '../../core/transport/retryAfter.js';
@@ -20,6 +20,8 @@ const SETTLE_TIMEOUT_MS = 15_000;
 // A healthy lookup needs a fraction of this. A browser that is down fails every
 // parcel the same way, and each failure must not hold a consumer's run for a minute.
 const BROWSER_TIMEOUT_MS = 30_000;
+/** A lookup whose CAPTCHA the solver can read may run this long, within the caller's budget. */
+const SOLVING_TIMEOUT_MS = 50_000;
 // A fresh consent flow and the separate history request need time to complete.
 const BROWSER_RETRY_MIN_MS = 15_000;
 const MAX_CAPTURED = 20;
@@ -71,15 +73,31 @@ export class RoyalMailTracker {
   async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeRoyalMailNumber(trackingNumber);
     if (this.#browserWsEndpoint || this.#executablePath) {
-      const budgetMs = Math.min(BROWSER_TIMEOUT_MS, context.budgetMs ?? this.timeoutMs);
+      const callerMs = context.budgetMs ?? this.timeoutMs;
+      const plainMs = Math.min(BROWSER_TIMEOUT_MS, callerMs);
+      const budgetMs = this.#captchaVision ? Math.max(plainMs, Math.min(SOLVING_TIMEOUT_MS, callerMs)) : plainMs;
       const started = performance.now();
-      const vision = this.#captchaVision ? { options: this.#captchaVision, attempt: { used: false } } : undefined;
-      // One model request per lookup, in the first context whose task it can read: a fresh
+      const plainLeft = () => plainMs - (performance.now() - started);
+      const vision: RoyalMailVisionContext | undefined = this.#captchaVision
+        ? { options: this.#captchaVision, attempt: { used: false, solving: false }, plainMs: plainLeft } : undefined;
+      // One solving attempt per lookup, in the first context whose task it can read: a fresh
       // context seldom escapes an interactive CAPTCHA, though it often meets another task type.
-      const run = ({ remainingMs, signal }: { remainingMs: number; signal: AbortSignal }) => {
+      const run = async ({ remainingMs, signal }: { remainingMs: number; signal: AbortSignal }) => {
         const args = [number, this.#executablePath ?? '', signal, remainingMs, this.#fullHistory,
           this.#browserProxy, this.#browserWsEndpoint] as const;
-        return vision ? fetchRoyalMailInBrowser(...args, vision) : fetchRoyalMailInBrowser(...args);
+        if (!vision) return fetchRoyalMailInBrowser(...args);
+        // Past the plain cap, only a lookup whose CAPTCHA is being solved, or was solved, goes on.
+        const plain = new AbortController();
+        const timer = setTimeout(() => {
+          if (!vision.attempt.solving) plain.abort(new DOMException('Royal Mail lookup reached its cap', 'TimeoutError'));
+        }, Math.max(1, Math.floor(plainLeft())));
+        try {
+          return await fetchRoyalMailInBrowser(number, args[1], AbortSignal.any([signal, plain.signal]), remainingMs,
+            this.#fullHistory, this.#browserProxy, this.#browserWsEndpoint, vision);
+        } catch (error) {
+          if (plain.signal.aborted && !signal.aborted) throw new BudgetExceededError('royal-mail', plainMs, { cause: error });
+          throw error;
+        } finally { clearTimeout(timer); }
       };
       return runSteps<CarrierResult>({ carrier: 'royal-mail', budgetMs,
         signal: context.signal, recorder: this.#recorder }, [
@@ -88,7 +106,7 @@ export class RoyalMailTracker {
         // recover an intermittent edge refusal without retaining issued tokens.
         { id: 'retry', run, recovers: error => error instanceof ChallengeError
           && error.reason !== 'captcha_refused' && error.reason !== 'captcha_blocked'
-          && budgetMs - (performance.now() - started) >= BROWSER_RETRY_MIN_MS },
+          && plainLeft() >= BROWSER_RETRY_MIN_MS },
       ]);
     }
     // The legacy service remains available through explicit tracker instances.

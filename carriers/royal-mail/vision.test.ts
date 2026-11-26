@@ -12,18 +12,33 @@ beforeEach(() => { vi.mocked(planRoyalMailVision).mockReset(); });
 async function harness() {
   const png = await sharp({ create: { width: 200, height: 260, channels: 4, background: '#aaccee' } }).png().toBuffer();
   const state = { proof: false, signature: 'Drag the synthetic object to its matching shape', frameUrl: 'https://newassets.hcaptcha.com/hcaptcha.html#frame=challenge&id=synthetic-widget',
-    image: png, ready: true, submitted: false, x: 0, submitLabel: 'Skip' };
+    image: png, ready: true, submitted: false, x: 0, submitLabel: 'Skip', afterAnswer: 'Verify', nextAfterAnswer: 'Verify',
+    refreshable: false, refreshedSignature: 'Drag the synthetic object to its matching shape', serial: 0 };
+  const others = await Promise.all(['#ccaaee', '#eeccaa', '#aaeecc', '#eeaacc'].map(background =>
+    sharp({ create: { width: 200, height: 260, channels: 4, background } }).png().toBuffer()));
   const emitter = new EventEmitter();
-  const submit = { getAttribute: async () => state.submitLabel, innerText: async () => state.submitLabel, click: vi.fn(async () => { state.submitted = true; state.proof = true; }) };
+  // Next shows the task's second page in the same generation; Verify submits the answer.
+  const submit = { getAttribute: async () => state.submitLabel, innerText: async () => state.submitLabel, click: vi.fn(async () => {
+    if (/^Next/.test(state.submitLabel)) {
+      state.image = others[state.serial++ % others.length]!; state.submitLabel = 'Skip'; state.afterAnswer = state.nextAfterAnswer; return;
+    }
+    state.submitted = true; state.proof = true;
+  }) };
+  // A refresh issues a new task in a new generation.
+  const refreshControl = { isVisible: async () => state.refreshable, click: vi.fn(async () => {
+    emitter.emit('request', { ...request(), url: () => 'https://api.hcaptcha.com/getcaptcha/synthetic-sitekey' });
+    state.image = others[state.serial++ % others.length]!; state.signature = state.refreshedSignature;
+  }) };
   const crop = { evaluate: async () => state.ready, screenshot: vi.fn(async () => state.image), boundingBox: async () => ({ x: state.x, y: 0, width: 200, height: 260 }) };
   const frame = { url: () => state.frameUrl, isDetached: () => false, locator: (selector: string) => {
     if (selector === '.challenge-view') return crop;
     if (selector === 'canvas') return { count: async () => 1, boundingBox: async () => ({ x: 0, y: 60, width: 200, height: 200 }) };
     if (selector === '.prompt-text') return { innerText: async () => state.signature };
     if (selector === '.button-submit') return submit;
+    if (selector.startsWith('.refresh')) return { first: () => refreshControl };
     throw new Error('Unexpected fixture selector');
   } };
-  const mouse = { click: vi.fn(async () => {}), move: vi.fn(async () => {}), down: vi.fn(async () => {}), up: vi.fn(async () => { state.submitLabel = 'Verify'; }) };
+  const mouse = { click: vi.fn(async () => { state.submitLabel = state.afterAnswer; }), move: vi.fn(async () => {}), down: vi.fn(async () => {}), up: vi.fn(async () => { state.submitLabel = 'Verify'; }) };
   const install = vi.fn(async (...args: unknown[]) => args.length === 2);
   const page = Object.assign(emitter, { locator: () => ({ elementHandle: async () => ({ contentFrame: async () => frame, evaluate: install }) }),
     evaluate: async () => state.proof, mouse }) as unknown as Page;
@@ -41,7 +56,7 @@ async function harness() {
       headers: () => ({}), body: async () => Buffer.from(JSON.stringify({ pass: false })) });
   };
   vi.mocked(planRoyalMailVision).mockResolvedValue({ action: 'drag', points: [{ x: 300, y: 600 }, { x: 800, y: 750 }] });
-  return { ...recovery, controller, state, mouse, submit, context, records, emitter, refusal, crop, install,
+  return { ...recovery, controller, state, mouse, submit, context, records, emitter, refusal, crop, install, refreshControl,
     refresh: () => { emitter.emit('request', { ...request(), url: () => 'https://api.hcaptcha.com/getcaptcha/synthetic-sitekey' }); },
     autoAccept: () => { state.proof = true; emitter.emit('request', request()); },
     autoCheck: () => { emitter.emit('request', request()); },
@@ -245,16 +260,96 @@ describe('Royal Mail verification recovery', () => {
     h.finish(false);
   });
 
-  it('declines click puzzles before spending a model request', async () => {
+  it('declines an unreadable task before spending the lookup\'s attempt when no other task is offered', async () => {
     const h = await harness();
-    h.state.signature = 'Click each synthetic object';
+    h.state.signature = 'Type the synthetic word';
     await expect(h.solve(h.signal)).resolves.toBe(false);
     expect(planRoyalMailVision).not.toHaveBeenCalled();
     expect(h.mouse.down).not.toHaveBeenCalled();
     h.finish(false);
-    // The retry's fresh context keeps the lookup's one model request.
-    expect(h.context.attempt.used).toBe(false);
-    expect(h.records).toEqual([expect.objectContaining({ outcome: 'unsupported', modelCalls: 0 })]);
+    // The retry's fresh context keeps the lookup's one attempt.
+    expect(h.context.attempt).toEqual({ used: false, solving: false });
+    expect(h.records).toEqual([expect.objectContaining({ outcome: 'unsupported', modelCalls: 0, refreshes: 0 })]);
+  });
+
+  it('exchanges an unreadable task for a drag task in the same widget and answers the new image', async () => {
+    const h = await harness();
+    Object.assign(h.state, { signature: 'Type the synthetic word', refreshable: true });
+    await expect(h.solve(h.signal)).resolves.toBe(true);
+    expect(h.refreshControl.click).toHaveBeenCalledOnce();
+    expect(vi.mocked(planRoyalMailVision).mock.calls[0]?.[1]).toBe(h.state.image);
+    expect(h.mouse.down).toHaveBeenCalledOnce();
+    h.finish(true);
+    expect(h.context.attempt).toMatchObject({ used: true, solving: true });
+    expect(h.records[0]).toMatchObject({ outcome: 'accepted', refreshes: 1, modelCalls: 1, actions: 1, submissions: 1 });
+  });
+
+  it('refreshes at most three times and never past the lookup\'s plain cap', async () => {
+    const h = await harness();
+    Object.assign(h.state, { signature: 'Type the synthetic word', refreshable: true, refreshedSignature: 'Type the synthetic word' });
+    await expect(h.solve(h.signal)).resolves.toBe(false);
+    expect(h.refreshControl.click).toHaveBeenCalledTimes(3);
+    h.finish(false);
+    expect(h.records[0]).toMatchObject({ outcome: 'unsupported', refreshes: 3, modelCalls: 0 });
+    expect(h.context.attempt).toEqual({ used: false, solving: false });
+    const late = await harness();
+    Object.assign(late.state, { signature: 'Type the synthetic word', refreshable: true });
+    late.context.plainMs = () => 5_000;
+    await expect(late.solve(late.signal)).resolves.toBe(false);
+    expect(late.refreshControl.click).not.toHaveBeenCalled();
+    late.finish(false);
+  });
+
+  it('answers a click task with native clicks inside the task image', async () => {
+    const h = await harness();
+    h.state.signature = 'Please click each synthetic object';
+    vi.mocked(planRoyalMailVision).mockResolvedValueOnce({ action: 'click', points: [{ x: 200, y: 600 }, { x: 700, y: 700 }] });
+    await expect(h.solve(h.signal)).resolves.toBe(true);
+    expect(h.mouse.click).toHaveBeenCalledTimes(2);
+    expect(h.mouse.click).toHaveBeenNthCalledWith(1, 40, 156);
+    expect(h.mouse.down).not.toHaveBeenCalled();
+    expect(h.submit.click).toHaveBeenCalledOnce();
+    h.finish(true);
+    expect(h.records[0]).toMatchObject({ outcome: 'accepted', modelCalls: 1, actions: 2, submissions: 1 });
+  });
+
+  it('declines a plan whose action differs from the task\'s prompt', async () => {
+    const h = await harness();
+    h.state.signature = 'Please click each synthetic object';
+    await expect(h.solve(h.signal)).resolves.toBe(false);
+    expect(h.mouse.click).not.toHaveBeenCalled();
+    expect(h.mouse.down).not.toHaveBeenCalled();
+    h.finish(false);
+    expect(h.records[0]).toMatchObject({ outcome: 'declined', modelCalls: 1 });
+  });
+
+  it('advances one answered click page with Next and reads the second page afresh', async () => {
+    const h = await harness();
+    Object.assign(h.state, { signature: 'Please click each synthetic object', afterAnswer: 'Next' });
+    const first = h.state.image;
+    vi.mocked(planRoyalMailVision)
+      .mockResolvedValueOnce({ action: 'click', points: [{ x: 200, y: 600 }] })
+      .mockResolvedValueOnce({ action: 'click', points: [{ x: 500, y: 500 }, { x: 800, y: 800 }] });
+    await expect(h.solve(h.signal)).resolves.toBe(true);
+    const images = vi.mocked(planRoyalMailVision).mock.calls.map(call => call[1]);
+    expect(images).toHaveLength(2);
+    expect(images[0]).toBe(first);
+    expect(images[1]).not.toBe(first);
+    expect(h.mouse.click).toHaveBeenCalledTimes(3);
+    expect(h.submit.click).toHaveBeenCalledTimes(2);
+    h.finish(true);
+    expect(h.records[0]).toMatchObject({ outcome: 'accepted', modelCalls: 2, rounds: 2, actions: 3, submissions: 1 });
+  });
+
+  it('does not advance to a third page', async () => {
+    const h = await harness();
+    Object.assign(h.state, { signature: 'Please click each synthetic object', afterAnswer: 'Next', nextAfterAnswer: 'Next' });
+    vi.mocked(planRoyalMailVision).mockResolvedValue({ action: 'click', points: [{ x: 200, y: 600 }] });
+    await expect(h.solve(h.signal)).resolves.toBe(false);
+    expect(h.submit.click).toHaveBeenCalledOnce();
+    h.finish(false);
+    expect(h.records[0]).toMatchObject({ outcome: 'unsupported', modelCalls: 2, actions: 2, submissions: 0 });
+    expect(h.context.attempt).toEqual({ used: true, solving: false });
   });
 
   it('spends the lookup\'s one model request even when the model declines', async () => {

@@ -41,8 +41,8 @@ function harness(phase: 'summary' | 'events' = 'summary') {
     await tick();
   };
   const controller = new AbortController();
-  const capture = (trigger: () => Promise<void>, timeout = 1000, recover?: Parameters<typeof captureRoyalMailReply>[7]) =>
-    captureRoyalMailReply(page, target, NUMBER, phase, controller.signal, timeout, trigger, recover);
+  const capture = (trigger: () => Promise<void>, timeout = 1000, recover?: Parameters<typeof captureRoyalMailReply>[7],
+    solvingMs?: () => number) => captureRoyalMailReply(page, target, NUMBER, phase, controller.signal, timeout, trigger, recover, solvingMs);
   return { emitter, respond, request, controller, capture, captcha };
 }
 
@@ -200,6 +200,20 @@ describe('Royal Mail browser response capture', () => {
       await h.respond({ mailPieces: { mailPieceId: 'SG999999998GB', summary: {} } });
       return true;
     })).rejects.toMatchObject({ kind: 'schema' });
+    expect(h.emitter.eventNames()).toEqual([]);
+  });
+
+  it('holds the reply to the lookup\'s own deadline while a solver works on the challenge', async () => {
+    const h = harness();
+    h.captcha.visible = true;
+    const recover = vi.fn(async (_signal: AbortSignal, remaining: number) => {
+      await new Promise(resolve => setTimeout(resolve, 80));
+      h.captcha.visible = false;
+      await h.respond(payload);
+      return remaining > 1000;
+    });
+    await expect(h.capture(async () => {}, 20, recover, () => 5000)).resolves.toHaveProperty('mailPieceId', NUMBER);
+    expect(recover.mock.calls[0]?.[1]).toBeGreaterThan(4000);
     expect(h.emitter.eventNames()).toEqual([]);
   });
 

@@ -82,7 +82,8 @@ describe('Royal Mail vision plan refusal boundaries', () => {
     { ...PLAN, points: [{ x: 400, y: 1000 }] }, { ...PLAN, points: [{ x: Infinity, y: 400 }] },
     { ...PLAN, points: [{ x: '400', y: 400 }] },
     { ...PLAN, points: [{ x: 400, y: 400 }, { x: 401, y: 401 }] },
-    { ...PLAN, action: 'click' }, { ...PLAN, points: [{ x: 300, y: 600 }] },
+    { ...PLAN, action: 'click', points: Array.from({ length: 10 }, (_, i) => ({ x: 50 + i * 80, y: 600 })) },
+    { ...PLAN, action: 'click', points: [] }, { ...PLAN, points: [{ x: 300, y: 600 }] },
   ])('declines uncertainty, invalid coordinates and ambiguous repeated actions: %j', plan => {
     expect(parseRoyalMailVisionPlan(plan)).toBeNull();
   });
@@ -90,5 +91,12 @@ describe('Royal Mail vision plan refusal boundaries', () => {
   it('accepts a bounded drag with two distinct points', () => {
     expect(parseRoyalMailVisionPlan({ action: 'drag', confidence: 0.99, reason: 'none', points: [{ x: 100, y: 700 }, { x: 800, y: 500 }] }))
       .toEqual({ action: 'drag', points: [{ x: 100, y: 700 }, { x: 800, y: 500 }] });
+  });
+
+  it('accepts one through nine distinct high-confidence click targets', () => {
+    for (const count of [1, 9]) {
+      const points = Array.from({ length: count }, (_, i) => ({ x: 50 + i * 90, y: 500 }));
+      expect(parseRoyalMailVisionPlan({ ...PLAN, action: 'click', points })).toEqual({ action: 'click', points });
+    }
   });
 });

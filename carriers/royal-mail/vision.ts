@@ -5,9 +5,20 @@ import { ChallengeError } from '../../core/errors/index.js';
 import { loadSharp } from '../../core/transport/optional.js';
 import { isRecord } from '../../core/types.js';
 import { planRoyalMailVision, type RoyalMailVisionOptions } from './vision-model.js';
+import { royalMailVisionButton, royalMailVisionCanAdvance, royalMailVisionTask } from './vision-policy.js';
 
 const CHALLENGE = 'iframe[src*="hcaptcha.com"][src*="frame=challenge"]:visible';
 const PROVIDER = 'Royal Mail';
+// hCaptcha's own control for another task in the same widget.
+const REFRESH = '.refresh.button, [role="button"][aria-label*="new challenge" i]';
+/** Unreadable tasks exchanged for another in the same window, while the lookup's plain cap allows. */
+const MAX_REFRESHES = 3;
+/** Time a refreshed task needs before the plain cap: its image, a model answer and the input. */
+const REFRESH_RESERVE_MS = 6_000;
+/** The solver's cap across both pages of a task; the caller's budget still bounds it. */
+const SOLVER_MS = 30_000;
+/** Native clicks across both pages of a task. */
+const MAX_CLICKS = 12;
 type Outcome = 'accepted' | 'declined' | 'stale' | 'unsupported' | 'refused' | 'blocked' | 'timeout';
 
 /** A derived guide for the model, never drawn on the live widget. */
@@ -31,6 +42,8 @@ export interface RoyalMailVerificationRecord {
   phase: 'widget' | 'analysis' | 'generation' | 'snapshot' | 'geometry' | 'input' | 'verification' | 'submit' | 'proof';
   modelCalls: number;
   rounds: number;
+  /** Unreadable tasks exchanged for another before inference. */
+  refreshes: number;
   actions: number;
   submissions: number;
   checks: number;
@@ -46,8 +59,13 @@ export interface RoyalMailCaptchaOptions extends RoyalMailVisionOptions {
 
 export interface RoyalMailVisionContext {
   options: RoyalMailCaptchaOptions;
-  /** Shared by the browser step and its existing fresh-context retry. */
-  attempt: { used: boolean };
+  /**
+   * Shared by the browser step and its existing fresh-context retry. `solving` is set while the
+   * solver works on a task it can read, and stays set once that task is accepted.
+   */
+  attempt: { used: boolean; solving?: boolean };
+  /** Time left before the lookup's plain cap. Refreshes stop short of it. */
+  plainMs?: () => number;
 }
 
 /** Observe before navigation. The original guest widget issues and consumes its own proof. */
@@ -64,7 +82,7 @@ export function royalMailVisionRecovery(page: Page, config: RoyalMailVisionConte
   let seen = false;
   let outcome: Outcome = 'declined';
   let phase: RoyalMailVerificationRecord['phase'] = 'widget';
-  const record = { modelCalls: 0, rounds: 0, actions: 0, submissions: 0, accepted: false, modelMs: 0 };
+  const record = { modelCalls: 0, rounds: 0, refreshes: 0, actions: 0, submissions: 0, accepted: false, modelMs: 0 };
   const pending = new Set<Promise<void>>();
   const verificationRequests = new Set<Request>();
   const captchaRequest = (request: Request, type: 'getcaptcha' | 'checkcaptcha') => {
@@ -106,9 +124,15 @@ export function royalMailVisionRecovery(page: Page, config: RoyalMailVisionConte
 
   const solve = async (signal: AbortSignal, phaseMs = Infinity): Promise<boolean> => {
     seen = true;
-    // One model request per lookup: a task the solver cannot read leaves it to the retry.
+    // One solving attempt per lookup: a task the solver cannot read leaves it to the retry.
     if (config.attempt.used) return false;
-    const expires = performance.now() + Math.min(13_000, remainingMs() - 2500, phaseMs - 1000);
+    let solved = false;
+    try { solved = await attempt(signal, phaseMs); return solved; }
+    finally { if (!solved) config.attempt.solving = false; }
+  };
+
+  const attempt = async (signal: AbortSignal, phaseMs: number): Promise<boolean> => {
+    const expires = performance.now() + Math.min(SOLVER_MS, remainingMs() - 2500, phaseMs - 1000);
     const left = (cap = 1000) => {
       signal.throwIfAborted(); session.throwIfAborted();
       const ms = Math.min(expires - performance.now(), remainingMs() - 2500);
@@ -182,44 +206,87 @@ export function royalMailVisionRecovery(page: Page, config: RoyalMailVisionConte
         return await verdict();
       };
       const sharp = await loadSharp(PROVIDER);
-      {
-        record.rounds++;
-        const currentGeneration = generation;
-        const crop = frame.locator('.challenge-view');
-        if (await frame.locator('canvas').count() !== 1) { outcome = 'unsupported'; return false; }
-        const ready = await crop.evaluate(node => {
-          for (let el: Element | null = node; el; el = el.parentElement) {
-            const style = getComputedStyle(el);
-            if (style.visibility !== 'visible' || style.display === 'none' || Number(style.opacity) < 0.99) return false;
-          }
-          return true;
-        });
-        if (!ready) { outcome = 'stale'; return false; }
-        const signature = await frame.locator('.prompt-text').innerText({ timeout: left() });
-        if (!/\b(?:drag|move)\b/i.test(signature) || signature.length > 1000) { outcome = 'unsupported'; return false; }
-        const submit = frame.locator('.button-submit');
-        const canVerify = async (beforeAnswer = false) => {
-          const labels = [await submit.getAttribute('aria-label', { timeout: left() }), await submit.innerText({ timeout: left() })];
-          return labels.some(label => /^Verify(?: (?:Answers|Challenge))?$/i.test(label?.trim() ?? '')
-            || beforeAnswer && /^Skip(?: Challenge)?$/i.test(label?.trim() ?? ''));
-        };
-        // Multi-page drag tasks require a separate transition contract. Decline
-        // a visible Next control before inference and never advance it after input.
-        // An unanswered single-page task can still label this control Skip.
-        if (!await canVerify(true)) { outcome = 'unsupported'; return false; }
-        let image = await crop.screenshot({ type: 'png', timeout: left() });
-        let stable = false;
-        // A visible canvas can still be fading or receiving its first assets.
-        // Never ask the model about a transient frame.
-        for (let check = 0; check < 4; check++) {
-          await delay(100, undefined, { signal });
-          const nextImage = await crop.screenshot({ type: 'png', timeout: left() });
-          stable = createHash('sha256').update(image).digest('hex') === createHash('sha256').update(nextImage).digest('hex');
-          image = nextImage;
-          if (stable) break;
+      const crop = frame.locator('.challenge-view');
+      const submit = frame.locator('.button-submit');
+      const visible = () => crop.evaluate(node => {
+        for (let el: Element | null = node; el; el = el.parentElement) {
+          const style = getComputedStyle(el);
+          if (style.visibility !== 'visible' || style.display === 'none' || Number(style.opacity) < 0.99) return false;
         }
-        if (!stable) { outcome = 'stale'; return false; }
-        const digest = createHash('sha256').update(image).digest('hex');
+        return true;
+      });
+      const digestOf = (image: Buffer) => createHash('sha256').update(image).digest('hex');
+      const readButton = async (initial = false) => {
+        const [aria, text] = await Promise.all([submit.getAttribute('aria-label', { timeout: left() }), submit.innerText({ timeout: left() })]);
+        return royalMailVisionButton(aria, text, initial);
+      };
+      // A new task (after Next or a refresh) replaces the image; wait until its pixels differ and settle.
+      const nextImage = async (before: string) => {
+        let previous: string | null = null, settled = 0;
+        while (true) {
+          left();
+          if (checking || frame?.isDetached() || frame?.url() !== original) return null;
+          const [shown, pixels] = await Promise.all([visible(), crop.screenshot({ type: 'png', timeout: left() })]);
+          const now = digestOf(pixels);
+          settled = now === previous ? settled + 1 : 0;
+          previous = now;
+          if (shown && now !== before && settled >= 2) return { image: pixels, generation };
+          await delay(100, undefined, { signal });
+        }
+      };
+      // Exchange an unreadable task for another in the same widget. Never after an answer.
+      const refresh = async () => {
+        if (record.refreshes >= MAX_REFRESHES || record.actions > 0 || armed || checking
+          || Math.min(config.plainMs?.() ?? Infinity, expires - performance.now()) < REFRESH_RESERVE_MS) return null;
+        const control = frame!.locator(REFRESH).first();
+        if (!await control.isVisible()) return null;
+        const before = digestOf(await crop.screenshot({ type: 'png', timeout: left() }));
+        const issued = generation;
+        await control.click({ timeout: left() });
+        record.refreshes++;
+        const image = await nextImage(before);
+        return image && generation !== issued ? image : null;
+      };
+      let nexts = 0;
+      let fresh: { image: Buffer; generation: number } | null = null;
+      for (let pageIndex = 0; pageIndex < 2; pageIndex++) {
+        record.rounds++;
+        let currentGeneration = generation;
+        let task: 'drag' | 'click' | null = null;
+        let signature = '';
+        while (true) {
+          currentGeneration = generation;
+          if (!await visible()) { outcome = 'stale'; return false; }
+          signature = await frame.locator('.prompt-text').innerText({ timeout: left() });
+          task = royalMailVisionTask(signature);
+          const button = task && await frame.locator('canvas').count() === 1 ? await readButton(true) : null;
+          // A click task can span two pages: its first page shows Next.
+          if (task && (button === 'skip' || button === 'verify' || task === 'click' && button === 'next' && pageIndex === 0)) break;
+          if (pageIndex > 0) { outcome = 'unsupported'; return false; }
+          fresh = await refresh();
+          if (!fresh) { outcome = 'unsupported'; return false; }
+        }
+        config.attempt.solving = true;
+        let image: Buffer;
+        if (fresh) {
+          if (fresh.generation !== generation || fresh.generation !== currentGeneration) { outcome = 'stale'; return false; }
+          image = fresh.image;
+          fresh = null;
+        } else {
+          image = await crop.screenshot({ type: 'png', timeout: left() });
+          let stable = false;
+          // A visible canvas can still be fading or receiving its first assets.
+          // Never ask the model about a transient frame.
+          for (let check = 0; check < 4; check++) {
+            await delay(100, undefined, { signal });
+            const settled = await crop.screenshot({ type: 'png', timeout: left() });
+            stable = digestOf(image) === digestOf(settled);
+            image = settled;
+            if (stable) break;
+          }
+          if (!stable) { outcome = 'stale'; return false; }
+        }
+        const digest = digestOf(image);
         const [box, canvas] = await Promise.all([crop.boundingBox(), frame.locator('canvas').boundingBox()]);
         if (generation !== currentGeneration) { outcome = 'stale'; return false; }
         if (!box || !canvas || box.width < 100 || box.width > 1000 || box.height < 100 || box.height > 1200) {
@@ -234,7 +301,7 @@ export function royalMailVisionRecovery(page: Page, config: RoyalMailVisionConte
         record.modelCalls++;
         const plan = await planRoyalMailVision(config.options, image, signal, modelBudget, guide);
         record.modelMs += Math.round(performance.now() - started);
-        if (!plan) { outcome = 'declined'; return false; }
+        if (!plan || plan.action !== task || record.actions + plan.points.length > MAX_CLICKS) { outcome = 'declined'; return false; }
         phase = 'generation';
         left();
         const unchanged = async () => {
@@ -252,43 +319,66 @@ export function royalMailVisionRecovery(page: Page, config: RoyalMailVisionConte
           outcome = 'stale'; return false;
         }
         phase = 'snapshot';
-        if (createHash('sha256').update(now).digest('hex') !== digest) { outcome = 'stale'; return false; }
+        if (digestOf(now) !== digest) { outcome = 'stale'; return false; }
         const points = plan.points.map(point => ({ x: point.x / 1000 * box.width, y: point.y / 1000 * box.height }));
         phase = 'geometry';
+        // A drag's ends lie apart; click targets may sit closer together.
+        const spacing = plan.action === 'drag' ? 58 : 24;
         if (!points.every(point => point.x + box.x > canvas.x + 3 && point.x + box.x < canvas.x + canvas.width - 3
           && point.y + box.y > canvas.y + 3 && point.y + box.y < canvas.y + canvas.height - 3)
-          || points.some((point, i) => points.slice(0, i).some(other => Math.hypot(point.x - other.x, point.y - other.y) < 58))) {
+          || points.some((point, i) => points.slice(0, i).some(other => Math.hypot(point.x - other.x, point.y - other.y) < spacing))) {
           outcome = 'declined'; return false;
         }
         phase = 'input';
-        await page.evaluate(id => {
+        if (!armed) await page.evaluate(id => {
           const state = (window as unknown as { __royalMailVision?: { id: string; armed: boolean } }).__royalMailVision;
           if (state?.id === id) state.armed = true;
         }, widgetId);
         armed = true;
         left();
-        await page.mouse.move(box.x + points[0]!.x, box.y + points[0]!.y);
-        await page.mouse.down();
-        try { await page.mouse.move(box.x + points[1]!.x, box.y + points[1]!.y, { steps: 10 }); }
-        finally { await page.mouse.up(); }
-        record.actions++;
+        if (plan.action === 'click') {
+          for (const point of points) {
+            left();
+            if (!await unchanged()) { outcome = 'stale'; return false; }
+            if (checking) { outcome = 'unsupported'; return false; }
+            await page.mouse.click(box.x + point.x, box.y + point.y);
+            record.actions++;
+          }
+        } else {
+          await page.mouse.move(box.x + points[0]!.x, box.y + points[0]!.y);
+          await page.mouse.down();
+          try { await page.mouse.move(box.x + points[1]!.x, box.y + points[1]!.y, { steps: 10 }); }
+          finally { await page.mouse.up(); }
+          record.actions++;
+        }
         if (await automaticVerdict()) return true;
         // A widget that submitted on mouse-up already owns verification. Do
         // not submit the same answer again while its response is still pending.
         if (checking) { outcome = 'timeout'; return false; }
         if (await verdict()) return true;
         if (!await unchanged()) { outcome = 'stale'; return false; }
-        // The drag has now been applied to the matching image.
-        // The widget may repaint its selection/completion feedback afterwards;
-        // its generation, prompt and frame still have to match before submission.
+        // The answer has now been applied to the matching image. The widget may
+        // repaint its selection feedback; its generation, prompt and frame still
+        // have to match before Next or submission.
         phase = 'verification';
-        if (!await canVerify()) {
-          outcome = 'unsupported'; return false;
-        }
+        const button = await readButton();
         if (checking) {
           if (await automaticVerdict()) return true;
           outcome = 'timeout'; return false;
         }
+        if (button === 'next') {
+          if (!royalMailVisionCanAdvance(pageIndex, plan.action, nexts, record.actions, checking, refused, blocked, signal.aborted || session.aborted)
+            || !await unchanged()) { outcome = 'unsupported'; return false; }
+          const before = digestOf(await crop.screenshot({ type: 'png', timeout: left() }));
+          await submit.click({ timeout: left() });
+          nexts++;
+          // The next page's image is read afresh: no coordinates carry over.
+          fresh = await nextImage(before);
+          if (await verdict()) return true;
+          if (!fresh) { outcome = 'stale'; return false; }
+          continue;
+        }
+        if (button !== 'verify') { outcome = 'unsupported'; return false; }
         phase = 'submit';
         await submit.click({ timeout: left() });
         record.submissions++;
@@ -304,6 +394,8 @@ export function royalMailVisionRecovery(page: Page, config: RoyalMailVisionConte
           await delay(100, undefined, { signal });
         }
       }
+      outcome = 'unsupported';
+      return false;
     } catch (error) {
       signal.throwIfAborted(); session.throwIfAborted();
       if (error instanceof ChallengeError) throw error;

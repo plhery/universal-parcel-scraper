@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { TrawlClient } from '../../core/transport/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
-import { ChallengeError, IndeterminateError, NotFoundError, RateLimitedError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { BudgetExceededError, ChallengeError, IndeterminateError, NotFoundError, RateLimitedError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import {
   parseRoyalMailTrackingHtml,
@@ -917,7 +917,7 @@ describe('Royal Mail lookup steps', () => {
   it('logs only fixed verification fields when explicitly enabled', async () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     vi.mocked(fetchRoyalMailInBrowser).mockImplementationOnce(async (...args) => {
-      args[7]?.options.onVerification?.({ outcome: 'accepted', phase: 'proof', modelCalls: 1, rounds: 1,
+      args[7]?.options.onVerification?.({ outcome: 'accepted', phase: 'proof', modelCalls: 1, rounds: 1, refreshes: 0,
         actions: 1, submissions: 1, checks: 1, accepted: true, history: true, modelMs: 100 });
       return { events: [] };
     });
@@ -928,7 +928,7 @@ describe('Royal Mail lookup steps', () => {
     expect(JSON.parse(String(warn.mock.calls[0]?.[0]))).toMatchObject({ event: 'royal_mail.verification', accepted: true, history: true });
     expect(String(warn.mock.calls[0]?.[0])).not.toContain('synthetic-key');
     expect(String(warn.mock.calls[0]?.[0])).not.toContain(DELIVERED_NUMBER);
-    expect(JSON.parse(String(warn.mock.calls[0]?.[0]))).toEqual({ event: 'royal_mail.verification', outcome: 'accepted', phase: 'proof', modelCalls: 1, rounds: 1,
+    expect(JSON.parse(String(warn.mock.calls[0]?.[0]))).toEqual({ event: 'royal_mail.verification', outcome: 'accepted', phase: 'proof', modelCalls: 1, rounds: 1, refreshes: 0,
       actions: 1, submissions: 1, checks: 1, accepted: true, history: true, modelMs: 100 });
   });
 
@@ -968,6 +968,33 @@ describe('Royal Mail lookup steps', () => {
     expect(step).toHaveBeenNthCalledWith(2, expect.objectContaining({ step: 'retry', outcome: 'ok',
       fallbackFrom: 'browser', fallbackReason: 'challenge', fallbackError: challenge }));
     expect(lookup).toHaveBeenCalledWith(expect.objectContaining({ finalStep: 'retry', outcome: 'ok', attempts: 2 }));
+  });
+
+  it('holds a lookup past its 30-second cap only while the solver works on a task it can read', async () => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+    try {
+      const tracker = new RoyalMailTracker({ browserWsEndpoint: 'ws://browser.invalid/synthetic-capability',
+        captchaVision: { apiKey: 'synthetic-key' } });
+      vi.mocked(fetchRoyalMailInBrowser).mockImplementationOnce((_number, _path, signal) => new Promise((_resolve, reject) => {
+        signal.addEventListener('abort', () => reject(signal.reason), { once: true });
+      }));
+      const plain = tracker.fetch(DELIVERED_NUMBER, { budgetMs: 60_000 });
+      const ended = expect(plain).rejects.toBeInstanceOf(BudgetExceededError);
+      await vi.advanceTimersByTimeAsync(30_000);
+      await ended;
+      expect(fetchRoyalMailInBrowser).toHaveBeenCalledOnce();
+      expect(vi.mocked(fetchRoyalMailInBrowser).mock.calls[0]?.[3]).toBeGreaterThan(49_000);
+      const result = parseRoyalMailTrackingResponse(DELIVERED, DELIVERED_NUMBER);
+      vi.mocked(fetchRoyalMailInBrowser).mockImplementationOnce(async (_number, _path, signal, _ms, _history, _proxy, _endpoint, vision) => {
+        vision!.attempt.solving = true;
+        await new Promise(resolve => setTimeout(resolve, 40_000));
+        signal.throwIfAborted();
+        return result;
+      });
+      const solved = tracker.fetch(DELIVERED_NUMBER, { budgetMs: 60_000 });
+      await vi.advanceTimersByTimeAsync(40_000);
+      await expect(solved).resolves.toBe(result);
+    } finally { vi.useRealTimers(); }
   });
 
   it('keeps a second challenge as a failure without a third session', async () => {

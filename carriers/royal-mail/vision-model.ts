@@ -7,7 +7,7 @@ export interface RoyalMailVisionOptions {
 }
 
 export interface RoyalMailVisionPlan {
-  action: 'drag';
+  action: 'drag' | 'click';
   /** Coordinates relative to the puzzle crop, on a 0–1000 scale. */
   points: { x: number; y: number }[];
 }
@@ -69,9 +69,9 @@ export async function planRoyalMailVision(options: RoyalMailVisionOptions, png: 
 }
 
 export function parseRoyalMailVisionPlan(data: unknown): RoyalMailVisionPlan | null {
-  if (!isRecord(data) || data.action !== 'drag' || data.reason !== 'none' || typeof data.confidence !== 'number'
+  if (!isRecord(data) || (data.action !== 'drag' && data.action !== 'click') || data.reason !== 'none' || typeof data.confidence !== 'number'
     || !Number.isFinite(data.confidence) || data.confidence < 0.95 || data.confidence > 1 || !Array.isArray(data.points)
-    || data.points.length !== 2) return null;
+    || (data.action === 'drag' ? data.points.length !== 2 : data.points.length < 1 || data.points.length > 9)) return null;
   const points: RoyalMailVisionPlan['points'] = [];
   for (const point of data.points) {
     if (!isRecord(point) || typeof point.x !== 'number' || typeof point.y !== 'number') return null;
