@@ -40,8 +40,12 @@ export function dpdUkRequestInfo(rawUrl, number) {
     ? { kind: 'detail', code } : null;
 }
 
-const parcelDigits = value => typeof value === 'string' && value.length <= 64
-  ? /^(\d{14})[0-9A-Z]?$/.exec(value.replace(/\s/g, '').toUpperCase())?.[1] ?? null : null;
+// A fourteen-digit parcel number with its check character, or a ten-digit one, which has none.
+const parcelDigits = value => {
+  if (typeof value !== 'string' || value.length > 64) return null;
+  const compact = value.replace(/\s/g, '').toUpperCase();
+  return (/^(\d{14})[0-9A-Z]?$/.exec(compact) ?? /^(\d{10})$/.exec(compact))?.[1] ?? null;
+};
 
 /** The codes a reference reply issues for the number, and whether it names exactly one parcel. */
 function issuedCodes(body, number) {
@@ -50,7 +54,7 @@ function issuedCodes(body, number) {
   const rows = Array.isArray(payload?.data) ? payload.data.slice(0, 100) : [];
   const codes = rows.filter(row => {
     const digits = parcelDigits(row?.parcelNumber);
-    return digits && (number.length === 10 ? digits.slice(4) === number : digits === number)
+    return digits && (digits === number || (number.length === 10 && digits.length === 14 && digits.slice(4) === number))
       && typeof row.parcelCode === 'string' && CODE.test(row.parcelCode);
   }).map(row => row.parcelCode);
   return { codes, single: rows.length === 1 && codes.length === 1 };

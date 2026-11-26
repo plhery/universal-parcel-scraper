@@ -1,7 +1,7 @@
 # DPD UK
 
-DPD's United Kingdom public parcel history, using fourteen-digit parcel numbers
-or their last ten digits.
+DPD's United Kingdom public parcel history, using fourteen-digit parcel numbers,
+their last ten digits, or ten-digit parcel numbers.
 Switzerland, Germany and France have separate carrier ids.
 
 ## How it works
@@ -33,6 +33,9 @@ on HTTP.
 - The ten digits after a parcel number's four-digit prefix find the parcel too.
   The reference lookup resolves them, and the adapter keeps only the parcel whose
   number ends in them; several such parcels leave the answer inconclusive.
+- Some parcels have a ten-digit number, which is also their consignment number.
+  The replies print it in groups of four, three and three with no check
+  character, and the adapter keeps the parcel whose whole number it is.
   Detection does not offer DPD UK for a bare run of ten digits, which many
   carriers print; a universal provider's carrier hint can name it.
 - Each scan row names the DPD network, a partner network abroad or the

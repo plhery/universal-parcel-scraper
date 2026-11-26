@@ -13,28 +13,33 @@ import { dpdUkWording, isDpdUkNotice, withoutDriverName } from './wording.js';
 export const PROVIDER = 'DPD UK';
 
 /**
- * The fourteen-digit parcel number, with or without its check character, or the ten digits that
- * follow its four-digit prefix, which the reference lookup resolves to the parcel too.
+ * The fourteen-digit parcel number, with or without its check character, or ten digits: a
+ * ten-digit parcel number, or the ten digits that follow a fourteen-digit number's four-digit
+ * prefix, which the reference lookup resolves to the parcel too.
  */
 export function normalizeDpdUkNumber(raw: string): string {
   const typed = normalizeTrackingNumber(raw);
   const number = /^\d{10}$/.test(typed) ? typed : dpdParcelNumber(typed);
-  if (!number) throw new InvalidInputError(PROVIDER, 'DPD UK requires a fourteen-digit parcel number, with or without its check character, or its last ten digits');
+  if (!number) throw new InvalidInputError(PROVIDER, 'DPD UK requires a fourteen-digit parcel number, with or without its check character, or ten digits');
   return number;
 }
 
 // The public client displays spaced digits followed by the printed check
-// character, which is a digit for about one parcel in four.
+// character, which is a digit for about one parcel in four. A ten-digit parcel
+// number, which is also its consignment's, shows in groups of four, three and
+// three with no check character.
 function parcelNumber(value: unknown): string | null {
   if (typeof value !== 'string' || value.length > 64) return null;
-  const match = /^(\d{14})[0-9A-Z]?$/.exec(value.replace(/\s/g, '').toUpperCase());
+  const compact = value.replace(/\s/g, '').toUpperCase();
+  const match = /^(\d{14})[0-9A-Z]?$/.exec(compact) ?? /^(\d{10})$/.exec(compact);
   return match?.[1] ?? null;
 }
 
-/** Whether a reply's parcel number is the one asked for, whole or by its last ten digits. */
+/** Whether a reply's parcel number is the one asked for: whole, or ten digits ending a fourteen-digit one. */
 function isParcel(value: unknown, number: string): boolean {
   const parcel = parcelNumber(value);
-  return parcel !== null && (number.length === 10 ? parcel.slice(4) === number : parcel === number);
+  if (parcel === null) return false;
+  return parcel === number || (number.length === 10 && parcel.length === 14 && parcel.slice(4) === number);
 }
 
 /** Resolve one exact parcel, keeping its issued code opaque and lookup-local. */

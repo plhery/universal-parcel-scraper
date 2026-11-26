@@ -87,6 +87,27 @@ test('captures the search, then the issued parcel\'s detail and events decoded, 
   assert.deepEqual(handlers, {});
 });
 
+test('opens the parcel whose whole number is the ten digits searched', async () => {
+  const ten = '0000000003', tenCode = `${ten}*12345`, tenUrl = `https://track.dpd.co.uk/?reference=${ten}`;
+  const tenUrls = { reference: `${api}reference?origin=PRTK&postcode=&referenceNumber=${ten}`,
+    detail: `${api}parcels/${tenCode}`, events: `${api}parcels/${tenCode}/parcelevents` };
+  const tenBodies = { reference: JSON.stringify({ data: [{ parcelNumber: '0000 000 003', parcelCode: tenCode, consignmentNumber: ten }] }),
+    detail: JSON.stringify({ data: { parcelNumber: '0000 000 003', parcelCode: tenCode } }), events: bodies.events };
+  const reply = kind => response(kind, 200, { url: () => tenUrls[kind], request: () => ({ method: () => 'GET', url: () => tenUrls[kind] }),
+    body: async () => Buffer.from(tenBodies[kind]) });
+  const { handlers, page, state, options } = fixture();
+  page.goto = async target => {
+    state.targets.push(target);
+    state.url = target;
+    if (target === tenUrl) handlers.response(reply('reference'));
+    else { await tick(); handlers.response(reply('detail')); handlers.response(reply('events')); }
+  };
+  const result = await runDpdUkBrowser({ ...options, url: tenUrl });
+  assert.equal(result.status, 'success');
+  assert.deepEqual(state.targets, [tenUrl, `https://track.dpd.co.uk/parcels/${tenCode}`]);
+  assert.deepEqual(result.capturedResponses.map(entry => entry.body), ['reference', 'detail', 'events'].map(kind => tenBodies[kind]));
+});
+
 test('leaves the parcel to the page once it opened it', async () => {
   const { handlers, page, state, options } = fixture();
   page.goto = async target => {

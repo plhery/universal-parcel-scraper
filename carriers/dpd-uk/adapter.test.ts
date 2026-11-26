@@ -320,6 +320,25 @@ describe('DPD UK recognition', () => {
     // The fourteen digits name one parcel only.
     expect(() => parseDpdUkReference({ data: [unrelated, ...payload.reference.data] }, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
+
+  it('tracks a parcel whose whole number is ten digits, and keeps it apart from fourteen-digit numbers', async () => {
+    const payload = fixture(), number = '0000000003', code = `${number}*10000`;
+    const parcel = { parcelNumber: '0000 000 003', parcelCode: code, consignmentNumber: number };
+    payload.detail.data.parcelNumber = parcel.parcelNumber; payload.detail.data.parcelCode = code;
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json({ data: [parcel] })).mockResolvedValueOnce(json(payload.detail)).mockResolvedValueOnce(json(payload.history));
+    await expect(new DpdUkTracker({ fetcher }).fetch(` ${number} `)).resolves.toMatchObject({ status: 'delivered' });
+    expect(fetcher.mock.calls.map(call => call[0])).toEqual([
+      `https://apis.track.dpd.co.uk/v1/reference?origin=PRTK&postcode=&referenceNumber=${number}`,
+      `https://apis.track.dpd.co.uk/v1/parcels/${encodeURIComponent(code)}`,
+      `https://apis.track.dpd.co.uk/v1/parcels/${encodeURIComponent(code)}/parcelevents`,
+    ]);
+    // A fourteen-digit number ending in the same digits is another parcel, and both together leave the answer open.
+    const longer = { parcelNumber: '1550 0000 000 003 X', parcelCode: '15500000000003*10000' };
+    expect(() => parseDpdUkReference({ data: [parcel] }, '15500000000003')).toThrow(expect.objectContaining({ kind: 'schema' }));
+    expect(() => parseDpdUkReference({ data: [longer, parcel] }, number)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => parseDpdUkReference({ data: [{ ...parcel, parcelNumber: '0000 000 004' }] }, number)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    expect(() => parseDpdUkHistory(payload.detail, payload.history, '0000000004', code)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
 });
 
 describe('DPD UK anonymous retrieval', () => {
