@@ -3,6 +3,10 @@
   "entries": [
     {"wording": "Shipment has begun. In transit to destination city", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The single scan of a parcel the tracker lists with a YunExpress number, whose tracker carries the rest of its history."},
     {"wording": "Clearence processing completed - Export", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "YunExpress's export clearance, spelt as YunExpress writes it, relayed for a parcel DayOne handed to YunExpress."},
+    {"wording": "Shipment information received", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The ERP's first scan for a DOT1 number: the order's data, before the pickup."},
+    {"wording": "Shipment picked up", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The ERP's pickup from the merchant, for a DOT1 number."},
+    {"wording": "Arrived at origin facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The ERP's arrival at the first facility, after the pickup."},
+    {"wording": "Departed from sort facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The ERP's departure from the sorting facility, the parcel still in China."},
     {"wording": "Order processed by shipper", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "Yanwen's record of the merchant's order data, the first scan."},
     {"wording": "SHIPPING INFORMATION RECEIVED", "stage": "registered", "language": "en", "confirmedBy": "live"},
     {"wording": "SHIPPING INFORMATION RECEIVED BY AUSTRALIA POST", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "Australia Post's manifest, relayed: it comes after the parcel has moved and is no step back."},

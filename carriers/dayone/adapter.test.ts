@@ -8,7 +8,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { delayedFetcher } from '../../core/testing/hang.js';
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
 import { createTracker } from '../../facade/index.js';
-import { adapter, DAYONE_API, DAYONE_CALLBACK, DAYONE_PAGE, dayoneLookupUrl, DayoneTracker } from './adapter.js';
+import { adapter, DAYONE_API, DAYONE_CALLBACK, DAYONE_ERP, DAYONE_PAGE, dayoneErpUrl, dayoneLookupUrl, DayoneTracker } from './adapter.js';
 import { normalizeDayoneNumber, parseDayone } from './parser.js';
 import { dayoneCodeStage, dayoneStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
@@ -216,8 +216,8 @@ describe('DayOne HTTP adapter', () => {
     for (const number of ['DOT099000000000001', 'DOT09900000000000001', 'DOX0990000000000001', 'DOT099000000000000A', 'SAMPLETRACKING', `DOT${'0'.repeat(70)}`]) {
       await expect(carrier(fetcher).track({ number }), number).rejects.toMatchObject({ kind: 'invalid_input' });
     }
-    // DayOne issues them; its tracker sends DOT1 to a lookup that answers an empty body, and the rest nowhere.
-    for (const number of [ERP, 'DOT2990000000000001', 'DOT9990000000000001']) {
+    // DayOne issues them; its tracker sends them nowhere.
+    for (const number of ['DOT2990000000000001', 'DOT9990000000000001']) {
       await expect(carrier(fetcher).track({ number }), number).rejects.toMatchObject({ kind: 'indeterminate' });
     }
     await expect(carrier(fetcher).track({ number: DELIVERED }, { signal: AbortSignal.abort(new Error('cancelled')) })).rejects.toThrow('cancelled');
@@ -226,6 +226,46 @@ describe('DayOne HTTP adapter', () => {
     expect(normalizeDayoneNumber('dot 0990-0000-0000-0001')).toBe(DELIVERED);
     // A high-confidence rule settles the carrier, so no recognition is declared.
     expect(carrier(fetcher).recognize).toBeUndefined();
+  });
+
+  it('asks DayOne’s ERP for a DOT1 number and keeps its clocks as China’s wall clocks', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(text('erp'), { headers: { 'Content-Type': 'application/json' } }));
+    const result = await carrier(fetcher).track({ number: ERP.toLowerCase() });
+    const [[url, init]] = fetcher.mock.calls as [[string, RequestInit]];
+    expect(String(url)).toBe(`${DAYONE_ERP}?id=${ERP}`);
+    expect(String(url)).toBe(dayoneErpUrl(ERP));
+    expect(init).toMatchObject({ method: 'GET', redirect: 'manual', headers: { Accept: 'application/json, text/plain, */*', Referer: `${DAYONE_PAGE}?trackNo=${ERP}` } });
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
+      last_status_text: 'Departed from sort facility', last_update: null, last_update_local: '2026-04-14T21:30:00' });
+    // The scans name no place and no offset; the "Z" is not UTC.
+    expect(result.events).toEqual([
+      { local_time: '2026-04-14T21:30:00', description: 'Departed from sort facility', stage: 'in_transit', stage_source: 'carrier_map' },
+      { local_time: '2026-04-13T15:10:00', description: 'Arrived at origin facility', stage: 'in_transit', stage_source: 'carrier_map' },
+      { local_time: '2026-04-13T08:20:00', description: 'Shipment picked up', stage: 'accepted', stage_source: 'carrier_map' },
+      { local_time: '2026-04-10T11:00:00', description: 'Shipment information received', stage: 'registered', stage_source: 'carrier_map' },
+    ]);
+    expect(result).not.toHaveProperty('delivery_tracking_number');
+    expect(result).not.toHaveProperty('destination_country');
+  });
+
+  it('keeps the ERP’s empty answer inconclusive and its unknown number, browser check and changed reply apart', async () => {
+    const lookup = (body: string, init?: ResponseInit) => carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(body, init))).track({ number: ERP });
+    const erp = () => JSON.parse(text('erp')) as Reply;
+    const changedErp = (change: (item: Item) => void) => { const body = erp(); change(body.data[0]!); return JSON.stringify(body); };
+    // The ERP answers nothing for numbers it holds nothing under, and did for numbers it later answered.
+    await expect(lookup('')).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(lookup(' \n')).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(lookup(JSON.stringify(fixture('not-found')))).rejects.toMatchObject({ kind: 'not_found' });
+    await expect(lookup('<!DOCTYPE html><html><head><title>Just a moment...</title></head><body><script>window._cf_chl_opt={}</script></body></html>'))
+      .rejects.toMatchObject({ kind: 'challenge' });
+    await expect(lookup(text('erp'), { status: 404 })).rejects.toMatchObject({ kind: 'transport' });
+    await expect(lookup(changedErp((item) => { item.server_hawbcode = 'DOT1990000000000002'; }))).rejects.toMatchObject({ kind: 'schema' });
+    for (const clock of ['2026-04-14T21:30:00', '2026-04-14T21:30:00+08:00', '2026-04-14T24:30:00Z', '2026-04-14T21:30Z']) {
+      await expect(lookup(changedErp((item) => { item.details[0]!.track_occur_date = clock; })), clock).rejects.toMatchObject({ kind: 'schema' });
+    }
+    // The tracker's own clock form reads as it does on the other lookup.
+    await expect(lookup(changedErp((item) => { item.details[0]!.track_occur_date = '2026-04-14 21:30:00'; })))
+      .resolves.toMatchObject({ last_update_local: '2026-04-14T21:30:00' });
   });
 
   it('sends a read that fails to connect or hangs once more inside the budget', async () => {
@@ -245,7 +285,7 @@ describe('DayOne HTTP adapter', () => {
     await expect(carrier(large).track({ number: DELIVERED })).rejects.toThrow('unexpectedly large');
   });
 
-  it('routes a DayOne number, which detection settles, to the adapter and proposes the destination’s post for the network’s S10 number', async () => {
+  it('routes a DayOne number, which detection settles, to the adapter, proposes the destination’s post for the network’s S10 number and dates the ERP’s scans in China', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async (url) => (String(url).startsWith(DAYONE_API)
       ? reply(text('delivered')) : new Response('', { status: 503 })));
     const tracker = createTracker({ fetcher, providers: [], env: {} });
@@ -254,6 +294,11 @@ describe('DayOne HTTP adapter', () => {
       handoff: { carrier: 'australia-post', number: 'UL123456785YP', confirmed: false } });
     expect(fetcher.mock.calls.filter(([url]) => String(url).startsWith(DAYONE_API)).map(([url]) => String(url)))
       .toEqual([dayoneLookupUrl(DELIVERED)]);
+    // The ERP's wall clocks are dated on DayOne's clock in China.
+    const erp = await createTracker({ fetcher: vi.fn<typeof fetch>().mockImplementation(async () => reply(text('erp'))), providers: [], env: {} })
+      .track({ number: ERP }, { budgetMs: 3000 });
+    expect(erp).toMatchObject({ carrier: 'dayone', source: 'dayone', result: { last_update: '2026-04-14T21:30:00+08:00' } });
+    expect(erp.result.events[0]).toMatchObject({ local_time: '2026-04-14T21:30:00', time: '2026-04-14T21:30:00+08:00', time_zone: 'Asia/Shanghai' });
   });
 });
 

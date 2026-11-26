@@ -2,8 +2,8 @@
 
 DayOne is a cross-border fulfilment warehouse whose tracker is dayonetrack.com. It says it is
 not a delivery carrier: it ships merchants' orders and its parcels reach the destination
-country's courier. The adapter reads the tracker's own lookup for numbers with DOT0; other
-DayOne numbers use enabled universal providers.
+country's courier. The adapter reads the tracker's own lookups for numbers with DOT0 and DOT1;
+other DayOne numbers use enabled universal providers.
 
 ## Numbers
 
@@ -19,6 +19,9 @@ account, and the adapter sends the same request: `method=track`, `param` set to
 (`callbackparam`). It reads the reply in that callback, or bare. One HTTP read, and one more
 when the first fails to connect or hangs. The tracker runs on the rtb56 platform, whose request and reply
 [YYpost's adapter](../yypost/rtb56.ts) shares with this one.
+
+For DOT1 the page asks DayOne's ERP instead, `GET https://erp.dayoneerp.com/dayone-api/queryTrackingInfo?id=…`,
+also without a cookie or account. Its JSON has the same shape as `Service.ashx`'s reply.
 
 ## Notes
 
@@ -38,16 +41,20 @@ when the first fails to connect or hangs. The tracker runs on the rtb56 platform
 - The tracker's unknown-number answer is a not-found. Its "Parameter error" is a schema
   failure and any other refusal is inconclusive. Redirects, 404s and browser checks are never
   read as a missing parcel.
+- The ERP's scans state no offset, and their clocks end in `Z` though they are China's wall
+  clocks: the same scans from other sources stand eight hours earlier in UTC. They are kept as
+  wall clocks.
+- The ERP answers an empty body for a number it holds nothing under, and has for numbers it
+  later answered, so an empty answer is inconclusive.
 - A delivered parcel's `signatory_name` is read as who signed for it. The merchant's order
   reference and the proof-of-delivery link are not read. The rtb56 scan reader shared with
   YYpost cuts who signed from a scan's wording.
 
 ## Limitations
 
-The page sends DOT1 numbers to `GET https://erp.dayoneerp.com/dayone-api/queryTrackingInfo?id=…`,
-which answers HTTP 200 with an empty body for every number tried, so their reply's shape is
-unknown. Those numbers, and DOT numbers with another digit after DOT, are inconclusive for
-the adapter and left to the providers.
+DOT numbers with another digit after DOT have no lookup on the page, so they are inconclusive
+for the adapter and left to the providers. The ERP's scans after the parcel left China have not
+been seen, so whose clock they keep is unknown.
 
 ## Links
 
@@ -55,5 +62,5 @@ the adapter and left to the providers.
 
 ## Testing
 
-Set `DAYONE_TRACKING_NUMBER` to a DOT0 number and optionally `DAYONE_UNKNOWN_NUMBER` outside the
-repository, then run `npm run test:carriers:live -- carriers/dayone`.
+Set `DAYONE_TRACKING_NUMBER` to a DOT0 or DOT1 number and optionally `DAYONE_UNKNOWN_NUMBER` to a
+DOT0 number outside the repository, then run `npm run test:carriers:live -- carriers/dayone`.

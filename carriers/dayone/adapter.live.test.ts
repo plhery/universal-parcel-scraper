@@ -11,7 +11,7 @@ describe('DayOne live retrieval', () => {
     expect(answer).toMatchObject({ carrier: 'dayone', source: 'dayone' });
     expect(answer.attempts[0]).toMatchObject({ source: 'dayone', kind: 'ok' });
     expect(answer.result.events.length).toBeGreaterThan(0);
-    // Every scan states its place's offset.
+    // Every scan has an instant: its place's offset, or DayOne's clock for the ERP's wall clocks.
     expect(answer.result.events.every((event) => event.description && /[+-]\d{2}:\d{2}$/.test(String(event.time)))).toBe(true);
     expect(answer.result.last_update ?? null).toBe(answer.result.events[0]!.time ?? null);
   }, 45_000);
