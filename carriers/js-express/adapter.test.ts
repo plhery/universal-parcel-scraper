@@ -407,6 +407,27 @@ describe('JS Express tracking adapter', () => {
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: onTime })).toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 
+  it("reads the posts' IPS scans after their country, China Post's posting as on its way, and China Post's destination labels", () => {
+    const rows: readonly (readonly [string, string, string])[] = [
+      ['OIT', 'CHINA Posting of item', 'in_transit'],
+      ['OIT', 'CHINA Receive item at origin country gateway', 'in_transit'],
+      ['OCP', 'CHINA Send item to customs', 'customs'],
+      ['OIT', 'CHINA Dispatch item to destination country', 'in_transit'],
+      ['OIT', 'PHILIPPINES Receive at country of destination', 'in_transit'],
+      ['OCP', 'PHILIPPINES Send item to customs', 'customs'],
+      ['OCE', 'PHILIPPINES Returned from Customs (CUSTOMS STATUS: Import authorized, no taxes or duties to be paid, Amount: PhP0.00 )', 'in_transit'],
+      ['OIT', 'PHILIPPINES Enroute to delivery office', 'in_transit'],
+      ['DCF', '寄达地海关允许进口（无需缴税）', 'in_transit'],
+    ];
+    for (const [code, wording, stage] of rows) {
+      expect(jsExpressStage(wording, code), wording).toEqual({ stage, source: 'carrier_map' });
+      expect(statusMapAnswer({ carrier: 'js-express', providerCode: code, description: wording }), wording).toEqual({ kind: 'mapped', stage });
+    }
+    // A name that is no country, or a country's code, does not stand for the office's country.
+    expect(jsExpressMappedStage('SAMPLELAND Receive at country of destination')).toBeUndefined();
+    expect(jsExpressMappedStage('CN Send item to customs')).toBeUndefined();
+  });
+
   it("reads SpeedX's day-end delay, relayed under DDE, as the parcel still on its way", () => {
     expect(jsExpressStage('Delay in transit', 'DDE')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'DDE', description: 'Delay in transit' })).toEqual({ kind: 'mapped', stage: 'in_transit' });

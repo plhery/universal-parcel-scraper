@@ -274,6 +274,9 @@ describe('PHLPost status vocabulary', () => {
     expect(statusMap.stage('3', normalizeStatusWording('Data Import for CN documents'))).toBe('registered');
     expect(statusMap.stage('3', normalizeStatusWording('Receive item at origin country gateway'))).toBe('in_transit');
     expect(phlpostStage(' item  DELIVERED ')).toEqual({ stage: 'delivered', source: 'carrier_map' });
+    // Customs' release with a decision in brackets is the release only when the item goes in with nothing to pay.
+    expect(phlpostEventStage('Returned from Customs (CUSTOMS STATUS: Import authorised, no taxes or duties to be paid )')).toBe('in_transit');
+    expect(phlpostEventStage('Returned from Customs (CUSTOMS STATUS: Import authorized, taxes or duties to be paid, Amount: PhP1.00 )')).toBeUndefined();
     for (const wording of ['constructor', 'toString', 'Sample event', '']) expect(phlpostEventStage(wording), wording).toBeUndefined();
     expect(phlpostStage('')).toBeNull();
   });

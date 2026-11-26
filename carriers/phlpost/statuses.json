@@ -12,6 +12,7 @@
     {"code": "31", "wording": "Send item to customs", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "An IPS scan."},
     {"wording": "Item for customs examination", "stage": "customs", "language": "en", "confirmedBy": "source", "note": "Listed for PHLPost on TrackingMore's carrier page."},
     {"code": "38", "wording": "Returned from Customs", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "An IPS scan. Customs released the item into the post's network; it is not a return to the sender."},
+    {"code": "38", "wording": "Returned from Customs (CUSTOMS STATUS: Import authorized, no taxes or duties to be paid, Amount: PhP0.00 )", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "An IPS scan with customs' decision in brackets: the item let in with nothing to pay, released into the post's network."},
     {"wording": "Item sent to provincial", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "Listed for PHLPost on TrackingMore's carrier page."},
     {"wording": "Item arrived at provincial office", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "Listed for PHLPost on TrackingMore's carrier page."},
     {"wording": "Turnover item in next office", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "Listed for PHLPost on TrackingMore's carrier page."},

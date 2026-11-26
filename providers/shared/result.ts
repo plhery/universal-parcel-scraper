@@ -24,7 +24,7 @@ import { isPostiAbroadLabel } from '../../carriers/posti/identity.js';
 import { anPostWordingStage } from '../../carriers/an-post/status.js';
 import { CHRONOPOST_NOTIFICATION } from '../../carriers/chronopost/status.js';
 import { chinaPostDestinationStage, chinaPostRelayedStage } from '../../carriers/china-post/status.js';
-import { phlpostEventStage } from '../../carriers/phlpost/status.js';
+import { phlpostRelayedStage } from '../../carriers/phlpost/status.js';
 import { postaShqiptareScanStage } from '../../carriers/posta-shqiptare/status.js';
 import { ukrposhtaWordingStage } from '../../carriers/ukrposhta/status.js';
 import { imileSentenceStage } from '../../carriers/imile/status.js';
@@ -802,23 +802,7 @@ function providerWordingStage(description: string): Stage | undefined {
   // JETSPEED's English rows as 17TRACK relays them read as JETSPEED's map reads them.
   // The destination post's scans in China Post's Chinese, such as "到达寄达地处理中心", as China Post's map reads them.
   return chinaPostRelayedStage(value) ?? postaShqiptareScanStage(value) ?? ukrposhtaWordingStage(value) ?? imileRelayed(value)
-    ?? jetspeedStage(normalizeStatusWording(value)) ?? chinaPostDestinationStage(value) ?? ipsRelayStage(value);
-}
-
-/**
- * A UPU event name the posts record in IPS, in the words PHLPost's tracker gives it and as its map reads it,
- * which ParcelsApp relays after the office's country by name: "China Posting of item", "Philippines Enroute to
- * delivery office".
- */
-function ipsRelayStage(value: string): Stage | undefined {
-  const words = value.trim().split(/\s+/);
-  for (let count = 1; count <= 3 && count < words.length; count += 1) {
-    const country = words.slice(0, count).join(' ');
-    const code = countryCode(country);
-    const stage = code && code !== country.toUpperCase() ? phlpostEventStage(words.slice(count).join(' ')) : undefined;
-    if (stage) return stage;
-  }
-  return undefined;
+    ?? jetspeedStage(normalizeStatusWording(value)) ?? chinaPostDestinationStage(value) ?? phlpostRelayedStage(value);
 }
 
 /**

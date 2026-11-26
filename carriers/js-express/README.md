@@ -102,6 +102,10 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   and places them in the town, the other to the second with the office's code after the town,
   and can word an arrival differently. A scan from one takes over the row stored from the other
   less than a minute away, so the parcel does not show each scan twice when the tracker switches.
+- The posts' IPS scans come after the office's country in capitals, "CHINA Send item to customs",
+  and take the stage PHLPost's map gives the event. China Post's posting among them is its receipt
+  of the parcel JS Express collected days before, so it is in transit. China Post's labels for the
+  destination leg in Chinese take the stage its map gives them.
 - iMile's scans as the destination courier open with the centre's name in 【】, so each pair of
   centres makes a new wording. They take the stage iMile's own sentences give, as its adapter
   reads them.

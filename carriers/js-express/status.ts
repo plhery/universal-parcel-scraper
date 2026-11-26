@@ -1,8 +1,9 @@
 import { statusWordings } from '../../core/status/english.js';
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
-import { chinaPostRelayedStage } from '../china-post/status.js';
+import { chinaPostDestinationStage, chinaPostRelayedStage } from '../china-post/status.js';
 import { imileRelayedStage } from '../imile/status.js';
+import { phlpostRelayedStage } from '../phlpost/status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 interface Entry { readonly wording: string; readonly stage?: string; readonly english?: string; readonly unmapped?: boolean; readonly note?: string }
@@ -13,10 +14,10 @@ const ENTRIES: readonly Entry[] = statuses.entries;
  * lines, then those of the partners that fly, clear and deliver the parcel, in
  * their words. The map is the wording recorded in `statuses.json`, by its
  * `normalizeStatusWording` form, and the English an entry shows for its
- * Chinese, then China Post's domestic scans and iMile's as JS Express relays
- * them, then the codes that settle a stage alone. The shared rules read a
- * destination agent's pickup at the airport, or a courier's receipt, as an
- * acceptance.
+ * Chinese, then China Post's scans, the posts' IPS scans and iMile's as JS
+ * Express relays them, then the codes that settle a stage alone. The shared
+ * rules read a destination agent's pickup at the airport, or a courier's
+ * receipt, as an acceptance.
  */
 const WORDINGS = statusWordings(ENTRIES.flatMap(({ wording, stage, english }) => stage ? [{ wording, stage, english }] : []));
 
@@ -58,13 +59,24 @@ const RETURNED_TO = /^(ihre sendung ist zu )\[[^\]]*\]( zurückgekehrt\.?)$/;
 // billed; please have the recipient contact the local courier"). The parcel waits on the recipient, not on another round.
 const HELD_FOR_RECIPIENT = /^交货异常，投递失败，逾期退回或销毁/;
 
-// iMile's scans as its destination courier, which open with the centre's name in 【】, take iMile's reading.
+// The posts' IPS scans, which JS Express relays after the office's country in capitals: "CHINA Send item to customs",
+// "PHILIPPINES Enroute to delivery office". China Post's posting there is its receipt of the parcel JS Express
+// collected days before: on its way, not an acceptance.
+const ipsStage = (normalized: string): Stage | undefined => {
+  const stage = phlpostRelayedStage(normalized);
+  return stage === 'accepted' ? 'in_transit' : stage;
+};
+
+// iMile's scans as its destination courier, which open with the centre's name in 【】, take iMile's reading. China
+// Post's labels for the destination leg, in Chinese, take its reading too.
 const mappedStage = (normalized: string): Stage | undefined =>
   WORDINGS.stage(normalized.replace(WAYBILL_REFERENCE, '$1').replace(RETURNED_TO, '$1[]$2')) ?? bracketedStage(normalized)
     ?? (FORWARDED.test(normalized) ? 'in_transit' : undefined)
     ?? (HELD_FOR_RECIPIENT.test(normalized) ? 'exception' : undefined)
     ?? uspsSentenceStage(normalized)
     ?? chinaPostRelayedStage(normalized)
+    ?? chinaPostDestinationStage(normalized)
+    ?? ipsStage(normalized)
     ?? imileRelayedStage(normalized);
 
 /** The stage JS Express's map gives a row's wording. */

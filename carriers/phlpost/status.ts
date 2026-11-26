@@ -1,5 +1,6 @@
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { countryCode } from '../../core/time/index.js';
 
 /**
  * PHLPost's scan wordings, mapped whole. The tracker joins two systems: IPS,
@@ -43,11 +44,30 @@ const EVENTS = new Map(Object.entries(PHLPOST_EVENTS).map(([wording, stage]) => 
 // Both systems give the reason after the event: "Unsuccessful delivery - REASON: Unclaimed",
 // "Unsuccessful delivery (REASON: Addressee not available)".
 const UNSUCCESSFUL = /^unsuccessful delivery\b/;
+// Customs' release with its decision in brackets, the item let in with nothing to pay: "Returned from Customs (CUSTOMS
+// STATUS: Import authorized, no taxes or duties to be paid, Amount: PhP0.00 )".
+const RELEASED_DUTY_FREE = /^(returned from customs) \(customs status: import authori[sz]ed, no taxes or duties to be paid\b[^()]*\)$/;
 
 /** The stage the map gives a scan's wording, if it knows it. */
 export function phlpostEventStage(wording: string): Stage | undefined {
   const key = normalizeStatusWording(wording);
-  return EVENTS.get(key) ?? (UNSUCCESSFUL.test(key) ? 'failed_attempt' : undefined);
+  return EVENTS.get(key.replace(RELEASED_DUTY_FREE, '$1')) ?? (UNSUCCESSFUL.test(key) ? 'failed_attempt' : undefined);
+}
+
+/**
+ * A UPU event name the posts record in IPS, in the words PHLPost's tracker gives it and as its map reads it, after
+ * the office's country by name, as others relay them: "China Posting of item", "PHILIPPINES Enroute to delivery
+ * office". A country's code in its place names no country.
+ */
+export function phlpostRelayedStage(value: string): Stage | undefined {
+  const words = value.trim().split(/\s+/);
+  for (let count = 1; count <= 3 && count < words.length; count += 1) {
+    const country = words.slice(0, count).join(' ');
+    const code = countryCode(country);
+    const stage = code && code !== country.toUpperCase() ? phlpostEventStage(words.slice(count).join(' ')) : undefined;
+    if (stage) return stage;
+  }
+  return undefined;
 }
 
 /** A scan's stage from its wording, else the shared wording rules, else nothing, which keeps it visible for review. */
