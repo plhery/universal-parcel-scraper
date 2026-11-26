@@ -30,7 +30,6 @@
   },
   "capabilities": [
     "history",
-    "location",
     "eta",
     "pickup_point",
     "sender_name",

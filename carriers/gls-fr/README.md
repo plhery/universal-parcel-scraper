@@ -19,7 +19,7 @@ The parser:
 
 1. requires the number to be echoed in `trackid`, `numeroalphaColis` or
    `numeroGp` (whichever matches the shape asked for); a mismatch is a schema error;
-2. reads up to 500 events, dedupes on (time, location, code), sorts newest
+2. reads up to 500 events, dedupes on (time, code), sorts newest
    first and keeps 100;
 3. takes the parcel status from `statutColis`, falling back to the newest event.
 
@@ -54,7 +54,8 @@ this confirmation before they can identify the French network.
 - GLS France can enter a departure at its planned time, such as an evening dispatch dated the
   coming midnight. A scan dated more than five minutes after the lookup is held back until it
   is due (`plannedScans`).
-- Locations are GLS facility codes (`FR0012`), not resolved to cities.
+- Scans carry no place. GLS gives only a facility code (`FR0012`, or `FR9900` for the shipment
+  data), which names nothing a reader or a map can find.
 - The estimate is the day part of `dateTheoriqueLivraison`. It is dropped once the
   parcel is delivered, waiting for collection, or in exception: the portal then
   shows the scan's own day. When `deliveryDateReliability` is `0` the portal presents

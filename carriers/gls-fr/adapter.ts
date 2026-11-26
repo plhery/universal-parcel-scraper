@@ -51,11 +51,6 @@ const WAITING_AT_POINT = new Set(['LIP', 'LTP', 'LIK', 'LTK']);
 /** Waiting at the depot, where the recipient collects it. */
 const WAITING_AT_DEPOT = 'PAQ';
 
-function locationCode(value: unknown): string {
-  const code = cleanScalar(value, 16).toLocaleUpperCase('en-US');
-  return /^[A-Z]{2}[A-Z0-9]{2,8}$/.test(code) ? code : '';
-}
-
 /**
  * GLS France puts three shapes on the same timestamp fields: an ISO value with
  * or without an offset, a SQL-style `YYYY-MM-DD HH:mm:ss.S` wall clock, and a
@@ -142,14 +137,12 @@ function parseEvent(raw: JsonObject): ParsedEvent | null {
     : glsFranceStatusMetadata(code);
   const time = parsedTime(raw.datereference) ?? parsedTime(raw.datecreation);
   if (!code && !time) return null;
-  const location = locationCode(raw.codelieuEvenement);
   return {
     timestamp: time?.timestamp ?? Number.NEGATIVE_INFINITY,
     typeCode,
     metadata,
     event: {
       ...(time ? { time: time.iso } : {}),
-      ...(location ? { location } : {}),
       description: metadata?.description ?? 'GLS France tracking update',
       // An unmapped code carries no stage: the sync classifies and records it.
       ...(metadata ? { stage: metadata.stage } : {}),
@@ -268,7 +261,6 @@ function parseTracking(payload: unknown, trackingNumber: string): ParsedTracking
     if (!parsed) return;
     const identity = JSON.stringify([
       parsed.event.time ?? '',
-      parsed.event.location ?? '',
       parsed.event.provider_code ?? '',
     ]);
     if (seen.has(identity)) return;

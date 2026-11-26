@@ -254,7 +254,6 @@ describe('GLS France status mapping', () => {
     expect(result.status).toBe('unknown');
     expect(result.events?.[0]).toEqual({
       time: '2026-08-29T11:42:00+02:00',
-      location: 'FR0012',
       description: 'GLS France tracking update',
       provider_code: 'NEW',
     });
@@ -276,13 +275,11 @@ describe('GLS France response normalization', () => {
     });
     expect(result.events).toEqual([{
       time: '2026-08-29T11:42:00+02:00',
-      location: 'FR0012',
       description: 'Delivered',
       stage: 'delivered',
       provider_code: 'LIV',
     }, {
       time: '2026-08-28T08:10:00+02:00',
-      location: 'FR9900',
       description: 'Shipment information received',
       stage: 'registered',
       provider_code: 'CON',
