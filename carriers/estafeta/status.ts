@@ -25,5 +25,13 @@ export function estafetaStatus(wording: string): ClassifiedStatus | undefined {
   return WORDINGS.get(normalized);
 }
 
+// A notice that the delivery may run late, with its cause: "Posible demora en la entrega por …".
+const DELAY_NOTICE = /^posible demora en la entrega\b/;
+
 /** What the map says about one scan: its Spanish wording, as the parser reads it. */
-export const statusMap: CarrierStatusMap = { stage: (_code, wording) => estafetaStatus(wording)?.stage, gaps: [] };
+export const statusMap: CarrierStatusMap = {
+  stage: (_code, wording) => estafetaStatus(wording)?.stage,
+  gaps: [],
+  gapNote: (_code, wording) => DELAY_NOTICE.test(estafetaWording(wording))
+    ? 'A notice that the delivery may run late, with its cause: not a step, so the parcel keeps the stage it had.' : undefined,
+};

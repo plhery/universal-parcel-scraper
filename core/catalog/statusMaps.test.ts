@@ -1147,6 +1147,7 @@ describe('status map answers', () => {
     expect(answer('estafeta', null, 'En proceso de entrega a domicilio')).toEqual(mapped('out_for_delivery'));
     expect(answer('estafeta', null, 'Entregado')).toEqual(mapped('delivered'));
     expect(answer('estafeta', null, 'Una frase nueva')).toEqual(unknown);
+    expect(answer('estafeta', null, 'POSIBLE DEMORA EN LA ENTREGA POR LLUVIAS')).toEqual(gap);
   });
 
   it("answers Intelcom by its code, and leaves a code it does not know open", () => {
