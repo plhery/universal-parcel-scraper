@@ -338,6 +338,14 @@ describe('Huaya Express tracking adapter', () => {
     expect(statusMapAnswer({ carrier: 'huaya-express', providerCode: null, description: '合成的记录' })).toEqual({ kind: 'unknown' });
   });
 
+  it("reads the Greek courier's voucher at its station as the last mile's label, whether or not the page lost its accent", () => {
+    for (const description of ['ABC DEF STATION Δημιουργ α ΣΥ.ΔΕ.ΤΑ.', 'ABC DEF STATION Δημιουργία ΣΥ.ΔΕ.ΤΑ.', 'XYZ STATION Δημιουργία ΣΥ.ΔΕ.ΤΑ.']) {
+      expect(statusMapAnswer({ carrier: 'huaya-express', providerCode: null, description }), description)
+        .toEqual({ kind: 'mapped', stage: 'registered' });
+    }
+    expect(statusMapAnswer({ carrier: 'huaya-express', providerCode: null, description: 'ABC DEF STATION Synthetic row' })).toEqual({ kind: 'unknown' });
+  });
+
   it('finds a row whether the page writes an accented letter or the "?" it can put in its place', () => {
     for (const description of ['Din leverans ?r bokad med Early Bird.', 'Din leverans är bokad med Early Bird.']) {
       expect(statusMapAnswer({ carrier: 'huaya-express', providerCode: null, description }), description)

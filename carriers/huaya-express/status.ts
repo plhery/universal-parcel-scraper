@@ -9,13 +9,18 @@ export const ENTRIES: readonly { readonly wording: string; readonly stage: strin
 const LANDING_DAY = /^(航班起飞[，,] ?预计航班落地时间[(（])\d{1,2}[./]\d{1,2}([)）])$/;
 // The page writes some accented letters as "?": "Din leverans ?r bokad med Early Bird.".
 const ACCENTED = /[\u00C0-\u024F]/g;
+// The Greek courier's rows open with its station, the row's place: "ABC DEF STATION Δημιουργία ΣΥ.ΔΕ.ΤΑ.". The page,
+// in GBK, has no accented Greek letters and writes a space in their place ("Δημιουργ α").
+const GREEK_STATION = /^[a-z]{2,8}(?: [a-z]{2,8}){0,3} station (?=\p{Script=Greek})/u;
+const GREEK_ACCENTED = /[\u0386\u0388-\u038F\u0390\u03AA-\u03B0\u03CA-\u03CE]/gu;
 
 /**
  * The key a row's `normalizeStatusWording` wording is mapped under: the flight's landing day becomes an ellipsis,
- * J&T Express Mexico's towns, sites, courier and phone too, and an accented Latin letter the "?" the page can
- * write in its place, so either spelling finds the row.
+ * J&T Express Mexico's towns, sites, courier and phone too, the Greek courier's station too, and an accented Latin
+ * letter the "?" the page can write in its place, an accented Greek one the space, so either spelling finds the row.
  */
-export const huayaScanKey = (wording: string): string => jtMexicoKey(wording).replace(LANDING_DAY, '$1…$2').replace(ACCENTED, '?');
+export const huayaScanKey = (wording: string): string => jtMexicoKey(wording).replace(LANDING_DAY, '$1…$2')
+  .replace(GREEK_STATION, '… station ').replace(ACCENTED, '?').replace(GREEK_ACCENTED, ' ');
 
 const WORDINGS = new Map<string, Stage>(ENTRIES.map((entry) => [huayaScanKey(normalizeStatusWording(entry.wording)), entry.stage as Stage]));
 
