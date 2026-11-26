@@ -531,7 +531,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/\b(?:data|information|details) delivered\b|\bdaten (?:ubermittelt|erhalten)|donnees (?:transmises|recues)/.test(text)) return 'registered';
   // The same in Russian and Ukrainian, ahead of the customs words a shop's declaration data carries.
   if (CYRILLIC_DATA_RECEIVED.test(text)) return 'registered';
-  if (/\b(?:datos|informacion|dados|informacao|informacoes) (?:del envio |do envio |da encomenda )?(?:entregad[oa]s?|entregues?)\b/.test(text)) return 'registered';
+  // The same in Spanish and Portuguese, and DHL's Spanish "Datos del envío recibidos" as Track123 relays it.
+  if (/\b(?:datos|informacion|dados|informacao|informacoes) (?:del envio |do envio |da encomenda )?(?:entregad[oa]s?|entregues?)\b|^datos del envio recibidos$/.test(text)) return 'registered';
   // Left for the carrier to admit, not admitted yet: Correos's "Depositado para
   // admisión", a parcel the sender dropped in a CityPaq locker.
   if (/\bpara (?:su )?(?:admision|admissao)\b|\b(?:deposited|dropped off)\b(?: [\w']+){0,8}? for (?:admission|acceptance)\b/.test(text)) return 'registered';

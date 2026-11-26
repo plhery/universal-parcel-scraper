@@ -685,8 +685,9 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^receiving: simplified pre-filled[.!]?$/i.test(value)) return 'accepted';
   // Canada Post's new label at a processing plant (0198), between two processing scans.
   if (/^label correction applied[.!]?$/i.test(value)) return 'in_transit';
-  // SEUR's receipt at its origin facility (SX001) and Vinted Go's parcel dropped off by its sender, as their own maps read them.
-  if (/^the shipment has been received at the seur facilities of origin[.!]?$|^parcel was dropped off at the (?:locker|parcel shop)[.!]?$/i.test(value)) return 'accepted';
+  // SEUR's receipt at its origin facility (SX001), and Vinted Go's and PostNord's (EN_ROUTE) parcel dropped off by its sender,
+  // as their own maps read them.
+  if (/^the shipment has been received at the seur facilities of origin[.!]?$|^parcel was dropped off at the (?:locker|parcel shop)[.!]?$|^the shipment item has been dropped off by sender[.!]?$/i.test(value)) return 'accepted';
   // Sending's collection and its departure on the national route, in ParcelsApp's English, as Sending's own map reads them.
   if (/^reception in the delegation[.!]?$/i.test(value)) return 'accepted';
   if (/^out in national route[.!]?$/i.test(value)) return 'in_transit';
@@ -736,7 +737,8 @@ function providerWordingStage(description: string): Stage | undefined {
   // FedEx's scan status for a parcel it has taken in, with the details aggregators join to it, as FedEx's own map reads it.
   if (/^in fedex possession(?:[.!]?$|\s*[-—–:]\s)/i.test(value)) return 'accepted';
   if (/^checked in at origin hub[.!]?$|^parcel received and processing[.!]?$/i.test(value)) return 'accepted';
-  if (/^parcel shipped[.!]?$|^(?:airline|flight) delay(?:ed)?[.!]?$/i.test(value)) return 'in_transit';
+  // A flight's delay, in English or in Spanish as ParcelsApp relays PasarEX's ("Vuelo retrasado").
+  if (/^parcel shipped[.!]?$|^(?:airline|flight) delay(?:ed)?[.!]?$|^vuelo (?:retrasado|demorado)[.!]?$/i.test(value)) return 'in_transit';
   // Quantium Solutions' hub steps, which aggregators relay for SingPost's cross-border parcels, as its own map reads them,
   // and its receipt at the destination post, after the despatch from the destination transit centre: Yanwen's copy names
   // it "Arrival at Destination Post".

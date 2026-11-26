@@ -1930,6 +1930,8 @@ describe("universal providers' answers", () => {
       ['SF Express has received your package, we sincerely protect your expectations, and will not let you down. If you have any questions, please contact courier Example at 10000000000.', 'accepted'],
       ['The shipment has been received at the SEUR facilities of origin', 'accepted'],
       ['Parcel was dropped off at the locker', 'accepted'], ['Parcel was dropped off at the parcel shop', 'accepted'],
+      ['The shipment item has been dropped off by sender.', 'accepted'], ['The shipment item has been dropped off by sender', 'accepted'],
+      ['Vuelo retrasado', 'in_transit'], ['Datos del envío recibidos', 'registered'],
       ['Your parcel has been received by drop off point', 'accepted'], ['Parcel has entered confiscation process', 'exception'],
       ['Manifested but not collected email sent to Sample', 'registered'],
       // BH Pošta's own Bosnian, export then import, the dispatch naming the office that delivers the item.
