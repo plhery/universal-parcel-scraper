@@ -667,8 +667,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
     }
   }
   if (/^(?:reported|recorded|announced|item created|enregistre|annonce|erfasst|angekundigt|registrato|annunciato)$/.test(text)) return 'registered';
-  // A shipment record the sender created ("Shipment created"), and nothing else.
-  if (/^(?:(?:the |your |a |new )?(?:shipment|parcel|package|consignment|order|envoi|colis|expedition|commande|sendung|paket|auftrag|spedizione|pacco|ordine|envio|paquete|pedido|encomenda|przesylka|paczka|zamowienie|gonderi|kargo|siparis) )(?:(?:has been|was|a ete|wurde|e stat[oa]|ha sido|fue|foi|zostal[ao]?) )?(?:created|creee?s?|erstellt|angelegt|creat[oa]|cread[oa]|criad[oa]|utworzon[aey]|olusturuldu)$/.test(text)) return 'registered';
+  // A shipment record the sender created ("Shipment created"), and nothing else, also waiting for the
+  // carrier to register the parcel (DAO's "Shipment created, awaiting registration", as ParcelsApp relays it).
+  if (/^(?:(?:the |your |a |new )?(?:shipment|parcel|package|consignment|order|envoi|colis|expedition|commande|sendung|paket|auftrag|spedizione|pacco|ordine|envio|paquete|pedido|encomenda|przesylka|paczka|zamowienie|gonderi|kargo|siparis) )(?:(?:has been|was|a ete|wurde|e stat[oa]|ha sido|fue|foi|zostal[ao]?) )?(?:created|creee?s?|erstellt|angelegt|creat[oa]|cread[oa]|criad[oa]|utworzon[aey]|olusturuldu)(?:,? awaiting registration)?$/.test(text)) return 'registered';
   // An order placed with the seller, before any shipment, also as ParcelsApp relays it in one word ("Ordered").
   if (/^(?:the |your |an? |new )?order (?:has been |was )?placed$|^ordered$/.test(text)) return 'registered';
   // The carrier recorded the shipment, in Spanish after a "notified" label ("Notificado - El envío ha sido

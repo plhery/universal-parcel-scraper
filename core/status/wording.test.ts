@@ -914,6 +914,7 @@ describe('classifyWording', () => {
       ["We've received your order details, but have not yet received your parcel", 'registered'],
       ['Dane zamówienia otrzymane', 'registered'],
       ['shipment created', 'registered'],
+      ['Shipment created, awaiting registration', 'registered'],
       ['Przesyłka utworzona', 'registered'],
       ['Gönderi oluşturuldu', 'registered'],
       ['notificado - el envío ha sido registrado.', 'registered'],
