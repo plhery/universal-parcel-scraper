@@ -759,6 +759,39 @@ describe('USPS lookup steps', () => {
         }
       });
 
+      it('reads through the resting Chrome one lookup a minute while the service has no session ready', async () => {
+        vi.useFakeTimers({ toFake: ['Date'] });
+        try {
+          const trawl = ownTrawl();
+          const endpoint = ownEndpoint();
+          const readBrowserPage = vi.fn(async () => ({ html: INTERSTITIAL_PAGE, redirected: false }));
+          const tracker = (recorder?: StepRecorder) => new USPSTracker({ trawl, browserEndpoint: endpoint, readBrowserPage, recorder });
+          await refuse(tracker, 2);
+          const lookup = async (reply: () => Response) => {
+            vi.spyOn(globalThis, 'fetch').mockImplementation(async () => reply());
+            const { recorder, records } = routes();
+            await expect(tracker(recorder).fetch(DELIVERED_NUMBER)).rejects.toBeDefined();
+            vi.restoreAllMocks();
+            return records;
+          };
+          const unready = () => lookup(() => Response.json({ error: 'No USPS browser session is ready' }, { status: 500 }));
+          const refused = () => lookup(() => Response.json({ error: 'Max tier reached without success' }, { status: 500 }));
+          expect(await unready()).toContain('browser:challenge:-');
+          expect(readBrowserPage).toHaveBeenCalledTimes(3);
+          vi.setSystemTime(Date.now() + 59_000);
+          expect(await unready()).not.toContain('browser:challenge:-');
+          vi.setSystemTime(Date.now() + 1_000);
+          expect(await unready()).toContain('browser:challenge:-');
+          expect(readBrowserPage).toHaveBeenCalledTimes(4);
+          // A lookup the service did read still waits five minutes from the last resting read.
+          vi.setSystemTime(Date.now() + 2 * 60_000);
+          expect(await refused()).not.toContain('browser:challenge:-');
+          expect(readBrowserPage).toHaveBeenCalledTimes(4);
+        } finally {
+          vi.useRealTimers();
+        }
+      });
+
       it('rests the Chrome when it refuses one read in three, and not for wrappers further apart', async () => {
         vi.useFakeTimers({ toFake: ['Date'] });
         try {

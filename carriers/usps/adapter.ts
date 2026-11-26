@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { recognizeFromBrowserLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { uspsPackageIdentifier } from '../../core/detection/usps.js';
-import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
+import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputError, RateLimitedError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { HoldKind, serviceTag } from '../../core/runner/holds.js';
 import { recoverableByDefault, runSteps, type StepContext, type StepSpec } from '../../core/runner/index.js';
@@ -96,14 +96,18 @@ function pauseRun(run: OutageRun, until: number): void {
  * which it reads only when the service failed, ends it. In a spell the service fails nearly every
  * lookup and the Chrome loads few of them, each after about fifteen seconds on the wrapper, so
  * during a rest it reads one lookup the service failed every five minutes at most, and the
- * others end with the service's failure within seconds. A host that keeps adapters' holds keeps
- * the rest across restarts, which come every few minutes while a host deploys.
+ * others end with the service's failure within seconds. When USPS lets none of the service's
+ * sessions through, for days at a time, the service answers that it has none ready and reads
+ * nothing, while the Chrome's refusals pass within minutes: it then reads one of those lookups a
+ * minute. A host that keeps adapters' holds keeps the rest across restarts, which come every few
+ * minutes while a host deploys.
  */
 const CHROME_REFUSALS = 2;
 const CHROME_WINDOW_MS = 15 * 60_000;
 const CHROME_REST_MS = 15 * 60_000;
 const CHROME_LONGEST_REST_MS = 60 * 60_000;
 const CHROME_RESTING_READ_MS = 5 * 60_000;
+const CHROME_UNSERVED_READ_MS = 60_000;
 interface ChromeRun { key: string; refusals: number[]; restingUntil: number; restMs: number; restingReadAt: number }
 const chromeRuns = new Map<string, ChromeRun>();
 const finite = (value: unknown): value is number => typeof value === 'number' && Number.isFinite(value);
@@ -154,6 +158,11 @@ function chromeLoaded(run: ChromeRun): void {
   Object.assign(run, { refusals: [], restingUntil: 0, restMs: CHROME_REST_MS });
   saveChromeRun(run);
 }
+
+/** The browser service's answer that it holds no session USPS let through, so it read nothing
+ * (`unready` in trawl/usps-tracking.mjs). TRAWL sends it as HTTP 500. */
+const unserved = (error: unknown): boolean => error instanceof UpstreamHttpError && error.status === 500
+  && /"error"\s*:\s*"No USPS browser session is ready"/.test(error.diagnostics?.body_excerpt ?? '');
 
 type Route = NonNullable<StepRecord['networkRoute']>;
 
@@ -564,10 +573,11 @@ export class USPSTracker {
       // The private Chrome's share running out leaves the browser service the rest of the lookup.
       { id: 'trawl', enabled: !!trawl, recovers: error => recoverableByDefault(error) || error instanceof BudgetExceededError, run },
       // While the Chrome rests it reads a lookup the service could not, paused ones included, every
-      // five minutes at most. The read is claimed as it starts, so lookups running together take one.
+      // five minutes at most, or every minute while the service has no session ready. The read is
+      // claimed as it starts, so lookups running together take one.
       ...(resting ? [{ ...browser,
         recovers: (error: unknown) => (recoverableByDefault(error) || error instanceof RateLimitedError)
-          && Date.now() - resting.restingReadAt >= CHROME_RESTING_READ_MS,
+          && Date.now() - resting.restingReadAt >= (unserved(error) ? CHROME_UNSERVED_READ_MS : CHROME_RESTING_READ_MS),
         run: (context: StepContext) => {
           resting.restingReadAt = Date.now();
           return browser.run(context);
