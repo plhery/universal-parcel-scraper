@@ -1,0 +1,26 @@
+{
+  "carrier": "ylexp",
+  "entries": [
+    {
+      "wording": "PickUp Scan",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Yi Long took the parcel in."
+    },
+    {
+      "wording": "Departed from sort facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "3",
+      "wording": "送达！",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Delivered!\": the record's STATE 3, which the tracking page shows with ADATE as the delivery time (送达时间). A parcel for Spain had it after two rows that end at the sort facility."
+    }
+  ]
+}

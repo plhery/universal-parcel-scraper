@@ -1,0 +1,61 @@
+{
+  "id": "ylexp",
+  "displayName": "Yi Long Express",
+  "aliases": [
+    "YLEXP",
+    "颐龙快递",
+    "颐龙速递"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#F24701"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ylexp",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "destination_country",
+    "weight"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "destination_country",
+      "parcel_count",
+      "order_reference"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "destination_country",
+      "weight"
+    ],
+    "discarded": [
+      "parcel_count",
+      "order_reference"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "location",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

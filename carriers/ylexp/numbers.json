@@ -1,0 +1,24 @@
+{
+  "carrier": "ylexp",
+  "records": [
+    {
+      "number": "PQ5J960718954380108015P",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260208221924/https://www.parcelpanel.com/couriers/ylexp/",
+        "date": "2026-02-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "The sample number of ParcelPanel's Yi Long Express page, as archived: a Correos parcel number. Yi Long's tracker answers it as a delivered parcel for Spain."
+    }
+  ]
+}

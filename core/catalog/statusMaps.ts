@@ -1154,6 +1154,7 @@ import { statusMap as arriival } from '../../carriers/arriival/status.js';
 import { statusMap as spcWorldwideExpress } from '../../carriers/spc-worldwide-express/status.js';
 import { statusMap as xendnow } from '../../carriers/xendnow/status.js';
 import { statusMap as srj } from '../../carriers/srj/status.js';
+import { statusMap as ylexp } from '../../carriers/ylexp/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1378,7 +1379,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'sendy-express': sendyExpress,
   arriival,
   'spc-worldwide-express': spcWorldwideExpress, xendnow,
-  srj,
+  srj, ylexp,
 };
 
 /** The carrier the app files the universal providers' scans under. */
