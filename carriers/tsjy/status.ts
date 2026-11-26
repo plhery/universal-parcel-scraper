@@ -37,6 +37,8 @@ const RELAYED: ReadonlyMap<string, Stage> = new Map([
   // A line's warehouse taking the parcel in after TSJY's dispatch, and sending it on, in Chinese and English.
   ['货物已入库 origin scan', 'in_transit'],
   ['货物出库 left origin facility.', 'in_transit'],
+  // That line's parcel on its way, hours after its warehouse sent it on, in Chinese and English.
+  ['你的包裹转运中 your parcel is in transit', 'in_transit'],
   // That line handing the parcel back an hour after taking it in, while TSJY's order still reads in transit
   // (运输途中): TSJY has it back and may book it on another line, so the journey is held up, not over.
   ['包裹已退件', 'exception'],
