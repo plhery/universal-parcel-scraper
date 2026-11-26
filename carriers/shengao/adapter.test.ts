@@ -123,5 +123,7 @@ describe('SHENGAO tracking adapter', () => {
     expect(statusMapAnswer({ carrier: 'shengao', providerCode: 'ARRIVAL', description: 'Arrived at the receiving point' }))
       .toEqual({ kind: 'mapped', stage: 'accepted' });
     expect(statusMapAnswer({ carrier: 'shengao', description: 'Shipment Received in Depot' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(statusMapAnswer({ carrier: 'shengao', description: 'Out for Delivery' })).toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
+    expect(statusMapAnswer({ carrier: 'shengao', description: 'Delivered' })).toEqual({ kind: 'mapped', stage: 'delivered' });
   });
 });

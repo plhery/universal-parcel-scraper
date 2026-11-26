@@ -14,6 +14,8 @@
     {"wording": "Parcel arrives at Transit Airport, Parcel Arrival", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Written beside the destination airport's arrival, minutes after it: an arrival, not a hold."},
     {"wording": "Custom clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The destination's import clearance done, the parcel goes on."},
     {"wording": "Shipment Received in Depot", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The last-mile partner's depot in the destination country taking the parcel in, after the import clearance."},
-    {"wording": "Shipment Data Processed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The last-mile partner's record of the parcel's data, a second after its depot's receipt: the journey goes on."}
+    {"wording": "Shipment Data Processed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The last-mile partner's record of the parcel's data, a second after its depot's receipt: the journey goes on."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "The last-mile partner's round, after its depot took the parcel in again."},
+    {"wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "The last-mile partner's delivery, hours after the round."}
   ]
 }
