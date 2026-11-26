@@ -1,5 +1,5 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { TransportError } from '../../core/errors/index.js';
+import { CarrierError, TransportError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
@@ -28,9 +28,26 @@ export class OrlenPaczkaTracker {
   }
 }
 
+/** Whether the failure is error 1004: the status service holds the number and shows no tracking for it. */
+function withheld(error: unknown): boolean {
+  let current = error;
+  for (let depth = 0; depth < 8 && current instanceof Error; depth += 1, current = current.cause) {
+    if (current instanceof CarrierError) return current.kind === 'indeterminate' && current.reason === 'tracking_withheld';
+  }
+  return false;
+}
+
 export const adapter: AdapterFactory = environment => {
   const tracker = new OrlenPaczkaTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'orlen-paczka', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
-    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
-      () => accepted(() => normalizeOrlenPaczkaNumber(number))) };
+    recognize: async (number, context) => {
+      try {
+        return await recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeOrlenPaczkaNumber(number)));
+      } catch (error) {
+        // Error 1004 answers only a number with its own check digit in the issued range; a wrong
+        // check digit or a number past the range gets the no-data placeholder. ORLEN holds it.
+        if (withheld(error)) return { known: true, lastActivityAt: null };
+        throw error;
+      }
+    } };
 };

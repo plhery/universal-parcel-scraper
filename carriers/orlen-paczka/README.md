@@ -12,9 +12,12 @@ browser is needed.
 
 The reply must name the requested number as the number asked about and as the parcel
 (`truckNo`). Absence is the service's own placeholder: no parcel (`Brak danych`) and no scans.
-Error 1004, which some numbers of the current range return, stays inconclusive: the tracker
-shows them as untrackable without saying whether a parcel exists. HTTP recognition uses the
-same lookup.
+Error 1004, which some numbers of the issued range return, leaves tracking inconclusive
+(`tracking_withheld`): the tracker shows them as untrackable, as it does a number it has no
+data for. The service gives it only to a number with its own check digit in the issued range;
+the same digits with another check digit, or a number past the range, get the no-data
+placeholder. So ORLEN holds a number it answers 1004, and HTTP recognition, which makes the
+same lookup, reads it as known without an activity time.
 
 The official app (`pl.orlen.paczka`) offers no other anonymous route. It reads parcels from
 `orlenapm.azure-api.net/CustomerAPP2026/v1` under `customers/{id}/shipments`, with a token its

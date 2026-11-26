@@ -88,9 +88,9 @@ export function parseOrlenPaczka(body: string, rawNumber: string): CarrierResult
   const payload = payloadOf(body);
   if (!isRecord(payload)) throw new SchemaError(PROVIDER, 'ORLEN Paczka returned an invalid tracking reply');
   if (Object.hasOwn(payload, 'err')) {
-    // Error 1004 answers some numbers of the current range that have no
-    // public history; the tracker shows them as untrackable, which proves
-    // neither a parcel nor its absence.
+    // Error 1004 answers some numbers of the issued range, each only with its
+    // own check digit: ORLEN holds the number but shows no history for it,
+    // and its tracker calls it untrackable. Tracking stays inconclusive.
     if (payload.err === 1004) {
       throw new IndeterminateError(PROVIDER, 'ORLEN Paczka does not show tracking for this number', { reason: 'tracking_withheld' });
     }

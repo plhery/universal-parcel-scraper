@@ -154,14 +154,16 @@ describe('ORLEN Paczka HTTP adapter', () => {
     expect(detectCarrierMatch('2109999000004').candidates ?? []).not.toContain('orlen-paczka');
   });
 
-  it('recognizes dated history and explicit absence, and leaves a withheld number inconclusive', async () => {
+  it('recognizes dated history, explicit absence and a withheld number it holds, and leaves other errors inconclusive', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
-      .mockResolvedValueOnce(reply(fixture('not-found'))).mockResolvedValueOnce(reply('callback({"err":1004});'));
+      .mockResolvedValueOnce(reply(fixture('not-found'))).mockResolvedValueOnce(reply('callback({"err":1004});'))
+      .mockResolvedValueOnce(reply('callback({"err":1001});'));
     await expect(carrier(fetcher).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T13:59:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(NUMBER)).resolves.toEqual({ known: false });
+    await expect(carrier(fetcher).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null });
     await expect(carrier(fetcher).recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
     await expect(carrier(fetcher).recognize!('2109999000004')).resolves.toEqual({ known: false });
-    expect(fetcher).toHaveBeenCalledTimes(3);
+    expect(fetcher).toHaveBeenCalledTimes(4);
   });
 
   it.each([[403, 'challenge'], [429, 'rate_limited'], [404, 'transport'], [410, 'transport'], [503, 'maintenance']] as const)(
