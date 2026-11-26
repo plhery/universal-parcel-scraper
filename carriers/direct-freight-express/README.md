@@ -10,7 +10,10 @@ limits, malformed pages and definite replies do not launch a browser. The ordina
 is sufficient; no carrier-specific service module is needed.
 
 The page renders desktop and mobile copies of each scan. The parser checks that they agree,
-then keeps one complete timeline, depot locations and the stated delivery-estimate day. Scan
+then keeps one complete timeline, depot locations and the stated delivery-estimate day. On the
+delivery day the page says "Today by" a time, read as the lookup's day in Sydney, where Direct
+Freight is based. An estimate in another form leaves the history and is named in
+`unread_estimates`. Scan
 item counts distinguish piece deliveries from completed consignments. Scan clocks stay local
 because the page gives no offset. Capped histories stay incomplete. The recipient's authority to leave, recorded
 before the pickup, moves nothing and takes no stage: the consignment keeps the stage of the scan

@@ -1,7 +1,9 @@
 import { load } from 'cheerio';
+import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { unreadEstimates } from '../../core/result/unread.js';
 import { languageStageStatus } from '../../core/status/index.js';
 import { paddedDate } from '../../core/time/fields.js';
 import { calendarDay } from '../../core/time/index.js';
@@ -12,6 +14,10 @@ export const PROVIDER = 'Direct Freight Express';
 export const DIRECT_FREIGHT_MAX_BYTES = 512 * 1024;
 const BLOCKED = /_cf_chl_opt|cf-chl-|cf-turnstile|<title>\s*(?:Just a moment|Attention Required|Access Denied)|Incapsula incident|Request unsuccessful|verify (?:that )?you are human|403 Forbidden/i;
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+// On the delivery day the estimate reads "Today by 10:30AM", a date the page leaves to the reader: the
+// lookup's day in Sydney, where Direct Freight is based.
+const DIRECT_FREIGHT_ZONE = 'Australia/Sydney';
+const TODAY_BY = /^Today by (?:0?[1-9]|1[0-2]):[0-5]\d ?[AP]M$/i;
 
 /** A lookup constraint, not evidence that a shared numeric layout belongs to this network. */
 export function normalizeDirectFreightNumber(raw: string): string {
@@ -27,7 +33,16 @@ function clock(value: string): string {
   return `${day}T${m[4]}`;
 }
 
-export function parseDirectFreight(html: string, raw: string): CarrierResult {
+/** The estimate's day: a date, "Scheduled For Delivery By" one, or today, "Estimated For Delivery:" by a time. Undefined when unread. */
+function estimateDay(label: string, text: string, now: number): string | null | undefined {
+  if (!text) return null;
+  const date = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(paddedDate(text));
+  if (label === 'Scheduled For Delivery By' && date) return calendarDay(Number(date[3]), Number(date[2]), Number(date[1])) ?? undefined;
+  if (/^Estimated For Delivery:?$/.test(label) && TODAY_BY.test(text)) return DateTime.fromMillis(now, { zone: DIRECT_FREIGHT_ZONE }).toISODate() ?? undefined;
+  return undefined;
+}
+
+export function parseDirectFreight(html: string, raw: string, now = Date.now()): CarrierResult {
   const number = normalizeDirectFreightNumber(raw);
   if (new TextEncoder().encode(html).byteLength > DIRECT_FREIGHT_MAX_BYTES) throw new SchemaError(PROVIDER, 'Direct Freight returned an oversized page');
   if (BLOCKED.test(html)) throw new ChallengeError(PROVIDER, 'Direct Freight returned browser verification');
@@ -82,10 +97,8 @@ export function parseDirectFreight(html: string, raw: string): CarrierResult {
   if (!newest) throw new NoHistoryError(PROVIDER, 'Direct Freight returned no dated consignment scans');
   const eta = panel.find('#lblEtaDetails'), etaLabel = panel.find('#lblEtaLabel');
   if (eta.length !== 1 || etaLabel.length !== 1) throw new SchemaError(PROVIDER, 'Direct Freight changed its delivery estimate');
-  const etaText = clean(eta.text(), 80);
-  const date = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(paddedDate(etaText));
-  const expected = date ? calendarDay(Number(date[3]), Number(date[2]), Number(date[1])) : null;
-  if (etaText && (!expected || clean(etaLabel.text()) !== 'Scheduled For Delivery By')) throw new SchemaError(PROVIDER, 'Direct Freight returned an unreadable delivery estimate');
+  // An estimate in another form leaves the history and names its field for a capture.
+  const etaText = clean(eta.text(), 80), expected = estimateDay(clean(etaLabel.text(), 80), etaText, now);
   let staged = directFreightStage(newest.description!);
   // A delivery of fewer items than the consignment's earlier scans counted leaves the rest under way.
   if (staged?.stage === 'delivered' && newestDeliveredCount > 0 && newestDeliveredCount < largestItemCount) {
@@ -94,5 +107,5 @@ export function parseDirectFreight(html: string, raw: string): CarrierResult {
   return { status: staged ? languageStageStatus(staged.stage) : 'unknown',
     ...(staged ? { current_stage: staged.stage, current_stage_source: staged.source } : {}),
     last_status_text: newest.stage === 'delivered' && staged?.stage !== 'delivered' ? 'Delivery of individual items' : newest.description, last_update: null, last_update_local: newest.local_time,
-    expected_delivery: expected, ...(events.length > 100 ? { history_truncated: true } : {}), events: events.slice(0, 100) };
+    expected_delivery: expected ?? null, ...(expected === undefined ? unreadEstimates({ lblEtaDetails: etaText }) : {}), ...(events.length > 100 ? { history_truncated: true } : {}), events: events.slice(0, 100) };
 }

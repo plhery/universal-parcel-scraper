@@ -29,8 +29,21 @@ describe('Direct Freight history', () => {
     for (const html of [page(rows(), NUMBER + '9'), page().replace('Consignment Number', 'Order Number'),
       page().replace('Date:', 'Other:'), page().replace('block md:hidden', 'changed'),
       page().replace('<span>Status:</span><br>Delivered', '<span>Status:</span><br>On Board'),
-      page().replace('03 Jul 2026 09:00:00', '31 Feb 2026 09:00:00'), page().replace('05/07/2026', '31/02/2026')]) {
+      page().replace('03 Jul 2026 09:00:00', '31 Feb 2026 09:00:00')]) {
       expect(() => parseDirectFreight(html, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    }
+  });
+
+  it('reads a same-day estimate as the lookup day in Sydney and names an estimate it cannot read', () => {
+    const today = page().replace('Scheduled For Delivery By', 'Estimated For Delivery:').replace('05/07/2026', 'Today by 10:30AM');
+    // 23:30 UTC on 4 July is the morning of 5 July in Sydney.
+    const result = parseDirectFreight(today, NUMBER, Date.parse('2026-07-04T23:30:00Z'));
+    expect(result.expected_delivery).toBe('2026-07-05'); expect(result).not.toHaveProperty('unread_estimates');
+    for (const html of [page().replace('05/07/2026', '31/02/2026'), today.replace('Today by', 'Tomorrow by'),
+      page().replace('Scheduled For Delivery By', 'Estimated For Delivery:')]) {
+      const unread = parseDirectFreight(html, NUMBER);
+      expect(unread).toMatchObject({ expected_delivery: null, unread_estimates: ['lblEtaDetails'], current_stage: 'delivered' });
+      expect(unread.events).toHaveLength(2);
     }
   });
 
