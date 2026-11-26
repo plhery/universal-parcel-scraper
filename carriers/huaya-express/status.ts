@@ -53,4 +53,17 @@ export const isHuayaDestinationRow = (content: string, place: string): boolean =
   return country !== undefined && country !== 'CN' && countryCode(country) === country && !HAN.test(content);
 };
 
+// The Italian last mile's rows the tracker copies under the town and its province's code, as Poste Italiane writes
+// them: "ROMA (RM)", "BENTIVOGLIO (BO)".
+const PROVINCE_PLACE = /^\s*[A-Z][A-Z' .-]{0,60}\(([A-Z]{2})\)\s*$/;
+const ITALIAN_PROVINCES = new Set(('AG AL AN AO AP AQ AR AT AV BA BG BI BL BN BO BR BS BT BZ CA CB CE CH CI CL CN CO CR CS CT CZ '
+  + 'EN FC FE FG FI FM FR GE GO GR IM IS KR LC LE LI LO LT LU MB MC ME MI MN MO MS MT NA NO NU OG OR OT PA PC PD PE PG PI '
+  + 'PN PO PR PT PU PV PZ RA RC RE RG RI RM RN RO SA SI SO SP SR SS SU SV TA TE TN TO TP TR TS TV UD VA VB VC VE VI VR VS '
+  + 'VT VV').split(' '));
+/** Whether a row is placed at a town and an Italian province's code, as the Italian last mile's rows are, outside the tracker's Chinese steps. */
+export const isHuayaItalianRow = (content: string, place: string): boolean => {
+  const province = PROVINCE_PLACE.exec(place)?.[1];
+  return province !== undefined && ITALIAN_PROVINCES.has(province) && !HAN.test(content);
+};
+
 export const statusMap: CarrierStatusMap = { stage: huayaStage, gaps: [] };

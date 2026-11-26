@@ -240,6 +240,39 @@ describe('Huaya Express tracking adapter', () => {
     expect(result.events!.at(-1)!.description).toBe('Votre Colissimo va bientôt nous être confié ! Il est en cours de préparation chez votre expéditeur.');
   });
 
+  it('dates the Italian last mile’s rows at a town and its province on Italy’s clock, on a parcel to Italy', () => {
+    const reply = structuredClone(fixture('track')) as [{ data: [{ consigneeCountry: string; trackDetails: Record<string, string>[] }] }];
+    const record = reply[0].data[0];
+    const template = record.trackDetails.at(-1)!;
+    const row = (date: string, created: string, content: string, location: string) =>
+      ({ ...template, track_date: date, track_createdate: created, track_content: content, track_location: location, track_kind: '' });
+    record.consigneeCountry = 'IT';
+    // Newest first. Each Italian row was written at the platform's next 4-hourly poll after its Italian time;
+    // on Beijing time the round would start at 06:10 in Milan and wait nine hours for the poll.
+    record.trackDetails = [
+      row('2026-12-10 16:05:12', '2026-12-11 03:00:15', 'MILANO (MI), la spedizione è in consegna', 'MILANO (MI)'),
+      row('2026-12-10 04:20:40', '2026-12-10 15:00:02', 'MILANO (MI), la spedizione è in transito', 'MILANO (MI)'),
+      row('2026-12-09 12:31:00', '2026-12-09 23:00:04', 'BOLOGNA (BO), la spedizione è in transito', 'BOLOGNA (BO)'),
+      row('2026-12-08 10:03:40', '2026-12-08 10:03:40', '航班落地，清关中', 'IT'),
+      row('2026-12-04 23:44:41', '2026-12-04 23:44:41', '到达收货点', '广州'),
+    ];
+    const result = parseHuayaTrack(reply, NUMBER, Date.parse('2026-12-11T00:00:00Z'))!;
+    expect(result).toMatchObject({ current_stage: 'out_for_delivery', last_update: '2026-12-10T16:05:12+01:00' });
+    expect(result.events!.map(({ time, local_time, time_zone, time_zone_basis, location, stage }) =>
+      [time, local_time, time_zone, time_zone_basis, location, stage])).toEqual([
+      ['2026-12-10T16:05:12+01:00', '2026-12-10T16:05:12', 'Europe/Rome', 'place', 'MILANO (MI)', 'out_for_delivery'],
+      ['2026-12-10T04:20:40+01:00', '2026-12-10T04:20:40', 'Europe/Rome', 'place', 'MILANO (MI)', 'in_transit'],
+      ['2026-12-09T12:31:00+01:00', '2026-12-09T12:31:00', 'Europe/Rome', 'place', 'BOLOGNA (BO)', 'in_transit'],
+      ['2026-12-08T10:03:40+08:00', undefined, undefined, undefined, 'IT', 'customs'],
+      ['2026-12-04T23:44:41+08:00', undefined, undefined, undefined, '广州', 'accepted'],
+    ]);
+    // The same rows on a parcel to another country keep their wall clocks, for the place to date.
+    record.consigneeCountry = 'DE';
+    const elsewhere = parseHuayaTrack(reply, NUMBER, Date.parse('2026-12-11T00:00:00Z'))!;
+    expect(elsewhere.events![0]).toMatchObject({ local_time: '2026-12-10T16:05:12' });
+    expect(elsewhere.events![0]!.time).toBeUndefined();
+  });
+
   it('dates the rows it copies from J&T Express Mexico on J&T’s clock, whatever their towns, sites, courier and phone', () => {
     const reply = structuredClone(fixture('track')) as [{ data: [{ consigneeCountry: string; trackDetails: Record<string, string>[] }] }];
     const record = reply[0].data[0];

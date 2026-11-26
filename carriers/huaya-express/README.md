@@ -52,6 +52,10 @@ browser is needed.
   platform's next 4-hourly poll after its local time, where Beijing time would put a letterbox
   delivery in the night. They keep their wall clocks, which the country dates. The tracker's own
   steps abroad under such a code are in Chinese and stay on Beijing's clock.
+- On the line into Italy the last mile's rows name the town and its province's code ("ROMA (RM)"),
+  in Italian, and come on Italy's clock: each is written at the platform's next 4-hourly poll after
+  its Italian time, where Beijing time would put it seven hours early. On a parcel to Italy they are
+  dated on Rome's zone; elsewhere they keep their wall clocks for the place to date.
 - Other scan times are wall clocks without an offset on the platform's Beijing clock and are read
   on it; a row dated after the lookup is held back.
 - 17TRACK names the forwarder GZHY, which is kept as an alias.
