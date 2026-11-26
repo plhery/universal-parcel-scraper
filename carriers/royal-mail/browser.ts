@@ -54,8 +54,13 @@ export async function captureRoyalMailReply(page: Page, url: string, number: str
   let expires = performance.now() + timeoutMs;
   const finished = new AbortController();
   const timer = new AbortController();
-  const arm = (ms: number) => setTimeout(() => timer.abort(new DOMException('Royal Mail tracking response timed out', 'TimeoutError')),
-    Math.max(1, Math.floor(ms)));
+  const arm = (ms: number) => {
+    const armed = setTimeout(() => timer.abort(new DOMException('Royal Mail tracking response timed out', 'TimeoutError')),
+      Math.max(1, Math.floor(ms)));
+    // A lookup that ends first clears the timer it no longer waits on.
+    signal.addEventListener('abort', () => clearTimeout(armed), { once: true });
+    return armed;
+  };
   let clock = arm(timeoutMs);
   const deadline = AbortSignal.any([signal, finished.signal, timer.signal]);
   deadline.throwIfAborted();

@@ -91,6 +91,7 @@ export class RoyalMailTracker {
         const timer = setTimeout(() => {
           if (!vision.attempt.solving) plain.abort(new DOMException('Royal Mail lookup reached its cap', 'TimeoutError'));
         }, Math.max(1, Math.floor(plainLeft())));
+        signal.addEventListener('abort', () => clearTimeout(timer), { once: true });
         try {
           return await fetchRoyalMailInBrowser(number, args[1], AbortSignal.any([signal, plain.signal]), remainingMs,
             this.#fullHistory, this.#browserProxy, this.#browserWsEndpoint, vision);
