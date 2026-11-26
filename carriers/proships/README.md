@@ -51,9 +51,10 @@ their sources are in [`numbers.json`](numbers.json).
 
 ## Links
 
-One parcel opens on proships.com under `/tracking` with the number in the `tracking`
-parameter, the address the tracking form builds. An older form sent the number in the `code`
-parameter. The library reads the number from either parameter.
+One parcel opens on proships.com under `/tracking/` with `origen=nacional` and the number in the
+`tracking` parameter, the address the national tracking form builds. Without `origen` the page
+looks nothing up. Older forms sent the number alone in the `tracking` or `code` parameter. The
+library reads the number from either parameter.
 
 ## Testing
 

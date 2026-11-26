@@ -29,7 +29,8 @@ a number.
 
 ## Links
 
-`track.lexship.biz/?tracking=<number>` opens one shipment.
+`track.lexship.biz/?tracking=<number>` opens one shipment. The app drops the number from its address
+once it looks it up, and renders an empty page for a number it does not know.
 
 ## Testing
 

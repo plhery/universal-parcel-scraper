@@ -53693,8 +53693,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "localClocks": true
     },
     "canaryUrl": "https://proships.com/tracking/",
-    "trackingUrlTemplate": "https://proships.com/tracking?tracking={trackingNumber}",
-    "trackingSearchUrl": "https://proships.com/tracking/",
+    "trackingUrlTemplate": "https://proships.com/tracking/?origen=nacional&tracking={trackingNumber}",
+    "trackingSearchUrl": "https://proships.com/",
     "helpUrl": "https://proships.com/ayuda/",
     "linkRules": [
       {

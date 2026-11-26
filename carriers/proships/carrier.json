@@ -28,8 +28,8 @@
     "history"
   ],
   "portal": {
-    "url": "https://proships.com/tracking?tracking={trackingNumber}",
-    "searchUrl": "https://proships.com/tracking/",
+    "url": "https://proships.com/tracking/?origen=nacional&tracking={trackingNumber}",
+    "searchUrl": "https://proships.com/",
     "helpUrl": "https://proships.com/ayuda/",
     "canaryUrl": "https://proships.com/tracking/",
     "shows": [

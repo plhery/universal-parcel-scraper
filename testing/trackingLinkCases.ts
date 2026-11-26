@@ -280,9 +280,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'parcel-one', number: '4002109876543',
     route: /^https:\/\/parcel\.one\/(?:de|en)\/tracking\/\?trackno=4002109876543$/,
     marker: /Sendung verfolgen|Track (?:a |your )?shipment/i },
+  // The tracker looks the number in its path up and answers an unknown one with a notice.
   { carrier: 'cargomini', number: '999999999999TR',
     route: /^https:\/\/tracking\.cargomini\.com\/999999999999TR$/,
-    marker: /CargoMini Tracking/ },
+    marker: /Package not found|Tracking History/ },
   { carrier: 'aruba-post', number: 'RR999999995AW',
     route: /^https:\/\/cds\.postaruba\.com\/ipswt\/IPSWeb_item_events\.aspx\?itemid=RR999999995AW$/,
     marker: /No information, please check your item identifier/,
@@ -1286,10 +1287,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'shipa', number: 'SD000000003',
     route: /^https:\/\/shipa\.com\/track\/\?trackingno=SD000000003$/,
     marker: /Results for Your Shipment Search|TRACK IT ON SHIPA DELIVERY/i },
-  // The site adds the slash; the page then posts the number in its address to its lookup and names an unknown one.
-  // An unknown code gets the tracker's notice with HTTP 404.
+  // The national form's address: the page looks the number up as it is served, and an unknown code
+  // gets the tracker's notice with HTTP 404.
   { carrier: 'proships', number: '0000000000000',
-    route: /^https:\/\/proships\.com\/tracking\/\?tracking=0000000000000$/,
+    route: /^https:\/\/proships\.com\/tracking\/\?origen=nacional&tracking=0000000000000$/,
     marker: /No encontramos paquetes para el c[óo]digo/i,
     shipmentNotFound: { status: 404, marker: /No encontramos paquetes para el c[óo]digo/i } },
   // The page puts the number in its address in its form and asks its lookup on load; an unknown one gets a notice.
@@ -2449,10 +2450,6 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/go\.paperfly\.com\.bd\/track\/order\/010125-0000-A1-A1$/,
     marker: /Share Tracking Details|Parcel Details/,
     shipmentNotFound: { status: 404, marker: /Share Tracking Details/ } },
-  // LEXSHIP's tracking app looks the number in its address up on load.
-  { carrier: 'lexship', number: 'LX0000000000',
-    route: /^https:\/\/track\.lexship\.biz\/\?tracking=LX0000000000$/,
-    marker: /Can't Find Your Shipment Details\?|Current Status|Loading Tracking Information/ },
   // The page looks up the number in its address and answers an unknown one with a notice.
   { carrier: 'line-clear', number: 'V000000000000000',
     route: /^https:\/\/www\.lineclearexpress\.com\/tracker\?id=V000000000000000$/,
@@ -2988,6 +2985,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   roadie: 'The tracker requires US egress; the rendered-link canary has no scoped US browser transport.',
   'custom-companies': 'The details page does not answer connections from Europe; the rendered-link canary has no scoped US browser transport.',
   'aaa-cooper': 'The website refuses visitors outside the Americas; the rendered-link canary has no scoped American browser transport.',
+  lexship: 'The tracking app drops the number from its address once it looks it up, and renders an empty page for one it does not know, so a synthetic rendered-page check cannot prove the link; native retrieval binds the returned AWBNo.',
   'tforce-logistics': 'The tracker refuses many countries outside North America; the rendered-link canary has no scoped North American browser transport.',
   'peninsula-truck-lines': 'The website refuses visitors outside North America; the rendered-link canary has no scoped North American browser transport.',
   'asyad-express': 'The web tracker requires Omani network access; the adapter reads the separate mobile guest endpoints.',
