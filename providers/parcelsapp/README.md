@@ -809,7 +809,9 @@ alone is enough. The browser step exists for future protocol changes.
   with no place after its first scan in the destination, take the zone its scans there
   share. Its scans with no place on China's leg, up to the flight out, are on China's clock
   when its nearest scan with a place, the older one first, is in China, and on Hong Kong's when
-  it is there, as in YunExpress's adapter: as labeled, its flight out left eight hours late. Other carriers keep their readings: OnTrac's dates are UTC. A scan of these carriers that its location
+  it is there, as in YunExpress's adapter: as labeled, its flight out left eight hours late. That
+  clock beats a guess, routing's too: on iMile's Dubai clock, for a parcel filed under iMile that
+  iMile delivers in Germany, its export clearance came four hours after its own row of it. Other carriers keep their readings: OnTrac's dates are UTC. A scan of these carriers that its location
   places only in the US or Canada
   ("US 12345", "United States") borrows like a wall-clock scan (step 3 above), from a scan
   of its network that a place gives a zone: FedEx's "Shipment information sent to FedEx"

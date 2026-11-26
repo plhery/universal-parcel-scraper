@@ -1352,6 +1352,20 @@ describe('ParcelsApp result parsing', () => {
     }
   });
 
+  it("reads YunExpress's unplaced scans on China's leg on China's clock over routing's zone for a parcel filed under another network", () => {
+    // Filed under iMile, whose catalog clock is Dubai's, YunExpress's export clearance came four hours after its own row of it.
+    const result = parseParcelsAppResponse({ carriers: ['YunExpress'], originCode: 'CN', destinationCode: 'DE', states: [
+      { date: '2026-11-24T12:45:00Z', status: 'International flight has departed', carrier: 0 },
+      { date: '2026-11-24T11:41:15Z', status: 'Clearance processing completed - Export', carrier: 0 },
+      { date: '2026-11-21T21:36:45Z', status: 'Departed from sort facility', carrier: 0, location: 'Shenzhen Hub, China' },
+      { date: '2026-11-19T11:46:33Z', status: 'Shipment information received', carrier: 0 },
+    ] }, number, identity(), 'Asia/Dubai', Date.parse('2026-11-26T00:00:00Z'));
+    expect(result.events?.map((scan) => [scan.time, scan.time_zone])).toEqual([
+      ['2026-11-24T04:45:00.000Z', 'Asia/Shanghai'], ['2026-11-24T03:41:15.000Z', 'Asia/Shanghai'],
+      ['2026-11-21T13:36:45.000Z', 'Asia/Shanghai'], ['2026-11-19T03:46:33.000Z', 'Asia/Shanghai'],
+    ]);
+  });
+
   it("reads Joom Logistics' relays of scans abroad on their place's clock, and its rows in China on Hong Kong's", () => {
     // Joom gives the scans it relays at their place's wall clock: on Hong Kong's, a clearance at Liège came seven hours
     // before YunExpress's own row of it, stated +01:00.

@@ -2164,13 +2164,19 @@ function yunExpressAirportZones(items: readonly { name: unknown; location: strin
  * own adapter dates them (`yunExpressOriginLeg`). Its flight out came at China's digits: as labeled, it left eight
  * hours late, after the import clearance its destination's town dated.
  */
-function yunExpressOriginZones(items: readonly { name: unknown; date: unknown; location: string; offset: string | null | undefined; wording: string }[],
-  zones: readonly { zone: string | null }[]): (string | null)[] {
+function yunExpressOriginZones(items: readonly { name: unknown; date: unknown; location: string; offset: string | null | undefined; wording: string;
+  guessed: boolean }[], zones: readonly { zone: string | null; step: ZoneStep }[]): (string | null)[] {
   const rows = items.flatMap((item, index) => nameKey(item.name) === 'yunexpress' ? [{ item, index, wall: mislabeledWallTime(item.date) ?? '' }] : [])
     .sort((a, b) => (a.wall < b.wall ? 1 : a.wall > b.wall ? -1 : 0));
   const leg = yunExpressOriginLeg(rows.map(({ item }) => ({ location: item.location.trim(), wording: item.wording })));
   const found = items.map((): string | null => null);
-  rows.forEach(({ item, index }, at) => { if (leg[at] && !item.offset && !zones[index]!.zone) found[index] = leg[at]!; });
+  // A guessed zone, routing's among them, gives way: routing passes another network's for a parcel filed under it, and on
+  // iMile's Dubai clock, for a parcel iMile delivers in Germany, YunExpress's export clearance came four hours after its
+  // own row of it.
+  rows.forEach(({ item, index }, at) => {
+    const zone = zones[index]!;
+    if (leg[at] && !item.offset && (!zone.zone || zone.step === 'routing' || (item.guessed && zone.step === 'carrier'))) found[index] = leg[at]!;
+  });
   return found;
 }
 
