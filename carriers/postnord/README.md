@@ -33,7 +33,10 @@ wall clock in a country of several, and a twin labelled with the instant counts 
 delivering abroad relays instants (Deutsche Post's have the minute of its own tracker's), and
 without a destination a foreign post's scan stays as labelled. A terminal's own scans carry
 milliseconds; one it has to the minute (`locationType` HUB) is its wall clock too: an airport
-terminal's scans of mail from abroad were answered before their labelled UTC time.
+terminal's scans of mail from abroad were answered before their labelled UTC time. A foreign
+post's scan placed in no country (`999`) and no named place, to the minute, is on the clock of the
+PostNord country receiving the item: a Ukrainian item's departure steps for Denmark each came an
+hour after Ukrposhta's own scan.
 Each event uses its own code and, where the code covers several milestones, exact portal wording.
 The parcel app's review asks the same map (`statusMap`); a copy without a code gets a stage only
 from wording that names a milestone or a hold of its own.

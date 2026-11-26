@@ -67,7 +67,12 @@ const WHOLE_MINUTE_UTC = /T\d{2}:\d{2}:00(?:\.0{1,9})?Z$/;
 function relayedWallCountry(raw: Record<string, unknown>, rawTime: string, destination: string | null): string | null {
   const location = isRecord(raw.location) ? raw.location : null;
   const country = location ? clean(location.countryCode, 8) : '';
-  if (!location || !/^[A-Z]{2}$/.test(country) || !WHOLE_MINUTE_UTC.test(rawTime)) return null;
+  if (!location || !WHOLE_MINUTE_UTC.test(rawTime)) return null;
+  // A foreign post's scan PostNord places in no country ("999") and no named place carries the clock of
+  // the PostNord country receiving the item: a Ukrainian item's departure steps for Denmark at 16:18, 15:05
+  // and 05:09 under a Z, each an hour after Ukrposhta's own scan at 15:18, 14:05 and 04:09 UTC.
+  if (country === '999' && !clean(location.name, 160)) return destination && POSTNORD_COUNTRIES.has(destination) ? destination : null;
+  if (!/^[A-Z]{2}$/.test(country)) return null;
   if (clean(location.name, 160)) return location.locationType === 'HUB' && POSTNORD_COUNTRIES.has(country) ? country : null;
   if (location.locationType !== 'UNDEF') return null;
   return POSTNORD_COUNTRIES.has(country) || (destination && country !== destination) ? country : null;

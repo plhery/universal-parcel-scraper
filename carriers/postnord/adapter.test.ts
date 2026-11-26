@@ -158,6 +158,23 @@ describe('PostNord direct tracking', () => {
     expect(parsePostnord(value, NUMBER)).toMatchObject({ last_update: null, events: [{ local_time: '2026-10-24T21:19:00.000' }, { time: '2026-10-23T09:00:00+02:00' }] });
   });
 
+  it("reads a foreign post's scan placed in no country on the clock of the PostNord country receiving it", () => {
+    const unplaced = (eventTime: string, name?: string) => ({ eventDescription: 'The shipment item is under transportation.', eventTime,
+      status: 'EN_ROUTE', location: { countryCode: '999', locationType: 'HUB', ...(name ? { name } : {}) } });
+    const value = payload();
+    value.items[0].events = [unplaced('2026-11-19T15:05:00.000Z'), unplaced('2026-11-22T05:09:00.000Z'), unplaced('2026-11-23T08:00:12.345Z')];
+    value.items[0].status = { code: 'EN_ROUTE', header: 'The shipment item is under transportation.' };
+    value.receiver.address.countryCode = 'DK';
+    const times = () => parsePostnord(value, NUMBER).events?.map((event) => event.time);
+    // To the millisecond: an instant.
+    expect(times()).toEqual(['2026-11-23T08:00:12.345Z', '2026-11-22T05:09:00+01:00', '2026-11-19T15:05:00+01:00']);
+    // A named place, or a destination outside PostNord's countries, leaves the label.
+    value.items[0].events[1] = unplaced('2026-11-22T05:09:00.000Z', 'SYNTHETIC HUB');
+    expect(times()?.[1]).toBe('2026-11-22T05:09:00Z');
+    value.receiver.address.countryCode = 'DE';
+    expect(times()?.[2]).toBe('2026-11-19T15:05:00Z');
+  });
+
   it('reads a terminal\'s scan to the minute on its country\'s wall clock', () => {
     const scan = (eventTime: string, locationType = 'HUB', name = 'SYNTHETIC BREVTERMINAL', countryCode = 'SE') =>
       ({ eventDescription: 'The shipment item is under transportation.', eventTime, status: 'EN_ROUTE', location: { countryCode, locationType, name } });
