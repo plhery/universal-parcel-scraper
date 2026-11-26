@@ -76,6 +76,9 @@ export const EVENT_STAGE_BY_CODE: Record<string, Stage> = {
   '926': 'ready_for_pickup',
   '934': 'failed_attempt',
   '938': 'delivered',
+  // An outbound item's export clearance and its completion: routine steps before it leaves Switzerland.
+  '942': 'in_transit',
+  '947': 'in_transit',
   '1000': 'in_transit',
   '1001': 'in_transit',
   '1002': 'in_transit',

@@ -381,6 +381,24 @@
       "firstSeen": "2026-10-08"
     },
     {
+      "code": "942",
+      "wording": "Exportverzollung",
+      "language": "de",
+      "english": "Export customs clearance",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "An outbound item's export clearance in Switzerland, a routine step before it leaves: it is not held."
+    },
+    {
+      "code": "947",
+      "wording": "Abschluss Exportverzollung",
+      "language": "de",
+      "english": "Completion of export customs clearance",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The export clearance done, the item cleared to leave Switzerland."
+    },
+    {
       "code": "1000",
       "wording": "Arrival at the collection/delivery point",
       "language": "en",

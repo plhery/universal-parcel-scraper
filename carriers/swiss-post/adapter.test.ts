@@ -80,6 +80,8 @@ describe('Swiss Post event codes', () => {
     ['923', 'Delivery failed: Recipient unknown', 'failed_attempt'],
     ['926', 'Retention period was extended by recipient', 'ready_for_pickup'],
     ['934', 'Delivery failed: Shipment undeliverable', 'failed_attempt'],
+    ['942', 'Exportverzollung', 'in_transit'],
+    ['947', 'Abschluss Exportverzollung', 'in_transit'],
     ['1001', 'Arrival at the collection/delivery point', 'in_transit'],
     ['1100', 'Arrival at the delivery point', 'in_transit'],
     ['1204', 'Consignment is being processed', 'in_transit'],
