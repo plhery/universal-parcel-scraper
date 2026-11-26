@@ -1,0 +1,88 @@
+{
+  "id": "xendnow",
+  "displayName": "XendNow",
+  "aliases": [
+    "XendNow Courier Service",
+    "Xend Sdn Bhd"
+  ],
+  "region": {
+    "countries": [
+      "MY"
+    ]
+  },
+  "brand": {
+    "color": "#652C8F"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kuala_Lumpur",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "xendnow",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.xendnow.my/trace.aspx?key={trackingNumber}",
+    "searchUrl": "https://www.xendnow.my/trace.aspx",
+    "canaryUrl": "https://www.xendnow.my/trace.aspx",
+    "shows": [
+      "status",
+      "history",
+      "remarks",
+      "office_opening_hours",
+      "parcel_count",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "recipient_address",
+      "recipient_name",
+      "recipient_id",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "remarks",
+      "office_opening_hours",
+      "parcel_count",
+      "recipient_address",
+      "recipient_name",
+      "recipient_id",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "location",
+      "eta",
+      "sender_name",
+      "service_name",
+      "weight"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.xendnow.my",
+        "xendnow.my"
+      ],
+      "pathPattern": "^/trace\\.aspx$",
+      "params": [
+        "key"
+      ]
+    }
+  ],
+  "detection": []
+}

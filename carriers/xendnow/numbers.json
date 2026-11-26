@@ -1,0 +1,24 @@
+{
+  "carrier": "xendnow",
+  "records": [
+    {
+      "number": "EX03200305NC0410",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://xendnow.my/trace.aspx",
+        "date": "2026-11-26",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example card left in a comment of XendNow's tracking page; the tracking API answers it with a delivered history."
+    }
+  ]
+}

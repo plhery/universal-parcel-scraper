@@ -2916,6 +2916,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'arriival', number: 'TH000000000AF',
     route: /^https:\/\/arriival\.com\/tracking\/\?no=TH000000000AF$/,
     marker: /Track Your Shipment[\s\S]*From pickup to delivery, track every step/ },
+  // XendNow's tracking page reads the box from its key parameter and asks the tracking API for it on load.
+  { carrier: 'xendnow', number: 'EX00000101ZZ0000',
+    route: /^https:\/\/www\.xendnow\.my\/trace\.aspx\?key=EX00000101ZZ0000$/,
+    marker: /Self Collection Points|Holiday List/ },
 ];
 
 /**

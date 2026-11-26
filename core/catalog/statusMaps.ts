@@ -1152,6 +1152,7 @@ import { statusMap as babyxpress } from '../../carriers/babyxpress/status.js';
 import { statusMap as sendyExpress } from '../../carriers/sendy-express/status.js';
 import { statusMap as arriival } from '../../carriers/arriival/status.js';
 import { statusMap as spcWorldwideExpress } from '../../carriers/spc-worldwide-express/status.js';
+import { statusMap as xendnow } from '../../carriers/xendnow/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1376,6 +1377,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'sendy-express': sendyExpress,
   arriival,
   'spc-worldwide-express': spcWorldwideExpress,
+  'spc-worldwide-express': spcWorldwideExpress, xendnow,
 };
 
 /** The carrier the app files the universal providers' scans under. */

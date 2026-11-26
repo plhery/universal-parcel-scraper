@@ -1,0 +1,41 @@
+{
+  "carrier": "xendnow",
+  "entries": [
+    {
+      "code": "13",
+      "wording": "Shipment Picked Up",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The courier collects the parcel from its sender; the first row of the public sample."
+    },
+    {
+      "code": "1",
+      "wording": "Ready For Pickup",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "Held at a self-collection point. The tracker follows the wording with the point's opening hours, which the adapter leaves out."
+    },
+    {
+      "code": "8",
+      "wording": "Failed Attempt-No Receiver",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "No one took the parcel; in the sample, written each evening the recipient did not come to the collection point."
+    },
+    {
+      "code": "2",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The tracking page shows the receiver and proof of delivery with this code; the adapter reads neither."
+    }
+  ]
+}

@@ -7097,5 +7097,11 @@
     "carrier": "centex",
     "kind": "open",
     "reason": "CENTEX waybills seen so far are ZJ and seventeen digits, and the only public sample comes from one archived capture of its tracker, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker. Its parcels to Brazil also carry a Correios number, which detection gives to Correios."
+  },
+  {
+    "carrier": "xendnow",
+    "pattern": "^EX\\d{8}[A-Z]{2}\\d{4}$",
+    "kind": "open",
+    "reason": "One public XendNow box id has this layout, from the example card on its tracking page; one sample does not establish the family."
   }
 ]
