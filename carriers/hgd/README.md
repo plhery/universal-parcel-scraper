@@ -15,6 +15,8 @@ its own tracking server, a Neoman GInfo system, whose waybills on its dedicated 
 - The tracking form on 365igo.com.cn posts to the same server's `EmmisTrack` page, which renders
   the same record as HTML. The adapter reads the record itself. The server and the site answer
   only plain HTTP, so the catalog links neither.
+- SRJ and Yi Long Express run the same server software; the request and the record's reader are
+  shared in [`ginfo.ts`](ginfo.ts).
 - `-102` is the answer for a number the server holds nothing under, which is not found. Any other
   code but `100` is inconclusive, and a non-200 reply is a moved route.
 - `TRCKING_NBR` must be the whole number asked: a request without a number gets some other
@@ -33,6 +35,8 @@ its own tracking server, a Neoman GInfo system, whose waybills on its dedicated 
 ## Limitations
 
 - No delivery estimate. The record gives no delivering carrier or onward number.
+- The record's `STATE` is not read: no delivered HGD record has been seen to confirm the code the
+  other tenants give a delivered parcel.
 
 ## Numbers
 
