@@ -50,11 +50,11 @@
     {
       "code": "8.83",
       "wording": "Sorting",
-      "stage": "in_transit",
+      "stage": "accepted",
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-11-24",
-      "note": "Processing (operation type 8) under an attribute the lapaygroup/RussianPost operation list does not name; the page labels it Sorting, as 8.0, the day after the item's registration."
+      "note": "Processing (operation type 8) under an attribute the lapaygroup/RussianPost operation list does not name; the page labels it Sorting, as 8.0, the day after the item's registration and the day before its acceptance (1.1). Read as accepted, so the acceptance after it is no step back."
     },
     {
       "code": "8.1",

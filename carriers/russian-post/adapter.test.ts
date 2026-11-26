@@ -101,6 +101,11 @@ describe('Russian Post anonymous tracking', () => {
     expect(statusMapAnswer({ carrier: 'russian-post', providerCode: '10.0', description: 'Example' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 
+  it('reads the sorting under attribute 8.83, written before the acceptance, with it', () => {
+    expect(statusMapAnswer({ carrier: 'russian-post', providerCode: '8.83', description: 'Sorting' })).toEqual({ kind: 'mapped', stage: 'accepted' });
+    expect(statusMapAnswer({ carrier: 'russian-post', providerCode: '8.0', description: 'Sorting' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+  });
+
   it('shows English for the acceptance labels the English feed gives in Russian', () => {
     for (const [code, russian, english] of [[7, 'Упрощенный предзаполненный', 'Simplified acceptance, pre-filled'], [8, 'Упрощенный предоплаченный', 'Simplified acceptance, prepaid']] as const) {
       const body = fixture(); Object.assign(body[0]!.trackingItem, { globalStatus: 'IN_PROGRESS',
