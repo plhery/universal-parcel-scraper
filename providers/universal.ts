@@ -197,6 +197,13 @@ export class UniversalTracker {
     if (number.length <= SHORT_NUMBER_LENGTH && (!carrier || carrier === 'unknown')) {
       throw new NoHistoryError(source, 'A number this short is not sent without its carrier', { reason: 'short_number' });
     }
+    // Track123 reads the courier page of the carrier it is given and names that carrier whatever the
+    // courier finds, so it cannot show that a number this short is the carrier's own rather than a
+    // shipper's reference the courier also searches: DHL's page answered seven digits that way with
+    // another shipper's parcel.
+    if (number.length <= SHORT_NUMBER_LENGTH && source === 'Track123') {
+      throw new NoHistoryError(source, 'Track123 names the carrier it is asked about, so a number this short is not sent', { reason: 'short_number' });
+    }
     const result = this.options.browserLookup && (source === 'Postal Ninja' || source === 'Ship24')
       ? await this.options.browserLookup(source, number)
       : await this.provider(source).track({ number, postcode: postcode ?? null, timezone: timezone ?? null, countryHint: countryHint ?? null,

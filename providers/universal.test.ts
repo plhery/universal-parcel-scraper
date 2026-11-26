@@ -398,6 +398,18 @@ describe('universal discovery chain', () => {
     expect(fetcher).toHaveBeenCalled();
   });
 
+  it('sends Track123 no number of seven characters or fewer, whose carrier its answer only repeats', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockRejectedValue(new Error('no request expected'));
+    const tracker = new UniversalTracker({ providers: ['Track123'], trawlUrl: 'http://browser.test', fetcher });
+    for (const typed of ['5041726', 'AB12345', '5041 726']) {
+      await expect(tracker.fetchSource('Track123', typed, 20_000, null, null, undefined, null, 'dhl'))
+        .rejects.toMatchObject({ kind: 'indeterminate', provider: 'Track123', reason: 'short_number', name: 'NoHistoryError' });
+    }
+    expect(fetcher).not.toHaveBeenCalled();
+    // Eight characters are sent.
+    await expect(tracker.fetchSource('Track123', '50417268', 20_000, null, null, undefined, null, 'dhl')).rejects.not.toMatchObject({ reason: 'short_number' });
+  });
+
   it('takes an answer for a number that short only when it names the carrier, its brand or the partner after its own leg', async () => {
     const answer = (names: string[], discovered?: string, partner?: string): CarrierResult => ({
       status: 'delivered', current_stage: 'delivered', last_update: '2026-01-02T12:00:00.000Z',
