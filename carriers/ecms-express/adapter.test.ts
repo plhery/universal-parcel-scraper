@@ -60,6 +60,18 @@ describe('ECMS history', () => {
     expect(parseEcmsExpress(fixture(), NUMBER).events![0]).toMatchObject({ time: '2026-07-04T14:10:00Z' });
   });
 
+  it("leaves out the destination's code after a partner's town abroad, keeping it after the destination's own", () => {
+    const data = fixture();
+    const order = data.orderInfo[0]!;
+    order.consigneeCountry = 'BG';
+    Object.assign(order.infoList[0]!, { cityEnName: 'Almere', countryEnName: 'BG' });
+    Object.assign(order.infoList[1]!, { cityEnName: 'Sofia', countryEnName: 'BG' });
+    Object.assign(order.infoList[2]!, { cityEnName: 'Amsterdam', provinceEnName: 'North Holland', countryEnName: 'Netherlands' });
+    expect(parseEcmsExpress(data, NUMBER).events!.map(event => event.location))
+      .toEqual(['Almere', 'Sofia, BG', 'Amsterdam, North Holland, Netherlands']);
+    expect(parseEcmsExpress(fixture(), NUMBER).events![0]!.location).toBe('Example City, US');
+  });
+
   it('keeps a midnight partner delivery instant', () => {
     const data = fixture();
     const order = data.orderInfo[0]!;

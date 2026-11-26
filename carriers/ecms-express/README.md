@@ -24,6 +24,11 @@ reaching ECMS's station before the parcel, so it names no place. A partner refer
 partner's relayed scans when they agree. Merchant references and payment links
 are discarded.
 
+ECMS names a country in full. A partner's relayed scan gives the destination's
+two-letter code instead, also after a town it passes abroad ("Almere, BG" on a parcel
+to Bulgaria). The code is left out when the town is a city of another country and
+none of the destination's, so the place names the town alone.
+
 `operatorTime` with a nonzero `timeZone` encodes a facility wall clock as UTC components,
 and the offset stays exactly as supplied, including fixed standard offsets in summer. ECMS
 writes its own scans' wall clocks from their instant with the station's offset, so read at

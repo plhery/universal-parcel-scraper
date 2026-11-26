@@ -5,6 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus } from '../../core/status/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
+import { locatePlace } from '../../places/index.js';
 import { ecmsExpressStage } from './status.js';
 
 export const PROVIDER = 'ECMS Express';
@@ -50,7 +51,7 @@ function wallClockFeeds(rows: readonly unknown[]): Set<string> {
   return feeds;
 }
 
-function scan(row: unknown, number: string, walled: ReadonlySet<string>): CarrierEvent {
+function scan(row: unknown, number: string, walled: ReadonlySet<string>, destination: string): CarrierEvent {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'ECMS returned an invalid scan');
   identity(row, number);
   const code = text(row, 'eventCode', 40), description = text(row, 'eventDescription') || text(row, 'customDescription');
@@ -74,9 +75,14 @@ function scan(row: unknown, number: string, walled: ReadonlySet<string>): Carrie
   const minutes = typeof offset === 'number' ? Math.abs(offset * 60) : 0;
   const time = typeof offset !== 'number' ? undefined : offset === 0 ? `${local}Z`
     : `${local}${offset < 0 ? '-' : '+'}${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`;
+  // ECMS names a country in full; a delivery partner's row gives the destination's bare code, even after a town
+  // it passes abroad ("Almere, BG"). Then the code says where the parcel goes, not where the town is.
+  const town = text(row, 'cityEnName', 100), country = text(row, 'countryEnName', 100);
+  const abroad = town && /^[A-Z]{2}$/.test(country) && country === destination
+    && locatePlace(`${town}, ${country}`)?.precision !== 'city' && (locatePlace(town)?.country ?? country) !== country;
   // The sender's manifest is data reaching ECMS's station, not a scan: the parcel has not been there.
   const location = MANIFESTS.has(code) ? ''
-    : [...new Set(['cityEnName', 'provinceEnName', 'countryEnName'].map(key => text(row, key, 100)).filter(Boolean))].join(', ');
+    : [...new Set([town, text(row, 'provinceEnName', 100), abroad ? '' : country].filter(Boolean))].join(', ');
   const classified = ecmsExpressStage(code, description);
   // A flight row can give the flight's day alone, at midnight sharp, recorded hours later: a day, not a clock.
   const flightDay = code === 'EVENT_313' || code === 'EVENT_314';
@@ -104,10 +110,10 @@ export function parseEcmsExpress(payload: unknown, raw: string): CarrierResult {
   if (!Array.isArray(shipment.infoList) || shipment.infoList.length > 500) throw new SchemaError(PROVIDER, 'ECMS returned an invalid history');
   if (!shipment.infoList.length) throw new NoHistoryError(PROVIDER);
   const walled = wallClockFeeds([...(shipment.infoList as unknown[]), shipment.baseInfo]);
-  const events = shipment.infoList.map(row => scan(row, number, walled));
-  const newest = scan(shipment.baseInfo, number, walled);
-  const classified = ecmsExpressStage(newest.provider_code!, newest.description!);
   const destination = text(shipment, 'consigneeCountry', 80).toUpperCase();
+  const events = shipment.infoList.map(row => scan(row, number, walled, destination));
+  const newest = scan(shipment.baseInfo, number, walled, destination);
+  const classified = ecmsExpressStage(newest.provider_code!, newest.description!);
   const partner = isRecord(shipment.vendorConfig) && typeof shipment.vendorConfig.name === 'string'
     ? carrierIdFromPartner(shipment.vendorConfig.name) : undefined;
   const references = partner ? [...new Set(shipment.infoList.flatMap(row => {
