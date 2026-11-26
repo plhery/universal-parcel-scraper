@@ -379,6 +379,10 @@ describe('Ship24 feeds that relabel the carrier\'s wall clock', () => {
       ['2026-10-14T20:11:00Z', undefined, 'The item is pre-advised to PostNL'], ['2026-10-12T01:07:00Z', undefined, 'The item is being processed'],
       ['2026-10-08T08:27:00Z', undefined, 'The shipping label has been created']]))
       .toEqual(['2026-10-19T11:09:00.000Z', '2026-10-14T18:11:00.000Z', '2026-10-12T01:07:00.000Z', '2026-10-08T08:27:00.000Z']);
+    // Its customs stamps keep UTC under a place too, as PostNL's own feed dates them to the fraction of a second.
+    expect(feed('postnl-tracking', 'PostNL', [['2026-11-21T21:42:00Z', 'THE NETHERLANDS', 'Pre-declaration of the item has been received by customs'],
+      ['2026-11-21T21:27:00Z', 'THE NETHERLANDS', 'The item is ready for shipment']]))
+      .toEqual(['2026-11-21T21:42:00.000Z', '2026-11-21T20:27:00.000Z']);
   });
 
   it('reads CTT\'s Z as the clock of its Portuguese sites, which an unlocated scan abroad borrows', () => {

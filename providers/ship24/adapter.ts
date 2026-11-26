@@ -31,6 +31,7 @@ import { seventeenFeiaCopyZone } from '../../carriers/17feia/clock.js';
 import { cttSiteZone, portugalZone } from '../../carriers/ctt/clock.js';
 import { gofoScanZone } from '../../carriers/gofo/clock.js';
 import { imileCountryClock } from '../../carriers/imile/clock.js';
+import { POSTNL_CUSTOMS_STAMP, POSTNL_UTC_RECORD } from '../../carriers/spring-gds/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
 import { trackingPlace } from '../../places/trackingLocation.js';
 import { keepsZone } from '../../places/zones.js';
@@ -205,8 +206,8 @@ interface Feed {
   home?: (location: string) => string | null;
   /** The last guess for a scan nothing else places: Ship24's own label, Pacific time, for GOFO's. */
   own?: string;
-  /** The feed's scans whose offset is real after all, by their wording and an empty location. */
-  stated?: (status: string) => boolean;
+  /** The feed's scans whose offset is real after all, by their wording and whether they name a place. */
+  stated?: (status: string, placed: boolean) => boolean;
   /** A scan nothing places keeps its wall clock instead of borrowing a neighbour's or the courier's. */
   walls?: true;
   /** The feed's offsets are as the scans had them: only its offset-less scans are wall clocks, which borrow. */
@@ -217,8 +218,9 @@ const RELABELLED_FEEDS: Readonly<Record<string, Omit<Feed, 'code'>>> = {
   'canada-post-tracking': {},
   'uniuni-tracking': {},
   'gofo-express-tracking': { country: 'US', place: (location, _journey, status) => gofoScanZone(location, status), own: 'America/Los_Angeles' },
-  // PostNL's label creation and processing record name no country and keep UTC (carriers/spring-gds).
-  'postnl-tracking': { stated: (status) => /^(?:The shipping label has been created|The item is being processed)$/i.test(status.trim()) },
+  // PostNL's label creation and processing record name no country and keep UTC, and its customs stamps keep UTC
+  // wherever they are (carriers/spring-gds/clock.ts).
+  'postnl-tracking': { stated: (status, placed) => POSTNL_CUSTOMS_STAMP.test(status.trim()) || (!placed && POSTNL_UTC_RECORD.test(status.trim())) },
   'amazon-uk-tracking': { home: () => 'Europe/London' },
   'portugal-ctt-tracking': { place: (location, journey) => cttSiteZone(location, [journey.origin, journey.destination]), home: portugalZone },
   '4px-tracking': { shift: 'Asia/Shanghai' },
@@ -327,7 +329,7 @@ function parcelNumbers(data: Record<string, unknown>, number: string): Set<strin
 /** A relabelling feed's timestamp as the scan's wall clock; any other is left as Ship24 sent it. */
 function feedClock(timestamp: unknown, feed: Feed | null, scan: Record<string, unknown>): unknown {
   if (!feed || feed.keepsOffsets || typeof timestamp !== 'string' || !EXPLICIT_OFFSET_PATTERN.test(timestamp)) return timestamp;
-  if (feed.stated && !place(scan.location) && typeof scan.status === 'string' && feed.stated(scan.status)) return timestamp;
+  if (feed.stated && typeof scan.status === 'string' && feed.stated(scan.status, Boolean(place(scan.location)))) return timestamp;
   if (!feed.shift) return timestamp.replace(EXPLICIT_OFFSET_PATTERN, '');
   const shifted = DateTime.fromISO(timestamp, { setZone: true }).setZone(feed.shift);
   return shifted.isValid ? shifted.toISO({ includeOffset: false, suppressMilliseconds: true }) : timestamp;
