@@ -6,7 +6,7 @@
       "language": "en",
       "confirmedBy": "live",
       "unmapped": true,
-      "note": "The recipient's permission to leave the consignment unattended, recorded before the pickup: it moves nothing."
+      "note": "The recipient's permission to leave the consignment unattended, recorded before the pickup: it moves nothing, so the consignment keeps the stage of the scan before it."
     },
     {
       "wording": "Pickup Collected",

@@ -123,5 +123,5 @@ it("keeps the recipient's authority to leave, recorded before the pickup, as an 
   expect(result.events?.[1]).toEqual({ description: 'Authority to Leave Received', local_time: '2026-07-03T15:30:00' });
   expect(parseDirectFreight(page(scans.slice(1)), NUMBER).status).toBe('unknown');
   expect(statusMapAnswer({ carrier: 'direct-freight-express', providerCode: null, description: 'Authority to Leave Received' }))
-    .toMatchObject({ kind: 'intentional_gap' });
+    .toMatchObject({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage of the scan before it/) });
 });
