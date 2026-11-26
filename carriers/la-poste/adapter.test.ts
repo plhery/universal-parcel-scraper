@@ -360,11 +360,29 @@ describe('La Poste network failure recovery', () => {
     const { fetcher, ended } = delayedFetcher([{ afterMs: Infinity }, { afterMs: 400, reply: () => Response.json(deliveredFixture()) }]);
     const { recorder, steps } = recordingRecorder();
     const lookup = new LaPosteTracker({ fetcher, recorder }).fetch(TRACKING_NUMBER);
-    await vi.advanceTimersByTimeAsync(7_900);
+    await vi.advanceTimersByTimeAsync(4_400);
     await expect(lookup).resolves.toMatchObject({ status: 'delivered' });
-    // The hung request gets half of the 15-second budget; the retry answers well within the rest.
-    expect(ended).toEqual([7_500, 7_900]);
+    // The hung request gets four seconds, less than half of the 15-second budget; the retry answers well within the rest.
+    expect(ended).toEqual([4_000, 4_400]);
     expect(steps.map((step) => [step.step, step.outcome])).toEqual([['direct', 'transport'], ['retry', 'ok']]);
+  });
+
+  it('waits for an answer that comes within four seconds', async () => {
+    fakeBudgetClock();
+    const { fetcher, ended } = delayedFetcher([{ afterMs: 3_900, reply: () => Response.json(deliveredFixture()) }]);
+    const lookup = new LaPosteTracker({ fetcher }).fetch(TRACKING_NUMBER);
+    await vi.advanceTimersByTimeAsync(3_900);
+    await expect(lookup).resolves.toMatchObject({ status: 'delivered' });
+    expect(ended).toEqual([3_900]);
+  });
+
+  it('gives a hung request half of a short budget', async () => {
+    fakeBudgetClock();
+    const { fetcher, ended } = delayedFetcher([{ afterMs: Infinity }, { afterMs: 400, reply: () => Response.json(deliveredFixture()) }]);
+    const lookup = new LaPosteTracker({ fetcher }).fetch(TRACKING_NUMBER, { budgetMs: 3_000 });
+    await vi.advanceTimersByTimeAsync(1_900);
+    await expect(lookup).resolves.toMatchObject({ status: 'delivered' });
+    expect(ended).toEqual([1_500, 1_900]);
   });
 
   it('retries a network failure once, then leaves it to the router', async () => {

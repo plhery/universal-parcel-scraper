@@ -33,8 +33,10 @@ describes their use; a suffix alone does not identify the carrier.
 2. `retry`: the same request, up to three times after an HTTP 403, and once
    after a network failure or timeout, only while the original 15-second
    deadline has time left. Until that network retry is spent, an attempt gets
-   at most half of the time left, so a request that hangs leaves time for it;
-   the retries share the rest, so they never extend the lookup.
+   at most half of the time left and at most four seconds, so a request that
+   hangs leaves time for it: La Poste answers within a second or two, and a new
+   request answers where one still open after four seconds has hung. The
+   retries share the rest, so they never extend the lookup.
 
 While the parcel waits at a post office, relay or locker, the step that read the
 feed then asks La Poste's locator for that point,

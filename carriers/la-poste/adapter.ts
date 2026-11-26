@@ -33,7 +33,9 @@ import { eventStage, eventStatus, GROUP_STATUSES } from './status.js';
 //   retried up to three times inside the original deadline (see README.md).
 // - A request that hangs would otherwise take the whole budget, so a network
 //   failure or timeout is retried once too, and an attempt gets at most half
-//   of what is left while that retry remains.
+//   of what is left, and at most four seconds, while that retry remains: La
+//   Poste answers within a second or two, a request still open after four has
+//   hung, and a new one answers.
 // - The tracking page links the point holding a parcel to La Poste's locator,
 //   `localiser.laposte.fr/{idPoint}`, which redirects to the point's page. That
 //   page carries the point's record, address included, as JSON in
@@ -43,6 +45,8 @@ const TRACKING_PAGE = 'https://www.laposte.fr/outils/suivre-vos-envois';
 const LOCATOR = 'https://localiser.laposte.fr';
 const TIMEZONE = 'Europe/Paris';
 const DEFAULT_TIMEOUT_MS = 15_000;
+/** How long a request may stay open before the network retry: one still open after this has hung. */
+const HUNG_AFTER_MS = 4_000;
 /** The locator answers from a cache within a fraction of a second. */
 const ADDRESS_TIMEOUT_MS = 3_000;
 /** Points whose address a tracker remembers: a waiting parcel is looked up again and again. */
@@ -397,11 +401,12 @@ export class LaPosteTracker {
     // retries sharing the original deadline. A real incident still fails every
     // attempt within seconds and reaches the router. A request that fails to
     // reach La Poste, or hangs until its timeout, gets one retry as well. Until
-    // that retry is spent, an attempt gets at most half of what is left, so a
-    // hang leaves it time. Do not retry other HTTP or parsing failures, nor a
+    // that retry is spent, an attempt gets at most half of what is left and at
+    // most HUNG_AFTER_MS, so a hang leaves it time. Do not retry other HTTP or parsing failures, nor a
     // not-found. Once the deadline is spent the retry is refused, so the caller
     // still sees the provider's own rejection rather than a budget error.
     let networkRetried = false;
+    const beforeNetworkRetry = (remainingMs: number): number => Math.min(firstAttemptMs(remainingMs), HUNG_AFTER_MS);
     const retriable = (error: unknown): boolean => deadline - performance.now() >= 1
       && ((error instanceof UpstreamHttpError && error.status === 403) || (!networkRetried && isNetworkFailure(error)));
     const retry: StepSpec<CarrierResult> = {
@@ -409,13 +414,13 @@ export class LaPosteTracker {
       recovers: retriable,
       run: ({ remainingMs, signal, previousError }) => {
         if (isNetworkFailure(previousError)) networkRetried = true;
-        return request(networkRetried ? remainingMs : firstAttemptMs(remainingMs), signal);
+        return request(networkRetried ? remainingMs : beforeNetworkRetry(remainingMs), signal);
       },
     };
     return await runSteps<CarrierResult>({
       carrier: 'la-poste', budgetMs, signal: context.signal, recorder: this.recorder,
     }, [
-      { id: 'direct', run: ({ remainingMs, signal }) => request(firstAttemptMs(remainingMs), signal) },
+      { id: 'direct', run: ({ remainingMs, signal }) => request(beforeNetworkRetry(remainingMs), signal) },
       retry,
       { ...retry },
       { ...retry },
