@@ -5184,6 +5184,12 @@
     "reason": "Twelve digits are shared by several carriers and nothing in the number points to Yurtiçi Kargo."
   },
   {
+    "carrier": "z1-express",
+    "pattern": "^ZY\\d{16}$",
+    "kind": "open",
+    "reason": "One public Z1 Express number has this layout, ZY and sixteen digits, from a tracking directory's courier page; one sample does not establish the family."
+  },
+  {
     "carrier": "zajil",
     "pattern": "^\\d{11}$",
     "kind": "by_design",

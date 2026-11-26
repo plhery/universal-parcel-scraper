@@ -1,0 +1,24 @@
+{
+  "carrier": "z1-express",
+  "entries": [
+    {"code": "包裹预报", "wording": "Parcel Data Received", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The sender's data, before Z1 holds the parcel. The step's Chinese name is the provider code."},
+    {"code": "揽件", "wording": "Parcel received at Shenzhen Sorting Centre", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Z1's first scan of the parcel, written to the second eight hours after the data on the sample."},
+    {"code": "中转仓库处理", "wording": "Parcel processed at Shenzhen Sorting Centre", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "中转仓库出库", "wording": "Parcel departure in Shenzhen Sorting Centre", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "空运代理交货", "wording": "Linehaul Agent, Parcel departure in Transit Facility, Parcel Departure", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Handed to the air freight agent."},
+    {"code": "空运离港", "wording": "Parcel is leaving Airport, Parcel Leaving Port", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The flight leaves; the place is its airport's code."},
+    {"code": "开始清关", "wording": "Start Customs clearance", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "Import clearance in the destination country, which can start before the flight leaves."},
+    {"code": "空运到港", "wording": "Parcel arrives at Airport, Parcel Arrival", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "包裹清关", "wording": "Customs clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The parcel is released; the step's name says only clearance, so its wording decides."},
+    {"code": "清关交接交出", "wording": "Customs clearance handover and handover", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The cleared parcel handed on to the partner that delivers."},
+    {"code": "尾程到达", "wording": "The package is in transit within the country", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "尾程到达", "wording": "Arrived at GOFO Regional Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A row copied from GOFO, which delivers in the United States; its town and state join the place."},
+    {"code": "转运中(尾程单号轨迹内容)", "wording": "Loaded on Vehicle", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "GOFO's rows, copied under one step whatever they say, as the rows below."},
+    {"code": "转运中(尾程单号轨迹内容)", "wording": "Departed GOFO Regional Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "转运中(尾程单号轨迹内容)", "wording": "In Transit to Next Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "转运中(尾程单号轨迹内容)", "wording": "Arrived at GOFO Regional Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "转运中(尾程单号轨迹内容)", "wording": "Arrived at GOFO Delivery Station", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "转运中(尾程单号轨迹内容)", "wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
+    {"code": "妥投", "wording": "delivered", "stage": "delivered", "language": "en", "confirmedBy": "live"}
+  ]
+}

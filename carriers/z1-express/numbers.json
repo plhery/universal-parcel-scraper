@@ -1,0 +1,24 @@
+{
+  "carrier": "z1-express",
+  "records": [
+    {
+      "number": "ZY2600505069205538",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260720012614/https://www.parcelpanel.com/couriers/z1express/",
+        "date": "2026-07-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The sample ParcelPanel's Z1Express page offered to try, as archived. Z1's tracker answers it with a parcel sent from Shenzhen, flown from Hong Kong to New York and delivered in Utah by GOFO."
+    }
+  ]
+}
