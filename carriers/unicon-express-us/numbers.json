@@ -1,0 +1,29 @@
+{
+  "carrier": "unicon-express-us",
+  "records": [
+    {
+      "number": "LH2300315428",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260521195841/https://www.parcelpanel.com/couriers/lhexpressus/",
+        "date": "2026-05-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ]
+      },
+      "note": "The sample ParcelPanel's UNICON page offered to try, as archived. UNICON's tracker answers it with a parcel flown from San Francisco, cleared in China and delivered in Beijing by SF Express under the waybill it names."
+    }
+  ]
+}

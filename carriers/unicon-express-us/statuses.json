@@ -1,0 +1,24 @@
+{
+  "carrier": "unicon-express-us",
+  "entries": [
+    {"wording": "您的运单创建成功 准备发出", "stage": "registered", "language": "zh", "confirmedBy": "live", "note": "The waybill is created; UNICON does not hold the parcel yet."},
+    {"wording": "系统已收到客户身份证信息", "unmapped": true, "language": "zh", "confirmedBy": "live", "note": "UNICON has the recipient's identity card for Chinese customs, written beside the waybill's creation; the parcel keeps the stage of the scan before."},
+    {"wording": "包裹到达美国集货仓", "stage": "accepted", "language": "zh", "confirmedBy": "live", "note": "UNICON's first scan of the parcel, at its US consolidation warehouse."},
+    {"wording": "仓库已称重入库 SFO分拨中心", "stage": "accepted", "language": "zh", "confirmedBy": "live", "note": "Weighed in at the warehouse the row names, in the minute of the arrival above. Any warehouse."},
+    {"wording": "包裹已出库，准备送往机场", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"wording": "包裹已送国际机场", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"wording": "航班已起飞，包裹飞往中国", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"wording": "航班已到达，待提货", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "The flight has landed in China and the parcel waits to be collected from the airline; clearance has not started."},
+    {"wording": "包裹正在中国海关清关中", "stage": "customs", "language": "zh", "confirmedBy": "live"},
+    {"wording": "包裹派送中，已转顺丰速运快递，快递单号为SF1669655531324", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "The hand-off to the courier that delivers in China, with its name and number. Any courier and number."},
+    {"wording": "顺丰速运 已收取快件", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "SF Express takes the parcel from UNICON, mid-journey for the parcel. SF's rows follow, opening with their city."},
+    {"wording": "快件运输中", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"wording": "快件在【古山村店】完成分拣，准备发往 【泉州晋江中转场】", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "SF's depots fill the 【】, as in the rows below."},
+    {"wording": "快件在【泉州晋江中转场】完成分拣，准备发往 【北京顺航中转场】，根据规划班次预计发出时间【7月5日凌晨】", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "The same sort with the departure SF plans, a day and part of it."},
+    {"wording": "快件已发车", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"wording": "快件到达 【北京顺航中转场】", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"wording": "快件正在派送途中（主单总件数：1件）", "stage": "out_for_delivery", "language": "zh", "confirmedBy": "live", "note": "SF's round, after the adapter takes out the courier it is handed to and their phone number."},
+    {"wording": "快件派送不成功(因电话无人接听/关机/无信号，暂无法联系到收方客户),正在处理中,待再次派送", "stage": "failed_attempt", "language": "zh", "confirmedBy": "live", "note": "SF could not reach the recipient by phone and will try again."},
+    {"wording": "您的快件已签收，感谢您使用顺丰，期待再次为您服务。（主单总件数：1件）", "stage": "delivered", "language": "zh", "confirmedBy": "live", "note": "After the adapter takes out the line asking to call the courier, with their name and phone number."}
+  ]
+}

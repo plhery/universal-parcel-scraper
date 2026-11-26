@@ -1,0 +1,82 @@
+{
+  "id": "unicon-express-us",
+  "displayName": "UNICON Express USA",
+  "aliases": [
+    "联合速递",
+    "UnionExpressUSA"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#00576A"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "unicon-express-us",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://www.kuaidi100.com/all/lhexpressus.shtml",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "courier_name",
+      "driver_phone"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "courier_name",
+      "driver_phone"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "provider_code",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "signatory",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.lianhesudi.com",
+        "lianhesudi.com",
+        "www.lhexpressus.com",
+        "lhexpressus.com"
+      ],
+      "pathPattern": "^/index\\.php$",
+      "query": "^(?=(?:.*&)?s=/Index/chaxun(?:&|$))(?:.*&)?sn=([^&]+)(?=&|$)"
+    }
+  ],
+  "detection": []
+}

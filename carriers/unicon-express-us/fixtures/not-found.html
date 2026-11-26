@@ -1,0 +1,114 @@
+﻿<!doctype html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-script-type" content="text/javascript">
+<meta http-equiv="content-style-type" content="text/css">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title>联合速递</title>
+<link href="/Public/Index/css/layout.css" rel="stylesheet" type="text/css">
+<link href="/Public/Index/css/index.css" rel="stylesheet" type="text/css">
+<link href="/Public/Plugin/layui/css/layui.css" rel="stylesheet" type="text/css">
+<script src="/Public/Plugin/layui/layui.js"></script>
+<script src="/Public/Index/js/jquery.js"></script>
+</head>
+<body id="chaxun">
+<div id="container">
+	<div id="header">
+    <div class="hInner clearfix">
+        <h1><a href="#"><img src="http://km-md2.oss-us-west-1.aliyuncs.com/4c24532dddc642fd9267dc5135ceebfd.png" alt=""></a></h1>
+        <ul id="gNavi" class="clearfix">
+            <li><a href="/index.php?s=/Index">首页</a></li>
+            <li><a href="/index.php?s=/Index/lipei">理赔条款</a></li>
+            <li><a href="/index.php?s=/Index/fenlei">分类说明</a></li>
+            <li><a href="/index.php?s=/Index/upload">身份证上传</a></li>
+            <li><a href="/index.php?s=/Index/news">新闻公告</a></li>
+        </ul>
+                    <ul class="loginUl">
+                <li><a href="/index.php?s=/Index/register">注册</a></li>
+                <li>|</li>
+                <li><a href="/index.php?s=/Index/login">登录</a></li>
+            </ul>    </div>
+</div>
+	<div id="main">
+		<div class="wrap">
+		<div class="searchInfo clearfix">
+				<div class="search clearfix">
+				<p class="title">全程物流跟踪：</p>
+					<input type="text" placeholder="请输入联合速递单号" id="order_sn" value="LH9999999999" onfocus="if(this.placeholder=='请输入联合速递单号')this.placeholder=''" onblur="if(this.placeholder =='') this.placeholder ='请输入联合速递单号'">
+					<a href="javascript:" onclick="fnSubQuery()">查询</a> </div>
+		</div>
+			<div class="chaBox">
+					<div class="ttl">物流信息</div>
+					<div class="detailBox">
+
+						<table class="result-info">
+							<tbody>
+							    							        <tr>
+							            <td style="text-align: center" colspan="100%">未找到 LH9999999999 相关信息!</td>
+                                    </tr>							</tbody>
+						</table>
+
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+	<div id="footer">
+		<div class="wrap">
+			<div class="logo"><a href="/index.php?s=/Index"><img src="http://km-md2.oss-us-west-1.aliyuncs.com/4c24532dddc642fd9267dc5135ceebfd.png" alt=""></a></div>
+			<div class="fRBox">
+			<ul class="contact">
+			<li>电话：旧金山；dtf11111@gmail.com，洛杉矶；818-213-0231</li>
+			<li>地址：洛杉矶仓；5775 E Jurapa St unit B Ontario CA 91761，旧金山仓；43301 Osgood Rd, Fremont, CA 94539 </li>
+			</ul>
+			<p class="fNavi">
+			  <a href="https://www.kuaidi100.com" target="_blank">快递100</a>
+			  <span>|</span>
+			  <a href="https://www.cainiao.com/" target="_blank">菜鸟</a>
+			  <span>|</span>
+			  <a href="http://www.taobao.com" target="_blank">淘宝网</a>
+			  <span>|</span>
+			  <a href="http://www.tmall.com" target="_blank">天猫</a>
+			  <span>|</span>
+			  <a href="https://www.sf-express.com/cn/sc/" target="_blank">顺丰</a>
+			  <span>|</span>
+			  <a href="https://www.jdwl.com" target="_blank">京东物流</a>
+			  <span>|</span>
+			  <a href="http://www.yundaex.com/" target="_blank">韵达</a>
+			  <span>|</span>
+			  <a href="https://www.ups.com/" target="_blank">UPS</a>
+			  <span>|</span>
+			  <a href="https://www.fedex.com" target="_blank">FEDEX</a>
+			  <span>|</span>
+			  <a href="https://www.usps.com" target="_blank">USPS</a>
+			  <span>|</span>
+			  <a href="https://www.dhl.com" target="_blank">DHL</a>
+			</p>
+			<p class="copyright">©2020 UnionExpressUSA</p>
+			</div>
+
+		</div>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+var layer;
+$(function(){
+    layui.use('layer', function(){
+      layer = layui.layer;
+    });
+});
+function fnSubQuery() {
+  var sn = $('#order_sn').val();
+
+  if(!sn){
+    layer.msg('请输入运单号!',{icon:5});
+    return false;
+  }
+  layer.load();
+  window.location.href = '/index.php?s=/Index/chaxun&sn='+sn;
+}
+</script>
+</html>

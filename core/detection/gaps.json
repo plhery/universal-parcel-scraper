@@ -4829,6 +4829,12 @@
     "reason": "The confirmed boxes share a UMTC prefix. Other UMAC box series and collisions need review before detection is assigned."
   },
   {
+    "carrier": "unicon-express-us",
+    "pattern": "^LH\\d{10}$",
+    "kind": "open",
+    "reason": "One public UNICON Express USA waybill has this layout, LH and ten digits, from a tracking directory's courier page; one sample does not establish the family, and other carriers' rules already offer the shape."
+  },
+  {
     "carrier": "united-africa-feeder-line",
     "kind": "open",
     "reason": "A published UFLN bill resolves to the exact booking. The scope of a future carrier prefix rule is open."

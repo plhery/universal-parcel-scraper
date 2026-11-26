@@ -1,0 +1,189 @@
+﻿<!doctype html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-script-type" content="text/javascript">
+<meta http-equiv="content-style-type" content="text/css">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title>联合速递</title>
+<link href="/Public/Index/css/layout.css" rel="stylesheet" type="text/css">
+<link href="/Public/Index/css/index.css" rel="stylesheet" type="text/css">
+<link href="/Public/Plugin/layui/css/layui.css" rel="stylesheet" type="text/css">
+<script src="/Public/Plugin/layui/layui.js"></script>
+<script src="/Public/Index/js/jquery.js"></script>
+</head>
+<body id="chaxun">
+<div id="container">
+	<div id="header">
+    <div class="hInner clearfix">
+        <h1><a href="#"><img src="http://km-md2.oss-us-west-1.aliyuncs.com/4c24532dddc642fd9267dc5135ceebfd.png" alt=""></a></h1>
+        <ul id="gNavi" class="clearfix">
+            <li><a href="/index.php?s=/Index">首页</a></li>
+            <li><a href="/index.php?s=/Index/lipei">理赔条款</a></li>
+            <li><a href="/index.php?s=/Index/fenlei">分类说明</a></li>
+            <li><a href="/index.php?s=/Index/upload">身份证上传</a></li>
+            <li><a href="/index.php?s=/Index/news">新闻公告</a></li>
+        </ul>
+                    <ul class="loginUl">
+                <li><a href="/index.php?s=/Index/register">注册</a></li>
+                <li>|</li>
+                <li><a href="/index.php?s=/Index/login">登录</a></li>
+            </ul>    </div>
+</div>
+	<div id="main">
+		<div class="wrap">
+		<div class="searchInfo clearfix">
+				<div class="search clearfix">
+				<p class="title">全程物流跟踪：</p>
+					<input type="text" placeholder="请输入联合速递单号" id="order_sn" value="LH2300315428" onfocus="if(this.placeholder=='请输入联合速递单号')this.placeholder=''" onblur="if(this.placeholder =='') this.placeholder ='请输入联合速递单号'">
+					<a href="javascript:" onclick="fnSubQuery()">查询</a> </div>
+		</div>
+			<div class="chaBox">
+					<div class="ttl">物流信息</div>
+					<div class="detailBox">
+
+						<table class="result-info">
+							<tbody>
+							    <tr class="last">
+                                                <td class="row1"><span class="day">2023-07-06</span> <span class="time"> 12:44</span></td>
+                                                                                                            <td class="status status-check"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>
+                                                                                                    <td class="context">[北京市]您的快件已签收，如有疑问请电联快递员【李文峰，电话：15701173897】，感谢您使用顺丰，期待再次为您服务。（主单总件数：1件）</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-06</span> <span class="time"> 12:00</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">[北京市]快件派送不成功(因电话无人接听/关机/无信号，暂无法联系到收方客户),正在处理中,待再次派送</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-06</span> <span class="time"> 07:27</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">[北京市]快件交给李文峰，正在派送途中（联系电话：15701173897，顺丰已开启“安全呼叫”保护您的电话隐私,请放心接听！）（主单总件数：1件）</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-06</span> <span class="time"> 06:54</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">[北京市]快件到达 【军事博物馆店】</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-06</span> <span class="time"> 05:20</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">[北京市]快件已发车</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-06</span> <span class="time"> 05:20</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">[北京市]快件在【北京顺航中转场】完成分拣，准备发往 【军事博物馆店】</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-06</span> <span class="time"> 03:59</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">[北京市]快件到达 【北京顺航中转场】</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-05</span> <span class="time"> 00:34</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">[泉州市]快件已发车</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-04</span> <span class="time"> 21:38</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">[泉州市]快件在【泉州晋江中转场】完成分拣，准备发往 【北京顺航中转场】</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-04</span> <span class="time"> 21:38</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">[泉州市]快件在【泉州晋江中转场】完成分拣，准备发往 【北京顺航中转场】，根据规划班次预计发出时间【7月5日凌晨】</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-04</span> <span class="time"> 21:37</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">[泉州市]快件到达 【泉州晋江中转场】</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-04</span> <span class="time"> 20:33</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">[泉州市]快件已发车</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-04</span> <span class="time"> 20:33</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">[泉州市]快件在【古山村店】完成分拣，准备发往 【泉州晋江中转场】</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-04</span> <span class="time"> 20:25</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">[泉州市]快件运输中</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-04</span> <span class="time"> 20:25</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">[泉州市]顺丰速运 已收取快件</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-03</span> <span class="time"> 17:30</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">包裹派送中，已转顺丰速运快递，快递单号为SF1669655531324</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-07-02</span> <span class="time"> 12:00</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">包裹正在中国海关清关中</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-06-30</span> <span class="time"> 10:00</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">航班已到达，待提货</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-06-25</span> <span class="time"> 10:00</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">航班已起飞，包裹飞往中国</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-06-24</span> <span class="time"> 11:18</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">包裹已送国际机场</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-06-23</span> <span class="time"> 13:34</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">包裹已出库，准备送往机场</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-06-23</span> <span class="time"> 13:08</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">仓库已称重入库 SFO分拨中心</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-06-23</span> <span class="time"> 13:08</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">包裹到达美国集货仓</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-06-20</span> <span class="time"> 17:38</span></td>
+                                                                                                            <td class="status"><div class="col2"> <span class="step"> <span class="line1"></span> <span class="line2"></span> </span> </div></td>                                                <td class="context">系统已收到客户身份证信息</td>
+                                            </tr><tr >
+                                                <td class="row1"><span class="day">2023-06-20</span> <span class="time"> 17:38</span></td>
+                                                    <td class="status status-first"></td>
+                                                                                                    <td class="context">您的运单创建成功 准备发出</td>
+                                            </tr>                                    							    							</tbody>
+						</table>
+
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+	<div id="footer">
+		<div class="wrap">
+			<div class="logo"><a href="/index.php?s=/Index"><img src="http://km-md2.oss-us-west-1.aliyuncs.com/4c24532dddc642fd9267dc5135ceebfd.png" alt=""></a></div>
+			<div class="fRBox">
+			<ul class="contact">
+			<li>电话：旧金山；dtf11111@gmail.com，洛杉矶；818-213-0231</li>
+			<li>地址：洛杉矶仓；5775 E Jurapa St unit B Ontario CA 91761，旧金山仓；43301 Osgood Rd, Fremont, CA 94539 </li>
+			</ul>
+			<p class="fNavi">
+			  <a href="https://www.kuaidi100.com" target="_blank">快递100</a>
+			  <span>|</span>
+			  <a href="https://www.cainiao.com/" target="_blank">菜鸟</a>
+			  <span>|</span>
+			  <a href="http://www.taobao.com" target="_blank">淘宝网</a>
+			  <span>|</span>
+			  <a href="http://www.tmall.com" target="_blank">天猫</a>
+			  <span>|</span>
+			  <a href="https://www.sf-express.com/cn/sc/" target="_blank">顺丰</a>
+			  <span>|</span>
+			  <a href="https://www.jdwl.com" target="_blank">京东物流</a>
+			  <span>|</span>
+			  <a href="http://www.yundaex.com/" target="_blank">韵达</a>
+			  <span>|</span>
+			  <a href="https://www.ups.com/" target="_blank">UPS</a>
+			  <span>|</span>
+			  <a href="https://www.fedex.com" target="_blank">FEDEX</a>
+			  <span>|</span>
+			  <a href="https://www.usps.com" target="_blank">USPS</a>
+			  <span>|</span>
+			  <a href="https://www.dhl.com" target="_blank">DHL</a>
+			</p>
+			<p class="copyright">©2020 UnionExpressUSA</p>
+			</div>
+
+		</div>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+var layer;
+$(function(){
+    layui.use('layer', function(){
+      layer = layui.layer;
+    });
+});
+function fnSubQuery() {
+  var sn = $('#order_sn').val();
+
+  if(!sn){
+    layer.msg('请输入运单号!',{icon:5});
+    return false;
+  }
+  layer.load();
+  window.location.href = '/index.php?s=/Index/chaxun&sn='+sn;
+}
+</script>
+</html>
