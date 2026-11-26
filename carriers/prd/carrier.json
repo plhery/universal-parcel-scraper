@@ -37,7 +37,7 @@
     "delivery_tracking_number"
   ],
   "portal": {
-    "url": "https://www.primexpslogistics.com/",
+    "url": "https://szprd.rtb56.com/track_query.aspx",
     "searchUrl": "https://szprd.rtb56.com/track_query.aspx",
     "canaryUrl": "https://szprd.rtb56.com/track_query.aspx",
     "shows": [

@@ -53178,7 +53178,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "localClocks": true
     },
     "canaryUrl": "https://szprd.rtb56.com/track_query.aspx",
-    "trackingUrlTemplate": "https://www.primexpslogistics.com/",
+    "trackingUrlTemplate": "https://szprd.rtb56.com/track_query.aspx",
     "trackingSearchUrl": "https://szprd.rtb56.com/track_query.aspx",
     "linkRules": [
       {
