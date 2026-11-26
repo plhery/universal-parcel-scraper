@@ -1352,6 +1352,21 @@ describe('ParcelsApp result parsing', () => {
     }
   });
 
+  it("reads Joom Logistics' relays of scans abroad on their place's clock, and its rows in China on Hong Kong's", () => {
+    // Joom gives the scans it relays at their place's wall clock: on Hong Kong's, a clearance at Liège came seven hours
+    // before YunExpress's own row of it, stated +01:00.
+    const result = parseParcelsAppResponse({ carriers: ['Joom Logistics'], originCode: 'CN', destinationCode: 'DE', states: [
+      { date: '2026-11-25T14:22:00Z', status: 'Start Customs Clearance', carrier: 0, location: 'Liege, Belgium' },
+      { date: '2026-11-24T21:03:00Z', status: 'Package arrived by international flight', carrier: 0, location: 'LU, Luxembourg' },
+      { date: '2026-11-24T12:45:00Z', status: 'Package departed on international flight', carrier: 0 },
+      { date: '2026-11-21T19:40:00Z', status: 'Package arrived at sorting centre', carrier: 0, location: 'Shenzhen, China' },
+    ] }, number, identity(), null, Date.parse('2026-11-26T00:00:00Z'));
+    expect(result.events?.map((scan) => [scan.time, scan.time_zone])).toEqual([
+      ['2026-11-25T13:22:00.000Z', 'Europe/Brussels'], ['2026-11-24T20:03:00.000Z', 'Europe/Luxembourg'],
+      ['2026-11-24T04:45:00.000Z', 'Asia/Hong_Kong'], ['2026-11-21T11:40:00.000Z', 'Asia/Hong_Kong'],
+    ]);
+  });
+
   it("reads Juxi Express's copies of a local carrier's scans abroad on their place's clock, and its own rows on Beijing's", () => {
     // On Beijing's clock a British delivery office's rounds came at night, and a copy of USPS's
     // departure from Chicago before USPS's own acceptance there.

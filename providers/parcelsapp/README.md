@@ -491,6 +491,11 @@ alone is enough. The browser step exists for future protocol changes.
   the town, region or airport its place names, Australia's east coast for Australia Post's
   suburb-and-state rows, or its country's single clock, and keeps its wall clock in a country of
   several. SXW's own rows, in China or with no place, keep Beijing's.
+- Joom Logistics relays the scans of the lines, posts and couriers that carry its parcels at
+  their place's wall clock, as its own adapter reads them. On Hong Kong's clock, the catalog's,
+  a clearance at Liège came seven hours before YunExpress's own row of it. Such a scan, placed
+  outside China and Hong Kong, takes its place's clock; Joom's scans in China or with no place
+  keep Hong Kong's.
 - Muser's copies of the delivering network's scans in the US follow the wording with the town
   and ZIP Code past a run of spaces, at the town's wall clock. As in Muser's own adapter, the
   town becomes the place, in the state the ZIP Code is in, and the scan takes that state's clock:

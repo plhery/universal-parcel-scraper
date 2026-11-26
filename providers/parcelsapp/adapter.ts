@@ -1593,6 +1593,11 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   // SXW Express copies the rows of its partner and of the carrier delivering abroad at their place's wall clock.
   const sxw = carrier === 'sxw-express' ? sxwAbroadZone(scanLocation(name, state.location), destination) : undefined;
   if (sxw !== undefined) return sxw;
+  // Joom Logistics relays the scans of the lines, posts and couriers that carry its parcels at their place's wall clock,
+  // as its own tracker gives them (carriers/joom-logistics), and ParcelsApp files them under Joom's name, whose catalog
+  // zone is Hong Kong's: a clearance at Liège came seven hours before YunExpress's own row of it. Its scans placed
+  // outside China and Hong Kong take their place's clock (`siteZone`); the others keep Hong Kong's.
+  if (carrier === 'joom-logistics' && placedOutsideChina(scanLocation(name, state.location))) return undefined;
   // Posta Shqiptare's relays of a foreign post's scans, under that post's country ("Finland"), run
   // hours ahead of the foreign post's own clock by an amount that differs between countries: they
   // keep their wall clock, as Posta Shqiptare's own tracker leaves them.
@@ -1625,6 +1630,12 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   // A country-qualified routing name can identify a branch rather than the
   // scan location. Keep its clock as a guess even when the alias is catalogued.
   return zone !== 'UTC' && !(typeof name === 'string' && carrierNameCountryZone(name)) ? zone : undefined;
+}
+
+/** Whether a scan's place is found outside mainland China, Hong Kong and Macau. */
+function placedOutsideChina(location: string): boolean {
+  const country = location.trim() ? locatePlace(location)?.country : undefined;
+  return country !== undefined && !['CN', 'HK', 'MO'].includes(country);
 }
 
 // Countries whose states or provinces the steps read, where a town alone can be hours from the main clock.
