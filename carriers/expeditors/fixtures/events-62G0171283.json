@@ -1,0 +1,168 @@
+{
+  "shipmentAttributes": {
+    "expeditorsReference": "62G0171283",
+    "events": [
+      {
+        "event": {
+          "description": "Requested Delivery Date",
+          "date": "2026-01-27T05:59:00Z",
+          "formattedDate": "26-Jan-2026 23:59 CST"
+        },
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Cont Returned to Carrier",
+          "date": "2026-01-23T16:28:00Z",
+          "formattedDate": "23-Jan-2026 11:28 EST"
+        },
+        "destination": "NEWARK,  NJ (EWR)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Est Arrival at Dest",
+          "date": "2026-01-22T18:30:00Z",
+          "formattedDate": "22-Jan-2026 12:30 CST"
+        },
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Estimated Time of Arrival",
+          "date": "2026-01-22T13:00:00Z",
+          "formattedDate": "22-Jan-2026 07:00 CST"
+        },
+        "origin": "CHICAGO, IL (ORD)",
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "At Final Destination",
+          "date": "2026-01-22T12:30:00Z",
+          "formattedDate": "22-Jan-2026 06:30 CST"
+        },
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Booked",
+          "date": "2026-01-22T04:00:00Z",
+          "formattedDate": "21-Jan-2026 22:00 CST"
+        },
+        "origin": "CHICAGO, IL (ORD)",
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Confirmed on Board",
+          "date": "2026-01-22T01:05:00Z",
+          "formattedDate": "21-Jan-2026 19:05 CST"
+        },
+        "origin": "CHICAGO, IL (ORD)",
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Onforwarded",
+          "date": "2026-01-20T19:05:00Z",
+          "formattedDate": "20-Jan-2026 14:05 EST"
+        },
+        "origin": "NEW YORK, NY (JFK)",
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Gate-out for Delivery",
+          "date": "2026-01-19T15:59:00Z",
+          "formattedDate": "19-Jan-2026 10:59 EST"
+        },
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Appointment Scheduled",
+          "date": "2026-01-19T13:00:00Z",
+          "formattedDate": "19-Jan-2026 08:00 EST"
+        },
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Broker Notified",
+          "date": "2026-01-15T14:15:00Z",
+          "formattedDate": "15-Jan-2026 08:15 CST"
+        },
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Est Arr Port of Unlading",
+          "date": "2026-01-13T04:59:00Z",
+          "formattedDate": "12-Jan-2026 23:59 EST"
+        },
+        "destination": "NEW YORK, NY (JFK)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Import Customs Release",
+          "date": "2026-01-12T14:00:00Z",
+          "formattedDate": "12-Jan-2026 08:00 CST"
+        },
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Elect. Import Customs Rls",
+          "date": "2026-01-12T14:00:00Z",
+          "formattedDate": "12-Jan-2026 08:00 CST"
+        },
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Import Clearance Notice",
+          "date": "2026-01-08T15:25:00Z",
+          "formattedDate": "08-Jan-2026 09:25 CST"
+        },
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Decl. Lodged w Customs",
+          "date": "2026-01-08T15:25:00Z",
+          "formattedDate": "08-Jan-2026 09:25 CST"
+        },
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Freight Received No Docs",
+          "date": "2025-11-25T12:30:00Z",
+          "formattedDate": "25-Nov-2025 18:00 IST"
+        },
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Vendor Called for Booking",
+          "date": "2025-11-24T12:00:00Z",
+          "formattedDate": "24-Nov-2025 12:00 GMT"
+        },
+        "remarks": ""
+      }
+    ]
+  }
+}

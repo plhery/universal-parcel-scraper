@@ -1,0 +1,166 @@
+{
+  "carrier": "expeditors",
+  "entries": [
+    {
+      "wording": "Services Completed: Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The shipment's status: Expeditors delivered the freight and closed its service."
+    },
+    {
+      "wording": "Services Completed: Turned Over to Client Trucker",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The shipment's status: Expeditors handed the freight to the trucker its client sent and closed its service, so nothing follows on its side."
+    },
+    {
+      "wording": "Trucker Notified",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A shipment status and a status change: a trucker was told to collect the freight for its last leg."
+    },
+    {
+      "wording": "On Hold, Pending Information",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The shipment's status while Expeditors waits for information it needs to go on."
+    },
+    {
+      "wording": "Hold (Non-Credit)",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The status change that put the shipment on hold for a reason other than credit."
+    },
+    {
+      "wording": "Delivered to Consignee",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Turned Over to Dispatch",
+      "stage": null,
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A status change that does not say whose dispatch took the freight; the shipment's status beside it says whether Expeditors' service ended."
+    },
+    {
+      "wording": "Vendor Called for Booking",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The supplier asked Expeditors to book the shipment."
+    },
+    {
+      "wording": "Booked",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A leg was booked. Onward legs are booked after the freight has moved, which the shared late-registration reading keeps from stepping back."
+    },
+    {
+      "wording": "Broker Notified",
+      "stage": null,
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The customs broker at destination was told of the shipment, sometimes before it leaves its origin; it states no movement or customs step."
+    },
+    {
+      "wording": "Freight Received w/Docs",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Freight Received No Docs",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Expeditors has the freight, but not yet its documents."
+    },
+    {
+      "wording": "Confirmed on Board",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Export Customs Release",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Decl. Lodged w Customs",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The import declaration was submitted; the release is still to come."
+    },
+    {
+      "wording": "Import Clearance Notice",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Comes with the declaration, days before the release in one sample, so it is no release."
+    },
+    {
+      "wording": "Import Customs Release",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Elect. Import Customs Rls",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Customs released the import electronically."
+    },
+    {
+      "wording": "Cleared Customs",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Gate-out for Delivery",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The container left the port terminal towards Expeditors' warehouse, not the consignee."
+    },
+    {
+      "wording": "Appointment Scheduled",
+      "stage": null,
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A slot was booked for a pickup or delivery; nothing moved."
+    },
+    {
+      "wording": "Onforwarded",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "At Final Destination",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The freight reached the destination station; its delivery is still to come."
+    },
+    {
+      "wording": "Cont Returned to Carrier",
+      "stage": null,
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The empty container went back to the shipping line after it was unloaded; it says nothing new about the freight."
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "shipmentAttributes": {
+    "expeditorsReference": "62G0171283",
+    "origin": "CHENNAI (FORMERLY MADRAS)",
+    "originCode": "MAA",
+    "destination": "MINNEAPOLIS/ST PAUL, MN",
+    "destinationCode": "MSP"
+  },
+  "shipmentStatus": {
+    "expeditorsReference": "62G0171283",
+    "description": "Services Completed: Turned Over to Client Trucker",
+    "lastStatusChangeEvent": {
+      "event": {
+        "description": "Turned Over to Dispatch",
+        "date": "2026-01-22T22:54:00Z"
+      }
+    }
+  },
+  "pieces": {
+    "quantity": 2.0,
+    "unit": "PCS"
+  },
+  "weight": {
+    "quantity": 459.0,
+    "unit": "K"
+  },
+  "volume": {
+    "quantity": 2.115,
+    "unit": "M3"
+  },
+  "carrier": "Maersk Line",
+  "vessel": "MADRID EXPRESS",
+  "carrierReference": "549E",
+  "mode": "Ocean",
+  "reference": "PO - 99999999",
+  "timeline": {
+    "actualDeliveryPort": "MSP",
+    "actualArrivalTime": "2026-01-22T12:30:00Z",
+    "actualArrivalPort": "MSP",
+    "estimatedArrivalTime": "2026-01-22T18:30:00Z",
+    "estimatedArrivalPort": "MSP",
+    "actualDepartTime": "2025-12-05T03:30:00Z",
+    "actualDepartPort": "3E1",
+    "estimatedDepartTime": "2025-12-02T12:00:00Z"
+  },
+  "shipmentArrivalStatus": {
+    "overallStatus": "Completed",
+    "statusRemarks": "",
+    "targetStatusEvent": {
+      "description": "Arrived at Final Port",
+      "date": "2026-01-12T12:00:00Z",
+      "formattedDate": "12-Jan-2026 GMT"
+    }
+  },
+  "milestones": [
+    {
+      "order": 1,
+      "name": "Notified Expeditors",
+      "achieved": true,
+      "achievedDate": "2025-11-24T04:40:00Z",
+      "formattedDate": "24-Nov-2025 10:10 IST"
+    },
+    {
+      "order": 2,
+      "name": "Freight Received",
+      "achieved": true,
+      "achievedDate": "2025-11-25T12:30:00Z",
+      "formattedDate": "25-Nov-2025 18:00 IST"
+    },
+    {
+      "order": 3,
+      "name": "Estimated Departure",
+      "achieved": true,
+      "achievedDate": "2025-12-02T12:00:00Z",
+      "formattedDate": "02-Dec-2025 12:00 GMT"
+    },
+    {
+      "order": 4,
+      "name": "Departed",
+      "achieved": true,
+      "achievedDate": "2025-12-05T03:30:00Z",
+      "formattedDate": "05-Dec-2025 09:00 IST"
+    },
+    {
+      "order": 5,
+      "name": "Import Customs Prepared",
+      "achieved": true,
+      "achievedDate": "2025-12-12T21:40:00Z",
+      "formattedDate": "12-Dec-2025 15:40 CST"
+    },
+    {
+      "order": 6,
+      "name": "Arrived",
+      "achieved": true,
+      "achievedDate": "2026-01-22T12:30:00Z",
+      "formattedDate": "22-Jan-2026 06:30 CST"
+    },
+    {
+      "order": 7,
+      "name": "Import Customs Released",
+      "achieved": true,
+      "achievedDate": "2026-01-12T14:00:00Z",
+      "formattedDate": "12-Jan-2026 08:00 CST"
+    },
+    {
+      "order": 8,
+      "name": "Services Completed",
+      "achieved": true,
+      "achievedDate": "2026-01-22T22:54:00Z",
+      "formattedDate": "22-Jan-2026 16:54 CST"
+    }
+  ]
+}

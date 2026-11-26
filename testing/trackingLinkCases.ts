@@ -2925,6 +2925,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/courier\.jomkirim\.com\/shipment\/tracking$/,
     marker: /Track your shipment[\s\S]*Enter your tracking code/i,
     forwarding: { notFound: /Invalid shipment code/ }, reads: 1 },
+  // Expeditors' guest tracker reads the reference from its address and searches for it on load.
+  { carrier: 'expeditors', number: '99Z9999999',
+    route: /^https:\/\/go2expo\.expeditors\.com\/anonymous-track\/tracking-results\/shipments\/99Z9999999$/,
+    marker: /CRITERIA: REFERENCE/i },
 ];
 
 /**

@@ -1,0 +1,126 @@
+{
+  "shipmentAttributes": {
+    "expeditorsReference": "45N0026043",
+    "origin": "SUZHOU",
+    "originCode": "SZV",
+    "destination": "MINNEAPOLIS/ST PAUL, MN",
+    "destinationCode": "MSP"
+  },
+  "shipmentStatus": {
+    "expeditorsReference": "45N0026043",
+    "description": "Trucker Notified",
+    "lastStatusChangeEvent": {
+      "event": {
+        "description": "Trucker Notified",
+        "date": "2026-02-02T15:45:00Z"
+      }
+    }
+  },
+  "pieces": {
+    "quantity": 4.0,
+    "unit": "PCS"
+  },
+  "weight": {
+    "quantity": 748.0,
+    "unit": "K"
+  },
+  "volume": {
+    "quantity": 6.928,
+    "unit": "CR"
+  },
+  "carrier": "QANTAS AIRWAYS",
+  "carrierReference": "7521",
+  "mode": "Air",
+  "reference": "PO - 99999999",
+  "timeline": {
+    "actualDeliveryPort": "MSP",
+    "actualArrivalTime": "2026-02-02T13:45:00Z",
+    "actualArrivalPort": "MSP",
+    "estimatedArrivalTime": "2026-02-02T14:00:00Z",
+    "estimatedArrivalPort": "MSP",
+    "actualDepartTime": "2026-01-27T09:22:00Z",
+    "actualDepartPort": "SZV",
+    "estimatedDepartTime": "2026-01-28T21:00:00Z"
+  },
+  "shipmentArrivalStatus": {
+    "overallStatus": "On Time",
+    "statusRemarks": "",
+    "targetStatusEvent": {
+      "description": "Estimated Delivery",
+      "date": "2026-02-02T23:00:00Z",
+      "formattedDate": "02-Feb-2026 CST"
+    }
+  },
+  "milestones": [
+    {
+      "order": 1,
+      "name": "Notified Expeditors",
+      "achieved": true,
+      "achievedDate": "2026-01-26T07:00:00Z",
+      "formattedDate": "26-Jan-2026 01:00 CST"
+    },
+    {
+      "order": 2,
+      "name": "Export Customs Submitted",
+      "achieved": true,
+      "achievedDate": "2026-01-28T01:00:00Z",
+      "formattedDate": "28-Jan-2026 09:00 SGT"
+    },
+    {
+      "order": 3,
+      "name": "Export Customs Cleared",
+      "achieved": true,
+      "achievedDate": "2026-01-28T03:00:00Z",
+      "formattedDate": "28-Jan-2026 11:00 SGT"
+    },
+    {
+      "order": 4,
+      "name": "Freight Received",
+      "achieved": true,
+      "achievedDate": "2026-01-27T15:26:00Z",
+      "formattedDate": "27-Jan-2026 23:26 SGT"
+    },
+    {
+      "order": 5,
+      "name": "Estimated Departure",
+      "achieved": true,
+      "achievedDate": "2026-01-28T21:00:00Z",
+      "formattedDate": "29-Jan-2026 05:00 SGT"
+    },
+    {
+      "order": 6,
+      "name": "Departed",
+      "achieved": true,
+      "achievedDate": "2026-01-29T14:44:00Z",
+      "formattedDate": "29-Jan-2026 22:44 SGT"
+    },
+    {
+      "order": 7,
+      "name": "Import Customs Prepared",
+      "achieved": true,
+      "achievedDate": "2026-01-30T17:08:00Z",
+      "formattedDate": "30-Jan-2026 11:08 CST"
+    },
+    {
+      "order": 8,
+      "name": "Arrived",
+      "achieved": true,
+      "achievedDate": "2026-02-02T13:45:00Z",
+      "formattedDate": "02-Feb-2026 07:45 CST"
+    },
+    {
+      "order": 9,
+      "name": "Import Customs Released",
+      "achieved": true,
+      "achievedDate": "2026-01-30T17:11:00Z",
+      "formattedDate": "30-Jan-2026 11:11 CST"
+    },
+    {
+      "order": 10,
+      "name": "Services Completed",
+      "achieved": true,
+      "achievedDate": "2026-02-02T15:45:00Z",
+      "formattedDate": "02-Feb-2026 09:45 CST"
+    }
+  ]
+}

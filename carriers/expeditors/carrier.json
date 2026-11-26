@@ -1,0 +1,85 @@
+{
+  "id": "expeditors",
+  "displayName": "Expeditors",
+  "aliases": [
+    "Expeditors International",
+    "Expeditors International of Washington"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#EB0028"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "expeditors",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "eta",
+    "weight",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "url": "https://go2expo.expeditors.com/anonymous-track/tracking-results/shipments/{trackingNumber}",
+    "searchUrl": "https://www.expeditors.com/",
+    "helpUrl": "https://www.expeditors.com/contact",
+    "canaryUrl": "https://www.expeditors.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "offset_timestamps",
+      "weight",
+      "volume",
+      "pieces",
+      "origin",
+      "destination",
+      "milestones",
+      "flight_and_routing",
+      "references",
+      "remarks"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "offset_timestamps",
+      "weight"
+    ],
+    "discarded": [
+      "volume",
+      "pieces",
+      "origin",
+      "destination",
+      "milestones",
+      "flight_and_routing",
+      "references",
+      "remarks"
+    ],
+    "unavailable": [
+      "proof_of_delivery"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "go2expo.expeditors.com"
+      ],
+      "path": "^/anonymous-track/(?:tracking-results/)?shipments/(\\d{2}[A-Z0-9]\\d{7})(?:/(?:details|events|references))?/?$"
+    }
+  ],
+  "detection": []
+}

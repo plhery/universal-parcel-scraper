@@ -7145,5 +7145,17 @@
     "pattern": "^AWB\\d{5}$",
     "kind": "by_design",
     "reason": "Jomkirim's shipment codes are its courier script's prefix and a short serial; AWB and five digits is a generic reference shape that cannot name Jomkirim, seen only on an aggregator's archived link."
+  },
+  {
+    "carrier": "expeditors",
+    "pattern": "^\\d{2}[A-Z]\\d{7}$",
+    "kind": "collision",
+    "reason": "An Expeditors reference, its branch's two digits, a letter and seven digits, has the shape of the ten-character numbers Australia Post's low rule suggests, so the shape cannot name Expeditors."
+  },
+  {
+    "carrier": "expeditors",
+    "pattern": "^\\d{10}$",
+    "kind": "collision",
+    "reason": "Some Expeditors references are ten digits, a shape many carriers' numeric numbers share, and the guest search also matches customers' ten-digit order references."
   }
 ]

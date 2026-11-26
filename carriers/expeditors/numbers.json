@@ -1,0 +1,107 @@
+{
+  "carrier": "expeditors",
+  "records": [
+    {
+      "number": "45N0026043",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260216193208/https://go2expo.expeditors.com/anonymous-track/tracking-results/shipments/2080463625",
+        "date": "2026-02-16",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "air freight",
+        "reportedRole": "expeditorsReference",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "The Expeditors reference the guest search names for the customer reference in an archived guest tracking link; Expeditors' service answered it with dated events."
+    },
+    {
+      "number": "62G0171283",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260216180913/http://go2expo.expeditors.com/anonymous-track/tracking-results/shipments/7080574774",
+        "date": "2026-02-16",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "ocean freight",
+        "reportedRole": "expeditorsReference",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "The Expeditors reference the guest search names for the customer reference in an archived guest tracking link; Expeditors' service answered it with dated events."
+    },
+    {
+      "number": "41N0742442",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251215025208/https://go2expo-api.expeditors.com/api/visibility/guest-shipment-search?searchReference=41N0742442",
+        "date": "2025-12-15",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "reportedRole": "expeditorsReference",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "An archived guest search reply that names this number as the shipment's Expeditors reference, delivered; the guest search no longer holds it."
+    },
+    {
+      "number": "4052766897",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251022025202/https://go2expo-api.expeditors.com/api/visibility/shipment-detail/4052766897/details",
+        "date": "2025-10-22",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "reportedRole": "expeditorsReference",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie"
+        ]
+      },
+      "note": "An archived guest shipment page whose reply names this all-digit number as the shipment's Expeditors reference; the guest search no longer holds it."
+    }
+  ]
+}

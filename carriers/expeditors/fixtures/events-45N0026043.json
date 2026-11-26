@@ -1,0 +1,172 @@
+{
+  "shipmentAttributes": {
+    "expeditorsReference": "45N0026043",
+    "events": [
+      {
+        "event": {
+          "description": "Est Delivery to Consignee",
+          "date": "2026-02-02T23:00:00Z",
+          "formattedDate": "02-Feb-2026 17:00 CST"
+        },
+        "origin": "SUZHOU (SZV)",
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Est Arrival at Dest",
+          "date": "2026-02-02T14:00:00Z",
+          "formattedDate": "02-Feb-2026 08:00 CST"
+        },
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "At Final Destination",
+          "date": "2026-02-02T13:45:00Z",
+          "formattedDate": "02-Feb-2026 07:45 CST"
+        },
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Onforwarded",
+          "date": "2026-02-02T03:30:00Z",
+          "formattedDate": "01-Feb-2026 21:30 CST"
+        },
+        "origin": "CHICAGO, IL (ORD)",
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Cleared Customs",
+          "date": "2026-01-30T19:31:00Z",
+          "formattedDate": "30-Jan-2026 13:31 CST"
+        },
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Import Customs Release",
+          "date": "2026-01-30T17:11:00Z",
+          "formattedDate": "30-Jan-2026 11:11 CST"
+        },
+        "destination": "CHICAGO, IL (ORD)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Import Clearance Notice",
+          "date": "2026-01-30T17:11:00Z",
+          "formattedDate": "30-Jan-2026 11:11 CST"
+        },
+        "destination": "CHICAGO, IL (ORD)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Decl. Lodged w Customs",
+          "date": "2026-01-30T17:11:00Z",
+          "formattedDate": "30-Jan-2026 11:11 CST"
+        },
+        "destination": "CHICAGO, IL (ORD)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Elect. Import Customs Rls",
+          "date": "2026-01-30T17:11:00Z",
+          "formattedDate": "30-Jan-2026 11:11 CST"
+        },
+        "destination": "CHICAGO, IL (ORD)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Est Arr Port of Unlading",
+          "date": "2026-01-30T06:11:00Z",
+          "formattedDate": "30-Jan-2026 00:11 CST"
+        },
+        "origin": "NINGBO (NGB)",
+        "destination": "CHICAGO, IL (ORD)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Estimated Time of Arrival",
+          "date": "2026-01-29T12:00:00Z",
+          "formattedDate": "29-Jan-2026 12:00 GMT"
+        },
+        "destination": "CHICAGO, IL (ORD)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Export Customs Release",
+          "date": "2026-01-28T03:00:00Z",
+          "formattedDate": "28-Jan-2026 11:00 SGT"
+        },
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Freight Received w/Docs",
+          "date": "2026-01-27T15:26:00Z",
+          "formattedDate": "27-Jan-2026 23:26 SGT"
+        },
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Confirmed on Board",
+          "date": "2026-01-27T09:22:00Z",
+          "formattedDate": "27-Jan-2026 17:22 SGT"
+        },
+        "origin": "SUZHOU (SZV)",
+        "destination": "SHANGHAI (SHA)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Booked",
+          "date": "2026-01-27T08:49:00Z",
+          "formattedDate": "27-Jan-2026 16:49 SGT"
+        },
+        "origin": "SUZHOU (SZV)",
+        "destination": "SHANGHAI (SHA)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Requested Delivery Date",
+          "date": "2026-01-27T06:00:00Z",
+          "formattedDate": "27-Jan-2026 00:00 CST"
+        },
+        "origin": "SUZHOU (SZV)",
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Broker Notified",
+          "date": "2026-01-26T08:56:00Z",
+          "formattedDate": "26-Jan-2026 16:56 SGT"
+        },
+        "remarks": ""
+      },
+      {
+        "event": {
+          "description": "Vendor Called for Booking",
+          "date": "2026-01-26T07:00:00Z",
+          "formattedDate": "26-Jan-2026 15:00 SGT"
+        },
+        "origin": "SUZHOU (SZV)",
+        "destination": "MINNEAPOLIS/ST PAUL, MN (MSP)",
+        "remarks": ""
+      }
+    ]
+  }
+}
