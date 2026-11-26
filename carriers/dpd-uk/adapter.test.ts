@@ -173,7 +173,8 @@ describe('DPD UK public history projection', () => {
     'There has been a delay with your delivery',
     'As requested, your parcel will now be left in your selected safe place',
     'As requested, your parcel will now be delivered on Mon 2 November 2026 at 9:30.',
-    'As requested, your parcel will now be delivered on Mon 2 November 2026'])('gives the notice %s no mapped stage', text => {
+    'As requested, your parcel will now be delivered on Mon 2 November 2026',
+    'As requested, your parcel will now be delivered'])('gives the notice %s no mapped stage', text => {
     expect(classifyDpdUkWording(text).source).not.toBe('carrier_map');
     expect(statusMapAnswer({ carrier: 'dpd-uk', providerCode: null, description: text }))
       .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
