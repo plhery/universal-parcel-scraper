@@ -56,6 +56,13 @@
       "note": "An order scan, the first a parcel gets, before Shouwu has it."
     },
     {
+      "wording": "Shipping Label Created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A label made for the parcel, without a place, a day after the order data and before the first scan at a pickup point."
+    },
+    {
       "wording": "Carrier received the shipment",
       "stage": "registered",
       "language": "en",
@@ -804,6 +811,13 @@
       "language": "en",
       "confirmedBy": "live",
       "note": "The delivering carrier's round."
+    },
+    {
+      "wording": "到达收货点",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Arrived at the receiving point: the forwarder's receiving point has the parcel."
     },
     {
       "wording": "货物电子信息已经收到",
