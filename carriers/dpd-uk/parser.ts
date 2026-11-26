@@ -94,6 +94,7 @@ const VERIFIED_WORDING: Readonly<Record<string, Stage>> = {
   'your parcel has been dropped off at a dpd pickup shop': 'accepted',
   'your parcel is on its way to your dpd pickup shop': 'in_transit',
   'your parcel is ready for you to collect at your dpd pickup shop': 'ready_for_pickup',
+  'your parcel has been collected from your dpd pickup shop': 'delivered',
 };
 
 // A parcel its sender hands in at a Pickup shop: the order record of a label that waits for it, and
