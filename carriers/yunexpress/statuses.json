@@ -195,6 +195,13 @@
       "note": "The same last mile's arrival at its delivery depot, before its Out for delivery."
     },
     {
+      "wording": "Arrived at Post Office",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The delivering post office receiving the parcel, before its round."
+    },
+    {
       "wording": "Arrived at HUB",
       "stage": "in_transit",
       "language": "en",

@@ -61,6 +61,8 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   // the way to the recipient at the minute of its Out for delivery.
   ['Sort - loaded to trailer', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at depot', { status: 'in_transit', stage: 'in_transit' }],
+  // The delivering post office receiving the parcel, before its round.
+  ['Arrived at Post Office', { status: 'in_transit', stage: 'in_transit' }],
   ['Driver enroute', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   // A European last mile's hub after customs, and its depot before the round.
   ['Arrived at HUB', { status: 'in_transit', stage: 'in_transit' }],

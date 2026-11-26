@@ -1150,6 +1150,20 @@ describe('status map answers', () => {
     expect(answer('estafeta', null, 'POSIBLE DEMORA EN LA ENTREGA POR LLUVIAS')).toEqual(gap);
   });
 
+  it("answers La Poste's sentences as Shouwu relays them, without the apostrophes, and the new last-mile lines", () => {
+    expect(answer('shouwu', null, 'FR, Votre envoi na pas pu être distribué ce jour. Un avis de passage a été déposé par le facteur dans votre boîte aux lettres.,Exemple'))
+      .toEqual(mapped('failed_attempt'));
+    expect(answer('shouwu', null, 'FR, Votre envoi na pas pu être distribué ce jour en raison dune situation indépendante de notre volonté. Il sera remis en distribution au plus tôt.,Exemple'))
+      .toEqual(mapped('in_transit'));
+    expect(answer('shouwu', null, 'FR, Votre envoi na pas pu être distribué ce jour. Il sera remis en distribution au plus tôt. Nous vous prions daccepter nos excuses.,运输中'))
+      .toEqual(mapped('in_transit'));
+    expect(answer('shouwu', null, 'Loaded to movement / tour vehicle(return to sender)')).toEqual(mapped('exception'));
+    expect(answer('shouwu', null, 'Customs clearance completed, awaiting warehouse delivery')).toEqual(mapped('in_transit'));
+    expect(answer('dpd-pl', null, 'Redirection to other depot')).toEqual(mapped('in_transit'));
+    expect(answer('dpd-pl', null, 'Return to the sender')).toEqual(mapped('exception'));
+    expect(answer('yunexpress', null, 'Arrived at Post Office')).toEqual(mapped('in_transit'));
+  });
+
   it("answers Intelcom by its code, and leaves a code it does not know open", () => {
     expect(answer('intelcom', '105', 'Synthetic label')).toEqual(mapped('accepted'));
     expect(answer('intelcom', '300', 'Synthetic label')).toEqual(mapped('out_for_delivery'));

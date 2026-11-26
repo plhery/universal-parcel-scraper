@@ -21,6 +21,7 @@ export const DPD_PL_SCANS: Readonly<Record<string, Stage>> = {
   'Sent outside Poland': 'in_transit',
   // A short hold at a depot, seen before a pickup point run.
   'Parcel stored in depot': 'in_transit',
+  'Redirection to other depot': 'in_transit',
   'Parcel dispatched to be collected by pickup point': 'in_transit',
   'Parcel dispatched to be delivered': 'out_for_delivery',
   // The pickup point or locker received the parcel for the recipient.
@@ -35,6 +36,8 @@ export const DPD_PL_SCANS: Readonly<Record<string, Stage>> = {
   'Waiting for pickup timeout': 'exception',
   // The parcel goes back to its sender under a new parcel number, and the
   // original parcel's history ends here.
+  // The return starting: on its way back, not yet with the sender.
+  'Return to the sender': 'exception',
   'Parcel return': 'returned',
   'Parcel delivered': 'delivered',
 };
