@@ -143,6 +143,14 @@ describe('Estafeta bound history', () => {
       .toMatchObject({ current_stage: 'in_transit', last_update_local: '2026-01-04T09:00:00' });
     expect(() => parseEstafetaHistory(history.html(), { ...held, latestClock: '08:58' })).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     expect(() => parseEstafetaHistory(history.html(), { ...held, held: undefined, latestClock: '08:58' })).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    // The history can leave out the step's scan of the summary's day, as with the parcel's arrival at the office that
+    // then holds it: the summary still dates it, before the notice. A summary after the notice stays inconclusive.
+    step!.last().text('Recibido en oficina');
+    expect(parseEstafetaHistory(history.html(), { ...held, latestClock: '08:58' }))
+      .toMatchObject({ current_stage: 'in_transit', last_update_local: '2026-01-04T09:00:00' });
+    expect(() => parseEstafetaHistory(history.html(), { ...held, latestClock: '09:01' })).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => parseEstafetaHistory(history.html(), { ...held, latestDate: '05/01/2026' })).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    step!.last().text('En tránsito');
     // Under way after any other newer scan, the summary must date the newest scan.
     notice!.last().text('Recibido por Estafeta');
     expect(() => parseEstafetaHistory(history.html(), { ...held, held: undefined })).toThrow(expect.objectContaining({ kind: 'indeterminate' }));

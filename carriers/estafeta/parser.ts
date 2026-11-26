@@ -94,6 +94,11 @@ function targetsGuide(target: string, guide: string): boolean {
 
 function clockText(raw: string): string { return raw.replace(/\s+hrs\.$/i, '').trim(); }
 
+function minutes(text: string): number | undefined {
+  const match = /^([01]?\d|2[0-3]):([0-5]\d)$/.exec(text);
+  return match ? Number(match[1]) * 60 + Number(match[2]) : undefined;
+}
+
 function clock(day: string, time: string): { local_time?: string; provider_time_text?: string } {
   const date = paddedDate(day);
   const rawClock = paddedDate(clockText(time));
@@ -145,8 +150,14 @@ export function parseEstafetaHistory(html: string, lookup: EstafetaLookup): Carr
   // holds the parcel, such as the wait to be scheduled for a round, comes after it. The step shows in red while the
   // parcel is held, and later as under way while that notice is still the newest scan.
   const holding = lookup.held || (scans[0] !== undefined && estafetaRoundNotice(scans[0].description));
-  const anchor = holding ? scans.find(({ description }) => estafetaWording(description) === estafetaWording(lookup.state)) : scans[0];
-  if (anchor?.day !== lookup.latestDate || anchor.clock !== clockText(lookup.latestClock)) throw new IndeterminateError('Estafeta', 'Estafeta latest summary does not match its first scan');
+  const ofStep = ({ description }: { description: string }) => estafetaWording(description) === estafetaWording(lookup.state);
+  const anchor = holding ? scans.find(ofStep) : scans[0];
+  const summaryClock = minutes(clockText(lookup.latestClock));
+  // The history can leave out the step's scan of the day the summary dates, such as the parcel's arrival at the office
+  // that then holds it: the notice holding the parcel still follows the summary's clock on that day.
+  const stepScanMissing = holding && summaryClock !== undefined && !scans.some(scan => ofStep(scan) && scan.day === lookup.latestDate)
+    && scans.some(({ day, clock: time, description }) => day === lookup.latestDate && estafetaRoundNotice(description) && (minutes(time) ?? -1) >= summaryClock);
+  if (!stepScanMissing && (anchor?.day !== lookup.latestDate || anchor.clock !== clockText(lookup.latestClock))) throw new IndeterminateError('Estafeta', 'Estafeta latest summary does not match its first scan');
   const latest = events[0]!;
   const current = estafetaStatus(String(latest.description));
   const summary = estafetaStatus(lookup.state);
