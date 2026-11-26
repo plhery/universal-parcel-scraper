@@ -1,0 +1,73 @@
+{
+  "carrier": "arriival",
+  "entries": [
+    {
+      "code": "1",
+      "wording": "Order Confirmed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The booking; the tracker's page shows the parcel as awaiting pickup."
+    },
+    {
+      "code": "7",
+      "wording": "Parcel transit to sorting facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26"
+    },
+    {
+      "code": "8",
+      "wording": "Parcel received at sorting facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26"
+    },
+    {
+      "code": "9",
+      "wording": "Departure to Kuala Lumpur International Airport",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The air freight to East Malaysia leaves for the airport."
+    },
+    {
+      "code": "10",
+      "wording": "Awaiting customs clearance",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "A clearance still to come, on the flight from Peninsular to East Malaysia."
+    },
+    {
+      "code": "13",
+      "wording": "Departed to recipient's address for parcel delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26"
+    },
+    {
+      "code": "14",
+      "wording": "Your parcel is out for delivery.",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The tracker goes on with a sentence giving the driver's phone, which the adapter leaves out."
+    },
+    {
+      "code": "15",
+      "wording": "Parcel Delivered!",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26"
+    }
+  ]
+}

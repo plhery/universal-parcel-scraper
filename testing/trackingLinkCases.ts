@@ -2912,6 +2912,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'sendy-express', number: 'SDS0000000',
     route: /^https:\/\/www\.sendy\.com\.my\/en\/track\/SDS0000000$/,
     marker: /The tracking information has not been updated/ },
+  // The page reads the number from its address and looks it up on load; an unknown one leaves its form as it was.
+  { carrier: 'arriival', number: 'TH000000000AF',
+    route: /^https:\/\/arriival\.com\/tracking\/\?no=TH000000000AF$/,
+    marker: /Track Your Shipment[\s\S]*From pickup to delivery, track every step/ },
 ];
 
 /**

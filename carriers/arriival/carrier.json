@@ -1,0 +1,80 @@
+{
+  "id": "arriival",
+  "displayName": "Arriival",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "MY"
+    ]
+  },
+  "brand": {
+    "color": "#0088d0"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kuala_Lumpur",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "arriival",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "provider_code",
+    "service_name"
+  ],
+  "portal": {
+    "url": "https://arriival.com/tracking/?no={trackingNumber}",
+    "searchUrl": "https://arriival.com/tracking/",
+    "canaryUrl": "https://arriival.com/tracking/",
+    "shows": [
+      "status",
+      "history",
+      "provider_code",
+      "service_name",
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "driver_phone",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "service_name"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "driver_phone",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "location",
+      "eta"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "arriival.com",
+        "www.arriival.com"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "no"
+      ]
+    }
+  ],
+  "detection": []
+}

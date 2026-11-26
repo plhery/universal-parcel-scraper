@@ -364,6 +364,12 @@
     "reason": "CAXU is a container lessor's owner code, whose ISO 6346 numbers end in a check digit; Arkas Line's tracker returns the moves of the sample container it leased, and other lines lease the same lessor's containers. Detection does not offer Arkas Line."
   },
   {
+    "carrier": "arriival",
+    "pattern": "^TH\\d{9}AF$",
+    "kind": "open",
+    "reason": "One Arriival sample, the tracker's own placeholder for its WM-EM air freight waybills. Flash Express's Thai rule offers the shape at low confidence, and one placeholder does not establish the family."
+  },
+  {
     "carrier": "arrow-xl",
     "pattern": "^\\d[A-Z0-9]{11}[A-Z]\\d{3}$",
     "kind": "by_design",

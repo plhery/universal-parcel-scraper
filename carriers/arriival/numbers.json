@@ -1,0 +1,27 @@
+{
+  "carrier": "arriival",
+  "records": [
+    {
+      "number": "TH113308688AF",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://arriival.com/tracking/",
+        "date": "2026-11-26",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "flash-express"
+        ]
+      },
+      "note": "Arriival's tracking page gives this number as the example in its tracking field; its tracker answers it with a waybill flown from Kuala Lumpur and delivered in Sandakan."
+    }
+  ]
+}
