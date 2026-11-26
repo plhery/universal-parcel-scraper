@@ -901,7 +901,7 @@ describe('Royal Mail lookup steps', () => {
     const calls = vi.mocked(fetchRoyalMailInBrowser).mock.calls;
     expect(calls).toHaveLength(2);
     expect(calls[0]?.[7]?.options.apiKey).toBe('synthetic-key');
-    // The first attempt can spend the one visual round: it is not kept for the retry.
+    // The one model request is shared: a first context that spent it leaves none for the retry.
     expect(calls[0]?.[7]).toBe(calls[1]?.[7]);
     expect(calls[0]?.[7]).not.toHaveProperty('retryReserveMs');
   });

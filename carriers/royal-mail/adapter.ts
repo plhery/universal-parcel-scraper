@@ -74,8 +74,8 @@ export class RoyalMailTracker {
       const budgetMs = Math.min(BROWSER_TIMEOUT_MS, context.budgetMs ?? this.timeoutMs);
       const started = performance.now();
       const vision = this.#captchaVision ? { options: this.#captchaVision, attempt: { used: false } } : undefined;
-      // Vision answers an interactive CAPTCHA in the attempt that met it: a fresh context
-      // seldom escapes one, though it often gets past an edge refusal.
+      // One model request per lookup, in the first context whose task it can read: a fresh
+      // context seldom escapes an interactive CAPTCHA, though it often meets another task type.
       const run = ({ remainingMs, signal }: { remainingMs: number; signal: AbortSignal }) => {
         const args = [number, this.#executablePath ?? '', signal, remainingMs, this.#fullHistory,
           this.#browserProxy, this.#browserWsEndpoint] as const;

@@ -106,8 +106,8 @@ export function royalMailVisionRecovery(page: Page, config: RoyalMailVisionConte
 
   const solve = async (signal: AbortSignal, phaseMs = Infinity): Promise<boolean> => {
     seen = true;
+    // One model request per lookup: a task the solver cannot read leaves it to the retry.
     if (config.attempt.used) return false;
-    config.attempt.used = true;
     const expires = performance.now() + Math.min(13_000, remainingMs() - 2500, phaseMs - 1000);
     const left = (cap = 1000) => {
       signal.throwIfAborted(); session.throwIfAborted();
@@ -230,6 +230,7 @@ export function royalMailVisionRecovery(page: Page, config: RoyalMailVisionConte
         const guide = await sharp(image).composite([{ input: royalMailVisionGrid(Math.round(box.width), Math.round(box.height)) }]).png().toBuffer();
         const modelBudget = Math.min(10_000, left(13_000) - 2000);
         if (modelBudget < 500) { outcome = 'timeout'; return false; }
+        config.attempt.used = true;
         record.modelCalls++;
         const plan = await planRoyalMailVision(config.options, image, signal, modelBudget, guide);
         record.modelMs += Math.round(performance.now() - started);

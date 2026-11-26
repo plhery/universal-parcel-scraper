@@ -88,6 +88,7 @@ describe('Royal Mail verification recovery', () => {
     expect(h.submit.click).not.toHaveBeenCalled();
     h.finish(false);
     expect(h.records[0]).toMatchObject({ outcome: 'unsupported', actions: 0, modelCalls: 0 });
+    expect(h.context.attempt.used).toBe(false);
   });
 
   it('does not advance a multi-page task whose Next control appears after answering', async () => {
@@ -250,6 +251,17 @@ describe('Royal Mail verification recovery', () => {
     await expect(h.solve(h.signal)).resolves.toBe(false);
     expect(planRoyalMailVision).not.toHaveBeenCalled();
     expect(h.mouse.down).not.toHaveBeenCalled();
+    h.finish(false);
+    // The retry's fresh context keeps the lookup's one model request.
+    expect(h.context.attempt.used).toBe(false);
+    expect(h.records).toEqual([expect.objectContaining({ outcome: 'unsupported', modelCalls: 0 })]);
+  });
+
+  it('spends the lookup\'s one model request even when the model declines', async () => {
+    const h = await harness();
+    vi.mocked(planRoyalMailVision).mockResolvedValueOnce(null);
+    await expect(h.solve(h.signal)).resolves.toBe(false);
+    expect(h.context.attempt.used).toBe(true);
     h.finish(false);
   });
 
