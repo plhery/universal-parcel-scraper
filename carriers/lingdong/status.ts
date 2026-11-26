@@ -25,6 +25,10 @@ const ENGLISH_FLIGHT_DAY = /^((?:flight scheduled for|scheduled flight on|expect
 const ENGLISH_FLIGHT_DATE = /^(expect flight )\d{1,2}(?:st|nd|rd|th)(\.?)$/;
 
 const FLIGHT_BOOKED = [FLIGHT_DAY, FLIGHT_DATE, ENGLISH_FLIGHT_DAY, ENGLISH_FLIGHT_DATE];
+// The flight's expected landing once it has taken off, on the day of the month at the destination, after a delay to
+// the flight's schedule when there is one: "There is a delay in the flight schedule. It is expected to arrive at the
+// local time on the 21st".
+const ARRIVAL_FORECAST = /^(?:there is a delay in the flight schedule\. )?it is expected to arrive at the local time on the \d{1,2}(?:st|nd|rd|th)\.?$/;
 // The flight's arrival names the airport, "Arrived at <town> Airport".
 const AIRPORT_ARRIVAL = /^(arrived at )[a-z][a-z .'-]{0,40}( airport)$/;
 
@@ -33,6 +37,12 @@ export function isLingdongFlightBooked(wording: string): boolean {
   const english = lingdongEnglish(wording);
   return [wording, ...(english === undefined ? [] : [english])]
     .some((value) => FLIGHT_BOOKED.some((pattern) => pattern.test(normalizeStatusWording(value))));
+}
+
+/** Whether a row, whole or by its English half, is the booked flight's expected landing: a forecast. */
+export function isLingdongArrivalForecast(wording: string): boolean {
+  const english = lingdongEnglish(wording);
+  return [wording, ...(english === undefined ? [] : [english])].some((value) => ARRIVAL_FORECAST.test(normalizeStatusWording(value)));
 }
 
 function mapped(wording: string): Stage | undefined {
@@ -52,7 +62,9 @@ export function lingdongStage(_code: string | null, wording: string): Stage | un
 }
 
 const FLIGHT_BOOKED_NOTE = 'The flight booked for the parcel, before it flies: a forecast, so the parcel keeps the stage of the scan before it.';
+const ARRIVAL_FORECAST_NOTE = "The flight's expected landing, delayed or not: a forecast, so the parcel keeps the stage of the scan before it.";
 
-/** The booked flight, whole or by the English half shown, has no stage of its own: it keeps the one before it. */
+/** The booked flight and its expected landing, whole or by the English half shown, have no stage of their own: they keep the one before them. */
 export const statusMap: CarrierStatusMap = { stage: lingdongStage, gaps: [],
-  gapNote: (_code, wording) => (isLingdongFlightBooked(wording) ? FLIGHT_BOOKED_NOTE : undefined) };
+  gapNote: (_code, wording) => (isLingdongFlightBooked(wording) ? FLIGHT_BOOKED_NOTE
+    : isLingdongArrivalForecast(wording) ? ARRIVAL_FORECAST_NOTE : undefined) };

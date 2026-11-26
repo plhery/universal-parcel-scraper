@@ -92,19 +92,23 @@ describe('Lingdong International tracking adapter', () => {
     const details = payload[0]!.data[0]!.trackDetails;
     const row = (content: string, date: string) => ({ ...details[0]!, track_content: content, track_kind: '', track_location: '',
       track_date: date, track_createdate: date });
-    details.unshift(row('航班抵达【Flight arrival】', '2026-03-05 10:00:00'), row('预计11.9航班/Scheduled flight on November 9st', '2026-03-05 09:00:00'));
+    details.unshift(row('航班抵达【Flight arrival】', '2026-03-05 10:00:00'),
+      row('There is a delay in the flight schedule. It is expected to arrive at the local time on the 5th', '2026-03-05 09:30:00'),
+      row('预计11.9航班/Scheduled flight on November 9st', '2026-03-05 09:00:00'));
     const events = parseLingdongTrack(payload, NUMBER, Date.parse('2026-03-05T06:00:00Z'))!.events ?? [];
-    expect(events.slice(0, 2).map(({ description, stage, stage_source }) => [description, stage, stage_source])).toEqual([
+    expect(events.slice(0, 3).map(({ description, stage, stage_source }) => [description, stage, stage_source])).toEqual([
       ['Flight arrival', 'in_transit', 'carrier_map'],
-      // The flight booked before it flies is a forecast: a notice on the stage of the scan before it.
+      // The flight booked before it flies, and its expected landing, are forecasts: notices on the stage of the scan before them.
+      ['There is a delay in the flight schedule. It is expected to arrive at the local time on the 5th', 'in_transit', 'none'],
       ['Scheduled flight on November 9st', 'in_transit', 'none'],
     ]);
-    expect(events.slice(2).find((event) => event.stage)?.stage).toBe('in_transit');
+    expect(events.slice(3).find((event) => event.stage)?.stage).toBe('in_transit');
     // The app reads the English half shown alone by the same map, the flight booked as a notice.
     for (const description of ['Flight arrival', 'Received by local delivery company']) {
       expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description }), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
     }
-    for (const description of ['Scheduled flight on November 9st', 'Flight scheduled for October 28th', 'Expect flight 30th.']) {
+    for (const description of ['Scheduled flight on November 9st', 'Flight scheduled for October 28th', 'Expect flight 30th.',
+      'It is expected to arrive at the local time on the 17th', 'There is a delay in the flight schedule. It is expected to arrive at the local time on the 21st']) {
       expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description }), description)
         .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage of the scan before it/) });
     }

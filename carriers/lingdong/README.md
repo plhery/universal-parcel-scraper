@@ -24,7 +24,8 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
   Italiane's in Italy and GOFO's in the United States. The stage comes from the wording in
   [status.ts](status.ts). A row in Chinese and then the same in English, after a slash or in
   `【】`, shows its English half; the map reads either. The flight booked before it flies ("Expected
-  flight on …") is a forecast, a notice on the stage of the scan before it. A partner's scan can be listed twice at one clock and place, its
+  flight on …") and its expected landing once it flies ("It is expected to arrive at the local time on
+  the …", after a delay to the schedule or not) are forecasts, notices on the stage of the scan before them. A partner's scan can be listed twice at one clock and place, its
   headline alone ("In transito") and with the partner's sentence after it: when both give one
   stage, only the fuller row is kept.
 - Scan times are wall clocks without an offset on the platform's Beijing clock, as
