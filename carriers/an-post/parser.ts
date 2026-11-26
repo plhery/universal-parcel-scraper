@@ -17,8 +17,9 @@ const ZONE = 'Europe/Dublin';
  * delivery partner relays its scans (40, 49, 67, 68), in whole minutes.
  */
 const ABROAD = new Set([5, 40, 49, 67, 68]);
-/** The mail centre taking the item in ("We have your item and will process it for delivery"). */
+/** The mail centre taking the item in: code 48, or 37, one of the app's acceptance codes, in 48's words. */
 const MAIL_CENTRE_RECEIPT = 48;
+const MAIL_CENTRE_WORDING = 'We have your item and will process it for delivery';
 
 /** The item's identity and current status from GetItemSummary or GetCustItemSummary. The sender's reference is never kept. */
 export interface AnPostSummary {
@@ -231,11 +232,12 @@ export function parseAnPostEvents(payload: unknown, summary: AnPostSummary): Car
     seen.add(key);
     scans.push({ event, code, activity, stage, text: description, local, ...(office ? { office } : {}) });
   }
-  // The mail centre's "We have your item" (48) after the post office's hand-in (15), or any scan that moved the
-  // item, takes it in on its way: in transit.
+  // The mail centre's "We have your item" (48, or 37 in the same words) after the post office's hand-in (15), or
+  // after any scan that moved the item, takes it in on its way: in transit.
   let taken = false;
   for (const scan of [...scans].reverse()) {
-    if (scan.code === MAIL_CENTRE_RECEIPT && scan.event.stage === 'accepted' && taken) {
+    const receipt = scan.code === MAIL_CENTRE_RECEIPT || (scan.code === 37 && same(scan.activity, MAIL_CENTRE_WORDING));
+    if (receipt && scan.event.stage === 'accepted' && taken) {
       scan.stage = { stage: 'in_transit', source: scan.stage!.source };
       scan.event = { ...scan.event, stage: 'in_transit' };
     }

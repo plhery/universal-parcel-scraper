@@ -377,6 +377,20 @@ describe('An Post guest history', () => {
     expect(before).toMatchObject({ last_update: null, last_update_local: skipped.date });
   });
 
+  it("reads the mail centre's receipt under code 37 in transit after a scan that moved the item, as under 48", () => {
+    const wording = 'We have your item and will process it for delivery';
+    const informed = scan(35, 'We have received information about your incoming item from the sender', '2026-10-05T20:10:00');
+    // As live: the receipt under 48, two repeats, then one under 37.
+    const receipts = [scan(37, wording, '2026-10-08T01:05:20'), scan(48, wording, '2026-10-07T19:06:24'),
+      scan(48, wording, '2026-10-07T14:12:59'), scan(48, wording, '2026-10-07T12:43:53')];
+    const result = parseAnPostEvents(eventsOf([...receipts, informed]), summaryFor(receipts[0]!));
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map' });
+    expect(result.events?.map(event => [event.provider_code, event.stage])).toEqual([['37', 'in_transit'], ['48', 'in_transit'],
+      ['48', 'in_transit'], ['48', 'accepted'], ['35', 'registered']]);
+    // The first receipt, under either code, is the acceptance.
+    expect(parseAnPostEvents(eventsOf([receipts[0], informed]), summaryFor(receipts[0]!))).toMatchObject({ current_stage: 'accepted' });
+  });
+
   it.each([
     [5, 'Your item is being sent internationally. We will aim to show tracking\r\nupdates as they become available, or visit the local delivery provider website for updates.'],
     [13, 'Your item was not collected within the specified timeframe. This item will now be returned to sender.'],

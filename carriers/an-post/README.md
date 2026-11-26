@@ -56,8 +56,8 @@ guest tracking client. It is included with the maintainer's approval.
   hold out-for-delivery and collection codes, so their wording may narrow them; its
   return-to-sender codes include returns still under way, which wording narrows to an
   exception. A code seen live outranks its category: 66, filed under customs, is the local
-  delivery provider's sorting abroad, in transit. The mail centre's receipt (48) after the
-  post office's hand-in (15) or another scan that moved the item is in transit. An item another
+  delivery provider's sorting abroad, in transit. The mail centre's receipt (48, or 37 in the
+  same words) after the post office's hand-in (15) or another scan that moved the item is in transit. An item another
   post sent to Ireland, with that post's S10 number, reaches An Post from it after its dispatch:
   An Post's receipt of it ("We have received your item", 6, then "We have your item", 37 or 48)
   is its arrival in Ireland, in transit, as is a summary ahead of the history that repeats one.
