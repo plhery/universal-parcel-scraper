@@ -114,6 +114,13 @@
       "note": "Substring match on the accent-free wording; the result status becomes exception. Reclassified to exception 2026-09-12."
     },
     {
+      "wording": "retard d acheminement",
+      "language": "fr",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "\"Votre livraison risque d'être reportée d'un jour ouvré à cause d'un retard d'acheminement\": a delay on the way, announced before any round, so no delivery was tried. Checked before the failed round's \"retard\"."
+    },
+    {
       "wording": "retard",
       "language": "fr",
       "stage": "failed_attempt",

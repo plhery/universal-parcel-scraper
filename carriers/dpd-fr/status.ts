@@ -103,6 +103,10 @@ export function classifyStatus(description: string): ClassifiedStatus {
     'necessite un complement d information',
   ])) return { status: 'exception', stage: 'exception' };
 
+  // "Votre livraison risque d'être reportée d'un jour ouvré à cause d'un retard d'acheminement": a delay on the way,
+  // announced before any round. No delivery was tried, so the "retard" of a failed round below does not read it.
+  if (value.includes('retard d acheminement')) return { status: 'in_transit', stage: 'in_transit' };
+
   if (includesAny(value, [
     'echec de livraison',
     'livraison impossible',

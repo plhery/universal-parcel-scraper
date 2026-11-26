@@ -67,7 +67,9 @@ non-2xx statuses are indeterminate.
   avons reçu une réclamation" would look like movement.
 - "retard" maps to `failed_attempt`, as does a round that did not deliver ("Nous n'avons pas pu
   livrer votre colis", "Votre livraison n'a pas pu être réalisée ce jour, elle est reprogrammée au
-  prochain jour ouvré"); "réclamation" and "enquête est ouverte" to `exception`.
+  prochain jour ouvré"); "réclamation" and "enquête est ouverte" to `exception`. A delay on the way
+  announced before any round ("Votre livraison risque d'être reportée d'un jour ouvré à cause d'un
+  retard d'acheminement") is `in_transit`: no delivery was tried.
 - The notice that the recipient was told of the acceptance ("Le destinataire est informé par SMS
   de la prise en charge…") can come hours after a sort centre's scan, so it keeps the stage of the
   scan before it (`stage_source: 'none'`) and gives no result status; the acceptance's own row is

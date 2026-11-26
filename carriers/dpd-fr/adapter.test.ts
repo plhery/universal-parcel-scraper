@@ -266,6 +266,17 @@ describe('DPD France rendered tracking', () => {
     expect(statusMap.gapNote?.(null, notice)).toMatch(/put off.*keeps the stage/);
   });
 
+  it('reads a delay on the way, announced before any round, as transit, and the put-off notice after it too', () => {
+    const rows: [string, string, string, string][] = [
+      ['05/03/2026', '11:30', 'Le destinataire est informé par e-mail du report de sa livraison', ''],
+      ['05/03/2026', '11:05', "Votre livraison risque d'être reportée d'un jour ouvré à cause d'un retard d'acheminement", 'Agence DPD de Exemple (998)'],
+      ['05/03/2026', '05:20', 'Votre colis est en transit dans notre réseau', 'Agence DPD de Exemple (998)'],
+    ];
+    const result = parseDPDFranceTrackingHtml(trackingFixture({ outboundRows: rows }), TEST_TRACKING_NUMBER);
+    expect(result.events?.map((event) => event.stage)).toEqual(['in_transit', 'in_transit', 'in_transit']);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+  });
+
   it('reads a round that did not deliver, the notice to book again and the booked day', () => {
     const rows: [string, string, string, string][] = [
       ['05/03/2026', '17:43', 'Les instructions de livraison ont bien été prises en compte. Le destinataire a programmé une nouvelle livraison à son adresse pour le 09.03.2026', ''],
