@@ -458,6 +458,7 @@ describe('JS Express tracking adapter', () => {
       ['DDE', 'Incidencia en el reparto', 'exception'], ['DDE', 'Incidencia en el reparto.Dirección incorrecta', 'exception'], ['DRS', 'En devolución', 'exception'], ['OIT', 'Consignee Contacted', 'pending'],
       ['DZT', 'The recipient has selected a Packstation as the new delivery address.', 'pending'],
       ['OIT', 'There is a preferred location/neighbour for this item.', 'pending'],
+      ['OIT', 'PREFERRED APM APPLIED', 'pending'], ['DZT', 'REDIRECT TO LOCKER', 'pending'], ['OIT', 'SCANNED AS PART OF SECURE PROCESS', 'in_transit'],
     ] as const) {
       expect(jsExpressStage(description, code), description).toEqual({ stage, source: 'carrier_map' });
       expect(statusMapAnswer({ carrier: 'js-express', providerCode: code, description }), description).toEqual({ kind: 'mapped', stage });
