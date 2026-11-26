@@ -26626,6 +26626,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "expeditors": {
+    "displayName": "Expeditors",
+    "color": "#EB0028",
+    "aliases": [
+      "Expeditors International",
+      "Expeditors International of Washington"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "expeditors"
+    },
+    "canaryUrl": "https://www.expeditors.com/",
+    "trackingUrlTemplate": "https://go2expo.expeditors.com/anonymous-track/tracking-results/shipments/{trackingNumber}",
+    "trackingSearchUrl": "https://www.expeditors.com/",
+    "helpUrl": "https://www.expeditors.com/contact",
+    "linkRules": [
+      {
+        "domains": [
+          "go2expo.expeditors.com"
+        ],
+        "path": "^/anonymous-track/(?:tracking-results/)?shipments/(\\d{2}[A-Z0-9]\\d{7})(?:/(?:details|events|references))?/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "explus-logistics": {
     "displayName": "ExPlus Logistics",
     "color": "#2676ba",
@@ -38545,6 +38575,45 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "jomkirim": {
+    "displayName": "Jomkirim",
+    "color": "#0B71B7",
+    "aliases": [
+      "JOMKIRIM COURIER",
+      "Jomkirim Sdn Bhd"
+    ],
+    "countries": [
+      "MY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jomkirim",
+      "localClocks": true
+    },
+    "canaryUrl": "https://courier.jomkirim.com/shipment/tracking",
+    "trackingUrlTemplate": "https://courier.jomkirim.com/shipment/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://courier.jomkirim.com/shipment/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "courier.jomkirim.com"
+        ],
+        "path": "^/shipment/tracking/([^/?#]+)/?$"
+      },
+      {
+        "domains": [
+          "courier.jomkirim.com"
+        ],
+        "pathPattern": "^/shipment/tracking/?$",
+        "params": [
+          "code"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "joom-logistics": {
     "displayName": "Joom Logistics",
     "color": "#2d2f43",
@@ -46810,6 +46879,46 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ],
     "detectionRules": []
+  },
+  "next-smart-ship": {
+    "displayName": "Next Smart Ship",
+    "color": "#0554f2",
+    "aliases": [
+      "NextSmartShip",
+      "NSS Standard",
+      "NSS Expedited"
+    ],
+    "countries": [
+      "CN",
+      "US",
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "next-smart-ship"
+    },
+    "canaryUrl": "https://fulfillship.nextsmartship.com/track",
+    "trackingUrlTemplate": "https://fulfillship.nextsmartship.com/track?s={trackingNumber}",
+    "trackingSearchUrl": "https://fulfillship.nextsmartship.com/track",
+    "linkRules": [
+      {
+        "domains": [
+          "fulfillship.nextsmartship.com"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "s"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^NSS\\d{19}$",
+        "confidence": "high"
+      }
+    ]
   },
   "nhat-tin": {
     "displayName": "Nhat Tin Logistics",
@@ -74734,6 +74843,7 @@ export const CARRIER_IDS = [
   "exline-kz",
   "exmate",
   "expedico",
+  "expeditors",
   "explus-logistics",
   "express-freight-ni",
   "express-one",
@@ -75084,6 +75194,7 @@ export const CARRIER_IDS = [
   "jiufang",
   "jlog",
   "jne",
+  "jomkirim",
   "joom-logistics",
   "jordan-post",
   "jp-home",
@@ -75337,6 +75448,7 @@ export const CARRIER_IDS = [
   "netpost-vn",
   "neway-transport",
   "next-level-delivery",
+  "next-smart-ship",
   "nhat-tin",
   "night-star-express",
   "nim-express",
@@ -76841,6 +76953,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "exline-kz": [],
   "exmate": ["exmate-1"],
   "expedico": [],
+  "expeditors": [],
   "explus-logistics": [],
   "express-freight-ni": [],
   "express-one": ["express-one-1"],
@@ -77191,6 +77304,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jiufang": [],
   "jlog": [],
   "jne": ["jne-1"],
+  "jomkirim": [],
   "joom-logistics": [],
   "jordan-post": ["jordan-post-s10"],
   "jp-home": [],
@@ -77444,6 +77558,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "netpost-vn": [],
   "neway-transport": [],
   "next-level-delivery": [],
+  "next-smart-ship": ["next-smart-ship-1"],
   "nhat-tin": ["nhat-tin-1"],
   "night-star-express": [],
   "nim-express": [],

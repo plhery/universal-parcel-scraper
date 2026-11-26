@@ -366,6 +366,7 @@ import { adapter as exelot } from '../carriers/exelot/adapter.js';
 import { adapter as exlineKz } from '../carriers/exline-kz/adapter.js';
 import { adapter as exmate } from '../carriers/exmate/adapter.js';
 import { adapter as expedico } from '../carriers/expedico/adapter.js';
+import { adapter as expeditors } from '../carriers/expeditors/adapter.js';
 import { adapter as expressOne } from '../carriers/express-one/adapter.js';
 import { adapter as expressOneBg } from '../carriers/express-one-bg/adapter.js';
 import { adapter as fanCourier } from '../carriers/fan-courier/adapter.js';
@@ -580,6 +581,7 @@ import { adapter as jifan } from '../carriers/jifan/adapter.js';
 import { adapter as jingguangLogistics } from '../carriers/jingguang-logistics/adapter.js';
 import { adapter as jitsu } from '../carriers/jitsu/adapter.js';
 import { adapter as jne } from '../carriers/jne/adapter.js';
+import { adapter as jomkirim } from '../carriers/jomkirim/adapter.js';
 import { adapter as joomLogistics } from '../carriers/joom-logistics/adapter.js';
 import { adapter as jordanPost } from '../carriers/jordan-post/adapter.js';
 import { adapter as jrsExpress } from '../carriers/jrs-express/adapter.js';
@@ -720,6 +722,7 @@ import { adapter as navlungo } from '../carriers/navlungo/adapter.js';
 import { adapter as neighbourExpress } from '../carriers/neighbour-express/adapter.js';
 import { adapter as nepalPost } from '../carriers/nepal-post/adapter.js';
 import { adapter as nextLevelDelivery } from '../carriers/next-level-delivery/adapter.js';
+import { adapter as nextSmartShip } from '../carriers/next-smart-ship/adapter.js';
 import { adapter as nhatTin } from '../carriers/nhat-tin/adapter.js';
 import { adapter as nightStarExpress } from '../carriers/night-star-express/adapter.js';
 import { adapter as nimExpress } from '../carriers/nim-express/adapter.js';
@@ -1592,6 +1595,7 @@ export const REGISTRY: RegistryDefinition = {
     "exline-kz": exlineKz,
     "exmate": exmate,
     "expedico": expedico,
+    "expeditors": expeditors,
     "express-one": expressOne,
     "express-one-bg": expressOneBg,
     "fan-courier": fanCourier,
@@ -1806,6 +1810,7 @@ export const REGISTRY: RegistryDefinition = {
     "jingguang-logistics": jingguangLogistics,
     "jitsu": jitsu,
     "jne": jne,
+    "jomkirim": jomkirim,
     "joom-logistics": joomLogistics,
     "jordan-post": jordanPost,
     "jrs-express": jrsExpress,
@@ -1946,6 +1951,7 @@ export const REGISTRY: RegistryDefinition = {
     "neighbour-express": neighbourExpress,
     "nepal-post": nepalPost,
     "next-level-delivery": nextLevelDelivery,
+    "next-smart-ship": nextSmartShip,
     "nhat-tin": nhatTin,
     "night-star-express": nightStarExpress,
     "nim-express": nimExpress,
@@ -3086,6 +3092,7 @@ export const REGISTRY: RegistryDefinition = {
     "exline-kz": "exline-kz",
     "exmate": "exmate",
     "expedico": "expedico",
+    "expeditors": "expeditors",
     "explus-logistics": "universal",
     "express-freight-ni": "universal",
     "express-one": "express-one",
@@ -3453,6 +3460,7 @@ export const REGISTRY: RegistryDefinition = {
     "jiufang": "universal",
     "jlog": "universal",
     "jne": "jne",
+    "jomkirim": "jomkirim",
     "joom-logistics": "joom-logistics",
     "jordan-post": "jordan-post",
     "jp-home": "universal",
@@ -3712,6 +3720,7 @@ export const REGISTRY: RegistryDefinition = {
     "netpost-vn": "universal",
     "neway-transport": "universal",
     "next-level-delivery": "next-level-delivery",
+    "next-smart-ship": "next-smart-ship",
     "nhat-tin": "nhat-tin",
     "night-star-express": "night-star-express",
     "nim-express": "nim-express",
