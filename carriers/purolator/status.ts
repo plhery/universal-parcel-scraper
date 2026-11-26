@@ -33,6 +33,8 @@ const codes: Record<string, ClassifiedStatus> = {
   '9230': { status: 'exception', stage: 'failed_attempt' },
   '9250': { status: 'exception', stage: 'failed_attempt' },
   '9260': { status: 'exception', stage: 'failed_attempt' },
+  // The round that did not deliver the parcel, which goes out again the next business day.
+  '9330': { status: 'exception', stage: 'failed_attempt' },
   '9550': { status: 'in_transit', stage: 'ready_for_pickup' },
   // 9000 is the delivery to the address or to the counter that then holds the
   // parcel; 9500 is the collection there.

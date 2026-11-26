@@ -50,6 +50,7 @@ describe('Purolator direct tracking', () => {
       ['6500', 'Address correction required - resolution in progress', 'exception', 'exception'],
       ['9230', 'Address correction required - missing entry code', 'exception', 'failed_attempt'],
       ['9250', 'Attempted delivery - receiver unavailable', 'exception', 'failed_attempt'],
+      ['9330', 'Delivery rescheduled for the next business day', 'exception', 'failed_attempt'],
     ] as const) {
       const value = payload(); value.shipment[0].package[0].events.unshift(scan(code, description));
       const result = normalizeCarrierResult(parsePurolator(value, NUMBER));
