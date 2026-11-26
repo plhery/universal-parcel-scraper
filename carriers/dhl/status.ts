@@ -112,6 +112,10 @@ export function stageForText(text: string, fallback = 'in_transit'): string {
   // Unfall, Arbeitszeitüberschreitung", "due to unexpected circumstances such as illness, accident, or overtime"): a
   // delay, not an attempt at the door, and a new round follows the next working day.
   if (/\bwegen unerwarteter umstände\b|\bdue to unexpected circumstances\b/.test(value)) return 'in_transit';
+  // A parcel sorted to the wrong place, which DHL readdresses and sends on: "The shipment was misrouted and could not be
+  // delivered. The shipment will be readdressed and forwarded to the recipient." In German it only says the delivery may
+  // be late ("wurde leider fehlgeleitet"). A delay on the way, not an attempt at the door.
+  if (/\bmisrouted\b|\bfehlgeleitet\b/.test(value)) return 'in_transit';
   // "Delivery not possible" comes after the loading onto the delivery vehicle, before the parcel
   // waits at a retail outlet: a failed attempt, as the partner posts' copies of the scan read it.
   // So is a recipient the courier could not find at the address on the parcel.

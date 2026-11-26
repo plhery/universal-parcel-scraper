@@ -416,6 +416,9 @@ describe('DHL public tracking normalization', () => {
     // A round that did not reach the parcel for DHL's own reasons is a delay, not an attempt.
     ['Ihre Sendung konnte heute leider wegen unerwarteter Umstände wie z.B. Krankheit, Unfall, Arbeitszeitüberschreitung nicht zugestellt werden. Ein neuer Zustellversuch erfolgt am nächsten Werktag.', 'in_transit', 'in_transit'],
     ['Your shipment could unfortunately not be delivered today due to unexpected circumstances such as illness, accident, or overtime. A new delivery attempt will be made on the next business day.', 'in_transit', 'in_transit'],
+    // A misrouted parcel DHL readdresses is late, not attempted.
+    ['The shipment was misrouted and could not be delivered. The shipment will be readdressed and forwarded to the recipient.', 'in_transit', 'in_transit'],
+    ['Die Sendung wurde leider fehlgeleitet. Gegebenenfalls verzögert sich dadurch die Zustellung.', 'in_transit', 'in_transit'],
     ['Die Sendung wurde nicht erfolgreich zugestellt.', 'failed_attempt', 'exception'],
     // A "nicht" in one sentence and "zugestellt" in the next are no failed delivery.
     ['Eine Umleitung ist nicht mehr möglich. Die Sendung wird heute zugestellt.', 'in_transit', 'in_transit'],
