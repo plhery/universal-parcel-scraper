@@ -288,6 +288,9 @@ describe('Speedaf status vocabulary', () => {
     // A sub-action the map does not name takes its action's stage, apart from an issue scan's reason.
     expect(speedafStage('401:9999', 'Clearance Exception')).toEqual({ stage: 'exception', source: 'carrier_map' });
     expect(speedafStage('-1:IP99', 'Issue Parcel Reason【Synthetic reason】')).toBeNull();
+    // Self pick-up is the recipient's choice, before the site's notice: it keeps the stage of the scan before it.
+    expect(speedafStage('-1:IP08', 'Issue Parcel Reason【Self Pick-up】')).toBeNull();
+    expect(statusMapAnswer({ carrier: 'speedaf', providerCode: '-1:IP08', description: 'Issue Parcel Reason【Self Pick-up】' })).toMatchObject({ kind: 'intentional_gap' });
     expect(statusMapAnswer({ carrier: 'speedaf', providerCode: '999', description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
     // A code the map does not know falls to the shared wording rules.
     expect(speedafStage('999', 'Delivered')).toEqual({ stage: 'delivered', source: 'wording:language' });

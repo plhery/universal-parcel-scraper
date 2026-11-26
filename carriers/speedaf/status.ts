@@ -63,5 +63,6 @@ export const statusMap: CarrierStatusMap = {
   gaps: [
     { code: '-1', note: 'An issue scan without a reason in its sub-action. The plugin labels the action invalid.' },
     { code: '-2', note: 'The page hides these scans unless the waybill carries its exception flag; their meaning is not documented.' },
+    { code: '-1:IP08', note: 'The recipient collecting the parcel themselves, written a second after it arrived at the pick-up site and before the site asks them to come: a choice, not a scan, so it keeps the stage of the scan before it.' },
   ],
 };
