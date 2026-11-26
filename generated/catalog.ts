@@ -53506,9 +53506,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "professional-couriers",
+      "localClocks": true
     },
     "canaryUrl": "https://www.tpcindia.com/",
+    "trackingSearchUrl": "https://www.tpcindia.com/",
     "linkRules": [],
     "detectionRules": []
   },

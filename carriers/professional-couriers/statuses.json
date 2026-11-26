@@ -1,15 +1,16 @@
 {
   "carrier": "professional-couriers",
   "entries": [
-    {"wording": "Booking Completed To", "stage": "accepted", "language": "en", "confirmedBy": "source", "note": "Listed by Ship24's TPC page among status phrases seen in TPC tracking results. The destination follows the wording."},
-    {"wording": "Despatched to", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "Listed by Ship24's TPC page among status phrases seen in TPC tracking results. The next branch or hub follows the wording."},
-    {"wording": "Received at", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "Listed by Ship24's TPC page among status phrases seen in TPC tracking results. The branch or hub follows the wording."},
-    {"wording": "Bag Despatched to", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "Listed by Ship24's TPC page among status phrases seen in TPC tracking results. The parcel left in a consolidated bag; the next location follows."},
-    {"wording": "Out for Delivery - Area :", "stage": "out_for_delivery", "language": "en", "confirmedBy": "source", "note": "Listed by Ship24's TPC page among status phrases seen in TPC tracking results. The delivery area follows the wording."},
-    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "source", "note": "Listed by Ship24's TPC page among status phrases seen in TPC tracking results."},
-    {"wording": "Holding - Area :", "stage": "exception", "language": "en", "confirmedBy": "source", "note": "Listed by Ship24's TPC page among status phrases seen in TPC tracking results. Held before the next attempt or movement; the area follows."},
-    {"wording": "Door Locked - Area :", "stage": "failed_attempt", "language": "en", "confirmedBy": "source", "note": "Listed by Ship24's TPC page among status phrases seen in TPC tracking results. The area follows the wording."},
-    {"wording": "Party Refused - Area :", "stage": "failed_attempt", "language": "en", "confirmedBy": "source", "note": "Listed by Ship24's TPC page among status phrases seen in TPC tracking results. The recipient refused the parcel; the area follows."},
-    {"wording": "Return to Origin - Area :", "stage": "returned", "language": "en", "confirmedBy": "source", "note": "Listed by Ship24's TPC page among status phrases seen in TPC tracking results. The area follows the wording."}
+    {"code": "Booking Completed", "wording": "Booking Completed", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The booking station took the consignment in. Ship24's TPC page lists it as Booking Completed To, followed by the destination."},
+    {"code": "Received at", "wording": "Received at …", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A station or hub received the consignment; the station, and after a hyphen its branch, follow."},
+    {"code": "Despatched to", "wording": "Despatched to …", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Left for the next station, hub or delivery branch."},
+    {"code": "Bag Despatched to", "wording": "Bag Despatched to …", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Left in a consolidated bag for the next station."},
+    {"code": "Misroute", "wording": "Misroute - Area : …", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Sent to a delivery area that does not serve the address. No delivery attempt precedes it, and the next scans show the consignment moving on."},
+    {"code": "Out for Delivery", "wording": "Out for Delivery - Area : …", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The delivery area follows the wording."},
+    {"code": "Delivered", "wording": "Delivered - Area : …", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The delivery area follows the wording."},
+    {"code": "Holding", "wording": "Holding - Area : …", "stage": "exception", "language": "en", "confirmedBy": "source", "note": "Listed by Ship24's TPC page among status phrases seen in TPC tracking results. Held before the next attempt or movement; the area follows."},
+    {"code": "Door Locked", "wording": "Door Locked - Area : …", "stage": "failed_attempt", "language": "en", "confirmedBy": "source", "note": "Listed by Ship24's TPC page among status phrases seen in TPC tracking results. The area follows the wording."},
+    {"code": "Party Refused", "wording": "Party Refused - Area : …", "stage": "failed_attempt", "language": "en", "confirmedBy": "source", "note": "Listed by Ship24's TPC page among status phrases seen in TPC tracking results. The recipient refused the parcel; the area follows."},
+    {"code": "Return to Origin", "wording": "Return to Origin - Area : …", "stage": "returned", "language": "en", "confirmedBy": "source", "note": "Listed by Ship24's TPC page among status phrases seen in TPC tracking results. The area follows the wording."}
   ]
 }

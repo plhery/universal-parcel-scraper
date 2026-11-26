@@ -694,6 +694,7 @@ import { statusMap as packs } from '../../carriers/packs/status.js';
 import { statusMap as pactic } from '../../carriers/pactic/status.js';
 import { statusMap as parcelOne } from '../../carriers/parcel-one/status.js';
 import { statusMap as padtf } from '../../carriers/padtf/status.js';
+import { statusMap as professionalCouriers } from '../../carriers/professional-couriers/status.js';
 import { statusMap as paketCl } from '../../carriers/paket-cl/status.js';
 import { statusMap as pakistanPost } from '../../carriers/pakistan-post/status.js';
 import { statusMap as palletways } from '../../carriers/palletways/status.js';
@@ -1265,7 +1266,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'j-and-t-br': jAndTBr,
   zheldor,
   'costco-logistics': costcoLogistics,
-  'ftd-nz': ftdNz, 'benniao-express': benniaoExpress, 'best-freight-cn': bestFreightCn, lhtex, polonez, 'v-xpress': vXpress, airspeed, topdelivery, kargoturk, expedico, 'profit-fields': profitFields, 'lm-parcel': lmParcel, znlogic, 'freightways-global': freightwaysGlobal, 'fxdc-post': fxdcPost, 'frontier-ca': frontierCa, pdu,
+  'ftd-nz': ftdNz, 'benniao-express': benniaoExpress, 'best-freight-cn': bestFreightCn, lhtex, polonez, 'v-xpress': vXpress, airspeed, topdelivery, kargoturk, expedico, 'professional-couriers': professionalCouriers, 'profit-fields': profitFields, 'lm-parcel': lmParcel, znlogic, 'freightways-global': freightwaysGlobal, 'fxdc-post': fxdcPost, 'frontier-ca': frontierCa, pdu,
   'airways-courier-in': airwaysCourierIn, 'akis-express': akisExpress, 'ambro-express': ambroExpress, 'apg-ecommerce': apgEcommerce, 'bigfoot-express': bigfootExpress, 'biz-courier': bizCourier, cvc,
   diakinisis, 'faster-shipe': fasterShipe, 'first-flight-me': firstFlightMe, 'gbs-broker': gbsBroker, 'herona-express': heronaExpress, 'hop-envios': hopEnvios, interlogistica,
   'intertown-transport': intertownTransport, 'intras-jp': intrasJp, 'jas-worldwide': jasWorldwide, 'king-kong-express': kingKongExpress, lafasta, 'm24-logistics': m24Logistics,

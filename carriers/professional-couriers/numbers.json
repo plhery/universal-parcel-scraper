@@ -12,7 +12,7 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -22,7 +22,7 @@
           "tnt-au"
         ]
       },
-      "note": "A Voxya complaint against The Professional Couriers gives it as a shipment marked delivered but not received."
+      "note": "A Voxya complaint against The Professional Couriers gives it as a shipment marked delivered but not received. TPC's tracker answers it with a consignment booked in Kanpur, through Chennai and Bengaluru South, and delivered."
     },
     {
       "number": "PRO18216642",

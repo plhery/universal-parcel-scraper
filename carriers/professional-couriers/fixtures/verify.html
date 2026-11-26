@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head><title>Track-info</title></head>
+<body>
+<form method="post" action="./Track-info.aspx" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="synthetic-viewstate-verify" />
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="030FB453" />
+<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="synthetic-validation-verify" />
+</div>
+<div class="tt-wrap">
+
+    <section class="c-pad track-line">
+        <div class="tt-card">
+            <div class="col text-center">
+                <h3>Track n Trace</h3>
+                <div class="nav nav-fill d-flex tt-stepper w-100" id="nav-tab1" role="tablist">
+                    <a href="#consignor-details" id="ContentPlaceHolderMid_ContentPlaceHolder2_ActiveBooked" class="col-md-auto col-4 nav-item nav-link" data-toggle="tab" role="tab" aria-controls="consignor-details" aria-selected="true">
+                        <span class="tt-step-icon" aria-hidden="true">📦</span>
+                        <span class="mt-0">Booked</span>
+                    </a>
+                    <a href="#consignee-details" id="ContentPlaceHolderMid_ContentPlaceHolder2_ActiveOntransit" class="col-md-auto col-4 nav-item nav-link" data-toggle="tab" role="tab" aria-controls="consignee-details" aria-selected="false">
+                        <span class="tt-step-icon" aria-hidden="true"></span>
+                        <span class="mt-0">Transit</span>
+                    </a>
+                    <a href="#payment-details" id="ContentPlaceHolderMid_ContentPlaceHolder2_ActiveDelivered" class="col-md-auto col-4 nav-item nav-link active" data-toggle="tab" role="tab" aria-controls="payment-details" aria-selected="false">
+                        <span class="tt-step-icon" aria-hidden="true">✅</span>
+                        <span class="mt-0">Delivered</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ContentPlaceHolderMid_ContentPlaceHolder2_trackSection" class="track-line">
+        <div class="tt-card text-center">
+
+            <div class="tt-status-headline">
+                <span id="ContentPlaceHolderMid_ContentPlaceHolder2_lbl_track" style="font-size:Large;">KNP507956665 is delivered at Bengaluru - South on Friday, July 10, 2026 at 12:31 and is acknowledged with SIGN</span>
+                <span class="text-danger">
+                    <span id="ContentPlaceHolderMid_ContentPlaceHolder2_lbl_trackVal" style="font-size:Large;"></span>
+                </span>
+                <span id="ContentPlaceHolderMid_ContentPlaceHolder2_lblLatUpdt" style="font-size:Large;"></span>
+            </div>
+
+            <div class="text-left">
+                
+            </div>
+
+              <div id="ContentPlaceHolderMid_ContentPlaceHolder2_divVerify" class="tt-verify">
+    <div class="tt-verify-icon" aria-hidden="true">🔒</div>
+    <div class="tt-verify-title">Verify to view full details</div>
+    <div class="tt-verify-hint">
+        Enter the 4-digit code <strong>1234</strong> or <strong>0000</strong>
+    </div>
+    <div class="tt-verify-form">
+        <input name="ctl00$ctl00$ContentPlaceHolderMid$ContentPlaceHolder2$txtLast4" type="text" maxlength="4" id="ContentPlaceHolderMid_ContentPlaceHolder2_txtLast4" class="tt-verify-input" autocomplete="off" inputmode="numeric" pattern="[0-9]*" placeholder="••••" aria-label="4-digit verification code" />
+        <button onclick="__doPostBack('ctl00$ctl00$ContentPlaceHolderMid$ContentPlaceHolder2$btnVerify4','')" id="ContentPlaceHolderMid_ContentPlaceHolder2_btnVerify4" class="c-btn active">Verify</button>
+    </div>
+</div>
+                <div id="ContentPlaceHolderMid_ContentPlaceHolder2_divReg" class="row justify-content-center align-items-center mt-3" style="display:flex; flex-wrap:wrap; gap:16px 24px;">
+    <button onclick="__doPostBack('ctl00$ctl00$ContentPlaceHolderMid$ContentPlaceHolder2$Button8','')" id="ContentPlaceHolderMid_ContentPlaceHolder2_Button8" class="c-btn active">
+        View All Details
+    </button>
+    
+    <button onclick="__doPostBack('ctl00$ctl00$ContentPlaceHolderMid$ContentPlaceHolder2$Button9','')" id="ContentPlaceHolderMid_ContentPlaceHolder2_Button9" class="c-btn" style="font-size:12px; font-weight:bold;">
+        Request For Confirmation
+    </button>
+    <div id="ContentPlaceHolderMid_ContentPlaceHolder2_divRegCmplnt" style="display:flex; align-items:center; gap:10px;">
+        <span>
+            <span style="font-size:13px;">If there is any service issue</span>
+        </span>
+        <button onclick="__doPostBack('ctl00$ctl00$ContentPlaceHolderMid$ContentPlaceHolder2$btnRegCompliant','')" id="ContentPlaceHolderMid_ContentPlaceHolder2_btnRegCompliant" class="c-btn">
+            Register Complaint
+        </button>
+    </div>
+</div>
+
+        </div>
+    </section>
+
+    </div>
+
+</form>
+</body>
+</html>

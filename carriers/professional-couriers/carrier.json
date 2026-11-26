@@ -19,16 +19,49 @@
   "timezone": "Asia/Kolkata",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "professional-couriers",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
   "portal": {
+    "searchUrl": "https://www.tpcindia.com/",
     "canaryUrl": "https://www.tpcindia.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "delivered_at",
+      "progress_rail"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "delivered_at",
+      "progress_rail"
+    ],
+    "unavailable": [
+      "recipient_name",
+      "proof_of_delivery",
+      "weight",
+      "service_name",
+      "eta",
+      "offset_timestamps"
+    ]
   },
   "links": [],
   "detection": []

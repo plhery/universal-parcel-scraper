@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head><title>Captcha Verification</title></head>
+<body>
+<form method="post" action="./CaptchaGate.aspx" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="synthetic-viewstate-captcha" />
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="847E5A34" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="synthetic-validation-captcha" />
+</div>
+<div class="captcha-card">
+        <div class="logo">
+            <img id="imgLogo" src="images/drsnew.jpg" alt="Company Logo" />
+        </div>
+
+        <div class="note">
+            Dear Patron, please validate this captcha for getting tracking information.
+        </div>
+
+        <h3 class="verify-title">Verify Captcha</h3>
+
+       <img id="imgCaptcha" src="CaptchaImage.ashx?r=b7e4e874118a48b1998513de0d2a5a86" alt="Captcha" style="height:40px;width:150px;" />
+<a href="javascript:void(0)" onclick="var i=document.getElementById('imgCaptcha');i.src='CaptchaImage.ashx?r='+Date.now();" style="margin-left:8px;font-size:13px;">Refresh</a>
+        <input name="txtCaptcha" type="text" value="AAAAA" id="txtCaptcha" placeholder="Enter Captcha" />
+
+        <br />
+
+        <input type="submit" name="btnVerify" value="Submit" id="btnVerify" />
+
+       <div class="app-badges-wrap" style="display:inline-flex;">
+  <div class="app-badges" style="display:flex; flex-direction:row; align-items:center; gap:12px;">
+    <a href="https://play.google.com/store/apps/details?id=com.tpcgo.example" target="_blank" rel="noopener">
+      <img src="images/PlaystoreLogo.jpeg" alt="Get it on Google Play" style="height:44px; width:auto; display:block; object-fit:contain;" />
+    </a>
+    <a href="https://apps.apple.com/in/app/tpc-go/id6785742624" target="_blank" rel="noopener">
+      <img src="images/AppstoreLogo.jpeg" alt="Download on the App Store" style="height:44px; width:auto; display:block; object-fit:contain;" />
+    </a>
+  </div>
+</div>
+    </div>
+
+</form>
+</body>
+</html>
