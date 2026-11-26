@@ -68,6 +68,8 @@ describe('J&T Brazil guest history', () => {
     // Worded like the transfers 50 and 90, but before the collection: a record of the shipment.
     d.data[0].details[0].code = 210;
     expect(parseJAndTBr(d, NUMBER).events![0]!.stage).toBe('registered');
+    d.data[0].details[0].code = 172;
+    expect(parseJAndTBr(d, NUMBER).events![0]!.stage).toBe('in_transit');
   });
   it('uses supplied transport, whole submission binding and remaining browser budget', async () => {
     const h = harness(); await expect(h.tracker.fetch(NUMBER)).resolves.toMatchObject({ status: 'delivered' });

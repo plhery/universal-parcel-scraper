@@ -67,6 +67,15 @@
       "note": "Worded like the transfers 50 and 90, and came between them."
     },
     {
+      "code": "172",
+      "wording": "Em transferencia",
+      "stage": "in_transit",
+      "language": "pt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "Worded like the transfers 50 and 90, and came hours after a 50."
+    },
+    {
       "code": "210",
       "wording": "Em transferencia",
       "stage": "registered",
