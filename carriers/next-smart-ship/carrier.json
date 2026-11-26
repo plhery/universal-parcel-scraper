@@ -1,0 +1,98 @@
+{
+  "id": "next-smart-ship",
+  "displayName": "Next Smart Ship",
+  "aliases": [
+    "NextSmartShip",
+    "NSS Standard",
+    "NSS Expedited"
+  ],
+  "region": {
+    "countries": [
+      "CN",
+      "US",
+      "AU"
+    ]
+  },
+  "brand": {
+    "color": "#0554f2"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "next-smart-ship",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number",
+    "delivered_at"
+  ],
+  "portal": {
+    "url": "https://fulfillship.nextsmartship.com/track?s={trackingNumber}",
+    "searchUrl": "https://fulfillship.nextsmartship.com/track",
+    "canaryUrl": "https://fulfillship.nextsmartship.com/track",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "progress_rail",
+      "origin_country",
+      "destination_country",
+      "transit_time",
+      "eta",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "contact_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "delivered_at"
+    ],
+    "discarded": [
+      "progress_rail",
+      "origin_country",
+      "transit_time",
+      "contact_details"
+    ],
+    "unavailable": [
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "fulfillship.nextsmartship.com"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "s"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "next-smart-ship-1",
+      "pattern": "^NSS\\d{19}$",
+      "confidence": "high"
+    }
+  ]
+}

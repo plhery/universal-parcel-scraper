@@ -2929,6 +2929,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'expeditors', number: '99Z9999999',
     route: /^https:\/\/go2expo\.expeditors\.com\/anonymous-track\/tracking-results\/shipments\/99Z9999999$/,
     marker: /CRITERIA: REFERENCE/i },
+  // The tracker reads the number from its address and looks it up on load.
+  { carrier: 'next-smart-ship', number: 'NSS9000000000000000017',
+    route: /^https:\/\/fulfillship\.nextsmartship\.com\/track\?s=NSS9000000000000000017$/,
+    marker: /Logistics tracking not found|NSS Tracking Number/ },
 ];
 
 /**

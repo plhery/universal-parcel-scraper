@@ -1,0 +1,43 @@
+{
+  "carrier": "next-smart-ship",
+  "records": [
+    {
+      "number": "NSS3623110762978891776",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261109113033/https://fulfillship.nextsmartship.com/track?s=NSS3623110762978891776",
+        "date": "2026-11-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "next-smart-ship",
+        "confidence": "high"
+      },
+      "note": "An archived link to Next Smart Ship's tracker. The tracker answers it as a parcel from China to the United States that USPS delivered."
+    },
+    {
+      "number": "NSS3309831094921615360",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260410161103/https://www.parcelpanel.com/couriers/nextsmartship/",
+        "date": "2026-04-10",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "next-smart-ship",
+        "confidence": "high"
+      },
+      "note": "ParcelPanel's Next Smart Ship page offered it as a sample to try. The tracker answers it as a parcel within Australia that Australia Post delivered."
+    }
+  ]
+}
