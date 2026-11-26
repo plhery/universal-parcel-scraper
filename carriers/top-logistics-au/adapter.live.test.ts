@@ -21,6 +21,8 @@ describe('Top Logistics Australia live retrieval', () => {
   }, 45_000);
 
   it('leaves a number the frame does not know open', async () => {
+    // The frame answers lookups sent close together from one address with "Access Limited".
+    await new Promise((resolve) => setTimeout(resolve, 20_000));
     await expect(direct().track({ number: process.env.TOP_LOGISTICS_AU_UNKNOWN_NUMBER ?? 'TPL000000000' })).rejects.toMatchObject({ kind: 'indeterminate' });
-  }, 45_000);
+  }, 65_000);
 });

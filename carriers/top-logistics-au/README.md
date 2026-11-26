@@ -17,6 +17,8 @@ Australian delivery carriers. Its site is toplogistics.com.au.
 - A number the frame does not know gets an empty HTTP 500, the answer a failed lookup also gives, so it
   leaves the answer open. The frame has no not-found page. A block page is a challenge, a redirect or a
   404 a moved tracker, and a page without the history a changed one.
+- Lookups sent close together from one address get a bare "Access Limited" with HTTP 200 in place of the
+  page. It is a rate limit, not a changed page.
 
 ## Notes
 
@@ -52,6 +54,7 @@ The site's search opens numbers from its `s` parameter.
 
 `npm run test:carriers:live -- carriers/top-logistics-au`
 
-The live test tracks the sample in `numbers.json` and checks that an invented number is left open;
+The live test tracks the sample in `numbers.json` and, after a pause for the frame's rate limit, checks
+that an invented number is left open;
 `TOP_LOGISTICS_AU_TRACKING_NUMBER` tracks another number, and `TOP_LOGISTICS_AU_UNKNOWN_NUMBER` another
 unknown one.

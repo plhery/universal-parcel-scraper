@@ -1,5 +1,5 @@
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, IndeterminateError, MaintenanceError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, MaintenanceError, RateLimitedError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
@@ -12,6 +12,7 @@ export { normalizeTlaNumber, parseTla, TLA_LOOKUP } from './parser.js';
 const SITE = 'https://toplogistics.com.au/';
 const REDIRECTS = [301, 302, 303, 307, 308];
 const HTML_TYPE = /^text\/html\b/i;
+const LIMITED = /^\s*Access Limited\s*$/i;
 const DEFAULT_BUDGET_MS = 15_000;
 
 export class TlaTracker {
@@ -42,6 +43,8 @@ export class TlaTracker {
     // A redirect or a missing route is a moved tracker.
     if (status !== 200) throw new TransportError(PROVIDER, 'Top Logistics Australia tracking is unavailable', { status });
     if (isTlaBlocked(body)) throw new ChallengeError(PROVIDER, 'Top Logistics Australia answered with a browser check', { status });
+    // Lookups sent close together from one address get a bare "Access Limited" in place of the page.
+    if (LIMITED.test(body)) throw new RateLimitedError(PROVIDER, undefined, 'Top Logistics Australia limited lookups from this address', { status });
     if (!HTML_TYPE.test(response.headers.get('content-type') ?? '')) {
       throw new SchemaError(PROVIDER, 'Top Logistics Australia answered with something other than its tracking page');
     }

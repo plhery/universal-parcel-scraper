@@ -63,6 +63,8 @@ describe('Top Logistics Australia tracking adapter', () => {
     expect(await answer(() => html('', { status: 302, headers: { Location: 'https://toplogistics.com.au/' } }))).toMatchObject({ kind: 'transport' });
     expect(await answer(() => html('<h1>Not Found</h1>', { status: 404 }))).toMatchObject({ kind: 'transport' });
     expect(await answer(() => html('', { status: 429 }))).toMatchObject({ kind: 'rate_limited' });
+    // The frame's reply to lookups sent close together from one address.
+    expect(await answer(() => html('Access Limited'))).toMatchObject({ kind: 'rate_limited' });
     expect(await answer(() => new Response('{}', { headers: { 'Content-Type': 'application/json' } }))).toMatchObject({ kind: 'schema' });
     expect(await answer(() => html('<html><body>Maintenance</body></html>'))).toMatchObject({ kind: 'schema' });
     for (const response of [() => html('', { status: 500 }), () => html(challenge), () => html('<html></html>')]) {
