@@ -495,6 +495,18 @@ describe('HuaHan status map', () => {
     }
   });
 
+  it("reads an American courier's scans after the hand-off by their words, its facility named by its code too", () => {
+    for (const [code, description, stage] of [
+      ['IA', 'Parcel departed from Facility.', 'in_transit'],
+      [null, 'Parcel received by EXA01.', 'in_transit'],
+      [null, 'Parcel received by local Facility.', 'in_transit'],
+      [null, 'Parcel is out for delivery.', 'out_for_delivery'],
+    ] as const) {
+      expect(statusMapAnswer({ carrier: 'huahan', providerCode: code, description }), description).toEqual({ kind: 'mapped', stage });
+      expect(huahanStage(code ?? '', description), description).toEqual({ stage, source: 'carrier_map' });
+    }
+  });
+
   it('reads a destination post\'s posting after the hand-off as transit and its rounds under FI by their words', () => {
     for (const [code, description, stage] of [
       [null, 'Parcel departed from facility to service provider.', 'in_transit'],

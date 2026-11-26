@@ -108,6 +108,11 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['your shipment has arrived at the postal operator of the country of destination and will be delivered in the coming days.', 'in_transit'],
   ['unsuccessful (physical) delivery', 'failed_attempt'],
   ['not delivered - addressee not present- message left', 'failed_attempt'],
+  // An American courier's scans after the hand-off at the destination: its departure from a facility, under IA, then
+  // its local facility taking the parcel in and its round, relayed without a code.
+  ['parcel departed from facility.', 'in_transit'],
+  ['parcel received by local facility.', 'in_transit'],
+  ['parcel is out for delivery.', 'out_for_delivery'],
 ]);
 // Milestones in Chinese with the English after them, and lines with a day, a flight, a time or a place.
 const PATTERNS: ReadonlyArray<readonly [RegExp, Stage]> = [
@@ -127,6 +132,8 @@ const PATTERNS: ReadonlyArray<readonly [RegExp, Stage]> = [
   [/^pre-shipment info sent to usps\b/, 'registered'],
   // USPS moving the parcel between its facilities, relayed with the facility after the comma left empty.
   [/^in transit to next facility\b/, 'in_transit'],
+  // The American courier's facility taking the parcel in, named by its code.
+  [/^parcel received by [a-z]{2,6}\d{1,3}\.?$/, 'in_transit'],
   [/^in transit, arriving on time\b/, 'in_transit'],
 ];
 
