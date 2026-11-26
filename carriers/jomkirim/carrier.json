@@ -1,0 +1,74 @@
+{
+  "id": "jomkirim",
+  "displayName": "Jomkirim",
+  "aliases": [
+    "JOMKIRIM COURIER",
+    "Jomkirim Sdn Bhd"
+  ],
+  "region": {
+    "countries": [
+      "MY"
+    ]
+  },
+  "brand": {
+    "color": "#0B71B7"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kuala_Lumpur",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "jomkirim",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://courier.jomkirim.com/shipment/tracking/{trackingNumber}",
+    "searchUrl": "https://courier.jomkirim.com/shipment/tracking",
+    "canaryUrl": "https://courier.jomkirim.com/shipment/tracking",
+    "shows": [
+      "status",
+      "history",
+      "delivery_partner"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "delivery_partner"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "location",
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "courier.jomkirim.com"
+      ],
+      "path": "^/shipment/tracking/([^/?#]+)/?$"
+    },
+    {
+      "domains": [
+        "courier.jomkirim.com"
+      ],
+      "pathPattern": "^/shipment/tracking/?$",
+      "params": [
+        "code"
+      ]
+    }
+  ],
+  "detection": []
+}

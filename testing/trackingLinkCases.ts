@@ -2920,6 +2920,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'xendnow', number: 'EX00000101ZZ0000',
     route: /^https:\/\/www\.xendnow\.my\/trace\.aspx\?key=EX00000101ZZ0000$/,
     marker: /Self Collection Points|Holiday List/ },
+  // Jomkirim's tracker sends an unknown code back to its form, which says so in a notice that fades after 2.5 seconds.
+  { carrier: 'jomkirim', number: 'SH0000000',
+    route: /^https:\/\/courier\.jomkirim\.com\/shipment\/tracking$/,
+    marker: /Track your shipment[\s\S]*Enter your tracking code/i,
+    forwarding: { notFound: /Invalid shipment code/ }, reads: 1 },
 ];
 
 /**

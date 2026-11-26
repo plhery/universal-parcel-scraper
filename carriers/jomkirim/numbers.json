@@ -1,0 +1,32 @@
+{
+  "carrier": "jomkirim",
+  "records": [
+    {
+      "number": "AWB05912",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230320090454/https://www.tracking.my/jomkirim/AWB05912",
+        "date": "2023-03-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "domestic parcel"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      },
+      "note": "An archived tracking.my page for Jomkirim names this shipment; Jomkirim's tracker answers it with a delivered history."
+    }
+  ]
+}

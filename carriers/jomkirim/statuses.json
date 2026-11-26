@@ -1,0 +1,9 @@
+{
+  "carrier": "jomkirim",
+  "entries": [
+    {"wording": "Created", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-26", "note": "The shipment's first row, when it is booked."},
+    {"wording": "In Processing", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-26", "note": "Follows the booking within the hour and comes before the delivery round; it names no place."},
+    {"wording": "Out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-26", "note": "The delivery round."},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-26", "note": "The last row and the current status of a delivered shipment."}
+  ]
+}

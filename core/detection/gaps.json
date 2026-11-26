@@ -7139,5 +7139,11 @@
     "pattern": "^PQ[A-Z0-9]{20}P$",
     "kind": "by_design",
     "reason": "Yi Long Express's tracker follows the number of the network that carries the parcel. Its one public sample is a Correos parcel number, which detection offers to Correos."
+  },
+  {
+    "carrier": "jomkirim",
+    "pattern": "^AWB\\d{5}$",
+    "kind": "by_design",
+    "reason": "Jomkirim's shipment codes are its courier script's prefix and a short serial; AWB and five digits is a generic reference shape that cannot name Jomkirim, seen only on an aggregator's archived link."
   }
 ]
