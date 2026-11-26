@@ -714,6 +714,14 @@
       "note": "DHL's round in Germany, after the destination parcel centre: no such recipient at the address, and the return follows."
     },
     {
+      "wording": "Not delivered-Bad address",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "DHL's round in Germany, a second after \"The recipient is unknown\": the address did not serve, and the return to origin follows."
+    },
+    {
       "wording": "Shipment will be returned to origin-Bad address",
       "stage": "exception",
       "language": "en",
@@ -744,6 +752,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-07",
       "note": "The delivering partner's round in Germany."
+    },
+    {
+      "wording": "Unloaded from movement / tour vehicle",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Unloaded from a line haul's vehicle or a round's at the destination's depot in Germany, hours after the destination parcel centre and before the round's loading."
     },
     {
       "wording": "Loaded to movement / tour vehicle",
