@@ -63,10 +63,22 @@
       "note": "\"目的港货站通知提货\": the destination airport's cargo terminal telling the agent to collect the parcel, after the flight's arrival."
     },
     {
+      "code": "PACS",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "\"入清关行海关监管仓\": the customs broker's bonded warehouse took the parcel in, after the cargo terminal's notice and before the release from customs."
+    },
+    {
       "code": "RC",
       "stage": "in_transit",
       "confirmedBy": "live",
       "note": "\"Released from customs\" at the destination."
+    },
+    {
+      "code": "RDHD",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "\"清关行理货完成待交接尾程\": the customs broker's tally is done after the release, the parcel waiting for the hand-over to the final carrier."
     },
     {
       "code": "CARR",
