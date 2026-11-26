@@ -170,6 +170,16 @@ function scanZone(local: string, description: string, location: string, label: s
   return jsExpressChinaClock(description, location) ?? jsExpressJapanClock(location) ?? null;
 }
 
+/**
+ * GOFO's rows at one of its sites' three-letter codes, as its regional agency in Marseille, "MSL": the code
+ * is GOFO's, not an airport's, and on a parcel to a country of one clock the row is on that clock, as GOFO's
+ * own rows of the same scans are. Null otherwise.
+ */
+function gofoSiteZone(description: string, location: string, country: string | null): string | null {
+  if (!country || !/\bGOFO\b/i.test(description) || !/^[A-Z]{3}$/i.test(location) || hasSeveralClocks(country)) return null;
+  return mainZone(country);
+}
+
 /** USPS's feed to the second in a history: on UTC, or on the clocks of the towns it writes "Town,ST". */
 type UspsFeed = 'utc' | 'town' | null;
 
@@ -339,7 +349,7 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
     // CTT Express's statuses come at the clock Chinese lines relay them on, whatever offset the row states.
     const ctt = cttExpressRelayZone(description, country === 'PT');
     const stated = ctt ? null : statedInstant(local, offset, description);
-    const zone = stated ? null : ctt ?? scanZone(local, description, location, label, straightship, uspsFeed);
+    const zone = stated ? null : ctt ?? scanZone(local, description, location, label, straightship, uspsFeed) ?? gofoSiteZone(description, location, country);
     // A place that is the destination's country code alone names no place within it.
     const placeless = !location || location.toUpperCase() === country;
     const time = stated ?? (zone ? isoTime(local, zone)?.iso : placeless ? destinationInstant(local, offset, country) : undefined);

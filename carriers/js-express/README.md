@@ -88,7 +88,9 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   the destination's clocks ever is: the destination courier's record of the merchant's data, which
   then comes a minute after the Chinese warehouse's inbound scan, at the instant the courier's own
   tracker gives it, and at which a universal provider's copy of it lands. The country code alone is
-  the parcel's destination, not the row's place, and is left out. Other rows at an
+  the parcel's destination, not the row's place, and is left out. GOFO's rows at a site's
+  three-letter code, such as its regional agency in Marseille ("MSL"), are on the destination's
+  clock when it keeps one: the code is GOFO's, not an airport's. Other rows at an
   airport's code or without a place keep `local_time`, as do other couriers' rows: iMile's name
   no country. CTT Express's statuses ("Pendiente de recepción en
   CTT Express", "En reparto", "Entregado") come two hours after CTT Express's instant, to the

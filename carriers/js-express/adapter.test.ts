@@ -161,6 +161,10 @@ describe('JS Express tracking adapter', () => {
       row('2026-05-02 01:30:00', '香港转运中心', 'Arrive at transit center'),
     )).toEqual(['2026-05-02T09:00:00', '2026-05-02T08:00:00', '2026-05-02T07:00:00', '2026-05-02T06:00:00', '2026-05-02T05:00:00',
       '2026-05-02T04:00:00', '2026-05-02T03:30:00', '2026-05-02T03:00:00', '2026-05-02T02:00:00', '2026-05-02T01:30:00']);
+    // GOFO's regional agency at its site code, on a parcel to France, is on France's clock, not an airport's of that code.
+    const gofo = (country: string) => parseJsExpress(waybill([row('2026-11-23 15:17:10', 'MSL', 'Arrived at GOFO Regional Destination Facility')],
+      { country }), DELIVERED).events!.map((event) => event.time ?? event.local_time);
+    expect([gofo('France'), gofo('United States')]).toEqual([['2026-11-23T15:17:10+01:00'], ['2026-11-23T15:17:10']]);
     // Places written in Japanese, in kana or with a courier branch's kanji, are on Japan's clock, whatever offset JS Express gives them.
     expect(clocks(
       row('2026-05-03 02:00:00', '見本営業所', 'The package delivery failed'),
