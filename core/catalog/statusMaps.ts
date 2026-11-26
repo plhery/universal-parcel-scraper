@@ -1376,7 +1376,6 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'cesco-logistics': cescoLogistics, 'rosalia-express': rosaliaExpress, 'icasa-cargo': icasaCargo, 'flow-progressive-logistics': flowProgressiveLogistics, parcelninja, cootranstame, paqmex, 'astral-aviation': astralAviation, 'ibex-express-bo': ibexExpressBo, redecarga, 'paqueteria-vencedor': paqueteriaVencedor,
   'sendy-express': sendyExpress,
   arriival,
-  'spc-worldwide-express': spcWorldwideExpress,
   'spc-worldwide-express': spcWorldwideExpress, xendnow,
 };
 
