@@ -321,6 +321,31 @@ describe('JCEX HTTP adapter', () => {
       .toEqual(['Arrive at sorting center', 'Arrive at destination airport', 'In clearance process', 'Depart from origin airport']);
   });
 
+  it("reads a US partner's scan JCEX files under its state's code as a country, or under China, in the US", () => {
+    const parsed = (destination: string) => parseJcex(changed('delivered', (content) => {
+      const template = content.trackDetails[0]!;
+      const row = (eventTime: string, timeZone: string, eventDetailEn: string, countryCode: string, location: string) => ({
+        ...template, eventTime, timeZone, platformEventCode: 'InTransit_Other', eventDetailEn, eventDetailCn: eventDetailEn, countryCode, location });
+      content.recipientCountryCode = destination;
+      content.trackDetails = [
+        // Indiana's code read as India's, with India's offset.
+        row('2026-04-15 20:10:00', '+05:30', 'Departed facility', 'IN', 'EXAMPLE TOWN,IN'),
+        row('2026-04-15 18:30:00', '-05:00', 'Arrived at facility', 'US', 'EXAMPLE PARK,IL'),
+        // A place JCEX files under the US in another row, filed under China with China's offset.
+        row('2026-04-15 07:00:00', '+08:00', 'Processed at facility', 'CN', 'EXAMPLE PARK,IL'),
+      ];
+    }), NUMBER, READ);
+    const us = parsed('US');
+    expect(us.events!.map((event) => [event.description, event.time ?? event.local_time])).toEqual([
+      ['Departed facility', '2026-04-15T20:10:00'],
+      ['Arrived at facility', '2026-04-15T18:30:00-05:00'],
+      ['Processed at facility', '2026-04-15T07:00:00'],
+    ]);
+    expect(dateLocalClocks('jcex', us, READ).events!.map((event) => event.time_zone)).toEqual(['America/New_York', undefined, 'America/Chicago']);
+    // On a parcel to another country, the rows keep the countries JCEX gives them.
+    expect(parsed('FR').events!.map((event) => event.time)).toEqual(['2026-04-15T18:30:00-05:00', '2026-04-15T20:10:00+05:30', '2026-04-15T07:00:00+08:00']);
+  });
+
   it('keeps one order notice JCEX lists twice at one second in two wordings', () => {
     const parsed = parseJcex(changed('delivered', (content) => {
       const notice = content.trackDetails.at(-1)!;

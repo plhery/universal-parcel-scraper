@@ -71,6 +71,9 @@ Tracked through the lookup its tracking page makes.
   under the United States without a place keeps its wall clock too, ordered on the clock the
   reply's US places keep when they all keep one: an import clearance after a landing in
   California comes after the landing, not before it on China's clock.
+- On a parcel to the United States, JCEX can file a US partner's scan under its state's code
+  read as a country ("TOWN,IN", Indiana, under India with India's offset), or under China at a
+  place its other rows file under the US. Such a row is read in the US, on its state's clock.
 - The newest scan's instant, when it has one, is the last update, and a delivered scan's is the
   delivery time. Rows dated after the read are dropped.
 - Seconds after it takes a parcel in, JCEX writes a timeline up to the delivering partner: rows

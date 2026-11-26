@@ -158,6 +158,21 @@ function rowOf(row: unknown, index: number): Row | null {
 }
 
 /**
+ * JCEX can file a US partner's scan under another country: under its state's
+ * code read as a country ("TOWN,IN", Indiana, under India and India's offset),
+ * or under China at a place it files under the US in its other rows. On a
+ * parcel to the US such a row is in the US: its state settles its clock.
+ */
+function inTheUs(rows: readonly Row[], destination: string): Row[] {
+  if (destination !== 'US') return [...rows];
+  const places = new Set(rows.filter((row) => row.country === 'US').map((row) => row.location));
+  return rows.map((row) => {
+    const state = row.written || row.country === 'US' ? undefined : US_STATE.exec(row.location)?.[1];
+    return state && usStateTimeZone(state) && (row.country === state || places.has(row.location)) ? { ...row, country: 'US' } : row;
+  });
+}
+
+/**
  * JCEX lists a scan it relays from Yanwen or the delivering partner a second
  * time as its own row, on Beijing's wall clock under China's offset or the
  * destination's: a row whose wall clock, on Beijing's clock, is the instant
@@ -327,7 +342,8 @@ export function parseJcex(payload: unknown, raw: string, readAt = Date.now()): C
   // JCEX can list its order notice twice at one second in two wordings ("Shipment order info received",
   // "The order information has been sent"): one notice, of which the first listed stays.
   const notices = new Set<string>();
-  const listed = rows.map(rowOf).filter((row): row is Row => {
+  const destination = text(shipment, 'recipientCountryCode', 8).toUpperCase();
+  const listed = inTheUs(rows.map(rowOf).filter((row): row is Row => {
     const key = row && JSON.stringify([row.local, row.label, row.code, row.description, row.location, row.written?.offset]);
     if (!key || seen.has(key)) return false;
     seen.add(key);
@@ -336,7 +352,7 @@ export function parseJcex(payload: unknown, raw: string, readAt = Date.now()): C
     if (notices.has(notice)) return false;
     notices.add(notice);
     return true;
-  });
+  }), destination);
   const { copies, offsets } = relayedCopies(listed);
   const reworded = rewordedCopies(listed);
   const clocks = placedClocks(listed);
@@ -372,7 +388,6 @@ export function parseJcex(payload: unknown, raw: string, readAt = Date.now()): C
   const newest = events[0]!;
   const current = events.find((event) => event.stage);
   const stage = current?.stage as Stage | undefined;
-  const destination = text(shipment, 'recipientCountryCode', 8).toUpperCase();
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: current!.stage_source! } : {}),
