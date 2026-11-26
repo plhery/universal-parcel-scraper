@@ -367,6 +367,12 @@ describe('classifyWording', () => {
   it('reads French missed attempts, same-day delivery notices and mailbox deliveries', () => {
     expect(wordingStage('Nous sommes passés mais nous n\'avons pu vous remettre votre colis. Il va être acheminé vers votre point de retrait.')).toBe('failed_attempt');
     expect(wordingStage('Votre envoi n\'a pas pu être distribué ce jour.')).toBe('failed_attempt');
+    // Relayed without the apostrophes, the notice card no longer reads as a drop-off.
+    expect(wordingStage('FR, Votre envoi na pas pu être distribué ce jour. Un avis de passage a été déposé par le facteur dans votre boîte aux lettres.,Exemple')).toBe('failed_attempt');
+    // La Poste's round put off for its own reasons (PB1), with or without the apostrophes and the reason: a delay.
+    expect(wordingStage("Votre envoi n'a pas pu être distribué ce jour en raison d'une situation indépendante de notre volonté. Il sera remis en distribution au plus tôt.")).toBe('in_transit');
+    expect(wordingStage('FR, Votre envoi na pas pu être distribué ce jour en raison dune situation indépendante de notre volonté. Il sera remis en distribution au plus tôt.,Exemple')).toBe('in_transit');
+    expect(wordingStage('FR, Votre envoi na pas pu être distribué ce jour. Il sera remis en distribution au plus tôt. Nous vous prions daccepter nos excuses.,运输中')).toBe('in_transit');
     // A day's delivery called off, worded as the next round to come.
     expect(wordingStage('Votre colis ne peut être livré ce jour. Il sera mis en livraison au plus tôt.')).toBe('failed_attempt');
     expect(wordingStage('Il sera mis en livraison au plus tôt.')).toBe('in_transit');
