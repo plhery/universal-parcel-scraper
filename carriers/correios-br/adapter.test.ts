@@ -65,6 +65,9 @@ describe('Correios parser', () => {
     expect(answer('XYZ/99', 'Aguardando pagamento')).toEqual({ kind: 'mapped', stage: 'customs' });
     // A recorded code still decides over it.
     expect(answer('BDE/01', 'Aguardando pagamento')).toEqual({ kind: 'mapped', stage: 'delivered' });
+    // Correios withdrawing the scan before it keeps that scan's stage until the next one.
+    const withdrawn = answer('EST/11', 'Favor desconsiderar a informação anterior');
+    expect(withdrawn.kind === 'intentional_gap' && withdrawn.note).toContain('keeps the stage of the scan before it');
   });
 
   it('holds an import in customs while Correios waits for its taxes or fee, whatever code the scan carries', () => {

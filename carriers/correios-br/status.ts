@@ -12,8 +12,9 @@ const codes: Record<string, ClassifiedStatus> = {
   // The postman found nobody to take the item on the delivery run ("carteiro não atendido").
   'BDE/02': { status: 'exception', stage: 'failed_attempt' },
   'BDE/25': { status: 'exception', stage: 'failed_attempt' },
-  // The postman found no such address on the delivery run.
+  // The postman found no such address on the delivery run, or one too incomplete to find (BDR/98).
   'BDE/99': { status: 'exception', stage: 'failed_attempt' },
+  'BDR/98': { status: 'exception', stage: 'failed_attempt' },
   // Nobody at the address knew the recipient on the delivery run.
   'BDE/06': { status: 'exception', stage: 'failed_attempt' },
   'BDE/23': { status: 'exception', stage: 'returned' },
@@ -27,6 +28,7 @@ const codes: Record<string, ClassifiedStatus> = {
   // Waiting for collection at the address the scan gives, or in a post office box.
   'LDI/01': { status: 'in_transit', stage: 'ready_for_pickup' },
   'LDI/02': { status: 'in_transit', stage: 'ready_for_pickup' },
+  'LDI/03': { status: 'in_transit', stage: 'ready_for_pickup' },
   'FC/82': { status: 'pending', stage: 'registered' },
   // A missorted item Correios has caught and will forward again.
   'FC/03': { status: 'in_transit', stage: 'in_transit' },
@@ -103,5 +105,8 @@ const CORREIOS_CODE = /^[A-Z]{2,4}\/\d{2}$/;
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code && CORREIOS_CODE.test(code) ? classifyCorreiosScan(code, wording)?.stage : STAGE_BY_WORDING.get(wording)),
-  gaps: [],
+  gaps: [{
+    code: 'EST/11',
+    note: 'Correios withdrawing the scan before it ("favor desconsiderar a informação anterior"), a second after a cancelled delivery run: no step of its own, so it keeps the stage of the scan before it until the next scan.',
+  }],
 };
