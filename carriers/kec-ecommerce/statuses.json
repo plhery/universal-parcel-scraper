@@ -140,6 +140,15 @@
       "stage": "in_transit",
       "language": "en",
       "confirmedBy": "live"
+    },
+    {
+      "code": "lastmile_arrive_destination_hub",
+      "wording": "Parcel arrived at delivery facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "The last-mile facility that delivers, after the way there (lastmile_in_transit): before the round."
     }
   ]
 }

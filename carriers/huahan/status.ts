@@ -40,6 +40,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['the instruction data for this shipment have been provided by the sender to dhl electronically.', 'registered'],
   ['the instruction data for this shipment have been provided by the sender to dhl electronically', 'registered'],
   ['货物电子信息已经收到', 'registered'],
+  // The same record in English, between the shipment's data and the origin facility's arrival.
+  ['electronic item data received', 'registered'],
   ['ready to ship, parcel received and processed', 'in_transit'],
   ['shipped', 'in_transit'],
   ['change of delivery address', 'in_transit'],
