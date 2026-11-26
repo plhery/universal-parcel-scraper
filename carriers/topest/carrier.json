@@ -1,0 +1,63 @@
+{
+  "id": "topest",
+  "displayName": "TOPEST",
+  "aliases": [
+    "韬博供应链",
+    "TOPEST Express"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#0B5CAD"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "topest",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "searchUrl": "https://www.topestexpress.com/track",
+    "canaryUrl": "https://www.topestexpress.com/track",
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "provider_code",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "signatory",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

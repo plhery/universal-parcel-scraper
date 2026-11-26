@@ -1157,6 +1157,7 @@ import { statusMap as srj } from '../../carriers/srj/status.js';
 import { statusMap as ylexp } from '../../carriers/ylexp/status.js';
 import { statusMap as uniconExpressUs } from '../../carriers/unicon-express-us/status.js';
 import { statusMap as z1Express } from '../../carriers/z1-express/status.js';
+import { statusMap as topest } from '../../carriers/topest/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1383,7 +1384,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'spc-worldwide-express': spcWorldwideExpress, xendnow,
   srj, ylexp,
   'unicon-express-us': uniconExpressUs,
-  'z1-express': z1Express,
+  'z1-express': z1Express, topest,
 };
 
 /** The carrier the app files the universal providers' scans under. */

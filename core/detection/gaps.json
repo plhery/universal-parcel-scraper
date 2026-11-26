@@ -4672,6 +4672,12 @@
     "reason": "ParcelPanel's Top Logistics Australia sample is TPL and nine digits. Top Logistics publishes no layout and its courier tracks the parcel under the same number, so no rule offers it for the shape."
   },
   {
+    "carrier": "topest",
+    "pattern": "^SZTB\\d{9}YQ$",
+    "kind": "open",
+    "reason": "One public TOPEST waybill has this layout, SZTB, nine digits and YQ, from a tracking directory's courier page; one sample does not establish the family."
+  },
+  {
     "carrier": "topparcel",
     "kind": "by_design",
     "reason": "Topparcel tracks a parcel by the number of the courier or post it booked, so the number names that carrier, not Topparcel."

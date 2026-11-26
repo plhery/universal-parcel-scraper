@@ -1,0 +1,30 @@
+{
+  "carrier": "topest",
+  "entries": [
+    {"code": null, "wording": "Parcel Data Received", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The sender's data, before the parcel reaches the sorting centre."},
+    {"code": null, "wording": "Parcel received at Shenzhen Sorting Centre.", "stage": "accepted", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Parcel processed at Shenzhen Sorting Centre.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Parcel departure in Shenzhen Sorting Centre.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Customs declaration completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "China's export declaration, done."},
+    {"code": null, "wording": "The item is pre-advised", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The delivering post's notice that the item is announced, written after the parcel left the sorting centre."},
+    {"code": null, "wording": "The item is ready for shipment", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "shipment in transit to HK airport", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Parcel departure in Transit Facility, Parcel Departure", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Flight dispatched（航班已飞）", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Parcel is leaving Airport, Parcel Leaving Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Flight arrived（航班已落地）", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Custom clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Import clearance, done."},
+    {"code": null, "wording": "The shipment is handed over in bulk, final acceptance of the item to be confirmed", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Consignment received at the PostNL Acceptance Centre", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "The item is at the PostNL sorting center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "The item is received by PostNL and waiting for further processing", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "The item is processed at the PostNL sorting center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "The item is on transport to the country of destination", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "The consignment has arrived in the country of destination", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "The item has arrived in the country of destination", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "The item has been processed in the country of destination", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "The item is at the local sorting centre", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "The item is available at the pickuppoint", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "The item has been delivered successfully", "stage": "delivered", "language": "en", "confirmedBy": "live"}
+  ]
+}
