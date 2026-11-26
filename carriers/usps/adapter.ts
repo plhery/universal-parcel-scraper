@@ -160,8 +160,8 @@ function chromeLoaded(run: ChromeRun): void {
 }
 
 /** The browser service's answer that it holds no session USPS let through, so it read nothing
- * (`unready` in trawl/usps-tracking.mjs). TRAWL sends it as HTTP 500. */
-const unserved = (error: unknown): boolean => error instanceof UpstreamHttpError && error.status === 500
+ * (`unready` in trawl/usps-tracking.mjs): HTTP 503, or 500 from a service built before it sent 503. */
+const unserved = (error: unknown): boolean => error instanceof UpstreamHttpError && [500, 503].includes(error.status)
   && /"error"\s*:\s*"No USPS browser session is ready"/.test(error.diagnostics?.body_excerpt ?? '');
 
 type Route = NonNullable<StepRecord['networkRoute']>;
@@ -576,8 +576,10 @@ export class USPSTracker {
       // five minutes at most, or every minute while the service has no session ready. The read is
       // claimed as it starts, so lookups running together take one.
       ...(resting ? [{ ...browser,
-        recovers: (error: unknown) => (recoverableByDefault(error) || error instanceof RateLimitedError)
-          && Date.now() - resting.restingReadAt >= (unserved(error) ? CHROME_UNSERVED_READ_MS : CHROME_RESTING_READ_MS),
+        recovers: (error: unknown) => unserved(error)
+          ? Date.now() - resting.restingReadAt >= CHROME_UNSERVED_READ_MS
+          : (recoverableByDefault(error) || error instanceof RateLimitedError)
+            && Date.now() - resting.restingReadAt >= CHROME_RESTING_READ_MS,
         run: (context: StepContext) => {
           resting.restingReadAt = Date.now();
           return browser.run(context);

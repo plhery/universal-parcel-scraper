@@ -759,7 +759,7 @@ describe('USPS lookup steps', () => {
         }
       });
 
-      it('reads through the resting Chrome one lookup a minute while the service has no session ready', async () => {
+      it.each([500, 503])('reads through the resting Chrome one lookup a minute while the service has no session ready (HTTP %i)', async (status) => {
         vi.useFakeTimers({ toFake: ['Date'] });
         try {
           const trawl = ownTrawl();
@@ -774,7 +774,7 @@ describe('USPS lookup steps', () => {
             vi.restoreAllMocks();
             return records;
           };
-          const unready = () => lookup(() => Response.json({ error: 'No USPS browser session is ready' }, { status: 500 }));
+          const unready = () => lookup(() => Response.json({ error: 'No USPS browser session is ready' }, { status }));
           const refused = () => lookup(() => Response.json({ error: 'Max tier reached without success' }, { status: 500 }));
           expect(await unready()).toContain('browser:challenge:-');
           expect(readBrowserPage).toHaveBeenCalledTimes(3);
