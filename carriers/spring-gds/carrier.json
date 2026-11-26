@@ -46,7 +46,7 @@
     ],
     "recognition": {
       "rank": 524,
-      "pattern": "^181\\d{15}$"
+      "pattern": "^(?:181\\d{15}|78\\d{20})$"
     },
     "refresh": {
       "minMinutes": 30
@@ -133,6 +133,11 @@
     {
       "id": "spring-gds-1810",
       "pattern": "^181\\d{15}$",
+      "confidence": "low"
+    },
+    {
+      "id": "spring-gds-78",
+      "pattern": "^78\\d{20}$",
       "confidence": "low"
     }
   ]

@@ -71863,6 +71863,21 @@
     ]
   },
   {
+    "input": "7899999999999999999917",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "spring-gds",
+      "austrian-post",
+      "usps",
+      "estafeta"
+    ],
+    "asked": [
+      "austrian-post",
+      "spring-gds"
+    ]
+  },
+  {
     "input": "79034111041",
     "carrier": "unknown",
     "confidence": "low",

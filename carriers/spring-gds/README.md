@@ -133,6 +133,10 @@ it; everything user-facing says PostNL.
   any fourth digit. bpost and Ecoscooting take any eighteen digits, so `spring-gds-1810` only
   suggests PostNL, and recognition asks PostNL about that series alone. Other eighteen-digit
   numbers stay unasked.
+- Parcels for Spain that InPost Spain delivers are also held under `78` and twenty digits,
+  another series no public source shows; InPost Spain's page answers them as well. Austrian
+  Post, USPS and Estafeta take twenty-two digits too, so `spring-gds-78` only suggests PostNL;
+  recognition asks PostNL about that series and Austrian Post about any twenty-two digits.
 - `mailingtechnology.com/tracking?tn=` (Spring GDS) and retired `postnl.post/details/{n}`
   links are recognized when pasted. New links use `/track?barcodes=`.
 - Not used: the Spring GDS portal. It shows extra internal legs for the same barcode, but it

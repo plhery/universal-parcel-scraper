@@ -511,7 +511,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         }
       ],
       "recognitionRank": 524,
-      "recognitionPattern": "^181\\d{15}$",
+      "recognitionPattern": "^(?:181\\d{15}|78\\d{20})$",
       "refresh": {
         "minMinutes": 30
       },
@@ -564,6 +564,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       },
       {
         "pattern": "^181\\d{15}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^78\\d{20}$",
         "confidence": "low"
       }
     ]
@@ -76096,7 +76100,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aliexpress": ["aliexpress-1","aliexpress-cnfr","aliexpress-hd-other-series","aliexpress-2","aliexpress-maersk","aliexpress-lp-reference","aliexpress-lp-17","aliexpress-ap-reference","aliexpress-aeca","aliexpress-cnbr","aliexpress-cnmex","aliexpress-cnusup","aliexpress-cacainiao","aliexpress-rl","aliexpress-jncn","aliexpress-ecoscooting-las-palmas","aliexpress-cn-dated","aliexpress-gfus","aliexpress-uusc","aliexpress-cgd","aliexpress-hrbc","aliexpress-ecsc-aaro","aliexpress-sk0sczd","aliexpress-rn-rs-y","aliexpress-694788","aliexpress-pa","aliexpress-f","aliexpress-9c-i","aliexpress-9c-j","aliexpress-rtz","aliexpress-fmp","aliexpress-sda-waybill","aliexpress-ty","aliexpress-mi","aliexpress-xx","aliexpress-go"],
   "sunyou": ["sunyou-1","sunyou-2","sunyou-3"],
   "hermes": ["hermes-delivery-note"],
-  "spring-gds": ["spring-gds-1","spring-gds-2","spring-gds-3","spring-gds-1810"],
+  "spring-gds": ["spring-gds-1","spring-gds-2","spring-gds-3","spring-gds-1810","spring-gds-78"],
   "postlogistics": ["postlogistics-dashed-reference","postlogistics-compact-reference"],
   "dachser": [],
   "dhl": ["dhl-1","dhl-14","dhl-16","dhl-15","dhl-other-network-plate","dhl-8","dhl-9","dhl-10","dhl-3","dhl-13","dhl-12","dhl-17","dhl-7"],

@@ -1159,6 +1159,19 @@ describe('PostNL eighteen-digit numbers for Italy', () => {
   });
 });
 
+describe('PostNL twenty-two-digit numbers for Spain', () => {
+  it('offers PostNL for 78 and twenty digits and asks it beside Austrian Post, and only for that series', () => {
+    for (const number of ['7899999999999999999917', '7899 9999 9999 9999 9999 17']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: expect.arrayContaining(['spring-gds', 'usps']) });
+      expect(recognitionAskedCarriers(number, { countryHint: 'ES' }), number).toEqual(['austrian-post', 'spring-gds']);
+    }
+    for (const number of ['7999999999999999999917', '8799999999999999999917', '789999999999999999917', '78999999999999999999170']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('spring-gds');
+      expect(recognitionAskedCarriers(number), number).not.toContain('spring-gds');
+    }
+  });
+});
+
 describe('Avis Logistics, Depo and e-Cargo links', () => {
   it('reads the number from each tracking link', () => {
     expect(parseTrackingInput('https://avislogistics.kz/?trace=0000000000017')).toMatchObject({

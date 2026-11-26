@@ -8708,5 +8708,15 @@
       "colis-prive"
     ],
     "reason": "Avito gives its orders P and eleven digits, and 5Post's tracker finds the parcels Avito sends with it under them; Colis Privé's twelve-character references include the same layout. Both rules are low, Avito also ships with other carriers, and the carrier that knows the number decides."
+  },
+  {
+    "shape": "78 and twenty digits",
+    "carriers": [
+      "austrian-post",
+      "estafeta",
+      "spring-gds",
+      "usps"
+    ],
+    "reason": "Austrian Post, USPS and Estafeta take twenty-two digits at low confidence; spring-gds-78 adds PostNL for the series its international tracker answered for Spain. All stay suggestions; recognition asks PostNL about the series and Austrian Post about any twenty-two digits."
   }
 ]

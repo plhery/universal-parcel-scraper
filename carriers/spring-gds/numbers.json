@@ -688,6 +688,24 @@
         ]
       },
       "note": "Made-up number in the shape of a later parcel for Italy that PostNL's international tracker answered: 1811 and fourteen digits. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "7899999999999999999917",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-26",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "spring-gds",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "Made-up number in the shape of parcels for Spain that PostNL's international tracker answered: 78 and twenty digits. InPost Spain, which delivered them, answers them too. Its serial sits far beyond the range in use."
     }
   ]
 }

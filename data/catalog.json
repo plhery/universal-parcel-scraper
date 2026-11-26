@@ -506,7 +506,7 @@
         }
       ],
       "recognitionRank": 524,
-      "recognitionPattern": "^181\\d{15}$",
+      "recognitionPattern": "^(?:181\\d{15}|78\\d{20})$",
       "refresh": {
         "minMinutes": 30
       },
@@ -559,6 +559,10 @@
       },
       {
         "pattern": "^181\\d{15}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^78\\d{20}$",
         "confidence": "low"
       }
     ]
