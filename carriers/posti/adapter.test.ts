@@ -298,8 +298,12 @@ describe('Posti anonymous transport', () => {
       init?.signal?.throwIfAborted();
       return tokens();
     });
-    await expect(new PostiTracker({ fetcher: slow, timeoutMs: 20 }).fetch(NUMBER)).rejects.toThrow();
+    // Wide enough that a busy runner cannot spend the whole budget before the token request starts.
+    const started = Date.now();
+    await expect(new PostiTracker({ fetcher: slow, timeoutMs: 250 }).fetch(NUMBER)).rejects.toThrow();
     expect(slow).toHaveBeenCalledTimes(1);
+    expect(slow.mock.calls[0]?.[1]?.signal?.aborted).toBe(true);
+    expect(Date.now() - started).toBeLessThan(5000);
   });
 
   it('normalizes safe identifiers and rejects invalid input before requesting a token', async () => {
