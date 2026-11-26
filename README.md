@@ -107,8 +107,9 @@ parseTrackingInput('1Z999AA10123456784');
 
 Detection has no Node imports and makes no requests.
 
-A shop's tracking-page link, such as parcelLab's `delivery-status.com`, resolves through the
-platform with `resolveShopTrackingLink(url)`, which makes at most two read-only requests.
+A shop's tracking-page link, from parcelLab's `delivery-status.com`, Narvar, AfterShip,
+Sendcloud or ParcelPanel, resolves to its carrier and number with `resolveShopTrackingLink(url)`,
+which makes at most two read-only requests.
 
 ### HTTP and Docker
 

@@ -2415,6 +2415,47 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "tno"
         ],
         "detectFromNumber": true
+      },
+      {
+        "domains": [
+          "narvar.com"
+        ],
+        "params": [
+          "tracking_numbers"
+        ],
+        "pathPattern": "/tracking(?:/|$)",
+        "detectFromNumber": true
+      },
+      {
+        "domains": [
+          "aftership.com"
+        ],
+        "params": [
+          "tracking-numbers",
+          "t"
+        ],
+        "path": "^/(?:track/)?(?:[A-Za-z0-9-]+/)?([A-Za-z0-9]*[0-9][A-Za-z0-9]*)/?$",
+        "detectFromNumber": true
+      },
+      {
+        "domains": [
+          "sendcloud.sc"
+        ],
+        "params": [
+          "code"
+        ],
+        "pathPattern": "^/forward/?$",
+        "detectFromNumber": true
+      },
+      {
+        "domains": [
+          "shipping-portal.com"
+        ],
+        "params": [
+          "tracking_number"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "detectFromNumber": true
       }
     ],
     "detectionRules": []

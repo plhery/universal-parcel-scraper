@@ -7,10 +7,10 @@
  * `api.parcellab.com/v2/checkpoints`, anonymously; that reply names each parcel's number and courier.
  */
 import { CARRIER_CATALOG, type CarrierId } from '../../generated/catalog.js';
-import { detectCarrierMatch } from '../detection/detect.js';
 import { normalizeTrackingNumber } from '../detection/normalize.js';
 import { parseTrackingInput } from '../detection/parse.js';
 import { validTrackingNumber } from '../detection/valid.js';
+import { linkParcel } from './parcel.js';
 import type { ShopLinkParcel, ShopLinkResolution, ShopLinkResolveOptions, ShopTrackingLink } from './types.js';
 
 export const PARCELLAB_API = 'https://api.parcellab.com/v2/checkpoints/';
@@ -21,7 +21,7 @@ const MOST_BYTES = 512 * 1024;
 const COURIERS: Record<string, CarrierId> = {
   'dhl-germany': 'dhl', 'dhl-de': 'dhl', 'gls-germany': 'gls-de', 'gls-france': 'gls-fr', 'gls-italy': 'gls-it',
   'gls-poland': 'gls-pl', 'gls-netherlands': 'gls-nl', 'dpd-germany': 'dpd-de', 'dpd-poland': 'dpd-pl',
-  'dpd-france': 'dpd-fr', 'hermes-uk': 'evri', 'colissimo': 'la-poste', 'correos': 'correos-spain',
+  'dpd-france': 'dpd-fr', 'hermes-uk': 'evri-uk', 'colissimo': 'la-poste', 'correos': 'correos-spain',
   'bring': 'bring-posten', 'post-at': 'austrian-post', 'austria-post': 'austrian-post', 'post-ch': 'swiss-post',
   'inpost-pl': 'inpost', 'royalmail': 'royal-mail',
 };
@@ -54,7 +54,8 @@ export function parcelLabCarrier(code: string | undefined): CarrierId | undefine
 
 /**
  * The parcel a number and parcelLab's account of it make. The courier's own tracking link, when the catalog reads
- * the same number from it, names the carrier; then the courier code the shop gave parcelLab; else the number's shape.
+ * the same number from it, names the carrier; then the courier code the shop gave parcelLab, unless the number's shape is
+ * surely another carrier's; else the number's shape.
  */
 export function parcelLabParcel(number: string, courier?: string, courierUrl?: string): ShopLinkParcel | undefined {
   const trackingNumber = number.trim();
@@ -65,10 +66,7 @@ export function parcelLabParcel(number: string, courier?: string, courierUrl?: s
     && normalizeTrackingNumber(fromLink.trackingNumber) === normalized) {
     return { trackingNumber, carrier: fromLink.carrier, confidence: 'high', ...(courier ? { courierCode: courier } : {}) };
   }
-  const named = parcelLabCarrier(courier);
-  if (named) return { trackingNumber, carrier: named, confidence: 'high', courierCode: courier };
-  const detected = detectCarrierMatch(trackingNumber);
-  return { trackingNumber, carrier: detected.carrier, confidence: detected.confidence, ...(courier ? { courierCode: courier } : {}) };
+  return linkParcel(trackingNumber, parcelLabCarrier(courier), courier);
 }
 
 /** The number and courier code a link carries in its query, which need no request. */

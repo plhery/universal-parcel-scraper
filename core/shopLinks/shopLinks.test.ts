@@ -90,4 +90,58 @@ describe('shop tracking-page links', () => {
     const page = recording({ 'https://hm.delivery-status.com/': html('<html>no plugin</html>') });
     await expect(resolveShopTrackingLink(ORDER_LINK, { fetcher: page.fetcher })).resolves.toMatchObject({ reason: 'unsupported' });
   });
+
+  it('reads the numbers Narvar, AfterShip, Sendcloud and ParcelPanel links carry, with no request', async () => {
+    const { urls, fetcher } = recording({});
+    const resolve = (link: string) => resolveShopTrackingLink(link, { fetcher });
+    // Narvar lists a shipment's numbers under the carrier the retailer booked; a number surely another's keeps its own.
+    await expect(resolve(`https://tracking.narvar.com/acme/tracking/fedex?tracking_numbers=123456789012,${UPS}&order_number=1`)).resolves.toEqual({
+      platform: 'narvar', shop: 'acme', status: 'resolved', parcels: [
+        { trackingNumber: '123456789012', carrier: 'fedex', confidence: 'high', courierCode: 'fedex' },
+        { trackingNumber: UPS, carrier: 'ups', confidence: 'high', courierCode: 'fedex' },
+      ],
+    });
+    await expect(resolve(`https://track.aftership.com/trackings?courier=dhl-germany&tracking-numbers=${DHL}`)).resolves.toEqual({
+      platform: 'aftership', status: 'resolved', parcels: [{ trackingNumber: DHL, carrier: 'dhl', confidence: 'high', courierCode: 'dhl-germany' }],
+    });
+    await expect(resolve(`https://www.aftership.com/track/dhl-germany/${DHL}`)).resolves.toMatchObject({ parcels: [{ carrier: 'dhl' }] });
+    await expect(resolve(`https://acme.aftership.com/${UPS}?page-name=tracking`)).resolves.toEqual({
+      platform: 'aftership', shop: 'acme', status: 'resolved', parcels: [{ trackingNumber: UPS, carrier: 'ups', confidence: 'high' }],
+    });
+    // Sendcloud's documented links (sendcloud.dev, tracking API reference).
+    await expect(resolve('https://tracking.sendcloud.sc/forward?carrier=postnl&code=3SYZXG132912330&destination=NL&lang=en-us&source=NL&type=parcel&verification=5611+EM&servicepoint_verification=&created_at=2022-01-25'))
+      .resolves.toEqual({ platform: 'sendcloud', status: 'resolved',
+        parcels: [{ trackingNumber: '3SYZXG132912330', carrier: 'spring-gds', confidence: 'high', courierCode: 'postnl' }] });
+    await expect(resolve('https://my-bakery.shipping-portal.com/tracking/?country=nl&tracking_number=3SYZXG132959174&postal_code=5611+EM'))
+      .resolves.toMatchObject({ platform: 'sendcloud', shop: 'my-bakery', status: 'resolved', parcels: [{ trackingNumber: '3SYZXG132959174' }] });
+    await expect(resolve(`https://www.example-shop.com/apps/parcelpanel?nums=${UPS}`)).resolves.toEqual({
+      platform: 'parcelpanel', shop: 'example-shop.com', status: 'resolved', parcels: [{ trackingNumber: UPS, carrier: 'ups', confidence: 'high' }],
+    });
+    expect(urls).toEqual([]);
+    // Pasted alone, the same links give their number to the paste parser, its carrier left to the number.
+    for (const link of [
+      `https://tracking.narvar.com/acme/tracking/fedex?tracking_numbers=${UPS}&order_number=1`,
+      `https://acme.aftership.com/${UPS}`, `https://www.aftership.com/track/ups/${UPS}`,
+      `https://track.aftership.com/trackings?courier=ups&tracking-numbers=${UPS}`,
+      `https://tracking.sendcloud.sc/forward?carrier=postnl&code=${UPS}&verification=5611+EM`,
+      `https://my-bakery.shipping-portal.com/tracking/?country=nl&tracking_number=${UPS}&postal_code=5611+EM`,
+    ]) expect(parseTrackingInput(link), link).toMatchObject({ trackingNumber: UPS, carrier: 'ups', source: 'link' });
+    expect(parseTrackingInput('https://acme.aftership.com/order-status?order-number=1001')).toMatchObject({ confidence: 'none' });
+  });
+
+  it('leaves links that name an order, not a parcel, unresolved', async () => {
+    for (const [link, platform] of [
+      ['https://acme.narvar.com/acme/tracking?order_number=1001', 'narvar'],
+      ['https://acme.aftership.com/order-status?order-number=1001&email=buyer%40example.org', 'aftership'],
+      ['https://acme.myshopify.com/apps/parcelpanel?order=1001&token=gro.elpmaxe_-_reyub', 'parcelpanel'],
+      ['https://tracking.sendcloud.sc/forward?carrier=postnl', 'sendcloud'],
+    ] as const) {
+      await expect(resolveShopTrackingLink(link), link).resolves.toEqual({
+        platform, ...(platform === 'sendcloud' ? {} : { shop: 'acme' }), status: 'unresolved', reason: 'unsupported' });
+    }
+    for (const other of ['https://narvar.com.example.org/acme/tracking/ups?tracking_numbers=1', 'https://example.org/apps/parcelpanelx?nums=1',
+      'https://www.sendcloud.sc/forward?code=1', 'https://shipping-portal.com.example.org/tracking/?tracking_number=1']) {
+      expect(shopTrackingLink(other), other).toBeUndefined();
+    }
+  });
 });

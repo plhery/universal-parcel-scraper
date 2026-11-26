@@ -2,13 +2,13 @@ import type { CarrierId } from '../../generated/catalog.js';
 import type { DetectionConfidence } from '../detection/types.js';
 
 /** The shop tracking-page platforms whose links name a parcel. */
-export type ShopTrackingPlatform = 'parcellab';
+export type ShopTrackingPlatform = 'parcellab' | 'narvar' | 'aftership' | 'sendcloud' | 'parcelpanel';
 
 /** A link to a shop's tracking page, which names a parcel without being a carrier's link. */
 export interface ShopTrackingLink {
   platform: ShopTrackingPlatform;
   url: string;
-  /** The shop the page is for, as its address names it (`hm` for `hm.delivery-status.com`). */
+  /** The shop the page is for, as its address names it (`hm` for `hm.delivery-status.com`, a ParcelPanel shop's domain). */
   shop?: string;
 }
 

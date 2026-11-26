@@ -2,12 +2,15 @@
  * Shop tracking-page links.
  *
  * What it is: recognizes the links shops put in shipping emails to their own tracking page, run by a platform
- * such as parcelLab, and resolves one to the carrier and tracking number of each parcel it names.
- * What it is not: no tracking. Recognition reads only the string; resolution makes a bounded, anonymous,
- * read-only request or two to the platform, through the caller's fetch, and keeps no address or name.
+ * such as parcelLab, Narvar, AfterShip, Sendcloud or ParcelPanel, and resolves one to the carrier and tracking number
+ * of each parcel it names.
+ * What it is not: no tracking. Recognition reads only the string. A link that carries its numbers resolves with no
+ * request; parcelLab's order links take a bounded, anonymous, read-only request or two to the platform, through the
+ * caller's fetch. No address or name is kept.
  * Browser-safe: plain fetch, no Node APIs.
  */
 import { parcelLabLink, resolveParcelLabLink } from './parcellab.js';
+import { platformLink, resolvePlatformLink } from './platforms.js';
 import type { ShopLinkResolution, ShopLinkResolveOptions, ShopTrackingLink } from './types.js';
 
 export type {
@@ -26,7 +29,7 @@ export function shopTrackingLink(raw: string): ShopTrackingLink | undefined {
     return undefined;
   }
   if (url.protocol !== 'https:' && url.protocol !== 'http:') return undefined;
-  return parcelLabLink(url);
+  return parcelLabLink(url) ?? platformLink(url);
 }
 
 /**
@@ -46,5 +49,5 @@ export function shopTrackingLinks(text: string): ShopTrackingLink[] {
 export function resolveShopTrackingLink(link: ShopTrackingLink | string, options: ShopLinkResolveOptions = {}): Promise<ShopLinkResolution> {
   const known = typeof link === 'string' ? shopTrackingLink(link) : link;
   if (!known) return Promise.resolve({ status: 'unresolved', reason: 'unsupported' });
-  return resolveParcelLabLink(known, options);
+  return known.platform === 'parcellab' ? resolveParcelLabLink(known, options) : Promise.resolve(resolvePlatformLink(known));
 }
