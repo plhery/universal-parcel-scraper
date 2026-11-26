@@ -42,6 +42,11 @@ const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   // Held at the delivery base for another day: no round, so no attempt.
   ['the shipment has been postponed and will probably be delivered on the next working day', 'in_transit'],
   ['the shipment has been loaded onto the delivery vehicle. delivery is expected to take place today.', 'out_for_delivery'],
+  // The same loading in WanbExpress's shorter English, at the second of DHL's German line for it.
+  ['the shipment has been loaded onto the delivery vehicle.', 'out_for_delivery'],
+  // WanbExpress's English at the second of DHL's German line that the branch holds the parcel from the next working
+  // day, after a missed delivery: that line stages it, and this one, worded as a round, moves nothing.
+  ['being delivered.', null],
   // After the sorting centre's departure, before the partner that delivers it takes the parcel.
   ['parcel is ready for hand over to distributor', 'in_transit'],
   // A partner's pre-advice, at the instant WanbExpress records the parcel's data, before its sorting centre has it.

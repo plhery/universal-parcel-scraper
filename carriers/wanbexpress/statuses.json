@@ -217,6 +217,22 @@
       "note": "DHL holding the parcel at its delivery base for another day, after its arrival in the region and before the next loading: no round, so no attempt."
     },
     {
+      "wording": "The shipment has been loaded onto the delivery vehicle.",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "DHL's delivery round in WanbExpress's shorter English, at the second of DHL's German line for the loading."
+    },
+    {
+      "wording": "Being delivered.",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "WanbExpress's English at the second of DHL's German line that the branch holds the parcel from the next working day, hours after a missed delivery: no round, and the German line stages the parcel, so this one keeps the stage."
+    },
+    {
       "wording": "The shipment has been loaded onto the delivery vehicle. Delivery is expected to take place today.",
       "language": "en",
       "stage": "out_for_delivery",
