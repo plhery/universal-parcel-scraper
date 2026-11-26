@@ -14,8 +14,12 @@ The reply must name the requested number as the number asked about and as the pa
 (`truckNo`). Absence is the service's own placeholder: no parcel (`Brak danych`) and no scans.
 Error 1004, which some numbers of the current range return, stays inconclusive: the tracker
 shows them as untrackable without saying whether a parcel exists. HTTP recognition uses the
-same lookup. The official app (`pl.orlen.paczka`) talks to a separate API at
-`api.orlenpaczka.pl`, which this route does not need.
+same lookup.
+
+The official app (`pl.orlen.paczka`) offers no other anonymous route. It reads parcels from
+`orlenapm.azure-api.net/CustomerAPP2026/v1` under `customers/{id}/shipments`, with a token its
+bundled client obtains, and a customer id comes only from a phone number confirmed by an SMS
+code. Its `api.orlenpaczka.pl/CMA` service serves pickup points.
 
 ## Numbers
 
