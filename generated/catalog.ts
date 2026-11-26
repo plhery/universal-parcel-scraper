@@ -4205,6 +4205,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "correios-br",
+      "refresh": {
+        "minMinutes": 30
+      },
       "localClocks": true,
       "browser": true
     },

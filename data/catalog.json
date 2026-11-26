@@ -4200,6 +4200,9 @@
     "tracking": {
       "mode": "automatic",
       "adapter": "correios-br",
+      "refresh": {
+        "minMinutes": 30
+      },
       "localClocks": true,
       "browser": true
     },

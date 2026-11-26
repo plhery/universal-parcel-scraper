@@ -22,6 +22,9 @@
       "direct",
       "trawl"
     ],
+    "refresh": {
+      "minMinutes": 30
+    },
     "localClocks": true,
     "browser": true
   },

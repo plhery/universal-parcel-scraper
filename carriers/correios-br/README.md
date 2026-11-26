@@ -26,7 +26,9 @@ fall back to the providers. The portal answers a burst of lookups from one addre
 asks: a few in a hundred reads at seven or fewer in ten minutes, one in five at ten or more. So
 one browser service sends Correios at most seven reads in any ten minutes, shared by every
 tracker in the process; a read past that waits for its turn when the lookup has the time, and
-otherwise fails as our own pacing (`rate_limited`, `self_paced`) with the wait. A host that
+otherwise fails as our own pacing (`rate_limited`, `self_paced`) with the wait. That is 42 reads
+an hour, too few for a few dozen parcels each checked every few minutes, so the catalog asks for
+a refresh at most every half hour and every parcel keeps its turn. A host that
 keeps adapters' holds (`keepAdapterHolds`) keeps the window, and the direct step's rest, across
 restarts. Fixed `correios.verification` diagnostics
 record token receipt, submission, response counts, HTTP statuses, widget clicks and when the
