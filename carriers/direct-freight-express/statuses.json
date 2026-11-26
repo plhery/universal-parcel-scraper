@@ -2,6 +2,13 @@
   "carrier": "direct-freight-express",
   "entries": [
     {
+      "wording": "Authority to Leave Received",
+      "language": "en",
+      "confirmedBy": "live",
+      "unmapped": true,
+      "note": "The recipient's permission to leave the consignment unattended, recorded before the pickup: it moves nothing."
+    },
+    {
       "wording": "Pickup Collected",
       "stage": "accepted",
       "language": "en",

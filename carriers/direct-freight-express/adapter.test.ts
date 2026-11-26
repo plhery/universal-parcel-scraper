@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { TrawlClient } from '../../core/transport/trawl.js';
 import { DirectFreightTracker, directFreightUrl } from './adapter.js';
 import { normalizeDirectFreightNumber, parseDirectFreight } from './parser.js';
@@ -113,4 +114,14 @@ it('keeps a delivery whose scans give no item counts', () => {
   const result = parseDirectFreight(page(rows().map((scan): Row => [scan[0], scan[1], scan[2], ''])), NUMBER);
   expect(result.current_stage).toBe('delivered');
   expect(parseDirectFreight(page(rows().slice(0, 1)), NUMBER).current_stage).toBe('delivered');
+});
+
+it("keeps the recipient's authority to leave, recorded before the pickup, as an instruction without a stage", () => {
+  const scans: Row[] = [['04 Jul 2026 09:00:00', 'Example Depot', 'Pickup Collected', '1'], ['03 Jul 2026 15:30:00', '', 'Authority to Leave Received', '']];
+  const result = parseDirectFreight(page(scans), NUMBER);
+  expect(result.current_stage).toBe('accepted');
+  expect(result.events?.[1]).toEqual({ description: 'Authority to Leave Received', local_time: '2026-07-03T15:30:00' });
+  expect(parseDirectFreight(page(scans.slice(1)), NUMBER).status).toBe('unknown');
+  expect(statusMapAnswer({ carrier: 'direct-freight-express', providerCode: null, description: 'Authority to Leave Received' }))
+    .toMatchObject({ kind: 'intentional_gap' });
 });
