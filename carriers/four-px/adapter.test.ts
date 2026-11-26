@@ -152,6 +152,14 @@ describe('4PX result projection', () => {
     expect(events.find((event) => event.description === 'Label creation')?.stage).toBe('registered');
   });
 
+  it("names a US partner's postcode once where 4PX writes it twice", () => {
+    const payload = fixture();
+    const tracks = payload.data[0].tracks;
+    payload.data[0].tracks = [{ ...tracks[0], tkCode: '', tkDesc: 'Arrived at gofo regional hub', tkLocation: 'Example Town,CA,90058 90058' },
+      { ...tracks[1], tkLocation: 'Example Town,TX, 75001' }, ...tracks.slice(2)];
+    expect(parse(payload, NUMBER).events!.slice(0, 2).map((event) => event.location)).toEqual(['Example Town,CA,90058', 'Example Town,TX, 75001']);
+  });
+
   it("leaves out a partner's scan listed again with UTC digits under the same offset", () => {
     const payload = fixture();
     const tracks = payload.data[0].tracks;

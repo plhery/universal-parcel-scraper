@@ -54,6 +54,8 @@ underscore at the end of a wording, as DPD's (`…_nabn`), is dropped. A
 partner's pickup-shop record relayed in place of a wording (the shop's fields,
 then `_store_type;pudo_id;pudo_name;…`) is no scan: its shop name and town are
 the pickup point.
+A US partner's postcode that 4PX writes twice at the end of a place
+(`…,CA,90058 90058`) is kept once.
 
 The server reference can identify a delivery partner's tracking number. Shared
 result normalization keeps only a USPS routing barcode's package number, never

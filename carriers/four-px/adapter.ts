@@ -130,6 +130,9 @@ function shopRecord(description: string): { point?: string } | undefined {
   return shop ? { point: [shop, field('city')].filter(Boolean).join(', ') } : {};
 }
 
+// 4PX can write a US partner's postcode twice at the end of the place: "Example Town,CA,90058 90058".
+const DOUBLED_POSTCODE = /(^|[\s,])(\d{4,10}) \2$/;
+
 export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   const number = normalizeFourPxNumber(trackingNumber);
   if (!isRecord(payload) || payload.result !== 1 || !Array.isArray(payload.data)) throw new SchemaError('4PX');
@@ -157,7 +160,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
       continue;
     }
     const description = clean(wording.replace(QUALIFIER, ''), 500);
-    const location = clean(raw.tkLocation, 200);
+    const location = clean(raw.tkLocation, 200).replace(DOUBLED_POSTCODE, '$1$2');
     const code = clean(raw.tkCode, 64);
     const facilityClock = TRANSMITTED.test(description) || code === WAITING_AT_ORIGIN || (code === BACK_FROM_ABROAD && !clean(raw.tkTimezone, 64));
     const time = eventTime(facility && facilityClock ? { ...raw, tkTimezone: facility }
