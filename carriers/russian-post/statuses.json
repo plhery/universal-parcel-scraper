@@ -241,6 +241,14 @@
       "language": "en",
       "confirmedBy": "live",
       "note": "Completes a return when the preceding operation or shipment flag identifies the return leg."
+    },
+    {
+      "code": "2.32",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The item handed over at the post office the day after it arrived there for collection (8.2). Completes a return when the preceding operation or shipment flag identifies the return leg."
     }
   ]
 }

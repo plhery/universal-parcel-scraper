@@ -24,7 +24,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['9.0', 'in_transit'], ['9.1', 'in_transit'], ['9.2', 'in_transit'], ['10.0', 'in_transit'], ['11.0', 'customs'], ['14.1', 'in_transit'],
   ['33.1', 'in_transit'], ['33.2', 'in_transit'], ['33.3', 'in_transit'],
 ]);
-const DELIVERY = new Set(['2.6', '2.25']);
+const DELIVERY = new Set(['2.6', '2.25', '2.32']);
 
 /**
  * An operation of type 1 is the acceptance ("Прием"), whatever its attribute: single, batch, simplified

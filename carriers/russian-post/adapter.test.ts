@@ -132,6 +132,15 @@ describe('Russian Post anonymous tracking', () => {
     expect(parseRussianPost(body, NUMBER).delivered_at).toBeUndefined();
   });
 
+  it('reads the hand-over at the post office after the item waited there (2.32) as its delivery, as the other deliveries', () => {
+    const body = fixture();
+    body[0]!.trackingItem.trackingHistoryItemList = [row(2, 32, 'Delivered', '2026-03-13T10:00:00.000+03:00'),
+      row(8, 2, 'Arrived at the Post office', '2026-03-12T09:41:17.000+03:00')];
+    expect(parseRussianPost(body, NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
+      delivered_at: '2026-03-13T10:00:00.000+03:00' });
+    expect(statusMapAnswer({ carrier: 'russian-post', providerCode: '2.32', description: 'Delivered' })).toMatchObject({ kind: 'intentional_gap' });
+  });
+
   it('validates event types and offset clocks without reading planned events or summary clocks', () => {
     for (const patch of [{ operationType: '2' }, { operationAttr: {} }, { humanStatus: {} }, { date: '2026-02-30T12:00:00+07:00' }, { date: '2026-03-12T16:58:40' }, { date: '2026-03-12T16:58:40+99:00' }]) {
       const data = fixture(); Object.assign(data[0]!.trackingItem.trackingHistoryItemList[0]!, patch);
