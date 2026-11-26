@@ -140,6 +140,12 @@ describe('WhatsShip public order-reference parser', () => {
     expect(moved).toMatchObject({ current_stage: 'in_transit', current_stage_source: 'carrier_map' });
     expect(moved.events!.map(event => [event.stage, event.stage_source])).toEqual([
       ['in_transit', 'carrier_map'], ['in_transit', 'carrier_map'], ['registered', 'carrier_map']]);
+    // So does the map when 17TRACK relays those rows under its own codes; a node code it lacks still reads nothing.
+    for (const [code, wording, stage] of [['InfoReceived', 'shipment information received', 'registered'],
+      ['InfoReceived', 'shipment arrived at facility', 'in_transit'], ['InTransit_Other', 'sent to next destination', 'in_transit']]) {
+      expect(statusMap.stage(code!, wording!), wording).toBe(stage);
+    }
+    expect(statusMap.stage('UNSEEN_CODE', 'shipment arrived at facility')).toBeUndefined();
     // WhatsShip's own arrival at its origin facility after the partner feed moved the parcel is a hand-over on the way.
     const handed = parseWhatsShip(reply([raw({ ProcessTimezone: 'UTC+08:00' }),
       raw({ ProcessDate: '2026-01-11T19:10:00', ProcessTimezone: 'UTC+08:00', ProcessContent: 'Shipment arrived at facility', TrackingStatus: 20 }),

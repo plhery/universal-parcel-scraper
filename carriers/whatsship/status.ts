@@ -30,9 +30,13 @@ const CODELESS: ReadonlyMap<string, Stage> = new Map([
   ['sent to next destination', 'in_transit'],
 ]);
 
+// WhatsShip's node codes are capitals. A universal provider's own code, such as 17TRACK's `InfoReceived` on the
+// partner feed's rows it relays under WhatsShip's name, names no node: the row reads by its wording, as without one.
+const NODE_CODE = /^[A-Z][A-Z_ ]*$/;
+
 /** The scan code, with explicit delivery wording where the code is ambiguous; a code-less scan by its wording. */
 export function whatsShipStage(code: string | null, wording: string): Stage | undefined {
-  if (!code) return CODELESS.get(normalizeStatusWording(wording));
+  if (!code || !NODE_CODE.test(code)) return CODELESS.get(normalizeStatusWording(wording));
   const text = wording.trim();
   if (code === 'DELIVERY_ATTEMPT') {
     if (/^out for delivery[.!]?$/i.test(text)) return 'out_for_delivery';
