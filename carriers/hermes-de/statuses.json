@@ -325,6 +325,27 @@
       "note": "A return parcel prepared at a hub (Die Retoure wurde in … für den Weiterversand vorbereitet): a customer's own return, dropped off at a ParcelShop, on its way to the merchant. After a failed delivery or a return to the sender, the adapter reads it as an exception."
     },
     {
+      "code": "RETOURE_ANNOUNCED",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "A customer's own return announced electronically (Die Retoure wurde … elektronisch angekündigt)."
+    },
+    {
+      "code": "RETOURE_DROP_OFF",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "A customer's own return dropped off at a ParcelShop (Die Retoure wurde im … PaketShop … abgegeben), which takes it in for Hermes, as PARCELSHOP_DROP_OFF reads. It has not reached the merchant."
+    },
+    {
+      "code": "RETOURE_IN_DELIVERY",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "A customer's own return loaded for delivery to the merchant (Die Retoure wurde ins Zustellfahrzeug geladen und wird voraussichtlich heute zugestellt). After a failed delivery or a return to the sender, the adapter reads it as an exception."
+    },
+    {
       "code": "EDL_BOOKED_DROPOFF",
       "confirmedBy": "official-doc",
       "firstSeen": "2026-09-08",

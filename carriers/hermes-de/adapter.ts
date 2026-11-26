@@ -13,7 +13,7 @@ import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/tra
 import { isRecord } from '../../core/types.js';
 import {
   COLLECTED_AT_PARCELSHOP, DELIVERED_ABROAD, hermesGermanyMilestone, IGNORED_BOOKING_STATUS, IN_PARCELBOX, type Milestone,
-  NOT_COLLECTED_ABROAD, RETURN_HANDOVER, RETURN_SORTED, SENT_BACK,
+  NOT_COLLECTED_ABROAD, RETURN_HANDOVER, RETURN_LEG, SENT_BACK,
 } from './status.js';
 
 // Public recipient protocol inspected 2026-09-08:
@@ -239,7 +239,7 @@ export function parseHermesGermanyResponse(payload: unknown, trackingNumber: str
     }
     shopReadyAt = code === SHOP_READY_ABROAD ? entry.timestamp : null;
     if (entry.event.provider_code === NOT_COLLECTED_ABROAD) uncollected = true;
-    else if ((uncollected && entry.event.provider_code === DELIVERED_ABROAD) || (sentBack && entry.event.provider_code === RETURN_SORTED)) {
+    else if ((uncollected && entry.event.provider_code === DELIVERED_ABROAD) || (sentBack && RETURN_LEG.has(String(entry.event.provider_code)))) {
       entry.metadata = RETURN_HANDOVER;
       entry.event.stage = RETURN_HANDOVER.stage;
     }

@@ -168,6 +168,10 @@ describe('Hermes Germany', () => {
     const back = parseHermesGermanyResponse(progress('HANDED_OVER', 'DELIVERY_FAILED_NOT_MET_4X', 'RETOURE_SORTED'), NUMBER);
     expect(back).toMatchObject({ status: 'exception', current_stage: 'exception' });
     expect(back.events?.map((event) => event.stage)).toEqual(['exception', 'failed_attempt', 'accepted']);
+    const own = parseHermesGermanyResponse(progress('RETOURE_ANNOUNCED', 'RETOURE_DROP_OFF', 'PARCELSHOP_COLLECTED_BY_DRIVER', 'RETOURE_IN_DELIVERY'), NUMBER);
+    expect(own).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
+    expect(own.events?.map((event) => event.stage)).toEqual(['out_for_delivery', 'accepted', 'accepted', 'registered']);
+    expect(parseHermesGermanyResponse(progress('HANDED_OVER', 'DELIVERY_FAILED_NOT_MET_4X', 'RETOURE_IN_DELIVERY'), NUMBER).current_stage).toBe('exception');
   });
 
   it.each([
@@ -177,6 +181,7 @@ describe('Hermes Germany', () => {
     ['RETURN_DELIVERED_TO_SENDER', 'returned'],
     ['RETOURE_DELIVERED', 'returned'],
     ['RETOURE_SORTED', 'in_transit'],
+    ['RETOURE_DROP_OFF', 'accepted'],
     ['DELIVERY_FAILED', 'failed_attempt'],
     ['READY_FOR_PICKUP', 'ready_for_pickup'],
   ])('does not confuse %s with delivery', (code, stage) => {

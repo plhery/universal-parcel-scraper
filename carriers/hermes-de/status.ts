@@ -98,6 +98,11 @@ export const STATUSES: Record<string, Milestone> = {
   // A return parcel prepared at a hub, "Die Retoure wurde in … für den Weiterversand vorbereitet": a customer's own
   // return, dropped off at a ParcelShop, on its way to the merchant. After a failed delivery it is an exception.
   RETOURE_SORTED: milestone('in_transit', 'in_transit', 'Return sorted on its way to the sender'),
+  // The rest of a customer's own return: announced, dropped off at a ParcelShop ("Die Retoure wurde im … PaketShop …
+  // abgegeben"), which takes it in, and out for delivery to the merchant.
+  RETOURE_ANNOUNCED: milestone('registered', 'pending', 'Return announced to Hermes'),
+  RETOURE_DROP_OFF: milestone('accepted', 'in_transit', 'Return dropped off at a ParcelShop'),
+  RETOURE_IN_DELIVERY: milestone('out_for_delivery', 'out_for_delivery', 'Return out for delivery to the sender'),
 };
 
 // Delivery preference bookings (a safe place, a ParcelShop, a delivery day) record the
@@ -112,8 +117,8 @@ export const NOT_COLLECTED_ABROAD = 'INTERNATIONAL_PUDO_NOT_COLLECTED';
 export const DELIVERED_ABROAD = 'INTERNATIONAL_DELIVERED';
 export const RETURN_HANDOVER = milestone('exception', 'exception', 'Returning to sender');
 
-/** A return parcel's sorting, and the stages that make it a parcel sent back rather than a customer's own return. */
-export const RETURN_SORTED = 'RETOURE_SORTED';
+/** A return parcel's sorting and delivery round, and the stages that make it a parcel sent back rather than a customer's own return. */
+export const RETURN_LEG: ReadonlySet<string> = new Set(['RETOURE_SORTED', 'RETOURE_IN_DELIVERY']);
 export const SENT_BACK: ReadonlySet<string> = new Set<Stage>(['failed_attempt', 'exception', 'returned']);
 
 /** The code for a parcel put into a Hermes Box, which waits there for its recipient. */
