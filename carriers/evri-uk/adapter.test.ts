@@ -151,6 +151,7 @@ describe('Evri UK anonymous history', () => {
     ['5_SHOP', 'SYNTHETIC_COLLECTED_POINT', 'delivered', 'delivered'],
     ['6_INFO', 'DELAY_ASAP', 'in_transit', 'in_transit'],
     ['6_INFO', 'DELAY_ONEDAY', 'in_transit', 'in_transit'],
+    ['6_INFO', 'DELAY_ONEDAY_B', 'in_transit', 'in_transit'],
     ['6_INFO', 'DELAY_WORKING_ON_IT', 'in_transit', 'in_transit'],
     ['6_INFO', 'RE_ATTEMPT_NOT_WITHIN_GEOFENCE', 'in_transit', 'in_transit'],
   ])('files rail %s point %s as %s', (stageCode, code, stage, status) => {
@@ -186,6 +187,8 @@ describe('Evri UK anonymous history', () => {
     const delayed = "we're sorry, your parcel has been delayed. we're working to get it on its way on the next working day and we'll let you know when it's out for delivery";
     expect(statusMapAnswer({ carrier: 'evri-uk', providerCode: '6_INFO/DELAY_WORKING_ON_IT', description: delayed }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
+    const later = "we're sorry, your parcel has been delayed. we'll update your tracking when it's on the way on the next working day";
+    expect(statusMapAnswer({ carrier: 'evri-uk', providerCode: '6_INFO/DELAY_ONEDAY_B', description: later })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'evri-uk', providerCode: '6_INFO/POTENTIAL_FRAUD', description: 'potential fraud event' }))
       .toEqual({ kind: 'mapped', stage: 'pending' });
   });

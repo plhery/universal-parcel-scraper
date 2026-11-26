@@ -29,10 +29,11 @@ const POINTS = new Map<string, Stage>([
 
 // Notices on the 6_INFO rail, where Evri also files some of the delay notices it gives on the
 // parcel's own rail. A day without a delivery, the parcel going out again the next working day,
-// is transit, and so is a delay at the depot ("we're working to get it on its way on the next
-// working day"); a fraud flag on the record moves nothing. Other points there stay unstaged.
+// is transit, and so is a delay ("we're working to get it on its way on the next working day",
+// "we'll update your tracking when it's on the way on the next working day"); a fraud flag on the
+// record moves nothing. Other points there stay unstaged.
 const INFO_POINTS = new Map<string, Stage>([
-  ['DELAY_ASAP', 'in_transit'], ['DELAY_ONEDAY', 'in_transit'], ['DELAY_WORKING_ON_IT', 'in_transit'],
+  ['DELAY_ASAP', 'in_transit'], ['DELAY_ONEDAY', 'in_transit'], ['DELAY_ONEDAY_B', 'in_transit'], ['DELAY_WORKING_ON_IT', 'in_transit'],
   ['RE_ATTEMPT_NOT_WITHIN_GEOFENCE', 'in_transit'],
   ['POTENTIAL_FRAUD', 'pending'],
 ]);
