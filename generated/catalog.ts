@@ -36799,7 +36799,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "inputMode": "numeric",
           "autoComplete": "off"
         }
-      ]
+      ],
+      "recognitionRank": 521
     },
     "canaryUrl": "https://www.jtexpress.com.cn/",
     "trackingUrlTemplate": "https://www.jtexpress.com.cn/service.html?indexIpt={trackingNumber}",
@@ -36820,7 +36821,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^JT\\d{13}$",
-        "confidence": "low"
+        "confidence": "low",
+        "servedCountriesOnly": true
       }
     ]
   },

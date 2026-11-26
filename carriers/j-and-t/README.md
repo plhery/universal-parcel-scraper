@@ -27,8 +27,8 @@ approval.
 - The router answers an empty `bills` list for any string it does not hold. That is not
   found only for the prefixes J&T Indonesia issues: `JD`, `JO`, `JX` and `JY` waybills read
   back from the router, and the help centre names `JP`. Other `J` prefixes, `JT` with
-  thirteen digits (mostly Philippine) and twelve digits (shared with other networks and
-  with J&T Cargo) are inconclusive. That answer carries the reason `portal_not_found`, so a
+  thirteen digits (J&T Philippines' and J&T China's) and twelve digits (shared with other
+  networks and with J&T Cargo) are inconclusive. That answer carries the reason `portal_not_found`, so a
   consumer can tell the router's answer from an outage.
 - Router code `617` (signature refused), an HTML page, and HTTP 401 or 403 are challenges.
   Code `490` (the app version is turned away) and HTTP 404 or 410 are transport failures.

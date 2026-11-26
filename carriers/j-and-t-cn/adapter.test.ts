@@ -6,7 +6,9 @@ import { normalizeCarrierInputs } from '../../core/catalog/inputs.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { InputRequiredError, NoHistoryError, UpstreamHttpError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
-import { adapter, J_AND_T_CN_API, J_AND_T_CN_SCANS_API, J_AND_T_CN_SIGNING_SALT, jAndTCnSignedHeaders, JAndTCnTracker } from './adapter.js';
+import {
+  adapter, J_AND_T_CN_API, J_AND_T_CN_HALF_YEAR_API, J_AND_T_CN_SCANS_API, J_AND_T_CN_SIGNING_SALT, jAndTCnSignedHeaders, JAndTCnTracker,
+} from './adapter.js';
 import { jAndTCnAnswer, normalizeJAndTCnNumber, parseJAndTCn } from './parser.js';
 
 const NUMBER = 'JT9000000000017';
@@ -160,6 +162,32 @@ describe('J&T Express China HTTP adapter', () => {
     const asked = vi.fn<typeof fetch>(async (input) => Object.defineProperty(reply({}, { status: 403 }), 'url', { value: String(input) }));
     const failure = await carrier(asked).track({ number: NUMBER, phoneDigits: DIGITS }).catch((error: unknown) => error) as UpstreamHttpError;
     expect(failure.request?.url).toContain(`phoneLast=${DIGITS}`);
+  });
+
+  it('recognizes a waybill by the site’s six-month check, which takes no phone digits', async () => {
+    const fetcher = vi.fn<typeof fetch>(async () => reply({ code: 1, msg: '请求成功', data: true }));
+    const factory = carrier(fetcher);
+    await expect(factory.recognize!(' jt 9000-0000-0001 7 ')).resolves.toEqual({ known: true, lastActivityAt: null });
+    const [[url, init]] = fetcher.mock.calls as [[string, RequestInit]];
+    expect(url).toBe(J_AND_T_CN_HALF_YEAR_API);
+    expect(init).toMatchObject({ method: 'POST', redirect: 'manual', signal: expect.any(AbortSignal) });
+    expect(JSON.parse(String(init.body))).toEqual({ waybillId: NUMBER });
+    const headers = init.headers as Record<string, string>;
+    expect(headers['Content-Type']).toBe('application/json');
+    expect(headers.sign).toBe(md5(md5(`${J_AND_T_CN_SIGNING_SALT}${headers.times}`)));
+    // A waybill it never issued, or one older than six months.
+    fetcher.mockImplementation(async () => reply({ code: 1, msg: '请求成功', data: false }));
+    await expect(factory.recognize!(NUMBER)).resolves.toEqual({ known: false });
+  });
+
+  it('knows no number outside its waybills without a request, and fails on a check that answers no flag', async () => {
+    const fetcher = vi.fn<typeof fetch>(async () => reply({ code: 999001030, msg: '参数无效', data: null }));
+    const factory = carrier(fetcher);
+    await expect(factory.recognize!('JD0012345678')).resolves.toEqual({ known: false });
+    expect(fetcher).not.toHaveBeenCalled();
+    await expect(factory.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'schema' });
+    fetcher.mockImplementation(async () => new Response('<html><script>var acw_sc__v2</script></html>', { headers: { 'Content-Type': 'text/html' } }));
+    await expect(factory.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
   });
 
   it('takes JT or UT and thirteen digits, and puts JT before thirteen bare digits as the page does', () => {

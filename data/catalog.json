@@ -36794,7 +36794,8 @@
           "inputMode": "numeric",
           "autoComplete": "off"
         }
-      ]
+      ],
+      "recognitionRank": 521
     },
     "canaryUrl": "https://www.jtexpress.com.cn/",
     "trackingUrlTemplate": "https://www.jtexpress.com.cn/service.html?indexIpt={trackingNumber}",
@@ -36815,7 +36816,8 @@
     "detectionRules": [
       {
         "pattern": "^JT\\d{13}$",
-        "confidence": "low"
+        "confidence": "low",
+        "servedCountriesOnly": true
       }
     ]
   },

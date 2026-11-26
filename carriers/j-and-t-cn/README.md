@@ -15,6 +15,13 @@ the last four digits of the recipient's or sender's phone the tracker asks for.
    which the page asks `v_5` for them; the adapter does the same.
 2. `retry`: the same lookup once more after a request that does not reach the site or times out.
 
+Recognition asks the site's six-month check instead, which takes no phone digits: a signed
+`POST https://official.jtexpress.com.cn/official/waybill//trackingCustomer/halfYear/flag` with
+`{"waybillId": …}`, a route the page's script defines beside the lookup. It answers `true` for a
+waybill J&T China issued in the last six months, which is known without an activity date, and
+`false` for any other, an older one included, which is unknown. Another answer is a schema
+failure, and a network failure gets one retry.
+
 - The digits come from the optional `phoneDigits` input, which the catalog offers for this
   carrier. Without four digits the adapter asks for them (`input_required`) before any request,
   so a lookup without them goes to universal providers.
@@ -48,8 +55,9 @@ the last four digits of the recipient's or sender's phone the tracker asks for.
 The tracker accepts thirteen digits, or `JT` or `UT` followed by thirteen digits, and puts `JT`
 before thirteen bare digits. Archived lookups on J&T China's tracker carry `JT` numbers. J&T's
 Philippine network prints the same `JT` and thirteen digits, so `j-and-t-cn-1` only suggests
-J&T China alongside J&T Express. Bare thirteen-digit numbers are shared by many carriers and
-have no rule.
+J&T China alongside J&T Express, and keeps it to China (`servedCountriesOnly`): for a lookup from
+another country, recognition asks J&T China only once the other candidates have missed the number.
+Bare thirteen-digit numbers are shared by many carriers and have no rule.
 
 ## Links
 

@@ -18,6 +18,10 @@ describe('J&T Express China live retrieval', () => {
       && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+08:00$/.test(String(event.time)))).toBe(true);
   }, 45_000);
 
+  it.skipIf(!KNOWN)('recognizes the waybill without the phone digits', async () => {
+    await expect(direct().recognize!(KNOWN!)).resolves.toEqual({ known: true, lastActivityAt: null });
+  }, 20_000);
+
   it.skipIf(!KNOWN)('asks for the phone digits without a request', async () => {
     await expect(direct().track({ number: KNOWN! })).rejects.toMatchObject({ kind: 'input_required', field: 'phoneDigits' });
   });

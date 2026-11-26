@@ -40,7 +40,10 @@
     "steps": [
       "direct",
       "retry"
-    ]
+    ],
+    "recognition": {
+      "rank": 521
+    }
   },
   "capabilities": [
     "history",
@@ -99,7 +102,8 @@
     {
       "id": "j-and-t-cn-1",
       "pattern": "^JT\\d{13}$",
-      "confidence": "low"
+      "confidence": "low",
+      "servedCountriesOnly": true
     }
   ]
 }
