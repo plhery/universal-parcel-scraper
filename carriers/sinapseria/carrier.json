@@ -19,6 +19,7 @@
   },
   "capabilities": [],
   "portal": {
+    "url": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=17&onlyCodes=false&awbno={trackingNumber}",
     "searchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=17",
     "helpUrl": "https://sinapseria.ro/contact/",
     "canaryUrl": "https://sinapseria.ro/",
@@ -27,6 +28,14 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "app.couriermanager.eu"
+      ],
+      "pathPattern": "^/cscourier/Main$",
+      "query": "^(?=(?:.*&)?appcont=17(?:&|$))(?:.*&)?awbno=([^&]+)(?=&|$)"
+    }
+  ],
   "detection": []
 }

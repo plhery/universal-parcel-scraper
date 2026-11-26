@@ -22,6 +22,7 @@
   },
   "capabilities": [],
   "portal": {
+    "url": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=13&onlyCodes=false&awbno={trackingNumber}",
     "searchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=13",
     "helpUrl": "https://24curier.ro/contact/",
     "canaryUrl": "https://24curier.ro/",
@@ -30,6 +31,14 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "app.couriermanager.eu"
+      ],
+      "pathPattern": "^/cscourier/Main$",
+      "query": "^(?=(?:.*&)?appcont=13(?:&|$))(?:.*&)?awbno=([^&]+)(?=&|$)"
+    }
+  ],
   "detection": []
 }

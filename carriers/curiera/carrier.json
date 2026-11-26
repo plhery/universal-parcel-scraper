@@ -21,6 +21,7 @@
   },
   "capabilities": [],
   "portal": {
+    "url": "https://app.curiera.ro/cscourier/Main?tracking=true&appcont=4416&onlyCodes=false&awbno={trackingNumber}",
     "searchUrl": "https://app.curiera.ro/cscourier/Main?tracking=true&appcont=4416",
     "helpUrl": "https://curiera.ro/contact/",
     "canaryUrl": "https://curiera.ro/",
@@ -29,6 +30,21 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "app.curiera.ro"
+      ],
+      "pathPattern": "^/cscourier/Main$",
+      "query": "^(?!(?:.*&)?appcont=(?!4416(?:&|$)))(?:.*&)?awbno=([^&]+)(?=&|$)"
+    },
+    {
+      "domains": [
+        "app.couriermanager.eu"
+      ],
+      "pathPattern": "^/cscourier/Main$",
+      "query": "^(?=(?:.*&)?appcont=4416(?:&|$))(?:.*&)?awbno=([^&]+)(?=&|$)"
+    }
+  ],
   "detection": []
 }

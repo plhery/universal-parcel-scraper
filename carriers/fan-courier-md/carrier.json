@@ -21,6 +21,7 @@
   },
   "capabilities": [],
   "portal": {
+    "url": "https://app.fancourier.md/fan/Main?tracking=true&appcont=3895&onlyCodes=false&awbno={trackingNumber}",
     "searchUrl": "https://app.fancourier.md/fan/Main?tracking=true&appcont=3895",
     "helpUrl": "https://www.fancourier.md/contact/",
     "canaryUrl": "https://www.fancourier.md/",
@@ -29,6 +30,14 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "app.fancourier.md"
+      ],
+      "pathPattern": "^/fan/Main$",
+      "query": "^(?!(?:.*&)?appcont=(?!3895(?:&|$)))(?:.*&)?awbno=([^&]+)(?=&|$)"
+    }
+  ],
   "detection": []
 }

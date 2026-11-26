@@ -21,6 +21,7 @@
   },
   "capabilities": [],
   "portal": {
+    "url": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=1311&onlyCodes=false&awbno={trackingNumber}",
     "searchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=1311",
     "helpUrl": "https://intelligentlogistik.ro/contact/",
     "canaryUrl": "https://intelligentlogistik.ro/",
@@ -29,6 +30,14 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "app.couriermanager.eu"
+      ],
+      "pathPattern": "^/cscourier/Main$",
+      "query": "^(?=(?:.*&)?appcont=1311(?:&|$))(?:.*&)?awbno=([^&]+)(?=&|$)"
+    }
+  ],
   "detection": []
 }

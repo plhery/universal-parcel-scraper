@@ -13,13 +13,15 @@ layout, so there is no rule.
 
 ## Why there is no adapter
 
-Its tracker runs on CourierManager, a courier software platform, at app.fancourier.md. The home
-page's form posts the AWB number to it, and it shows the AWB's history. With no public number to
-check its replies against, there is no adapter.
+Its tracker runs on CourierManager, a courier software platform, at app.fancourier.md. It takes
+the AWB number in its address or from the home page's form, and shows the AWB's history. With
+no public number to check its replies against, there is no adapter.
 
 ## Links
 
-Its tracker takes numbers only through a form that posts them, so no address opens one shipment.
+The tracker opens an AWB from its `awbno` parameter. Its host also serves the other
+CourierManager couriers, chosen by `appcont`, and shows FAN Courier Moldova's page when the
+parameter is absent, so the library reads addresses with `appcont=3895` or none.
 
 ## Testing
 

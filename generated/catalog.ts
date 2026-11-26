@@ -5982,9 +5982,18 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://24curier.ro/",
+    "trackingUrlTemplate": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=13&onlyCodes=false&awbno={trackingNumber}",
     "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=13",
     "helpUrl": "https://24curier.ro/contact/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "app.couriermanager.eu"
+        ],
+        "pathPattern": "^/cscourier/Main$",
+        "query": "^(?=(?:.*&)?appcont=13(?:&|$))(?:.*&)?awbno=([^&]+)(?=&|$)"
+      }
+    ],
     "detectionRules": []
   },
   "2ebox": {
@@ -11902,9 +11911,18 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://www.bestcourier.ro/",
+    "trackingUrlTemplate": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=12&onlyCodes=false&awbno={trackingNumber}",
     "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=12",
     "helpUrl": "https://www.bestcourier.ro/contact.php",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "app.couriermanager.eu"
+        ],
+        "pathPattern": "^/cscourier/Main$",
+        "query": "^(?=(?:.*&)?appcont=12(?:&|$))(?:.*&)?awbno=([^&]+)(?=&|$)"
+      }
+    ],
     "detectionRules": []
   },
   "best-express-kh": {
@@ -19352,9 +19370,25 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://curiera.ro/",
+    "trackingUrlTemplate": "https://app.curiera.ro/cscourier/Main?tracking=true&appcont=4416&onlyCodes=false&awbno={trackingNumber}",
     "trackingSearchUrl": "https://app.curiera.ro/cscourier/Main?tracking=true&appcont=4416",
     "helpUrl": "https://curiera.ro/contact/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "app.curiera.ro"
+        ],
+        "pathPattern": "^/cscourier/Main$",
+        "query": "^(?!(?:.*&)?appcont=(?!4416(?:&|$)))(?:.*&)?awbno=([^&]+)(?=&|$)"
+      },
+      {
+        "domains": [
+          "app.couriermanager.eu"
+        ],
+        "pathPattern": "^/cscourier/Main$",
+        "query": "^(?=(?:.*&)?appcont=4416(?:&|$))(?:.*&)?awbno=([^&]+)(?=&|$)"
+      }
+    ],
     "detectionRules": []
   },
   "custom-companies": {
@@ -26977,9 +27011,18 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://www.fancourier.md/",
+    "trackingUrlTemplate": "https://app.fancourier.md/fan/Main?tracking=true&appcont=3895&onlyCodes=false&awbno={trackingNumber}",
     "trackingSearchUrl": "https://app.fancourier.md/fan/Main?tracking=true&appcont=3895",
     "helpUrl": "https://www.fancourier.md/contact/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "app.fancourier.md"
+        ],
+        "pathPattern": "^/fan/Main$",
+        "query": "^(?!(?:.*&)?appcont=(?!3895(?:&|$)))(?:.*&)?awbno=([^&]+)(?=&|$)"
+      }
+    ],
     "detectionRules": []
   },
   "far-international": {
@@ -35748,9 +35791,18 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://intelligentlogistik.ro/",
+    "trackingUrlTemplate": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=1311&onlyCodes=false&awbno={trackingNumber}",
     "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=1311",
     "helpUrl": "https://intelligentlogistik.ro/contact/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "app.couriermanager.eu"
+        ],
+        "pathPattern": "^/cscourier/Main$",
+        "query": "^(?=(?:.*&)?appcont=1311(?:&|$))(?:.*&)?awbno=([^&]+)(?=&|$)"
+      }
+    ],
     "detectionRules": []
   },
   "inter-courier": {
@@ -59352,9 +59404,18 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://sinapseria.ro/",
+    "trackingUrlTemplate": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=17&onlyCodes=false&awbno={trackingNumber}",
     "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=17",
     "helpUrl": "https://sinapseria.ro/contact/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "app.couriermanager.eu"
+        ],
+        "pathPattern": "^/cscourier/Main$",
+        "query": "^(?=(?:.*&)?appcont=17(?:&|$))(?:.*&)?awbno=([^&]+)(?=&|$)"
+      }
+    ],
     "detectionRules": []
   },
   "sinokor-merchant-marine": {

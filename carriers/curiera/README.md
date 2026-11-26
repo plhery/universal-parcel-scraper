@@ -11,11 +11,16 @@ No public page shows a Curiera number or its layout, so there is no rule.
 
 ## Why there is no adapter
 
-Its tracking page, hosted on CourierManager, a courier software platform, takes an AWB through a form and shows its scans. With no public number to check its replies against, there is no adapter.
+Its tracking page, hosted on CourierManager, a courier software platform, takes an AWB in its
+address or through a form and shows its scans. With no public number to check its replies
+against, there is no adapter.
 
 ## Links
 
-Its tracking page takes numbers only through a form that posts them, so no address opens one item.
+The tracking page opens an AWB from its `awbno` parameter. Its host also serves the other
+CourierManager couriers, chosen by `appcont`, and shows Curiera's page when the parameter is
+absent. The library reads addresses on it with Curiera's `appcont=4416` or none, and those
+with `appcont=4416` on CourierManager's shared host.
 
 ## Testing
 
