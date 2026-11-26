@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>先进跨境物流轨迹查询</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/rocket.ico">
+<!--    <link rel="stylesheet" href="https://www.layuicdn.com/layui-v2.6.8/css/layui.css">-->
+    <link rel="stylesheet" href="/css/layui.css">
+    <link rel="stylesheet" href="/css/tracking.css">
+</head>
+<body>
+<div class="layui-container page-wrapper">
+    <form class="layui-form" action="/tracking.html" method="post">
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label" for="order-nos">运单单号</label>
+            <div class="layui-input-block">
+                <textarea id="order-nos" name="orderNos" rows="6" placeholder="请输入要查询的单号，每行一个" class="layui-textarea">AXP0216971
+</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="queryForm">查询</button>
+            </div>
+        </div>
+    </form>
+
+    <div>
+        <div class="tracking-item">
+            <div class="tracking-item-title">
+                运单号：<span>LP00805322393174</span>
+                /
+                派送单号：<span>AXP0216971</span>
+            </div>
+
+            <table class="layui-table" lay-even>
+                <colgroup>
+                    <col width="60"/>
+                    <col width="180"/>
+                    <col width="180"/>
+                    <col/>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>发生时间</th>
+                    <th>发生地点</th>
+                    <th>轨迹内容</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="text-align: center">1</td>
+                    <td>2026-05-04 07:13:35</td>
+                    <td>ALBURY, NSW</td>
+                    <td>Delivered--DELIVERED</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">2</td>
+                    <td>2026-05-04 07:13:00</td>
+                    <td>ALBURY, ABX</td>
+                    <td>OutForDelivery--ATL</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">3</td>
+                    <td>2026-05-04 05:35:00</td>
+                    <td>ALBURY, ABX TO ALBURY, ABX</td>
+                    <td>OutForDelivery--ON BOARD FOR DELIVERY</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">4</td>
+                    <td>2026-05-04 03:35:00</td>
+                    <td>ALBURY, ABX TO ALBURY, ABX</td>
+                    <td>Picked Up</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">5</td>
+                    <td>2026-05-04 01:35:00</td>
+                    <td>ALBURY, ABX TO ALBURY, ABX</td>
+                    <td>Shipment Data Confirmed</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">6</td>
+                    <td>2026-04-30 02:48:00</td>
+                    <td>ALBURY, ABX</td>
+                    <td>IN AGENT DEPOT</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">7</td>
+                    <td>2026-04-29 17:02:00</td>
+                    <td>BANKSTOWN AERODROME, NSW</td>
+                    <td>IN TRANSIT TO AGENT ALBURY</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">8</td>
+                    <td>2026-04-29 17:01:00</td>
+                    <td>BANKSTOWN AERODROME, NSW</td>
+                    <td>IN DEPOT</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">9</td>
+                    <td>2026-04-29 14:28:24</td>
+                    <td>SYD</td>
+                    <td>Finished devanning
+</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">10</td>
+                    <td>2026-04-27 10:00:55</td>
+                    <td>SYD</td>
+                    <td>The importer&#39;s customs clearance has started successfully</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">11</td>
+                    <td>2026-04-27 09:59:55</td>
+                    <td>SYD</td>
+                    <td>Arrived,Waiting for picking up container&amp; devanning
+</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">12</td>
+                    <td>2026-04-16 15:24:58</td>
+                    <td>SHEKOU</td>
+                    <td>Sailing</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">13</td>
+                    <td>2026-04-08 14:06:34</td>
+                    <td>SHEKOU</td>
+                    <td>Released from customs</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">14</td>
+                    <td>2026-04-04 11:56:26</td>
+                    <td></td>
+                    <td>The package is in China Customs inspection, please wait patiently for customs clearance</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">15</td>
+                    <td>2026-04-03 17:34:40</td>
+                    <td>SHEKOU</td>
+                    <td>Export customs declaration begins
+</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">16</td>
+                    <td>2026-04-02 14:02:10</td>
+                    <td></td>
+                    <td>Main line allocation received successfully</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">17</td>
+                    <td>2026-04-02 00:00:00</td>
+                    <td>东莞仓</td>
+                    <td>order checkout</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">18</td>
+                    <td>2026-04-01 13:12:40</td>
+                    <td>东莞仓</td>
+                    <td>Express delivery arrived at operation center</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">19</td>
+                    <td>2026-03-31 22:00:00</td>
+                    <td></td>
+                    <td>InfoReceived--SHIPMENT CREATED</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+
+<script src="https://www.layuicdn.com/layui-v2.6.8/layui.js"></script>
+<script>
+    var emptyTextRegexp = /^[\s\t\n\r]+$/;
+
+    layui.use('form', function () {
+        var form = layui.form;
+
+        form.on('submit(queryForm)', function (data) {
+            var orderNos = data.field.orderNos;
+            if (!orderNos || emptyTextRegexp.test(orderNos)) {
+                layer.open({
+                    type: 0,
+                    content: '请填写要查询的单号',
+                    icon: 2,
+                });
+                return false;
+            }
+            return true;
+        })
+    })
+</script>
+</body>
+</html>

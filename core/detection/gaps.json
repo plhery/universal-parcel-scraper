@@ -429,6 +429,12 @@
     "reason": "Austrian Post delivers Hermes Austria's fourteen-digit parcels and its tracker looks them up; Hermes Germany's and the DPD networks' rules already suggest fourteen digits, and nothing in the number names Austrian Post."
   },
   {
+    "carrier": "austway",
+    "pattern": "^AXP\\d{7}$",
+    "kind": "open",
+    "reason": "One public Austway delivery number has this layout, AXP and seven digits, from a tracking directory's courier page; one sample does not establish the family, and Australia Post's rules already offer the shape at low confidence."
+  },
+  {
     "carrier": "averitt",
     "pattern": "^\\d{10}$",
     "kind": "by_design",

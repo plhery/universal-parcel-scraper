@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>先进跨境物流轨迹查询</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/rocket.ico">
+<!--    <link rel="stylesheet" href="https://www.layuicdn.com/layui-v2.6.8/css/layui.css">-->
+    <link rel="stylesheet" href="/css/layui.css">
+    <link rel="stylesheet" href="/css/tracking.css">
+</head>
+<body>
+<div class="layui-container page-wrapper">
+    <form class="layui-form" action="/tracking.html" method="post">
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label" for="order-nos">运单单号</label>
+            <div class="layui-input-block">
+                <textarea id="order-nos" name="orderNos" rows="6" placeholder="请输入要查询的单号，每行一个" class="layui-textarea">AXP9999999
+</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="queryForm">查询</button>
+            </div>
+        </div>
+    </form>
+
+    <div>
+        
+    </div>
+    <div class="empty">
+        未查询到相关轨迹
+    </div>
+</div>
+
+<script src="https://www.layuicdn.com/layui-v2.6.8/layui.js"></script>
+<script>
+    var emptyTextRegexp = /^[\s\t\n\r]+$/;
+
+    layui.use('form', function () {
+        var form = layui.form;
+
+        form.on('submit(queryForm)', function (data) {
+            var orderNos = data.field.orderNos;
+            if (!orderNos || emptyTextRegexp.test(orderNos)) {
+                layer.open({
+                    type: 0,
+                    content: '请填写要查询的单号',
+                    icon: 2,
+                });
+                return false;
+            }
+            return true;
+        })
+    })
+</script>
+</body>
+</html>

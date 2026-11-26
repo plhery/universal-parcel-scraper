@@ -1,0 +1,24 @@
+{
+  "carrier": "austway",
+  "entries": [
+    {"code": "InfoReceived", "wording": "SHIPMENT CREATED", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The sender's data. A row of the form `Status--wording` keeps the status as its code."},
+    {"code": null, "wording": "Express delivery arrived at operation center", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The parcel reaches Austway's warehouse in Dongguan."},
+    {"code": null, "wording": "order checkout", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The parcel leaves the warehouse."},
+    {"code": null, "wording": "Main line allocation received successfully", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Export customs declaration begins", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "The package is in China Customs inspection, please wait patiently for customs clearance", "stage": "customs", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Released from customs", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Sailing", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Arrived,Waiting for picking up container& devanning", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "The importer's customs clearance has started successfully", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "Import clearance in Australia."},
+    {"code": null, "wording": "Finished devanning", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "IN DEPOT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The delivering partner's depot."},
+    {"code": null, "wording": "IN TRANSIT TO AGENT ALBURY", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Any town after the agent's name reads the same."},
+    {"code": null, "wording": "IN AGENT DEPOT", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Shipment Data Confirmed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The local agent's data, written after the parcel reached its depot."},
+    {"code": null, "wording": "Picked Up", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The local agent's driver taking the parcel from its depot, two hours before the round."},
+    {"code": "OutForDelivery", "wording": "ON BOARD FOR DELIVERY", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
+    {"code": "OutForDelivery", "wording": "ATL", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "Authority to leave, on the round."},
+    {"code": "Delivered", "wording": "DELIVERED", "stage": "delivered", "language": "en", "confirmedBy": "live"}
+  ]
+}

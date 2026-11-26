@@ -1,0 +1,27 @@
+{
+  "carrier": "austway",
+  "records": [
+    {
+      "number": "AXP0216971",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260516134158/https://www.parcelpanel.com/couriers/austway/",
+        "date": "2026-05-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "The sample ParcelPanel's Austway page offered to try, as archived. Austway's tracker answers it as the delivery number of a parcel shipped by sea from Shekou to Sydney and delivered in Albury, New South Wales."
+    }
+  ]
+}

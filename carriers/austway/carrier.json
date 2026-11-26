@@ -1,0 +1,65 @@
+{
+  "id": "austway",
+  "displayName": "Austway",
+  "aliases": [
+    "澳华国际物流",
+    "Austway Cargo"
+  ],
+  "region": {
+    "countries": [
+      "CN",
+      "AU"
+    ]
+  },
+  "brand": {
+    "color": "#C8102E"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "austway",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "searchUrl": "https://api.austway-cargo.cn/tracking.html",
+    "canaryUrl": "https://api.austway-cargo.cn/tracking.html",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "signatory",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}
