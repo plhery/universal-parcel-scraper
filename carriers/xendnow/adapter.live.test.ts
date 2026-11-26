@@ -8,6 +8,9 @@ const direct = () => adapter({ recorder: NOOP_RECORDER, env: {}, trawl: null, br
 // The tracking page's example box, unless another is given.
 const NUMBER = process.env.XENDNOW_TRACKING_NUMBER ?? numbers.records[0]!.number;
 
+// Malaysia keeps UTC+08:00 all year, so its wall clock now is eight hours ahead of UTC.
+const malaysiaNow = () => new Date(Date.now() + 8 * 3_600_000).toISOString();
+
 describe('XendNow live retrieval', () => {
   it('retrieves the requested box with providers disabled', async () => {
     const answer = await createTracker({ providers: [] }).track({ number: NUMBER, carrier: 'xendnow' });
@@ -17,7 +20,7 @@ describe('XendNow live retrieval', () => {
     expect(result.events.length).toBeGreaterThan(0);
     // Coded wordings on a wall clock, none in the future.
     expect(result.events.every((event) => /^\d{1,3}$/.test(String(event.provider_code)) && event.description
-      && event.local_time && event.local_time <= new Date().toISOString())).toBe(true);
+      && event.local_time && event.local_time <= malaysiaNow())).toBe(true);
   });
 
   it('reads an unknown box as not found', async () => {

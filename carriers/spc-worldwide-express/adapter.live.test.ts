@@ -8,6 +8,9 @@ const direct = () => adapter({ recorder: NOOP_RECORDER, env: {}, trawl: null, br
 // The public sample, unless another consignment is given.
 const NUMBER = process.env.SPC_WORLDWIDE_EXPRESS_TRACKING_NUMBER ?? numbers.records[0]!.number;
 
+// Malaysia keeps UTC+08:00 all year, so its wall clock now is eight hours ahead of UTC.
+const malaysiaNow = () => new Date(Date.now() + 8 * 3_600_000).toISOString();
+
 describe('SPC Worldwide Express live retrieval', () => {
   it('retrieves the requested consignment with providers disabled', async () => {
     const answer = await createTracker({ providers: [] }).track({ number: NUMBER, carrier: 'spc-worldwide-express' });
@@ -17,7 +20,7 @@ describe('SPC Worldwide Express live retrieval', () => {
     expect(result.events.length).toBeGreaterThan(0);
     // Status codes on the station's wall clock, none in the future.
     expect(result.events.every((event) => /^[A-Z][A-Z0-9_]+$/.test(String(event.provider_code))
-      && event.local_time && event.local_time <= new Date().toISOString())).toBe(true);
+      && event.local_time && event.local_time <= malaysiaNow())).toBe(true);
   });
 
   it.skipIf(!process.env.SPC_WORLDWIDE_EXPRESS_UNKNOWN_NUMBER)('reads an unknown consignment as not found', async () => {

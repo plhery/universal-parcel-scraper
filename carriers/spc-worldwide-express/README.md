@@ -43,5 +43,5 @@ The result page opens numbers from its `ref` parameter.
 
 ## Testing
 
-`npm run test:carriers:live -- carriers/spc-worldwide-express`, with `SPC_WORLDWIDE_EXPRESS_TRACKING_NUMBER`
-and optionally `SPC_WORLDWIDE_EXPRESS_UNKNOWN_NUMBER` set outside the repository.
+`npm run test:carriers:live -- carriers/spc-worldwide-express` tracks the public sample, or the consignment in
+`SPC_WORLDWIDE_EXPRESS_TRACKING_NUMBER`. The not-found check runs when `SPC_WORLDWIDE_EXPRESS_UNKNOWN_NUMBER` is set.

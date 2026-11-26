@@ -45,5 +45,5 @@ The tracking page opens boxes from its `key` parameter.
 
 ## Testing
 
-`npm run test:carriers:live -- carriers/xendnow`, with `XENDNOW_TRACKING_NUMBER` and optionally
-`XENDNOW_UNKNOWN_NUMBER` set outside the repository.
+`npm run test:carriers:live -- carriers/xendnow` tracks the public sample, or the box in `XENDNOW_TRACKING_NUMBER`,
+and checks an invented box, or the one in `XENDNOW_UNKNOWN_NUMBER`, reads as not found.
