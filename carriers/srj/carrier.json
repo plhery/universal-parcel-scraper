@@ -1,0 +1,73 @@
+{
+  "id": "srj",
+  "displayName": "SRJ",
+  "aliases": [
+    "Siruijie",
+    "思睿捷",
+    "Suzhou Siruijie Supply Chain Management",
+    "苏州思睿捷供应链管理有限责任公司",
+    "上海思睿捷国际物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#FC7F01"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "srj",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "weight",
+    "provider_code",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "destination_country",
+      "parcel_count",
+      "order_reference"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "weight",
+      "provider_code",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "parcel_count",
+      "order_reference"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

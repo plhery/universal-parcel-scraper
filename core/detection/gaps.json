@@ -7103,5 +7103,11 @@
     "pattern": "^EX\\d{8}[A-Z]{2}\\d{4}$",
     "kind": "open",
     "reason": "One public XendNow box id has this layout, from the example card on its tracking page; one sample does not establish the family."
+  },
+  {
+    "carrier": "srj",
+    "pattern": "^LBG\\d{11}$",
+    "kind": "open",
+    "reason": "One public SRJ waybill, LBG and eleven digits, from a tracking directory page; one sample does not establish the family, so the adapter answers explicit selection."
   }
 ]

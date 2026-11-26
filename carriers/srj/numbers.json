@@ -1,0 +1,24 @@
+{
+  "carrier": "srj",
+  "records": [
+    {
+      "number": "LBG26042000398",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260516134321/https://www.parcelpanel.com/couriers/srj/",
+        "date": "2026-05-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The sample number of ParcelPanel's SRJ page, as archived. SRJ's tracker answers it as a parcel for the United States that USPS delivered."
+    }
+  ]
+}

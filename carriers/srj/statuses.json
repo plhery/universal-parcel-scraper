@@ -1,0 +1,112 @@
+{
+  "carrier": "srj",
+  "entries": [
+    {
+      "wording": "The Shipment information received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "SRJ's own first row: the order's data reached its system."
+    },
+    {
+      "wording": "Operation center out of warehouse",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "SRJ's own row, dated by its day alone."
+    },
+    {
+      "code": "RC",
+      "wording": "Shipment Information Received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The line's system received the order's data. The line's rows end in their code in brackets."
+    },
+    {
+      "code": "IS",
+      "wording": "Arrive Processing Center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "OS",
+      "wording": "Leave Processing Center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "OT",
+      "wording": "Import clearance start",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "OT covers the line's other steps, customs and transfers alike, so its wording decides."
+    },
+    {
+      "code": "OT",
+      "wording": "Import customs clearance completed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "OT",
+      "wording": "Cargo is being transshipped locally",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Written after the destination country's code, US."
+    },
+    {
+      "code": "PU",
+      "wording": "Accepted at USPS Origin Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "USPS's first scan, relayed under the line's status Delivered to Local Carrier: the hand-over after import, not the sender's drop-off."
+    },
+    {
+      "code": "TR",
+      "wording": "Arrived at USPS Regional Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A USPS scan relayed under the line's status In Transit."
+    },
+    {
+      "code": "TR",
+      "wording": "Arrived at Post Office",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A USPS scan relayed under the line's status In Transit."
+    },
+    {
+      "code": "BD",
+      "wording": "Out for Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A USPS scan relayed under the line's status Out For Delivery."
+    },
+    {
+      "code": "LD",
+      "wording": "Delivered, In/At Mailbox",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A USPS scan relayed under the line's status Delivered. USPS's sentence after it, which repeats the clock and place with the ZIP code, is left out."
+    },
+    {
+      "code": "3",
+      "wording": "送达！",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Delivered!\": the record's STATE 3, which the tracking page shows with ADATE as the delivery time (送达时间), the clock of USPS's delivery scan."
+    }
+  ]
+}
