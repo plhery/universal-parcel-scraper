@@ -97,7 +97,8 @@ carrier.
   arrival at a parcel centre on the way back, is a leg in transit.
   `InfoReceived` yields to scans 17TRACK files under it: Correios Brazil's posting ("Objeto
   postado") and its export unit abroad receiving the item, and a USPS shipping partner picking
-  the item up or arriving at or leaving its facility before USPS has it.
+  the item up or arriving at or leaving its facility before USPS has it, and "Shipment arrived at
+  facility" in the partner feed WhatsShip relays for some orders.
   `OutForDelivery_Other` yields to a customs step or release in the wording, such as China
   Post's "Import allowed by destination customs" filed under the round, and to a leg between
   offices, such as Poczta Polska's "In transport" and "Arrival at inward office of exchange" on

@@ -25,6 +25,8 @@ export const SUB_STAGES: Record<string, Stage> = {
 const SCANNED = /^objeto (?:postado|recebido na unidade de exporta(?:ção|cao) no pa(?:í|i)s de origem)\.?$/i;
 // A shipping partner collecting and moving a USPS item before USPS has it, which 17TRACK files the same way.
 const PARTNER_SCANNED = /^(?:(?:arrived|departed) shipping partner facility|picked up by shipping partner)\b/i;
+// The arrival at a facility in the partner feed WhatsShip relays for some orders, which 17TRACK files the same way.
+const FACILITY_SCANNED = /^shipment arrived at facility\.?$/i;
 // A customs step, which 17TRACK can file under the delivery round, as China Post's "Import allowed by destination
 // customs" a minute after the round started.
 const CUSTOMS = /\bcustoms\b|海关/i;
@@ -62,7 +64,7 @@ const GENERIC_TRANSIT = new Set(['InTransit_Other', 'InTransit_LocalPickedUp']);
 export function subStatusStage(code: string, worded: Stage, description = ''): Stage | undefined {
   const mapped = Object.hasOwn(SUB_STAGES, code) ? SUB_STAGES[code] : undefined;
   if (!mapped || (GENERIC_TRANSIT.has(code) && worded !== 'pending')) return undefined;
-  if (code === 'InfoReceived' && [SCANNED, PARTNER_SCANNED].some((scan) => scan.test(description.trim()))) return undefined;
+  if (code === 'InfoReceived' && [SCANNED, PARTNER_SCANNED, FACILITY_SCANNED].some((scan) => scan.test(description.trim()))) return undefined;
   if (mapped === 'out_for_delivery' && worded === 'delivered') return undefined;
   if (mapped === 'out_for_delivery' && (worded === 'customs' || (worded === 'in_transit' && CUSTOMS.test(description)))) return undefined;
   return mapped !== 'delivered' || worded === 'delivered' ? mapped : undefined;
