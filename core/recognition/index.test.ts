@@ -376,7 +376,8 @@ describe('settling on a carrier', () => {
     expect(settleRecognition([{ ...dhlExpress, failure: { kind: 'upstream_http' } }, freight], now)).toEqual({ choices: [] });
     // An answer, or a failure saying the carrier holds nothing under the number, lets the other settle.
     expect(settleRecognition([{ ...dhlExpress, status: 'unknown' }, freight], now)).toEqual({ carrier: 'dhl-freight', choices: [] });
-    for (const failure of [{ kind: 'not_found' }, { kind: 'invalid_input' }, { kind: 'input_required' }, { kind: 'carrier_unavailable', reason: 'portal_not_found' }]) {
+    for (const failure of [{ kind: 'not_found' }, { kind: 'invalid_input' }, { kind: 'input_required' }, { kind: 'carrier_unavailable', reason: 'portal_not_found' },
+      { kind: 'indeterminate', reason: 'no_history' }, { kind: 'indeterminate', reason: 'webtrack_no_history' }]) {
       expect(settleRecognition([{ ...dhlExpress, failure }, freight], now), failure.kind).toEqual({ carrier: 'dhl-freight', choices: [] });
     }
     // So does a browser's answer after the HTTP check failed.

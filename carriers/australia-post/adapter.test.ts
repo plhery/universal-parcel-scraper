@@ -530,14 +530,14 @@ describe('Australia Post recognition', () => {
     const unknown = empty(); unknown[0].trackingIds = [NUMBER];
     fetcher.mockResolvedValueOnce(Response.json(unknown));
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: false });
-    // A refusal, an unprocessable reference and a known article without scans are not answers.
+    // A refusal and an unprocessable reference are not answers; a known article without scans is Australia Post's.
     fetcher.mockResolvedValueOnce(new Response('{}', { status: 403 }));
     await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
     fetcher.mockResolvedValueOnce(Response.json([{ status: 500, trackingIds: [NUMBER], error: { errorCode: -1, message: 'Unexpected exception' } }]));
     await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
     const bare = fixture(); bare[0].shipment.articles[0].details[0].events = [];
     fetcher.mockResolvedValueOnce(Response.json(bare));
-    await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null });
     expect(browser).not.toHaveBeenCalled();
     fetcher.mockClear();
     await expect(instance.recognize!('ABC123')).resolves.toEqual({ known: false });

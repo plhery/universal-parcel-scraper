@@ -575,6 +575,14 @@ describe('DHL eCommerce Webtrack', () => {
     expect(fetcher).toHaveBeenCalledTimes(2); expect(browser).not.toHaveBeenCalled();
   });
 
+  it('leaves a package Webtrack lists without history to the global page', async () => {
+    const browser = vi.spyOn(trackingBrowser, 'scrapeUniversalPage');
+    const payload = webtrack(); payload.packages[0]!.events = [];
+    const tracker = new DHLEcommerceTracker({ fetcher: vi.fn(async () => reply(payload)) });
+    await expect(tracker.recognize(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'webtrack_no_history' });
+    expect(browser).not.toHaveBeenCalled();
+  });
+
   it('preserves outage, challenge and malformed answers during recognition', async () => {
     const browser = vi.spyOn(trackingBrowser, 'scrapeUniversalPage');
     for (const status of [403, 404, 410, 429, 503]) {

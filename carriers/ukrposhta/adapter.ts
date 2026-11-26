@@ -2,7 +2,7 @@ import { withLocalBrowser } from '../../core/transport/localBrowser.js';
 import type { Page, Response as BrowserResponse } from 'playwright-core';
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
-import { BudgetExceededError, ChallengeError, IndeterminateError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { BudgetExceededError, ChallengeError, IndeterminateError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { recoverableByDefault, runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { fetchBounded } from '../../core/transport/boundedFetch.js';
@@ -134,15 +134,11 @@ export const adapter: AdapterFactory = environment => {
   // longer than the minute a lookup takes at most.
   const statusApi = new UkrposhtaTracker({ ...options, executablePath: null });
   return { id: 'ukrposhta', recordsSteps: true, steps: ['direct', 'browser'], track: (input, context) => tracker.fetch(input.number, context),
-    recognize: (number, context) => recognizeFromLookup(async () => {
-      try {
-        return await statusApi.fetch(number, { ...context, budgetMs: Math.min(context?.budgetMs ?? 45_000, 60_000) });
-      } catch (error) {
-        // The portal reads the same domestic records, so the status API's miss means Ukrposhta
-        // does not know a domestic barcode now. The portal can still know an international reference.
-        if (error instanceof IndeterminateError && error.reason === 'status_api_not_found'
-          && !isValidS10TrackingNumber(normalizeUkrposhtaNumber(number))) throw new NotFoundError('ukrposhta');
-        throw error;
-      }
-    }, () => accepted(() => normalizeUkrposhtaNumber(number))) };
+    // The portal reads the same domestic records, so the status API's miss means Ukrposhta does
+    // not know a domestic barcode now. The portal can still know an international reference.
+    recognize: (number, context) => recognizeFromLookup(
+      () => statusApi.fetch(number, { ...context, budgetMs: Math.min(context?.budgetMs ?? 45_000, 60_000) }),
+      () => accepted(() => normalizeUkrposhtaNumber(number)),
+      { inconclusive: (error) => error instanceof IndeterminateError && error.reason === 'status_api_not_found'
+        && isValidS10TrackingNumber(normalizeUkrposhtaNumber(number)) }) };
 };

@@ -61,7 +61,9 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: 'la-poste-senegal', recordsSteps: true, steps: ['direct', 'retry'],
     track: (input, context) => tracker.fetch(input.number, context),
+    // The site's own not-found flag could stand for a lookup that failed: it settles nothing.
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
-      () => accepted(() => normalizeLaPosteSenegalNumber(number))),
+      () => accepted(() => normalizeLaPosteSenegalNumber(number)),
+      { inconclusive: (error) => error instanceof IndeterminateError && error.reason === 'portal_not_found' }),
   };
 };

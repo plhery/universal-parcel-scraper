@@ -903,13 +903,13 @@ describe('DHL sessions and browser fallback', () => {
     expect(await tracker.recognizes(NUMBER)).toEqual({ known: true, lastActivityAt: null });
   });
 
-  it('keeps recognition inconclusive without opening the browser', async () => {
+  it('keeps recognition off the browser, and reads a number DHL Paket does not track as unknown', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('Challenge', { status: 403 }));
     await expect(new DHLTracker({ trawl: new TrawlClient('http://trawl:8191') }).recognizes(NUMBER)).rejects.toBeInstanceOf(DHLSessionError);
     expect(fetcher.mock.calls.map(([url]) => String(url))).toEqual([CONFIG]);
     fetcher.mockReset().mockResolvedValueOnce(config())
       .mockResolvedValueOnce(Response.json({ sendungen: [{ id: NUMBER, sendungNichtGefunden: { keineDhlPaketSendung: true } }] }));
-    await expect(new DHLTracker({ trawl: null }).recognizes(NUMBER)).rejects.toThrow('own tracking website');
+    await expect(new DHLTracker({ trawl: null }).recognizes(NUMBER)).resolves.toEqual({ known: false });
   });
 
   it('reports one direct step, then the browser step, through the recorder', async () => {

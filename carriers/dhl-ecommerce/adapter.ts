@@ -495,7 +495,9 @@ export class DHLEcommerceTracker {
         if (error instanceof IndeterminateError && error.reason === 'webtrack_not_found') throw new NotFoundError(PROVIDER);
         throw error;
       }
-    }, () => accepted(() => normalizeDHLEcommerceNumber(trackingNumber)));
+    }, () => accepted(() => normalizeDHLEcommerceNumber(trackingNumber)),
+    // A package Webtrack lists without published history is left to the global page, which may hold it.
+    { inconclusive: (error) => error instanceof IndeterminateError && error.reason === 'webtrack_no_history' });
   }
 
   private async direct(number: string, timeoutMs: number, signal: AbortSignal): Promise<CarrierResult> {

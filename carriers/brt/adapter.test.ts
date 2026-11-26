@@ -317,7 +317,7 @@ describe('BRT direct tracking', () => {
     }
   });
 
-  it('reads BRT\'s not-found-or-processing reply as an unknown shipment, never as absence', async () => {
+  it('reads BRT\'s not-found-or-processing reply as an unknown shipment, never as absence in tracking', async () => {
     for (const number of [SHIPMENT, NUMBER, PARCEL_ID]) {
       expect(() => parseBrt(notFoundPage, number)).toThrowError(expect.objectContaining({ kind: 'indeterminate', reason: 'portal_not_found' }));
     }
@@ -325,7 +325,7 @@ describe('BRT direct tracking', () => {
       { headers: { 'Content-Type': 'text/html; charset=ISO-8859-1' } }));
     await expect(adapter(environment(fetcher)).track({ number: SHIPMENT, postcode: null }))
       .rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
-    await expect(adapter(environment(fetcher)).recognize!(SHIPMENT)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+    await expect(adapter(environment(fetcher)).recognize!(SHIPMENT)).resolves.toEqual({ known: false });
     const page = (fn: (document: ReturnType<typeof load>) => void) => { const $ = load(notFoundPage); fn($); return $.html(); };
     for (const body of [notFoundPage.replace('TIS0564', 'TIS0565'), notFoundPage.replace('TIS0564 ', ''), notFoundPage.replace('still being processed', 'being processed'),
       notFoundPage.replace('Errori riscontrati</label>', 'Avviso</label>'), notFoundPage.replace('box_tool_content', 'hidden'),

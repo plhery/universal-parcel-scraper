@@ -20,7 +20,8 @@ malformed replies, cancellation and spent budgets stop the lookup. Browser
 lookups are serialized per instance.
 
 Opt-in browser recognition goes straight to the global page after an inconclusive
-HTTP check. It requires dated activity and returns the history with its confirmation.
+HTTP check, such as a package Webtrack lists without history. It requires dated activity
+and returns the history with its confirmation.
 
 A USPS routing barcode opens with the recipient's ZIP code. Every lookup asks for the
 package identifier after it instead, which Webtrack also tracks, and the result reports

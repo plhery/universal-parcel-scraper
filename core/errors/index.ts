@@ -84,12 +84,24 @@ export class IndeterminateError extends CarrierError {
 }
 
 /**
- * A universal provider looked the number up and has no history for it yet (not
+ * The reasons of an inconclusive answer that is the source's own reply about the number: it
+ * shows no parcel, or no history, under it. The source answered, but may not prove absence: a
+ * label not scanned yet looks the same. A regional tracker that does not list the item (DHL
+ * eCommerce's Webtrack, `webtrack_not_found`) is no such answer: the carrier's global one may
+ * know it.
+ */
+export const UNKNOWN_ITEM_REASONS: ReadonlySet<string> = new Set([
+  'status_api_not_found', 'portal_not_found', 'no_history', 'webtrack_no_history',
+]);
+
+/**
+ * A universal provider or a carrier looked the number up and has no history for it yet (not
  * announced, not handed over). An answer about the parcel, not an outage. With the
  * reason `short_number`, the number was too short to send without its carrier; with
  * `unattributed_history`, the provider's answer for a number that short named another carrier or none.
  * With `listed`, the carrier lists the shipment but holds no scan for it, as for one booked,
- * announced or labelled: the carrier knows the number.
+ * announced or labelled: the carrier knows the number. So it does with `parcel_found`, with
+ * `written_ahead`, and when the record names the delivery carrier or planned steps.
  */
 export class NoHistoryError extends IndeterminateError {
   /**

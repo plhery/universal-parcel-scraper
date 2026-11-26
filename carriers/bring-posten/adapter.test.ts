@@ -341,7 +341,7 @@ describe('Bring bounded anonymous retrieval', () => {
     await expect(tracker.recognize!('RR000000004DE', {})).resolves.toEqual({ known: false }); expect(fetcher).not.toHaveBeenCalled();
     fetcher.mockImplementation(async url => (String(url).includes('/json/')
       ? Response.json({ error: 'No shipments found', errorState: 'NOT_FOUND' }, { status: 404 }) : new Response(PAGE_NOT_FOUND, { status: 404 })));
-    await expect(tracker.recognize!('370000000000000001', {})).rejects.toMatchObject({ reason: 'portal_not_found' });
+    await expect(tracker.recognize!('370000000000000001', {})).resolves.toEqual({ known: false });
   });
 
   it('validates inputs, response bytes, cancellation and malformed JSON', async () => {

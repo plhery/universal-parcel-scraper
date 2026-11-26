@@ -153,7 +153,7 @@ describe('Etomars transport and recognition', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
     const empty = adapter({ fetcher: vi.fn(async () => new Response(miss())),
       recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
-    await expect(empty.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(empty.recognize!(NUMBER)).resolves.toEqual({ known: false });
   });
 
   it('cancels before dispatch and leaves unsupported order-reference modes to fallback', async () => {

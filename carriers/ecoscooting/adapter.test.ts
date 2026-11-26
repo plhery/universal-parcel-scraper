@@ -241,8 +241,8 @@ describe('Ecoscooting parcel history', () => {
       .mockResolvedValueOnce(new Response(JSON.stringify({ success: 'false', errorCode: 'P-011-0201-00-00-502', errorMsg: 'query logisticOrder by mailNo error' })));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
     await expect(instance.recognize!(NUMBER)).resolves.toMatchObject({ known: true });
-    // The query error also comes for a label not yet announced, so it settles nothing.
-    await expect(instance.recognize!(OTHER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    // The query error is Ecoscooting's answer that it shows no parcel, as for a label not yet announced.
+    await expect(instance.recognize!(OTHER)).resolves.toEqual({ known: false });
     await expect(instance.recognize!('ZZ')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

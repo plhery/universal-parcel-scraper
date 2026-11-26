@@ -206,7 +206,7 @@ describe('Canpar retrieval', () => {
     expect(new Headers(init?.headers).has('Cookie')).toBe(false);
     const empty = fixture(); empty.result[0].events = [];
     fetcher.mockResolvedValueOnce(Response.json(empty));
-    await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: false });
   });
 
   it.each([[404, 'transport'], [403, 'challenge'], [429, 'rate_limited'], [503, 'maintenance']])('keeps HTTP %s distinct from absence', async (status, kind) => {

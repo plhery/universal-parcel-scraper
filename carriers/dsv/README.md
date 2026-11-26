@@ -68,8 +68,8 @@ references, goods and the packages' own rows are not read.
 
 Recognition asks the former DB Schenker tracker about an STT straight away, puzzle included, as
 myDSV's search does not know them; any other number takes the ordinary lookup. It waits three
-seconds at most. A later answer, and a number neither tracker knows, leave DSV offered by its
-detection rule alone.
+seconds at most. A later answer leaves DSV offered by its detection rule alone; a number neither
+tracker knows is unknown.
 
 ## Notes
 

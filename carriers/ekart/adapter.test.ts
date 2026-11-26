@@ -157,12 +157,12 @@ describe('Ekart retrieval', () => {
     expect(new Headers(init?.headers).get('x-user-agent')).toBe('Synthetic tracker EKCL/website/1');
     expect(init?.signal).toBeInstanceOf(AbortSignal);
   });
-  it('recognizes a number with history, leaves its empty answer open, and asks nothing for another shape', async () => {
+  it('recognizes a number with history, reads its empty answer as unknown, and asks nothing for another shape', async () => {
     const replying = (body: unknown) => vi.fn<typeof fetch>().mockImplementation(async (url) => String(url).includes('/shipmenttrack/')
       ? new Response('<meta name="csrf-token" content="synthetic-csrf">') : new Response(JSON.stringify(body)));
     const carrier = (fetcher: typeof fetch) => adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
     await expect(carrier(replying(fixture())).recognize!(NUMBER)).resolves.toMatchObject({ known: true });
-    await expect(carrier(replying({})).recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+    await expect(carrier(replying({})).recognize!(NUMBER)).resolves.toEqual({ known: false });
     const unused = vi.fn<typeof fetch>();
     await expect(carrier(unused).recognize!('FMPP123')).resolves.toEqual({ known: false });
     expect(unused).not.toHaveBeenCalled();

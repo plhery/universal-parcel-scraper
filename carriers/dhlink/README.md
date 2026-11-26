@@ -56,7 +56,8 @@ page makes.
   block page and HTTP 403, on the page and the lookup alike. A block is a challenge, never a
   missing parcel. Redirects are not followed.
 - Recognition makes the same request. A parcel listed under the number asked, before a scan, is
-  known to it, without an activity date.
+  known to it, without an activity date. The empty answer for a DHLink number or a last leg's
+  number settles nothing, as in tracking.
 
 ## Notes
 

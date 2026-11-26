@@ -338,7 +338,9 @@ export const adapter: AdapterFactory = (environment) => {
     recognize: async (number, context) => {
       // Only the browser phase can resolve a piece; over HTTP it stays inconclusive.
       if (isPieceId(number)) throw new IndeterminateError(PROVIDER, 'DHL Express resolves piece identifiers on its browser page only');
-      return recognizeFromLookup(() => tracker.direct(number, context), () => accepted(() => normalizeNumber(number)));
+      // A waybill the mobile API holds records for but shows nothing about is left to the global page.
+      return recognizeFromLookup(() => tracker.direct(number, context), () => accepted(() => normalizeNumber(number)),
+        { inconclusive: (error) => error instanceof IndeterminateError && error.reason === 'portal_not_found' });
     },
     recognizeWithBrowser: async (number, context, previousError) => {
       // The adapter's own pacing of the app's API says nothing about the global page.

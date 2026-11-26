@@ -147,7 +147,7 @@ describe('guest adapter routing and recognition', () => {
     }
   });
 
-  it('recognizes only the supplied HTTP history, with exact Fez absence negative and ShipGlobal absence inconclusive', async () => {
+  it('recognizes only the supplied HTTP history, and reads Fez\'s and ShipGlobal\'s absence answers as unknown', async () => {
     for (const entry of [cases[0]!, cases[2]!]) {
       const instance = entry.factory(environment(vi.fn(async () => new Response(body(entry)))));
       await expect(instance.recognize!(entry.number)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-07-04T10:20:30', finished: true });
@@ -156,6 +156,6 @@ describe('guest adapter routing and recognition', () => {
     const fez = fezDelivery(environment(vi.fn(async () => Response.json({ status: 'Error', description: 'Order Not Found', history: '' }))));
     await expect(fez.recognize!(cases[0]!.number)).resolves.toEqual({ known: false });
     const ship = shipglobalUs(environment(vi.fn(async () => Response.json({ message: 'Invalid tracking number' }, { status: 400 }))));
-    await expect(ship.recognize!(cases[2]!.number)).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(ship.recognize!(cases[2]!.number)).resolves.toEqual({ known: false });
   });
 });

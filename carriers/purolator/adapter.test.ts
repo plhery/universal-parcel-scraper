@@ -24,7 +24,7 @@ describe('Purolator direct tracking', () => {
     fetcher.mockResolvedValue(new Response('Too many requests', { status: 429, headers: { 'Retry-After': '60' } }));
     await expect(carrier.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 60_000 });
     fetcher.mockResolvedValue(Response.json({ searchResult: [{ sequenceId: 1, trackingId: NUMBER, status: 'NOT FOUND', shipmentIndex: -1 }], shipment: [] }));
-    await expect(carrier.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+    await expect(carrier.recognize!(NUMBER)).resolves.toEqual({ known: false });
   });
   it('maps each historical code and preserves cross-country clocks without assigning a zone', () => {
     const result = normalizeCarrierResult(parsePurolator(payload(), NUMBER));

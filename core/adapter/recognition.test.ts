@@ -2,7 +2,10 @@ import { readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { InputRequiredError, InvalidInputError, NotFoundError, UpstreamHttpError } from '../errors/index.js';
+import {
+  BudgetExceededError, CarrierError, ChallengeError, IndeterminateError, InputRequiredError, InvalidInputError, MaintenanceError, NoHistoryError,
+  NotFoundError, RateLimitedError, SchemaError, TransportError, UNKNOWN_ITEM_REASONS, UpstreamHttpError, UpstreamNetworkError,
+} from '../errors/index.js';
 import { REGISTRY } from '../../generated/registry.js';
 import { NOOP_RECORDER } from '../telemetry/index.js';
 import { AdapterRegistry, accepted, recognizeFromBrowserLookup, recognizeFromLookup } from './index.js';
@@ -92,6 +95,69 @@ describe('recognition from a plain lookup', () => {
     await expect(recognizeFromLookup(async () => { throw new UpstreamHttpError('Carrier', 503); })).rejects.toThrow();
   });
 
+  it('reads a carrier\'s answer that shows no parcel under the number as unknown', async () => {
+    const answers: Error[] = [
+      new NoHistoryError('Carrier', undefined, { reason: 'portal_not_found' }),
+      ...[...UNKNOWN_ITEM_REASONS].map((reason) => new IndeterminateError('Carrier', undefined, { reason })),
+      // An adapter that rebuilds a failure keeps its kind and reason.
+      new CarrierError('indeterminate', 'Carrier', 'No history', { reason: 'portal_not_found' }),
+    ];
+    for (const answer of answers) {
+      await expect(recognizeFromLookup(async () => { throw answer; }), answer.message).resolves.toEqual({ known: false });
+      // A step runner's wrapper keeps the answer.
+      await expect(recognizeFromLookup(async () => { throw new Error('direct failed', { cause: answer }); })).resolves.toEqual({ known: false });
+    }
+    expect([...UNKNOWN_ITEM_REASONS].sort()).toEqual(['no_history', 'portal_not_found', 'status_api_not_found', 'webtrack_no_history']);
+  });
+
+  it('knows a number the carrier holds a record of without a scan', async () => {
+    const answers: Error[] = [
+      new NoHistoryError('Carrier', undefined, { reason: 'listed' }),
+      new NoHistoryError('Carrier', undefined, { reason: 'parcel_found' }),
+      new NoHistoryError('Carrier', undefined, { reason: 'written_ahead', writtenAhead: ['2026-09-09T08:00:00+02:00'] }),
+      // A record that names the delivery carrier, or steps the carrier wrote ahead of them.
+      new NoHistoryError('Carrier', undefined, { deliveryCarrier: 'dpd', deliveryTrackingNumber: '01234567890123' }),
+      new NoHistoryError('Carrier', undefined, { plannedEvents: [{ time: '2026-09-09T08:00:00Z', description: 'Departure', stage: 'in_transit' }] }),
+      new CarrierError('indeterminate', 'Carrier', 'Listed', { reason: 'listed' }),
+    ];
+    for (const answer of answers) {
+      await expect(recognizeFromLookup(async () => { throw answer; }), answer.message).resolves.toEqual({ known: true, lastActivityAt: null });
+      await expect(recognizeFromLookup(async () => { throw new Error('direct failed', { cause: answer }); })).resolves.toEqual({ known: true, lastActivityAt: null });
+    }
+  });
+
+  it('keeps every failure that says nothing about the number a failure', async () => {
+    const failures: Error[] = [
+      new IndeterminateError('Carrier'),
+      new IndeterminateError('Carrier', 'Endpoint unavailable', { reason: 'session_rejected' }),
+      // A regional tracker's miss: the carrier's global tracker may know the number.
+      new IndeterminateError('Carrier', undefined, { reason: 'webtrack_not_found' }),
+      new UpstreamHttpError('Carrier', 502),
+      new UpstreamNetworkError('Carrier', new Error('socket hang up')),
+      new ChallengeError('Carrier'),
+      new RateLimitedError('Carrier', 60_000),
+      new MaintenanceError('Carrier'),
+      new SchemaError('Carrier'),
+      new TransportError('Carrier'),
+      new BudgetExceededError('Carrier', 8_000),
+      // A no-history answer without a reason may be a record the carrier holds without rows, or none.
+      new NoHistoryError('Carrier'),
+      new NoHistoryError('Carrier', undefined, { reason: 'unsupported_reference' }),
+      // The first carrier error in the chain decides: an outage that wraps an older answer is an outage.
+      new IndeterminateError('Carrier', 'Unavailable', { cause: new NoHistoryError('Carrier') }),
+    ];
+    for (const failure of failures) {
+      await expect(recognizeFromLookup(async () => { throw failure; }), failure.message).rejects.toBe(failure);
+    }
+  });
+
+  it('keeps an answer the adapter reads as inconclusive a failure', async () => {
+    const blank = new IndeterminateError('Carrier', 'Shows nothing for the waybill', { reason: 'portal_not_found' });
+    const inconclusive = (error: unknown) => error === blank;
+    await expect(recognizeFromLookup(async () => { throw blank; }, undefined, { inconclusive })).rejects.toBe(blank);
+    await expect(recognizeFromLookup(async () => { throw new NotFoundError('Carrier'); }, undefined, { inconclusive })).resolves.toEqual({ known: false });
+  });
+
   it('knows a parcel the carrier holds behind the recipient\'s postcode, and no number a form asks a postcode for', async () => {
     const held = new InputRequiredError('Carrier', 'a postcode', undefined, { reason: 'parcel_found' });
     await expect(recognizeFromLookup(async () => { throw held; })).resolves.toEqual({ known: true, lastActivityAt: null });
@@ -155,6 +221,16 @@ describe('browser confirmation', () => {
     });
     await expect(recognizeFromBrowserLookup(async () => { throw new NotFoundError('Carrier'); })).resolves.toEqual({ known: false, lastActivityAt: null });
     await expect(recognizeFromBrowserLookup(async () => { throw new UpstreamHttpError('Carrier', 503); })).rejects.toThrow();
+  });
+
+  it('reads the page\'s answer without history as over HTTP, with no history to reuse', async () => {
+    await expect(recognizeFromBrowserLookup(async () => { throw new IndeterminateError('Carrier', undefined, { reason: 'portal_not_found' }); }))
+      .resolves.toEqual({ known: false, lastActivityAt: null });
+    await expect(recognizeFromBrowserLookup(async () => { throw new NoHistoryError('Carrier', undefined, { reason: 'portal_not_found' }); }))
+      .resolves.toEqual({ known: false, lastActivityAt: null });
+    await expect(recognizeFromBrowserLookup(async () => { throw new NoHistoryError('Carrier', undefined, { reason: 'listed' }); }))
+      .resolves.toEqual({ known: true, lastActivityAt: null });
+    await expect(recognizeFromBrowserLookup(async () => { throw new ChallengeError('Carrier'); })).rejects.toThrow(ChallengeError);
   });
 
   it('normalizes the retained result like every tracking result', async () => {

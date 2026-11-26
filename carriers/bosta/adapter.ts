@@ -1,5 +1,5 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { ChallengeError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
@@ -68,7 +68,9 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: 'bosta', recordsSteps: true, steps: ['direct', 'retry'],
     track: (input, context) => tracker.fetch(input.number, context),
+    // A draft order under review is Bosta's record of the number, which may never ship: it settles nothing.
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
-      () => accepted(() => normalizeBostaNumber(number))),
+      () => accepted(() => normalizeBostaNumber(number)),
+      { inconclusive: (error) => error instanceof NoHistoryError && error.reason === 'no_history' }),
   };
 };

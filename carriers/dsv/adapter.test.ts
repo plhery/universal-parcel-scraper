@@ -407,13 +407,13 @@ describe('DSV former DB Schenker tracker', () => {
     expect(booking.mock.calls.every(([url]) => String(url).startsWith('https://mydsv.com/app/search/'))).toBe(true);
   });
 
-  it('leaves DSV offered by its rule alone when the former tracker does not know an STT or answers late', async () => {
+  it('reads an STT the former tracker does not know as unknown, and gives up on one it answers late', async () => {
     const long = 'DEXYZ000000001';
     for (const details of [() => reply('{"code":"TRACKING-BADREQ-SHIPMENT_NOT_FOUND"}', 400), () => reply('{"code":"TRACKING-NOTFOUND"}', 404)]) {
       const fetcher = former('schenker-search', details);
-      await expect(carrier(fetcher).recognize!(long)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+      await expect(carrier(fetcher).recognize!(long)).resolves.toEqual({ known: false });
       await expect(createTracker({ fetcher, providers: [], env: {} }).recognize(long))
-        .resolves.toMatchObject({ choices: [], asked: ['dsv'], unanswered: ['dsv'] });
+        .resolves.toMatchObject({ choices: [], asked: ['dsv'], unanswered: [] });
     }
     expect(detectCarrierMatch(long)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dsv'] });
     const answers = former('schenker-search');

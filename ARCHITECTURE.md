@@ -361,7 +361,8 @@ error's class name; a plain `CarrierError`, which an adapter builds to keep a fa
 its cause, gives the class its kind stands for. An inconclusive error
 for the carrier's own answer that it holds no history under the number, an empty result or
 not-found notice, carries `portal_not_found`, so a consumer can tell that answer from an
-outage; it does not make the parcel absent. An answer without history from a carrier that lists
+outage; it does not make the parcel absent. `UNKNOWN_ITEM_REASONS` lists it with the other
+reasons for such an answer. An answer without history from a carrier that lists
 the shipment but holds no scan for it, as for one booked, announced or labelled, carries
 `listed`: the carrier knows the number. A rate limit an adapter's own pacing imposes,
 refused before any request, carries `self_paced`: the lookup sent nothing, so a consumer can
@@ -405,10 +406,20 @@ Recognition uses HTTP by default. Consumers can request `recognitionCandidates` 
 can name the numbers a browser lookup is worth, as DPD France's layouts;
 recipient inputs exclude a candidate. A carrier that holds the parcel but shows it only with
 the recipient's input knows the number: the adapter's `input_required` error carries the
-reason `parcel_found`, and recognition answers known without an activity date. A carrier whose HTTP recognition cannot bind every number
+reason `parcel_found`, and recognition answers known without an activity date. So it does for
+an answer without history that shows the carrier holds a record of the number: `listed`,
+`parcel_found` or `written_ahead`, or a record naming the delivery carrier or planned steps. An
+answer with a reason of `UNKNOWN_ITEM_REASONS` is the carrier's answer that it shows no parcel
+under the number: recognition answers unknown, as for a not-found. A no-history answer without a
+reason fails, since adapters also give it for a record without rows. An adapter marks an answer
+that settles nothing for it as `inconclusive`, and recognition fails on it: one its browser
+confirmation reads further, as DHL Express's blank checkpoint and a package DHL eCommerce's
+Webtrack lists without history, or a miss from a search that does not find every parcel by the
+number asked, as DHLink's for a DHLink number. A carrier whose HTTP recognition cannot bind every number
 its rules offer names the ones it can, and is only suggested for the rest: Saia's service never
-sees a PRO's twelfth digit. Browser confirmation requires dated shipment activity
-and returns its tracking result for reuse. Through an `AdapterRegistry`, that result is finished
+sees a PRO's twelfth digit. Browser confirmation requires dated shipment activity, or the
+carrier's word that it holds a record of the number, and returns the tracking result of dated
+activity for reuse. Through an `AdapterRegistry`, that result is finished
 for the carrier asked as `trackCarrier` finishes a lookup; an adapter's own `track()` answer is
 not, and goes through `trackCarrier` or `createTracker()`. An ambiguous ten-digit number includes DHL Express among its direct candidates when its waybill check passes. Its
 facility clocks are dated where the scan's location settles a zone and stay unresolved
@@ -442,8 +453,9 @@ the carrier left to the number.
 Consumers bound concurrency, cache answers and
 decide when another check is due. `recognizeAll` passes cancellation and its budget to each
 callback and discards late answers. A failed outcome that threw a carrier error carries its kind
-and reason as `failure`: `portal_not_found` is the carrier's own empty answer, which leaves the
-carrier offered by its rule; a check without `failure` threw no carrier error or did not answer in time.
+and reason as `failure`: a reason of `UNKNOWN_ITEM_REASONS` is the carrier's own empty answer that
+its adapter marked inconclusive, which leaves the carrier offered by its rule; a check without
+`failure` threw no carrier error or did not answer in time.
 Pass the earlier HTTP error as the browser method's third argument so the adapter retains
 its recovery policy, including rate limits and malformed responses.
 
@@ -479,7 +491,7 @@ carrier that knows the number passes a check digit of its own (the candidate lis
 input, then the one serving the country hint (each candidate carries the match as
 `countryMatch`), then the highest rank. Other unrelated carriers stay a choice. While a
 carrier number evidence backs has failed without saying it holds nothing under the number
-(`not_found`, `invalid_input`, `input_required` or `portal_not_found`), and answered no other
+(`not_found`, `invalid_input`, `input_required` or a reason of `UNKNOWN_ITEM_REASONS`), and answered no other
 ask, neither the only answer nor a brand's pick is taken when the evidence leaves it out and
 it is not among the backed carrier's `checkDigitPeers`: the parcel may be the backed carrier's.
 `recognitionNumberShape` retains only character classes and run lengths for private

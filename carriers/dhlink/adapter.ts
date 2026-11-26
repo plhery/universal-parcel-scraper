@@ -1,5 +1,5 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, NoHistoryError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
@@ -56,11 +56,11 @@ export const adapter: AdapterFactory = (environment) => {
     id: 'dhlink', recordsSteps: true, steps: ['direct', 'retry'],
     track: (input, context) => tracker.fetch(input.number, context),
     // A parcel listed under the number asked, before its warehouse scans it, is DHLink's: the
-    // answer binds the number, so recognition knows it, without an activity date.
+    // answer binds the number, so recognition knows it, without an activity date. The empty
+    // answer for a DHLink number or a last leg's number settles nothing: the search finds
+    // neither parcel by them.
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
-      () => accepted(() => normalizeDhlinkNumber(number))).catch((error: unknown) => {
-      if (error instanceof NoHistoryError && error.reason === 'listed') return { known: true, lastActivityAt: null };
-      throw error;
-    }),
+      () => accepted(() => normalizeDhlinkNumber(number)),
+      { inconclusive: (error) => error instanceof IndeterminateError && error.reason === 'portal_not_found' }),
   };
 };

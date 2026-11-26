@@ -3,7 +3,7 @@ import type { Recognition, TrackingContext } from '../adapter/index.js';
 import { carrierBrand } from '../catalog/networks.js';
 import { followsPartnerNumbers } from '../catalog/partners.js';
 import type { RecognitionCandidate } from '../catalog/recognition.js';
-import { CarrierError } from '../errors/index.js';
+import { CarrierError, UNKNOWN_ITEM_REASONS } from '../errors/index.js';
 import { isoTime } from '../time/index.js';
 import { CARRIER_RECOGNITION_RANKS } from '../../generated/recognition.js';
 
@@ -52,8 +52,10 @@ export interface RecognitionOutcome extends RecognitionCandidate {
   finished?: boolean;
   /**
    * For a `failed` outcome whose check threw a carrier error, that error's kind and reason; absent
-   * when the check found no carrier error or did not answer in time. `portal_not_found` is the
-   * carrier's own answer that it holds no history under the number, which does not rule it out.
+   * when the check found no carrier error or did not answer in time. A reason of
+   * `UNKNOWN_ITEM_REASONS`, such as `portal_not_found`, is the carrier's own answer that it holds
+   * no history under the number, which does not rule it out: the adapter marked it inconclusive,
+   * as when its browser confirmation reads further.
    */
   failure?: { kind: string; reason?: string };
 }
@@ -153,7 +155,7 @@ export function settleRecognition(outcomes: readonly RecognitionOutcome[], now =
   // A backed carrier that failed, and answered no other ask, as a browser's after HTTP's. A carrier
   // whose own check digit passes is not held back by a preference resting on a check digit alone.
   const unanswered = outcomes.filter((outcome) => outcome.preferred && outcome.status === 'failed'
-    && !CANNOT_ANSWER.has(outcome.failure?.kind ?? '') && outcome.failure?.reason !== 'portal_not_found'
+    && !CANNOT_ANSWER.has(outcome.failure?.kind ?? '') && !UNKNOWN_ITEM_REASONS.has(outcome.failure?.reason ?? '')
     && !outcomes.some((other) => other.carrier === outcome.carrier && other.status !== 'failed'));
   const waits = (outcome: RecognitionOutcome) => !outcome.preferred
     && unanswered.some((backed) => backed.carrier !== outcome.carrier && !backed.checkDigitPeers?.includes(outcome.carrier));

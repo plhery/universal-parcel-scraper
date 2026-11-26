@@ -8,7 +8,7 @@
  * `AdapterEnvironment` provides, and it reports through the `StepRecorder`.
  */
 import { isPlaceholderNumber } from '../detection/placeholder.js';
-import { BudgetExceededError, CarrierError, carrierErrorKind, InvalidInputError } from '../errors/index.js';
+import { BudgetExceededError, CarrierError, InvalidInputError, NoHistoryError, UNKNOWN_ITEM_REASONS } from '../errors/index.js';
 import { normalizeCarrierResult, type CarrierResult } from '../result/index.js';
 import type { StepRecorder } from '../telemetry/index.js';
 import type { Egress } from '../transport/egress.js';
@@ -185,8 +185,9 @@ export interface CarrierAdapter {
   /**
    * Required when carrier.json declares `tracking.recognition`: whether the
    * carrier knows the number, without the user's inputs, through plain HTTP
-   * only (never a browser tier). A positive not-found is `known: false`; any
-   * other failure throws.
+   * only (never a browser tier). An answer that shows no parcel under the number
+   * is `known: false`; one that shows the carrier holds it without a scan is
+   * known without an activity date; any other failure throws (`recognizeFromLookup`).
    */
   recognize?(number: string, context?: TrackingContext): Promise<Recognition>;
   /** Opt-in confirmation through the adapter's browser path, without recipient inputs. */
@@ -195,13 +196,6 @@ export interface CarrierAdapter {
 
 export type AdapterFactory = (environment: AdapterEnvironment) => CarrierAdapter;
 
-/**
- * `recognize()` for an adapter whose ordinary lookup is already cheap: a
- * result with scans, or a status past pending, is known; a positive not-found
- * is unknown; any other failure is thrown. `accepts` is the adapter's own
- * number check: a form it cannot look up is unknown without a request. Only
- * for lookups without a browser tier.
- */
 /** Whether a number check passes: false when it rejects the number. */
 export function accepted(check: () => unknown): boolean {
   try {
@@ -213,29 +207,69 @@ export function accepted(check: () => unknown): boolean {
   }
 }
 
-/** The first carrier error in the chain asks for an input to show a parcel the carrier holds. */
-function foundBehindInput(error: unknown): boolean {
+/** Reasons an answer without a scan gives for a record the carrier holds under the number. */
+const HELD_REASONS: ReadonlySet<string> = new Set(['listed', 'parcel_found', 'written_ahead']);
+
+/**
+ * What a failed lookup's first carrier error says about the number: `held` when the carrier
+ * holds a record of it without a scan to show, `absent` when the carrier shows no parcel under
+ * it, and undefined when the failure says nothing about the number (an outage, a challenge, a
+ * changed reply, a regional tracker's miss).
+ */
+function answerOf(error: unknown): 'held' | 'absent' | undefined {
   const seen = new Set<unknown>();
   for (let current = error; current instanceof Error && !seen.has(current) && seen.size < 8; current = current.cause) {
     seen.add(current);
-    if (current instanceof CarrierError) return current.kind === 'input_required' && current.reason === 'parcel_found';
+    if (!(current instanceof CarrierError)) continue;
+    const reason = current.reason ?? '';
+    // The carrier holds the parcel and shows it only once the recipient gives an input, such as a postcode.
+    if (current.kind === 'input_required') return reason === 'parcel_found' ? 'held' : undefined;
+    // A number the carrier does not issue is as unknown to it as one it cannot find.
+    if (current.kind === 'not_found' || current.kind === 'invalid_input') return 'absent';
+    if (current.kind !== 'indeterminate') return undefined;
+    // A record without a scan: booked, labelled, written ahead, or naming the carrier that delivers it.
+    if (HELD_REASONS.has(reason) || (current instanceof NoHistoryError
+      && Boolean(current.deliveryCarrier || current.writtenAhead?.length || current.plannedEvents?.length))) return 'held';
+    // The carrier's own reply that it shows no parcel under the number, which a label not scanned yet also gets.
+    // A no-history answer without a reason says neither: adapters give it for a record without rows too.
+    return UNKNOWN_ITEM_REASONS.has(reason) ? 'absent' : undefined;
   }
-  return false;
+  return undefined;
 }
 
+export interface LookupRecognitionOptions {
+  /**
+   * An answer that settles nothing for this adapter, which recognition throws as a failure: one
+   * its browser confirmation reads further, such as the single blank checkpoint DHL Express's
+   * mobile API shows for a waybill it holds records for, or a miss from a search that does not
+   * find every parcel by the number asked.
+   */
+  inconclusive?: (error: unknown) => boolean;
+}
+
+/**
+ * `recognize()` for an adapter whose ordinary lookup is already cheap: a
+ * result with scans, or a status past pending, is known. A failure that shows
+ * no parcel under the number, a positive not-found or the carrier's answer
+ * without history, is unknown; one that shows the carrier holds a record of the
+ * number without a scan is known without an activity date; any other failure
+ * is thrown. `accepts` is the adapter's own number check: a form it cannot look
+ * up is unknown without a request. Only for lookups without a browser tier.
+ */
 export async function recognizeFromLookup(
   lookup: () => Promise<CarrierResult>,
   accepts: () => boolean = () => true,
+  options: LookupRecognitionOptions = {},
 ): Promise<Recognition> {
   if (!accepts()) return { known: false };
   let result: CarrierResult;
   try {
     result = await lookup();
   } catch (error) {
-    // A number the carrier does not issue is as unknown to it as one it cannot find.
-    if (['not_found', 'invalid_input'].includes(carrierErrorKind(error) ?? '')) return { known: false };
-    // The carrier holds the parcel and shows it only once the recipient gives an input, such as a postcode.
-    if (foundBehindInput(error)) return { known: true, lastActivityAt: null };
+    if (options.inconclusive?.(error)) throw error;
+    const answer = answerOf(error);
+    if (answer === 'absent') return { known: false };
+    if (answer === 'held') return { known: true, lastActivityAt: null };
     throw error;
   }
   // Local clocks and malformed dates name no instant.
@@ -264,11 +298,15 @@ export async function recognizeFromLookup(
     ...(finished ? { finished } : {}) };
 }
 
-/** Browser shells and undated default statuses do not establish a shipment. */
+/**
+ * Browser shells and undated default statuses do not establish a shipment. The carrier's word
+ * that it holds a record of the number without a scan does, as over HTTP, with no history to reuse.
+ */
 export async function recognizeFromBrowserLookup(lookup: () => Promise<CarrierResult>): Promise<BrowserRecognition> {
   let result: CarrierResult | undefined;
   // The retained result passes the same checks as every tracking result before anyone reuses it.
   const answer = await recognizeFromLookup(async () => (result = normalizeCarrierResult(await lookup())));
+  if (answer.known && !result) return { known: true, lastActivityAt: null };
   if (!answer.known || (!answer.lastActivityAt && !answer.lastActivityLocal) || !result) return { known: false, lastActivityAt: null };
   return { ...answer, result };
 }

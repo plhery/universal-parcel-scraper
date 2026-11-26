@@ -428,11 +428,11 @@ describe('Canada Post bounded native lookup', () => {
     expect(cancel).toHaveBeenCalled();
   });
 
-  it('recognizes full history but leaves no-history errors inconclusive', async () => {
+  it('recognizes full history and reads No PIN History as unknown', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(Response.json(delivered())).mockResolvedValueOnce(Response.json({ pin: NUMBER, error: { cd: '004', descEn: 'No PIN History' } }, { status: 206 }));
     const native = adapter(environment(fetcher));
     expect(await native.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-03-14T13:00:34.000Z', finished: true });
-    await expect(native.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+    expect(await native.recognize!(NUMBER)).toEqual({ known: false });
     expect(await native.recognize!('unaccepted')).toEqual({ known: false });
   });
 

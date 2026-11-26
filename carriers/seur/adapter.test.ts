@@ -272,7 +272,7 @@ describe('SEUR simplified anonymous tracking', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
-  it('recognizes matching activity, skips unsupported formats and propagates no-history failures', async () => {
+  it('recognizes matching activity, skips unsupported formats and reads SEUR\'s no-history answer as unknown', async () => {
     // Recognition asks about SEUR's longer numbers only.
     const long = '99000000000002'; const asked = (body = copy()) => ({ ...body, identificador_busqueda: long });
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response(asked())); const instance = adapter(environment(fetcher));
@@ -282,7 +282,7 @@ describe('SEUR simplified anonymous tracking', () => {
     const offset = vi.fn<typeof fetch>().mockResolvedValue(response(asked(body0)));
     expect(await adapter(environment(offset)).recognize!(long)).toEqual({ known: true, lastActivityAt: '2026-01-23T12:13:05.000Z', finished: true });
     const unresolved = vi.fn<typeof fetch>().mockResolvedValue(response(noHistory));
-    await expect(adapter(environment(unresolved)).recognize!(long)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+    expect(await adapter(environment(unresolved)).recognize!(long)).toEqual({ known: false });
     const body = copy(); body.situaciones.forEach(scan => { scan.fecha = ''; }); const undated = vi.fn<typeof fetch>().mockResolvedValue(response(asked(body)));
     expect(await adapter(environment(undated)).recognize!(long)).toEqual({ known: true, lastActivityAt: null, finished: true });
   });

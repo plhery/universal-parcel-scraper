@@ -24,7 +24,7 @@ makes.
   review". It is not a shipment and has no history.
 - An older shipment can come without scans; its current state is returned as a summary.
 - Saudi shipments come from the same service; the page for Saudi Arabia makes the same lookup.
-- Recognition makes the same request.
+- Recognition makes the same request. A draft order settles nothing there either.
 
 ## Notes
 

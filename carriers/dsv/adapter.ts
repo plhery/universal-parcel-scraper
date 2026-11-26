@@ -169,8 +169,8 @@ export class DsvTracker {
   /**
    * Whether DSV knows a number, within three seconds. An STT goes straight to
    * the former DB Schenker tracker, as myDSV's search does not know them; any
-   * other number takes the ordinary lookup. A number neither tracker knows
-   * stays inconclusive, as when tracking it.
+   * other number takes the ordinary lookup. A number neither tracker knows is
+   * unknown here, though tracking leaves it inconclusive.
    */
   recognize(raw: string, context: TrackingContext = {}): Promise<Recognition> {
     const longest = this.options.recognitionMs ?? RECOGNITION_MS;

@@ -208,11 +208,11 @@ describe('ZTO International HTTP adapter', () => {
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
 
-  it('recognizes a known waybill, leaves the bare reply inconclusive, and asks nothing for a number it does not issue', async () => {
+  it('recognizes a known waybill, reads the bare reply as unknown, and asks nothing for a number it does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('not-found')));
     await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toMatchObject({ known: true });
-    await expect(carrier(fetcher).recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+    await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('75900000000000')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

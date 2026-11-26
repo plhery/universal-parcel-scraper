@@ -152,6 +152,7 @@ and `other_division` otherwise.
 The mobile API answers a missing waybill with an empty shipment list. A waybill it holds
 records for but shows nothing about, such as one several shipments reuse, comes back as one
 blank checkpoint: that is inconclusive (`portal_not_found`), and the global page is asked next.
+HTTP recognition leaves it to the browser confirmation in the same way.
 A mobile scan carries its facility's clock and its location, without an offset. The
 location reads `CITY - COUNTRY`, or `CITY - REGION - COUNTRY` in the USA, Canada and
 Australia, where the region is a state's or province's name or code, or for an Australian

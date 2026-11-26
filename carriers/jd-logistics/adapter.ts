@@ -45,7 +45,10 @@ export class JdLogisticsTracker {
 export const adapter: AdapterFactory = environment => {
   const tracker = new JdLogisticsTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent, trawl: environment.trawl });
   return { id: 'jd-logistics', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context),
-    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context, false)),
+    // The international feed's empty answer leaves a mainland series to the browser confirmation.
+    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context, false), undefined,
+      { inconclusive: (error) => error instanceof IndeterminateError && error.reason === 'portal_not_found'
+        && jdRoute(normalizeJdNumber(number)) !== 'international' }),
     recognizeWithBrowser: (number, context) => jdRoute(normalizeJdNumber(number)) !== 'international'
       ? recognizeFromBrowserLookup(() => tracker.fetch(number, context)) : Promise.resolve({ known: false, lastActivityAt: null }),
   };

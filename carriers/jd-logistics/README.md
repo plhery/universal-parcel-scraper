@@ -4,8 +4,10 @@ Each waybill is asked where its series is kept. Mainland series (`JD` followed b
 `JDV`, `JDVA`–`JDVC`, `JDX`, `JDAZ`) go to the public domestic tracker through TRAWL; the
 international feed does not hold them. `JDW` and `JDAP` go to the international website's
 anonymous feed. A JD series not seen yet asks the feed first, then the domestic tracker when the
-feed holds nothing. Without TRAWL, and for HTTP recognition, every series asks the feed. A series
-is a route, not evidence: the response must confirm the whole identifier.
+feed holds nothing. Without TRAWL, and for HTTP recognition, every series asks the feed. HTTP
+recognition reads the feed's empty answer as unknown, except for a series the domestic tracker
+may hold, which it leaves to browser recognition. A series is a route, not evidence: the response must confirm the
+whole identifier.
 
 ## How it works
 

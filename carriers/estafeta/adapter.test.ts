@@ -225,7 +225,7 @@ describe('Estafeta direct retrieval', () => {
     const recognize = (html: string) => adapter({ fetcher: vi.fn<typeof fetch>().mockResolvedValue(new Response(html)), recorder: NOOP_RECORDER,
       env: {}, trawl: null, browserExecutablePath: null }).recognize!(NUMBER);
     await expect(recognize($.html())).resolves.toEqual({ known: true, lastActivityAt: null });
-    await expect(recognize(negative)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+    await expect(recognize(negative)).resolves.toEqual({ known: false });
     expect(recognitionAskedCarriers(NUMBER, { countryHint: 'MX' })[0]).toBe('estafeta');
     expect(recognitionAskedCarriers(NUMBER, { countryHint: 'ES' })).not.toContain('estafeta');
     expect(recognitionCandidates(NUMBER, {}).find(({ carrier }) => carrier === 'estafeta')).toMatchObject({ outsideCountry: true });

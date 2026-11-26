@@ -445,10 +445,10 @@ describe('Ciblex tracker', () => {
     const instance = adapter({ fetcher, env: {}, recorder: { step() {}, lookup() {} }, trawl: null, browserExecutablePath: null });
     expect(await instance.recognize!('unsupported')).toEqual({ known: false }); expect(fetcher).not.toHaveBeenCalled();
     expect((await instance.track({ number: full })).status).toBe('delivered'); expect(fetcher).toHaveBeenCalledTimes(1);
-    // The empty table is Ciblex's own answer, which leaves a label not scanned yet open.
+    // The empty table is Ciblex's own answer that it shows no parcel, as for a label not scanned yet.
     const unknown = vi.fn<typeof fetch>().mockResolvedValue(new Response(emptyTrackingPage(full)));
     await expect(adapter({ fetcher: unknown, env: {}, recorder: { step() {}, lookup() {} }, trawl: null, browserExecutablePath: null }).recognize!(full))
-      .rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+      .resolves.toEqual({ known: false });
   });
 
   it('classifies endpoint errors and bounds actual response allocation', async () => {
