@@ -1,0 +1,51 @@
+{
+  "carrier": "babyxpress",
+  "records": [
+    {
+      "number": "SC0060659",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230320100158/https://www.tracking.my/babyxpress/SC0060659",
+        "date": "2023-03-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "domestic parcel in Sabah"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
+      },
+      "note": "An archived tracking.my page for BabyXpress names this consignment; BabyXpress's Delyva tracker answers it with a parcel delivered in Sabah."
+    },
+    {
+      "number": "SC0060117",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221209223950/https://www.tracking.my/babyxpress/SC0060117",
+        "date": "2022-12-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "domestic parcel in Sabah"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
+      },
+      "note": "An archived tracking.my page for BabyXpress names this consignment; BabyXpress's Delyva tracker answers it with a parcel delivered in Sabah through the company's own hub."
+    }
+  ]
+}

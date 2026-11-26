@@ -1,0 +1,171 @@
+{
+  "data": {
+    "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+    "consignmentNo": "SC0060117",
+    "statusCode": 700,
+    "statusText": "Delivered",
+    "description": "Delivery success - BX Kota Belud (BBXS17)",
+    "coord": {
+      "lon": null,
+      "lat": null
+    },
+    "origin": "Penampang, Sabah, MY",
+    "destination": "Kota Belud, Sabah, MY",
+    "histories": [
+      {
+        "id": 14339859,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060117",
+        "statusCode": 700,
+        "statusText": "Delivered",
+        "description": "Delivery success - BX Kota Belud (BBXS17)",
+        "location": "-",
+        "createdAt": "2022-11-16T16:33:04.946Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      },
+      {
+        "id": 14339857,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060117",
+        "statusCode": 556,
+        "statusText": "Outbound",
+        "description": "Departed from branch - BX Kota Belud (BBXS17)",
+        "location": "-",
+        "createdAt": "2022-11-16T16:32:20.631Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      },
+      {
+        "id": 14324231,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060117",
+        "statusCode": 555,
+        "statusText": "Inbound",
+        "description": "Arrived at branch - BX Kota Belud (BBXS17)",
+        "location": "-",
+        "createdAt": "2022-11-15T08:50:41.873Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      },
+      {
+        "id": 14316380,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060117",
+        "statusCode": 556,
+        "statusText": "Outbound",
+        "description": "Departed from branch - Baby Xpress Sdn.Bhd",
+        "location": "-",
+        "createdAt": "2022-11-14T12:01:16.151Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      },
+      {
+        "id": 14289774,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060117",
+        "statusCode": 555,
+        "statusText": "Inbound",
+        "description": "Arrived at branch - Baby Xpress Sdn.Bhd",
+        "location": "-",
+        "createdAt": "2022-11-11T01:19:14.630Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      },
+      {
+        "id": 14284326,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060117",
+        "statusCode": 556,
+        "statusText": "Outbound",
+        "description": "Departed from branch - BX Penampang (BBXS02)",
+        "location": "-",
+        "createdAt": "2022-11-10T07:44:43.971Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      },
+      {
+        "id": 14284315,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060117",
+        "statusCode": 555,
+        "statusText": "Inbound",
+        "description": "Arrived at branch - BX Penampang (BBXS02)",
+        "location": "-",
+        "createdAt": "2022-11-10T07:44:31.509Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      },
+      {
+        "id": 14284208,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060117",
+        "statusCode": 110,
+        "statusText": "Order ready",
+        "description": null,
+        "location": "-",
+        "createdAt": "2022-11-10T07:35:52.629Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      },
+      {
+        "id": 14284203,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060117",
+        "statusCode": 100,
+        "statusText": "Record created",
+        "description": null,
+        "location": "-",
+        "createdAt": "2022-11-10T07:35:36.419Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      }
+    ],
+    "arrival": null,
+    "originCoord": null,
+    "destinationCoord": null,
+    "personnel": {
+      "name": "BX Kota Belud (BBXS17)",
+      "phone": "",
+      "vehicleName": "-",
+      "vehicleType": null,
+      "vehicleRegNo": "-",
+      "coord": null
+    },
+    "extTrackUrl": "",
+    "scheduledAt": "2022-11-10T07:35:36.359Z",
+    "etaDuration": -1,
+    "service": {
+      "name": "CBS-LOGI-S",
+      "code": "SC-S-SBH",
+      "logo": "servicecompany/323_1626874317182_2.jpeg"
+    }
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "data": {
+    "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+    "consignmentNo": "SC0060659",
+    "statusCode": 700,
+    "statusText": "Delivered",
+    "description": "Delivery success - BX Kudat (BBXS13)",
+    "coord": {
+      "lon": null,
+      "lat": null
+    },
+    "origin": "Tawau, Sabah, MY",
+    "destination": "Kudat, Sabah, MY",
+    "histories": [
+      {
+        "id": 14815233,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060659",
+        "statusCode": 700,
+        "statusText": "Delivered",
+        "description": "Delivery success - BX Kudat (BBXS13)",
+        "location": "-",
+        "createdAt": "2023-01-04T03:54:47.625Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      },
+      {
+        "id": 14752156,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060659",
+        "statusCode": 555,
+        "statusText": "Inbound",
+        "description": "Arrived at branch - BX Kudat (BBXS13)",
+        "location": "-",
+        "createdAt": "2022-12-29T01:16:33.351Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      },
+      {
+        "id": 14640473,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060659",
+        "statusCode": 556,
+        "statusText": "Outbound",
+        "description": "Departed from branch - BX Tawau (BBXS34)",
+        "location": "-",
+        "createdAt": "2022-12-19T08:12:29.991Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      },
+      {
+        "id": 14640464,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060659",
+        "statusCode": 555,
+        "statusText": "Inbound",
+        "description": "Arrived at branch - BX Tawau (BBXS34)",
+        "location": "-",
+        "createdAt": "2022-12-19T08:12:17.579Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      },
+      {
+        "id": 14640282,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060659",
+        "statusCode": 110,
+        "statusText": "Order ready",
+        "description": null,
+        "location": "",
+        "createdAt": "2022-12-19T08:04:32.647Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      },
+      {
+        "id": 14640281,
+        "companyId": "f273c9c9-6420-42d8-84ce-a83fc3b96fde",
+        "consignmentNo": "SC0060659",
+        "statusCode": 100,
+        "statusText": "Record created",
+        "description": null,
+        "location": "",
+        "createdAt": "2022-12-19T08:04:22.200Z",
+        "coord": {
+          "lon": null,
+          "lat": null
+        },
+        "hasPodImage": false
+      }
+    ],
+    "arrival": null,
+    "originCoord": null,
+    "destinationCoord": null,
+    "personnel": {
+      "name": "BX Kudat (BBXS13)",
+      "phone": "",
+      "vehicleName": "-",
+      "vehicleType": null,
+      "vehicleRegNo": "-",
+      "coord": null
+    },
+    "extTrackUrl": "",
+    "scheduledAt": "2022-12-19T08:04:22.133Z",
+    "etaDuration": 509363,
+    "service": {
+      "name": "CBR-S-LOGI",
+      "code": "CBR-SC-S-SBH",
+      "logo": "servicecompany/323_1626874317182_2.jpeg"
+    }
+  }
+}

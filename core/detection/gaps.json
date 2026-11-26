@@ -441,6 +441,12 @@
     "reason": "Eleven digits are shared by Aramex, CDEK and other carriers, and nothing in the number points to Azul Cargo Express."
   },
   {
+    "carrier": "babyxpress",
+    "pattern": "^SC\\d{7}$",
+    "kind": "collision",
+    "reason": "SC and seven digits fall within the two letters and seven digits of R+L Carriers' PRO numbers, and only an aggregator's archived links show the series for BabyXpress, so the shape cannot name it."
+  },
+  {
     "carrier": "barq",
     "pattern": "^[A-Z]{2}\\d{9}$",
     "kind": "by_design",

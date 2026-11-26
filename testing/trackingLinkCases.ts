@@ -56,6 +56,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'westjet-cargo', number: '83800000000',
     route: /^https:\/\/westjet\.smartkargo\.com\/FrmAWBTracking\.aspx$/,
     marker: /Track Air Waybill/i, forwarding: 'none' },
+  // BabyXpress's Delyva tenant looks the number up on opening and names it beside its answer.
+  { carrier: 'babyxpress', number: 'SC9900001',
+    route: /^https:\/\/babyxpress-my\.delyva\.app\/customer\/track\?trackingNo=SC9900001$/,
+    marker: /No tracking information found/i },
   { carrier: 'air-greenland', number: '63199000008',
     route: /^https:\/\/airgreenland\.com\/cargo\/tracking-awb\/$/,
     marker: /air consignment note number/i, forwarding: 'none' },

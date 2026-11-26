@@ -1,0 +1,85 @@
+{
+  "id": "babyxpress",
+  "displayName": "BabyXpress",
+  "aliases": [
+    "Baby Xpress",
+    "Baby Xpress Sdn. Bhd."
+  ],
+  "region": {
+    "countries": [
+      "MY"
+    ]
+  },
+  "brand": {
+    "color": "#072F60"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kuala_Lumpur",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "babyxpress",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "delivered_at",
+    "destination_country",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "url": "https://babyxpress-my.delyva.app/customer/track?trackingNo={trackingNumber}",
+    "searchUrl": "https://babyxpress-my.delyva.app/customer/track",
+    "canaryUrl": "https://babyxpress-my.delyva.app/customer/track",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "coordinates",
+      "driver_name",
+      "driver_phone"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "delivered_at",
+      "destination_country",
+      "offset_timestamps"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "coordinates",
+      "driver_name",
+      "driver_phone"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "recipient_name",
+      "sender_name",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "babyxpress-my.delyva.app"
+      ],
+      "pathPattern": "^/customer/track/?$",
+      "params": [
+        "trackingNo",
+        "tracking"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,306 @@
+{
+  "carrier": "babyxpress",
+  "entries": [
+    {
+      "code": "100",
+      "wording": "Record created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The order exists in BabyXpress's system; the reply gives it as the scan's status text, with no description."
+    },
+    {
+      "code": "110",
+      "wording": "Order ready",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The order is ready for BabyXpress to take in."
+    },
+    {
+      "code": "555",
+      "wording": "Arrived at branch",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The scan's description; its branch follows after a dash and becomes the place."
+    },
+    {
+      "code": "555",
+      "wording": "Inbound",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The reply's status text for the same code, as the current status."
+    },
+    {
+      "code": "556",
+      "wording": "Departed from branch",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The scan's description; its branch follows after a dash and becomes the place."
+    },
+    {
+      "code": "556",
+      "wording": "Outbound",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The reply's status text for the same code, as the current status."
+    },
+    {
+      "code": "700",
+      "wording": "Delivery success",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The scan's description; the staff who delivered follow after a dash and stay behind."
+    },
+    {
+      "code": "700",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The reply's status text for the same code, as the current status."
+    },
+    {
+      "code": "0",
+      "wording": "Draft",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "10",
+      "wording": "Processing payment",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "11",
+      "wording": "Unpaid order",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "99",
+      "wording": "Failed",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The legend colours it as a cancellation: the order did not go through."
+    },
+    {
+      "code": "100",
+      "wording": "Order created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "110",
+      "wording": "Ready",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "200",
+      "wording": "Pending for collection",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "400",
+      "wording": "Driver out for pickup / pickup start",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "450",
+      "wording": "Arrived for pickup",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "475",
+      "wording": "Pickup failed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The courier could not collect the parcel, which stays booked with the sender."
+    },
+    {
+      "code": "500",
+      "wording": "Pickup success - collected by courier",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "501",
+      "wording": "On hold",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "555",
+      "wording": "Hub check-in",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "556",
+      "wording": "Hub check-out",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "600",
+      "wording": "In transit / delivery start",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The driver has set out with the parcel; the tracker shows the driver on its map from this code."
+    },
+    {
+      "code": "625",
+      "wording": "Arrived for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "650",
+      "wording": "Failed to deliver",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "651",
+      "wording": "Failed delivery - lost/damage",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "654",
+      "wording": "Driver cancelled",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A driver gave the job up and the order waits for another one, so the scan keeps the stage before it."
+    },
+    {
+      "code": "655",
+      "wording": "Failed",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "661",
+      "wording": "Returning to sender",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "663",
+      "wording": "Return failed",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "670",
+      "wording": "Return to warehouse",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The parcel goes back to the warehouse after a delivery that did not happen."
+    },
+    {
+      "code": "671",
+      "wording": "Reschedule",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The delivery moved to another day, which does not change where the parcel is."
+    },
+    {
+      "code": "672",
+      "wording": "Re-attend delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Another attempt at the delivery."
+    },
+    {
+      "code": "700",
+      "wording": "Item delivered / collected by recipient",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "701",
+      "wording": "Return successful",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "900",
+      "wording": "Order cancelled",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Delyva customer tracker's own wording for the code, shown when a scan has no status text."
+    },
+    {
+      "code": "1000",
+      "wording": "Order completed",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The order is closed after its delivery or its return, so the scan keeps the stage before it."
+    }
+  ]
+}
