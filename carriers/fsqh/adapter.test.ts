@@ -98,6 +98,8 @@ describe('Foshan Qianhe tracking adapter', () => {
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'fsqh', providerCode: null, description: 'Package received and scanned at warehouse' }))
       .toEqual({ kind: 'mapped', stage: 'accepted' });
+    expect(statusMapAnswer({ carrier: 'fsqh', providerCode: null, description: 'Votre colis est en transit sur nos plateformes logistiques.' }))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'fsqh', providerCode: null, description: 'Synthetic wording' })).toEqual({ kind: 'unknown' });
     expect(fsqhEnglish(null, normalizeStatusWording('航班起飞，预计航班落地时间(12.03)'))).toBe('Flight departed, expected to land on 12.03');
     expect(fsqhEnglish(null, normalizeStatusWording('安排航班中'))).toBe('Arranging a flight');

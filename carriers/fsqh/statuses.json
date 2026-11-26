@@ -24,6 +24,7 @@
     {"wording": "Package picked up by last-mile carrier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "Handed to GOFO, the delivery carrier in the United States."},
     {"wording": "Arrived at GOFO Regional Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22"},
     {"wording": "Loaded on Vehicle", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22"},
-    {"wording": "Departed GOFO Regional Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22"}
+    {"wording": "Departed GOFO Regional Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22"},
+    {"wording": "Votre colis est en transit sur nos plateformes logistiques.", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "note": "Colissimo's transit row, which the line copies a day after handing the parcel to the destination's warehouse."}
   ]
 }
