@@ -102,16 +102,19 @@ describe('Muser HTTP adapter', () => {
     expect(placed('Out for Delivery     SAMPLE TOWN 30301', 'CA')).toMatchObject({ location: 'SAMPLE TOWN', description: 'Out for Delivery' });
     expect(placed('Out for Delivery  SAMPLE TOWN')).toMatchObject({ description: 'Out for Delivery SAMPLE TOWN' });
     expect(placed('Out for Delivery  SAMPLE TOWN')).not.toHaveProperty('location');
+    // Two spaces part the wording from a town that ends in a ZIP Code.
+    expect(placed('Delivered  SAMPLE TOWN 30301')).toMatchObject({ location: 'SAMPLE TOWN, GA', description: 'Delivered',
+      stage: 'delivered', stage_source: 'carrier_map' });
     // A scan with a place of its own keeps its wording whole.
     expect(placed('Arrive at Airport     SAMPLE NOTE', 'US', 'HONG KONG')).toMatchObject({ location: 'HONG KONG', description: 'Arrive at Airport SAMPLE NOTE' });
   });
 
   it('stages an unmapped wording by the shared rules, and leaves a parcel with no staged scan unknown', () => {
     const worded = parseMuser(changed((item) => {
-      item.details = [scan('2026-07-08 08:00:00', 'Delivered, signed by SAMPLE RECIPIENT'), scan('2026-07-07 07:00:00', 'Sample Status Note')];
+      item.details = [scan('2026-07-08 08:00:00', 'Delivered to front porch, signed by SAMPLE RECIPIENT'), scan('2026-07-07 07:00:00', 'Sample Status Note')];
     }), PARCEL);
     expect(worded.events!.map((event) => [event.local_time, event.description, event.stage, event.stage_source])).toEqual([
-      ['2026-07-08T08:00:00', 'Delivered', 'delivered', 'wording:language'], ['2026-07-07T07:00:00', 'Sample Status Note', undefined, undefined]]);
+      ['2026-07-08T08:00:00', 'Delivered to front porch', 'delivered', 'wording:language'], ['2026-07-07T07:00:00', 'Sample Status Note', undefined, undefined]]);
     const unstaged = parseMuser(changed((item) => { item.details = [scan('2026-07-07 07:00:00', 'Sample Status Note')]; }), PARCEL);
     expect(unstaged).toMatchObject({ status: 'unknown', last_update: null, last_update_local: '2026-07-07T07:00:00' });
     expect(unstaged).not.toHaveProperty('current_stage');

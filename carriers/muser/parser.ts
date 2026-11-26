@@ -13,8 +13,9 @@ export const MUSER_MAX_BYTES = RTB56_MAX_BYTES;
 // MS, fourteen digits and YD.
 const NUMBER = /^MS\d{14}YD$/;
 // A delivering network's scan leaves the place empty and follows its wording with its town and
-// ZIP Code, past a run of spaces.
+// ZIP Code, past a run of spaces: three or more, or two before a town that ends in a ZIP Code.
 const TRAILING_PLACE = /^(\S.*?)\s{3,}(\S.*)$/s;
+const TRAILING_TOWN_ZIP = /^(\S.*?)\s{2,}(\S.*?\S[\s,]+\d{5}(?:-\d{4})?)$/s;
 const TOWN_ZIP = /^(.*?\S)[\s,]+(\d{5})(?:-\d{4})?$/;
 const MAX_EVENTS = 100;
 
@@ -27,7 +28,8 @@ export function normalizeMuserNumber(raw: string): string {
 
 /** The wording of a delivering network's scan and the town and ZIP Code that follow it past a run of spaces. */
 export function muserTrailingPlace(text: string): { wording: string; place: string } | null {
-  const split = TRAILING_PLACE.exec(text.trim());
+  const trimmed = text.trim();
+  const split = TRAILING_PLACE.exec(trimmed) ?? TRAILING_TOWN_ZIP.exec(trimmed);
   return split ? { wording: split[1]!, place: split[2]! } : null;
 }
 

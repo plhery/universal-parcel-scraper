@@ -13,6 +13,8 @@
     {"wording": "The import customs keep it for inspection", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "Customs at the destination hold the parcel to inspect it; clearance followed."},
     {"wording": "Customs clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Arrival Mail Processing Center", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The delivering network's scan, followed by its town and ZIP Code."},
-    {"wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The delivering network's scan, followed by its town and ZIP Code."}
+    {"wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The delivering network's scan, followed by its town and ZIP Code."},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The delivering network's scan, followed by its town and ZIP Code past two spaces."},
+    {"wording": "Shipment delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The tracker's own delivery scan, at the delivering network's instant and without a place."}
   ]
 }

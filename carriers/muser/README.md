@@ -27,7 +27,7 @@ The adapter reads its tracker's own lookup for numbers of MS, fourteen digits an
   clocks read as their town's: a delivery round would otherwise go out late at night. So every
   scan keeps its wall clock, and a consumer dates it by its place.
 - The delivering network's scans leave the place empty and follow the wording with the town and
-  ZIP Code, past a run of spaces. The town becomes the place, with the state the ZIP Code is in
+  ZIP Code, past a run of spaces: two before a town and ZIP Code, three or more otherwise. The town becomes the place, with the state the ZIP Code is in
   for a parcel to the United States; the ZIP Code itself is not kept.
 - Scans are English wording with the tracker's own codes, which the delivering network's scans
   lack, so the stage comes from the wording: [statuses.json](statuses.json), then the shared rules.
