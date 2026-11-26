@@ -11153,6 +11153,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "austway": {
+    "displayName": "Austway",
+    "color": "#C8102E",
+    "aliases": [
+      "澳华国际物流",
+      "Austway Cargo"
+    ],
+    "countries": [
+      "CN",
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "austway",
+      "localClocks": true
+    },
+    "canaryUrl": "https://api.austway-cargo.cn/tracking.html",
+    "trackingSearchUrl": "https://api.austway-cargo.cn/tracking.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "averitt": {
     "displayName": "Averitt Express",
     "color": "#c21f38",
@@ -65163,6 +65186,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "topest": {
+    "displayName": "TOPEST",
+    "color": "#0B5CAD",
+    "aliases": [
+      "韬博供应链",
+      "TOPEST Express"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "topest",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.topestexpress.com/track",
+    "trackingSearchUrl": "https://www.topestexpress.com/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "topex-logistics": {
     "displayName": "Topex Logistics",
     "color": "#3058a8",
@@ -74249,6 +74294,7 @@ export const CARRIER_IDS = [
   "ats-healthcare",
   "atual-cargas",
   "auexpress",
+  "austway",
   "averitt",
   "avis-logistics",
   "aymakan",
@@ -75815,6 +75861,7 @@ export const CARRIER_IDS = [
   "too-express",
   "top-logistics-au",
   "topdelivery",
+  "topest",
   "topex-logistics",
   "topnic",
   "topparcel",
@@ -76354,6 +76401,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ats-healthcare": [],
   "atual-cargas": [],
   "auexpress": [],
+  "austway": [],
   "averitt": [],
   "avis-logistics": [],
   "aymakan": ["aymakan-1"],
@@ -77920,6 +77968,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "too-express": [],
   "top-logistics-au": [],
   "topdelivery": [],
+  "topest": [],
   "topex-logistics": [],
   "topnic": [],
   "topparcel": [],

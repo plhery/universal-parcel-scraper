@@ -88,6 +88,7 @@ import { adapter as atlanticCourier } from '../carriers/atlantic-courier/adapter
 import { adapter as atsHealthcare } from '../carriers/ats-healthcare/adapter.js';
 import { adapter as australiaPost } from '../carriers/australia-post/adapter.js';
 import { adapter as austrianPost } from '../carriers/austrian-post/adapter.js';
+import { adapter as austway } from '../carriers/austway/adapter.js';
 import { adapter as averitt } from '../carriers/averitt/adapter.js';
 import { adapter as aymakan } from '../carriers/aymakan/adapter.js';
 import { adapter as azerpost } from '../carriers/azerpost/adapter.js';
@@ -1065,6 +1066,7 @@ import { adapter as todayKr } from '../carriers/today-kr/adapter.js';
 import { adapter as tonami } from '../carriers/tonami/adapter.js';
 import { adapter as topLogisticsAu } from '../carriers/top-logistics-au/adapter.js';
 import { adapter as topdelivery } from '../carriers/topdelivery/adapter.js';
+import { adapter as topest } from '../carriers/topest/adapter.js';
 import { adapter as topparcel } from '../carriers/topparcel/adapter.js';
 import { adapter as toptrans } from '../carriers/toptrans/adapter.js';
 import { adapter as topyou } from '../carriers/topyou/adapter.js';
@@ -1312,6 +1314,7 @@ export const REGISTRY: RegistryDefinition = {
     "ats-healthcare": atsHealthcare,
     "australia-post": australiaPost,
     "austrian-post": austrianPost,
+    "austway": austway,
     "averitt": averitt,
     "aymakan": aymakan,
     "azerpost": azerpost,
@@ -2289,6 +2292,7 @@ export const REGISTRY: RegistryDefinition = {
     "tonami": tonami,
     "top-logistics-au": topLogisticsAu,
     "topdelivery": topdelivery,
+    "topest": topest,
     "topparcel": topparcel,
     "toptrans": toptrans,
     "topyou": topyou,
@@ -2612,6 +2616,7 @@ export const REGISTRY: RegistryDefinition = {
     "auexpress": "universal",
     "australia-post": "australia-post",
     "austrian-post": "austrian-post",
+    "austway": "austway",
     "averitt": "averitt",
     "avis-logistics": "universal",
     "aymakan": "aymakan",
@@ -4264,6 +4269,7 @@ export const REGISTRY: RegistryDefinition = {
     "too-express": "universal",
     "top-logistics-au": "top-logistics-au",
     "topdelivery": "topdelivery",
+    "topest": "topest",
     "topex-logistics": "universal",
     "topnic": "universal",
     "topparcel": "topparcel",
