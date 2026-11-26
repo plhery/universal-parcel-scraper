@@ -25,8 +25,9 @@ const HEADER = ['Date/Time', 'Bar Code', 'Location', 'Status Type', 'Status Data
 // "18 Jul 2024 11:19AM": a 24-hour clock with a meridiem that agrees with it.
 const CLOCK = /^(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4}) (\d{2}):(\d{2})(AM|PM)$/;
 const TYPE = /^[A-Z][A-Z0-9 /&-]{0,39}$/;
-// Messages XDP sent the recipient or the sender: they move nothing, and some name the recipient.
-const MESSAGE = /(?:^|\s)(?:EMAIL|SMS)$|\bMESSAGE SENT$/;
+// Messages XDP sent the recipient or the sender, a failed service's e-mail among them (SERVICE FAIL MESSAGE): they move
+// nothing, and some name the recipient.
+const MESSAGE = /(?:^|\s)(?:EMAIL|SMS|MESSAGE)$|\bMESSAGE SENT$/;
 // The scanning system's name around the status it reports: Spirit at the depots, DriverX and ScanX on the round.
 const SYSTEM_STATUS = /^(?:Spirit|DriverX|ScanX) Status: "([^"]{1,200})"$/;
 // Wording that goes on to name a person; the scan is staged and told apart without the name.

@@ -32,7 +32,7 @@ still link to.
   wording decides: XDP's newer page counts a parcel out for delivery from the scheduled round,
   and the depot scan and the van allocation before it as being prepared.
 - After a return label, every later scan is staged `returned`.
-- Notification rows (emails, text messages and the delivery confirmation message) are dropped:
+- Notification rows (emails, text messages, a failed service's email and the delivery confirmation message) are dropped:
   they move nothing. Wording that goes on to name a person keeps the name and is staged without
   it. The providers' copies of XDP's emails and text messages are left out too.
 - A consignment of several pieces repeats each scan once per piece; repeats are dropped.

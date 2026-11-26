@@ -151,6 +151,10 @@ describe('XDP direct tracking', () => {
     // Messages alone are no history.
     expect(() => parseXdp(history([at('5 Mar 2026', '10:00AM'), 'All Barcodes', 'EMAIL', 'Collect Email alert sent']), NUMBER))
       .toThrowError(expect.objectContaining({ name: 'NoHistoryError' }));
+    // A failed service's e-mail names the recipient, and is left out like the other messages.
+    const failed = parseXdp(history([at('5 Mar 2026', '10:49AM'), '', 'EXCEPTION', 'Service Fail'],
+      [at('5 Mar 2026', '10:49AM'), '', 'SERVICE FAIL MESSAGE', 'Service fail email notification sent to Sample Person']), NUMBER);
+    expect(failed.events?.map((event) => event.provider_code)).toEqual(['EXCEPTION']);
     const scans = (count: number) => Array.from({ length: count }, (_, index) =>
       [at('5 Mar 2026', '10:00AM'), '', 'DELIVERY', `At Delivery Depot ${index}`] as const);
     expect(parseXdp(history(...scans(250)), NUMBER).events).toHaveLength(200);
