@@ -67,6 +67,9 @@ describe('BabyXpress tracking adapter', () => {
     expect(await answer(() => new Response('<html></html>', { headers: { 'Content-Type': 'text/html' } }))).toMatchObject({ kind: 'schema' });
     expect(await answer(() => new Response('{', { headers: { 'Content-Type': 'application/json' } }))).toMatchObject({ kind: 'schema' });
     expect(await answer(() => new Response(null, { status: 204 }))).toMatchObject({ kind: 'transport' });
+    for (const status of [404, 410]) {
+      expect(await answer(() => new Response('<h1>Not Found</h1>', { status, headers: { 'Content-Type': 'text/html' } }))).toMatchObject({ kind: 'transport' });
+    }
   });
 });
 
@@ -130,6 +133,11 @@ describe('BabyXpress replies', () => {
     expect(() => parseBabyXpress(order({ companyId: '00000000-0000-4000-8000-000000000000' }), NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     expect(() => parseBabyXpress(order({ histories: [scan(100, '2023-01-01T00:00:00.000Z', { consignmentNo: 'SC9900002' })] }), NUMBER))
       .toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+  });
+
+  it('keeps a long courier note to its first characters instead of refusing the history', () => {
+    const reply = order({ histories: [scan(700, '2023-01-04T03:54:47Z', { description: `Delivery success - ${'x'.repeat(400)}` })] });
+    expect(parseBabyXpress(reply, NUMBER).events?.[0]).toMatchObject({ stage: 'delivered' });
   });
 
   it('refuses a changed reply', () => {

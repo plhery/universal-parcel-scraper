@@ -83,7 +83,7 @@ function code(value: unknown, tenant: DelyvaTenant): number {
 
 function text(value: unknown, max: number, tenant: DelyvaTenant): string {
   if (value === null || value === undefined) return '';
-  if (typeof value !== 'string' || value.length > max) throw new SchemaError(tenant.provider, `${tenant.name} returned an invalid field`);
+  if (typeof value !== 'string') throw new SchemaError(tenant.provider, `${tenant.name} returned an invalid field`);
   return clean(value, max);
 }
 
@@ -161,8 +161,8 @@ export class DelyvaTracker {
     const { response, bytes } = await fetchBounded(DELYVA_TRACK, {
       method: 'POST', signal, body: JSON.stringify(delyvaRequest(number, this.tenant)),
       headers: { Accept: 'application/json', 'Content-Type': 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) },
-    }, { provider, timeoutMs, maxBytes: DELYVA_MAX_BYTES, redirect: 'manual', fetcher: this.options.fetcher });
-    // A redirect or an empty answer is a changed service, not a missing consignment.
+    }, { provider, timeoutMs, maxBytes: DELYVA_MAX_BYTES, redirect: 'manual', allowHttpStatuses: [404, 410], fetcher: this.options.fetcher });
+    // A redirect, a missing route or an empty answer is a changed service, not a missing consignment.
     if (response.status !== 200) throw new TransportError(provider, `${name} tracking answered with HTTP ${response.status}`, { status: response.status });
     const body = decodeText(bytes);
     if (!/^application\/json\b/i.test(response.headers.get('content-type') ?? '')) {
