@@ -1,0 +1,198 @@
+{
+  "shipment": null,
+  "is_show_hub_destination_map": true,
+  "hub_to_hub_list": [
+    {
+      "id": 3,
+      "min_tracked_at": "2023-03-20 21:54:04",
+      "latest_time": "2023-03-21 15:39:18",
+      "name": "Selangor Hub",
+      "gps": "3.022609,101.5917325",
+      "latitude": "3.022609",
+      "longitude": "101.5917325"
+    }
+  ],
+  "last_vehicle_location": null,
+  "prev_vehicle_location": null,
+  "to_address": {
+    "name": "Example Recipient",
+    "phone": "60100000000",
+    "address": "1, Jalan Contoh, 47301, Petaling Jaya, Selangor, MY",
+    "gps": "3.1,101.6",
+    "latitude": "3.1",
+    "longitude": "101.6",
+    "time": "2023-03-21 15:39:18"
+  },
+  "trackings": [
+    {
+      "content": "Parcel Delivered to Example Recipient",
+      "name": "Parcel Delivered to Example Recipient",
+      "en_name": "delivered",
+      "location": null,
+      "full_info": {
+        "description": "Parcel Delivered to Example Recipient",
+        "info": {
+          "receiver_name": "Example Recipient",
+          "formatted_address": "1, Jalan Contoh, 47301 Petaling Jaya, Selangor, Malaysia"
+        },
+        "location": "Selangor Hub",
+        "gps": "3.1,101.6"
+      },
+      "date": "21 Mar",
+      "time": "03:39 PM",
+      "pod": {
+        "image": "/attachments/external/00000000000000000000000000000000",
+        "signature": "/attachments/external/00000000000000000000000000000000",
+        "images": null
+      },
+      "gps": "3.1,101.6",
+      "attachments": [
+        {
+          "full_url": "/attachments/external/00000000000000000000000000000000"
+        }
+      ],
+      "created_at": "2023-03-21T07:39:18.000000Z",
+      "formatted_datetime": "21 Mar 2023"
+    },
+    {
+      "content": "Parcel Out for Delivery by Captain EXAMPLE CAPTAIN, 60100000000, estimated time of arrival 3-4PM, (Delivery May Be Delayed Due To Bad Weather)",
+      "name": "Parcel Out for Delivery by Captain EXAMPLE CAPTAIN, 60100000000, estimated time of arrival 3-4PM, (Delivery May Be Delayed Due To Bad Weather)",
+      "en_name": "out_for_delivery",
+      "location": "Selangor Hub",
+      "full_info": {
+        "description": "Parcel Out for Delivery by Captain EXAMPLE CAPTAIN, 60100000000, estimated time of arrival 3-4PM, (Delivery May Be Delayed Due To Bad Weather)",
+        "info": {
+          "eta": "3-4PM",
+          "weather": "(Delivery May Be Delayed Due To Bad Weather)",
+          "driver_name": "EXAMPLE CAPTAIN",
+          "driver_phone": "60100000000",
+          "plate_number": "ZZZ0000"
+        },
+        "location": null,
+        "gps": null
+      },
+      "date": "21 Mar",
+      "time": "09:21 AM",
+      "pod": null,
+      "gps": null,
+      "attachments": [],
+      "created_at": "2023-03-21T01:21:28.000000Z",
+      "formatted_datetime": "21 Mar 2023"
+    },
+    {
+      "content": "Parcel Arrived Hub",
+      "name": "Parcel Arrived Hub",
+      "en_name": "sorting_scanned",
+      "location": "Selangor Hub",
+      "full_info": null,
+      "date": "21 Mar",
+      "time": "12:28 AM",
+      "pod": null,
+      "gps": null,
+      "attachments": [],
+      "created_at": "2023-03-20T16:28:37.000000Z",
+      "formatted_datetime": "21 Mar 2023"
+    },
+    {
+      "content": "Parcel Sorting Completed",
+      "name": "Parcel Sorting Completed",
+      "en_name": "sorting_completed",
+      "location": "Selangor Hub",
+      "full_info": null,
+      "date": "20 Mar",
+      "time": "09:54 PM",
+      "pod": null,
+      "gps": null,
+      "attachments": [],
+      "created_at": "2023-03-20T13:54:09.000000Z",
+      "formatted_datetime": "20 Mar 2023"
+    },
+    {
+      "content": "Parcel Arrived Hub",
+      "name": "Parcel Arrived Hub",
+      "en_name": "sorting_scanned",
+      "location": "Selangor Hub",
+      "full_info": null,
+      "date": "20 Mar",
+      "time": "09:54 PM",
+      "pod": null,
+      "gps": null,
+      "attachments": [],
+      "created_at": "2023-03-20T13:54:04.000000Z",
+      "formatted_datetime": "20 Mar 2023"
+    },
+    {
+      "content": "Parcel Order Placed",
+      "name": "Parcel Order Placed",
+      "en_name": "order_placed",
+      "location": null,
+      "full_info": null,
+      "date": "14 Mar",
+      "time": "03:52 PM",
+      "pod": null,
+      "gps": null,
+      "attachments": [],
+      "created_at": "2023-03-14T07:52:32.000000Z",
+      "formatted_datetime": "14 Mar 2023"
+    }
+  ],
+  "img": null,
+  "info": {
+    "from": "Selangor",
+    "to": "Selangor",
+    "status": "delivered",
+    "from_city": "Subang Jaya",
+    "to_city": "Petaling Jaya",
+    "eta": "15:39 PM",
+    "eta_date": "21 Mar 2023",
+    "from_name": "Selangor Hub",
+    "to_name": "Example Recipient"
+  },
+  "driver": {
+    "eta": "03:29 PM",
+    "weather": "rain",
+    "driver_name": "EXAMPLE CAPTAIN",
+    "driver_phone": "60100000000",
+    "plate_number": "ZZZ0000",
+    "pic": null
+  },
+  "cage": {
+    "in_cage_img": null,
+    "cage_at": null,
+    "name": null,
+    "image": null
+  },
+  "plate_number": "ZZZ0000",
+  "is_agent": null,
+  "dropoff_location": {
+    "detail": {
+      "type": null,
+      "location_image": null,
+      "operating_hours": null
+    },
+    "address": null
+  },
+  "shipment_img": "/attachments/external/00000000000000000000000000000000",
+  "track_no": "SDS1703325",
+  "ref_no": null,
+  "courier_location": null,
+  "latest_update": "2023-03-21 03:39 PM",
+  "type": "parcel",
+  "total_weight": 2.4,
+  "parcel_json": [
+    {
+      "width": 30,
+      "height": 14,
+      "length": 62,
+      "volume": 0.026,
+      "weight": 2.4,
+      "track_no": "SDS1703325",
+      "user_weight": null,
+      "machine_weight": null,
+      "hub_weight": null,
+      "branch_weight": null,
+      "unit_price": null,
+      "commission": null
+    }
+  ]
+}

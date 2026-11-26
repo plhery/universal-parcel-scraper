@@ -1149,6 +1149,7 @@ import { statusMap as meitongda } from '../../carriers/meitongda/status.js';
 import { statusMap as wcxex } from '../../carriers/wcxex/status.js';
 import { statusMap as gsmNton } from '../../carriers/gsm-nton/status.js';
 import { statusMap as babyxpress } from '../../carriers/babyxpress/status.js';
+import { statusMap as sendyExpress } from '../../carriers/sendy-express/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1370,6 +1371,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'bob-go': bobGo, dypaq, navex,
   'a-hartrodt': aHartrodt, 'air-europa-cargo': airEuropaCargo, navlungo, genei, parcel2go, 'ots-astracon': otsAstracon,
   'cesco-logistics': cescoLogistics, 'rosalia-express': rosaliaExpress, 'icasa-cargo': icasaCargo, 'flow-progressive-logistics': flowProgressiveLogistics, parcelninja, cootranstame, paqmex, 'astral-aviation': astralAviation, 'ibex-express-bo': ibexExpressBo, redecarga, 'paqueteria-vencedor': paqueteriaVencedor,
+  'sendy-express': sendyExpress,
 };
 
 /** The carrier the app files the universal providers' scans under. */

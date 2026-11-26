@@ -4074,6 +4074,12 @@
     "reason": "Sendle's order numbers are a short counter that other carriers' rules share; the QSS tracking number under the label's barcode names Sendle."
   },
   {
+    "carrier": "sendy-express",
+    "pattern": "^SD[A-Z]\\d{7}$",
+    "kind": "open",
+    "reason": "Three Sendy samples, SD with a letter and seven digits. Australia Post's ten-character consignment rule offers the shape at low confidence, and no rule offers Sendy."
+  },
+  {
     "carrier": "sentral-cargo",
     "pattern": "^\\d{11}$",
     "kind": "collision",

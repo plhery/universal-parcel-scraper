@@ -1,0 +1,122 @@
+{
+  "carrier": "sendy-express",
+  "entries": [
+    {
+      "code": "order_placed",
+      "wording": "Parcel Order Placed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The sender booked the parcel; Sendy has not collected it yet."
+    },
+    {
+      "code": "sorting_scanned",
+      "wording": "Parcel Arrived Hub",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "A scan at the hub the scan names."
+    },
+    {
+      "code": "sorting_completed",
+      "wording": "Parcel Sorting Completed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26"
+    },
+    {
+      "code": "out_for_delivery",
+      "wording": "Parcel Out for Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The tracker goes on with the captain's name and phone, his plate and an arrival window, which the adapter leaves out."
+    },
+    {
+      "code": "delivered",
+      "wording": "Parcel Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The tracker goes on with the name of whoever received it, which the adapter leaves out."
+    },
+    {
+      "code": "info_received",
+      "wording": "Order Placed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "A parcel status (`info.status`) the tracker's script words."
+    },
+    {
+      "code": "processed",
+      "wording": "Arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "A parcel status the tracker's script words; its Malay wording says it reached a branch."
+    },
+    {
+      "code": "in_transit",
+      "wording": "In Transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "A parcel status the tracker's script words."
+    },
+    {
+      "code": "out_for_delivery",
+      "wording": "Out For Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "A parcel status the tracker's script words."
+    },
+    {
+      "code": "delivered",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The parcel status of a delivered parcel."
+    },
+    {
+      "code": "available_for_pickup",
+      "wording": "Available For Pickup",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "A parcel status the tracker's script words."
+    },
+    {
+      "code": "attempt_fail",
+      "wording": "Attempt Fail",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "A parcel status the tracker's script words; its Malay wording says the delivery failed."
+    },
+    {
+      "code": "exception",
+      "wording": "Exception",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "A parcel status the tracker's script words."
+    },
+    {
+      "code": "delivery_office",
+      "wording": "Delivery Office",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "A parcel status the tracker's script words: the parcel is at the office that delivers it."
+    }
+  ]
+}

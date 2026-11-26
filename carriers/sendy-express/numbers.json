@@ -1,0 +1,71 @@
+{
+  "carrier": "sendy-express",
+  "records": [
+    {
+      "number": "SDS1703325",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230601154127/https://www.tracking.my/sendy/SDS1703325",
+        "date": "2023-06-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "An archived tracking.my page tracks this number under Sendy Express; Sendy's own tracker answers it with a parcel delivered from its Selangor hub."
+    },
+    {
+      "number": "SDJ1685153",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230320091828/https://www.tracking.my/sendy/SDJ1685153",
+        "date": "2023-03-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "An archived tracking.my page tracks this number under Sendy Express; Sendy's own tracker answers it with a parcel delivered from its Kulai hub in Johor."
+    },
+    {
+      "number": "SDS1472736",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221210000106/https://www.tracking.my/sendy/SDS1472736",
+        "date": "2022-12-10",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "An archived tracking.my page tracks this number under Sendy Express; Sendy's own tracker answers it with a parcel delivered in Kuala Lumpur."
+    }
+  ]
+}

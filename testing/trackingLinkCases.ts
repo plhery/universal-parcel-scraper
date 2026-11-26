@@ -2908,6 +2908,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'mark-express', number: '999999990',
     route: /^https:\/\/crm\.markerp\.in\/Frm_DocTrackWeb\.aspx\?docno=999999990$/,
     marker: /AWB No - 999999990|Online Booking Of Specified A\.W\.B\. Is Not Found/ },
+  // The page looks the number up on load and names it over the tracker's "no update" notice.
+  { carrier: 'sendy-express', number: 'SDS0000000',
+    route: /^https:\/\/www\.sendy\.com\.my\/en\/track\/SDS0000000$/,
+    marker: /The tracking information has not been updated/ },
 ];
 
 /**

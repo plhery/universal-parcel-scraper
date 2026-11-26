@@ -1,0 +1,84 @@
+{
+  "id": "sendy-express",
+  "displayName": "Sendy Express",
+  "aliases": [
+    "Sendy",
+    "Sendy Express Malaysia"
+  ],
+  "region": {
+    "countries": [
+      "MY"
+    ]
+  },
+  "brand": {
+    "color": "#0a5cff"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kuala_Lumpur",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "sendy-express",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "offset_timestamps",
+    "weight"
+  ],
+  "portal": {
+    "url": "https://www.sendy.com.my/en/track/{trackingNumber}",
+    "searchUrl": "https://www.sendy.com.my/en/track",
+    "helpUrl": "https://www.sendy.com.my/en#contact_us",
+    "canaryUrl": "https://www.sendy.com.my/en/track",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "offset_timestamps",
+      "weight",
+      "eta",
+      "recipient_name",
+      "recipient_address",
+      "driver_name",
+      "driver_phone",
+      "vehicle",
+      "coordinates",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "offset_timestamps",
+      "weight"
+    ],
+    "discarded": [
+      "eta",
+      "recipient_name",
+      "recipient_address",
+      "driver_name",
+      "driver_phone",
+      "vehicle",
+      "coordinates",
+      "proof_of_delivery"
+    ],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.sendy.com.my",
+        "sendy.com.my"
+      ],
+      "path": "^/(?:en|ms|cn)/track/([A-Za-z0-9-]+)/?$"
+    }
+  ],
+  "detection": []
+}
