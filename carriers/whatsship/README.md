@@ -2,6 +2,8 @@
 
 Tracks WhatsShip forwarding references through the guest JSON endpoint called by [its branded tracker](https://www.whatsship.com/). Recognition confirms the whole order reference before choosing the carrier.
 
+The backend finds a reference only whole: another case, a digit off or a missing suffix is not found. Once a line such as YunExpress takes the parcel, the record's `OrderNumber` becomes that line's own number and the WS reference no longer appears in the reply. Such a record is kept; one that names another WS reference is refused.
+
 The `direct` step calls the tracker’s 57track backend; `retry` repeats only a network failure. This integration follows WhatsShip references only. The backend’s partner waybills do not establish another carrier’s ownership.
 
 The parser keeps dated scans and their stated offsets. Scans without an offset retain their local wall clock. Scans carry WhatsShip's node code, which names the step; the feed relayed for some partners' orders, such as YunExpress's, has no code: the map reads the wording it has recorded from that feed, also when a universal provider relays it under its own code, such as 17TRACK's `InfoReceived`, and shared English wording rules read the rest. WhatsShip's own arrival at its origin facility after that feed has moved the parcel is a hand-over on the way, so it reads in transit rather than as the acceptance. The response’s metadata timestamp is neither a scan nor an estimate. An exact missing-number reply is absence; empty history, malformed replies and verification remain distinct.

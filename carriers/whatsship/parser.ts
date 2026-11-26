@@ -137,8 +137,12 @@ export function parseWhatsShip(payload: unknown, rawNumber: string): CarrierResu
   }
   if (!isRecord(payload.Item)) throw new SchemaError(PROVIDER, 'WhatsShip returned no shipment record');
   const item = payload.Item;
-  if (typeof item.OrderNumber !== 'string' || item.OrderNumber.length > 64
-    || !isWhatsShipReference(item.OrderNumber) || normalizeTrackingNumber(item.OrderNumber) !== number) {
+  // 57track finds a WS reference only whole: another case, a digit off or a missing suffix is not found. Once the line
+  // takes the parcel, the record's OrderNumber becomes the line's own number, so a record named by another number is
+  // kept, while any WS reference it names must be the one asked.
+  const order = typeof item.OrderNumber === 'string' && item.OrderNumber.length <= 64 ? normalizeTrackingNumber(item.OrderNumber) : '';
+  const named = Object.values(item).filter((value): value is string => typeof value === 'string' && isWhatsShipReference(value));
+  if (!order || (order.startsWith('WS') && order !== number) || named.some((value) => normalizeTrackingNumber(value) !== number)) {
     throw new SchemaError(PROVIDER, 'WhatsShip returned another whole order reference');
   }
   if (!Array.isArray(item.OrderTrackingDetails) || item.OrderTrackingDetails.length > MAX_ROWS || !item.OrderTrackingDetails.every(isRecord)) {

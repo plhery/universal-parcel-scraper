@@ -35,6 +35,14 @@ describe('WhatsShip public order-reference parser', () => {
     expect(parseWhatsShip(normalized, NUMBER).events).toHaveLength(1);
   });
 
+  it("keeps a record the line has renamed with its own numbers, unless it names another WS reference", () => {
+    const renamed = reply(); renamed.Item.OrderNumber = '9'.repeat(18); renamed.Item.TrackingNumber = '9'.repeat(18);
+    expect(parseWhatsShip(renamed, NUMBER).events).toHaveLength(1);
+    const other = reply(); other.Item.OrderNumber = '9'.repeat(18);
+    Object.assign(other.Item, { CustomerOrderNumber: OTHER });
+    expect(() => parseWhatsShip(other, NUMBER)).toThrow(SchemaError);
+  });
+
   it('recognizes only the exact observed absence envelope', () => {
     expect(() => parseWhatsShip({ error: 'Tracking number not exist!', status: 422 }, NUMBER)).toThrow(NotFoundError);
     for (const data of [
