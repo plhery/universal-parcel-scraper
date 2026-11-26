@@ -13,8 +13,10 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['ST05', 'out_for_delivery'], // On the delivery vehicle.
   ['ST06', 'in_transit'], // Between depots: worded as local transit, earlier as the line-haul vehicle.
   ['ST07', 'delivered'],
+  ['ST08', 'failed_attempt'], // Not delivered on the round, the recipient's phone switched off.
   ['ST11', 'in_transit'], // Redirected.
   ['ST15', 'ready_for_pickup'], // Waiting in a parcel locker.
+  ['ST20', 'registered'], // The pickup order sent to a courier, before the collection.
   ['ST33', 'out_for_delivery'], // Taken out for a parcel locker.
   ['ST35', 'failed_attempt'], // A delivery attempt; the recipient was left a notice.
   // The recipient will collect the parcel, which stays at the depot for them.

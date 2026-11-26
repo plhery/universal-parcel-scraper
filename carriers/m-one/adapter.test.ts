@@ -222,6 +222,10 @@ describe('M-ONE status vocabulary', () => {
     }
     expect(statusMapAnswer({ carrier: 'm-one', providerCode: 'ST35', description: 'Pokušaj uručenja (primaocu ostavljeno obaveštenje)' }))
       .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
+    expect(statusMapAnswer({ carrier: 'm-one', providerCode: 'ST08', description: 'Nije isporučena - Isključen telefon' }))
+      .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
+    expect(statusMapAnswer({ carrier: 'm-one', providerCode: 'ST20', description: 'Poslat kuriru nalog za prikupljanje' }))
+      .toEqual({ kind: 'mapped', stage: 'registered' });
     expect(statusMapAnswer({ carrier: 'm-one', providerCode: 'ST99', description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
     expect(mOneStage('st07', 'Uručena pošiljka')).toEqual({ stage: 'delivered', source: 'carrier_map' });
     expect(mOneStage('ST99', 'Synthetic note')).toBeNull();
