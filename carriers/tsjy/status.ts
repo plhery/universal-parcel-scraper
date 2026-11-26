@@ -1,5 +1,6 @@
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { chinaPostRelayedStage } from '../china-post/status.js';
 
 /**
  * TSJY's own steps in its Kunshan warehouse, written in Chinese. The customer
@@ -26,8 +27,13 @@ const RELAYED: ReadonlyMap<string, Stage> = new Map([
   ['item information received.', 'accepted'],
   // Another line's order, in Chinese, placed while TSJY still holds the packed parcel, as 17FEIA's order data is.
   ['已下单', 'accepted'],
+  // Another line's order data in Chinese, as the platform's other tenants write it, while TSJY still holds the parcel.
+  ['货物电子信息已经收到', 'accepted'],
   // That line booking the parcel out of its warehouse, in Chinese, after taking it in there ("已入库").
   ['已出库', 'in_transit'],
+  // A line's Shanghai warehouse taking the parcel in after TSJY's dispatch, and its operations centre sending it on.
+  ['已入仓', 'in_transit'],
+  ['已出库,货物离开操作中心', 'in_transit'],
   // A line's warehouse taking the parcel in after TSJY's dispatch, and sending it on, in Chinese and English.
   ['货物已入库 origin scan', 'in_transit'],
   ['货物出库 left origin facility.', 'in_transit'],
@@ -79,12 +85,13 @@ export function tsjyMappedStage(wording: string): Stage | undefined {
 }
 
 /**
- * A relayed row no table names, through the shared rules. TSJY has dispatched
- * the parcel by the time a later carrier announces or receives it, so those
- * rows are the journey going on.
+ * A relayed row no table names: China Post's scans in Chinese as China Post's map reads them, else the shared
+ * rules. TSJY has dispatched the parcel by the time a later carrier announces or receives it, so those rows,
+ * China Post's receipt (中国邮政已收取邮件) among them, are the journey going on.
  */
 function relayedStage(wording: string): ClassifiedWording | null {
-  const worded = classifyWording(wording, 'pending');
+  const chinaPost = chinaPostRelayedStage(wording);
+  const worded = chinaPost ? { stage: chinaPost, source: 'carrier_map' as const } : classifyWording(wording, 'pending');
   if (worded.source === 'none') return null;
   return ['pending', 'registered', 'accepted'].includes(worded.stage) ? { stage: 'in_transit', source: 'carrier_map' } : worded;
 }

@@ -36,7 +36,8 @@ abroad on a line such as 17FEIA's. Tracked through the lookup the order search o
 - The map names TSJY's steps and 17FEIA's milestones as they read in TSJY's journey: 17FEIA's
   order data, like another line's order in Chinese (已下单), comes while TSJY still holds the
   parcel, and its receipt after TSJY's dispatch is transit. A later carrier's announcement or
-  receipt is transit too; other relayed wording goes through the shared rules. The broker's
+  receipt is transit too, China Post's receipt included; China Post's scans in Chinese read as
+  China Post's map reads them, and other relayed wording goes through the shared rules. The broker's
   "delivered to warehouse" is customs. A line handing the parcel back (包裹已退件) while TSJY's
   order still reads in transit is an exception: TSJY has the parcel back and may send it again.
 - The line is handed over from its number: `17feia` when the number is one of 17FEIA's order

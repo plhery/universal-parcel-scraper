@@ -298,6 +298,9 @@ describe('TSJY status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'tsjy', providerCode: null, description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
     // A line's order in Chinese, placed while TSJY still holds the packed parcel, reads as 17FEIA's order data.
     expect(tsjyStage('已下单')).toEqual({ stage: 'accepted', source: 'carrier_map' });
+    // China Post's scans after TSJY's dispatch, its receipt included, read as China Post's map reads them.
+    expect(tsjyStage('邮件已在【示例营业部】完成分拣，准备发出')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(tsjyStage('邮件离开【示例营业部】，正在发往【示例国际】')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     expect(statusMapAnswer({ carrier: 'tsjy', providerCode: null, description: '已下单' })).toEqual({ kind: 'mapped', stage: 'accepted' });
     // A line handing the parcel back to TSJY holds the journey up; the shared rules would end it as a return.
     expect(tsjyStage('包裹已退件')).toEqual({ stage: 'exception', source: 'carrier_map' });
