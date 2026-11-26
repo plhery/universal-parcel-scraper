@@ -47,11 +47,14 @@ export class XendnowTracker {
   }
 
   private async read(number: string, signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> {
-    // The scans, and the box's card for a DHL hand-over: the tracking page asks for both.
+    // The scans, and the box's card for a DHL hand-over: the tracking page asks for both. A failed request ends
+    // the other, so neither outlives the attempt.
+    const sibling = new AbortController();
+    const both = AbortSignal.any([signal, sibling.signal]);
     const [history, detail] = await Promise.all([
-      this.call('track_parcel_history', number, signal, timeoutMs),
-      this.call('track_parcel_detail', number, signal, timeoutMs),
-    ]);
+      this.call('track_parcel_history', number, both, timeoutMs),
+      this.call('track_parcel_detail', number, both, timeoutMs),
+    ]).finally(() => sibling.abort());
     return parseXendnow(history, detail, number);
   }
 
