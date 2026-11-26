@@ -123,6 +123,7 @@ describe('BFE Express tracking', () => {
       ['ar, en tránsito', 'in_transit'],
       ['ar, en reparto', 'out_for_delivery'],
       ['ar, reparto en curso', 'out_for_delivery'],
+      ['abc01, entregado', 'delivered'],
       ['tu paquete está en viaje a oficina ejemplo', 'in_transit'],
       ['reparto en curso', 'out_for_delivery'],
       ['entregado', 'delivered'],
@@ -132,6 +133,8 @@ describe('BFE Express tracking', () => {
     // BFE's Spanish rows in Argentina start with the country, which becomes the location.
     expect(bfeWording('AR, En tránsito')).toEqual({ description: 'En tránsito', location: 'AR', original_description: 'AR, En tránsito' });
     expect(bfeWording('AR, Reparto en curso')).toEqual({ description: 'Reparto en curso', location: 'AR', original_description: 'AR, Reparto en curso' });
+    // The delivery names the place of the round before it first, by its code.
+    expect(bfeWording('ABC01, Entregado')).toEqual({ description: 'Entregado', location: 'ABC01', original_description: 'ABC01, Entregado' });
   });
 
   it('posts the signed number and signs again once on the service clock when ours is off', async () => {
