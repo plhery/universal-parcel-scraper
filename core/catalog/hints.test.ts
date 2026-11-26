@@ -349,6 +349,11 @@ describe('carrier names reported by universal providers', () => {
     expect(carrierIdFromName('La Poste du Senegal')).toBe('la-poste-senegal');
   });
 
+  it('reads LM Parcel by the pinyin name Ship24 gives it', () => {
+    expect(carrierIdFromName('Liumai Express')).toBe('lm-parcel');
+    expect(carrierIdFromName('六脉速运')).toBe('lm-parcel');
+  });
+
   it('reads FedEx International Connect by its name, its abbreviation and the Cross Border name P2P traded under, never its Plus service', () => {
     expect(carrierIdFromName('FedEx® International Connect (FIC)')).toBe('fedex-international-connect');
     expect(carrierIdFromName('FedEx International Connect')).toBe('fedex-international-connect');

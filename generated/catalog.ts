@@ -42249,7 +42249,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#955b99",
     "aliases": [
       "六脉速运",
-      "六脉小包"
+      "六脉小包",
+      "Liumai Express"
     ],
     "countries": [
       "CN"
