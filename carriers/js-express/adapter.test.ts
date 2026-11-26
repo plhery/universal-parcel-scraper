@@ -157,11 +157,15 @@ describe('JS Express tracking adapter', () => {
       row('2026-05-02 03:30:00', 'Chinatown', 'Out for delivery'),
       row('2026-05-02 03:00:00', 'China', 'Delivered (China, ME)'),
       row('2026-05-02 02:00:00', 'Sample General Warehouse-Operation Center', 'Item has been collected'),
-      // Hong Kong and a Japanese place, written in their scripts.
+      // Hong Kong, written in its script.
       row('2026-05-02 01:30:00', '香港转运中心', 'Arrive at transit center'),
-      row('2026-05-02 01:00:00', '東京センター', 'Arrive at transit center'),
     )).toEqual(['2026-05-02T09:00:00', '2026-05-02T08:00:00', '2026-05-02T07:00:00', '2026-05-02T06:00:00', '2026-05-02T05:00:00',
-      '2026-05-02T04:00:00', '2026-05-02T03:30:00', '2026-05-02T03:00:00', '2026-05-02T02:00:00', '2026-05-02T01:30:00', '2026-05-02T01:00:00']);
+      '2026-05-02T04:00:00', '2026-05-02T03:30:00', '2026-05-02T03:00:00', '2026-05-02T02:00:00', '2026-05-02T01:30:00']);
+    // Places written in Japanese, in kana or with a courier branch's kanji, are on Japan's clock, whatever offset JS Express gives them.
+    expect(clocks(
+      row('2026-05-03 02:00:00', '見本営業所', 'The package delivery failed'),
+      row('2026-05-03 01:00:00', '東京センター', 'Arrive at transit center'),
+    )).toEqual(['2026-05-03T02:00:00+09:00', '2026-05-03T01:00:00+09:00']);
   });
 
   it('dates Straightship\'s rows on UTC only in a history that names it, and keeps other couriers\' wall clocks', () => {

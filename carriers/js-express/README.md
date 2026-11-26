@@ -56,6 +56,10 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   province or a city, or written in Chinese other than Hong Kong's, Macau's or Taiwan's, is on
   Beijing time. A flight's departure filed there keeps its wall clock:
   one has come hours after its flight could have left, given the landing that followed.
+- A row at a place written in Japanese, in kana or with a kanji only Japan writes, such as a
+  courier's branch ("…営業所"), is on Japan's clock, whatever offset it carries: JS Express gives
+  the Japanese partners' rows China's, and on Japan's clock the customs broker's rows fall between
+  JS Express's own at the airport, minutes apart.
 - Micro Express's rows, copied in its words once it is the courier in Australia, are on UTC, the
   instant Micro Express's own tracker gives the same scan to the second; read on Melbourne's clock,
   they would come eleven hours early. Their place, a suburb and its state, does not change that.

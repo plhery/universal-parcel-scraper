@@ -15,9 +15,14 @@ const CHINA_NAMES = [
 // A label opening with a region of China, as "South China Transit Center", or with one of those names.
 const CHINA_PLACE = new RegExp(`^(?:(?:north|south|east|west|central|north-?east|north-?west|south-?east|south-?west)\\s+china|${
   CHINA_NAMES.join('|')})(?![a-z'])`, 'i');
-// A place written in Chinese, as a warehouse's "安徽总仓库-操作中心", with no Japanese kana or Korean
-// script; Hong Kong, Macau and Taiwan written so are no mainland China.
-const CHINESE_SCRIPT = /^(?=.*\p{Script=Han})(?!.*[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}])(?!.*(?:香港|澳[门門]|台[湾灣]|臺灣))/u;
+// A place written in Japanese: in kana, or with a kanji only Japan writes so, as a courier's branch, "…営業所", a
+// station, "…駅", or a prefecture, "…県".
+const JAPANESE_SCRIPT = /[\p{Script=Hiragana}\p{Script=Katakana}営駅県]/u;
+// Japan's one clock.
+const JAPAN_ZONE = 'Asia/Tokyo';
+// A place written in Chinese, as a warehouse's "安徽总仓库-操作中心", not in Japanese nor in Korean script; Hong Kong,
+// Macau and Taiwan written so are no mainland China.
+const CHINESE_SCRIPT = /^(?=.*\p{Script=Han})(?!.*\p{Script=Hangul})(?!.*(?:香港|澳[门門]|台[湾灣]|臺灣))/u;
 // A flight's departure, take-off or landing.
 const FLIGHT = /\b(?:flights?|landing|landed|take-?off|uplifted)\b/i;
 
@@ -30,7 +35,15 @@ const FLIGHT = /\b(?:flights?|landing|landed|take-?off|uplifted)\b/i;
 function inChina(place: string): boolean {
   const [first = '', ...rest] = place.split(',').map((part) => part.trim());
   if (rest.some((part) => usStateTimeZone(part) || canadaProvinceTimeZone(part))) return false;
-  return countryCode(first) === 'CN' || CHINA_PLACE.test(first) || CHINESE_SCRIPT.test(place);
+  return countryCode(first) === 'CN' || CHINA_PLACE.test(first) || (CHINESE_SCRIPT.test(place) && !JAPANESE_SCRIPT.test(place));
+}
+
+/**
+ * The clock of a row at a place written in Japanese, the Japanese courier's and customs broker's: Japan's one clock,
+ * whatever offset the row states. Undefined for a row elsewhere.
+ */
+export function jsExpressJapanClock(location: string): string | undefined {
+  return JAPANESE_SCRIPT.test(location) ? JAPAN_ZONE : undefined;
 }
 
 /**

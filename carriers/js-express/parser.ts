@@ -14,7 +14,7 @@ import { cttExpressRelayZone } from '../ctt-express/clock.js';
 import { DHL_PAKET_ROW } from '../dhl/paket-rows.js';
 import { isJAndTGermanyCopy } from '../j-and-t-de/copies.js';
 import { isMicroExpressCopy } from '../micro-express/copies.js';
-import { jsExpressChinaClock } from './clock.js';
+import { jsExpressChinaClock, jsExpressJapanClock } from './clock.js';
 import { imileReceiver } from '../imile/parser.js';
 import { IMILE_RECEIVER, LIST_PLACE, RECEIVER } from './identity.js';
 import { isJsExpressDepotReceipt, jsExpressEnglish, jsExpressStage } from './status.js';
@@ -154,6 +154,7 @@ function canadianTown(location: string, label: string): boolean {
  * In a history whose USPS scans to the second name their towns "Town,ST", USPS's
  * rows are on their place's clock instead, labels included. Micro Express's rows,
  * copied once it delivers in Australia, are on UTC, whatever their place.
+ * A row at a place written in Japanese is on Japan's clock, whatever its offset.
  * Null otherwise: airports' codes, other rows without a place and other
  * couriers' rows.
  */
@@ -166,7 +167,7 @@ function scanZone(local: string, description: string, location: string, label: s
   const seconds = !local.endsWith(':00');
   if (USPS.test(description) && seconds) return 'UTC';
   if (uspsFeed === 'utc' && usps && (seconds || !STATE.test(location))) return 'UTC';
-  return jsExpressChinaClock(description, location) ?? null;
+  return jsExpressChinaClock(description, location) ?? jsExpressJapanClock(location) ?? null;
 }
 
 /** USPS's feed to the second in a history: on UTC, or on the clocks of the towns it writes "Town,ST". */
