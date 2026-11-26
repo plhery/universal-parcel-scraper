@@ -61059,6 +61059,24 @@
     ]
   },
   {
+    "input": "6078502763873",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post",
+      "aras-kargo",
+      "econt",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "aras-kargo"
+    ]
+  },
+  {
     "input": "607S3E-0004SN3W",
     "carrier": "unknown",
     "confidence": "none",

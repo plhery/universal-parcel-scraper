@@ -464,6 +464,7 @@ import { adapter as grandSlamExpress } from '../carriers/grand-slam-express/adap
 import { adapter as gruberLogistics } from '../carriers/gruber-logistics/adapter.js';
 import { adapter as gsPostbox } from '../carriers/gs-postbox/adapter.js';
 import { adapter as gsiExpress } from '../carriers/gsi-express/adapter.js';
+import { adapter as gsmNton } from '../carriers/gsm-nton/adapter.js';
 import { adapter as gtaAirskip } from '../carriers/gta-airskip/adapter.js';
 import { adapter as gti } from '../carriers/gti/adapter.js';
 import { adapter as gtlGoto } from '../carriers/gtl-goto/adapter.js';
@@ -1677,6 +1678,7 @@ export const REGISTRY: RegistryDefinition = {
     "gruber-logistics": gruberLogistics,
     "gs-postbox": gsPostbox,
     "gsi-express": gsiExpress,
+    "gsm-nton": gsmNton,
     "gta-airskip": gtaAirskip,
     "gti": gti,
     "gtl-goto": gtlGoto,
@@ -3233,6 +3235,7 @@ export const REGISTRY: RegistryDefinition = {
     "gruber-logistics": "gruber-logistics",
     "gs-postbox": "gs-postbox",
     "gsi-express": "gsi-express",
+    "gsm-nton": "gsm-nton",
     "gta-airskip": "gta-airskip",
     "gti": "gti",
     "gtl-goto": "gtl-goto",

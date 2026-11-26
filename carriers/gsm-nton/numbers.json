@@ -1,0 +1,34 @@
+{
+  "carrier": "gsm-nton",
+  "records": [
+    {
+      "number": "6078502763873",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240930054524/http://expressweb.co.kr/member/loginTracing.do?fwdCode=gexp&bound=ALL&langCode=KOR&HBLNO=6078502763873",
+        "date": "2024-09-30",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "aras-kargo",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "An archived capture of GSM NtoN's tracking link on expressWeb, under its forwarder code; the tracker answers it with an air import from Milan delivered by Korea Post, under the same number."
+    }
+  ]
+}

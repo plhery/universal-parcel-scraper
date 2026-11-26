@@ -1,0 +1,221 @@
+{
+  "carrier": "gsm-nton",
+  "entries": [
+    {
+      "code": "HTA",
+      "wording": "Accept",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The first row of a bill, written by a job. Its English detail says the shipment was picked up, its Korean one that it was accepted for international transport."
+    },
+    {
+      "code": "HTA",
+      "wording": "오더접수",
+      "stage": "accepted",
+      "language": "ko",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The Korean wording the tracking link shows for HTA."
+    },
+    {
+      "code": "HTC",
+      "wording": "Departure W/H In",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The parcel reached the forwarder’s warehouse abroad."
+    },
+    {
+      "code": "HTC",
+      "wording": "선적지반입",
+      "stage": "accepted",
+      "language": "ko",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The Korean wording the tracking link shows for HTC."
+    },
+    {
+      "code": "HTD",
+      "wording": "Departure(MXP)",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The flight or sailing left; the wording ends with its airport or port, which the adapter keeps as the location."
+    },
+    {
+      "code": "HTD",
+      "wording": "출항(MXP)",
+      "stage": "in_transit",
+      "language": "ko",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The Korean wording the tracking link shows for HTD."
+    },
+    {
+      "code": "HTE",
+      "wording": "Arrival(ICN)",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The flight or sailing arrived; the wording ends with its airport or port."
+    },
+    {
+      "code": "HTE",
+      "wording": "입항(ICN)",
+      "stage": "in_transit",
+      "language": "ko",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The Korean wording the tracking link shows for HTE."
+    },
+    {
+      "code": "HTF",
+      "wording": "CarryIn",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The parcel entered the bonded warehouse in Korea."
+    },
+    {
+      "code": "HTF",
+      "wording": "반입완료",
+      "stage": "in_transit",
+      "language": "ko",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The Korean wording the tracking link shows for HTF."
+    },
+    {
+      "code": "HTG",
+      "wording": "Clearance Accept",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "Customs took the import declaration, here before the flight landed."
+    },
+    {
+      "code": "HTG",
+      "wording": "통관접수",
+      "stage": "customs",
+      "language": "ko",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The Korean wording the tracking link shows for HTG."
+    },
+    {
+      "code": "HTG",
+      "wording": "clearance",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "Clearance under way; the English wording comes with a trailing space."
+    },
+    {
+      "code": "HTG",
+      "wording": "통관진행",
+      "stage": "customs",
+      "language": "ko",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The Korean wording the tracking link shows for HTG."
+    },
+    {
+      "code": "HTH",
+      "wording": "Acceptance of Declaration",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "Customs accepted the import declaration, which clears the parcel."
+    },
+    {
+      "code": "HTH",
+      "wording": "수입신고수리",
+      "stage": "in_transit",
+      "language": "ko",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The Korean wording the tracking link shows for HTH."
+    },
+    {
+      "code": "HTH",
+      "wording": "Clearance Complete",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "Cleared, so the parcel moves on to the delivering carrier."
+    },
+    {
+      "code": "HTH",
+      "wording": "통관완료",
+      "stage": "in_transit",
+      "language": "ko",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The Korean wording the tracking link shows for HTH."
+    },
+    {
+      "code": "HTF_O",
+      "wording": "CarryOut",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The parcel left the bonded warehouse."
+    },
+    {
+      "code": "HTF_O",
+      "wording": "반출완료",
+      "stage": "in_transit",
+      "language": "ko",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The Korean wording the tracking link shows for HTF_O."
+    },
+    {
+      "code": "HTI",
+      "wording": "Delivery Accept",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The delivering carrier in Korea took the parcel over."
+    },
+    {
+      "code": "HTI",
+      "wording": "배송접수",
+      "stage": "in_transit",
+      "language": "ko",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The Korean wording the tracking link shows for HTI."
+    },
+    {
+      "code": "HTJ",
+      "wording": "Delivery Complete",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The delivering carrier delivered the parcel."
+    },
+    {
+      "code": "HTJ",
+      "wording": "배송완료",
+      "stage": "delivered",
+      "language": "ko",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The Korean wording the tracking link shows for HTJ."
+    }
+  ]
+}

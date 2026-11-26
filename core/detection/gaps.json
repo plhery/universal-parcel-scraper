@@ -2072,6 +2072,12 @@
     "reason": "GSI Express hands parcels to Korea Post for delivery in Korea, whose rule suggests these thirteen-digit registered numbers."
   },
   {
+    "carrier": "gsm-nton",
+    "pattern": "^6\\d{12}$",
+    "kind": "collision",
+    "reason": "GSM NtoN files a parcel under the Korea Post registered number that delivers it in Korea, whose rule suggests these thirteen-digit numbers."
+  },
+  {
     "carrier": "guatex",
     "pattern": "^[A-Z]\\d{3,4}[A-Z]{1,2}\\d{5}$",
     "kind": "by_design",

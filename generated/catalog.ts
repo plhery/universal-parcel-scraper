@@ -32408,6 +32408,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "gsm-nton": {
+    "displayName": "GSM NtoN",
+    "color": "#354C5E",
+    "aliases": [
+      "GSMNtoN",
+      "Global Shipping Master",
+      "글로벌쉬핑마스터앤투앤"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Seoul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gsm-nton",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.gsmnton.com/",
+    "trackingSearchUrl": "https://www.gsmnton.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "expressweb.co.kr",
+          "www.expressweb.co.kr"
+        ],
+        "pathPattern": "^/member/loginTracing\\.do$",
+        "query": "^(?=(?:.*&)?fwdCode=gexp(?:&|$))(?:.*&)?HBLNO=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
   "gta-airskip": {
     "displayName": "GTA AirSkip",
     "color": "#1081c4",
@@ -74471,6 +74503,7 @@ export const CARRIER_IDS = [
   "gruber-logistics",
   "gs-postbox",
   "gsi-express",
+  "gsm-nton",
   "gta-airskip",
   "gti",
   "gtl-goto",
@@ -76566,6 +76599,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gruber-logistics": [],
   "gs-postbox": [],
   "gsi-express": [],
+  "gsm-nton": [],
   "gta-airskip": ["gta-airskip-1"],
   "gti": [],
   "gtl-goto": ["gtl-goto-1","gtl-goto-2"],

@@ -1,0 +1,24 @@
+{
+  "data": {
+    "STATUSNAME": "Delivery Complete",
+    "SHIPPERNAME": "MXN ITALY SRL",
+    "MBLNo": "18028026924",
+    "PONO": "ORDER-REFERENCE",
+    "GWT": 0.5,
+    "HBLNO": "6078502763873",
+    "PICKUPDATE": "2024-09-29",
+    "DeliveryCode": "EMS",
+    "DELIVERYDATE": "2024-09-30",
+    "CONFIRMDATE": "2024-10-07 12:45",
+    "PIECES": 1,
+    "CONSIGNEENAME": "hongkildong",
+    "FlightNo": "KE514",
+    "DESTCODE": "ICN",
+    "DeliveryName": "우체국(EMS)",
+    "ORDERDATE": "2024-09-27",
+    "ChangeDeliveryName": "우체국(EMS)",
+    "REFNO": "WDAIH240001976164",
+    "ORIGCODE": "MXP",
+    "REMARK": ""
+  }
+}

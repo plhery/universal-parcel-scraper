@@ -1146,6 +1146,7 @@ import { statusMap as huayutong } from '../../carriers/huayutong/status.js';
 import { statusMap as weLogistics } from '../../carriers/we-logistics/status.js';
 import { statusMap as meitongda } from '../../carriers/meitongda/status.js';
 import { statusMap as wcxex } from '../../carriers/wcxex/status.js';
+import { statusMap as gsmNton } from '../../carriers/gsm-nton/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1165,6 +1166,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'we-logistics': weLogistics,
   meitongda,
   wcxex,
+  'gsm-nton': gsmNton,
   'apm-logistics': apmLogistics, gintracom, 'transglobal-express': transglobalExpress, 'turkon-line': turkonLine, 'hapag-lloyd': hapagLloyd, 'biman-bangladesh': bimanBangladesh, cargolux, cargologic,
   'copa-airlines-cargo': copaAirlinesCargo,
   'airasia-cargo': airasiaCargo,
