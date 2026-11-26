@@ -480,6 +480,8 @@ describe('HuaHan status map', () => {
   it('reads USPS\'s relayed facility scans by their words, even under its last-step codes', () => {
     for (const [code, description, stage] of [
       [null, 'Pre-Shipment Info Sent to USPS, USPS Awaiting Item', 'registered'],
+      [null, 'Shipping Label Created', 'registered'],
+      [null, 'Shipping Label Created, USPS Awaiting Item', 'registered'],
       ['ND', 'Accepted at USPS Facility, EXAMPLE CITY, CA 90000', 'in_transit'],
       ['ND', 'Arrived at USPS Facility, EXAMPLE CITY, CA 90000', 'in_transit'],
       ['ND', 'In Transit to Next Facility, ', 'in_transit'],

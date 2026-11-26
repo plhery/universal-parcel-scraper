@@ -105,6 +105,7 @@
     {"wording": "Parcel is out for delivery.", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The same courier's round, relayed without a code."},
     {"wording": "Your shipment has arrived at the postal operator of the country of destination and will be delivered in the coming days.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "The destination post's notice of a delivery to come, after its arrival from abroad and before its round."},
     {"code": "FI", "wording": "Unsuccessful (physical) delivery", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "A post's round that did not deliver, after In delivery; the parcel then waited at the post office."},
-    {"code": "FI", "wording": "Not Delivered - addressee not present- message left", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "A post's round that found nobody and left a notice; the parcel then waited for collection."}
+    {"code": "FI", "wording": "Not Delivered - addressee not present- message left", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "A post's round that found nobody and left a notice; the parcel then waited for collection."},
+    {"wording": "Shipping Label Created", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "USPS's label for its leg, relayed without a code, as its pre-advice is: a record of data, not a movement; under one of HuaHan's codes the code reads it."}
   ]
 }

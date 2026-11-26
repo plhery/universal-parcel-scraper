@@ -130,6 +130,8 @@ const PATTERNS: ReadonlyArray<readonly [RegExp, Stage]> = [
   [/^arrived at usps facility\b/, 'in_transit'],
   [/^departed usps facility\b/, 'in_transit'],
   [/^pre-shipment info sent to usps\b/, 'registered'],
+  // USPS's label for its leg, relayed without a code like its pre-advice: a record of data, not a movement.
+  [/^shipping label created\b/, 'registered'],
   // USPS moving the parcel between its facilities, relayed with the facility after the comma left empty.
   [/^in transit to next facility\b/, 'in_transit'],
   // The American courier's facility taking the parcel in, named by its code.
