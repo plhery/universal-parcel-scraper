@@ -20053,6 +20053,7 @@
       "mode": "automatic",
       "adapter": "dao",
       "recognitionRank": 515,
+      "browserRecognitionRank": 515,
       "localClocks": true,
       "browser": true
     },

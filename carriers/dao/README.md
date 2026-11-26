@@ -6,7 +6,8 @@ tracking page asks.
 ## How it works
 
 The adapter first asks `GET https://dao.as/wp-json/dao-wp/v1/track-parcel?barcode={number}&lang=EN`.
-If DAO challenges that read, a configured TRAWL service opens the English tracking page in a
+The service refuses a request without the page's Turnstile token with an HTTP 403 bot check
+(`dao_bot_check_failed`). A configured TRAWL service then opens the English tracking page in a
 fresh context. The page owns its WordPress nonce, timing header and single-use Turnstile token.
 The helper waits for the interactive widget and clicks its visible checkbox at most three times,
 then captures the whole-number request. It returns selected identity and scan fields without
@@ -15,7 +16,9 @@ cookies, tokens or a rendered page. A failed connection gets one HTTP retry with
 A number the service does not know, including a malformed one, comes back as `{"found":false}`,
 so it is not found. A known parcel without scans, which older numbers return, has no history. The
 reply must name the requested SSCC. A missing route, a rejected request, block pages, HTTP errors
-and malformed replies keep their own failure kinds. Recognition stays HTTP-only and never starts browser verification.
+and malformed replies keep their own failure kinds. HTTP recognition never starts browser verification,
+so behind the bot check it cannot confirm a parcel. Browser recognition opens the page for the SSCCs
+DAO's rule offers, unless the HTTP read met a throttle or a malformed reply, and returns the history it reads.
 
 ## Numbers
 

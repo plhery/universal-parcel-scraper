@@ -20058,6 +20058,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "dao",
       "recognitionRank": 515,
+      "browserRecognitionRank": 515,
       "localClocks": true,
       "browser": true
     },

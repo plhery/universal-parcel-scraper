@@ -28,7 +28,10 @@
       "rank": 515
     },
     "localClocks": true,
-    "browser": true
+    "browser": true,
+    "browserRecognition": {
+      "rank": 515
+    }
   },
   "capabilities": [
     "history",

@@ -1,8 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
+import { recognitionAskedCarriers, recognitionCandidates } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
+import { RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import type { TrawlCapturedResponse, TrawlClient, TrawlScrapeResponse } from '../../core/transport/trawl.js';
@@ -293,13 +294,33 @@ describe('DAO browser recovery', () => {
     const instance = adapter({ fetcher, recorder, env: {}, trawl, browserExecutablePath: null });
     return { instance, fetcher, scrape, page, row, recorder };
   };
-  it('recovers a challenged HTTP read with whole-bound native history, while recognition remains HTTP-only', async () => {
+  it('recovers a challenged HTTP read with whole-bound native history, while HTTP recognition stays without the browser', async () => {
     const f = setup(); await expect(f.instance.track({ number: HOME })).resolves.toMatchObject({ current_stage: 'delivered' });
     expect(f.fetcher).toHaveBeenCalledOnce(); expect(f.scrape).toHaveBeenCalledOnce();
     expect(f.scrape).toHaveBeenCalledWith(expect.objectContaining({ url: f.page.url, skipHttp: true, maxTier: 3, captureResponses: [daoTrackingUrl(HOME)] }),
       expect.objectContaining({ signal: expect.any(AbortSignal), requireSolved: false, fetcher: f.fetcher, captureWindow: 'last' }));
     expect(f.recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'trawl', fallbackReason: 'challenge', outcome: 'ok' }));
     await expect(f.instance.recognize!(HOME)).rejects.toMatchObject({ kind: 'challenge' }); expect(f.scrape).toHaveBeenCalledOnce();
+  });
+  it('confirms a parcel through the tracking page once HTTP recognition met the bot check, and returns its history', async () => {
+    const f = setup(); const previous = await f.instance.recognize!(HOME).catch((error: unknown) => error);
+    expect(previous).toMatchObject({ kind: 'challenge' }); f.fetcher.mockClear();
+    await expect(f.instance.recognizeWithBrowser!(HOME, { budgetMs: 20_000 }, previous)).resolves.toMatchObject({
+      known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T06:41:20', result: { current_stage: 'delivered' } });
+    expect(f.fetcher).not.toHaveBeenCalled(); expect(f.scrape).toHaveBeenCalledOnce();
+    const absent = setup(); absent.row.body = text('not-found');
+    await expect(absent.instance.recognizeWithBrowser!(HOME)).resolves.toEqual({ known: false, lastActivityAt: null });
+    expect(recognitionCandidates(HOME, { phase: 'browser' }).map(row => row.carrier)).toContain('dao');
+    expect(recognitionCandidates(FOREIGN, { phase: 'browser' }).map(row => row.carrier)).not.toContain('dao');
+  });
+  it('leaves the page unasked after a throttle, a malformed reply or a refused number, and without the browser service', async () => {
+    const f = setup();
+    for (const previous of [new RateLimitedError('DAO', 60_000), new SchemaError('DAO')]) {
+      await expect(f.instance.recognizeWithBrowser!(HOME, {}, previous)).rejects.toBe(previous);
+    }
+    await expect(f.instance.recognizeWithBrowser!(OTHER.slice(0, -1) + '0')).resolves.toEqual({ known: false, lastActivityAt: null });
+    expect(f.scrape).not.toHaveBeenCalled();
+    await expect(carrier(vi.fn<typeof fetch>()).recognizeWithBrowser!(HOME)).rejects.toMatchObject({ kind: 'challenge' });
   });
   it('does not use a browser for a definite answer, rate limit, schema failure or invalid input', async () => {
     for (const [body, status] of [[text('not-found'), 200], ['broken', 200], ['{}', 429], ['{}', 400]] as const) {

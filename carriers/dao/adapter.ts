@@ -1,4 +1,4 @@
-import { accepted, recognizeFromLookup, type AdapterEnvironment, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { accepted, recognizeFromBrowserLookup, recognizeFromLookup, type AdapterEnvironment, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { BudgetExceededError, carrierErrorKind, ChallengeError, IndeterminateError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -61,7 +61,8 @@ export class DaoTracker {
         run: ({ signal, remainingMs }) => this.browser(raw, signal, remainingMs) },
     ]);
   }
-  private async browser(raw: string, signal: AbortSignal, remainingMs: number): Promise<CarrierResult> {
+  /** The English tracking page in the browser service, which passes DAO's bot check, and the reply it captures. */
+  async browser(raw: string, signal: AbortSignal, remainingMs: number): Promise<CarrierResult> {
     const trawl = this.options.trawl;
     if (!trawl) throw new ChallengeError(PROVIDER, 'DAO needs the browser tracking service');
     const number = normalizeDaoNumber(raw).number;
@@ -119,5 +120,16 @@ export const adapter: AdapterFactory = (environment) => {
     track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => http.fetch(number, context),
       () => accepted(() => normalizeDaoNumber(number))),
+    // DAO's service refuses a request without the page's Turnstile token with its bot check, so HTTP
+    // recognition cannot confirm a parcel; the page can. A throttle, a malformed reply or a refused
+    // number stands, and the page is not asked.
+    recognizeWithBrowser: (number, context, previous) => {
+      if (['rate_limited', 'schema', 'invalid_input'].includes(carrierErrorKind(previous) ?? '')) return Promise.reject(previous);
+      if (!accepted(() => normalizeDaoNumber(number))) return Promise.resolve({ known: false, lastActivityAt: null });
+      return recognizeFromBrowserLookup(() => runSteps({ carrier: 'dao', budgetMs: context?.budgetMs ?? 45_000, signal: context?.signal,
+        recorder: environment.recorder }, [
+        { id: 'trawl', run: ({ signal, remainingMs }) => tracker.browser(number, signal, remainingMs) },
+      ]));
+    },
   };
 };
