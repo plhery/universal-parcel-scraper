@@ -22850,8 +22850,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "dpd-ro",
-      "recognitionRank": 934,
-      "recognitionServedCountriesOnly": true,
       "browser": true
     },
     "canaryUrl": "https://www.dpd.com/ro/ro/",

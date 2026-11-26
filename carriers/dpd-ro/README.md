@@ -27,19 +27,17 @@ covers.
 The reply must name the whole requested waybill. For a waybill it does not know, the endpoint
 answers HTTP 404 with MyDPD's "Optiunile specificate nu au fost gasite" page, so that page is not
 found. Other 404s, blocked pages, HTTP errors and malformed replies keep their own failure kinds.
-Recognition makes the `direct` request alone, so it cannot confirm a waybill while the check
-stands.
+The carrier has no recognition: a plain request can only be refused while the check stands, and
+the tracker page is not opened to confirm a number.
 
 ## Numbers
 
 DPD Romania waybills, return waybills included, are eleven digits starting with 8, so other inputs
 are invalid without a request. Lookups archived from DPD Romania's tracker, a tracking guide and
 an open-source tracking library's test show them. Eleven digits are shared with Speedy and many
-other carriers, and nothing in the number points to DPD Romania, so `dpd-ro-1` only suggests it,
-and recognition asks DPD Romania beside the other carriers only when the lookup's country is
-Romania, and from elsewhere once they have all missed the number. `tracking.dpd.ro` also takes the
-fourteen-digit DPD group parcel number of a parcel handed to the DPD network and shows Speedy
-waybills of shipments between Bulgaria and Romania. The adapter takes only DPD Romania's own
+other carriers, and nothing in the number points to DPD Romania, so `dpd-ro-1` only suggests it.
+`tracking.dpd.ro` also takes the fourteen-digit DPD group parcel number of a parcel handed to the
+DPD network and shows Speedy waybills of shipments between Bulgaria and Romania. The adapter takes only DPD Romania's own
 waybills; the `dpd` and `speedy` entries track the others.
 
 ## Notes

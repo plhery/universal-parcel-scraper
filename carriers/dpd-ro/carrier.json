@@ -25,11 +25,7 @@
       "direct",
       "trawl"
     ],
-    "browser": true,
-    "recognition": {
-      "rank": 934,
-      "servedCountriesOnly": true
-    }
+    "browser": true
   },
   "capabilities": [
     "history",

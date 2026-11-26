@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
+import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
@@ -163,27 +163,24 @@ describe('DPD Romania HTTP adapter', () => {
     expect(parseDpdRoReply(200, `\uFEFF${text('delivered.json')}`, DELIVERED)).toMatchObject({ current_stage: 'delivered' });
   });
 
-  it('recognizes a known waybill and the not-found page without a browser or recipient inputs', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply('delivered')).mockResolvedValueOnce(missing());
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T09:20:30.000Z', finished: true });
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: false });
-    await expect(carrier(fetcher).recognize!('60000000001')).resolves.toEqual({ known: false });
-    expect(fetcher).toHaveBeenCalledTimes(2);
-    await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(missing())).track({ number: DELIVERED })).rejects.toMatchObject({ kind: 'not_found' });
+  it('reads MyDPD\'s not-found page as not found, and offers no recognition', async () => {
+    const instance = carrier(vi.fn<typeof fetch>().mockResolvedValue(missing()));
+    expect(instance.recognize).toBeUndefined();
+    expect(instance.recognizeWithBrowser).toBeUndefined();
+    await expect(instance.track({ number: DELIVERED })).rejects.toMatchObject({ kind: 'not_found' });
   });
 
   it.each([[403, 'challenge'], [429, 'rate_limited'], [400, 'transport'], [503, 'maintenance']] as const)(
-    'preserves HTTP %s as %s during retrieval and recognition', async (status, kind) => {
+    'preserves HTTP %s as %s', async (status, kind) => {
       const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response('<html></html>', { status, headers: { 'Retry-After': '120' } }));
       await expect(carrier(fetcher).track({ number: DELIVERED })).rejects.toMatchObject({ kind });
-      await expect(carrier(fetcher).recognize!(DELIVERED)).rejects.toMatchObject({ kind });
-      expect(fetcher).toHaveBeenCalledTimes(2);
+      expect(fetcher).toHaveBeenCalledTimes(1);
     });
 
   it('keeps a 404 that is not MyDPD’s page and a blocked HTTP 200 apart from missing waybills', async () => {
     for (const [response, kind] of [[new Response('Not Found', { status: 404 }), 'transport'],
       [new Response('<html><title>Just a moment...</title></html>'), 'challenge'], [new Response('{"items":[]}'), 'schema']] as const) {
-      await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(response)).recognize!(DELIVERED)).rejects.toMatchObject({ kind });
+      await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(response)).track({ number: DELIVERED })).rejects.toMatchObject({ kind });
     }
   });
 
@@ -267,10 +264,8 @@ describe('DPD Romania through MyDPD\'s tracker page', () => {
     expect(scrape.mock.calls[0]![0].maxTimeout).toBeGreaterThanOrEqual(10_000);
   });
 
-  it('keeps recognition on HTTP and answers a found waybill over HTTP without the browser', async () => {
+  it('answers a found waybill over HTTP without the browser', async () => {
     const { scrape, fetcher, instance } = browser(page([{}]));
-    await expect(instance.recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'challenge' });
-    expect(scrape).not.toHaveBeenCalled();
     fetcher.mockResolvedValue(reply('delivered'));
     await expect(instance.track({ number: DELIVERED })).resolves.toMatchObject({ status: 'delivered' });
     expect(scrape).not.toHaveBeenCalled();
@@ -278,12 +273,13 @@ describe('DPD Romania through MyDPD\'s tracker page', () => {
 });
 
 describe('DPD Romania numbers', () => {
-  it('suggests eleven digits starting with 8 and is asked about them only for a lookup in Romania', () => {
+  it('suggests eleven digits starting with 8, which recognition does not ask it about', () => {
     expect(detectCarrierMatch(DELIVERED)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
     expect(detectCarrierMatch(DELIVERED).candidates).toContain('dpd-ro');
-    expect(recognitionAskedCarriers(DELIVERED, { countryHint: 'RO' })[0]).toBe('dpd-ro');
-    for (const countryHint of [undefined, 'BG', 'DE', 'AL', 'NZ']) {
-      expect(recognitionAskedCarriers(DELIVERED, { countryHint }), `${countryHint}`).not.toContain('dpd-ro');
+    for (const countryHint of [undefined, 'RO', 'BG', 'DE']) {
+      for (const phase of [undefined, 'browser'] as const) {
+        expect(recognitionCandidates(DELIVERED, { countryHint, phase }).map(({ carrier }) => carrier), `${countryHint} ${phase}`).not.toContain('dpd-ro');
+      }
     }
     for (const other of ['70000000001', '8000000001', '800000000012']) {
       expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('dpd-ro');

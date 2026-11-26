@@ -1,4 +1,4 @@
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import {
   BudgetExceededError, carrierErrorKind, ChallengeError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError,
 } from '../../core/errors/index.js';
@@ -77,11 +77,8 @@ export class DpdRoTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const options = { fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent };
-  const tracker = new DpdRoTracker({ ...options, trawl: environment.trawl });
-  // Recognition stays on HTTP.
-  const http = new DpdRoTracker(options);
-  return { id: 'dpd-ro', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context),
-    recognize: (number, context) => recognizeFromLookup(() => http.fetch(number, context),
-      () => accepted(() => normalizeDpdRoNumber(number))) };
+  const tracker = new DpdRoTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent,
+    trawl: environment.trawl });
+  // No recognition: without the tracker page's Turnstile token a plain request can only be refused.
+  return { id: 'dpd-ro', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context) };
 };
