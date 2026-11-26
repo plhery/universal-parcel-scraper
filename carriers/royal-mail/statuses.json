@@ -412,6 +412,21 @@
       "note": "The delivery office's retention, 40 seconds after \"Held as Customs fee to pay\" at the same office and before the charge was paid: no movement, so the item keeps the stage of the scan before it."
     },
     {
+      "code": "EVNLC",
+      "wording": "Delivered to Your Customer Service Point",
+      "language": "en",
+      "unmapped": true,
+      "confirmedBy": "live",
+      "note": "Followed by a name. Seen after a booked collection (ECCSB) and before Royal Mail's first \"Item Received\", the delivery coming days later: not the recipient's delivery, so the item keeps the stage of the scan before it."
+    },
+    {
+      "code": "EVFNA",
+      "language": "en",
+      "unmapped": true,
+      "confirmedBy": "live",
+      "note": "\"Item Coll… Failure- No … (System Generated)\": a booked collection marked as failed by the system, hours after EVNLC. No movement, so the item keeps the stage of the scan before it."
+    },
+    {
       "code": "EVNFS",
       "wording": "Delivery Scan Recorded at Customer Service Point",
       "language": "en",

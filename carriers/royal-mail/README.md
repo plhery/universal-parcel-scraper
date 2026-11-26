@@ -72,6 +72,9 @@ answers are not retried. An unavailable browser fails fast.
   recipient's own collection. The same wording under the code the summary
   turns delivered with is the recipient's collection, and so the delivery, as
   is one of these scans when the summary calls the item collected on it.
+- After a booked collection, "Delivered to Your Customer Service Point" (`EVNLC`) and the
+  collection the system marks as failed (`EVFNA`) get no stage: they came before Royal Mail's
+  first "Item Received", days before the recipient's delivery.
 - A round that could not deliver to the address it was given (`EVKAI`) is a failed attempt,
   unless its wording sends the item back to its sender, as a post abroad's "Incorrectly
   addressed. Returned to sender." does: that scan is the return.
