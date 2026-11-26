@@ -538,10 +538,13 @@ describe('La Poste response normalization', () => {
     const first = parse([platform, announced]);
     expect(first).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
     expect(parse([again, platform, announced]).events?.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);
-    // The same scan listed twice at one instant, once for a parcel and once for a Colissimo, is the acceptance in both wordings.
+    // The same scan listed twice at one instant, once for a parcel and once for a Colissimo, is one scan, the first listed: the acceptance.
     const twin = { ...platform, label: 'Votre Colissimo est en transit sur nos plateformes logistiques.', order: 3 };
-    expect(parse([again, twin, platform, announced]).events?.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'accepted', 'registered']);
-    expect(parse([again, platform, twin, announced]).events?.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'accepted', 'registered']);
+    const read = (events: LaPosteEvent[]) => parse(events).events?.map((event) => [event.stage, event.description]);
+    expect(read([again, twin, platform, announced])).toEqual([['in_transit', platform.label], ['accepted', twin.label], ['registered', announced.label]]);
+    expect(read([again, platform, twin, announced])).toEqual([['in_transit', platform.label], ['accepted', platform.label], ['registered', announced.label]]);
+    // At another instant, the other wording is a scan of its own.
+    expect(parse([{ ...twin, date: '2026-01-09T18:00:00+01:00' }, platform, announced]).events).toHaveLength(3);
     // After La Poste took the parcel in charge, the platform scan is a step on the way.
     const taken = { group: 'EDRDEP', code: 'PC1', label: 'Votre colis est pris en charge par La Poste.', date: '2026-01-09T12:00:00+01:00', country: 'FR', order: 2 };
     expect(parse([{ ...platform, order: 3 }, taken, announced]).events?.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);

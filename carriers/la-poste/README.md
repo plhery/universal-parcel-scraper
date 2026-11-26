@@ -83,8 +83,9 @@ input, so recognition reads them as unknown rather than as a transport failure.
   behind; La Poste sends no other round scan.
 - A parcel handed over at a platform has no taking in charge (`PC1`): its first scan there
   right after the sender's announcement, `ET1` ("en transit sur nos plateformes logistiques"),
-  is the acceptance. La Poste can list that scan twice at one instant and place, worded for a
-  parcel and for a Colissimo; both rows are the acceptance.
+  is the acceptance.
+- La Poste can list a scan twice at one instant and place under one code, worded for a parcel
+  and for a Colissimo ("Votre colis est…", "Votre Colissimo est…"): the first listed is the scan.
 - `PB1` is a delivery that could not happen that day. Parcels word it as a
   coming delivery round, so the code makes it a failed attempt. Under the same code, an address
   La Poste finds incomplete or wrong is an exception, and a day lost "en raison d'une situation
