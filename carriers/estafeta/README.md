@@ -13,7 +13,10 @@ day's later scans sit in a collapse that names the guide; a day with a single
 scan has none, and the group's target, naming the guide, binds it instead.
 No cookies, account bootstrap or API credentials are needed. Colliding codes
 and multiple-piece guides require disambiguation and remain inconclusive.
-Full guides retain their complete alphanumeric identity. The short-code alias
+Full guides retain their complete alphanumeric identity. A guide has 22
+characters: twelve digits, two letters or digits and eight digits, or fifteen
+digits and seven letters or digits. Detection names
+Estafeta for a guide with a letter after the twelve digits. The short-code alias
 is accepted only when the single-parcel response explicitly pairs both values.
 
 ## Notes

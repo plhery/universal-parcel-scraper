@@ -1992,6 +1992,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       },
       {
+        "pattern": "^94501369\\d{15}$",
+        "confidence": "high"
+      },
+      {
         "pattern": "^9451162004\\d{6}$",
         "confidence": "low"
       },
@@ -4181,7 +4185,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       },
       {
-        "pattern": "^\\d{12}(?:[A-Z]\\d|\\d[A-Z])\\d{8}$",
+        "pattern": "^\\d{12}(?!\\d{2})[A-Z0-9]{2}\\d{8}$",
         "confidence": "high"
       }
     ]
@@ -5053,6 +5057,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^(?!MA\\d{19}$|JJD\\d{18}$)(?:\\d{2})?[A-Z0-9]{3}\\d{9}000\\d{6}$",
+        "confidence": "high",
+        "checksum": "australia-post"
+      },
+      {
+        "pattern": "^99[A-Z0-9]{3}\\d{9}00\\d{7}$",
         "confidence": "high",
         "checksum": "australia-post"
       },
@@ -75762,7 +75771,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "c-chez-vous": ["c-chez-vous-1"],
   "heppner": ["heppner-1"],
   "ciblex": ["ciblex-1","ciblex-full-barcode"],
-  "paack": ["paack-1","paack-5340","paack-eci","paack-nike","paack-shein"],
+  "paack": ["paack-1","paack-5340","paack-eci","paack-94501369","paack-nike","paack-shein"],
   "asendia": ["asendia-1","asendia-2","asendia-3","asendia-4","asendia-5","asendia-6"],
   "shipup": [],
   "india-post": ["india-post-1"],
@@ -75822,7 +75831,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "korea-post": ["korea-post-1","korea-post-2","korea-post-3"],
   "thailand-post": ["thailand-post-1"],
   "dtdc": ["dtdc-1","dtdc-2","dtdc-3","dtdc-4","dtdc-5"],
-  "australia-post": ["australia-post-article","australia-post-consignment","australia-post-consignment-10","australia-post-startrack","australia-post-prepaid","australia-post-r","australia-post-s10-tracked","australia-post-s10"],
+  "australia-post": ["australia-post-article","australia-post-article-99","australia-post-consignment","australia-post-consignment-10","australia-post-startrack","australia-post-prepaid","australia-post-r","australia-post-s10-tracked","australia-post-s10"],
   "hongkong-post": ["hongkong-post-1"],
   "pos-malaysia": ["pos-malaysia-1","pos-malaysia-2","pos-malaysia-4"],
   "ninja-van": ["ninja-van-1","ninja-van-2","ninja-van-3"],

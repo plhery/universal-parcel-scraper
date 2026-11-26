@@ -19,7 +19,7 @@ const lookup = () => parseEstafetaLookup(lookupHtml(), NUMBER);
 const negative = '<html><head><title>Resultado</title></head><body><div class="TimeLineErrorRow"><div class="fontWaybill">Numero de Guia:<span class="fontWaybillBold"></span></div><h4>Lo sentimos, no se encontró información</h4></div></body></html>';
 
 describe('Estafeta bound history', () => {
-  it('accepts the full guide with a letter after twelve digits without extracting a short code', () => {
+  it('accepts the full guide with one or two letters after twelve digits without extracting a short code', () => {
     const guide = '900000000001A000000002';
     const html = readFileSync(new URL('./fixtures/full-guide-lookup.html', import.meta.url), 'utf8');
     const history = readFileSync(new URL('./fixtures/full-guide-history.html', import.meta.url), 'utf8');
@@ -30,7 +30,8 @@ describe('Estafeta bound history', () => {
     expect(short.guide).toBe(guide);
     expect(parseEstafetaHistory(history, full).canonical_tracking_number).toBeUndefined();
     expect(parseEstafetaHistory(history, short).canonical_tracking_number).toBe(guide);
-    for (const number of ['A'.repeat(22), '900000000001AA00000002', '900000000001A00000000?', '90000000000A1000000002']) {
+    expect(normalizeEstafetaNumber('900000000001fr00000002')).toBe('900000000001FR00000002');
+    for (const number of ['A'.repeat(22), '900000000001A00000000?', '90000000000A1000000002', '90000000000FR000000002']) {
       expect(() => normalizeEstafetaNumber(number)).toThrow(InvalidInputError);
     }
     const pieces = load(html); pieces('.shipmentInfoDiv').append('<ul class="multiplesWaybillList"><li><a class="MultipleLink">900000000001A000000003</a></li></ul>');

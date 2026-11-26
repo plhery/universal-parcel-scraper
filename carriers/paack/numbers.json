@@ -227,6 +227,18 @@
         "confidence": "high"
       },
       "note": "An archived Paack tracking link, which carries this label number and the delivery postcode. Paack's own page showed the parcel's history with that postcode."
+    },
+    {
+      "number": "94501369990999009999990",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-26",
+      "expect": {
+        "carrier": "paack",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the shape of the 23-digit labels Paack's tracker returns with a postcode: 94501369 and fifteen digits. Its serial sits far beyond the range in use."
     }
   ]
 }

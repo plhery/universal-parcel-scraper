@@ -505,6 +505,18 @@
         ]
       },
       "note": "Made-up article ID whose check digit fails."
+    },
+    {
+      "number": "99999999999901004999998",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-26",
+      "expect": {
+        "carrier": "australia-post",
+        "confidence": "high"
+      },
+      "note": "Made-up article ID in the shape of one Australia Post's tracker returned: 99, twenty digits whose fifteenth and sixteenth are 0 but whose seventeenth is not, and a check digit. Its serial sits far beyond the range in use."
     }
   ]
 }

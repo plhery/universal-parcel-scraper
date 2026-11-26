@@ -111,6 +111,12 @@
       "checksum": "australia-post"
     },
     {
+      "id": "australia-post-article-99",
+      "pattern": "^99[A-Z0-9]{3}\\d{9}00\\d{7}$",
+      "confidence": "high",
+      "checksum": "australia-post"
+    },
+    {
       "id": "australia-post-consignment",
       "pattern": "^\\d{2}(?!\\d{3})[A-Z0-9]{3}\\d{7}$",
       "confidence": "low",

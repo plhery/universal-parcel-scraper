@@ -54,7 +54,9 @@ them, so that shape only suggests Paack as well.
   no detection rule: a rule would cost precision for every other carrier. Label numbers of
   `5340` and fourteen digits recur in public reports and on parcels Paack's page holds, and
   none has turned out to belong to another of the carriers whose rules take any eighteen
-  digits, so detection names Paack for them. Other numbers are picked
+  digits, so detection names Paack for them. So does a label of `94501369` and fifteen
+  digits: only Paack's page has answered for one, with the postcode, and Correos Express,
+  whose rule takes any twenty-three digits, has not known them. Other numbers are picked
   manually or through a link to Paack's tracker, on `mydeliveries.paack.app` or under
   `paack.co/shipments/tracking`. The rest of `paack.co` is the company site.
 - The `PK` numbers from Evri International hand-overs have a rule of their own. They are

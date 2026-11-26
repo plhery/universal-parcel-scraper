@@ -93,7 +93,9 @@ key alone does not clear a DataDome challenge; browser verification stays in its
 ## Notes
 
 - Detection selects Australia Post for an article ID: an optional two-digit prefix, a
-  three-character merchant location ID, nine digits, `000` and six digits. The last digit is a GS1
+  three-character merchant location ID, nine digits, `000` and six digits. With the prefix `99`,
+  only the first two of those three zeros are required: Australia Post's tracker holds articles
+  ending `004` and six digits. The last digit is a GS1
   check digit over every character before it, a letter counting as its ASCII code, and detection asks for it. Without the prefix,
   `MA` and nineteen digits is Matkahuolto's own layout, which recognition asks Matkahuolto
   about instead, and `JJD` and eighteen digits a DHL licence plate whose serial is zero-padded. It also selects it for

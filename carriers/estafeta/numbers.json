@@ -141,6 +141,18 @@
         ]
       },
       "note": "Archived Estafeta tracking page for an all-digit full guide. Estafeta's tracker returns a page bound to this guide, showing it delivered and its service. Its scans are no longer available, so the adapter stays inconclusive."
+    },
+    {
+      "number": "999999999998FR99999990",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-26",
+      "expect": {
+        "carrier": "estafeta",
+        "confidence": "high"
+      },
+      "note": "Made-up full guide in the shape of one Estafeta's tracker returned: twelve digits, two letters and eight digits. Its serial sits far beyond the range in use."
     }
   ]
 }

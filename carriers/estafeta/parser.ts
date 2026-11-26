@@ -23,7 +23,7 @@ export interface EstafetaLookup {
 const LABEL_ONLY = 'la guia ha sido generada sin embargo el envio aun no es depositado en estafeta';
 
 // A letter can take the 13th or 14th place (two-day guides carry a D in the 14th).
-const FULL_GUIDE = /^(?:\d{22}|\d{12}(?:[A-Z]\d|\d[A-Z])\d{8}|\d{15}[A-Z0-9]{7})$/;
+const FULL_GUIDE = /^(?:\d{12}[A-Z0-9]{2}\d{8}|\d{15}[A-Z0-9]{7})$/;
 
 export function normalizeEstafetaNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
