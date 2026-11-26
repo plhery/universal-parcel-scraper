@@ -205,7 +205,10 @@ describe('Chukou1 HTTP adapter', () => {
     const unstaged = parseChukou1(changed('in-transit', (shipment) => {
       shipment.orderStatus = 'Synthetic';
       shipment.firstLegTrackingDetails = [];
-      for (const feed of shipment.supplierTrackingDetails ?? []) for (const row of feed.trackingDetails) row.description = `${String(row.description)}，合成`;
+      // A customs release reads as in transit whatever follows it, so those rows lose their wording.
+      for (const feed of shipment.supplierTrackingDetails ?? []) for (const row of feed.trackingDetails) {
+        row.description = /放行/.test(String(row.description)) ? '合成' : `${String(row.description)}，合成`;
+      }
     }), IN_TRANSIT);
     expect(unstaged).toMatchObject({ status: 'unknown', last_status_text: '到达寄达地，合成' });
     expect(unstaged).not.toHaveProperty('current_stage');

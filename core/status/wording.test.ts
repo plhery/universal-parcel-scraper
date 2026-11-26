@@ -1140,6 +1140,8 @@ describe('classifyWording', () => {
       ['Export customs clearance in progress, held for inspection', 'customs'], ['Held for export customs inspection', 'customs'],
       ['出口清关中，海关查验', 'customs'], ['Import customs clearance in progress', 'customs'],
       ['目的国清关完成【Example】', 'in_transit'], ['进口清关完成', 'in_transit'],
+      // Customs releasing the parcel, with the customs office's town before it as Track123 relays China Post.
+      ['Example进口海关放行', 'in_transit'], ['出口海关/放行', 'in_transit'], ['进口海关已放行', 'in_transit'],
       // Customs inspecting or holding the parcel after its clearance completed, until the inspection ends or a release.
       ['清关完成，海关查验', 'customs'], ['目的国清关完成，海关扣留', 'customs'], ['被海关扣留', 'customs'], ['海关扣押', 'customs'],
       ['海关滞留', 'customs'], ['清关异常', 'customs'], ['清关失败', 'customs'], ['海关退运', 'customs'], ['海关查验，暂未放行', 'customs'],
