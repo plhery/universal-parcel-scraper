@@ -1,0 +1,398 @@
+{
+  "carrier": "spc-worldwide-express",
+  "records": [
+    {
+      "number": "51362737",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230601164053/https://www.tracking.my/spc/51362737",
+        "date": "2023-06-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a delivered history."
+    },
+    {
+      "number": "50687489",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20210304010615/https://www.tracking.my/spc/50687489",
+        "date": "2021-03-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a history that ends returned to the shipper."
+    },
+    {
+      "number": "50965068",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20191120225531/https://www.tracking.my/spc/50965068",
+        "date": "2019-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a delivered history."
+    },
+    {
+      "number": "50984248",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20191118210148/https://www.tracking.my/spc/50984248",
+        "date": "2019-11-18",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a registration and a sort at its origin station only."
+    },
+    {
+      "number": "51003031",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20190917222615/https://www.tracking.my/spc/51003031",
+        "date": "2019-09-17",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a delivered history."
+    },
+    {
+      "number": "51048158",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20190821181321/https://www.tracking.my/spc/51048158",
+        "date": "2019-08-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a single arrival scan."
+    },
+    {
+      "number": "51090855",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20191206102428/https://www.tracking.my/spc/51090855",
+        "date": "2019-12-06",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a delivered history."
+    },
+    {
+      "number": "51233123",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20201027082838/https://www.tracking.my/spc/51233123",
+        "date": "2020-10-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a delivery scan followed by a later arrival at the same station."
+    },
+    {
+      "number": "51326701",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20210505223858/https://www.tracking.my/spc/51326701",
+        "date": "2021-05-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a delivered history."
+    },
+    {
+      "number": "51341455",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20210123110125/https://www.tracking.my/spc/51341455",
+        "date": "2021-01-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a delivered history."
+    },
+    {
+      "number": "51451751",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20210415161343/https://www.tracking.my/spc/51451751",
+        "date": "2021-04-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a delivered history."
+    },
+    {
+      "number": "51499699",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230320084941/https://www.tracking.my/spc/51499699",
+        "date": "2023-03-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a delivered history."
+    },
+    {
+      "number": "51499949",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20201130081523/https://www.tracking.my/spc/51499949",
+        "date": "2020-11-30",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a delivered history."
+    },
+    {
+      "number": "51601020",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20210820192901/https://www.tracking.my/spc/51601020",
+        "date": "2021-08-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a delivered history."
+    },
+    {
+      "number": "51714507",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221209234236/https://www.tracking.my/spc/51714507",
+        "date": "2022-12-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "tracking.my's archived page for this SPC consignment; SPC's own tracker answers it with a delivered history."
+    },
+    {
+      "number": "8281425806",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20200814012335/https://www.tracking.my/spc/8281425806",
+        "date": "2020-08-14",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "acs-courier",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie",
+          "geniki-taxydromiki"
+        ]
+      },
+      "note": "tracking.my's archived page for this ten-digit number; SPC's own tracker answers it with a history at its stations, redirected and processed again."
+    }
+  ]
+}

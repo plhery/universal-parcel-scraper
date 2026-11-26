@@ -4316,6 +4316,18 @@
     "reason": "SP Express's Cainiao-page numbers, a destination country code and twelve digits, are too few to tie the layout to SP Express alone, so no rule claims them."
   },
   {
+    "carrier": "spc-worldwide-express",
+    "pattern": "^\\d{8}$",
+    "kind": "by_design",
+    "reason": "SPC Worldwide Express consignment numbers are eight bare digits with no known check digit, a run many carriers share, so nothing in the number points to SPC."
+  },
+  {
+    "carrier": "spc-worldwide-express",
+    "pattern": "^\\d{10}$",
+    "kind": "by_design",
+    "reason": "One public SPC Worldwide Express consignment number has ten bare digits, a run many carriers share, so nothing in the number points to SPC."
+  },
+  {
     "carrier": "spedire",
     "pattern": "^OE\\d{11}$",
     "kind": "open",

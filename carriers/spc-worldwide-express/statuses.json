@@ -1,0 +1,83 @@
+{
+  "carrier": "spc-worldwide-express",
+  "entries": [
+    {
+      "code": "REGISTER",
+      "wording": "REGISTER",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The station that takes the consignment enters it; the first row of every history."
+    },
+    {
+      "code": "PROCESSED",
+      "wording": "PROCESSED",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "Sorted at the station, usually the evening hub before the line haul."
+    },
+    {
+      "code": "IN_TRANSIT",
+      "wording": "IN_TRANSIT",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26"
+    },
+    {
+      "code": "ARRIVAL",
+      "wording": "ARRIVAL",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "Arrived at the station the row names, on the way or at the delivering one."
+    },
+    {
+      "code": "REDIRECT",
+      "wording": "REDIRECT",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "Sent on to another station or address; the consignment moves on under the same number."
+    },
+    {
+      "code": "OUT4DELIV",
+      "wording": "OUT4DELIV",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26"
+    },
+    {
+      "code": "ATTEMPT1ST",
+      "wording": "ATTEMPT1ST",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "A first delivery attempt that did not deliver, followed by another round out for delivery."
+    },
+    {
+      "code": "DELIVERED",
+      "wording": "DELIVERED",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26"
+    },
+    {
+      "code": "SHP_RETURN",
+      "wording": "SHP_RETURN",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "Returned to the shipper after a round out for delivery."
+    }
+  ]
+}
