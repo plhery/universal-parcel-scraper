@@ -33,6 +33,7 @@ import { IMPORT, LA_POSTE_COUNTRIES, partnerWall } from '../../carriers/la-poste
 import { HYWL_CHINA_ZONE, hywlInChina } from '../../carriers/hywl/clock.js';
 import { firstLineInChina } from '../../carriers/first-line/clock.js';
 import { juxiExpressAbroadZone } from '../../carriers/juxi-express/clock.js';
+import { huahanAbroadZone } from '../../carriers/huahan/clock.js';
 import { placedInIndia } from '../../carriers/shiprocket/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
 import { uspsRowZone, uspsScanZone } from '../../carriers/usps/clock.js';
@@ -251,6 +252,15 @@ const HYWL = 192109;
  * a country of several; Juxi's own rows keep 17TRACK's reading.
  */
 const JUXI_EXPRESS = 190384;
+
+/**
+ * 17TRACK's carrier 190003, HuaHan Logistics, relays the scans of the carrier that delivers the
+ * parcel abroad at each facility's wall clock, and 17TRACK labels them +08:00, as it does Juxi
+ * Express's: so read, an American courier's scans came half a day before the line's own rows of
+ * them. A row placed abroad is read on its place's clock (`huahanAbroadZone`), or keeps its wall
+ * clock in a country of several; HuaHan's own rows keep 17TRACK's reading.
+ */
+const HUAHAN = 190003;
 
 /**
  * 17TRACK's carrier 191047, 1ST, FIRST LINE's group, dates the line's rows in China and Hong Kong
@@ -817,6 +827,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const hywl = reported.key === HYWL;
     const juxi = reported.key === JUXI_EXPRESS;
     const juxiBound = juxi ? recipientCountry(shipment) : null;
+    const huahan = reported.key === HUAHAN;
+    const huahanBound = huahan ? recipientCountry(shipment) : null;
     const firstLine = reported.key === FIRST_LINE;
     const daiPost = reported.key === DAI_POST;
     const quickRabbit = reported.key === QUICK_RABBIT;
@@ -869,8 +881,9 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const mexican = mexico ? mexicoPostClock(raw, colombianRoute) : undefined;
       // Correios Brazil's copy of the sending post's scan abroad: that country's clock, or null for its wall clock.
       const sending = correiosBr ? correiosAbroadZone(text(raw.location)) : undefined;
-      // A local carrier's scan abroad that Juxi Express relays: its place's clock, or null for its wall clock alone.
-      const juxiAbroad = juxi ? juxiExpressAbroadZone(text(raw.location), text(raw.description), juxiBound) : undefined;
+      // A local carrier's scan abroad that Juxi Express or HuaHan relays: its place's clock, or null for its wall clock alone.
+      const juxiAbroad = juxi ? juxiExpressAbroadZone(text(raw.location), text(raw.description), juxiBound)
+        : huahan ? huahanAbroadZone(text(raw.location), huahanBound) : undefined;
       // A FIRST LINE row at the destination, on its facility's wall clock.
       const firstLineAbroad = firstLine && text(raw.location).trim() !== '' && !firstLineInChina(text(raw.location));
       // Poland Post's scan on Warsaw's clock, or a partner's after the departure from Poland on the recipient's.

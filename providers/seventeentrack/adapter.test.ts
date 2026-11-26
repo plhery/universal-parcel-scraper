@@ -700,6 +700,32 @@ describe('17TRACK result parsing', () => {
       .events?.[0]?.time).toBe('2026-05-11T11:40:00.000Z');
   });
 
+  it("reads HuaHan's copies of a local carrier's scans abroad on their place's clock, and its own rows as labeled", () => {
+    // 17TRACK labels the leg's wall clocks +08:00: so read, an American courier's scans came half a day early.
+    const row = (date: string, time: string, description: string, location: string) => ({
+      time_iso: `${date}T${time}+08:00`, time_utc: null, time_raw: { date, time, timezone: null },
+      description, location, stage: null, sub_status: 'InTransit_Other' });
+    const reply = (key: number, events: unknown[]): Payload => ({ meta: { code: 200 }, shipments: [{ number, code: 200,
+      shipment: { latest_status: { status: 'InTransit' }, shipping_info: { recipient_address: { country: 'US' } },
+        tracking: { providers: [{ provider: { key, name: 'HuaHan Logistics', country: 'CN' }, events }] } } }] });
+    const parsed = parse17TrackResponse(reply(190003, [
+      row('2026-11-24', '16:43:00', 'Parcel is out for delivery.', 'Newark,NJ,07101,US'),
+      row('2026-11-23', '22:42:00', 'Parcel departed from Facility.', 'Chicago,IL,60601,US'),
+      row('2026-11-21', '10:00:00', 'Parcel received by local Facility.', 'US'),
+      row('2026-11-13', '19:19:00', 'Shipment information received', ''),
+    ]), number);
+    expect(parsed.events?.map((event) => [event.time ?? `local ${event.local_time}`, event.time_zone, event.time_zone_basis])).toEqual([
+      ['2026-11-24T21:43:00.000Z', 'America/New_York', 'place'],
+      ['2026-11-24T04:42:00.000Z', 'America/Chicago', 'place'],
+      // The United States alone keeps several clocks: the wall clock stays.
+      ['local 2026-11-21T10:00:00', undefined, undefined],
+      ['2026-11-13T11:19:00.000Z', undefined, undefined],
+    ]);
+    // Another feed keeps 17TRACK's reading.
+    expect(parse17TrackResponse(reply(100999, [row('2026-11-23', '22:42:00', 'Arrived', 'Chicago,IL,60601,US')]), number).events?.[0]?.time)
+      .toBe('2026-11-23T14:42:00.000Z');
+  });
+
   it("reads Juxi Express's copies of a local carrier's scans abroad on their place's clock, and its own rows as labeled", () => {
     // 17TRACK labels the leg's wall clocks +08:00: so read, USPS's departure from Chicago came ten hours before USPS's own acceptance there.
     const row = (date: string, time: string, description: string, location: string) => ({

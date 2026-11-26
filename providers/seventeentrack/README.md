@@ -206,6 +206,10 @@ carrier.
   several. A delivery with no place is the delivering carrier's, on the destination's clock: on
   Beijing's, Swiss Post's came seven hours before its arrival at the delivery point. Juxi's own
   rows, in China or with no place, keep 17TRACK's reading.
+- HuaHan Logistics' leg (carrier key 190003) relays the delivering carrier's scans abroad the
+  same way, under the same `+08:00`: so read, an American courier's scans came half a day
+  before the line's own rows of them. A row placed abroad is read on its place's clock, or keeps
+  its wall clock in a country of several; HuaHan's own rows keep 17TRACK's reading.
 - FIRST LINE's group's leg (carrier key 191047, `1ST`) dates the line's rows in China and Hong
   Kong on Beijing's clock, to the second, and relays the destination's rows at their wall
   clocks under the same `+08:00`: so read, an arrival at a Paris airport came seven hours
