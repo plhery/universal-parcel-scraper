@@ -1,3 +1,4 @@
+import { dpdParcelNumber } from '../../core/detection/dpd.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
@@ -10,6 +11,10 @@ import { classifyPostnordStatus, isPostnordAdministrativeEvent } from './status.
 
 export function normalizePostnordNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
+  // A DPD parcel number PostNord delivers, typed with the letter its label prints after it, is
+  // asked by its fourteen digits, the shipment id PostNord answers with.
+  const dpd = /^\d{14}[A-Z]$/.test(number) ? dpdParcelNumber(number) : null;
+  if (dpd) return dpd;
   if (!/^\d{10,20}$/.test(number) && !/^\d{11}SE$/.test(number) && !isValidS10TrackingNumber(number)) {
     throw new InvalidInputError('PostNord', 'PostNord requires a numeric or postal tracking number');
   }

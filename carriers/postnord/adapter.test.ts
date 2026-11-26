@@ -309,7 +309,9 @@ describe('PostNord direct tracking', () => {
     expect(new Headers(fetcher.mock.calls[0]?.[1]?.headers).get('X-CustomHeader')).not.toBe(new Headers(fetcher.mock.calls[1]?.[1]?.headers).get('X-CustomHeader'));
     expect(normalizePostnordNumber('00573 099999999999981')).toBe(NUMBER);
     expect(normalizePostnordNumber('rr 000000005 se')).toBe('RR000000005SE');
-    for (const invalid of ['123', 'RR000000006SE', `${NUMBER}?id=other`]) expect(() => normalizePostnordNumber(invalid)).toThrow(InvalidInputError);
+    // A made-up DPD parcel number with the check character its label prints, which must match.
+    expect(normalizePostnordNumber('0999 0000 0000 05 z')).toBe('09990000000005');
+    for (const invalid of ['123', 'RR000000006SE', `${NUMBER}?id=other`, '09990000000005X']) expect(() => normalizePostnordNumber(invalid)).toThrow(InvalidInputError);
   });
 
   it('requires the observed negative schema and keeps challenges, throttling and outages distinct', async () => {

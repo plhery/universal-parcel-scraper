@@ -14,6 +14,10 @@ result gives Sweden or Denmark as the destination of an S10 item. Pasted links c
 number as `id` on `tracking.postnord.com` and as `shipmentId` on the national sites'
 tracking pages.
 
+PostNord delivers DPD parcels in the Nordic countries under DPD's fourteen-digit number. One
+typed with the letter DPD's label prints after it is asked by the fourteen digits when the
+letter is the number's check character; PostNord answers with the digits as the shipment id.
+
 ## How it works
 
 One GET returns the shipment and scans. The request carries the widget's bounded SHA-512
