@@ -26,6 +26,9 @@ const COLLECT_MS = 2_000;
 const MOBILE_SECRET = 'pr?GGSV}XRkVz>{/~v3~("s"&KJ`FP>J'; // gitleaks:allow
 const MAX_EVENTS = 500;
 const TIME = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})\.(\d{3})Z$/;
+// A dated wall clock's offset east of Greenwich.
+const EAST_OF_GREENWICH = /\+(?!00:00)\d{2}:\d{2}$/;
+const COUNTRY_TAIL = /(?:^|,\s?)([A-Z]{2})$/;
 
 const pageOf = (number: string) => `https://www.ordertracker.com/track/${encodeURIComponent(number)}`;
 
@@ -160,8 +163,11 @@ export function parseOrdertrackerResponse(payload: unknown, carrier: string, rea
     // A scan dated by its day alone comes at midnight. On La Poste's or Canada Post's instants,
     // midnight UTC is a time of day where the scan was.
     const day = wall.endsWith('T00:00:00') && (feed.clock === 'local' || feed.daysAtMidnight) ? wall.slice(0, 10) : null;
-    return { wall, day, utc: feed.clock === 'utc' && !day, wording: (worded.find((copy) => readable(copy.wording)) ?? worded[0])?.wording ?? '',
-      location: copies.find((copy) => copy.location)?.location ?? '' };
+    const location = copies.find((copy) => copy.location)?.location ?? '';
+    // A scan with a place, on a feed that writes those east of Greenwich on their wall clock, is dated by its place first.
+    const east = feed.clock === 'utc' && !!feed.wallClockEast && !day && !!location;
+    return { wall, day, utc: feed.clock === 'utc' && !day && !east, east,
+      wording: (worded.find((copy) => readable(copy.wording)) ?? worded[0])?.wording ?? '', location };
   });
   // Their stages tell the places which scans the parcel was at, and so whose clock a neighbour borrows.
   const clocks: CarrierEvent[] = read.map((scan) => {
@@ -169,7 +175,22 @@ export function parseOrdertrackerResponse(payload: unknown, carrier: string, rea
     return { ...(scan.utc ? { time: `${scan.wall}Z` } : { local_time: scan.day ?? scan.wall }),
       description: scan.wording, ...(stage ? { stage } : {}), ...(scan.location ? { location: scan.location } : {}) };
   });
-  const dated = clocks.some((clock) => clock.local_time) ? dateLocalClocks(carrier, { events: clocks }, readAt).events ?? clocks : clocks;
+  const date = (events: CarrierEvent[]) => events.some((clock) => clock.local_time) ? dateLocalClocks(carrier, { events }, readAt).events ?? events : events;
+  const placed = date(clocks);
+  // Such a scan's country says on which side of Greenwich it was; its town, when the places know it, gives its zone.
+  const countries = read.some((scan) => scan.east)
+    ? date(clocks.map((clock, index) => {
+      const country = read[index]!.east ? COUNTRY_TAIL.exec(read[index]!.location)?.[1] : undefined;
+      return country ? { ...clock, location: country } : clock;
+    }))
+    : placed;
+  // One that is not east of Greenwich, or whose country has no known zone, was written at its instant.
+  const utc = read.map((scan, index) => scan.utc || (scan.east && !EAST_OF_GREENWICH.test(String(countries[index]!.time ?? ''))));
+  const dated = placed.map((clock, index) => {
+    if (!read[index]!.east) return clock;
+    if (utc[index]) return { ...clocks[index]!, time: `${read[index]!.wall}Z` };
+    return clock.time_zone_basis === 'place' ? clock : countries[index]!;
+  });
   // A history whose newest scan lost its wording cannot say where the parcel is, and an older scan must not stand in for it.
   const clockOf = (index: number) => Date.parse(dated[index]!.time ?? `${dated[index]!.local_time}Z`) || 0;
   const newest = (worded: boolean) => Math.max(0, ...read.map((scan, index) => !!scan.wording === worded ? clockOf(index) : 0));
@@ -180,9 +201,9 @@ export function parseOrdertrackerResponse(payload: unknown, carrier: string, rea
     const parsed = !scan.wording ? null : typeof clock.time === 'string' ? event(clock.time, scan.wording)
       : localEvent(scan.day ? `${scan.day}T00:00:00` : scan.wall, scan.wording);
     if (!parsed) continue;
-    const zoned = scan.utc ? {} : Object.fromEntries((['time', 'local_time', 'time_zone', 'time_zone_basis'] as const)
+    const zone = utc[index] ? {} : Object.fromEntries((['time', 'local_time', 'time_zone', 'time_zone_basis'] as const)
       .filter((field) => clock[field] !== undefined).map((field) => [field, clock[field]]));
-    events.push({ ...parsed, ...zoned, ...(scan.location ? { location: scan.location } : {}) });
+    events.push({ ...parsed, ...zone, ...(scan.location ? { location: scan.location } : {}) });
   }
   return { ...result(events, SOURCE), tracking_source: 'structured-web-response' };
 }

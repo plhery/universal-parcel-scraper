@@ -34,6 +34,28 @@ describe('Ordertracker replies', () => {
     expect(events!.find((event) => event.stage === 'accepted')).not.toHaveProperty('time');
   });
 
+  it("reads Mail Boxes Etc's FedEx scans east of Greenwich on their place's wall clock, the others at their instants", () => {
+    const scan = (time: string, original: string) => ({ time, lines: [{ original }], carrier: { name: 'MAIL BOXES ETC' } });
+    const payload = { ...fixture('fedex-541270563758'), events: [
+      scan('2026-11-27T08:35:00.005Z', 'On FedEx vehicle for delivery EXAMPLEDORF DE'),
+      scan('2026-11-27T00:22:00.004Z', 'Arrived at FedEx hub PARIS FR'),
+      scan('2026-11-26T19:03:00.003Z', 'Departed FedEx hub MEMPHIS US'),
+      scan('2026-11-26T17:53:00.002Z', 'Picked up EXAMPLE CITY US'),
+      scan('2026-11-26T13:45:04.001Z', 'Shipment information sent to FedEx'),
+    ] };
+    const { events } = parseOrdertrackerResponse(payload, 'fedex', Date.parse('2026-11-28T00:00:00Z'));
+    expect(events!.map((event) => [event.time, event.time_zone])).toEqual([
+      // FedEx's own: 08:35 and 00:22 at +01:00. A town the places do not know takes its country's clock.
+      ['2026-11-27T08:35:00+01:00', 'Europe/Berlin'],
+      ['2026-11-27T00:22:00+01:00', 'Europe/Paris'],
+      // The scans in the United States and the label without a place are instants.
+      ['2026-11-26T19:03:00.000Z', undefined],
+      ['2026-11-26T17:53:00.000Z', undefined],
+      ['2026-11-26T13:45:04.000Z', undefined],
+    ]);
+    expect(events![0]).toMatchObject({ local_time: '2026-11-27T08:35:00', time_zone_basis: 'place', stage: 'out_for_delivery' });
+  });
+
   it("keeps only the carrier's feeds, dating a wall-clock copy by its place", () => {
     const { events, current_stage } = parse('canada-post-LA586492541CA', 'canada-post');
     expect(current_stage).toBe('out_for_delivery');

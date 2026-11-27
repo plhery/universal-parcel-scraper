@@ -36,7 +36,11 @@ request stays a provider failure. The reply does not repeat the number.
 
 Ordertracker merges what several feeds relay about a parcel, each named in `events[].carrier.name`,
 and writes every time as UTC. Some feeds give real instants, La Poste's for instance. Others give
-the scanning place's wall clock marked UTC, as Pitney Bowes does for USPS and UPS. [feeds.ts](feeds.ts)
+the scanning place's wall clock marked UTC, as Pitney Bowes does for USPS and UPS. Mail Boxes Etc
+does both for FedEx: a scan at a place east of Greenwich comes on that place's wall clock, as if the
+plus sign of FedEx's offset were lost, and the others, the label without a place included, at their
+instants. Its country decides which, and its town, or its country when the town is unknown, dates
+the wall clock. [feeds.ts](feeds.ts)
 lists the feeds whose scans count for each carrier, with their clocks. A scan at a wall clock's
 midnight is dated by its day alone, and so is Mail Boxes Etc's at midnight UTC, the way it relays
 the pickup FedEx dates by its day. Rows from other feeds are left out, and a reply with none of

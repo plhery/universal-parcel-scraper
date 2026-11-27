@@ -22,6 +22,13 @@ export interface OrdertrackerFeed {
    * Mail Boxes Etc writes FedEx's pickup. A `local` feed's scan at midnight is read as its day.
    */
   daysAtMidnight?: true;
+  /**
+   * A `utc` feed that writes a scan at a place east of Greenwich on that place's wall clock, as
+   * if the plus sign of the carrier's offset were lost: Mail Boxes Etc writes FedEx's scans in
+   * Europe an hour late in winter, and those in the Americas, and the label without a place, at
+   * their instants.
+   */
+  wallClockEast?: true;
 }
 
 const LA_POSTE: OrdertrackerFeed = { name: 'LA POSTE', clock: 'utc', lines: 'wording' };
@@ -31,7 +38,7 @@ const FEEDS: Readonly<Record<string, readonly OrdertrackerFeed[]>> = {
   // Pitney Bowes repeats some scans in English where Canada Post's own feed has only French.
   'canada-post': [{ name: 'CANADA POST', clock: 'utc', lines: 'place_line' }, PITNEY_BOWES],
   chronopost: [LA_POSTE],
-  fedex: [{ name: 'MAIL BOXES ETC', clock: 'utc', lines: 'trailing_place', daysAtMidnight: true }],
+  fedex: [{ name: 'MAIL BOXES ETC', clock: 'utc', lines: 'trailing_place', daysAtMidnight: true, wallClockEast: true }],
   'la-poste': [LA_POSTE],
   // Each scan comes through both, Pitney Bowes's copy with the seconds and FAR's with the wording it can lose.
   ups: [PITNEY_BOWES, { name: 'FAR', clock: 'local', lines: 'bracketed_place' }],
