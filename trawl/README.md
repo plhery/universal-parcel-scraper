@@ -108,8 +108,8 @@ That redirect can leave the verification wrapper blank; retaining it lets the
 adapter distinguish temporary unavailability from an unresolved challenge.
 A cookie session USPS sent there is dropped instead of replayed, and a fresh browser sent
 there saves none ([usps-tracking.mjs](usps-tracking.mjs)). USPS sends the first read of every
-browser session there, so tracking reads without a proxy of their own go through TRAWL's named
-sessions that USPS has already let through (see Sessions).
+browser session there, so tracking reads go through TRAWL's named sessions that USPS has already
+let through, prepared through the read's proxy when it names one (see Sessions).
 
 Spee-Dee also uses the service's HTTP tier after a refused direct connection; the benefit
 is the service's network, and no browser is launched. MTCaptcha (Hongkong Post)
@@ -196,6 +196,11 @@ reason, reads and age, and each rest. It also records each trial read with what 
 USPS's outage page, another page, an error or the read's timeout), a session that could not be
 opened with its status, and those counts on a session USPS did not let through, so refusals can be
 told apart by cause.
+
+USPS refuses one address's sessions for hours while it lets another's through, so a read that names
+a proxy has sessions of its own, `usps-tracking-proxy<n>-<n>`, prepared through that proxy, kept and
+rested apart from those on TRAWL's own address. Up to two proxies get sessions; a read through any
+other uses the pool. Their `usps.session` warnings carry `route: "proxy"`, never the proxy's address.
 
 Each USPS session runs in a browser of its own: the pool's Camoufox binary launched through
 `playwright-core` without camoufox-js's generated fingerprint, which USPS's bot check refuses. The

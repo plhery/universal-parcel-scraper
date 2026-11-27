@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
-import { attachUspsTrackingCapture, forgetUspsOutageSessions, keepUspsSession, listenAfterUspsWarmup, plainUspsBrowsers, USPS_IDLE_MS, USPS_SESSION_MAX_AGE_MS, USPS_WARMUP_MS, UspsPlainBrowsers, UspsSessions, uspsCaptureNumber, uspsOutage, uspsSessions, uspsUnready, uspsWarmupRequest, warmUspsSessions } from './usps-tracking.mjs';
+import { attachUspsTrackingCapture, forgetUspsOutageSessions, keepUspsSession, listenAfterUspsWarmup, plainUspsBrowsers, USPS_IDLE_MS, USPS_PROXY_EXITS, UspsExits, USPS_SESSION_MAX_AGE_MS, USPS_WARMUP_MS, UspsPlainBrowsers, UspsSessions, uspsCaptureNumber, uspsOutage, uspsSessions, uspsUnready, uspsWarmupRequest, warmUspsSessions } from './usps-tracking.mjs';
 
 const NUMBER = '9400111899223397910421';
 const URL = `https://tools.usps.com/tracking/${NUMBER}`;
@@ -129,15 +129,16 @@ function keeper(t, { outcomes = {}, createStatus, options } = {}) {
   const sessions = {
     created: [], destroyed: [],
     async list() { return [...live].map(id => ({ id })); },
-    async create({ id }) {
+    proxies: [],
+    async create({ id, proxy }) {
       if (createStatus) throw Object.assign(new Error('x'), { statusCode: createStatus });
-      this.created.push(id); live.add(id);
+      this.created.push(id); this.proxies.push(proxy); live.add(id);
     },
     async destroy(id) { this.destroyed.push(id); live.delete(id); },
   };
-  const keep = new UspsSessions({ report: fields => events.push(fields), ...options });
+  const keep = new (options?.exits ? UspsExits : UspsSessions)({ report: fields => events.push(fields), ...options });
   const scrape = async req => {
-    reads.push({ id: req.sessionId, at: Date.now(), maxTimeout: req.maxTimeout, url: req.url });
+    reads.push({ id: req.sessionId, at: Date.now(), maxTimeout: req.maxTimeout, url: req.url, ...('proxy' in req ? { proxy: req.proxy } : {}) });
     most = Math.max(most, ++active);
     await new Promise(resolve => setTimeout(resolve, 2_000));
     active--;
@@ -173,6 +174,51 @@ test('only an ordinary USPS tracking read without a proxy, cookies or session of
     { maxTier: 1 }, { url: 'https://tools.usps.com/go/TrackConfirmAction' }, { contentWaitForSelector: undefined }]) {
     assert.equal(keep.routes({ ...req, ...other }, {}), false, JSON.stringify(other));
   }
+});
+
+const PROXY = 'http://user:secret@proxy.example:8080';
+
+test('a USPS read through a proxy has sessions of its own, up to two proxies, and others keep the pool', () => {
+  const exits = new UspsExits();
+  const req = { url: URL, ...OPTIONS, maxTier: 3 };
+  assert.equal(exits.routes(req, {}), true);
+  assert.equal(exits.routes({ ...req, proxy: PROXY }, {}), true);
+  assert.equal(exits.routes({ ...req, proxy: PROXY }, undefined), false);
+  for (const proxy of [null, '', '  ', 8080]) assert.equal(exits.routes({ ...req, proxy }, {}), false, JSON.stringify(proxy));
+  for (const other of [{ sessionId: 'x' }, { cookies: [{ name: 'a' }] }, { maxTier: 1 }, { contentWaitForSelector: undefined }]) {
+    assert.equal(exits.routes({ ...req, proxy: PROXY, ...other }, {}), false, JSON.stringify(other));
+  }
+  assert.equal(USPS_PROXY_EXITS, 2);
+  assert.equal(exits.routes({ ...req, proxy: 'http://second.example:8080' }, {}), true);
+  assert.equal(exits.routes({ ...req, proxy: 'http://third.example:8080' }, {}), false);
+  assert.equal(exits.routes({ ...req, proxy: PROXY }, {}), true);
+});
+
+test('a proxy\'s sessions open through it, read without naming it, rest on their own and log no address', async t => {
+  const k = keeper(t, { options: { exits: true }, outcomes: {
+    1: ['r', 'r', 'r'], 2: ['r', 'r', 'r'], 3: ['r', 'r', 'r'], 4: ['r', 'r', 'r'], 'proxy1-1': ['r', 'T'],
+    'proxy1-2': ['r', 'r', 'r'] } });
+  // TRAWL's own address: four sessions refused, then a rest.
+  const direct = k.read();
+  await k.advance(60_000);
+  assert.equal(direct.error.statusCode, 503);
+  assert.equal(states(k.events).at(-1), 'resting');
+  // A read through the proxy is not held by that rest: its own session is prepared through the proxy and read.
+  const proxied = k.read({ proxy: PROXY });
+  await k.advance(16_500);
+  assert.equal(proxied.value.session, 'usps-tracking-proxy1-1');
+  assert.deepEqual(k.sessions.created.filter(id => id.includes('proxy')), ['usps-tracking-proxy1-1', 'usps-tracking-proxy1-2']);
+  assert.deepEqual(k.sessions.proxies.slice(4), [PROXY, PROXY]);
+  assert.deepEqual(k.sessions.proxies.slice(0, 4), [undefined, undefined, undefined, undefined]);
+  assert.equal(k.reads.some(read => 'proxy' in read), false);
+  const own = k.events.filter(event => event.route === 'proxy');
+  assert.deepEqual(states(own).slice(0, 3), ['created', 'created', 'accepted']);
+  assert.equal(k.events.filter(event => event.route === undefined).length > 0, true);
+  assert.equal(JSON.stringify(k.events).includes('proxy.example'), false);
+  // TRAWL's own address still rests: a read without a proxy is told at once that none is ready.
+  const after = k.read();
+  await k.advance(500);
+  assert.equal(after.error.statusCode, 503);
 });
 
 test('sessions are prepared in the background with spaced reads, and a lookup only reads one USPS let through', async t => {

@@ -137,14 +137,15 @@ export class UspsSessions {
   constructor({ now = Date.now, sleep = ms => new Promise(resolve => setTimeout(resolve, ms)), report = reportSession,
     spacingMs = USPS_SESSION_SPACING_MS, trialReads = USPS_SESSION_TRIAL_READS, lostAfter = USPS_SESSION_LOST_AFTER,
     maxAgeMs = USPS_SESSION_MAX_AGE_MS, readySessions = USPS_READY_SESSIONS, trialsBeforeRest = USPS_TRIALS_BEFORE_REST,
-    restMs = USPS_REST_MS, idleMs = USPS_IDLE_MS, waitMs = USPS_WAIT_FOR_SESSION_MS, minReadMs = MIN_READ_MS } = {}) {
+    restMs = USPS_REST_MS, idleMs = USPS_IDLE_MS, waitMs = USPS_WAIT_FOR_SESSION_MS, minReadMs = MIN_READ_MS,
+    proxy, prefix = '' } = {}) {
     Object.assign(this, { now, sleep, report, spacingMs, trialReads, lostAfter, maxAgeMs, readySessions, trialsBeforeRest,
-      restMs, idleMs, waitMs, minReadMs });
+      restMs, idleMs, waitMs, minReadMs, proxy, prefix });
   }
 
-  /** Whether a scrape request is an ordinary USPS tracking read the kept sessions serve. */
+  /** Whether a scrape request is an ordinary USPS tracking read the kept sessions serve, through their exit. */
   routes(req, sessions) {
-    return Boolean(sessions) && !req?.sessionId && req?.proxy === undefined && !req?.cookies?.length
+    return Boolean(sessions) && !req?.sessionId && req?.proxy === this.proxy && !req?.cookies?.length
       && (req.maxTier ?? 4) >= 3 && uspsCaptureNumber(req.url, req) !== null;
   }
 
@@ -154,7 +155,8 @@ export class UspsSessions {
   }
 
   #report(fields) {
-    try { this.report(fields); } catch { /* Diagnostics never change a read. */ }
+    // A proxy's sessions say so, never which proxy: its address can carry credentials.
+    try { this.report(this.proxy ? { ...fields, route: 'proxy' } : fields); } catch { /* Diagnostics never change a read. */ }
   }
 
   #notify() {
@@ -200,9 +202,9 @@ export class UspsSessions {
   /** One new session's spaced reads of the last requested page; whether USPS let it through. */
   async #trial() {
     const sessions = this.#sessions;
-    const session = { id: `${SESSION_PREFIX}${++this.#serial}`, created: this.now(), reads: 0, refusals: 0, failures: 0,
-      accepted: false, busy: false, trials: {} };
-    await sessions.create({ id: session.id });
+    const session = { id: `${SESSION_PREFIX}${this.prefix}${++this.#serial}`, created: this.now(), reads: 0, refusals: 0,
+      failures: 0, accepted: false, busy: false, trials: {} };
+    await sessions.create({ id: session.id, ...(this.proxy ? { proxy: this.proxy } : {}) });
     this.#report({ state: 'created' });
     for (let read = 0; read < this.trialReads && !session.accepted; read++) {
       if (read) await this.sleep(this.spacingMs);
@@ -259,7 +261,9 @@ export class UspsSessions {
   }
 
   /** Reads `req` through a session USPS has let through; `scrape` runs one read of a named session. */
-  async run(req, sessions, scrape) {
+  async run(request, sessions, scrape) {
+    // The session carries the proxy: its reads name the session alone.
+    const { proxy: _proxy, ...req } = request;
     const started = this.now();
     const total = req.maxTimeout ?? 60_000;
     const left = () => total - (this.now() - started);
@@ -302,8 +306,57 @@ export class UspsSessions {
   }
 }
 
+// USPS turns away one address's sessions for hours while it lets others through: the same plain browser
+// that USPS refuses on TRAWL's own address loads tracking through a residential proxy or another
+// datacenter's address. So a USPS read that names a proxy goes through sessions of its own, prepared
+// through that proxy, rather than through the pool's browsers, which USPS refuses on any address. At most
+// two proxies get sessions; reads through any other keep the pool.
+export const USPS_PROXY_EXITS = 2;
+
+/** TRAWL's USPS sessions by exit: its own address, and each proxy a read names. */
+export class UspsExits {
+  #exits = new Map();
+
+  constructor(options = {}) {
+    this.options = options;
+    this.direct = new UspsSessions(options);
+  }
+
+  #exit(proxy, open) {
+    if (proxy === undefined) return this.direct;
+    let exit = this.#exits.get(proxy);
+    if (!exit && open && this.#exits.size < USPS_PROXY_EXITS) {
+      this.#exits.set(proxy, exit = new UspsSessions({ ...this.options, proxy, prefix: `proxy${this.#exits.size + 1}-` }));
+    }
+    return exit;
+  }
+
+  /** Whether a scrape request is an ordinary USPS tracking read, without a proxy or through one that has sessions. */
+  routes(req, sessions) {
+    const proxy = req?.proxy;
+    if (proxy !== undefined && (typeof proxy !== 'string' || !proxy.trim())) return false;
+    const exit = this.#exit(proxy, Boolean(sessions) && !req?.sessionId && uspsCaptureNumber(req?.url, req) !== null);
+    return Boolean(exit?.routes(req, sessions));
+  }
+
+  run(req, sessions, scrape) {
+    const exit = this.#exit(req?.proxy, true);
+    if (!exit) throw new Error('No USPS sessions for this proxy');
+    return exit.run(req, sessions, scrape);
+  }
+
+  /** Sessions USPS has let through on TRAWL's own address, which the warm-up prepares. */
+  get readyCount() {
+    return this.direct.readyCount;
+  }
+
+  get readySessions() {
+    return this.direct.readySessions;
+  }
+}
+
 // One per process, however the module is reached: the server's warm-up and the orchestrator share it.
-export const uspsSessions = globalThis[Symbol.for('upc.uspsSessions')] ??= new UspsSessions();
+export const uspsSessions = globalThis[Symbol.for('upc.uspsSessions')] ??= new UspsExits();
 
 // USPS turns away every session of a browser from TRAWL's pool: camoufox-js gives each pool browser a generated
 // fingerprint, and USPS's bot check refuses it, while the same Camoufox build launched without camoufox-js
