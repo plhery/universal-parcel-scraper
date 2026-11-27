@@ -472,6 +472,20 @@ describe('Hualei tracking page', () => {
     expect(() => parseHualeiPage('<html><body><div class="div_canta"></div></body></html>', NUMBER, GZYL, READ_AT)).toThrow(SchemaError);
     expect(() => parseHualeiPage(page('page').replace('<li class="div_li3 abc">收件人</li>', ''), NUMBER, GZYL, READ_AT)).toThrow(SchemaError);
   });
+
+  it('reads the bare search form as not found only on a tenant that answers an unknown number with it', () => {
+    const bare = (echo: string) => '<html><body><form action="trackIndex.htm" method="post">'
+      + `<input type="hidden" id='codes' value='${echo}'/><textarea name="documentCode"></textarea></form><div class="div_canta"></div></body></html>`;
+    const tenant = { ...GZYL, bareUnknownPage: true as const };
+    expect(() => parseHualeiPage(bare(''), NUMBER, tenant, READ_AT)).toThrow(NotFoundError);
+    // Without the flag, with the number echoed back and no waybill, or without the form, the page has changed.
+    expect(() => parseHualeiPage(bare(''), NUMBER, GZYL, READ_AT)).toThrow(SchemaError);
+    expect(() => parseHualeiPage(bare(NUMBER), NUMBER, tenant, READ_AT)).toThrow(SchemaError);
+    expect(() => parseHualeiPage('<html><body><div class="div_canta"></div></body></html>', NUMBER, tenant, READ_AT)).toThrow(SchemaError);
+    // Its waybills read as on any tenant.
+    expect(() => parseHualeiPage(page('page-unknown'), 'NOTFOUND000009', tenant, READ_AT)).toThrow(IndeterminateError);
+    expect(parseHualeiPage(page('page'), NUMBER, tenant, READ_AT)).toEqual(parseHualeiPage(page('page'), NUMBER, GZYL, READ_AT));
+  });
 });
 
 describe('Hualei tracker', () => {

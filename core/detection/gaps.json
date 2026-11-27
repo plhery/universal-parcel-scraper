@@ -2839,6 +2839,12 @@
     "reason": "Linear Logistics numbers are DX's ten-digit secure-delivery references, and ten digits are shared by many carriers, so no rule claims them."
   },
   {
+    "carrier": "ljs",
+    "pattern": "^\\d{10}$",
+    "kind": "by_design",
+    "reason": "LJS's waybills are ten bare digits, which DHL, Mondial Relay and several other carriers share, and nothing in the number points to LJS."
+  },
+  {
     "carrier": "logen",
     "pattern": "^\\d{11}$",
     "kind": "by_design",

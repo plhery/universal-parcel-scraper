@@ -22,7 +22,9 @@ status maps.
    or, as some tenants do for an unknown number, answers one record that only echoes the number
    as its reference, without an order id, another number or a row, the adapter posts the same number as the `documentCode` field to `trackIndex.htm`, the
    tracking page the tenant's site opens. The page answers an unknown number with an empty
-   waybill that only echoes the number, which is the only not-found. An order without pieces,
+   waybill that only echoes the number, which is the only not-found; on
+   [LJS's](../ljs/README.md) older tenant, with its bare search form, no waybill and the number not
+   echoed, which is not-found there alone (`bareUnknownPage`). An order without pieces,
    destination or scans yet shows the number as its tracking or transfer number too, and has no
    history yet. It also shows the
    platform's own row for an order without scans, which some tenants' interfaces leave out.

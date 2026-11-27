@@ -1191,6 +1191,7 @@ import { statusMap as yuemaExpress } from '../../carriers/yuema-express/status.j
 import { statusMap as zmcExpress } from '../../carriers/zmc-express/status.js';
 import { statusMap as sunson } from '../../carriers/sunson/status.js';
 import { statusMap as lingxunLogistics } from '../../carriers/lingxun-logistics/status.js';
+import { statusMap as ljs } from '../../carriers/ljs/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1436,6 +1437,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'zmc-express': zmcExpress,
   sunson,
   'lingxun-logistics': lingxunLogistics,
+  ljs,
 };
 
 /** The carrier the app files the universal providers' scans under. */

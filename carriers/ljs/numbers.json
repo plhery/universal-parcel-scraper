@@ -1,0 +1,33 @@
+{
+  "carrier": "ljs",
+  "records": [
+    {
+      "number": "8811511589",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/ljs/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie"
+        ]
+      },
+      "note": "TrackShip's LJS page gives it as a tracking code example. LJS's tracker answers it as a parcel on its line to Japan, flown from Shenzhen and delivered by Sagawa in Gunma, whose steps the record copies under Sagawa's own number."
+    }
+  ]
+}

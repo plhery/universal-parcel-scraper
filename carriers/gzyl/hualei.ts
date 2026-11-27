@@ -96,6 +96,12 @@ export interface HualeiTenant {
    */
   readonly pageEcho?: true;
   /**
+   * The tracking page answers a number it holds no order for with its bare search form, as its
+   * index shows it: no waybill, and the number not echoed back. Asked only after the interface's
+   * no-row answer for the number, that page settles not-found.
+   */
+  readonly bareUnknownPage?: true;
+  /**
    * The tenant's own numbers. Once the delivery carrier's number has taken
    * `trackingNumber`, the track interface still finds an order by its own
    * number but returns it in no field: a lone record that holds none of the
@@ -824,6 +830,8 @@ function boundWaybill(html: string, number: string, tenant: HualeiTenant): PageW
   const { provider } = tenant;
   const $ = load(html);
   const blocks = $('div.div_canta div.div_cont').toArray();
+  const bareForm = $('textarea[name="documentCode"]').length === 1 && $('input#codes').length === 1 && !($('input#codes').attr('value') ?? '').trim();
+  if (!blocks.length && tenant.bareUnknownPage && bareForm) throw new NotFoundError(provider);
   if (!blocks.length || blocks.length > MAX_RECORDS) throw new SchemaError(provider, `${provider} returned a page without its results`);
   const waybills = blocks.map((block) => pageWaybill($, block, provider));
   if (waybills.length === 1 && isUnknown(waybills[0]!, number)) throw new NotFoundError(provider);

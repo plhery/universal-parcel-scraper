@@ -1,0 +1,16 @@
+{
+  "carrier": "ljs",
+  "entries": [
+    {"code": "ARRIVAL", "wording": "到达收货点", "language": "zh", "english": "Arrived at the receiving point", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The first scan in LJS's hands, at its Shenzhen warehouse."},
+    {"code": "SHIPMENT", "wording": "货物离开操作中心", "language": "zh", "english": "Goods leave the operation center", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The parcel leaves the Shenzhen operation centre. The English is GZYL's for this row on the same platform."},
+    {"wording": "現地輸送中", "language": "ja", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The line's own row, in Japanese, seconds after the parcel left the Shenzhen operation centre and before its flight was booked: on its way."},
+    {"wording": "预配…航班", "language": "zh", "english": "Booked on the flight of …", "stage": null, "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The flight booked for the parcel, its date as year/month/day read as an ellipsis and shown in the English. A forecast, not a movement, so the parcel keeps the stage of the scan before it."},
+    {"wording": "航班起飞", "language": "zh", "english": "Flight departed", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The flight to Japan left, on the booked day."},
+    {"wording": "航班到着/通关中", "language": "zh", "english": "Flight arrived, in customs clearance", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Landed in Japan and in import clearance, as Lindao Express's line to Japan words its own arrival."},
+    {"wording": "集荷", "language": "ja", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Sagawa's pickup at its Haneda office after clearance, copied from Sagawa: collected by the carrier for the last leg."},
+    {"wording": "輸送中", "language": "ja", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Sagawa's transfer through its Kanto hub, copied from Sagawa."},
+    {"wording": "配達中", "language": "ja", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Out for delivery from Sagawa's delivering office, copied from Sagawa."},
+    {"wording": "ご不在", "language": "ja", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Sagawa's driver found nobody in, copied from Sagawa; the delivery followed minutes later."},
+    {"wording": "配達完了", "language": "ja", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Sagawa's delivery, copied from Sagawa. The track interface gives the arrow before it as a question mark, which GBK cannot hold."}
+  ]
+}
