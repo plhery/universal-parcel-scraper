@@ -446,6 +446,8 @@ describe('JS Express tracking adapter', () => {
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'DDE', description: 'Insufficient Address' })).toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     expect(jsExpressStage('Return to Sender', 'DRS')).toEqual({ stage: 'exception', source: 'carrier_map' });
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'DRS', description: 'Return to Sender' })).toEqual({ kind: 'mapped', stage: 'exception' });
+    // iMile's centre receiving the returning parcel, as JS Express relays its return handling.
+    expect(jsExpressStage('【AUT RDC】Shipment received.', 'DOP')).toEqual({ stage: 'exception', source: 'carrier_map' });
   });
 
   it("reads the clearance agent's wait at the cargo terminal as transit and its pickup as customs, and a call to the recipient as moving nothing", () => {
