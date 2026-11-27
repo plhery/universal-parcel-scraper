@@ -172,6 +172,11 @@
             "afterFailureMinutes": {
               "type": "integer",
               "minimum": 1
+            },
+            "outForDeliveryMinutes": {
+              "description": "The least interval while the parcel is out for delivery, shorter than minMinutes, for a carrier whose own limit leaves room for the delivery day's news.",
+              "type": "integer",
+              "minimum": 1
             }
           },
           "required": [

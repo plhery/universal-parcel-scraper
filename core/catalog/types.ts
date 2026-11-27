@@ -177,7 +177,8 @@ export interface CarrierDefinition {
     browserRecognitionRank?: number;
     /** The normalized numbers browser recognition asks about; others the carrier's rules offer are not asked. */
     browserRecognitionPattern?: string;
-    refresh?: { minMinutes: number; afterFailureMinutes?: number };
+    /** The least minutes between two lookups of one number, after a failed one, and while the parcel is out for delivery. */
+    refresh?: { minMinutes: number; afterFailureMinutes?: number; outForDeliveryMinutes?: number };
     localClocks?: boolean;
     /** The carrier's page states every scan on one clock of its own, not the clock where the scan happened. */
     pageClock?: boolean;

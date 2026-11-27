@@ -258,11 +258,12 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
         const value = await tracker.track(parcel, { budgetMs, signal: controller.signal });
         // A lookup every waiting client left is not remembered, whatever it came to.
         if (controller.signal.aborted) return value;
-        const refresh = (carrierDefinition(value.carrier).tracking as { refresh?: { minMinutes: number } }).refresh;
+        const refresh = (carrierDefinition(value.carrier).tracking as { refresh?: { minMinutes: number; outForDeliveryMinutes?: number } }).refresh;
+        const minutes = (value.result.current_stage === 'out_for_delivery' ? refresh?.outForDeliveryMinutes : undefined) ?? refresh?.minMinutes ?? 0;
         // An answer the caller's own budget cut short, such as a carrier summary whose provider
         // history was still loading, is not what the next caller would get either.
         if (budgetMs === undefined || !value.attempts.some(attempt => attempt.kind === 'budget')) {
-          remember({ until: now() + Math.max(cacheMs, (refresh?.minMinutes ?? 0) * 60_000), value });
+          remember({ until: now() + Math.max(cacheMs, minutes * 60_000), value });
         }
         return value;
       } catch (error) {

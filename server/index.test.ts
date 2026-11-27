@@ -234,6 +234,19 @@ describe('tracking HTTP API', () => {
     expect(track).toHaveBeenCalledTimes(2);
   });
 
+  it("keeps a parcel out for delivery for the carrier's shorter interval", async () => {
+    let time = 0;
+    const track = vi.fn().mockResolvedValue({ ...answer, carrier: 'poste-italiane', result: { current_stage: 'out_for_delivery', events: [] } });
+    const url = await started({ tracker: tracker(track), cacheMs: 1, now: () => time });
+    await post(url);
+    time = 9 * 60_000;
+    await post(url);
+    expect(track).toHaveBeenCalledTimes(1);
+    time = 10 * 60_000 + 1;
+    await post(url);
+    expect(track).toHaveBeenCalledTimes(2);
+  });
+
   it('limits requests and rejects oversized bodies before tracking', async () => {
     const mock = tracker();
     const url = await started({ tracker: mock, rateLimit: 1 });

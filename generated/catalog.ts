@@ -3270,7 +3270,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "recognitionRank": 900,
       "refresh": {
         "minMinutes": 30,
-        "afterFailureMinutes": 60
+        "afterFailureMinutes": 60,
+        "outForDeliveryMinutes": 10
       },
       "browser": true
     },

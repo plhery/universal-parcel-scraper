@@ -67,6 +67,9 @@ it is its receipt from that post and reads as transit.
 
 ## Notes
 
+- `catalog.tracking.refresh` asks a number at most every 30 minutes, every 10 while it is out for
+  delivery, and 60 minutes after a failed lookup: a few hundred parcels stay within one egress's
+  fifteen searches a minute.
 - SDA delivery services use [Poste's shipment search](https://business.cert.poste.it/business/files/1476520760931/poste-delivery-business-express-standard-scheda-prodotto.pdf).
   Its [official request builder](https://www.poste.it/cerca-app/js/module/forms-ricerche-directive.js)
   submits the complete code. Detection and adapter eligibility share the catalog rules;
