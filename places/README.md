@@ -142,6 +142,10 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   forces, not a country: AE there is not the Emirates, and the base can be anywhere in the
   region. The scan gets no place, and `trackingPlace` and `trackingLocationCountry` give it
   no country.
+- An Italian province's code in brackets after the town ("BENTIVOGLIO (BO)", "TORINO (TO)") is
+  the province, not Bolivia or Tonga: `trackingPlace` and `trackingLocationCountry` read it as
+  no country, as they read a code a state or canton shares. A country written after it still
+  counts ("BENTIVOGLIO (BO), IT").
 - A field that only names a region is that region: it places a town of that name only if
   the town lies in it, and otherwise places the region's country ("Guangdong Province").
   The words of a region's name are not towns elsewhere: "Cabo Delgado" is in Mozambique,

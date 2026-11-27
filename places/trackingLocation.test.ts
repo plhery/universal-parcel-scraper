@@ -48,6 +48,21 @@ describe('tracking places', () => {
     expect(trackingPlace(location)).toEqual({ country: null, place: location });
   });
 
+  it("reads an Italian province's code in brackets after the town as no country", () => {
+    // Synthetic towns and provinces: Bologna's, Turin's, Venice's and Cuneo's codes are Bolivia's, Tonga's,
+    // Venezuela's and China's.
+    for (const location of ['BENTIVOGLIO (BO)', 'Bologna (BO)', 'TORINO (TO)', 'PORTOGRUARO ( VE )', 'ALBA (CN)', 'ROMA (RM)']) {
+      expect(trackingPlace(location)).toEqual({ country: null, place: location });
+      expect(trackingLocationCountry(location)).toBeNull();
+    }
+    // A country named after it still counts, and a code of no province stays a country.
+    expect(trackingPlace('BENTIVOGLIO (BO), IT')).toEqual({ country: 'IT', place: 'BENTIVOGLIO (BO)' });
+    expect(trackingLocationCountry('BENTIVOGLIO (BO), Italia')).toBe('IT');
+    expect(trackingPlace('Poznań (PL)')).toEqual({ country: 'PL', place: 'Poznań' });
+    expect(trackingPlace('BO')).toEqual({ country: 'BO', place: '' });
+    expect(trackingPlace('Santa Cruz, BO')).toEqual({ country: 'BO', place: 'Santa Cruz' });
+  });
+
   it('reads a US military post office as no country', () => {
     // "AE" after APO, FPO or DPO is the Armed Forces Europe, not the United Arab Emirates.
     for (const location of ['Fpo, AE', 'APO, AE 09001', 'DPO AP', 'EXAMPLE BASE, APO AA 34001']) {
