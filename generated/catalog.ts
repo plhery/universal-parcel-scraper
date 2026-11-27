@@ -9060,6 +9060,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "help": "In the Amazon app, open Track package, tap Share tracking and paste the link."
         }
       ],
+      "refresh": {
+        "minMinutes": 15,
+        "afterFailureMinutes": 60
+      },
       "linkToken": true
     },
     "canaryUrl": "https://www.amazon.com/progress-tracker/package/share/",

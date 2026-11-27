@@ -13,6 +13,9 @@ which is otherwise only visible in the buyer's account (see [Amazon Logistics](.
    `exceptionStateIdentifier` that overrides it, the progress bar's milestone and the
    promise line ("Arriving tomorrow", "Delivered 31 October").
 2. `retry`: one more attempt after a network failure.
+3. `recheck`: after Amazon's robot check, the same request once more 10 seconds later. The
+   check answers a run of requests from one address, then lets them through again. Amazon
+   answers the private browser service with HTTP 503, so no browser step follows.
 
 ## Notes
 
@@ -27,6 +30,8 @@ which is otherwise only visible in the buyer's account (see [Amazon Logistics](.
 - An unknown or expired token is redirected to the order history and its sign-in: the lookup
   is inconclusive (`session_rejected`), not a missing parcel. Amazon's robot check and the AWS
   WAF challenge are challenges.
+- `catalog.tracking.refresh` asks a link at most every 15 minutes, and 60 minutes after a failed
+  lookup, so frequent checks of a parcel out for delivery don't bring on the robot check.
 - A token opens its parcel on the other European stores too, but not on amazon.com, so the
   link's store is kept.
 

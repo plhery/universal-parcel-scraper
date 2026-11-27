@@ -4,12 +4,17 @@ import { ChallengeError, IndeterminateError, InputRequiredError, InvalidInputErr
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
+import { paused } from '../../core/runner/pause.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { MAX_BYTES, parseAmazonOrder, PROVIDER } from './parser.js';
 
 const REDIRECTS = [301, 302, 303, 307, 308];
 // Amazon's robot check, and the AWS WAF challenge its sign-in pages answer with.
 const CAPTCHA = /\/errors\/validateCaptcha|opfcaptcha|api-services-support@amazon\.com|awsWafCookieDomainList|\.awswaf\.com\//i;
+// Amazon's robot check answers a run of requests from one address, then lets them through again.
+export const RECHECK_PAUSE_MS = 10_000;
+// The least time the request asked again after the pause still needs.
+const RECHECK_FETCH_MS = 3_000;
 
 // The share token is the parcel's only key: no error may carry the address.
 function withoutCapability(error: unknown): unknown {
@@ -51,13 +56,19 @@ export class AmazonOrderTracker {
     return runSteps({ carrier: 'amazon-order', budgetMs: context.budgetMs ?? 15000, signal: context.signal, recorder: this.environment.recorder }, [
       { id: 'direct', run: ({ signal, remainingMs }) => attempt(signal, firstAttemptMs(remainingMs)) },
       networkRetryStep(({ signal, remainingMs }) => attempt(signal, remainingMs)),
+      { id: 'recheck', recovers: error => error instanceof ChallengeError,
+        run: async ({ signal, remainingMs, previousError }) => {
+          // A pause the lookup's end cuts short leaves the robot check as the answer.
+          if (RECHECK_PAUSE_MS + RECHECK_FETCH_MS > remainingMs || !await paused(RECHECK_PAUSE_MS, signal)) throw previousError;
+          return attempt(signal, remainingMs - RECHECK_PAUSE_MS);
+        } },
     ]);
   }
 }
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new AmazonOrderTracker(environment);
-  return { id: 'amazon-order', recordsSteps: true, steps: ['direct', 'retry'], track: (input, context) => {
+  return { id: 'amazon-order', recordsSteps: true, steps: ['direct', 'retry', 'recheck'], track: (input, context) => {
     if (!input.trackingUrl) throw new InputRequiredError(PROVIDER, 'trackingUrl', 'Amazon orders are tracked from the link of Amazon’s Share tracking button');
     return tracker.fetch(input.number, input.trackingUrl, context);
   } };

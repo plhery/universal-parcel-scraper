@@ -6,7 +6,7 @@ import { parseTrackingInput } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { universalPlan } from '../../providers/plan.js';
-import { adapter } from './adapter.js';
+import { adapter, RECHECK_PAUSE_MS } from './adapter.js';
 import { parseAmazonOrder } from './parser.js';
 
 const fixture = (name: string) => readFileSync(new URL(`./fixtures/${name}.html`, import.meta.url), 'utf8');
@@ -113,10 +113,10 @@ describe('Amazon order adapter', () => {
     const refused: unknown = await carrier(signIn).track({ number, trackingUrl: link }).catch(value => value);
     expect(refused).toMatchObject({ kind: 'indeterminate', reason: 'session_rejected' });
     expect(signIn).toHaveBeenCalledTimes(1);
-    const captcha = vi.fn<typeof fetch>(async () => new Response('<form action="/errors/validateCaptcha"></form>'));
-    await expect(carrier(captcha).track({ number, trackingUrl: link })).rejects.toMatchObject({ kind: 'challenge' });
-    const waf = vi.fn<typeof fetch>(async () => new Response('<script>window.awsWafCookieDomainList = [];</script>', { status: 202 }));
-    await expect(carrier(waf).track({ number, trackingUrl: link })).rejects.toMatchObject({ kind: 'challenge' });
+    // Too little time for the pause after a robot check: it is the answer.
+    const captcha = vi.fn<typeof fetch>(async () => new Response('<form action="/errors/validateCaptcha"></form>', { status: 503 }));
+    await expect(carrier(captcha).track({ number, trackingUrl: link }, { budgetMs: 5_000 })).rejects.toMatchObject({ kind: 'challenge' });
+    expect(captcha).toHaveBeenCalledTimes(1);
     const failed = vi.fn<typeof fetch>(async () => { throw new Error(link); });
     const network: unknown = await carrier(failed).track({ number, trackingUrl: link }).catch(value => value);
     expect(network).toMatchObject({ kind: 'transport' });
@@ -128,5 +128,30 @@ describe('Amazon order adapter', () => {
     }
     expect(() => carrier(signIn).track({ number })).toThrow(expect.objectContaining({ kind: 'input_required' }));
     expect(() => carrier(signIn).track({ number, trackingUrl: link.replace(FR, SYNTHETIC) })).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
+  });
+
+  it("asks once more ten seconds after Amazon's robot check, which answers a run of requests from one address", async () => {
+    vi.useFakeTimers();
+    try {
+      const lookup = async (fetcher: typeof fetch) => {
+        const answer = carrier(fetcher).track({ number, trackingUrl: link }, { budgetMs: 20_000 }).catch((error: unknown) => error);
+        await vi.advanceTimersByTimeAsync(RECHECK_PAUSE_MS);
+        return answer;
+      };
+      const robot = () => new Response('<form action="/errors/validateCaptcha"></form>', { status: 503 });
+      const cleared = vi.fn<typeof fetch>().mockResolvedValueOnce(robot()).mockResolvedValueOnce(new Response(fixture('colis-prive-in-transit')));
+      await expect(lookup(cleared)).resolves.toMatchObject({ current_stage: 'in_transit' });
+      expect(cleared).toHaveBeenCalledTimes(2);
+      const blocked = vi.fn<typeof fetch>(async () => robot());
+      await expect(lookup(blocked)).resolves.toMatchObject({ kind: 'challenge' });
+      expect(blocked).toHaveBeenCalledTimes(2);
+      const waf = vi.fn<typeof fetch>(async () => new Response('<script>window.awsWafCookieDomainList = [];</script>', { status: 202 }));
+      await expect(lookup(waf)).resolves.toMatchObject({ kind: 'challenge' });
+      expect(waf).toHaveBeenCalledTimes(2);
+      // An unknown or expired link is not asked again.
+      const signIn = vi.fn<typeof fetch>(async () => new Response(null, { status: 302, headers: { Location: '/gp/css/order-history/' } }));
+      await expect(lookup(signIn)).resolves.toMatchObject({ kind: 'indeterminate' });
+      expect(signIn).toHaveBeenCalledTimes(1);
+    } finally { vi.useRealTimers(); }
   });
 });
