@@ -397,6 +397,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'tmw-express', number: 'TMW0000199',
     route: /^https:\/\/www\.tmw-express\.com\.au\/#\/my\/checkLogistics\?doccode=TMW0000199$/,
     marker: /查件[\s\S]*物流信息/ },
+  // The detail page asks the open lookup for the number in its address on load.
+  { carrier: 'ttk-europe', number: 'TE900000005GB',
+    route: /^https:\/\/ttkeu\.com\/tracking\/tracking-detail\/\?id=TE900000005GB$/,
+    marker: /追踪详情[\s\S]*查询另一个包裹|查询另一个包裹[\s\S]*追踪详情/ },
   { carrier: 'masspack', number: '0000000000',
     route: /^https:\/\/mp\.masspack-express\.com\/#\/public-tracking\?orderNum=0000000000$/,
     marker: /Shipment Tracking|运单查询/i },

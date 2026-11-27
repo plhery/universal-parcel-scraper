@@ -1,4 +1,82 @@
 {
   "carrier": "ttk-europe",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Shipment Created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The English half of 订单生成 and the number, placed in the United Kingdom: the order is entered."
+    },
+    {
+      "wording": "Parcel Received",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The English half of 已收件 at a depot, whose Chinese half names the staff member who took the parcel in: the adapter drops the name."
+    },
+    {
+      "wording": "Arrived in depot and prepared for export",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The English half of 包裹到达…准备发货 at the UK depot. For a parcel with no receipt before it, it is the first scan of the parcel in TTK Europe's hands."
+    },
+    {
+      "wording": "Repeat Consignee, Parcel will be exported in next shipment",
+      "stage": "pending",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The English half of 重复收件人信息，包裹将移至下一批次发出, seconds after the depot's arrival: the batch already holds a parcel for the same recipient, so this one waits for the next. A notice: the parcel stays at the depot, and the stage stays the one before."
+    },
+    {
+      "wording": "Packed and ready to dispatch",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The English half of 包裹打包完毕，准备装车发货 at the UK processing centre: packed into its batch for the airport."
+    },
+    {
+      "wording": "On route to Airport",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The English half of 货物已装车发往始发机场, placed at Heathrow."
+    },
+    {
+      "wording": "Flight has departed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The English half of 配载航班已起飞, placed at Heathrow."
+    },
+    {
+      "wording": "Arrived in destination airport",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The English half of 配载航班抵达目的地机场, placed at Guangzhou Baiyun airport."
+    },
+    {
+      "wording": "Customs clearance in process",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The English half of 到达清关口岸，货物清关中, placed at Guangzhou customs: the batch is under import clearance."
+    },
+    {
+      "wording": "Customs clearance has completed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The English half of 包裹所在批次清关完毕: the batch is released, and the parcel moves on to China Post."
+    },
+    {
+      "wording": "Handed over to final delivery courier",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The English half of 包裹送交后程物流公司进行派送, placed at China Post: the domestic courier delivers under the related number the record names. TTK Europe writes nothing after it."
+    }
+  ]
 }

@@ -109,8 +109,11 @@ const DHL_PARCEL_PARTNERS: Readonly<Record<string, CarrierId | null>> = {
 
 // Waybills that take the S10 layout without being postal items: Morning Global's carry
 // Madagascar's code, and one in ten passes the check digit. M-ONE's carry Serbia's
-// code, and M-ONE delivers them itself.
-const OWN_S10_LAYOUTS: Readonly<Record<string, RegExp>> = { 'morning-global': /^BR\d{9}MG$/, 'm-one': /^[A-Z]{2}\d{9}RS$/ };
+// code, and M-ONE delivers them itself. TTK Europe's carry the United Kingdom's code, and
+// China Post delivers them under a domestic number of its own, which the record names.
+const OWN_S10_LAYOUTS: Readonly<Record<string, RegExp>> = {
+  'morning-global': /^BR\d{9}MG$/, 'm-one': /^[A-Z]{2}\d{9}RS$/, 'ttk-europe': /^TE\d{9}GB$/,
+};
 
 // The DHL networks whose JJD plates DHL Paket's tracker holds no record of (carriers/dhl/README.md).
 // DHL Express pieces are left out: DHL Paket shows the last-mile scans it adds to them.

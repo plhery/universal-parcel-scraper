@@ -78,6 +78,9 @@ describe('general delivery handoff candidates', () => {
     // M-ONE's parcel in Pošta Srbije's layout, which M-ONE delivers.
     expect(deliveryHandoff('m-one', 'PL123456785RS', { destination_country: 'RS' })).toBeNull();
     expect(deliveryHandoff('m-one', 'PL123456785RS', {}, 'DE')).toBeNull();
+    // TTK Europe's parcel in Royal Mail's layout, which China Post delivers under a number of its own.
+    expect(deliveryHandoff('ttk-europe', 'TE900000005GB', { destination_country: 'CN' })).toBeNull();
+    expect(deliveryHandoff('ttk-europe', 'TE900000005GB', {}, 'CN')).toBeNull();
     expect(deliveryHandoff('aliexpress', 'RR123456785MG', { destination_country: 'CA' }))
       .toEqual({ carrier: 'canada-post', number: 'RR123456785MG', basis: 'destination' });
   });

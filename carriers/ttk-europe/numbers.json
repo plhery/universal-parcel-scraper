@@ -1,5 +1,22 @@
 {
   "carrier": "ttk-europe",
-  "gap": "No public page shows a TTK Europe number.",
-  "records": []
+  "records": [
+    {
+      "number": "TE107809957GB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/ttkeurope/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "royal-mail",
+        "confidence": "high"
+      },
+      "note": "TrackShip's TTK Europe page gives it as a tracking code example. TTK Europe's tracker answers with a parcel flown from Heathrow to Guangzhou and handed to China Post under a domestic number. Its S10 layout carries the United Kingdom's code, which Royal Mail's rule takes."
+    }
+  ]
 }
