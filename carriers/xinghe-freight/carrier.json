@@ -102,6 +102,11 @@
       "id": "xinghe-freight-truncated",
       "pattern": "^GZXH\\d{10}Y$",
       "confidence": "high"
+    },
+    {
+      "id": "xinghe-freight-mistyped",
+      "pattern": "^GZXH(?:\\d{9}|\\d{11})YQ?$",
+      "confidence": "high"
     }
   ]
 }

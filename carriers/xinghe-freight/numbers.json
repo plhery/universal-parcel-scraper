@@ -25,6 +25,18 @@
         "confidence": "high"
       },
       "note": "Made-up number in the layout of a waybill a reader typed without its last letter, which Xinghe Freight's tracker answered once the Q was back. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "GZXH999999990YQ",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-26",
+      "expect": {
+        "carrier": "xinghe-freight",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the layout of waybills readers typed a digit short: GZXH, nine digits and YQ. The adapter refuses it before asking, so the reader checks the number."
     }
   ]
 }

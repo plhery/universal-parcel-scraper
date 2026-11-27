@@ -41,7 +41,8 @@ Freight with high confidence. Readers also type the waybill without its final `Q
 with the `Q` back. Readers also type one digit too few or too many. The tracker never holds
 such a number, so the adapter refuses a `GZXH` waybill without exactly ten digits before
 asking. The reader is then told to check the number instead of waiting for scans that never
-come.
+come. Since `GZXH` is Xinghe's own code, `xinghe-freight-mistyped` names Xinghe for a waybill one
+digit short or long, so the refusal reaches the reader.
 
 ## Links
 

@@ -513,7 +513,8 @@ describe('Chinese fulfilment warehouse numbers', () => {
     for (const number of ['GZXH9999999980YQ', 'gzxh 0000 0000 17 yq']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'xinghe-freight', confidence: 'high' });
     }
-    for (const number of ['GZXH000000017YQ', 'GZXH00000000017YQ', 'GZYL0000000017YQ', 'GZXH0000000017YT']) {
+    // A digit short or long names Xinghe too (xinghe-freight-mistyped), for its adapter to refuse.
+    for (const number of ['GZXH00000017YQ', 'GZXH000000000017YQ', 'GZYL0000000017YQ', 'GZXH0000000017YT']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('xinghe-freight');
     }
   });
@@ -1756,12 +1757,12 @@ describe('Deppon DPK waybills', () => {
   });
 });
 
-describe('Xinghe Freight waybills typed without their last letter', () => {
-  it('names Xinghe for GZXH, ten digits and Y, and only that layout', () => {
-    for (const number of ['GZXH9999999980Y', 'GZXH9999999980YQ']) {
+describe('Xinghe Freight waybills typed without their last letter or a digit off', () => {
+  it('names Xinghe for GZXH, nine to eleven digits and Y or YQ, and only that layout', () => {
+    for (const number of ['GZXH9999999980Y', 'GZXH9999999980YQ', 'GZXH999999998Y', 'GZXH999999990YQ', 'GZXH99999999800Y', 'GZXH99999999800YQ']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'xinghe-freight', confidence: 'high' });
     }
-    for (const number of ['GZXH999999998Y', 'GZXH99999999800Y', 'GZXH9999999980Q', 'GZXY9999999980Y']) {
+    for (const number of ['GZXH99999999Y', 'GZXH999999999800YQ', 'GZXH9999999980Q', 'GZXY9999999980Y']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('xinghe-freight');
     }
   });
