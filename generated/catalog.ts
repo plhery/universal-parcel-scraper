@@ -9532,6 +9532,44 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "anjiexin56": {
+    "displayName": "ANJIEXIN Logistics",
+    "color": "#15499A",
+    "aliases": [
+      "安捷信物流",
+      "深圳市安捷信物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "anjiexin56",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.anjiexin56.com/cha",
+    "trackingUrlTemplate": "https://wx.lqfast.com/Pub/UnitListDetail?companyid=JNCqnZaL7Kz%2Bbo2dhhXzyQ%3D%3D&unit={trackingNumber}",
+    "trackingSearchUrl": "https://www.anjiexin56.com/cha",
+    "linkRules": [
+      {
+        "domains": [
+          "wx.lqfast.com"
+        ],
+        "pathPattern": "^/Pub/UnitListDetail$",
+        "query": "^(?=(?:.*&)?companyid=JNCqnZaL7Kz[+ ]bo2dhhXzyQ==(?:&|$))(?:.*&)?unit=([^&]+)(?=&|$)"
+      },
+      {
+        "domains": [
+          "wx.lqfast.com"
+        ],
+        "pathPattern": "^/wx/waybillquery/?$",
+        "fragment": "^/(?:waybillquery/orderDetail)?\\?(?=(?:.*&)?companyid=JNCqnZaL7Kz[+ ]bo2dhhXzyQ==(?:&|$))(?:.*&)?(?:unit|seek)=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
   "anjun": {
     "displayName": "Anjun Logistics",
     "color": "#009944",
@@ -9596,6 +9634,50 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^AJ\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{9}$",
+        "confidence": "high"
+      }
+    ]
+  },
+  "annengyuntong": {
+    "displayName": "Annengyuntong Logistics",
+    "color": "#F48805",
+    "aliases": [
+      "安能运通物流",
+      "安能运通",
+      "深圳市安能运通物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "annengyuntong",
+      "localClocks": true
+    },
+    "canaryUrl": "https://wx.lqfast.com/wx/waybillquery/",
+    "trackingUrlTemplate": "https://wx.lqfast.com/Pub/UnitListDetail?companyid=9d3suZLQaTTCLeYx7PsD8w%3D%3D&unit={trackingNumber}",
+    "trackingSearchUrl": "https://wx.lqfast.com/wx/waybillquery/#/?companyid=9d3suZLQaTTCLeYx7PsD8w%3D%3D",
+    "linkRules": [
+      {
+        "domains": [
+          "wx.lqfast.com"
+        ],
+        "pathPattern": "^/Pub/UnitListDetail$",
+        "query": "^(?=(?:.*&)?companyid=9d3suZLQaTTCLeYx7PsD8w==(?:&|$))(?:.*&)?unit=([^&]+)(?=&|$)"
+      },
+      {
+        "domains": [
+          "wx.lqfast.com"
+        ],
+        "pathPattern": "^/wx/waybillquery/?$",
+        "fragment": "^/(?:waybillquery/orderDetail)?\\?(?=(?:.*&)?companyid=9d3suZLQaTTCLeYx7PsD8w==(?:&|$))(?:.*&)?(?:unit|seek)=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^ANYT\\d{8,10}$",
         "confidence": "high"
       }
     ]
@@ -16386,6 +16468,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "helpUrl": "https://www.95572.com/zxjy/",
     "linkRules": [],
     "detectionRules": []
+  },
+  "chinastarlogistics": {
+    "displayName": "Huaxin Supply Chain",
+    "color": "#003C8C",
+    "aliases": [
+      "华欣供应链",
+      "华欣物流",
+      "HSC"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "chinastarlogistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^Y(?:BJ|GZ)S20\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{5}$",
+        "confidence": "high"
+      }
+    ]
   },
   "chinz-logistics": {
     "displayName": "Chinz Logistics",
@@ -35638,6 +35747,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "hubologistics": {
+    "displayName": "HUBO Logistics",
+    "color": "#D01820",
+    "aliases": [
+      "巨宝物流",
+      "巨宝国际物流",
+      "HUBO"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hubologistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.hubologistics.com/",
+    "trackingUrlTemplate": "https://www.hubologistics.com/#/home/enquiry2?code={trackingNumber}",
+    "linkRules": [
+      {
+        "domains": [
+          "hubologistics.com",
+          "www.hubologistics.com"
+        ],
+        "pathPattern": "^/$",
+        "fragment": "^/home/enquiry2\\?(?:.*&)?code=([A-Za-z0-9]{6,40})(?:&.*)?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "huiyu": {
     "displayName": "Huiyu International",
     "color": "#213071",
@@ -44009,6 +44150,41 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ],
         "pathPattern": "^/select\\.html$",
         "query": "^(?=(?:.*&)?type=cnum(?:&|$))(?:.*&)?num=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
+  "longtengus": {
+    "displayName": "Longteng",
+    "color": "#151e49",
+    "aliases": [
+      "龙腾转运",
+      "龙腾",
+      "Longteng Zhuanyun"
+    ],
+    "countries": [
+      "US",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "longtengus",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.longtengus.com/",
+    "trackingUrlTemplate": "https://www.longtengus.com/TrackingInfo?TrackginNO={trackingNumber}",
+    "trackingSearchUrl": "https://www.longtengus.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "longtengus.com"
+        ],
+        "pathPattern": "^/TrackingInfo/?$",
+        "params": [
+          "TrackginNO"
+        ]
       }
     ],
     "detectionRules": []
@@ -67124,6 +67300,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "torbon": {
+    "displayName": "Torbon",
+    "color": "#00a0e9",
+    "aliases": [
+      "拓邦国际",
+      "拓邦",
+      "浙江拓邦供应链管理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "torbon"
+    },
+    "canaryUrl": "https://torbon.com/track/",
+    "trackingSearchUrl": "https://torbon.com/track/",
+    "helpUrl": "https://torbon.com/contact-us/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "torrestir": {
     "displayName": "Torrestir",
     "color": "#417c47",
@@ -72701,6 +72900,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "wlkgo": {
+    "displayName": "WLKGO",
+    "color": "#E40000",
+    "aliases": [
+      "窝里快购",
+      "窝里物流",
+      "窝里快递"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "wlkgo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://delivery.wlkgo.com/V1/DeliveryQuery.aspx",
+    "trackingSearchUrl": "https://delivery.wlkgo.com/V1/DeliveryQuery.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "wmg-group": {
     "displayName": "WMG",
     "color": "#123053",
@@ -74451,6 +74673,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "yijiangky": {
+    "displayName": "Yijiang Express",
+    "color": "#1492DF",
+    "aliases": [
+      "驿将快运",
+      "驿将",
+      "福建驿将快运有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "yijiangky",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "yilong-logistics": {
     "displayName": "Yilong Logistics",
     "color": "#ec0307",
@@ -76151,7 +76395,9 @@ export const CARRIER_IDS = [
   "andreani",
   "ane-logistics",
   "anhua-international",
+  "anjiexin56",
   "anjun",
+  "annengyuntong",
   "annto",
   "anousith",
   "anserx",
@@ -76352,6 +76598,7 @@ export const CARRIER_IDS = [
   "chilexpress",
   "china-airlines-cargo",
   "china-railway-express",
+  "chinastarlogistics",
   "chinz-logistics",
   "chit-chats",
   "choir-express",
@@ -76902,6 +77149,7 @@ export const CARRIER_IDS = [
   "huayutong",
   "hub-delivery",
   "hub-group-final-mile",
+  "hubologistics",
   "huiyu",
   "hunter-express",
   "hurtig-gutta",
@@ -77148,6 +77396,7 @@ export const CARRIER_IDS = [
   "logoix",
   "logsis",
   "longcps",
+  "longtengus",
   "loomis-express",
   "lotte-global",
   "lso",
@@ -77823,6 +78072,7 @@ export const CARRIER_IDS = [
   "topparcel",
   "toptrans",
   "topyou",
+  "torbon",
   "torrestir",
   "total-express",
   "total-transportation",
@@ -77993,6 +78243,7 @@ export const CARRIER_IDS = [
   "wise-express",
   "wizmo",
   "wld-express",
+  "wlkgo",
   "wmg-group",
   "wokexp",
   "wooliiporter",
@@ -78048,6 +78299,7 @@ export const CARRIER_IDS = [
   "ydh",
   "yfhex",
   "yha",
+  "yijiangky",
   "yilong-logistics",
   "yimidida",
   "yingtu",
@@ -78315,7 +78567,9 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "andreani": ["andreani-1"],
   "ane-logistics": [],
   "anhua-international": [],
+  "anjiexin56": [],
   "anjun": ["anjun-aj"],
+  "annengyuntong": ["annengyuntong-anyt"],
   "annto": [],
   "anousith": [],
   "anserx": ["anserx-1"],
@@ -78516,6 +78770,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "chilexpress": [],
   "china-airlines-cargo": [],
   "china-railway-express": [],
+  "chinastarlogistics": ["chinastarlogistics-1"],
   "chinz-logistics": [],
   "chit-chats": ["chit-chats-1"],
   "choir-express": [],
@@ -79066,6 +79321,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "huayutong": [],
   "hub-delivery": [],
   "hub-group-final-mile": [],
+  "hubologistics": [],
   "huiyu": ["huiyu-1"],
   "hunter-express": [],
   "hurtig-gutta": [],
@@ -79312,6 +79568,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "logoix": ["logoix-1"],
   "logsis": [],
   "longcps": [],
+  "longtengus": [],
   "loomis-express": ["loomis-express-1","loomis-express-2"],
   "lotte-global": [],
   "lso": ["lso-1"],
@@ -79987,6 +80244,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "topparcel": [],
   "toptrans": [],
   "topyou": ["topyou-1","topyou-2"],
+  "torbon": [],
   "torrestir": ["torrestir-1"],
   "total-express": ["total-express-awb","total-express-client"],
   "total-transportation": [],
@@ -80157,6 +80415,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "wise-express": [],
   "wizmo": ["wizmo-1"],
   "wld-express": [],
+  "wlkgo": [],
   "wmg-group": [],
   "wokexp": [],
   "wooliiporter": ["wooliiporter-1"],
@@ -80212,6 +80471,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ydh": ["ydh-1"],
   "yfhex": [],
   "yha": [],
+  "yijiangky": [],
   "yilong-logistics": ["yilong-logistics-1"],
   "yimidida": [],
   "yingtu": [],

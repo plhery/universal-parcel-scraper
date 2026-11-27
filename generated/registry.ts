@@ -59,7 +59,9 @@ import { adapter as ancDelivers } from '../carriers/anc-delivers/adapter.js';
 import { adapter as andreani } from '../carriers/andreani/adapter.js';
 import { adapter as aneLogistics } from '../carriers/ane-logistics/adapter.js';
 import { adapter as anhuaInternational } from '../carriers/anhua-international/adapter.js';
+import { adapter as anjiexin56 } from '../carriers/anjiexin56/adapter.js';
 import { adapter as anjun } from '../carriers/anjun/adapter.js';
+import { adapter as annengyuntong } from '../carriers/annengyuntong/adapter.js';
 import { adapter as anousith } from '../carriers/anousith/adapter.js';
 import { adapter as anserx } from '../carriers/anserx/adapter.js';
 import { adapter as anteraja } from '../carriers/anteraja/adapter.js';
@@ -181,6 +183,7 @@ import { adapter as chengchain } from '../carriers/chengchain/adapter.js';
 import { adapter as chilexpress } from '../carriers/chilexpress/adapter.js';
 import { adapter as chinaAirlinesCargo } from '../carriers/china-airlines-cargo/adapter.js';
 import { adapter as chinaPost } from '../carriers/china-post/adapter.js';
+import { adapter as chinastarlogistics } from '../carriers/chinastarlogistics/adapter.js';
 import { adapter as chinzLogistics } from '../carriers/chinz-logistics/adapter.js';
 import { adapter as chitChats } from '../carriers/chit-chats/adapter.js';
 import { adapter as chronodiali } from '../carriers/chronodiali/adapter.js';
@@ -545,6 +548,7 @@ import { adapter as huahan } from '../carriers/huahan/adapter.js';
 import { adapter as huaqiExpress } from '../carriers/huaqi-express/adapter.js';
 import { adapter as huayaExpress } from '../carriers/huaya-express/adapter.js';
 import { adapter as huayutong } from '../carriers/huayutong/adapter.js';
+import { adapter as hubologistics } from '../carriers/hubologistics/adapter.js';
 import { adapter as huiyu } from '../carriers/huiyu/adapter.js';
 import { adapter as hunterExpress } from '../carriers/hunter-express/adapter.js';
 import { adapter as huuneh } from '../carriers/huuneh/adapter.js';
@@ -694,6 +698,7 @@ import { adapter as logisimple } from '../carriers/logisimple/adapter.js';
 import { adapter as logisticsSolution } from '../carriers/logistics-solution/adapter.js';
 import { adapter as logistiq } from '../carriers/logistiq/adapter.js';
 import { adapter as logoix } from '../carriers/logoix/adapter.js';
+import { adapter as longtengus } from '../carriers/longtengus/adapter.js';
 import { adapter as loomisExpress } from '../carriers/loomis-express/adapter.js';
 import { adapter as lotteGlobal } from '../carriers/lotte-global/adapter.js';
 import { adapter as luluExpress } from '../carriers/lulu-express/adapter.js';
@@ -1118,6 +1123,7 @@ import { adapter as topest } from '../carriers/topest/adapter.js';
 import { adapter as topparcel } from '../carriers/topparcel/adapter.js';
 import { adapter as toptrans } from '../carriers/toptrans/adapter.js';
 import { adapter as topyou } from '../carriers/topyou/adapter.js';
+import { adapter as torbon } from '../carriers/torbon/adapter.js';
 import { adapter as torrestir } from '../carriers/torrestir/adapter.js';
 import { adapter as totalExpress } from '../carriers/total-express/adapter.js';
 import { adapter as toyou } from '../carriers/toyou/adapter.js';
@@ -1211,6 +1217,7 @@ import { adapter as whwdt } from '../carriers/whwdt/adapter.js';
 import { adapter as wiio } from '../carriers/wiio/adapter.js';
 import { adapter as winit } from '../carriers/winit/adapter.js';
 import { adapter as wldExpress } from '../carriers/wld-express/adapter.js';
+import { adapter as wlkgo } from '../carriers/wlkgo/adapter.js';
 import { adapter as wokexp } from '../carriers/wokexp/adapter.js';
 import { adapter as wooliiporter } from '../carriers/wooliiporter/adapter.js';
 import { adapter as wooriTaekbae } from '../carriers/woori-taekbae/adapter.js';
@@ -1244,6 +1251,7 @@ import { adapter as yaoqiLogistics } from '../carriers/yaoqi-logistics/adapter.j
 import { adapter as ycex } from '../carriers/ycex/adapter.js';
 import { adapter as ycsLogistics } from '../carriers/ycs-logistics/adapter.js';
 import { adapter as ydh } from '../carriers/ydh/adapter.js';
+import { adapter as yijiangky } from '../carriers/yijiangky/adapter.js';
 import { adapter as yilongLogistics } from '../carriers/yilong-logistics/adapter.js';
 import { adapter as yitu } from '../carriers/yitu/adapter.js';
 import { adapter as yji } from '../carriers/yji/adapter.js';
@@ -1340,7 +1348,9 @@ export const REGISTRY: RegistryDefinition = {
     "andreani": andreani,
     "ane-logistics": aneLogistics,
     "anhua-international": anhuaInternational,
+    "anjiexin56": anjiexin56,
     "anjun": anjun,
+    "annengyuntong": annengyuntong,
     "anousith": anousith,
     "anserx": anserx,
     "anteraja": anteraja,
@@ -1462,6 +1472,7 @@ export const REGISTRY: RegistryDefinition = {
     "chilexpress": chilexpress,
     "china-airlines-cargo": chinaAirlinesCargo,
     "china-post": chinaPost,
+    "chinastarlogistics": chinastarlogistics,
     "chinz-logistics": chinzLogistics,
     "chit-chats": chitChats,
     "chronodiali": chronodiali,
@@ -1826,6 +1837,7 @@ export const REGISTRY: RegistryDefinition = {
     "huaqi-express": huaqiExpress,
     "huaya-express": huayaExpress,
     "huayutong": huayutong,
+    "hubologistics": hubologistics,
     "huiyu": huiyu,
     "hunter-express": hunterExpress,
     "huuneh": huuneh,
@@ -1975,6 +1987,7 @@ export const REGISTRY: RegistryDefinition = {
     "logistics-solution": logisticsSolution,
     "logistiq": logistiq,
     "logoix": logoix,
+    "longtengus": longtengus,
     "loomis-express": loomisExpress,
     "lotte-global": lotteGlobal,
     "lulu-express": luluExpress,
@@ -2399,6 +2412,7 @@ export const REGISTRY: RegistryDefinition = {
     "topparcel": topparcel,
     "toptrans": toptrans,
     "topyou": topyou,
+    "torbon": torbon,
     "torrestir": torrestir,
     "total-express": totalExpress,
     "toyou": toyou,
@@ -2492,6 +2506,7 @@ export const REGISTRY: RegistryDefinition = {
     "wiio": wiio,
     "winit": winit,
     "wld-express": wldExpress,
+    "wlkgo": wlkgo,
     "wokexp": wokexp,
     "wooliiporter": wooliiporter,
     "woori-taekbae": wooriTaekbae,
@@ -2525,6 +2540,7 @@ export const REGISTRY: RegistryDefinition = {
     "ycex": ycex,
     "ycs-logistics": ycsLogistics,
     "ydh": ydh,
+    "yijiangky": yijiangky,
     "yilong-logistics": yilongLogistics,
     "yitu": yitu,
     "yji": yji,
@@ -2676,7 +2692,9 @@ export const REGISTRY: RegistryDefinition = {
     "andreani": "andreani",
     "ane-logistics": "ane-logistics",
     "anhua-international": "anhua-international",
+    "anjiexin56": "anjiexin56",
     "anjun": "anjun",
+    "annengyuntong": "annengyuntong",
     "annto": "universal",
     "anousith": "anousith",
     "anserx": "anserx",
@@ -2889,6 +2907,7 @@ export const REGISTRY: RegistryDefinition = {
     "china-airlines-cargo": "china-airlines-cargo",
     "china-post": "china-post",
     "china-railway-express": "universal",
+    "chinastarlogistics": "chinastarlogistics",
     "chinz-logistics": "chinz-logistics",
     "chit-chats": "chit-chats",
     "choir-express": "universal",
@@ -3472,6 +3491,7 @@ export const REGISTRY: RegistryDefinition = {
     "huayutong": "huayutong",
     "hub-delivery": "universal",
     "hub-group-final-mile": "universal",
+    "hubologistics": "hubologistics",
     "huiyu": "huiyu",
     "hunter-express": "hunter-express",
     "hurtig-gutta": "universal",
@@ -3727,6 +3747,7 @@ export const REGISTRY: RegistryDefinition = {
     "logoix": "logoix",
     "logsis": "universal",
     "longcps": "universal",
+    "longtengus": "longtengus",
     "loomis-express": "loomis-express",
     "lotte-global": "lotte-global",
     "lso": "universal",
@@ -4438,6 +4459,7 @@ export const REGISTRY: RegistryDefinition = {
     "topparcel": "topparcel",
     "toptrans": "toptrans",
     "topyou": "topyou",
+    "torbon": "torbon",
     "torrestir": "torrestir",
     "total-express": "total-express",
     "total-transportation": "universal",
@@ -4613,6 +4635,7 @@ export const REGISTRY: RegistryDefinition = {
     "wise-express": "universal",
     "wizmo": "universal",
     "wld-express": "wld-express",
+    "wlkgo": "wlkgo",
     "wmg-group": "universal",
     "wokexp": "wokexp",
     "wooliiporter": "wooliiporter",
@@ -4670,6 +4693,7 @@ export const REGISTRY: RegistryDefinition = {
     "ydh": "ydh",
     "yfhex": "universal",
     "yha": "universal",
+    "yijiangky": "yijiangky",
     "yilong-logistics": "yilong-logistics",
     "yimidida": "universal",
     "yingtu": "universal",
