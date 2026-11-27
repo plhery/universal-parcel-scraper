@@ -2325,6 +2325,12 @@
     "reason": "The letters are the sender's account prefix, and other Australian carriers on the same consignment software print the same layout."
   },
   {
+    "carrier": "iberomail",
+    "pattern": "^W\\d{6}$",
+    "kind": "by_design",
+    "reason": "Iberomail's waybills are W and six digits, too plain a shape to name it."
+  },
+  {
     "carrier": "ibex-express-bo",
     "number": "1980894",
     "kind": "by_design",

@@ -1,0 +1,77 @@
+{
+  "id": "iberomail",
+  "displayName": "Iberomail",
+  "aliases": [
+    "Iberomail, SA"
+  ],
+  "region": {
+    "countries": [
+      "PT"
+    ]
+  },
+  "brand": {
+    "color": "#1273E6"
+  },
+  "selectable": true,
+  "timezone": "Europe/Lisbon",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "iberomail",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://iberomail.com/track-trace/{trackingNumber}/",
+    "searchUrl": "https://iberomail.com/track-trace/",
+    "helpUrl": "https://iberomail.com/contactos/",
+    "canaryUrl": "https://iberomail.com/track-trace/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "signatory"
+    ],
+    "unavailable": [
+      "provider_code",
+      "offset_timestamps",
+      "eta",
+      "destination_country",
+      "weight",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "iberomail.com"
+      ],
+      "pathPattern": "^/track-trace/[^/]+/?$",
+      "path": "^/track-trace/([A-Za-z0-9]+)/?$"
+    },
+    {
+      "domains": [
+        "iberomail.com"
+      ],
+      "pathPattern": "^/TrackAndTrace/?$",
+      "fragment": "^/(?:track/)?([A-Za-z0-9]+)$"
+    }
+  ],
+  "detection": []
+}

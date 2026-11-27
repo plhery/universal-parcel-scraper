@@ -2941,6 +2941,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'iqfulfillment', number: 'IQFZZ990000',
     route: /^https:\/\/track\.iqfulfillment\.com\/\?deliveryNo=IQFZZ990000$/,
     marker: /Where can I find my order tracking number/ },
+  // The page frames the tracker with the number from its address, and the tracker looks it up on load.
+  { carrier: 'iberomail', number: 'W9900017',
+    route: /^https:\/\/iberomail\.com\/track-trace\/W9900017\/$/,
+    marker: /Track & Trace/ },
 ];
 
 /**

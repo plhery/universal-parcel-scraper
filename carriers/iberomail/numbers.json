@@ -1,0 +1,64 @@
+{
+  "carrier": "iberomail",
+  "records": [
+    {
+      "number": "W313153",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://portaldaqueixa.com/brands/iberomail/complaints/iberomail-desaparecimento-de-dinheiro-durante-transporte-de-encomenda-165459026",
+        "date": "2026-11-04",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Carta de Porte",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A complaint about a wallet a hotel sent home through Iberomail gives its waybill; Iberomail's tracker answers it with a domestic delivery."
+    },
+    {
+      "number": "W299199",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://portaldaqueixa.com/brands/iberomail/complaints/iberomail-falta-de-entrega-de-encomenda-e-ausencia-de-esclarecimentos-162683326",
+        "date": "2026-09-16",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A complaint about documents sent to Brazil gives the number, and Iberomail's answer there says customs returned the parcel; its tracker answers with the partner's S10 rows up to the return."
+    },
+    {
+      "number": "W296517",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://portaldaqueixa.com/brands/iberomail/complaints/iberomail-atraso-na-entrega-de-encomenda-enviada-para-o-estrangeiro-162294426",
+        "date": "2026-09-09",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "código de acompanhamento",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A complaint about coats a hotel sent to Brazil gives the tracking code; Iberomail's tracker holds the record with two steps and no clock."
+    }
+  ]
+}

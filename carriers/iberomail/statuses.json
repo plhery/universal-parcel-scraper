@@ -1,0 +1,19 @@
+{
+  "carrier": "iberomail",
+  "entries": [
+    {"wording": "GRABADO", "stage": "registered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The domestic network's first row, at OFICINA CENTRAL: the shipment's data is recorded."},
+    {"wording": "RECIBIDA INFORMACION", "stage": "registered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The origin agency receiving the shipment's data, hours after it was recorded; no movement of its own."},
+    {"wording": "EN PLATAFORMA DE DESTINO", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "At the destination hub overnight, which the row names (PT.PLT.…)."},
+    {"wording": "EN DELEGACION DESTINO", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "At the agency that delivers, before its round."},
+    {"wording": "EN REPARTO", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27"},
+    {"wording": "ENTREGADO con Firma", "stage": "delivered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The round's delivery record. The reply follows it with the signatory's DNI and name, which the adapter leaves out."},
+    {"wording": "POD Anotado en DST", "stage": "pending", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The proof of delivery entered at the destination agency after the delivery: a note on the record that moves nothing."},
+    {"wording": "ENTREGADO", "stage": "delivered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The agency closing the shipment as delivered, after its proof of delivery is entered."},
+    {"wording": "Processed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The first row of a parcel sent abroad under a partner's S10 number, at Lisbon."},
+    {"wording": "Departure to country of destination", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27"},
+    {"wording": "Item presented at the Customs", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Customs in the destination country, Brazil for the sample."},
+    {"wording": "Back to sender: transfer cancelled - addressee unreachable", "stage": "exception", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The destination post sending the parcel back after customs held it: on its way back, not yet with the sender. Iberomail's reply to the sample's complaint says it was still waiting for the parcel."},
+    {"wording": "Em processamento / Being Processed", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A step of Iberomail's own summary of a parcel sent abroad, without a clock."},
+    {"wording": "Em trânsito / In Transit", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A step of Iberomail's own summary of a parcel sent abroad, without a clock."}
+  ]
+}
