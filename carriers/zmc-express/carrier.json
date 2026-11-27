@@ -21,17 +21,61 @@
   "timezone": "Asia/Baghdad",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "zmc-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "delivered_at",
+    "weight"
+  ],
   "portal": {
     "searchUrl": "https://apps.zmc-iraq.com/tracking.php",
+    "helpUrl": "https://zmcexpress.com/get-in-touch/",
     "canaryUrl": "https://apps.zmc-iraq.com/tracking.php",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "weight",
+      "pieces",
+      "parcel_count",
+      "destination",
+      "customer_reference",
+      "recipient_name",
+      "recipient_contact"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "weight"
+    ],
+    "discarded": [
+      "pieces",
+      "parcel_count",
+      "destination",
+      "customer_reference",
+      "recipient_name",
+      "recipient_contact"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "proof_of_delivery",
+      "signatory",
+      "sender_name",
+      "recipient_address",
+      "delivery_partner"
+    ]
   },
   "links": [],
   "detection": []

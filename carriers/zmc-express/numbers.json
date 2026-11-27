@@ -1,5 +1,22 @@
 {
   "carrier": "zmc-express",
-  "gap": "No public page shows a ZMC Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "A13477-12-2536003",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/zmc-express/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's ZMC Express page gives it as its tracking code example. ZMC Express's tracker answers it, with its hyphens, with a shipment from Guangzhou through Dubai delivered in Baghdad, and answers nothing without them."
+    }
+  ]
 }

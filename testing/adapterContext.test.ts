@@ -182,7 +182,7 @@ function credential(validator: string, number: string, carrier: string): string 
 function carrierInputs(carrier: string): TrackingInput[] {
   const numbers = (corpus.get(carrier) ?? []).filter((record) => !['negative', 'quarantined'].includes(record.role)).map((record) => record.number);
   return (numbers.length ? numbers : UNSAMPLED[carrier] ?? []).map((raw) => {
-    // The number as the carrier knows it, which its adapter is given: a Tiui folio, a JRS Express or an IQ Fulfillment reference with its hyphens.
+    // The number as the carrier knows it, which its adapter is given: a Tiui folio, a JRS Express, an IQ Fulfillment or a ZMC Express reference with its hyphens.
     const number = carrierTrackingNumber(raw, carrier);
     const input: TrackingInput = { number };
     for (const requirement of activeRequirements(carrier, number)) {

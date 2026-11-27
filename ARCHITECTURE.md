@@ -180,8 +180,9 @@ drops the slashes of a NO LIMIT shipment number, which reads the same without th
 LIMIT's adapter puts them back for its form. It also drops the slash MRW's receipts print after the office's five
 digits; MRW's tracker knows the number without it. A Tiui folio keeps its hyphens when Tiui is
 the carrier, a JRS Express reference, an airbill and its branch code, its hyphen when JRS
-Express is, and an IQ Fulfillment order reference the hyphen before its suffix when IQ
-Fulfillment is, since their digits alone do not give them back: `carrierTrackingNumber()` gives the
+Express is, an IQ Fulfillment order reference the hyphen before its suffix when IQ
+Fulfillment is, and a ZMC Express reference its hyphens when ZMC Express is, since their digits
+alone do not give them back: `carrierTrackingNumber()` gives the
 number as its carrier knows it, for consumers to store, and the same shape under another carrier
 normalizes. A
 postcode the carrier does not read goes to the enabled fallbacks only, since ParcelsApp and

@@ -1,4 +1,16 @@
 {
   "carrier": "zmc-express",
-  "entries": []
+  "entries": [
+    {"code": "100", "wording": "Booked", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipment is booked, a day before the origin warehouse receives it."},
+    {"code": "200", "wording": "Received by cargo warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Followed by \" => \" and the warehouse: the origin's in Guangzhou, then Dubai's and the Iraqi branches' on the way."},
+    {"code": "300", "wording": "Assigned to flight by air", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Followed by \" => \" and the flight, sometimes with the airport it flies to."},
+    {"code": "302", "wording": "Assigned to trip by land", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Followed by \" => \" and the trip's name, as the truck from Dubai into Iraq."},
+    {"code": "315", "wording": "Customs declaration finished", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Followed by \" => \" and the country when it names one, IN IRAQ for the import: the parcel is cleared and moves on."},
+    {"code": "400", "wording": "Received in Iraq COD warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Followed by \" | \" and the warehouse, such as Erbil's store or Baghdad's supplying warehouse."},
+    {"code": "401", "wording": "Transfering between warehouses", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "402", "wording": "Transfering between WH and Courier", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The warehouse hands the parcel to the courier, minutes before it goes out on the vehicle."},
+    {"code": "430", "wording": "On vehicle for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
+    {"code": "440", "wording": "Delivered successfully", "stage": "delivered", "language": "en", "confirmedBy": "live"},
+    {"code": "445", "wording": "Pending delivery", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "note": "Followed by \" | \" and the reason, as Duplicated order: the round on the vehicle ended without a delivery, and a later round delivered the parcel."}
+  ]
 }
