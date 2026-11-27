@@ -1,0 +1,61 @@
+{
+  "id": "hjwl",
+  "displayName": "HJWL",
+  "aliases": [
+    "汇捷物流"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#05233B"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hjwl",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "offset_timestamps",
+    "provider_code"
+  ],
+  "portal": {
+    "searchUrl": "https://www.hjwl.ltd/#/kuaidi100",
+    "canaryUrl": "https://www.hjwl.ltd/",
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "location",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "hjwl-1",
+      "pattern": "^HJWL\\d{14}$",
+      "confidence": "high"
+    }
+  ]
+}

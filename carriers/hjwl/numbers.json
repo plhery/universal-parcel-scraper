@@ -1,0 +1,43 @@
+{
+  "carrier": "hjwl",
+  "records": [
+    {
+      "number": "HJWL20230613182346",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "hjwl",
+        "confidence": "high"
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for HJWL (汇捷物流). HJWL's query page answers it with six nodes from the order to the signature."
+    },
+    {
+      "number": "HJWL20230427104721",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/hjwl.shtml",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "hjwl",
+        "confidence": "high"
+      },
+      "note": "Kuaidi100's HJWL page gives it as the example number. HJWL's query page holds no node under it now."
+    }
+  ]
+}

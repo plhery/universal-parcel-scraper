@@ -1,0 +1,49 @@
+{
+  "carrier": "hjwl",
+  "entries": [
+    {
+      "code": "已下单",
+      "wording": "已下单",
+      "language": "zh",
+      "english": "Order placed",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The order is in HJWL's system; the parcel is not with it yet. The sample's message repeats the clock before 快递已下单."
+    },
+    {
+      "code": "已揽收",
+      "wording": "已揽收",
+      "language": "zh",
+      "english": "Collected",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "A courier collects the parcel from the sender."
+    },
+    {
+      "code": "已发货",
+      "wording": "已发货",
+      "language": "zh",
+      "english": "Shipped",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Given to each node on the way, a departure from a district and a transfer through a hub in the sample."
+    },
+    {
+      "code": "配送中",
+      "wording": "配送中",
+      "language": "zh",
+      "english": "Out for delivery",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The sample's message says the parcel is being delivered (快件正在配送中)."
+    },
+    {
+      "code": "已签收",
+      "wording": "已签收",
+      "language": "zh",
+      "english": "Signed for",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    }
+  ]
+}
