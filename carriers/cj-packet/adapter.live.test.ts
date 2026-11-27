@@ -11,7 +11,7 @@ describe('CJ Packet live retrieval', () => {
     expect(answer).toMatchObject({ carrier: 'cj-packet', source: 'cj-packet' });
     expect(answer.attempts[0]).toMatchObject({ source: 'cj-packet', kind: 'ok' });
     expect(answer.result.events.length).toBeGreaterThan(0);
-    expect(answer.result.service_name).toMatch(/^CJPacket\b/);
+    expect(answer.result.service_name).toMatch(/^(?:CJPacket|LuWei)\b/);
     // Each scan has its offset, or its wall clock when the forwarder sent none.
     expect(answer.result.events.every((event) => event.description && (event.time
       ? Date.parse(event.time) <= Date.now() : /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(String(event.local_time))))).toBe(true);

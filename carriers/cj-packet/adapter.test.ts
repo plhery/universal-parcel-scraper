@@ -272,12 +272,14 @@ describe('CJ Packet HTTP adapter', () => {
   it('rejects numbers CJ Packet does not issue and pre-aborted lookups without a request', async () => {
     const fetcher = vi.fn<typeof fetch>();
     // The forwarder's and the courier's numbers stay with their carriers.
-    for (const number of ['LP00000000000002CN', 'YT0000000000000001', 'CJPZ0000000001YQ', 'CJPZZZZ0000000001YQ', 'CJPZZ000000001YQ', 'CJPZZ0000000001', `CJPZZ${'0'.repeat(60)}YQ`]) {
+    for (const number of ['LP00000000000002CN', 'YT0000000000000001', 'CJPZ0000000001YQ', 'CJPZZZZ0000000001YQ', 'CJPZZ000000001YQ', 'CJPZZ0000000001', `CJPZZ${'0'.repeat(60)}YQ`, 'LWZZB0000000002YQ']) {
       await expect(carrier(fetcher).track({ number })).rejects.toMatchObject({ kind: 'invalid_input' });
     }
     await expect(carrier(fetcher).track({ number: IN_TRANSIT }, { signal: AbortSignal.abort(new Error('cancelled')) })).rejects.toThrow('cancelled');
     expect(fetcher).not.toHaveBeenCalled();
     expect(normalizeCjPacketNumber('cjpzzb 0000-0000-02 yq')).toBe(DELIVERED);
+    // LuWei Express's line on the same tracker.
+    expect(normalizeCjPacketNumber('lwpzzb 0000-0000-02 yq')).toBe('LWPZZB0000000002YQ');
   });
 
   it('sends a read that failed to reach the site once more', async () => {

@@ -285,6 +285,25 @@
         "confidence": "high"
       },
       "note": "Looked up on CJ Packet's own tracker, as an archived address shows; the capture was not opened, and the page loads its history by script."
+    },
+    {
+      "number": "LWPBJB0110600409YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/luwei/",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "cj-packet",
+        "confidence": "high"
+      },
+      "note": "TrackShip's LuWei page gives it as a tracking code example. CJ Packet's tracker knows it, on the LuWei Ordinary US service from Yiwu to a USPS delivery."
     }
   ]
 }

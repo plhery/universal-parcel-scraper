@@ -4,7 +4,8 @@
   "aliases": [
     "CJPacket",
     "CJ Dropshipping",
-    "CJ Packet Ordinary"
+    "CJ Packet Ordinary",
+    "LuWei Express"
   ],
   "region": {
     "countries": [
@@ -100,7 +101,7 @@
   "detection": [
     {
       "id": "cj-packet-1",
-      "pattern": "^CJP[A-Z]{2,3}\\d{10}YQ$",
+      "pattern": "^(?:CJP|LWP)[A-Z]{2,3}\\d{10}YQ$",
       "confidence": "high"
     }
   ]

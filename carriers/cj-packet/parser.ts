@@ -12,8 +12,8 @@ import { cjPacketCurrentStage, cjPacketStage, cjPacketSummary } from './status.j
 export const PROVIDER = 'CJ Packet';
 // A long history is under ten kilobytes.
 export const CJ_PACKET_MAX_BYTES = 512 * 1024;
-// `cj-packet-1`'s layout: CJP, two or three letters, ten digits and YQ.
-const NUMBER = /^CJP[A-Z]{2,3}\d{10}YQ$/;
+// `cj-packet-1`'s layout: CJP, or LWP on the LuWei Express line, two or three letters, ten digits and YQ.
+const NUMBER = /^(?:CJP|LWP)[A-Z]{2,3}\d{10}YQ$/;
 const WALL_CLOCK = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 const STAMP = /^\d{1,15}$/;
 // The place a relayed line can open with, such as "[US,SAMPLE CITY,ST]".
@@ -33,7 +33,7 @@ const MAX_EVENTS = 100;
 /** A CJ Packet number, in capitals as the tracker needs it; anything else is not one CJ Packet issues. */
 export function normalizeCjPacketNumber(raw: string): string {
   const number = raw.length <= 64 ? normalizeTrackingNumber(raw).toUpperCase() : '';
-  if (!NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'CJ Packet numbers are CJP, two or three letters, ten digits and YQ');
+  if (!NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'CJ Packet numbers are CJP or LWP, two or three letters, ten digits and YQ');
   return number;
 }
 

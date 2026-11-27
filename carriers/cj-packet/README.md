@@ -2,7 +2,8 @@
 
 CJ Packet is the shipping line of CJ Dropshipping. Parcels leave CJ's warehouses in China with a
 forwarder such as Cainiao or Yanwen and are handed to a courier in the destination country,
-which often prints its own number. Tracked through the lookup its tracking page makes.
+which often prints its own number. LuWei Express, CJ's line from Yiwu, runs on the same tracker.
+Tracked through the lookup its tracking page makes.
 
 ## How it works
 
@@ -58,8 +59,10 @@ which often prints its own number. Tracked through the lookup its tracking page 
 
 CJ Packet numbers start `CJP`, then two or three letters, ten digits and `YQ`. Customers quote
 them in reviews of the service, and archived lookups on CJ Packet's tracker show both forms.
-`cj-packet-1` claims that layout with high confidence: no other carrier uses the `CJP` prefix
-with the `YQ` suffix. The tracker also answers the forwarder's number, such as Yanwen's, and the
+LuWei Express numbers have the same layout after `LWP`; its tracker on `lw.comeorders.com` asks
+the same backend, which answers them on CJ Packet's lookup with LuWei's service name.
+`cj-packet-1` claims both layouts with high confidence: many forwarders end their numbers in `YQ`,
+each behind its own prefix, and no other carrier's numbers start `CJP` or `LWP`. The tracker also answers the forwarder's number, such as Yanwen's, and the
 courier's; those stay with their carriers. The samples and their sources are in
 [`numbers.json`](numbers.json).
 
