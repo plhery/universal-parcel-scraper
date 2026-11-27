@@ -1994,6 +1994,18 @@
     "reason": "Detection offers DTDC for this published shipment, which GLS Canada confirms in its own tracker."
   },
   {
+    "carrier": "gls-cz",
+    "pattern": "^\\d{11}$",
+    "kind": "by_design",
+    "reason": "Eleven digits are GLS's international parcel numbers, which other GLS networks track too, and GLS Czech Republic's national numbers written with a leading zero; neither names GLS Czech Republic."
+  },
+  {
+    "carrier": "gls-cz",
+    "pattern": "^\\d{10}$",
+    "kind": "open",
+    "reason": "Detection does not offer GLS Czech Republic for its ten-digit national numbers, a bare run of digits other carriers print too."
+  },
+  {
     "carrier": "gls-hu",
     "pattern": "^\\d{11}$",
     "kind": "by_design",

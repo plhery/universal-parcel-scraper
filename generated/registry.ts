@@ -448,6 +448,7 @@ import { adapter as globalpost } from '../carriers/globalpost/adapter.js';
 import { adapter as globkurier } from '../carriers/globkurier/adapter.js';
 import { adapter as glsCa } from '../carriers/gls-ca/adapter.js';
 import { adapter as glsCh } from '../carriers/gls-ch/adapter.js';
+import { adapter as glsCz } from '../carriers/gls-cz/adapter.js';
 import { adapter as glsDe } from '../carriers/gls-de/adapter.js';
 import { adapter as glsEs } from '../carriers/gls-es/adapter.js';
 import { adapter as glsFr } from '../carriers/gls-fr/adapter.js';
@@ -1704,6 +1705,7 @@ export const REGISTRY: RegistryDefinition = {
     "globkurier": globkurier,
     "gls-ca": glsCa,
     "gls-ch": glsCh,
+    "gls-cz": glsCz,
     "gls-de": glsDe,
     "gls-es": glsEs,
     "gls-fr": glsFr,
@@ -3288,6 +3290,7 @@ export const REGISTRY: RegistryDefinition = {
     "gls-at": "gls-de",
     "gls-ca": "gls-ca",
     "gls-ch": "gls-ch",
+    "gls-cz": "gls-cz",
     "gls-de": "gls-de",
     "gls-es": "gls-es",
     "gls-fr": "gls-fr",

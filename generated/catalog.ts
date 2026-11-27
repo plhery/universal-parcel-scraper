@@ -2283,7 +2283,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "gls-group.eu",
           "gls-group.com"
         ],
-        "pathPattern": "^/(?:GROUP|BE|BG|CZ|DK|FI|HR|IE|LU|NL|RO|RS|SI|SK)/",
+        "pathPattern": "^/(?:GROUP|BE|BG|DK|FI|HR|IE|LU|NL|RO|RS|SI|SK)/",
         "params": [
           "match",
           "parcelNumber",
@@ -31335,6 +31335,45 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/CA/",
         "params": [
           "match"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "gls-cz": {
+    "displayName": "GLS Czech Republic",
+    "color": "#ffdd00",
+    "aliases": [
+      "GLS Česká republika"
+    ],
+    "countries": [
+      "CZ"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Prague",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gls-cz",
+      "refresh": {
+        "minMinutes": 60,
+        "afterFailureMinutes": 240
+      }
+    },
+    "canaryUrl": "https://gls-group.com/CZ/cs/sledovani-zasilek/",
+    "trackingUrlTemplate": "https://gls-group.com/CZ/cs/sledovani-zasilek/?match={trackingNumber}",
+    "trackingSearchUrl": "https://gls-group.com/CZ/cs/sledovani-zasilek/",
+    "helpUrl": "https://gls-group.com/CZ/cs/kontakty/",
+    "linkRules": [
+      {
+        "domains": [
+          "gls-group.com",
+          "gls-group.eu"
+        ],
+        "pathPattern": "^/CZ/",
+        "params": [
+          "match",
+          "parcelNumber",
+          "matchParcelNumber"
         ]
       }
     ],
@@ -75633,6 +75672,7 @@ export const CARRIER_IDS = [
   "globkurier",
   "gls-at",
   "gls-ca",
+  "gls-cz",
   "gls-es",
   "gls-hu",
   "gls-it",
@@ -77758,6 +77798,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "globkurier": [],
   "gls-at": ["gls-at-1","gls-at-2"],
   "gls-ca": [],
+  "gls-cz": [],
   "gls-es": ["gls-es-1","gls-es-2"],
   "gls-hu": ["gls-hu-1"],
   "gls-it": ["gls-it-1","gls-it-8-digits","gls-it-digit-depot"],

@@ -334,6 +334,9 @@ describe('evidence-backed tracking formats', () => {
       .toMatchObject({ trackingNumber: 'ZY0AB12C', carrier: 'gls-de', source: 'link' });
     expect(parseTrackingInput('https://gls-group.eu/CH/de/paketverfolgung?match=AALZJR'))
       .toMatchObject({ trackingNumber: 'AALZJR', carrier: 'gls-ch', source: 'link' });
+    // GLS Czech Republic's page tracks its national numbers, which the group path does not know.
+    expect(parseTrackingInput('https://gls-group.com/CZ/cs/sledovani-zasilek/?match=0000000001'))
+      .toMatchObject({ trackingNumber: '0000000001', carrier: 'gls-cz', confidence: 'high', source: 'link' });
     // The group tracker's pages for countries without a GLS network of their own in the catalog ask the same service.
     expect(parseTrackingInput('https://gls-group.com/RO/en/parcel-tracking?match=12345678901'))
       .toMatchObject({ trackingNumber: '12345678901', carrier: 'gls-de', confidence: 'high', source: 'link' });

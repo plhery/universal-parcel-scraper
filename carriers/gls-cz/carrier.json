@@ -1,0 +1,62 @@
+{
+  "id": "gls-cz",
+  "displayName": "GLS Czech Republic",
+  "aliases": [
+    "GLS Česká republika"
+  ],
+  "region": {
+    "countries": [
+      "CZ"
+    ]
+  },
+  "brand": {
+    "color": "#ffdd00"
+  },
+  "selectable": true,
+  "timezone": "Europe/Prague",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "gls-cz",
+    "steps": [
+      "direct"
+    ],
+    "refresh": {
+      "minMinutes": 60,
+      "afterFailureMinutes": 240
+    }
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://gls-group.com/CZ/cs/sledovani-zasilek/?match={trackingNumber}",
+    "searchUrl": "https://gls-group.com/CZ/cs/sledovani-zasilek/",
+    "helpUrl": "https://gls-group.com/CZ/cs/kontakty/",
+    "canaryUrl": "https://gls-group.com/CZ/cs/sledovani-zasilek/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "pickup_point"
+    ],
+    "scraped": [
+      "status"
+    ],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "gls-group.com",
+        "gls-group.eu"
+      ],
+      "pathPattern": "^/CZ/",
+      "params": [
+        "match",
+        "parcelNumber",
+        "matchParcelNumber"
+      ]
+    }
+  ],
+  "detection": []
+}

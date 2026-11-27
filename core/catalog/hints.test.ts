@@ -450,9 +450,9 @@ describe('zones implied by carrier names', () => {
     // London never shares the others' clock, so DPD's brand zone stays off whatever networks join.
     expect(new Set(brandTimeZones('DPD Group'))).toEqual(new Set(['Europe/Zurich', 'Europe/Paris', 'Europe/Berlin', 'Europe/Warsaw', 'Europe/London', 'Europe/Dublin', 'Africa/Johannesburg', 'Europe/Brussels', 'Europe/Amsterdam', 'Europe/Lisbon', 'Europe/Vienna', 'Europe/Bucharest', 'Europe/Budapest', 'Europe/Athens', 'Asia/Hong_Kong', 'Europe/Moscow', 'Europe/Minsk']));
     expect(new Set(brandTimeZones('dpd'))).toEqual(new Set(['Europe/Zurich', 'Europe/Paris', 'Europe/Berlin', 'Europe/Warsaw', 'Europe/London', 'Europe/Dublin', 'Africa/Johannesburg', 'Europe/Brussels', 'Europe/Amsterdam', 'Europe/Lisbon', 'Europe/Vienna', 'Europe/Bucharest', 'Europe/Budapest', 'Europe/Athens', 'Asia/Hong_Kong', 'Europe/Moscow', 'Europe/Minsk']));
-    // GLS Italy, Spain, Poland, Austria, Hungary and the Netherlands keep the same clock as the other networks, so GLS scans
-    // keep their instants. Hermes Austria keeps Hermes Germany's clock too.
-    expect(new Set(brandTimeZones('GLS'))).toEqual(new Set(['Europe/Zurich', 'Europe/Berlin', 'Europe/Paris', 'Europe/Rome', 'Europe/Madrid', 'Europe/Warsaw', 'Europe/Vienna', 'Europe/Amsterdam', 'Europe/Budapest']));
+    // GLS Italy, Spain, Poland, Austria, Hungary, the Czech Republic and the Netherlands keep the same clock as the other
+    // networks, so GLS scans keep their instants. Hermes Austria keeps Hermes Germany's clock too.
+    expect(new Set(brandTimeZones('GLS'))).toEqual(new Set(['Europe/Zurich', 'Europe/Berlin', 'Europe/Paris', 'Europe/Rome', 'Europe/Madrid', 'Europe/Warsaw', 'Europe/Vienna', 'Europe/Amsterdam', 'Europe/Budapest', 'Europe/Prague']));
     expect(brandTimeZones('Hermes')).toEqual(['Europe/Berlin', 'Europe/Vienna']);
     // DHL eCommerce is UTC, so the brand's clock is unknown.
     for (const name of ['DHL', 'DHL Group', 'DPD Local', 'DPD UK', 'Post', 'Example Parcel Co']) expect(brandTimeZones(name)).toEqual([]);
