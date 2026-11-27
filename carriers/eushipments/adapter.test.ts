@@ -102,7 +102,7 @@ describe('euShipments HTTP adapter', () => {
     for (const [link, carrier] of [
       [`https://www.speedy.bg/bg/track-shipment?shipmentNumber=${COURIER}`, 'speedy'],
       [`https://boxnow.bg/track?track=${COURIER}`, 'box-now'],
-      [`https://gls-group.com/RO/en/parcel-tracking?match=${COURIER}`, 'gls-de'],
+      [`https://gls-group.com/RO/en/parcel-tracking?match=${COURIER}`, 'gls-ro'],
       [`https://www.dpdgroup.com/ro/mydpd/my-parcels/search?parcelNumber=${COURIER}`, 'dpd-ro'],
     ] as const) {
       expect(parseEushipments(text('delivered.html').replace(/href="[^"]*"/, `href="${link}"`), ORDER))
