@@ -1,0 +1,108 @@
+{
+  "id": "tongxi",
+  "displayName": "Tongxi Supply Chain",
+  "aliases": [
+    "TongXi",
+    "桐溪",
+    "桐溪供应链",
+    "深圳市桐溪供应链管理有限公司",
+    "Shenzhen Tongxi Supply Chain Management"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#0096AB"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "tongxi",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 46
+    }
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "service_name",
+    "destination_country",
+    "canonical_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country",
+      "canonical_tracking_number",
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "signatory",
+      "signature",
+      "proof_of_delivery",
+      "payment_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country",
+      "canonical_tracking_number"
+    ],
+    "discarded": [
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "signatory",
+      "signature",
+      "proof_of_delivery",
+      "payment_details"
+    ],
+    "unavailable": [
+      "eta",
+      "delivered_at",
+      "offset_timestamps",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "1.14.133.93"
+      ],
+      "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+      "params": [
+        "documentCode"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "tongxi-1",
+      "pattern": "^TX\\d{16}$",
+      "confidence": "low"
+    }
+  ]
+}

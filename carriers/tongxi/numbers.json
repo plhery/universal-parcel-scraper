@@ -1,0 +1,27 @@
+{
+  "carrier": "tongxi",
+  "records": [
+    {
+      "number": "TX0000000100442089",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/tongxi/",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tongxi"
+        ]
+      },
+      "note": "TrackShip's TongXi page gives it as a tracking code example. TongXi's tracker answers it with a parcel on the line into Spain, delivered after a failed attempt."
+    }
+  ]
+}

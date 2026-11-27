@@ -1,0 +1,21 @@
+{
+  "carrier": "tongxi",
+  "entries": [
+    {"wording": "Parcel Data Received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order's data, days before TongXi's first scan."},
+    {"code": "ARRIVAL", "wording": "Shipment arrvied at TX origin facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The first scan in TongXi's hands, at its Dongguan warehouse. The misspelling is the tracker's."},
+    {"code": "SHIPMENT", "wording": "Shipment departed from sort facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Arrived at the first mile sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's warehouse in China, after TongXi's own departure scan."},
+    {"wording": "Departed from the first mile sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Arrived at airport of the original country", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The origin airport in China; the tracker places it in the destination country, which the adapter leaves out."},
+    {"wording": "Departed from Airport to destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Arrived at destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Departed from customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The tracker writes \"Departed from customs of\" at the destination country, which the adapter leaves out with the \"of\": customs let the parcel go."},
+    {"wording": "Parcel in transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's notice every two days or so while no other row comes."},
+    {"wording": "Sorting Center Inbound Your shipment has arrived at sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The delivery carrier's first row in the destination country."},
+    {"wording": "Sorting Center Outbound Your shipment has been processed at sorting center and ready for shipping", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Accepted by Last Mile Your shipment has been accepted by delivery carrier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Handed to the courier who delivers: TongXi accepted the parcel in China."},
+    {"wording": "Out for Delivery Your shipment is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live"},
+    {"wording": "Delivery Attempt Failure Your shipment delivery attempt failed […]", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "note": "The reason in brackets, \"Recipient not at home\", stands as …."},
+    {"wording": "Delivery Success Your shipment has been delivered successfully", "language": "en", "stage": "delivered", "confirmedBy": "live"}
+  ]
+}
