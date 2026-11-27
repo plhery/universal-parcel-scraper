@@ -484,6 +484,7 @@
       "Mailing Technology",
       "PostNL - Netherlands Post",
       "Spring Global Mail",
+      "G3 Worldwide Mail",
       "PostNL International Mail",
       "NL Post",
       "Spring Global Delivery Solutions"
@@ -3252,7 +3253,8 @@
       "Crono",
       "SDA",
       "SDA Express Courier",
-      "Nexive"
+      "Nexive",
+      "Nexive Network"
     ],
     "countries": [
       "IT"
@@ -36407,6 +36409,23 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "infotec-servizi": {
+    "displayName": "Infotec Servizi",
+    "color": "#d03068",
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.infotecservizi.it/tracking/",
+    "trackingSearchUrl": "https://www.infotecservizi.it/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "inntralog": {
     "displayName": "Inntralog",
     "color": "#142882",
@@ -41759,6 +41778,35 @@
       }
     ]
   },
+  "la-nuova-posta": {
+    "displayName": "La Nuova Posta",
+    "color": "#23147d",
+    "aliases": [
+      "Gruppo La Nuova Posta"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.nuovaposta.com/tracking/",
+    "trackingUrlTemplate": "https://www.nuovaposta.com/tracking/{trackingNumber}/",
+    "trackingSearchUrl": "https://www.nuovaposta.com/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.nuovaposta.com",
+          "nuovaposta.com"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "la-poste-burkina-faso": {
     "displayName": "La Poste Burkina Faso",
     "color": "#155bab",
@@ -44636,6 +44684,44 @@
     "canaryUrl": "https://mahex.com/tracking",
     "trackingSearchUrl": "https://mahex.com/tracking",
     "helpUrl": "https://mahex.com/customer-support",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "mail-express-it": {
+    "displayName": "Mail Express",
+    "color": "#00549c",
+    "aliases": [
+      "Mail Express Poste Private",
+      "Mail Express Group"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://areaclienti-mailexpress.it/servizi_generici.aspx",
+    "trackingSearchUrl": "https://areaclienti-mailexpress.it/servizi_generici.aspx?a=tracingm",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "mail-runner": {
+    "displayName": "Mail Runner",
+    "color": "#e4326e",
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.mailrunner.it/",
+    "trackingSearchUrl": "https://www.mailrunner.it/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -53546,6 +53632,23 @@
     ],
     "detectionRules": []
   },
+  "post-and-post": {
+    "displayName": "Post & Post",
+    "color": "#3c129c",
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://postandpost.it/tracking/",
+    "trackingSearchUrl": "https://postandpost.it/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "post-haste": {
     "displayName": "Post Haste",
     "color": "#24b2d8",
@@ -53794,6 +53897,23 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "posta-express": {
+    "displayName": "POSTA express",
+    "color": "#fc7824",
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.postaexpress.it/trackingonline.asp",
+    "trackingSearchUrl": "https://www.postaexpress.it/trackingonline.asp",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "posta-faroe": {
     "displayName": "Posta (Faroe Islands)",
     "color": "#006fb4",
@@ -53909,6 +54029,26 @@
         "confidence": "high"
       }
     ]
+  },
+  "posta-network": {
+    "displayName": "Posta Network",
+    "color": "#183c90",
+    "aliases": [
+      "OK Poste Private"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.postanetwork.it/",
+    "trackingSearchUrl": "https://www.postanetwork.it/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "posta-north-macedonia": {
     "displayName": "Pošta na Severna Makedonija",
@@ -60724,6 +60864,35 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "sicilposte": {
+    "displayName": "Sicilposte",
+    "color": "#0048a8",
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.sicilposte.it/index.php",
+    "trackingUrlTemplate": "https://www.sicilposte.it/index.php?pagina=ricerca&tracking={trackingNumber}&submit_track=Cerca",
+    "trackingSearchUrl": "https://www.sicilposte.it/index.php?pagina=ricerca",
+    "linkRules": [
+      {
+        "domains": [
+          "www.sicilposte.it",
+          "sicilposte.it"
+        ],
+        "pathPattern": "^/(index\\.php)?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "silpo-pack": {
     "displayName": "Silpo Pack",
     "color": "#16163f",
@@ -61644,6 +61813,24 @@
     ],
     "detectionRules": []
   },
+  "smartpost-genova": {
+    "displayName": "Smartpost Genova",
+    "color": "#24609c",
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://clienti.postofficemanager.it/Tracking/tracking.php",
+    "trackingSearchUrl": "https://clienti.postofficemanager.it/Tracking/tracking.php?domain=smartpostgenova",
+    "helpUrl": "https://www.smartpost.it/tracciatura/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "smsa-express": {
     "displayName": "SMSA Express",
     "color": "#fc671a",
@@ -62390,6 +62577,26 @@
     "canaryUrl": "https://spfly.com.br/",
     "trackingSearchUrl": "https://spfly.com.br/rastreamento/",
     "helpUrl": "https://spfly.com.br/contato-2/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "spike-express": {
+    "displayName": "Spike",
+    "color": "#ff0762",
+    "aliases": [
+      "Post & Service"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.spike.express/tracking",
+    "trackingSearchUrl": "https://www.spike.express/tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -74997,6 +75204,38 @@
         "confidence": "high"
       }
     ]
+  },
+  "zerodistanze": {
+    "displayName": "Zerodistanze",
+    "color": "#002466",
+    "aliases": [
+      "Zerodistanze S.r.l."
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.zerodistanze.it/",
+    "trackingUrlTemplate": "https://www.zerodistanze.it/Home/Track?Barcode={trackingNumber}",
+    "trackingSearchUrl": "https://www.zerodistanze.it/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.zerodistanze.it",
+          "zerodistanze.it"
+        ],
+        "pathPattern": "^/Home/Track/?$",
+        "params": [
+          "Barcode"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "zes-express": {
     "displayName": "ZES Express",

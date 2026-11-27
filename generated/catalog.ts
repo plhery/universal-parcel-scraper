@@ -489,6 +489,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Mailing Technology",
       "PostNL - Netherlands Post",
       "Spring Global Mail",
+      "G3 Worldwide Mail",
       "PostNL International Mail",
       "NL Post",
       "Spring Global Delivery Solutions"
@@ -3257,7 +3258,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Crono",
       "SDA",
       "SDA Express Courier",
-      "Nexive"
+      "Nexive",
+      "Nexive Network"
     ],
     "countries": [
       "IT"
@@ -36412,6 +36414,23 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "infotec-servizi": {
+    "displayName": "Infotec Servizi",
+    "color": "#d03068",
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.infotecservizi.it/tracking/",
+    "trackingSearchUrl": "https://www.infotecservizi.it/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "inntralog": {
     "displayName": "Inntralog",
     "color": "#142882",
@@ -41764,6 +41783,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "la-nuova-posta": {
+    "displayName": "La Nuova Posta",
+    "color": "#23147d",
+    "aliases": [
+      "Gruppo La Nuova Posta"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.nuovaposta.com/tracking/",
+    "trackingUrlTemplate": "https://www.nuovaposta.com/tracking/{trackingNumber}/",
+    "trackingSearchUrl": "https://www.nuovaposta.com/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.nuovaposta.com",
+          "nuovaposta.com"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "la-poste-burkina-faso": {
     "displayName": "La Poste Burkina Faso",
     "color": "#155bab",
@@ -44641,6 +44689,44 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://mahex.com/tracking",
     "trackingSearchUrl": "https://mahex.com/tracking",
     "helpUrl": "https://mahex.com/customer-support",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "mail-express-it": {
+    "displayName": "Mail Express",
+    "color": "#00549c",
+    "aliases": [
+      "Mail Express Poste Private",
+      "Mail Express Group"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://areaclienti-mailexpress.it/servizi_generici.aspx",
+    "trackingSearchUrl": "https://areaclienti-mailexpress.it/servizi_generici.aspx?a=tracingm",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "mail-runner": {
+    "displayName": "Mail Runner",
+    "color": "#e4326e",
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.mailrunner.it/",
+    "trackingSearchUrl": "https://www.mailrunner.it/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -53551,6 +53637,23 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "post-and-post": {
+    "displayName": "Post & Post",
+    "color": "#3c129c",
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://postandpost.it/tracking/",
+    "trackingSearchUrl": "https://postandpost.it/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "post-haste": {
     "displayName": "Post Haste",
     "color": "#24b2d8",
@@ -53799,6 +53902,23 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "posta-express": {
+    "displayName": "POSTA express",
+    "color": "#fc7824",
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.postaexpress.it/trackingonline.asp",
+    "trackingSearchUrl": "https://www.postaexpress.it/trackingonline.asp",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "posta-faroe": {
     "displayName": "Posta (Faroe Islands)",
     "color": "#006fb4",
@@ -53914,6 +54034,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "high"
       }
     ]
+  },
+  "posta-network": {
+    "displayName": "Posta Network",
+    "color": "#183c90",
+    "aliases": [
+      "OK Poste Private"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.postanetwork.it/",
+    "trackingSearchUrl": "https://www.postanetwork.it/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "posta-north-macedonia": {
     "displayName": "Pošta na Severna Makedonija",
@@ -60729,6 +60869,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "sicilposte": {
+    "displayName": "Sicilposte",
+    "color": "#0048a8",
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.sicilposte.it/index.php",
+    "trackingUrlTemplate": "https://www.sicilposte.it/index.php?pagina=ricerca&tracking={trackingNumber}&submit_track=Cerca",
+    "trackingSearchUrl": "https://www.sicilposte.it/index.php?pagina=ricerca",
+    "linkRules": [
+      {
+        "domains": [
+          "www.sicilposte.it",
+          "sicilposte.it"
+        ],
+        "pathPattern": "^/(index\\.php)?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "silpo-pack": {
     "displayName": "Silpo Pack",
     "color": "#16163f",
@@ -61649,6 +61818,24 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "smartpost-genova": {
+    "displayName": "Smartpost Genova",
+    "color": "#24609c",
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://clienti.postofficemanager.it/Tracking/tracking.php",
+    "trackingSearchUrl": "https://clienti.postofficemanager.it/Tracking/tracking.php?domain=smartpostgenova",
+    "helpUrl": "https://www.smartpost.it/tracciatura/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "smsa-express": {
     "displayName": "SMSA Express",
     "color": "#fc671a",
@@ -62395,6 +62582,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://spfly.com.br/",
     "trackingSearchUrl": "https://spfly.com.br/rastreamento/",
     "helpUrl": "https://spfly.com.br/contato-2/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "spike-express": {
+    "displayName": "Spike",
+    "color": "#ff0762",
+    "aliases": [
+      "Post & Service"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.spike.express/tracking",
+    "trackingSearchUrl": "https://www.spike.express/tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -75003,6 +75210,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "zerodistanze": {
+    "displayName": "Zerodistanze",
+    "color": "#002466",
+    "aliases": [
+      "Zerodistanze S.r.l."
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.zerodistanze.it/",
+    "trackingUrlTemplate": "https://www.zerodistanze.it/Home/Track?Barcode={trackingNumber}",
+    "trackingSearchUrl": "https://www.zerodistanze.it/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.zerodistanze.it",
+          "zerodistanze.it"
+        ],
+        "pathPattern": "^/Home/Track/?$",
+        "params": [
+          "Barcode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "zes-express": {
     "displayName": "ZES Express",
     "color": "#102a83",
@@ -76553,6 +76792,7 @@ export const CARRIER_IDS = [
   "indah-logistik",
   "indigo-cargo",
   "indopaket",
+  "infotec-servizi",
   "inntralog",
   "inposdom",
   "instabox",
@@ -76709,6 +76949,7 @@ export const CARRIER_IDS = [
   "kyrgyz-express-post",
   "kyrgyz-post",
   "l-post",
+  "la-nuova-posta",
   "la-poste-burkina-faso",
   "la-poste-ci",
   "la-poste-senegal",
@@ -76795,6 +77036,8 @@ export const CARRIER_IDS = [
   "magnum-transportation",
   "magyar-posta",
   "mahex",
+  "mail-express-it",
+  "mail-runner",
   "mailamericas",
   "mailex",
   "mailplus-au",
@@ -77054,15 +77297,18 @@ export const CARRIER_IDS = [
   "porlor",
   "pos-indonesia",
   "post-anatolia",
+  "post-and-post",
   "post-haste",
   "post-international",
   "post-luxembourg",
   "post-modern",
   "post-one",
   "posta-e-kosoves",
+  "posta-express",
   "posta-faroe",
   "posta-kenya",
   "posta-moldovei",
+  "posta-network",
   "posta-north-macedonia",
   "posta-panduri",
   "posta-romana",
@@ -77266,6 +77512,7 @@ export const CARRIER_IDS = [
   "shree-nandan",
   "shunbang-express",
   "sicepat",
+  "sicilposte",
   "silpo-pack",
   "sinapseria",
   "sinokor-merchant-marine",
@@ -77292,6 +77539,7 @@ export const CARRIER_IDS = [
   "sm-express",
   "sm-line",
   "smafrakt",
+  "smartpost-genova",
   "smsa-express",
   "sofex-post",
   "sol-express",
@@ -77312,6 +77560,7 @@ export const CARRIER_IDS = [
   "speedpak",
   "speedy",
   "spfly",
+  "spike-express",
   "spourgitis",
   "sprint-eg",
   "spt-logistics",
@@ -77692,6 +77941,7 @@ export const CARRIER_IDS = [
   "zajil",
   "zecheng",
   "zeleris",
+  "zerodistanze",
   "zes-express",
   "zheldor",
   "zhongzhou-logistics",
@@ -78702,6 +78952,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "indah-logistik": ["indah-logistik-1"],
   "indigo-cargo": [],
   "indopaket": [],
+  "infotec-servizi": [],
   "inntralog": [],
   "inposdom": [],
   "instabox": [],
@@ -78858,6 +79109,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "kyrgyz-express-post": [],
   "kyrgyz-post": ["kyrgyz-post-s10"],
   "l-post": ["l-post-1"],
+  "la-nuova-posta": [],
   "la-poste-burkina-faso": ["la-poste-burkina-faso-s10"],
   "la-poste-ci": [],
   "la-poste-senegal": ["la-poste-senegal-s10"],
@@ -78944,6 +79196,8 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "magnum-transportation": [],
   "magyar-posta": ["magyar-posta-s10","magyar-posta-domestic","magyar-posta-package","magyar-posta-letter","magyar-posta-europe-standard"],
   "mahex": [],
+  "mail-express-it": [],
+  "mail-runner": [],
   "mailamericas": ["mailamericas-ml","mailamericas-ml-7","mailamericas-mmxqp","mailamericas-domc","mailamericas-s10"],
   "mailex": [],
   "mailplus-au": ["mailplus-au-1"],
@@ -79203,15 +79457,18 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "porlor": [],
   "pos-indonesia": ["pos-indonesia-1","pos-indonesia-s10"],
   "post-anatolia": [],
+  "post-and-post": [],
   "post-haste": [],
   "post-international": [],
   "post-luxembourg": ["post-luxembourg-s10"],
   "post-modern": [],
   "post-one": ["post-one-1"],
   "posta-e-kosoves": [],
+  "posta-express": [],
   "posta-faroe": [],
   "posta-kenya": [],
   "posta-moldovei": ["posta-moldovei-1"],
+  "posta-network": [],
   "posta-north-macedonia": ["posta-north-macedonia-s10"],
   "posta-panduri": [],
   "posta-romana": ["posta-romana-s10"],
@@ -79415,6 +79672,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "shree-nandan": [],
   "shunbang-express": [],
   "sicepat": [],
+  "sicilposte": [],
   "silpo-pack": [],
   "sinapseria": [],
   "sinokor-merchant-marine": [],
@@ -79441,6 +79699,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sm-express": [],
   "sm-line": [],
   "smafrakt": [],
+  "smartpost-genova": [],
   "smsa-express": ["smsa-express-1"],
   "sofex-post": [],
   "sol-express": [],
@@ -79461,6 +79720,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "speedpak": ["speedpak-1"],
   "speedy": ["speedy-1","speedy-2"],
   "spfly": [],
+  "spike-express": [],
   "spourgitis": [],
   "sprint-eg": [],
   "spt-logistics": [],
@@ -79841,6 +80101,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "zajil": [],
   "zecheng": ["zecheng-1"],
   "zeleris": ["zeleris-1"],
+  "zerodistanze": [],
   "zes-express": ["zes-express-1"],
   "zheldor": [],
   "zhongzhou-logistics": [],

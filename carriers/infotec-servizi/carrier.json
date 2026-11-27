@@ -1,0 +1,31 @@
+{
+  "id": "infotec-servizi",
+  "displayName": "Infotec Servizi",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#d03068"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.infotecservizi.it/tracking/",
+    "canaryUrl": "https://www.infotecservizi.it/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,34 @@
+{
+  "id": "mail-express-it",
+  "displayName": "Mail Express",
+  "aliases": [
+    "Mail Express Poste Private",
+    "Mail Express Group"
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#00549c"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://areaclienti-mailexpress.it/servizi_generici.aspx?a=tracingm",
+    "canaryUrl": "https://areaclienti-mailexpress.it/servizi_generici.aspx",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

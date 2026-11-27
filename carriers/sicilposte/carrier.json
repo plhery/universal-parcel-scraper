@@ -1,0 +1,43 @@
+{
+  "id": "sicilposte",
+  "displayName": "Sicilposte",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#0048a8"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.sicilposte.it/index.php?pagina=ricerca&tracking={trackingNumber}&submit_track=Cerca",
+    "searchUrl": "https://www.sicilposte.it/index.php?pagina=ricerca",
+    "canaryUrl": "https://www.sicilposte.it/index.php",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.sicilposte.it",
+        "sicilposte.it"
+      ],
+      "pathPattern": "^/(index\\.php)?$",
+      "params": [
+        "tracking"
+      ]
+    }
+  ],
+  "detection": []
+}

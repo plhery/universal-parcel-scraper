@@ -1,0 +1,42 @@
+{
+  "id": "la-nuova-posta",
+  "displayName": "La Nuova Posta",
+  "aliases": [
+    "Gruppo La Nuova Posta"
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#23147d"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.nuovaposta.com/tracking/{trackingNumber}/",
+    "searchUrl": "https://www.nuovaposta.com/tracking/",
+    "canaryUrl": "https://www.nuovaposta.com/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.nuovaposta.com",
+        "nuovaposta.com"
+      ],
+      "path": "^/tracking/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

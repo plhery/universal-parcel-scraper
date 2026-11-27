@@ -1,0 +1,33 @@
+{
+  "id": "posta-network",
+  "displayName": "Posta Network",
+  "aliases": [
+    "OK Poste Private"
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#183c90"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.postanetwork.it/",
+    "canaryUrl": "https://www.postanetwork.it/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

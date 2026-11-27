@@ -1,0 +1,32 @@
+{
+  "id": "smartpost-genova",
+  "displayName": "Smartpost Genova",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#24609c"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://clienti.postofficemanager.it/Tracking/tracking.php?domain=smartpostgenova",
+    "helpUrl": "https://www.smartpost.it/tracciatura/",
+    "canaryUrl": "https://clienti.postofficemanager.it/Tracking/tracking.php",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,31 @@
+{
+  "id": "posta-express",
+  "displayName": "POSTA express",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#fc7824"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.postaexpress.it/trackingonline.asp",
+    "canaryUrl": "https://www.postaexpress.it/trackingonline.asp",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

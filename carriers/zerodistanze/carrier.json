@@ -1,0 +1,45 @@
+{
+  "id": "zerodistanze",
+  "displayName": "Zerodistanze",
+  "aliases": [
+    "Zerodistanze S.r.l."
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#002466"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.zerodistanze.it/Home/Track?Barcode={trackingNumber}",
+    "searchUrl": "https://www.zerodistanze.it/",
+    "canaryUrl": "https://www.zerodistanze.it/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.zerodistanze.it",
+        "zerodistanze.it"
+      ],
+      "pathPattern": "^/Home/Track/?$",
+      "params": [
+        "Barcode"
+      ]
+    }
+  ],
+  "detection": []
+}
