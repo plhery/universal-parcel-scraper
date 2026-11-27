@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ABX Express | Track Parcel Status</title>
+</head>
+<body>
+<form action="/Home/Track" method="post"><div class="myDivWithBackground">
+
+
+    <div class="row">
+        <div class="col-md-12" style="background-image: url('/images/pic/bg6.png');" >
+            <div class="blur-frame" id="form">
+                <form method="post" class="login-form" id="form">
+                    <div class="col-md-12">
+                        <h1>Check Your ABX Parcel Tracking Number</h1>
+                        <p>Track your parcel status and view your delivery journey</p>
+
+                        <div class="search-container" style="align-items:center;">
+                            <div class="search-box" style="width:100%;">
+                                <input autocomplete="off" class="form-control" id="data" name="ConsignmentNo" placeholder="Enter your tracking number" required="required" Style="text-align:center;" type="text" value="" />
+                            </div>
+                            <button type="submit" id="btnSubmit" class="search-button" onclick="submitButton()">Track</button>
+                        </div>
+
+                        <div class="row" style="width:100%;">
+                            <br />
+                            <p>Track and trace up to 700 parcels at the same time by using a comma "," between tracking numbers.</p>
+                        </div>
+
+                        <br />
+
+                        <div class="divCaptcha">
+                            <!-- Left Div -->
+                            <div class="divCol dLeftCol">
+                                <div class="content">
+
+                                </div>
+
+                                <div class="dLeftSub">
+                                    <div class="subA">
+                                        <div class="container-fluid" id="bodycaptcha" style="padding-left:0%">
+                                            <div class="row">
+                                                <div class="slidercaptcha card">
+                                                    <div class="card-header">
+                                                        <span style="color:red" id="note1">Please complete security verification!</span>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="pull-left" id="captcha"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-header">
+                                            </div>
+                                            <br />
+                                        </div>
+
+                                        <p style="color:green" id="note2">Verification done!</p>
+
+                                        <button type="reset" class="btn pull-left">Reset</button>
+
+                                        <br />
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Div -->
+                            <div class="divCol dRightCol">
+                                <br />
+                                <p>Need Help with Your Shipment?</p>
+                                <p>For tracking assistance or more information, reach out to our Customer Care Team</p>
+                                <div class="tblrow">
+                                    <div class="icon-col">
+                                        <img src="/images/icon/Email.png" alt="image" style="width: 30px; height: 30px;" />
+                                    </div>
+                                    <div class="row">
+                                        <p>welisten@abxexpress.com.my</p>
+                                    </div>
+                                </div>
+                                <div class="tblrow">
+                                    <div class="icon-col">
+                                        <img src="/images/icon/phone.png" alt="image" style="width: 25px; height: 25px;" />
+                                    </div>
+                                    <div class="row">
+                                        <p>1800-33-3333</p>
+                                    </div>
+                                </div>
+                                <div class="tblrow">
+                                    <div class="icon-col">
+                                        <img src="/images/icon/chat.png" alt="image" style="width: 25px; height: 25px;" />
+                                    </div>
+                                    <div class="row" onclick="openWidget()">
+                                        <img src="/images/icon/ChatBotLink.png" alt="Chat" style="width: 100px; height: 25px;" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input autocomplete="off" class="form-control" id="captchaverify" name="Captcha" Style="width:100%; visibility: hidden;" type="text" value="" />
+                        </div>
+                        <div class="col-md-3"></div>
+                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8SyntheticTrackingFormToken_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-bbbbbbbbbbbbbbbbbbbb" /></form>
+                <img src="/images/pic/van_2.png" alt="Overlap Image" class="overlap-img">
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "carrier": "abx-express",
+  "records": [
+    {
+      "number": "CNMYA007956562",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/GengGeng026/Sync-Logseq/blob/main/journals/2026-06-08.md",
+        "date": "2026-06-08",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A public Logseq journal gives it as a parcel ABX Express collected, in a note about emailing ABX's customer service. ABX's tracker shows it collected at a Selangor hub and delivered in Selangor."
+    },
+    {
+      "number": "EZP843055940197",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/afiqiqmal/parcel-track",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The parcel-track library's README and tests give it as the sample for its ABX Express tracker. ABX's tracker now answers it with no record."
+    }
+  ]
+}

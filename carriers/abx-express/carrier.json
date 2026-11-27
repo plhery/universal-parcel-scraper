@@ -1,0 +1,64 @@
+{
+  "id": "abx-express",
+  "displayName": "ABX Express",
+  "aliases": [
+    "ABX Express (M) Sdn. Bhd."
+  ],
+  "region": {
+    "countries": [
+      "MY"
+    ]
+  },
+  "brand": {
+    "color": "#da1f34"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kuala_Lumpur",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "abx-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://www.abxexpress.com.my/tracking",
+    "helpUrl": "https://www.abxexpress.com.my/Home/FAQ",
+    "canaryUrl": "https://www.abxexpress.com.my/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "delivered_at",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times"
+    ],
+    "discarded": [
+      "delivered_at",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

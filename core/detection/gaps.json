@@ -7315,5 +7315,17 @@
     "pattern": "^\\d{12}$",
     "kind": "collision",
     "reason": "Yuantongshengyuan Logistics's only public waybill is twelve bare digits, a shape many carriers print, and nothing in the number points to the firm, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "abx-express",
+    "pattern": "^CNMYA\\d{9}$",
+    "kind": "open",
+    "reason": "CNMYA and nine digits is one public sample's shape, a China to Malaysia number whose prefix may be the shipper's rather than ABX Express's, so one sample does not give ABX the shape."
+  },
+  {
+    "carrier": "abx-express",
+    "pattern": "^EZP\\d{12}$",
+    "kind": "by_design",
+    "reason": "EZP and twelve digits is an open-source library's sample for ABX Express that ABX's tracker no longer knows, and nothing in the number ties it to ABX rather than to the platform that booked it."
   }
 ]

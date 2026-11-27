@@ -1,0 +1,8 @@
+{
+  "carrier": "abx-express",
+  "entries": [
+    {"wording": "Parcel Has Been Collected", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The hub that collected the parcel from the sender scanned it in; the first row of the public sample."},
+    {"wording": "Parcel Departed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The parcel left the hub that collected it."},
+    {"wording": "Delivery Completed", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Delivered; the page then shows the delivery date and its delivery photos."}
+  ]
+}
