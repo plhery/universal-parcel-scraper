@@ -58,6 +58,12 @@ describe('carrier search pages (rendered at phone size)', () => {
           console.warn(url + ': HTTP endpoint reachable; browser transport unverified');
           context.skip('HTTP endpoint reachable; browser transport failed, search page remains unverified');
         }
+        // So is a refusal with an empty body, which Chrome reports as a failed navigation (PADTF's 403).
+        if (http && process.env.TRACKING_LINKS_STRICT !== '1'
+          && searchPageVerdict({ status: http.status, url, title: '', text: '' }, 0) === 'blocked') {
+          console.warn(url + ': carrier bot protection; search page unverified');
+          context.skip('Carrier bot protection: search page remains unverified');
+        }
         throw error;
       }
       // EURODIS keeps the fields inside collapsed tracking methods on phones.

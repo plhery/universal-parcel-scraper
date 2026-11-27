@@ -14,6 +14,8 @@ export type TrackingPageVerdict = 'tracking-page' | 'blocked' | 'broken' | 'unve
 const CHALLENGE = /just a moment|un instant|access denied|attention required|verify you are human|vérification de sécurité|complete the captcha|captcha required|checking your browser|click the button below to continue shopping|enter the characters you see below|dass sie kein bot sind/i;
 // Europochta answers the canary's cloud runners with a bot check titled "Verification" in place of its page.
 const CHALLENGE_TITLE = /^\s*verification\s*$/i;
+// SafeLine's firewall answers its browser check with HTTP 468 (Togo Post, Liccardi).
+const SAFELINE_CHECK = 468;
 const MISSING_PAGE = /page (?:not found|does not exist|cannot be found)|404 (?:error|not found)|seite nicht gefunden|page introuvable|pagina non trovata/i;
 
 export function trackingPageVerdict(
@@ -28,7 +30,7 @@ export function trackingPageVerdict(
     && shipmentNotFound.marker.test(page.text);
   if (((page.status === 404 || page.status === 410) && !knownAbsence) || page.status >= 500) return 'broken';
   const content = page.title + '\n' + page.text;
-  if ([401, 403, 429].includes(page.status)
+  if ([401, 403, 429, SAFELINE_CHECK].includes(page.status)
     || CHALLENGE.test(content) || CHALLENGE_TITLE.test(page.title)) return 'blocked';
   if ((!knownAbsence && (page.status < 200 || page.status >= 300)) || !route.test(page.url)) return 'broken';
   if (MISSING_PAGE.test(content)) return 'broken';
@@ -46,7 +48,7 @@ export function searchPageVerdict(page: TrackingPageSnapshot, numberFields: numb
   if (page.status === 404 || page.status === 410 || page.status >= 500) return 'broken';
   const content = page.title + '\n' + page.text;
   if (numberFields > 0 && page.status >= 200 && page.status < 300 && !MISSING_PAGE.test(content)) return 'search-page';
-  if ([401, 403, 412, 429].includes(page.status) || CHALLENGE.test(content) || CHALLENGE_TITLE.test(page.title)) return 'blocked';
+  if ([401, 403, 412, 429, SAFELINE_CHECK].includes(page.status) || CHALLENGE.test(content) || CHALLENGE_TITLE.test(page.title)) return 'blocked';
   // Bot walls answer automated phones with an empty document; a carrier page has a title.
   if (!page.title.trim() && !page.text.trim()) return 'unverified';
   return 'broken';

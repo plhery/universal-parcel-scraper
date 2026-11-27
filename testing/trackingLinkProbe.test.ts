@@ -79,6 +79,9 @@ describe('search page validation', () => {
   it.each([403, 412, 429])('reports a challenge (%s) as blocked, never healthy', (status) => {
     expect(searchPageVerdict({ ...search, status, title: 'Access Denied' }, 0)).toBe('blocked');
   });
+  it("reports SafeLine's browser check (HTTP 468) as blocked", () => {
+    expect(searchPageVerdict({ ...search, status: 468, title: '', text: 'Checking the browser' }, 0)).toBe('blocked');
+  });
   it('keeps a field shown above a human check', () => {
     expect(searchPageVerdict({ ...search, text: 'Enter your tracking number. Verify you are human.' }, 1)).toBe('search-page');
   });

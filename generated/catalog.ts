@@ -24608,7 +24608,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.egyptexpress.com.eg/en-us/",
     "trackingUrlTemplate": "https://www.egyptexpress.com.eg/en-us/tracking-shipment/?trackingID={trackingNumber}",
-    "trackingSearchUrl": "https://www.egyptexpress.com.eg/en-us/tracking-shipment/",
+    "trackingSearchUrl": "https://www.egyptexpress.com.eg/en-us/",
     "helpUrl": "https://www.egyptexpress.com.eg/en-us/customer-support",
     "linkRules": [
       {
@@ -28739,7 +28739,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "flecha-amarilla"
     },
     "canaryUrl": "https://www.paqueteria-flechaamarilla.com.mx/",
-    "trackingSearchUrl": "https://www.paqueteria-flechaamarilla.com.mx/inicio",
+    "trackingSearchUrl": "https://www.paqueteria-flechaamarilla.com.mx/",
     "linkRules": [],
     "detectionRules": [
       {
