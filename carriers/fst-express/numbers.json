@@ -1,0 +1,63 @@
+{
+  "carrier": "fst-express",
+  "records": [
+    {
+      "number": "34LRU5071871",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/fst-express/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "TrackShip's FST Express page gives it as an example tracking code. FST's tracker answers it as the Australia Post consignment number of a job that Australia Post delivered."
+    },
+    {
+      "number": "SAUZ012516953",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.fstexpress.com.au/track_and_trace/?jobno=34LRU5071871",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "fst-express",
+        "confidence": "high"
+      },
+      "note": "The job number FST's tracker gives for TrackShip's example, which it answers by this number too."
+    },
+    {
+      "number": "FST1080410004",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.fstexpress.com.au/track_and_trace/",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A commented-out example in the tracker page's script. The tracker has no job under it."
+    }
+  ]
+}

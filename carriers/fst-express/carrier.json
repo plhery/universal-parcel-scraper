@@ -1,0 +1,91 @@
+{
+  "id": "fst-express",
+  "displayName": "FST Express",
+  "aliases": [
+    "FST EXPRESS PTY LTD",
+    "Fstexpress"
+  ],
+  "region": {
+    "countries": [
+      "AU"
+    ]
+  },
+  "brand": {
+    "color": "#496545"
+  },
+  "selectable": true,
+  "timezone": "Australia/Sydney",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "fst-express",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "offset_timestamps",
+    "delivered_at",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.fstexpress.com.au/track_and_trace/?jobno={trackingNumber}",
+    "searchUrl": "https://www.fstexpress.com.au/track_and_trace/",
+    "helpUrl": "https://www.fstexpress.com.au/contact-us/",
+    "canaryUrl": "https://www.fstexpress.com.au/track_and_trace/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "progress_rail",
+      "related_tracking_numbers"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "offset_timestamps",
+      "delivered_at",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "progress_rail",
+      "related_tracking_numbers"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "proof_of_delivery",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "fstexpress.com.au"
+      ],
+      "pathPattern": "^/(?:cn/)?track_and_trace/?$",
+      "params": [
+        "jobno"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "fst-express-job",
+      "pattern": "^SAUZ\\d{9}$",
+      "confidence": "high"
+    }
+  ]
+}

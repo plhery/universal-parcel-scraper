@@ -7169,5 +7169,17 @@
     "pattern": "^\\d{10}$",
     "kind": "collision",
     "reason": "Some Expeditors references are ten digits, a shape many carriers' numeric numbers share, and the guest search also matches customers' ten-digit order references."
+  },
+  {
+    "carrier": "fst-express",
+    "pattern": "^\\d{2}[A-Z0-9]{3}\\d{7}$",
+    "kind": "collision",
+    "reason": "FST's tracker also finds a job by the Australia Post consignment number it carries, and Australia Post's rule owns that shape."
+  },
+  {
+    "carrier": "fst-express",
+    "pattern": "^FST\\d{10}$",
+    "kind": "open",
+    "reason": "FST and ten digits appears only as a commented-out example in the tracker page's script, under which the tracker holds no job."
   }
 ]

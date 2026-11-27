@@ -1165,6 +1165,7 @@ import { statusMap as nextSmartShip } from '../../carriers/next-smart-ship/statu
 import { statusMap as iqfulfillment } from '../../carriers/iqfulfillment/status.js';
 import { statusMap as passTheParcel } from '../../carriers/pass-the-parcel/status.js';
 import { statusMap as iberomail } from '../../carriers/iberomail/status.js';
+import { statusMap as fstExpress } from '../../carriers/fst-express/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1398,6 +1399,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   iqfulfillment,
   'pass-the-parcel': passTheParcel,
   iberomail,
+  'fst-express': fstExpress,
 };
 
 /** The carrier the app files the universal providers' scans under. */

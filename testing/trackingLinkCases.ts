@@ -2945,6 +2945,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'iberomail', number: 'W9900017',
     route: /^https:\/\/iberomail\.com\/track-trace\/W9900017\/$/,
     marker: /Track & Trace/ },
+  // The tracker reads the number from its address and looks it up on load.
+  { carrier: 'fst-express', number: 'SAUZ900000000',
+    route: /^https:\/\/www\.fstexpress\.com\.au\/track_and_trace\/\?jobno=SAUZ900000000$/,
+    marker: /Track And Trace_FST EXPRESS|We couldn't find that tracking number/ },
 ];
 
 /**

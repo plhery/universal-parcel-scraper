@@ -1,0 +1,114 @@
+{
+  "carrier": "fst-express",
+  "entries": [
+    {
+      "code": "LC",
+      "wording": "Label Created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "FST's job was created for the parcel, before the parcel left the sender."
+    },
+    {
+      "code": "CI",
+      "wording": "Consignment Held By Customs (CUS)",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The customs broker's inbound scan at the arrival port; the clearance follows."
+    },
+    {
+      "code": "OQ",
+      "wording": "Consignment Cleared By Customs",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    },
+    {
+      "code": "O3",
+      "wording": "Consignment transferred to Last Mile Delivery Transport Hub",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    },
+    {
+      "code": "PU",
+      "wording": "Arrived at FST Sort Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The page's legend calls PU a warehouse scan. An imported parcel reaches it after customs cleared it, so it is a step on the way rather than the parcel's acceptance."
+    },
+    {
+      "code": "O1",
+      "wording": "Shipping information received by Australia Post",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "FST relays Australia Post's scans under O1 (交货其他状态, another delivery status) in Australia Post's own wording, so the wording stages them. This is Australia Post's pre-advice once FST lodged the parcel."
+    },
+    {
+      "code": "O1",
+      "wording": "Shipping information approved by Australia Post",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    },
+    {
+      "code": "O1",
+      "wording": "Item processed at sorting facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    },
+    {
+      "code": "O1",
+      "wording": "In transit to next facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    },
+    {
+      "code": "O1",
+      "wording": "Onboard for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    },
+    {
+      "code": "OK",
+      "wording": "Delivered - Left in a safe place",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "OK is 已签收 (signed for); the page shows its rows in green and its progress rail at its last step."
+    },
+    {
+      "code": "JF",
+      "wording": "Mail received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "A step of the page's progress rail (邮寄信息已收到, shipping information received)."
+    },
+    {
+      "code": "YS",
+      "wording": "Transportation",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "A step of the page's progress rail (运输中, in transit)."
+    }
+  ]
+}
