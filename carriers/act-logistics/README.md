@@ -1,28 +1,44 @@
 # ACT Logistics
 
-ACT Logistics parcels use enabled universal providers. There is no dedicated adapter.
-
 ACT Logistics is a South African courier and road freight carrier with its head office in Cape
 Town, branches in Johannesburg, Gqeberha and Durban, and subsidiary branches across the country. It
 also sends documents and parcels abroad and runs cross-border road freight to neighbouring
-countries. Its site is act-logistics.co.za.
+countries. Its site is act-logistics.co.za. It tracks waybills through its
+[ParcelPerfect tracker](https://actlogistics.pperfect.com/).
 
-## Numbers
+## How it works
 
-Its tracker takes a waybill number. No public page shows one, so there is no rule.
+1. `direct`: the adapter reads the public tenant code from `config/config.json` and asks the
+   tenant's `Waybill.getEventData` service for one waybill, as the tracker does. Every visible scan
+   must name that waybill. Clocks have no offset and are kept as local time.
 
-## Why there is no adapter
+[Bigfoot Express Freight](../bigfoot-express/README.md),
+[Intertown Transport](../intertown-transport/README.md) and
+[Primetime Express](../primetime-express/README.md) run the same tracker client, so the adapters
+share `parcelPerfect.ts` and its reading of stages. The only not-found answer is the service's own
+"Event data not found." for the waybill; any other error, a page or an incomplete reply is a
+failure.
 
-Its tracker is the same ParcelPerfect app as
-[Intertown Transport's](../intertown-transport/README.md): it keeps the searched waybill in the
-browser's storage and posts it as JSON to `trackappservice/Json/index.php` with class `Waybill` and
-method `getEventData`. No public number is known to check its replies against.
+## Notes
 
-## Links
+- The tenant's waybills are digits followed by ACT, and the service finds a waybill only with that
+  suffix. The adapter takes five to ten digits and the suffix. Detection names ACT Logistics for
+  the public example's shape, seven digits and ACT, which no other carrier's rule or sample takes.
+- `actlogistics.pperfect.com/?w=<waybill>` opens one waybill: the page stores the number and moves
+  to its waybill view, whose address no longer holds it.
 
-The app takes the waybill in its form and keeps it in the browser, so no address opens one parcel.
+## Limitations
+
+- The scans of a trunk route carry the hub the manifest goes to: a waybill loaded in Cape Town for
+  Johannesburg is loaded and dispatched at "Johannesburg". The location is the hub the service
+  gives.
+- Only the waybill number is asked. The parcel's own tracking sticker number is a separate search
+  on the tracker and is not read.
+- The sender's and recipient's names, the proof-of-delivery image, the service, the piece count,
+  the origin and destination hubs and the reference that the tracker's waybill view shows are not
+  read.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `ACT_LOGISTICS_TRACKING_NUMBER` and optionally `ACT_LOGISTICS_UNKNOWN_NUMBER` outside the
+repository and run `npm run test:carriers:live -- carriers/act-logistics`.

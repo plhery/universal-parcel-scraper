@@ -1,4 +1,61 @@
 {
   "carrier": "act-logistics",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Ready for collection",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Collected from origin address",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Collection checked in at Cape Town facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Loaded on manifest to Johannesburg facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Consignment details captured",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Dispatched",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Proof of delivery details captured",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Checked in at Port Elizabeth facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "prior-art",
+      "note": "ParcelPerfect wording, seen live on Intertown Transport's tracker."
+    },
+    {
+      "wording": "Loaded for delivery from Cape Town facility",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "prior-art",
+      "note": "ParcelPerfect wording, seen live on Bigfoot Express Freight's and Intertown Transport's trackers."
+    }
+  ]
 }

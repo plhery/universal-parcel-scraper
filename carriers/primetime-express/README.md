@@ -11,7 +11,7 @@ site is ptexpress.co.za. It tracks waybills through its
    tenant's `Waybill.getEventData` service for one waybill, as the tracker does. Every visible scan
    must name that waybill. Clocks have no offset and are kept as local time.
 
-[Bigfoot Express Freight](../bigfoot-express/README.md) and
+[ACT Logistics](../act-logistics/README.md), [Bigfoot Express Freight](../bigfoot-express/README.md) and
 [Intertown Transport](../intertown-transport/README.md) run the same tracker client, so the
 adapters share `parcelPerfect.ts` and its reading of stages. The only not-found answer is the
 service's own "Event data not found." for the waybill; any other error, a page or an incomplete

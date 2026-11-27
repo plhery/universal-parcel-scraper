@@ -16,19 +16,69 @@
   "timezone": "Africa/Johannesburg",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "act-logistics",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
+    "url": "https://actlogistics.pperfect.com/?w={trackingNumber}",
     "searchUrl": "https://actlogistics.pperfect.com/",
     "helpUrl": "https://act-logistics.co.za/contact/",
     "canaryUrl": "https://actlogistics.pperfect.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "progress_rail",
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "customer_reference",
+      "service_name",
+      "parcel_count",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "progress_rail",
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "customer_reference",
+      "service_name",
+      "parcel_count",
+      "proof_of_delivery"
+    ],
     "unavailable": []
   },
-  "links": [],
-  "detection": []
+  "links": [
+    {
+      "domains": [
+        "actlogistics.pperfect.com"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "w"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "act-logistics-1",
+      "pattern": "^\\d{7}ACT$",
+      "confidence": "high"
+    }
+  ]
 }
