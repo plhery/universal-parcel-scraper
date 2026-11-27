@@ -418,6 +418,18 @@ describe('locatePlace', () => {
     expectPlace('서울', { country: 'KR', name: 'Seoul', latitude: 37.57, longitude: 126.98 });
     // A name in Latin letters with the Chinese word for city.
     expectPlace('Changsha市 00000001', { country: 'CN', name: 'Changsha', latitude: 28.2, longitude: 112.97 });
+    // A city GeoNames names with its word for city alone, by its bare name before a facility's.
+    expectPlace('安阳转运中心', { country: 'CN', name: 'Anyang', latitude: 36.1, longitude: 114.38 });
+    expectPlace('臺北示例店', { country: 'TW', name: 'Taipei', latitude: 25.05, longitude: 121.53 });
+    // After "China" before Macau, a store owner's possessive or a carrier's name.
+    expectPlace('中国澳门', { country: 'MO', name: 'Macau', latitude: 22.2, longitude: 113.55 });
+    expectPlace('菜鸟的杭州示例店', { country: 'CN', name: 'Hangzhou', latitude: 30.29, longitude: 120.16 });
+    expectPlace('顺丰无锡示例中心', { country: 'CN', name: 'Wuxi', latitude: 31.57, longitude: 120.29 });
+    for (const location of ['到达目的地处理中心', '您的快件已签收', '顺丰速运', '菜鸟驿站']) expect(place(location), location).toBeNull();
+    // Foreign cities and airports by their Chinese names, which GeoNames keeps for towns of China, Japan and Korea alone.
+    expectPlace('悉尼示例中心', { country: 'AU', name: 'Sydney', latitude: -33.87, longitude: 151.21 });
+    expect(place('安克雷奇国际机场')).toMatchObject({ country: 'US', name: 'Anchorage', site: 'Ted Stevens Anchorage International Airport' });
+    expect(place('新郑国际机场')).toMatchObject({ country: 'CN', name: 'Zhengzhou', site: 'Zhengzhou Xinzheng International Airport' });
   });
 
   it('reads a town of a country written in Cyrillic by its Cyrillic name', () => {

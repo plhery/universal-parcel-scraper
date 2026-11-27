@@ -45,5 +45,12 @@
   { "country": "LV", "carriers": ["latvijas-pasts"], "names": ["Origo"], "town": "Riga", "site": "Origo", "latitude": 56.947, "longitude": 24.12, "source": "https://pasts.lv/en/News/5932-riga-post-office-no-50-will-continue-operations-in-the-current-premises-in-the-shopping-centre-origo-for-the-time-being" },
   { "country": "CN", "names": ["BJGJHHJ"], "town": "Beijing", "site": "Beijing International Exchange Office", "latitude": 39.908, "longitude": 116.397, "source": "https://www.geonames.org/1816670" },
   { "country": "CN", "names": ["GZSGJHHJ"], "town": "Guangzhou", "site": "Guangzhou International Exchange Office", "latitude": 23.117, "longitude": 113.25, "source": "https://www.geonames.org/1809858" },
-  { "country": "CN", "names": ["CDSGJHHJ"], "town": "Chengdu", "site": "Chengdu International Exchange Office", "latitude": 30.667, "longitude": 104.067, "source": "https://www.geonames.org/1815286" }
+  { "country": "CN", "names": ["CDSGJHHJ"], "town": "Chengdu", "site": "Chengdu International Exchange Office", "latitude": 30.667, "longitude": 104.067, "source": "https://www.geonames.org/1815286" },
+  { "country": "US", "names": ["安克雷奇国际机场"], "town": "Anchorage", "airport": "ANC" },
+  { "country": "US", "names": ["安克雷奇"], "town": "Anchorage", "latitude": 61.218, "longitude": -149.9, "source": "https://www.geonames.org/5879400" },
+  { "country": "US", "names": ["迈阿密国际机场"], "town": "Miami", "airport": "MIA" },
+  { "country": "US", "names": ["迈阿密"], "town": "Miami", "latitude": 25.774, "longitude": -80.194, "source": "https://www.geonames.org/4164138" },
+  { "country": "AU", "names": ["悉尼"], "town": "Sydney", "latitude": -33.868, "longitude": 151.207, "source": "https://www.geonames.org/2147714" },
+  { "country": "KZ", "names": ["阿拉木图"], "town": "Almaty", "latitude": 43.252, "longitude": 76.912, "source": "https://www.geonames.org/1526384" },
+  { "country": "CN", "names": ["新郑国际机场"], "town": "Zhengzhou", "airport": "CGO" }
 ]

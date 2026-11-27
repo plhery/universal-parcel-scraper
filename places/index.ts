@@ -90,6 +90,10 @@ const FACILITY_WORDS = new Set(`
 // Chinese words for a facility or a part of a town, not a town: "中心扫描" is a centre's scan, not
 // Zhongxin in Yunnan, and a "新城" is a town's new district.
 const CJK_FACILITY_WORDS = new Set(['中心', '新城']);
+// What can come before a town's name at a facility's start: "中国" before a region of China's
+// ("中国香港国际机场"), a store's owner and its possessive ("菜鸟的广州…店") and a carrier's name
+// ("顺丰鄂州…操作中心").
+const CJK_LEAD = /^(?:中国(?=香港|澳门|澳門|台湾|臺灣)|\p{Script=Han}{1,6}?的|顺丰|菜鸟|中通|圆通|申通|韵达|京东|极兔)/u;
 // Administrative words a town can be written with or without ("Jinhua City", "Guangdong Sheng").
 const DIVISION_WORDS = new Set('city province prefecture district county shi sheng qu xian si gu do ku ken'.split(' '));
 // Words that say a scan happened at an airport ("Frankfurt Airport (FRA)", "HELSINKI-VANTAAN LENTOASEMA").
@@ -614,19 +618,32 @@ function phrases(field: string): Phrase[] {
  */
 function cjkPhrases(field: string): Phrase[] {
   const found: Phrase[] = [];
-  for (const run of field.matchAll(/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]+/gu)) {
+  const runs = [...field.matchAll(/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]+/gu)]
+    .flatMap((run) => {
+      const lead = CJK_LEAD.exec(run[0])?.[0];
+      return lead && run[0].length - lead.length >= 2
+        ? [{ text: run[0], index: run.index }, { text: run[0].slice(lead.length), index: run.index + lead.length }]
+        : [{ text: run[0], index: run.index }];
+    });
+  for (const run of runs) {
     let start = run.index;
-    run[0].split(/(?<=[省市区县都府県])/u).forEach((segment, index) => {
+    run.text.split(/(?<=[省市区县都府県])/u).forEach((segment, index) => {
       const end = start + segment.length;
       const add = (key: string, rank: number) => {
         if (key.length >= 2 && !CJK_FACILITY_WORDS.has(key) && !found.some((phrase) => phrase.key === key)) {
           found.push({ key, text: segment, rank, start, end, whole: false });
         }
       };
+      // A Chinese city the gazetteer names with its word for city alone ("新乡市") goes by its bare
+      // name before a facility's ("新乡转运中心").
+      const named = (key: string, rank: number) => {
+        add(key, rank);
+        if (/^\p{Script=Han}+$/u.test(key)) add(`${key}市`, rank);
+      };
       const bare = segment.replace(/[省市区县都府県]$/u, '');
       add(segment, index * 2);
-      add(bare, index * 2);
-      for (let length = Math.min(bare.length - 1, 4); length >= 2; length -= 1) add(bare.slice(0, length), index * 2 + 3);
+      named(bare, index * 2);
+      for (let length = Math.min(bare.length - 1, 4); length >= 2; length -= 1) named(bare.slice(0, length), index * 2 + 3);
       start = end;
     });
   }

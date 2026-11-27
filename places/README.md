@@ -58,8 +58,12 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   a province followed by a city, and a county-level city after its prefecture's city, in
   the same province, is where the scan is: "浙江省金华市义乌市" is Yiwu, and so is a town
   (镇, 乡) after its city. A town's name can
-  start a facility's ("义乌转运中心"); a word for a facility or a part of town ("中心",
-  "新城") names no town. Latin letters next to such script are a word: "Changsha市".
+  start a facility's ("义乌转运中心"), also when GeoNames names the city with its word for
+  city alone ("安阳市"), and can follow "中国" before Hong Kong, Macau or Taiwan, a store
+  owner's possessive ("菜鸟的杭州…店") or a carrier's name ("顺丰无锡…"); a word for a facility
+  or a part of town ("中心", "新城") names no town. Latin letters next to such script are a
+  word: "Changsha市". GeoNames keeps Chinese names for towns of China, Japan and Korea alone,
+  so `hubs.json` names the foreign cities and airports Chinese scans give in Chinese.
 - A larger town of a country written in Cyrillic, Greek or Thai also matches by its names in
   that script ("Тюмень", "ΑΘΗΝΑ", "เชียงใหม่"). Thai's vowel and tone marks are part of its words.
 - A country also goes by its Chinese or Japanese name ("日本").
