@@ -34,6 +34,8 @@ const EXPRESS_CODES: Record<string, ClassifiedStatus> = {
   AS: { status: 'in_transit', stage: 'in_transit' },
   IR: { status: 'in_transit', stage: 'in_transit' },
   RC: { status: 'in_transit', stage: 'in_transit' },
+  // A delay TNT expects to make up, beside the parcel's arrival at its delivery depot.
+  MLH: { status: 'in_transit', stage: 'in_transit' },
   OD: { status: 'out_for_delivery', stage: 'out_for_delivery' },
   NH: { status: 'exception', stage: 'failed_attempt' },
   OK: { status: 'delivered', stage: 'delivered' },

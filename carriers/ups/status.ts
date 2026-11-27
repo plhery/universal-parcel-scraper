@@ -85,8 +85,9 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   // Facility scans, export and import scans. OC is worded "Arrived at Facility" too.
   ['AR', 'in_transit'], ['OC', 'in_transit'], ['DP', 'in_transit'], ['DS', 'in_transit'], ['YP', 'in_transit'], ['HL', 'in_transit'],
   ['EP', 'in_transit'], ['IP', 'in_transit'],
-  // A notice that the package is on its way, without a facility.
-  ['DA', 'in_transit'],
+  // A notice that the package is on its way, without a facility, and UPS planning the delivery or forwarding the
+  // parcel to its facility in the destination city (I8).
+  ['DA', 'in_transit'], ['I8', 'in_transit'],
   // Delays and new delivery plans: a late flight, a possible delay, a new
   // plan, a delivery a day early, a Saturday delivery requested, a day's delay for weather
   // or for a labor dispute outside UPS, a delivery a business day later than expected, and
@@ -236,5 +237,7 @@ export const statusMap: CarrierStatusMap = {
     ...['L0', 'L8'].map((code) => ({ code, note: "The receiver's delivery instructions, a notice and no scan: it keeps the stage of the scan before it, and the newest other scan decides the parcel's." })),
     { code: 'WH', note: "A warehouse scan, minutes after a customs hold: the held parcel goes into UPS's warehouse and moves nothing, so it keeps the stage of the scan before it, and the newest other scan decides the parcel's." },
     { code: 'VK', note: "A government agency holding the parcel, or releasing it: the code says neither, so the shared rules read the wording, a hold as customs and a release as in transit." },
+    { code: 'DB', note: "UPS preparing the parcel for clearance, or a hold resolved: the code says neither, so the shared rules read the wording, the preparation as customs and the resolved hold as in transit." },
+    { code: 'EU', note: "Customs waiting for the customer's documents, or a hold resolved: the code says neither, so the shared rules read the wording, the wait as customs and the resolved hold as in transit." },
   ],
 };

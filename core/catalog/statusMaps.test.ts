@@ -241,6 +241,15 @@ describe('status map answers', () => {
     expect(answer('dtdc', null, 'Scheduled for delivery')).toEqual(mapped('in_transit'));
   });
 
+  it("answers UPS's delivery planning and TNT's delay, and leaves UPS's clearance and hold codes to the wording", () => {
+    expect(answer('ups', 'I8', "Your package is in transit. We're updating plans to schedule your delivery.")).toEqual(mapped('in_transit'));
+    expect(answer('ups', 'I8', 'The package will be forwarded to a UPS facility in the destination city.')).toEqual(mapped('in_transit'));
+    expect(answer('tnt', 'MLH', "There's been a delay but we're working hard to deliver on time")).toEqual(mapped('in_transit'));
+    // DB and EU each carry a step toward clearance and a hold resolved.
+    for (const code of ['DB', 'EU']) expect(answer('ups', code, 'A hold on your package has been resolved.')).toEqual(gap);
+    expect(answer('ups', 'DB', 'UPS is preparing your package for clearance. We will notify you if additional information is needed.')).toEqual(gap);
+  });
+
   it("reads Ukrposhta's Ukrainian wording as providers relay it without a code", () => {
     for (const carrier of ['ukrposhta', 'unknown']) {
       expect(answer(carrier, null, 'Прийнято')).toEqual(mapped('accepted'));

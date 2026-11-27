@@ -187,6 +187,15 @@
       "stage": "in_transit",
       "confirmedBy": "fixture",
       "firstSeen": "2026-10-04"
+    },
+    {
+      "code": "MLH",
+      "wording": "There's been a delay but we're working hard to deliver on time",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "A delay TNT expects to make up, at the minute the parcel reached its delivery depot."
     }
   ]
 }
