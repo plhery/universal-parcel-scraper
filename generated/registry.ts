@@ -493,6 +493,7 @@ import { adapter as gti } from '../carriers/gti/adapter.js';
 import { adapter as gtlGoto } from '../carriers/gtl-goto/adapter.js';
 import { adapter as guatex } from '../carriers/guatex/adapter.js';
 import { adapter as gzyl } from '../carriers/gzyl/adapter.js';
+import { adapter as hainanAirlinesCargo } from '../carriers/hainan-airlines-cargo/adapter.js';
 import { adapter as hanjin } from '../carriers/hanjin/adapter.js';
 import { adapter as hapagLloyd } from '../carriers/hapag-lloyd/adapter.js';
 import { adapter as happyPost } from '../carriers/happy-post/adapter.js';
@@ -1773,6 +1774,7 @@ export const REGISTRY: RegistryDefinition = {
     "gtl-goto": gtlGoto,
     "guatex": guatex,
     "gzyl": gzyl,
+    "hainan-airlines-cargo": hainanAirlinesCargo,
     "hanjin": hanjin,
     "hapag-lloyd": hapagLloyd,
     "happy-post": happyPost,
@@ -3396,6 +3398,7 @@ export const REGISTRY: RegistryDefinition = {
     "gyujtoszallitas": "universal",
     "gzyl": "gzyl",
     "hadeland-bud": "universal",
+    "hainan-airlines-cargo": "hainan-airlines-cargo",
     "hanjin": "hanjin",
     "hapag-lloyd": "hapag-lloyd",
     "hapdong": "universal",

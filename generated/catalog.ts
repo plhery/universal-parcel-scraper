@@ -33487,6 +33487,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "hainan-airlines-cargo": {
+    "displayName": "Hainan Airlines Cargo",
+    "color": "#cf422f",
+    "aliases": [
+      "HNA Cargo",
+      "海航货运",
+      "海南航空货运"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hainan-airlines-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.hnacargo.com/Portal2/AwbSearch.aspx",
+    "trackingUrlTemplate": "https://www.hnacargo.com/",
+    "trackingSearchUrl": "https://www.hnacargo.com/Portal2/AwbSearch.aspx",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^880\\d{8}$",
+        "confidence": "high",
+        "rawPattern": "^880-\\d{4} ?\\d{4}$"
+      },
+      {
+        "pattern": "^880[A-Z]{3}\\d{8}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "hanjin": {
     "displayName": "Hanjin",
     "color": "#051469",
@@ -76700,6 +76734,7 @@ export const CARRIER_IDS = [
   "gyujtoszallitas",
   "gzyl",
   "hadeland-bud",
+  "hainan-airlines-cargo",
   "hanjin",
   "hapag-lloyd",
   "hapdong",
@@ -78860,6 +78895,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gyujtoszallitas": [],
   "gzyl": ["gzyl-1","gzyl-2"],
   "hadeland-bud": [],
+  "hainan-airlines-cargo": ["hainan-airlines-cargo-1","hainan-airlines-cargo-2"],
   "hanjin": [],
   "hapag-lloyd": [],
   "hapdong": [],

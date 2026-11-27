@@ -14,6 +14,7 @@ const profiles = {
   // PAD's and Yuxin's small pictures read best kept to their own proportions, as ddddocr feeds the model.
   padtf: { width: 70, height: 25, format: 'png', keepAspect: true },
   'yuxin-logistics': { width: 70, height: 26, format: 'jpeg', keepAspect: true },
+  'hainan-airlines-cargo': { width: 58, height: 25, format: 'jpeg', keepAspect: true },
   'professional-couriers': { width: 160, height: 44, format: 'png' },
   // MTCaptcha's photographic pictures run to tens of kilobytes. The text keeps to the middle, and the
   // model reads it best cut from the margins and stretched to its input.

@@ -1,0 +1,74 @@
+{
+  "id": "hainan-airlines-cargo",
+  "displayName": "Hainan Airlines Cargo",
+  "aliases": [
+    "HNA Cargo",
+    "海航货运",
+    "海南航空货运"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#cf422f"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hainan-airlines-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "provider_code",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.hnacargo.com/",
+    "searchUrl": "https://www.hnacargo.com/Portal2/AwbSearch.aspx",
+    "canaryUrl": "https://www.hnacargo.com/Portal2/AwbSearch.aspx",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "origin",
+      "destination",
+      "parcel_count",
+      "flight_and_routing"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "weight",
+      "origin",
+      "destination",
+      "parcel_count",
+      "flight_and_routing"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "hainan-airlines-cargo-1",
+      "pattern": "^880\\d{8}$",
+      "rawPattern": "^880-\\d{4} ?\\d{4}$",
+      "confidence": "high"
+    },
+    {
+      "id": "hainan-airlines-cargo-2",
+      "pattern": "^880[A-Z]{3}\\d{8}$",
+      "confidence": "high"
+    }
+  ]
+}

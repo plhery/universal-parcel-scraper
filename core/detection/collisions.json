@@ -8584,6 +8584,23 @@
     "reason": "An IATA air waybill with Amerijet's 810 prefix printed with its dash also fits several carriers' broad eleven-digit candidates; the dashed Amerijet rule decides. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. DPD Romania joins them for eleven digits starting with 8, asked only for lookups in Romania."
   },
   {
+    "shape": "880, a dash and eight digits",
+    "carriers": [
+      "hainan-airlines-cargo",
+      "coordinadora",
+      "dpd-ro",
+      "gls-at",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "gls-pl",
+      "mainfreight",
+      "postlogistics",
+      "ppl"
+    ],
+    "reason": "An IATA air waybill with Hainan Airlines' 880 prefix printed with its dash also fits several carriers' broad eleven-digit candidates; the dashed Hainan Airlines Cargo rule decides. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. DPD Romania joins them for eleven digits starting with 8, asked only for lookups in Romania."
+  },
+  {
     "shape": "127, a dash and eight digits",
     "carriers": [
       "gollog",

@@ -1,0 +1,30 @@
+{
+  "carrier": "hainan-airlines-cargo",
+  "gap": "No public page shows a Hainan Airlines air waybill's number.",
+  "records": [
+    {
+      "number": "880PEK12345675",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-27",
+      "expect": {
+        "carrier": "hainan-airlines-cargo",
+        "confidence": "high"
+      },
+      "note": "Made-up air waybill in the shape a reader gave the app: the airline's prefix 880, the origin airport and an eight-digit serial ending in the IATA check digit. Hainan Airlines Cargo's tracker filed the reader's under its own route."
+    },
+    {
+      "number": "880-12345675",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-27",
+      "expect": {
+        "carrier": "hainan-airlines-cargo",
+        "confidence": "high"
+      },
+      "note": "The same made-up air waybill as an air waybill is written: the prefix, a dash and the serial."
+    }
+  ]
+}

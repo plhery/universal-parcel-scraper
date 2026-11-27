@@ -1,0 +1,13 @@
+{
+  "carrier": "hainan-airlines-cargo",
+  "entries": [
+    {
+      "code": "已制单",
+      "wording": "已制单",
+      "language": "zh",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The air waybill was made out at the origin station; the airline does not have the cargo yet."
+    }
+  ]
+}

@@ -3083,6 +3083,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'cotaxi': 'The official PDF lookup uses separate prefix and serial fields, so the tracking link opens the search form.',
   'calidex-courier': 'The carrier’s TrackingPremium tenant opens a public form and submits the selected guide through its tracking API.',
   'hede-shipping': 'The carrier’s equipment tracker opens the public search form and posts the container number.',
+  'hainan-airlines-cargo': 'The tracker posts the air waybill with a verify code from the session its picture opens, so the link opens its search form.',
   'qatar-airways-cargo': 'The official shipment page opens a guest air waybill form that posts the search.',
   'kenya-airways-cargo': 'The official KQ Cargo guest app opens the air waybill form.',
   'ethiopian-cargo': 'The official guest form posts the air waybill and displays shipment history.',
