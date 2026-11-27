@@ -8,7 +8,8 @@
       "stage": "registered",
       "confirmedBy": "live",
       "firstSeen": "2026-09-08",
-      "note": "Shipment announced to Hermes"
+      "note": "Shipment announced to Hermes",
+      "template": "shipment_info_received"
     },
     {
       "code": "ORDER_INFO_RECEIVED",
@@ -124,7 +125,8 @@
       "stage": "out_for_delivery",
       "confirmedBy": "live",
       "firstSeen": "2026-09-08",
-      "note": "Out for delivery"
+      "note": "Out for delivery",
+      "template": "out_for_delivery_today"
     },
     {
       "code": "OUT_FOR_DELIVERY",
@@ -471,7 +473,8 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-10",
-      "note": "Delivered abroad after sorting in the destination country; the parcel's delivered flag agrees."
+      "note": "Delivered abroad after sorting in the destination country; the parcel's delivered flag agrees.",
+      "template": "delivered"
     },
     {
       "code": "DELIVERY_FAILED_ADDRESS_PROBLEM",

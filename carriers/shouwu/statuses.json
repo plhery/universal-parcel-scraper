@@ -31,7 +31,8 @@
       "stage": "delivered",
       "language": "en",
       "confirmedBy": "bundle",
-      "note": "A parcel's traceStatus, which the page labels Delivered."
+      "note": "A parcel's traceStatus, which the page labels Delivered.",
+      "template": "delivered"
     },
     {
       "wording": "Order information received. We're expecting your parcel to arrive with us.",
@@ -53,7 +54,8 @@
       "stage": "registered",
       "language": "en",
       "confirmedBy": "live",
-      "note": "An order scan, the first a parcel gets, before Shouwu has it."
+      "note": "An order scan, the first a parcel gets, before Shouwu has it.",
+      "template": "shipment_info_received"
     },
     {
       "wording": "Shipping Label Created",
@@ -113,7 +115,8 @@
       "wording": "Shipment started the customs clearance process at destination",
       "stage": "customs",
       "language": "en",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "import_customs_started"
     },
     {
       "wording": "Custom clearance completed",
@@ -163,7 +166,8 @@
       "stage": "out_for_delivery",
       "language": "en",
       "confirmedBy": "live",
-      "note": "The local courier's delivery round."
+      "note": "The local courier's delivery round.",
+      "template": "out_for_delivery"
     },
     {
       "wording": "Delivered",
@@ -171,7 +175,8 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-11-09",
-      "note": "The local courier's delivery, after its round, with no place."
+      "note": "The local courier's delivery, after its round, with no place.",
+      "template": "delivered"
     },
     {
       "wording": "Delivered by post man",
@@ -185,7 +190,8 @@
       "stage": "delivered",
       "language": "en",
       "confirmedBy": "live",
-      "note": "The last-mile carrier's delivery to the recipient."
+      "note": "The last-mile carrier's delivery to the recipient.",
+      "template": "delivered"
     },
     {
       "wording": "Shipment arrived at facility",
@@ -627,7 +633,8 @@
       "stage": "in_transit",
       "language": "en",
       "confirmedBy": "live",
-      "note": "After the handover to the carrier that flies the parcel. The first one right after the registration, without a receipt that moved the parcel, is the acceptance."
+      "note": "After the handover to the carrier that flies the parcel. The first one right after the registration, without a receipt that moved the parcel, is the acceptance.",
+      "template": "arrived_facility"
     },
     {
       "wording": "Shipment arrived at an air hub",
@@ -758,7 +765,8 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-11-07",
-      "note": "The delivering partner's round in Germany."
+      "note": "The delivering partner's round in Germany.",
+      "template": "out_for_delivery"
     },
     {
       "wording": "Unloaded from movement / tour vehicle",
@@ -782,7 +790,8 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-11-07",
-      "note": "The delivering partner's delivery in Germany."
+      "note": "The delivering partner's delivery in Germany.",
+      "template": "delivered"
     },
     {
       "wording": "Arrived at hub",
@@ -810,7 +819,8 @@
       "stage": "out_for_delivery",
       "language": "en",
       "confirmedBy": "live",
-      "note": "The delivering carrier's round."
+      "note": "The delivering carrier's round.",
+      "template": "out_for_delivery"
     },
     {
       "wording": "到达收货点",
@@ -941,7 +951,8 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-11-02",
-      "note": "The delivering partner's delivery in the Netherlands, after its out-for-delivery rows."
+      "note": "The delivering partner's delivery in the Netherlands, after its out-for-delivery rows.",
+      "template": "delivered"
     },
     {
       "wording": "The goods have been deliverey to the final delivery service provider",
@@ -973,7 +984,8 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-11-04",
-      "note": "Colis Privé's delivery to the recipient's letterbox, on the line into France."
+      "note": "Colis Privé's delivery to the recipient's letterbox, on the line into France.",
+      "template": "delivered_mailbox"
     },
     {
       "wording": "Arrival at the processing center",
@@ -1407,12 +1419,12 @@
     {"wording": "In transit to destination facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-23"},
     {"wording": "Votre envoi est en cours de traitement sur le site de tri local.", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "note": "La Poste's sort at the local sorting site, which Shouwu gives after the country's code and before its Chinese label."},
     {"wording": "Votre envoi est sur son site de distribution. Nous le préparons pour le mettre en livraison.", "language": "fr", "stage": "out_for_delivery", "confirmedBy": "live", "note": "La Poste's sort into the delivery round, as Colissimo's map reads it; relayed like the sort above."},
-    {"wording": "Votre envoi a été distribué dans la boîte à lettres.", "language": "fr", "stage": "delivered", "confirmedBy": "live", "note": "Delivered to the letterbox; relayed like the sort above."},
+    {"wording": "Votre envoi a été distribué dans la boîte à lettres.", "language": "fr", "stage": "delivered", "confirmedBy": "live", "note": "Delivered to the letterbox; relayed like the sort above.", "template": "delivered_mailbox"},
     {"wording": "Votre envoi est disponible en point de retrait. Il y sera conservé pendant 15 jours calendaires et sera remis au destinataire sur présentation dune pièce didentité originale.", "language": "fr", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-11-26", "note": "At La Poste's pickup point after a missed round, kept fifteen days; relayed like the sort above, without the apostrophes."},
     {"wording": "Votre envoi na pas pu être distribué ce jour en raison dune situation indépendante de notre volonté. Il sera remis en distribution au plus tôt.", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "note": "La Poste's round put off for its own reasons (PB1 in La Poste's map), which Shouwu relays without the apostrophes: a delay, not an attempt at the door."},
     {"wording": "Votre envoi na pas pu être distribué ce jour. Il sera remis en distribution au plus tôt. Nous vous prions daccepter nos excuses.", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "note": "La Poste's round put off with an apology and no reason: a delay, not an attempt at the door."},
     {"wording": "Votre envoi na pas pu être distribué ce jour. Un avis de passage a été déposé par le facteur dans votre boîte aux lettres.", "language": "fr", "stage": "failed_attempt", "confirmedBy": "live", "note": "La Poste's postman found no one and left a notice card in the letterbox."},
-    {"wording": "Arrived at pick-up point. Package available for collection.", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "The last mile can append its own note after a comma (\"Carrier note: …\"), which does not change the stage."},
+    {"wording": "Arrived at pick-up point. Package available for collection.", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "The last mile can append its own note after a comma (\"Carrier note: …\"), which does not change the stage.", "template": "ready_for_pickup"},
     {"wording": "Reparto fallido", "language": "es", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-11-23", "note": "The Spanish last mile's failed round, between two rounds; its station keeping the parcel follows minutes later (Envío estacionado, Estacionado ubicado)."},
     {"wording": "运单电子信息已收到", "language": "zh", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The waybill's electronic data received, at the second of the order's own data row."},
     {"wording": "The booking of the delivery is completed.", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The last mile's delivery booked in the destination country when the order's data comes, a week before the warehouse received the parcel; it can come twice, seconds apart."},
@@ -1434,13 +1446,13 @@
     {"wording": "Arriving at the transfer center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The destination's transfer centre, minutes after customs released the parcel."},
     {"wording": "Parcel departed from Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The last mile's departure without a full stop, as its other lines can come."},
     {"wording": "Parcel received by local Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The last mile's local facility without a full stop, the day before the round."},
-    {"wording": "Parcel is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The last mile's round."},
+    {"wording": "Parcel is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The last mile's round.", "template": "out_for_delivery"},
     {"wording": "Parcel handed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The destination post handing the parcel on after its office of exchange, at the minute of the next partner's terminal arrival."},
     {"wording": "The package has arrived at terminal (T1).", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The next partner's terminal, named by its number, at the minute of the hand-over."},
-    {"wording": "Delivered by Mailbox", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The last mile's delivery to the letterbox; the line goes on with its delivery note and the carrier's contact details."},
+    {"wording": "Delivered by Mailbox", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The last mile's delivery to the letterbox; the line goes on with its delivery note and the carrier's contact details.", "template": "delivered_mailbox"},
     {"wording": "Arrived at GOFO Regional Destination Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "GOFO's regional facility in the United States, after its sorting centre and hours before the round."},
-    {"wording": "The driver is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "GOFO's round, after its regional facility and before the letterbox delivery."},
-    {"wording": "Parcel has been delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "The last mile's delivery, as Shouwu relays it."},
+    {"wording": "The driver is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "GOFO's round, after its regional facility and before the letterbox delivery.", "template": "out_for_delivery"},
+    {"wording": "Parcel has been delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "The last mile's delivery, as Shouwu relays it.", "template": "delivered"},
     {"wording": "Arrived at destination hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "A hub in the destination country, days after customs released the parcel and before its departure from it."},
     {"wording": "Departed destination hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The destination hub sending the parcel on, after its arrival there."},
     {"wording": "Arrived at warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "A delivering partner's warehouse, as the lines that relay the same partners read it: after its destination hub, before the delivery round. Shouwu words its own intake otherwise (Arrival processing center, Shipment arrived at facility)."}

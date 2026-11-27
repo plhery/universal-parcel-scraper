@@ -52,12 +52,15 @@ try {
     import { createTracker } from 'universal-parcel-scraper/node';
     import { locatePlace } from 'universal-parcel-scraper/places';
     import * as tracking from 'universal-parcel-scraper';
-    import { carrierTrackingHintKey } from 'universal-parcel-scraper/app';
+    import { carrierTrackingHintKey, scanTemplate } from 'universal-parcel-scraper/app';
     import catalog from 'universal-parcel-scraper/data/catalog.json' with { type: 'json' };
     import stages from 'universal-parcel-scraper/data/stages.json' with { type: 'json' };
     import golden from 'universal-parcel-scraper/data/detection-golden.json' with { type: 'json' };
     import checksumVectors from 'universal-parcel-scraper/data/checksum-vectors.json' with { type: 'json' };
     import schema from 'universal-parcel-scraper/data/carrier.schema.json' with { type: 'json' };
+    import scanTemplates from 'universal-parcel-scraper/data/scan-templates.json' with { type: 'json' };
+    const template = scanTemplate('ups', { providerCode: 'AR', description: 'Arrived at Facility' });
+    assert.equal(scanTemplates.templates[template.id].text.de, 'In einem Paketzentrum angekommen');
     const match = parseTrackingInput('1Z999AA10123456784');
     assert.equal(match.carrier, 'ups');
     assert.equal(createTracker({ providers: [] }).detect(match.trackingNumber).carrier, 'ups');

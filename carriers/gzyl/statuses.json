@@ -1,7 +1,7 @@
 {
   "carrier": "gzyl",
   "entries": [
-    {"wording": "Order information received", "language": "en", "stage": "registered", "confirmedBy": "live"},
+    {"wording": "Order information received", "language": "en", "stage": "registered", "confirmedBy": "live", "template": "shipment_info_received"},
     {"wording": "Arrive at the cross border receiving point", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The first scan in GZYL's hands."},
     {"wording": "广州处理中心已收寄", "language": "zh", "stage": "accepted", "confirmedBy": "live", "note": "China Post's acceptance at its Guangzhou processing centre, which GZYL relays in Chinese with the city after it in brackets."},
     {"wording": "香港处理中心已收寄", "language": "zh", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The same acceptance at the Hong Kong processing centre, with the city after it in brackets, as Xinghe Freight's records on GZYL's tenant relay it."},
@@ -22,7 +22,7 @@
     {"wording": "Arrival sorting, distribution center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The destination network sorts the parcel at a town's distribution centre. GZYL writes the town after the wording; it is read as the place."},
     {"wording": "Leaving the sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel leaves a town's sorting centre for its next stop. GZYL writes the town after the wording; it is read as the place."},
     {"wording": "Package is on the way", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-20", "note": "GZYL writes a town in the destination country after the wording; it is read as the place."},
-    {"wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-21", "note": "The destination network's delivery. GZYL writes the town after the wording; it is read as the place."},
+    {"wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-21", "note": "The destination network's delivery. GZYL writes the town after the wording; it is read as the place.", "template": "delivered"},
     {"wording": "货物电子信息已经收到", "language": "zh", "stage": "registered", "confirmedBy": "prior-art", "note": "The platform writes this row itself for an order without scans, on its creation time."}
   ]
 }

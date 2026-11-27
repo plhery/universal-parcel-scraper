@@ -137,7 +137,8 @@
       "firstSeen": "2026-09-12",
       "note": "",
       "wording": "Received by logistics company",
-      "language": "en"
+      "language": "en",
+      "template": "received_by_carrier"
     },
     {
       "code": "PU_SIGN_IN_SUCCESS",
@@ -164,7 +165,8 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "",
+      "template": "at_sorting_center"
     },
     {
       "code": "SC_OUTBOUND_SUCCESS",
@@ -173,7 +175,8 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "",
+      "template": "departed_sorting_center"
     },
     {
       "code": "SC_TRANS_INBOUND_SUCCESS",
@@ -200,7 +203,8 @@
       "firstSeen": "2026-09-12",
       "note": "China's export clearance, after the arrival at the departure hub and before the parcel leaves the country: the export step, not the destination's customs.",
       "wording": "Export customs clearance started",
-      "language": "en"
+      "language": "en",
+      "template": "export_customs_started"
     },
     {
       "code": "CC_EX_SUCCESS",
@@ -209,7 +213,8 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "",
+      "template": "export_customs_cleared"
     },
     {
       "code": "LH_HO_IN_SUCCESS",
@@ -236,7 +241,8 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "",
+      "template": "departed_origin_country"
     },
     {
       "code": "LH_ARRIVE",
@@ -281,7 +287,8 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "",
+      "template": "departed_transit_country"
     },
     {
       "code": "TD_TRANS_ARRIVE",
@@ -290,7 +297,8 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "",
+      "template": "arrived_transit_country"
     },
     {
       "code": "TD_TRANS_DEPART_C",
@@ -344,7 +352,8 @@
       "firstSeen": "2026-09-12",
       "note": "The destination's import clearance. Into the United States or Israel it can start hours or a day before the export clearance, its entry filed before the flight leaves, on the destination's clock; that start, before any departure, moves nothing.",
       "wording": "Import customs clearance started",
-      "language": "en"
+      "language": "en",
+      "template": "import_customs_started"
     },
     {
       "code": "CC_IM_SUCCESS",
@@ -353,7 +362,8 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "",
+      "template": "import_customs_cleared"
     },
     {
       "code": "CC_HO_OUT_SUCCESS",
@@ -385,7 +395,8 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": "The local delivery company accepting the parcel after the hand-off, not the parcel's acceptance."
+      "note": "The local delivery company accepting the parcel after the hand-off, not the parcel's acceptance.",
+      "template": "handed_to_local_carrier"
     },
     {
       "code": "GTMS_ACCEPT_FAILURE",
@@ -467,7 +478,8 @@
       "stage": "out_for_delivery",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": ""
+      "note": "",
+      "template": "out_for_delivery"
     },
     {
       "code": "GSTA_INFORM_BUYER",
@@ -490,7 +502,8 @@
       "stage": "ready_for_pickup",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": "Signed for by the pickup station, not by the recipient: never read as delivered."
+      "note": "Signed for by the pickup station, not by the recipient: never read as delivered.",
+      "template": "ready_for_pickup"
     },
     {
       "code": "GTMS_SIGNED",
@@ -499,7 +512,8 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": "The only code that means the recipient has the parcel."
+      "note": "The only code that means the recipient has the parcel.",
+      "template": "delivered"
     },
     {
       "code": "GTMS_DEL_FAILURE",
@@ -582,7 +596,8 @@
       "stage": "ready_for_pickup",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": "The parcel waits at a pickup point."
+      "note": "The parcel waits at a pickup point.",
+      "template": "ready_for_pickup"
     },
     {
       "code": "GSTA_SIGN",
@@ -591,7 +606,8 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": "Described as delivered at a self pickup point: the recipient collected the parcel."
+      "note": "Described as delivered at a self pickup point: the recipient collected the parcel.",
+      "template": "delivered"
     },
     {
       "code": "GTMS_DEL_FAILURE",
@@ -645,7 +661,8 @@
       "stage": "out_for_delivery",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": ""
+      "note": "",
+      "template": "out_for_delivery"
     },
     {
       "code": "LM_DELIVERY_FAILURE",
@@ -670,7 +687,8 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": ""
+      "note": "",
+      "template": "delivered"
     },
     {
       "code": "RT_INBOUND",

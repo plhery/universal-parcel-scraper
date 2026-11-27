@@ -15,7 +15,8 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-10-05",
-      "note": "Moves the result to in_transit; no milestone of its own, so the event stays unmapped for the sync to classify."
+      "note": "Moves the result to in_transit; no milestone of its own, so the event stays unmapped for the sync to classify.",
+      "template": "on_the_way"
     },
     {
       "code": "AT_DELIVERY_CENTER",
@@ -132,7 +133,8 @@
       "stage": "out_for_delivery",
       "confirmedBy": "live",
       "firstSeen": "2026-10-07",
-      "note": "Seen in the German app's scan list, which carries wording only."
+      "note": "Seen in the German app's scan list, which carries wording only.",
+      "template": "out_for_delivery"
     },
     {
       "wording": "Unfortunately we have not been able to deliver your parcel.",
@@ -164,7 +166,8 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-07",
-      "note": "Seen in the German app's scan list, which carries wording only. Mapped whole because the shared classifier reads it as an acceptance."
+      "note": "Seen in the German app's scan list, which carries wording only. Mapped whole because the shared classifier reads it as an acceptance.",
+      "template": "collected_by_recipient"
     },
     {
       "wording": "Picked up from Pickup parcelshop by consignee.",
@@ -172,7 +175,8 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": "Seen in the German app's scan list, which carries wording only. The collection from a shop, after the driver's drop-off there; delivered, like the collection from a Pickup station. Mapped whole because the shared classifier reads it as an acceptance."
+      "note": "Seen in the German app's scan list, which carries wording only. The collection from a shop, after the driver's drop-off there; delivered, like the collection from a Pickup station. Mapped whole because the shared classifier reads it as an acceptance.",
+      "template": "collected_by_recipient"
     },
     {
       "wording": "Delivered.",
@@ -180,7 +184,8 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-07",
-      "note": "Seen in the German app's scan list, which carries wording only."
+      "note": "Seen in the German app's scan list, which carries wording only.",
+      "template": "delivered"
     },
     {
       "code": "ACCEPTED",
@@ -216,7 +221,8 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-07",
-      "note": "The German app's progress rail, one state for the whole parcel."
+      "note": "The German app's progress rail, one state for the whole parcel.",
+      "template": "delivered"
     },
     {
       "code": "OUT_FOR_DELIVERY",
@@ -225,7 +231,8 @@
       "stage": "out_for_delivery",
       "confirmedBy": "live",
       "firstSeen": "2026-10-07",
-      "note": "The German app's progress rail, one state for the whole parcel. Seen as a state the parcel had not reached."
+      "note": "The German app's progress rail, one state for the whole parcel. Seen as a state the parcel had not reached.",
+      "template": "out_for_delivery"
     },
     {
       "wording": "Pickup ordered for: …",
@@ -273,7 +280,8 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": "Seen in the German app's scan list, which carries wording only. Logged with the delivery at the same minute, naming where the parcel was left."
+      "note": "Seen in the German app's scan list, which carries wording only. Logged with the delivery at the same minute, naming where the parcel was left.",
+      "template": "delivered_mailbox"
     },
     {
       "wording": "At parcel delivery centre. (Return to sender)",

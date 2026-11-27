@@ -6,21 +6,24 @@
       "wording": "Parcel has been delivered successfully",
       "language": "en",
       "stage": "delivered",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "delivered"
     },
     {
       "code": "GTMS_SIGNED",
       "wording": "Your shipment has been delivered successfully",
       "language": "en",
       "stage": "delivered",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "delivered"
     },
     {
       "code": "GTMS_PUDO_SIGNED",
       "wording": "Your shipment has been collected by consignee at the parcelshop",
       "language": "en",
       "stage": "delivered",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "collected_by_recipient"
     },
     {
       "code": "GTMS_STA_SIGNED",
@@ -92,7 +95,8 @@
       "wording": "Out for delivery",
       "language": "en",
       "stage": "out_for_delivery",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "out_for_delivery"
     },
     {
       "code": "GTMS_DEL_FAILURE",
@@ -156,14 +160,16 @@
       "wording": "Your shipment has been delivered successfully",
       "language": "en",
       "stage": "delivered",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "delivered"
     },
     {
       "code": "PUDO_SIGN_SUCCESS",
       "wording": "Your shipment has been collected by consignee at the parcelshop",
       "language": "en",
       "stage": "delivered",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "collected_by_recipient"
     },
     {
       "code": "PUDO_DELIVERY",
@@ -264,7 +270,8 @@
       "wording": "Your shipment is out for delivery",
       "language": "en",
       "stage": "out_for_delivery",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "out_for_delivery"
     },
     {
       "code": "LM_DELIVERY_FAILURE",
@@ -286,7 +293,8 @@
       "language": "en",
       "stage": "in_transit",
       "confirmedBy": "live",
-      "note": "The last-mile carrier taking over a parcel Cainiao accepted long before."
+      "note": "The last-mile carrier taking over a parcel Cainiao accepted long before.",
+      "template": "handed_to_local_carrier"
     },
     {
       "code": "TRANSFER_ARRIVE",
@@ -307,14 +315,16 @@
       "wording": "Your shipment has been processed at sorting center and ready for shipping",
       "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "processed_sorting_center"
     },
     {
       "code": "SC_INBOUND",
       "wording": "Your shipment has arrived at sorting center",
       "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "arrived_sorting_center"
     },
     {
       "code": "TC_INBOUND",
@@ -433,7 +443,8 @@
       "wording": "Your shipment is out for delivery",
       "language": "en",
       "stage": "out_for_delivery",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "out_for_delivery"
     },
     {
       "code": "GTMS_STA_SIGNED",

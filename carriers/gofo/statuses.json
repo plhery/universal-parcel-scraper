@@ -6,7 +6,8 @@
       "wording": "Shipping Label Created",
       "language": "en",
       "stage": "registered",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "label_created"
     },
     {
       "code": "101",
@@ -112,7 +113,8 @@
       "wording": "Arrived at GOFO Regional Hub",
       "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "arrived_facility"
     },
     {
       "code": "202",
@@ -128,7 +130,8 @@
       "wording": "Loaded on Vehicle",
       "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "loaded_on_vehicle"
     },
     {
       "code": "201",
@@ -150,7 +153,8 @@
       "language": "en",
       "stage": "in_transit",
       "confirmedBy": "live",
-      "firstSeen": "2026-10-08"
+      "firstSeen": "2026-10-08",
+      "template": "departed_facility"
     },
     {
       "code": "412",
@@ -158,7 +162,8 @@
       "language": "en",
       "stage": "in_transit",
       "confirmedBy": "live",
-      "firstSeen": "2026-10-08"
+      "firstSeen": "2026-10-08",
+      "template": "to_next_facility"
     },
     {
       "code": "414",
@@ -190,14 +195,16 @@
       "wording": "Out for Delivery",
       "language": "en",
       "stage": "out_for_delivery",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "out_for_delivery"
     },
     {
       "code": "205",
       "wording": "Delivered",
       "language": "en",
       "stage": "delivered",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "delivered"
     }
   ]
 }

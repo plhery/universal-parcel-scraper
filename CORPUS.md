@@ -84,6 +84,15 @@ A carrier that words a scan only in another language than English can give the e
 page or another tenant of the same platform, which the note names. The map still stages the
 scan by the carrier's wording, and answers the English too.
 
+An entry can also name a `template` of [data/scan-templates.json](data/scan-templates.json): a
+common scan, such as an arrival at a sorting center, with its text in every language the app
+shows, so a reader of another language reads it in theirs. The template says what the carrier's
+wording says, no more: a wording that adds a fact, such as where it was left, takes a template
+that says it too, or none. The entry keys it by its wording, or by its code when it has no
+wording or one with a placeholder, and needs its `language`. `scanTemplate()` in the app entry
+names a scan's template; `node scripts/generate-scan-templates.mjs` checks the entries and
+indexes them.
+
 Some adapter tests replay these entries against the carrier's status map. Wording no carrier
 map covers falls to the shared classifier in [core/status](core/status/wording.ts), which
 has its own tests against audited histories.

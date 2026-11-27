@@ -126,7 +126,8 @@
       "firstSeen": "2026-11-08",
       "note": "Chronopost trackSkybillV2; code mapping requires matching wording. An export parcel on its way, under the code of the usual transit wording.",
       "wording": "Colis en transit",
-      "language": "fr"
+      "language": "fr",
+      "template": "on_the_way"
     },
     {
       "code": "ST",
@@ -161,7 +162,8 @@
       "confirmedBy": "live",
       "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
       "wording": "Colis en cours d'acheminement",
-      "language": "fr"
+      "language": "fr",
+      "template": "on_the_way"
     },
     {
       "code": "O",
@@ -363,7 +365,8 @@
       "firstSeen": "2026-10-08",
       "note": "Chronopost trackSkybillV2; code mapping requires matching wording. Seen with the delivering partner's own out-for-delivery scan, and staged like La Poste's MD1.",
       "wording": "Colis en cours de livraison",
-      "language": "fr"
+      "language": "fr",
+      "template": "out_for_delivery"
     },
     {
       "code": "TA",
@@ -504,7 +507,8 @@
       "firstSeen": "2026-10-08",
       "note": "Chronopost trackSkybillV2; code mapping requires matching wording. After R, the delivery reaches the sender and is staged returned.",
       "wording": "Livraison effectuée",
-      "language": "fr"
+      "language": "fr",
+      "template": "delivered"
     },
     {
       "code": "RI",
@@ -513,7 +517,8 @@
       "firstSeen": "2026-10-26",
       "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The recipient collects the parcel at the pickup point, after its arrival there (AB, SD or MD).",
       "wording": "Colis remis au destinataire au point de retrait",
-      "language": "fr"
+      "language": "fr",
+      "template": "collected_by_recipient"
     }
   ]
 }

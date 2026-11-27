@@ -597,6 +597,13 @@ language ([english.ts](core/status/english.ts)): the stage still comes from the 
 wording, the map answers both, and `translatedScanPolicy()` lets the English scan take over the
 row the app stored in the carrier's wording. A wording without known English keeps it.
 
+A common scan can also name a template whose text every language the app shows has
+([templates.ts](core/status/templates.ts)). `scanTemplate()` in the app entry gives a scan's
+template and the language of the carrier's wording, by provider code and then wording, from the
+entries of the carrier's `statuses.json` that name one, so the app shows the template to a reader
+of another language and the carrier's own words to the rest. The texts are in
+[data/scan-templates.json](data/scan-templates.json), which the apps bundle.
+
 A carrier can declare a `statusMap` next to its map in `status.ts`: the stage its map gives
 one provider code and wording, and the codes and wordings it leaves without a stage on
 purpose, each with a note. A scan of the carrier's own that moves nothing, such as a note on

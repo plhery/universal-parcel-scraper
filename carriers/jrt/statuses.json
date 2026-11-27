@@ -21,7 +21,8 @@
       "language": "en",
       "stage": "registered",
       "confirmedBy": "live",
-      "firstSeen": "2026-10-16"
+      "firstSeen": "2026-10-16",
+      "template": "shipment_info_received"
     },
     {
       "wording": "Shipment information sent to FedEx",
@@ -262,7 +263,8 @@
       "stage": "registered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-17",
-      "note": "Copied from DHL, which delivers the last leg: the label's data has reached it. JRT copies DHL's rows in lower case."
+      "note": "Copied from DHL, which delivers the last leg: the label's data has reached it. JRT copies DHL's rows in lower case.",
+      "template": "shipment_info_received"
     },
     {
       "wording": "shipment in transit to dhl",
@@ -422,7 +424,8 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-29",
-      "note": "Copied from DHL. After a return it is the delivery back to the sender, and the parser reads it as returned."
+      "note": "Copied from DHL. After a return it is the delivery back to the sender, and the parser reads it as returned.",
+      "template": "delivered"
     },
     {
       "wording": "returned shipment has been received by processing center",
@@ -1030,7 +1033,8 @@
       "stage": "out_for_delivery",
       "confirmedBy": "live",
       "firstSeen": "2026-11-09",
-      "note": "Copied from DHL, whose own adapter reads the same sentence as out for delivery: the round with the parcel."
+      "note": "Copied from DHL, whose own adapter reads the same sentence as out for delivery: the round with the parcel.",
+      "template": "out_for_delivery"
     },
     {
       "wording": "The shipment has arrived at the parcel center.",

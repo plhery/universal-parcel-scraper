@@ -56,14 +56,16 @@
       "stage": "in_transit",
       "language": "en",
       "confirmedBy": "live",
-      "firstSeen": "2026-09-28"
+      "firstSeen": "2026-09-28",
+      "template": "export_customs_cleared"
     },
     {
       "wording": "Arrived at the origin international airport",
       "stage": "in_transit",
       "language": "en",
       "confirmedBy": "live",
-      "firstSeen": "2026-09-28"
+      "firstSeen": "2026-09-28",
+      "template": "arrived_origin_airport"
     },
     {
       "wording": "Departed from AIRPORT",
@@ -79,21 +81,24 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-09-28",
-      "note": "China's export declaration, written at origin before and after the airport scan: the parcel is on its way, as its release (Clearence processing completed - Export) reads. Import customs is the destination's."
+      "note": "China's export declaration, written at origin before and after the airport scan: the parcel is on its way, as its release (Clearence processing completed - Export) reads. Import customs is the destination's.",
+      "template": "export_customs_started"
     },
     {
       "wording": "Shipment is in transit to next facility",
       "stage": "in_transit",
       "language": "en",
       "confirmedBy": "live",
-      "firstSeen": "2026-09-28"
+      "firstSeen": "2026-09-28",
+      "template": "to_next_facility"
     },
     {
       "wording": "Departed from sort facility",
       "stage": "in_transit",
       "language": "en",
       "confirmedBy": "live",
-      "firstSeen": "2026-09-28"
+      "firstSeen": "2026-09-28",
+      "template": "departed_sorting_center"
     },
     {
       "wording": "Arrived at origin facility",
@@ -115,7 +120,8 @@
       "stage": "registered",
       "language": "en",
       "confirmedBy": "live",
-      "firstSeen": "2026-09-28"
+      "firstSeen": "2026-09-28",
+      "template": "shipment_info_received"
     },
     {
       "wording": "Order submitted",
@@ -176,7 +182,8 @@
       "stage": "out_for_delivery",
       "language": "en",
       "confirmedBy": "live",
-      "firstSeen": "2026-10-04"
+      "firstSeen": "2026-10-04",
+      "template": "out_for_delivery"
     },
     {
       "wording": "Sort - loaded to trailer",
@@ -269,7 +276,8 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-10-23",
-      "note": "Relayed from GOFO in the US, as GOFO reads its own scan."
+      "note": "Relayed from GOFO in the US, as GOFO reads its own scan.",
+      "template": "out_for_delivery"
     },
     {
       "code": "50",
@@ -278,7 +286,8 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-09-28",
-      "note": "The exact latest event declares delivered; variable partner delivery notes remain descriptive."
+      "note": "The exact latest event declares delivered; variable partner delivery notes remain descriptive.",
+      "template": "delivered_mailbox"
     },
     {
       "wording": "In clearance processing - Import",
@@ -300,7 +309,8 @@
       "stage": "in_transit",
       "language": "en",
       "confirmedBy": "live",
-      "firstSeen": "2026-10-08"
+      "firstSeen": "2026-10-08",
+      "template": "arrived_sorting_center"
     },
     {
       "wording": "Shipment is ready for outbound",
@@ -654,7 +664,8 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": "Relayed from DHL Parcel Netherlands when the parcel waits at a ServicePoint."
+      "note": "Relayed from DHL Parcel Netherlands when the parcel waits at a ServicePoint.",
+      "template": "ready_for_pickup"
     },
     {
       "wording": "Preparing for delivery",
@@ -773,7 +784,8 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-11-13",
-      "note": "Relayed from the same last-mile carrier after its Item accepted, hours before its delivery to the letterbox."
+      "note": "Relayed from the same last-mile carrier after its Item accepted, hours before its delivery to the letterbox.",
+      "template": "out_for_delivery"
     },
     {
       "wording": "Accepted at Carrier's Facility",
@@ -909,7 +921,8 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-10-22",
-      "note": "Relayed from Ecoscooting."
+      "note": "Relayed from Ecoscooting.",
+      "template": "out_for_delivery"
     },
     {
       "wording": "Your shipment delivery attempt failed [<reason>]",
@@ -1159,7 +1172,8 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-11-10",
-      "note": "Relayed from J&T Express Australia: its delivery round. Matched on its fixed words, with the customer service sentence it can end with or without."
+      "note": "Relayed from J&T Express Australia: its delivery round. Matched on its fixed words, with the customer service sentence it can end with or without.",
+      "template": "out_for_delivery"
     },
     {
       "wording": "Arrived at Carrier's Regional Hub",
@@ -1209,7 +1223,7 @@
     {"wording": "Arrived at facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "The first scan after the label, hours before the departure scan."},
     {"wording": "Paket har ankommit till vår terminal", "language": "sv", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Relayed from CityMail, delivering in Sweden: its arrival at its terminal, as CityMail reads its own scan."},
     {"wording": "Loaded on Delivery Vehicle", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Relayed from the US last mile whose facilities show as the Carrier's Facility: the parcel loaded on the van for its round, before its out-for-delivery and delivery the same morning."},
-    {"wording": "Out For Delivery Today", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Relayed from the same carrier: its delivery round."},
+    {"wording": "Out For Delivery Today", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Relayed from the same carrier: its delivery round.", "template": "out_for_delivery_today"},
     {"wording": "Scheduled delivery date", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Relayed from the same carrier without a place, beside its delivery: a note of the delivery day, not a movement, so it has no stage and the parcel keeps the one it had."}
   ]
 }

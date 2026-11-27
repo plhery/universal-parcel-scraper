@@ -5,20 +5,23 @@
       "wording": "SHIPPING INFO SENT TO BRT",
       "language": "en",
       "stage": "registered",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "shipment_info_received"
     },
     {
       "wording": "COLLECTED",
       "language": "en",
       "stage": "accepted",
       "confirmedBy": "live",
-      "note": "In a shipment that starts at a partner's import depot (CHR-…, DPD…) it is BRT's hand-over from the partner that brought the parcel from abroad, wherever it is recorded, and the adapter reads it as in transit."
+      "note": "In a shipment that starts at a partner's import depot (CHR-…, DPD…) it is BRT's hand-over from the partner that brought the parcel from abroad, wherever it is recorded, and the adapter reads it as in transit.",
+      "template": "picked_up"
     },
     {
       "wording": "DEPARTED",
       "language": "en",
       "stage": "in_transit",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "departed_facility"
     },
     {
       "wording": "ARRIVED AT DEPOT",
@@ -31,7 +34,8 @@
       "language": "en",
       "stage": "out_for_delivery",
       "confirmedBy": "live",
-      "note": "BRT's own delivery round. At the depot of the DPD network abroad that delivers a parcel BRT sent there, the adapter reads it as the hand-over to that network, in transit."
+      "note": "BRT's own delivery round. At the depot of the DPD network abroad that delivers a parcel BRT sent there, the adapter reads it as the hand-over to that network, in transit.",
+      "template": "out_for_delivery"
     },
     {
       "wording": "ARRIVED AT BRT LOCKER",
@@ -49,7 +53,8 @@
       "wording": "DELIVERED",
       "language": "en",
       "stage": "delivered",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "template": "delivered"
     },
     {
       "wording": "ARRIVED AT BRT-fermopoint",
@@ -159,7 +164,8 @@
       "language": "it",
       "stage": "out_for_delivery",
       "confirmedBy": "live",
-      "note": "The Italian page's label for FOR DELIVERY."
+      "note": "The Italian page's label for FOR DELIVERY.",
+      "template": "out_for_delivery"
     },
     {
       "wording": "ARRIVATA AL BRT-fermopoint",
@@ -231,7 +237,8 @@
       "language": "it",
       "stage": "delivered",
       "confirmedBy": "live",
-      "note": "The Italian page's label for DELIVERED."
+      "note": "The Italian page's label for DELIVERED.",
+      "template": "delivered"
     }
   ]
 }
