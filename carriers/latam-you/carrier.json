@@ -1,0 +1,81 @@
+{
+  "id": "latam-you",
+  "displayName": "Latam You",
+  "aliases": [
+    "拉美邮",
+    "LatamYou"
+  ],
+  "region": {
+    "countries": [
+      "BR",
+      "CL",
+      "MX",
+      "CO",
+      "PE"
+    ]
+  },
+  "brand": {
+    "color": "#30058d"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "latam-you",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "provider_code",
+    "offset_timestamps",
+    "destination_country",
+    "delivered_at"
+  ],
+  "portal": {
+    "url": "https://latamyou.com/#/newTrack?no={trackingNumber}",
+    "searchUrl": "https://latamyou.com/#/newTrack",
+    "canaryUrl": "https://latamyou.com/",
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "offset_timestamps",
+      "destination_country",
+      "delivered_at"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "location",
+      "eta",
+      "weight",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "latamyou.com"
+      ],
+      "pathPattern": "^/?$",
+      "fragment": "^/newTrack\\?(?:[^#]*&)?no=([^&]+)"
+    }
+  ],
+  "detection": [
+    {
+      "id": "latam-you-1",
+      "pattern": "^LTY[A-Z]{2}PD\\d{10}$",
+      "confidence": "high"
+    }
+  ]
+}

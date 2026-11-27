@@ -2957,6 +2957,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'king-delivery', number: 'KDZGZ999999999',
     route: /^https:\/\/www\.kuaidaexp\.com\/cgi-bin\/GInfo\.dll\?MfcISAPICommand=emmistrack&w=kuaidaexp&ntype=10001&cno=KDZGZ999999999$/,
     marker: /运单跟踪/ },
+  // The guest tracker reads the number from its hash route into its field and looks it up on load. A
+  // visitor without a session then has the hash rewritten to the login route while the tracker stays shown.
+  { carrier: 'latam-you', number: 'LTYZZPD9900000017',
+    route: /^https:\/\/latamyou\.com\/#\/(?:newTrack\?no=LTYZZPD9900000017|user\/login)$/,
+    marker: /没有查询到订单信息/ },
 ];
 
 /**

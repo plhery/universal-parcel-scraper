@@ -1,0 +1,22 @@
+{
+  "carrier": "latam-you",
+  "records": [
+    {
+      "number": "LTYBRPD2304000216",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/latam-you/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "latam-you",
+        "confidence": "high"
+      },
+      "note": "TrackShip's Latam You page gives it as a tracking number example. Latam You's tracker answers it as an order to Brazil that Cainiao delivered."
+    }
+  ]
+}

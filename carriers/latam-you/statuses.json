@@ -1,0 +1,26 @@
+{
+  "carrier": "latam-you",
+  "entries": [
+    {"code": "10", "wording": "Order Place", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The merchant's order, written before the line has the parcel; its detail reads \"place order successful\"."},
+    {"code": "20", "wording": "Collected", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The line's warehouse in China received the parcel (\"receive successful\")."},
+    {"code": "23", "wording": "PACK", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Packed into the line's shipment at its warehouse (\"pack order successful\")."},
+    {"code": "25", "wording": "STOCKOUT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Left the line's warehouse."},
+    {"code": "26", "wording": "EXPORT_CUSTOMS_CLEARANCE", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Export clearance in China before the flight, a routine step; the state list at /BaseData/orderStates gives it."},
+    {"code": "27", "wording": "CLEARANCE_COMPLETED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Export clearance done in China, before the departure."},
+    {"code": "28", "wording": "DEPARTURE", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The flight to Latin America left."},
+    {"code": "29", "wording": "FLIGHT_ARRIVAL", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "The flight landed; from the state list at /BaseData/orderStates."},
+    {"code": "30", "wording": "Arriving in the local country", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Arrived in the destination country, before import clearance."},
+    {"code": "33", "wording": "In Clearance Completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Import clearance done: customs released the parcel. Seen on the last-mile partner's row (Cainiao's CC_IM_SUCCESS)."},
+    {"code": "35", "wording": "Waiting Delivery", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The last-mile partner's steps before the delivery: seen for Cainiao taking the parcel over (GTMS_ACCEPT) and leaving its sorting centre (GTMS_SC_DEPART)."},
+    {"code": "40", "wording": "Delivery Successful", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The last-mile partner's delivery (Cainiao's GTMS_SIGNED)."},
+    {"code": "800", "wording": "Return", "stage": "returned", "language": "en", "confirmedBy": "portal", "note": "From the state list at /BaseData/orderStates."},
+    {"code": "1000", "wording": "Abnormal", "stage": "exception", "language": "en", "confirmedBy": "portal", "note": "From the state list at /BaseData/orderStates."},
+    {"code": "1100", "wording": "Order Cancel", "stage": "exception", "language": "en", "confirmedBy": "portal", "note": "The order was cancelled and the parcel will not come; from the state list at /BaseData/orderStates."},
+    {"code": "1200", "wording": "Export Customs Exception", "stage": "exception", "language": "en", "confirmedBy": "portal", "note": "A customs problem in China; from the state list at /BaseData/orderStates."},
+    {"code": "1300", "wording": "Import Customs Exception", "stage": "exception", "language": "en", "confirmedBy": "portal", "note": "A customs problem in the destination country; from the state list at /BaseData/orderStates."},
+    {"code": "1400", "wording": "Package Lost", "stage": "exception", "language": "en", "confirmedBy": "portal", "note": "From the state list at /BaseData/orderStates."},
+    {"code": "1500", "wording": "Package Damaged", "stage": "exception", "language": "en", "confirmedBy": "portal", "note": "From the state list at /BaseData/orderStates."},
+    {"code": "1600", "wording": "Package Scrap", "stage": "exception", "language": "en", "confirmedBy": "portal", "note": "The parcel was scrapped; from the state list at /BaseData/orderStates."},
+    {"code": "2000", "wording": "Other", "language": "en", "confirmedBy": "portal", "note": "The state list's catch-all, which says nothing of where the parcel is: left without a stage, so the scan keeps the stage before it."}
+  ]
+}
