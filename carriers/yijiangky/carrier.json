@@ -1,0 +1,56 @@
+{
+  "id": "yijiangky",
+  "displayName": "Yijiang Express",
+  "aliases": [
+    "驿将快运",
+    "驿将",
+    "福建驿将快运有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#1492DF"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "yijiangky",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "history",
+      "location"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "status",
+      "eta",
+      "weight",
+      "service_name",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

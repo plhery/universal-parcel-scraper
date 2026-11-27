@@ -1,0 +1,46 @@
+{
+  "carrier": "yijiangky",
+  "records": [
+    {
+      "number": "YJ362260506067",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/yijiangky.shtml",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Kuaidi100's example on its Yijiang Express page. Yijiang's lookup answers it with a parcel collected in Yinchuan and delivered in Heihe."
+    },
+    {
+      "number": "UT20220209001",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 驿将快运. Yijiang's lookup answers that it holds nothing under it. La Poste's rules also take its shape."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "carrier": "yijiangky",
+  "entries": [
+    {
+      "wording": "已收取快件",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Parcel collected\": the first row, at the depot that took it in."
+    },
+    {
+      "wording": "快件在【银川西夏网点】完成分拣,准备发往【银川转运中心】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Sorted at [depot], to be sent to [hub]\". The status map reads every depot and destination by pattern."
+    },
+    {
+      "wording": "快件已发车",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"The vehicle carrying the parcel has left.\""
+    },
+    {
+      "wording": "快件到达【银川转运中心】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Arrived at [hub].\" The status map reads every depot by pattern."
+    },
+    {
+      "wording": "快件到达黑河市北安市",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Arrived in [city, county]\": the town whose depot delivers it. The status map reads every town by pattern."
+    },
+    {
+      "wording": "快件分配到【黑河北安部】准备派件",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Assigned to [depot], to be delivered\": the courier takes it in the next row."
+    },
+    {
+      "wording": "快件交给派送员,正在派送途中，请耐心等待（总件数：…件）",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Given to the courier, on its way to you, please wait (pieces: …)\". The count varies."
+    },
+    {
+      "wording": "您的快件已签收，如有疑问请联系客服400 116 9596（总件数：…件）",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Your parcel is signed for; call customer service with any question (pieces: …)\". The number is the firm's own service line. The count varies."
+    }
+  ]
+}

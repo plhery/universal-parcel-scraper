@@ -7224,6 +7224,11 @@
     "reason": "Longteng's one public waybill is S and thirteen digits, the test number kuaidi100 gives the firm: one letter before a date and a serial is too little to claim the shape, so the adapter answers explicit selection or a link to its tracker."
   },
   {
+    "carrier": "yijiangky",
+    "kind": "open",
+    "reason": "Yijiang Express's one waybill with history is YJ and twelve digits, the example kuaidi100 shows, and the test number kuaidi100 lists for the firm has another layout: too few to claim a shape, so the adapter answers explicit selection."
+  },
+  {
     "carrier": "meitongda",
     "kind": "open",
     "reason": "MEITONGDA numbers seen so far are MTD and seventeen digits, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
