@@ -13545,7 +13545,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "box-now",
-      "recognitionRank": 250
+      "recognitionRank": 250,
+      "recognitionServedCountriesOnly": true
     },
     "canaryUrl": "https://boxnow.cy/track",
     "trackingSearchUrl": "https://boxnow.cy/track",
@@ -21133,6 +21134,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "dhl-ecommerce-es",
       "recognitionRank": 630,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://clientesparcel.dhl.es/LiveTracking/",
@@ -23111,12 +23113,14 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       },
       {
         "pattern": "^\\d{14}$",
-        "confidence": "low"
+        "confidence": "low",
+        "servedCountriesOnly": true
       },
       {
         "pattern": "^\\d{14}[0-9A-Z]$",
         "confidence": "low",
-        "checksum": "dpd"
+        "checksum": "dpd",
+        "servedCountriesOnly": true
       }
     ]
   },
@@ -45493,7 +45497,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": [
       {
-        "pattern": "^\\d{12}$",
+        "pattern": "^00\\d{10}$",
         "confidence": "low"
       }
     ]
@@ -50436,7 +50440,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       },
       {
-        "pattern": "^\\d{11,13}$",
+        "pattern": "^(?:01\\d{9}|\\d{12,13})$",
         "confidence": "low"
       }
     ]

@@ -13540,7 +13540,8 @@
     "tracking": {
       "mode": "automatic",
       "adapter": "box-now",
-      "recognitionRank": 250
+      "recognitionRank": 250,
+      "recognitionServedCountriesOnly": true
     },
     "canaryUrl": "https://boxnow.cy/track",
     "trackingSearchUrl": "https://boxnow.cy/track",
@@ -21128,6 +21129,7 @@
       "mode": "automatic",
       "adapter": "dhl-ecommerce-es",
       "recognitionRank": 630,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://clientesparcel.dhl.es/LiveTracking/",
@@ -23106,12 +23108,14 @@
       },
       {
         "pattern": "^\\d{14}$",
-        "confidence": "low"
+        "confidence": "low",
+        "servedCountriesOnly": true
       },
       {
         "pattern": "^\\d{14}[0-9A-Z]$",
         "confidence": "low",
-        "checksum": "dpd"
+        "checksum": "dpd",
+        "servedCountriesOnly": true
       }
     ]
   },
@@ -45488,7 +45492,7 @@
     "linkRules": [],
     "detectionRules": [
       {
-        "pattern": "^\\d{12}$",
+        "pattern": "^00\\d{10}$",
         "confidence": "low"
       }
     ]
@@ -50431,7 +50435,7 @@
         "confidence": "low"
       },
       {
-        "pattern": "^\\d{11,13}$",
+        "pattern": "^(?:01\\d{9}|\\d{12,13})$",
         "confidence": "low"
       }
     ]
