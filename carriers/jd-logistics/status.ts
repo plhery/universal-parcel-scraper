@@ -18,6 +18,9 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['3052', MOVING],
   // Handed to the last-mile partner, whose first scan follows under DMPU.
   ['1060', MOVING],
+  // "Awaiting Pickup" between that handover and DMPU's "Cargo has been picked up": the partner is
+  // to collect the parcel, not the recipient.
+  ['A02', MOVING],
   ['DMPU', MOVING],
   // A line from China: picked up from the shop, then received, weighed and consolidated at
   // JD's warehouse there, which holds it until it departs.

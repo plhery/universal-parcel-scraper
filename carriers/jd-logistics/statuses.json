@@ -44,6 +44,15 @@
       "note": "Handed to the last-mile partner, GOFO in the United States."
     },
     {
+      "code": "A02",
+      "wording": "Awaiting Pickup",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "Between the handover to the last-mile partner (1060) and its pickup (DMPU): the partner is to collect the parcel."
+    },
+    {
       "code": "DMPU",
       "wording": "Arrived at GOFO Regional Hub",
       "language": "en",
