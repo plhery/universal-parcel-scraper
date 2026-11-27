@@ -443,7 +443,8 @@ A shop's own tracking page, run by a platform such as parcelLab
 (`<shop>.delivery-status.com`), Narvar, AfterShip, Sendcloud or ParcelPanel, is no carrier's
 link. `shopTrackingLinks` finds such links in a text or an HTML email and
 `resolveShopTrackingLink` reads each parcel's number and carrier from the link, or, for a
-parcelLab link that carries only an order and its hash, from parcelLab's anonymous API. The
+parcelLab link that carries only an order and its hash, from parcelLab's anonymous API, with
+the shop's account read from its page or from a script the page loads from its own host. The
 courier's own tracking link names the carrier when the catalog reads the same number from it,
 then the platform's courier code unless the number is surely another carrier's, then the
 number. A link that names no parcel says why: not found or expired, no number yet, refused,

@@ -3,7 +3,8 @@
  * `prtl.parcellab.com/trackings/details`. Their script (`cdn.parcellab.com/js/v3/parcelLab.min.js`) reads the
  * shipment from the link's query: a tracking number and parcelLab's courier code (`trackingNo`/`tno`,
  * `courier`/`c`), or an order (`orderNo`, or `xid`) with the shop's parcelLab user id (`plUserId`/`u`/`userId`,
- * else the page's own `userId` option) and the link's secure hash (`s`/`secureHash`). It then asks
+ * else the page's own `userId` option, else the `plUserId` option of a script the page loads from its own host, as
+ * H&M's `./index.js`) and the link's secure hash (`s`/`secureHash`). It then asks
  * `api.parcellab.com/v2/checkpoints`, anonymously; that reply names each parcel's number and courier.
  */
 import { CARRIER_CATALOG, type CarrierId } from '../../generated/catalog.js';
@@ -11,11 +12,13 @@ import { normalizeTrackingNumber } from '../detection/normalize.js';
 import { parseTrackingInput } from '../detection/parse.js';
 import { validTrackingNumber } from '../detection/valid.js';
 import { linkParcel } from './parcel.js';
-import type { ShopLinkParcel, ShopLinkResolution, ShopLinkResolveOptions, ShopTrackingLink } from './types.js';
+import type { ShopLinkFailure, ShopLinkParcel, ShopLinkResolution, ShopLinkResolveOptions, ShopTrackingLink } from './types.js';
 
 export const PARCELLAB_API = 'https://api.parcellab.com/v2/checkpoints/';
 /** A page or reply is a few kilobytes; an order's checkpoints a few dozen. */
 const MOST_BYTES = 512 * 1024;
+/** The page's own scripts read for the shop's account: H&M's pages load two. */
+const MOST_SCRIPTS = 2;
 
 /** parcelLab's courier codes whose name differs from the catalog's id; a code that is a catalog id names it. */
 const COURIERS: Record<string, CarrierId> = {
@@ -115,6 +118,54 @@ export function parcelLabPageUserId(html: string): string | undefined {
   return /\buserId\s*:\s*['"]?(\d{3,12})\b/.exec(html)?.[1];
 }
 
+/**
+ * The scripts a page loads from its own host, nearest parcelLab's plugin first, as the shop's options sit beside it:
+ * a relative `src` such as `./index.js`, or one on the page's host. parcelLab's own and other hosts' scripts are left out.
+ */
+export function parcelLabPageScripts(html: string, page: URL): URL[] {
+  const plugin = html.search(/parcellab-track-and-trace|cdn\.parcellab\.com/i);
+  const scripts: { url: URL; at: number }[] = [];
+  for (const match of html.matchAll(/<script\b[^>]*?(?<![\w-])src\s*=\s*(["']?)([^"'\s>]+)\1[^>]*>/gi)) {
+    let url: URL;
+    try {
+      url = new URL(match[2]!.replace(/&amp;/gi, '&'), page);
+    } catch {
+      continue;
+    }
+    if (url.origin === page.origin && !scripts.some((script) => script.url.href === url.href)) scripts.push({ url, at: match.index });
+  }
+  if (plugin >= 0) scripts.sort((a, b) => Math.abs(a.at - plugin) - Math.abs(b.at - plugin));
+  return scripts.map((script) => script.url);
+}
+
+/**
+ * The accounts a page's script sets as an option's value, `plUserId: "1234567"` or `userId: 1234567`, each once. Numbers
+ * that are no such key's value, as the shop's other accounts in a table by country, are not read.
+ */
+export function parcelLabScriptUserIds(script: string): string[] {
+  const option = /(?<![\w$.])(['"]?)(?:plUserId|userId)\1\s*:\s*(['"]?)(\d{3,12})\2(?![\w.])/g;
+  return [...new Set(Array.from(script.matchAll(option), (match) => match[3]!))];
+}
+
+/**
+ * The shop's account from the page's own scripts, when its HTML names none: the first script that sets one, of at most
+ * two. A script that sets several names none, rather than one guessed.
+ */
+async function scriptsUserId(scripts: URL[], load: (script: URL) => Promise<Response>): Promise<{ user: string } | { reason: ShopLinkFailure }> {
+  let failed = false;
+  for (const script of scripts.slice(0, MOST_SCRIPTS)) {
+    const response = await load(script);
+    if (!response.ok) {
+      failed = true;
+      continue;
+    }
+    const users = parcelLabScriptUserIds(await boundedText(response));
+    if (users.length > 1) return { reason: 'unsupported' };
+    if (users.length === 1) return { user: users[0]! };
+  }
+  return { reason: failed ? 'unavailable' : 'unsupported' };
+}
+
 export async function resolveParcelLabLink(link: ShopTrackingLink, options: ShopLinkResolveOptions = {}): Promise<ShopLinkResolution> {
   const base = { platform: link.platform, ...(link.shop ? { shop: link.shop } : {}) } as const;
   const url = new URL(link.url);
@@ -130,11 +181,20 @@ export async function resolveParcelLabLink(link: ShopTrackingLink, options: Shop
   try {
     let user = param(url, ['plUserId', 'u', 'userId']);
     if (!user) {
-      // The page names the shop's account in its script; the link leaves it out.
-      const page = await fetcher(`${url.origin}${url.pathname}`, { headers, signal: signal(), redirect: 'follow' });
+      // The page names the shop's account in its script, or in a script of its own it loads; the link leaves it out.
+      const address = `${url.origin}${url.pathname}`;
+      const page = await fetcher(address, { headers, signal: signal(), redirect: 'follow' });
       if (!page.ok) return { ...base, status: 'unresolved', reason: page.status === 404 || page.status === 410 ? 'not_found' : 'unavailable' };
-      user = parcelLabPageUserId(await boundedText(page));
-      if (!user) return { ...base, status: 'unresolved', reason: 'unsupported' };
+      const html = await boundedText(page);
+      user = parcelLabPageUserId(html);
+      if (!user) {
+        // A relative script is read against where the page landed: `/ch/fr` redirects to `/ch/fr/`.
+        const landed = new URL(page.url || address);
+        const found = await scriptsUserId(landed.origin === url.origin ? parcelLabPageScripts(html, landed) : [], (script) =>
+          fetcher(script.href, { headers: { ...headers, Accept: '*/*' }, signal: signal(), redirect: 'manual' }));
+        if ('reason' in found) return { ...base, status: 'unresolved', reason: found.reason };
+        user = found.user;
+      }
     }
     const query = new URLSearchParams({ ...(orderNo ? { orderNo } : { xid: xid! }), user, lang: 'en' });
     const zip = param(url, ['zip']);

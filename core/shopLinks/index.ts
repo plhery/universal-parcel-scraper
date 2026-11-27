@@ -5,8 +5,9 @@
  * such as parcelLab, Narvar, AfterShip, Sendcloud or ParcelPanel, and a mailing tool's click redirect worded like
  * tracking, and resolves one to the carrier and tracking number of each parcel it names.
  * What it is not: no tracking. Recognition reads only the string. A link that carries its numbers resolves with no
- * request; parcelLab's order links take a bounded, anonymous, read-only request or two to the platform, and a click
- * redirect a few to the mailing tool, through the caller's fetch. No address or name is kept.
+ * request; parcelLab's order links take up to four bounded, anonymous, read-only requests to the platform (the shop's
+ * page, two of the page's own scripts at most, then the order), and a click redirect a few to the mailing tool, through
+ * the caller's fetch. No address or name is kept.
  * Browser-safe: plain fetch, no Node APIs. A browser's fetch hides where a redirect leads, so click redirects stay
  * unresolved there.
  */

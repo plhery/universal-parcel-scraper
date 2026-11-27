@@ -14,6 +14,26 @@ const documented = {
 // A shop's page as parcelLab serves it: the account in the plugin's options, the shipment in the link's query.
 const PAGE = '<div id="parcellab-track-and-trace"></div><script>var options = { styles: true, userId: 1613380, lang: \'pl\' };</script>';
 const ORDER_LINK = 'https://hm.delivery-status.com/pl/?orderNo=9900000000001&s=0000aaaa1111bbbb2222cccc3333dddd&utm_source=transactional';
+// A page that sets no account itself: it loads parcelLab's v5 plugin and its own `./index.js`, as H&M's do. The script
+// sets the account in the plugin's options and lists the shop's other accounts by country.
+const SCRIPT_PAGE = `<script src="./footer.js"></script>
+  <main><div id="parcellab-track-and-trace"></div>
+  <script src="./index.js"></script>
+  <script onload="plTrackAndTraceStart()" src="https://cdn.parcellab.com/js/v5/main.min.js"></script></main>`;
+const SCRIPT = `function formatPrice(tracking, value) {
+  const dotDecimalSeparatorAccounts = [
+    7654321, // USA
+    2345678, // UK
+  ];
+  const numberOfDecimals = [2345678].includes(tracking.user_id) ? 0 : 2;
+}
+const options = {
+  styles: true,
+  plUserId: "1234567",
+  lang: "fr",
+  onRendered: function (state) { const tracking = { user_id: Number(state?.options?.userId) }; },
+};`;
+const SCRIPT_LINK = 'https://hm.delivery-status.com/ch/fr?orderNo=9900000000001&s=0000aaaa1111bbbb2222cccc3333dddd&pwrdBy_parcelLab=false';
 
 function recording(answers: Record<string, () => Response>) {
   const urls: string[] = [];
@@ -28,6 +48,9 @@ function recording(answers: Record<string, () => Response>) {
 }
 const json = (body: string, status = 200) => () => new Response(body, { status, headers: { 'Content-Type': 'application/json' } });
 const html = (body: string) => () => new Response(body, { status: 200, headers: { 'Content-Type': 'text/html' } });
+/** A page reached through a redirect, which a fetch reports as the response's address. */
+const landed = (body: string, at: string) => () => Object.defineProperty(html(body)(), 'url', { value: at });
+const script = (body: string, status = 200) => () => new Response(body, { status, headers: { 'Content-Type': 'text/javascript' } });
 
 describe('shop tracking-page links', () => {
   it('finds parcelLab pages in prose and in an HTML email, and names the shop', () => {
@@ -72,6 +95,68 @@ describe('shop tracking-page links', () => {
     expect(urls[0]).toBe('https://hm.delivery-status.com/pl/');
     const api = new URL(urls[1]!);
     expect(Object.fromEntries(api.searchParams)).toEqual({ orderNo: '9900000000001', user: '1613380', lang: 'en', s: '0000aaaa1111bbbb2222cccc3333dddd' });
+  });
+
+  it('reads the account from a script the page loads from its own host, never from a table of other accounts', async () => {
+    const { urls, fetcher } = recording({
+      'https://hm.delivery-status.com/ch/fr/index.js': script(SCRIPT),
+      'https://hm.delivery-status.com/ch/fr': landed(SCRIPT_PAGE, 'https://hm.delivery-status.com/ch/fr/'),
+      'https://api.parcellab.com/v2/checkpoints/': json(reply([documented])),
+    });
+    await expect(resolveShopTrackingLink(SCRIPT_LINK, { fetcher })).resolves.toEqual({
+      platform: 'parcellab', shop: 'hm', status: 'resolved',
+      parcels: [{ trackingNumber: DHL, carrier: 'dhl', confidence: 'high', courierCode: 'dhl-germany' }],
+    });
+    // The script nearest parcelLab's plugin answers, read against where the page landed; parcelLab's own is never asked.
+    expect(urls.slice(0, 2)).toEqual(['https://hm.delivery-status.com/ch/fr', 'https://hm.delivery-status.com/ch/fr/index.js']);
+    expect(Object.fromEntries(new URL(urls[2]!).searchParams)).toEqual({ orderNo: '9900000000001', user: '1234567', lang: 'en', s: '0000aaaa1111bbbb2222cccc3333dddd' });
+    expect(urls).toHaveLength(3);
+  });
+
+  it('prefers the account a page sets itself, and leaves a page whose scripts set none or several unresolved', async () => {
+    const inline = recording({
+      'https://hm.delivery-status.com/pl/': html(`${PAGE}<script src="./index.js"></script>`),
+      'https://api.parcellab.com/': json(reply([documented])),
+    });
+    await expect(resolveShopTrackingLink(ORDER_LINK, { fetcher: inline.fetcher })).resolves.toMatchObject({ status: 'resolved' });
+    expect(inline.urls).toHaveLength(2);
+    expect(new URL(inline.urls[1]!).searchParams.get('user')).toBe('1613380');
+
+    const outcome = async (scripts: Record<string, () => Response>) => {
+      const { urls, fetcher } = recording({ ...scripts, 'https://hm.delivery-status.com/pl/': html(SCRIPT_PAGE.replace(/\.\//g, '/pl/')) });
+      return { resolution: await resolveShopTrackingLink(ORDER_LINK, { fetcher }), urls };
+    };
+    // A table of accounts is no option; two scripts at most are read.
+    const table = SCRIPT.replace('plUserId: "1234567",', '');
+    const none = await outcome({ 'https://hm.delivery-status.com/pl/index.js': script(table), 'https://hm.delivery-status.com/pl/footer.js': script(table) });
+    expect(none.resolution).toMatchObject({ status: 'unresolved', reason: 'unsupported' });
+    expect(none.urls).toEqual(['https://hm.delivery-status.com/pl/', 'https://hm.delivery-status.com/pl/index.js', 'https://hm.delivery-status.com/pl/footer.js']);
+    // Accounts set as several options' values name none; the same account set twice names it.
+    const several = `const accounts = [{ country: 'ch', userId: 7654321 }, { country: 'de', "userId": "2345678" }];\n${SCRIPT}`;
+    await expect(outcome({ 'https://hm.delivery-status.com/pl/index.js': script(several) }))
+      .resolves.toMatchObject({ resolution: { reason: 'unsupported' }, urls: { length: 2 } });
+    const twice = `${SCRIPT}\nconst plugin = { userId: 1234567 };`;
+    const again = await outcome({ 'https://hm.delivery-status.com/pl/index.js': script(twice), 'https://api.parcellab.com/': json(reply([documented])) });
+    expect(again.resolution).toMatchObject({ status: 'resolved' });
+    expect(new URL(again.urls[2]!).searchParams.get('user')).toBe('1234567');
+    // A script that does not load leaves the page unavailable.
+    await expect(outcome({ 'https://hm.delivery-status.com/pl/index.js': script('', 500), 'https://hm.delivery-status.com/pl/footer.js': script(table) }))
+      .resolves.toMatchObject({ resolution: { reason: 'unavailable' }, urls: { length: 3 } });
+  });
+
+  it('never loads a script from another host', async () => {
+    const page = `<div id="parcellab-track-and-trace"></div>
+      <script src="https://cdn.parcellab.com/js/v5/main.min.js"></script>
+      <script src="https://hm.delivery-status.com.example.org/pl/index.js"></script>
+      <script src="//static.example.net/index.js"></script>
+      <script data-src="./index.js"></script>`;
+    const { urls, fetcher } = recording({ 'https://hm.delivery-status.com/pl/': html(page), 'https://': script(SCRIPT) });
+    await expect(resolveShopTrackingLink(ORDER_LINK, { fetcher })).resolves.toMatchObject({ status: 'unresolved', reason: 'unsupported' });
+    expect(urls).toEqual(['https://hm.delivery-status.com/pl/']);
+    // Nor from the host a page redirected to.
+    const moved = recording({ 'https://hm.delivery-status.com/pl/': landed(SCRIPT_PAGE, 'https://moved.example.org/pl/'), 'https://': script(SCRIPT) });
+    await expect(resolveShopTrackingLink(ORDER_LINK, { fetcher: moved.fetcher })).resolves.toMatchObject({ reason: 'unsupported' });
+    expect(moved.urls).toEqual(['https://hm.delivery-status.com/pl/']);
   });
 
   it('says why a link names no parcel', async () => {
