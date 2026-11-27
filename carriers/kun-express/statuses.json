@@ -21,6 +21,8 @@
     {"wording": "Departed USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS sending the parcel on from a facility, copied after the import clearance."},
     {"wording": "Arrived at Post Office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The delivering post office's receipt, copied before USPS's round."},
     {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "USPS's round, copied after the post office's receipt."},
-    {"wording": "Delivered, Parcel Locker", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "USPS's delivery into a parcel locker, copied as the last row."}
+    {"wording": "Delivered, Parcel Locker", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "USPS's delivery into a parcel locker, copied as the last row."},
+    {"wording": "Item has been collected", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-26", "note": "A line's collection, copied after the warehouse's receipt: under way, not a second acceptance."},
+    {"wording": "Delivery to local courier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-26", "note": "A line's hand-over to the destination's courier after import clearance, before its round; the record names no courier or number."}
   ]
 }

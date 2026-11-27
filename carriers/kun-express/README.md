@@ -26,7 +26,10 @@ CAPTCHA or browser is needed.
   maps them, and the departure written as the goods leaving the warehouse (`货物离开`) with its
   place. The rows copied from USPS keep USPS's wording. The map lists those seen, which read in
   transit, USPS's acceptance included: it comes after the flight, when USPS takes the parcel
-  over from the line. Other copied rows are staged by the shared wording rules.
+  over from the line. Other copied rows are staged by the shared wording rules. The map also
+  lists two rows of a line that copies its own English scans, which those rules leave unstaged:
+  its collection after the warehouse's receipt and its hand-over to the local courier, both
+  transit.
 - Scan times are wall clocks without an offset. The forwarder writes its own rows to the
   second, on the platform's Beijing clock. The rows it copies from USPS come to the minute on
   the facility's clock, as USPS's explanation of each row states, so a row to the minute keeps
