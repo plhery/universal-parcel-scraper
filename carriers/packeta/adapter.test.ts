@@ -193,6 +193,9 @@ describe('Packeta response parsing', () => {
   it('reads a parcel sent on from a full Z-BOX to another one as on its way', () => {
     expect(packetaEventStage('We are sorry, but the original Z-BOX is full. We will deliver the parcel to Z-BOX Example Street 1, Example Town 65. More information is being sent by e-mail.'))
       .toBe('in_transit');
+    // The recipient's own change of pickup point.
+    expect(packetaEventStage('You have redirected your parcel from the original location Example Town 1, Example Street 2 to the new location Z-BOX Example Town 1, Example Street 3 (Example Mall)'))
+      .toBe('in_transit');
   });
 
   it('retains operational sender and pickup-point names', () => {

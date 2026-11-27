@@ -333,6 +333,14 @@
       "note": "The handover to iMile, the last mile, whose scans follow with its centre in 【】."
     },
     {
+      "wording": "Route not completed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The same reason of iMile's driver without its angle brackets, between iMile's delivery round and \"Back To DS.\": read as the bracketed one."
+    },
+    {
       "wording": "<Route not completed>",
       "stage": "in_transit",
       "language": "en",

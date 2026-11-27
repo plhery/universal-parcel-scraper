@@ -72,6 +72,8 @@ const EVENT_TEXT_STAGES: Array<[substring: string, stage: Stage]> = [
   ['has been handed over to the carrier', 'in_transit'],
   // The Z-BOX the parcel was going to is full, so Packeta sends it to another one it names.
   ['z-box is full. we will deliver the parcel to', 'in_transit'],
+  // The recipient moved the parcel to another pickup point or Z-BOX, which the sentence names: it travels on there.
+  ['you have redirected your parcel from the original location', 'in_transit'],
   ['on its way to you', 'out_for_delivery'],
   ['ready for pickup', 'ready_for_pickup'],
   ['the parcel is with you', 'delivered'],

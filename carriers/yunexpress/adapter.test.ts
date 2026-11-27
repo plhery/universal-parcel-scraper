@@ -128,9 +128,11 @@ describe('YunExpress captured response projection', () => {
       Object.assign(item.TrackInfo.LastTrackEvent, { ProcessDate: '2026-03-25T20:41:00', ProcessContent: '【Sample DS】 Back To DS.', ProcessLocation: 'Example facility' });
       return reply;
     };
-    const unreached = parse(payload('<Route not completed>'), NUMBER);
-    expect(unreached).toMatchObject({ current_stage: 'in_transit' });
-    expect(unreached.events!.slice(0, 3).map((event) => event.stage)).toEqual(['in_transit', 'in_transit', 'out_for_delivery']);
+    for (const run of ['<Route not completed>', 'Route not completed']) {
+      const unreached = parse(payload(run), NUMBER);
+      expect(unreached, run).toMatchObject({ current_stage: 'in_transit' });
+      expect(unreached.events!.slice(0, 3).map((event) => event.stage), run).toEqual(['in_transit', 'in_transit', 'out_for_delivery']);
+    }
     // After the driver's failed attempt, the return to the station is that attempt told again.
     const attempted = parse(payload('【Sample DS】Consignee not at home.'), NUMBER);
     expect(attempted).toMatchObject({ current_stage: 'failed_attempt' });
