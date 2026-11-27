@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
-import { attachUspsTrackingCapture, forgetUspsOutageSessions, keepUspsSession, listenAfterUspsWarmup, USPS_IDLE_MS, USPS_SESSION_MAX_AGE_MS, USPS_WARMUP_MS, UspsSessions, uspsCaptureNumber, uspsOutage, uspsSessions, uspsWarmupRequest, warmUspsSessions } from './usps-tracking.mjs';
+import { attachUspsTrackingCapture, forgetUspsOutageSessions, keepUspsSession, listenAfterUspsWarmup, plainUspsBrowsers, USPS_IDLE_MS, USPS_SESSION_MAX_AGE_MS, USPS_WARMUP_MS, UspsPlainBrowsers, UspsSessions, uspsCaptureNumber, uspsOutage, uspsSessions, uspsUnready, uspsWarmupRequest, warmUspsSessions } from './usps-tracking.mjs';
 
 const NUMBER = '9400111899223397910421';
 const URL = `https://tools.usps.com/tracking/${NUMBER}`;
@@ -354,13 +354,90 @@ test('no session is prepared when none can be opened, nor once lookups have stop
   assert.equal(back.value.session, 'usps-tracking-2');
 });
 
-test('the orchestrator sends ordinary USPS reads through the kept session', () => {
+test('the orchestrator sends ordinary USPS reads through the kept session, and no session ready as HTTP 503', () => {
+  const imports = 'import {\n  proxySanitizeHeaders,\n  RequestValidationError,\n} from "./utils/sanitize"\n';
   const entry = 'export async function scrape(\n  req: ScrapeRequest,\n  deps: OrchestratorDeps,\n'
     + '  runners: OrchestratorRunners = {},\n): Promise<ScrapeResult> {\n  const started = Date.now()\n';
-  const patched = keepUspsSession('import { x } from "./x"\n' + entry);
-  assert.match(patched, /^import \{ uspsSessions \} from "\.\/utils\/usps-tracking\.mjs"\n/);
-  assert.match(patched, /Promise<ScrapeResult> \{\n {2}if \(uspsSessions\.routes\(req, deps\.sessions\)\) return uspsSessions\.run\(req, deps\.sessions!, \(read\) => scrape\(read, deps, runners\)\)\n {2}const started/);
-  assert.throws(() => keepUspsSession(entry.replace('runners: OrchestratorRunners = {}', 'runners = {}')), /review the USPS kept session/);
+  const patched = keepUspsSession(imports + entry);
+  assert.match(patched, /^import \{ uspsSessions, uspsUnready \} from "\.\/utils\/usps-tracking\.mjs"\n/);
+  assert.match(patched, /Promise<ScrapeResult> \{\n {2}if \(uspsSessions\.routes\(req, deps\.sessions\)\) return uspsSessions\.run\(req, deps\.sessions!, \(read\) => scrape\(read, deps, runners\)\)\n {4}\.catch\(\(error\) => \{ throw uspsUnready\(error\) \? new RequestValidationError\(error\.message, 503\) : error \}\)\n {2}const started/);
+  assert.throws(() => keepUspsSession(imports + entry.replace('runners: OrchestratorRunners = {}', 'runners = {}')), /review the USPS kept session/);
+  assert.throws(() => keepUspsSession(entry), /review the USPS kept session/);
+});
+
+test('no session ready is told apart from other failures', async () => {
+  const sessions = new UspsSessions({ waitMs: 0 });
+  const error = await sessions.run({ url: URL, skipHttp: true, maxTier: 3, maxTimeout: 30_000, ...OPTIONS },
+    { create: async () => new Promise(() => {}), destroy: async () => {}, list: () => [] }, async () => ({})).catch(error => error);
+  assert.equal(uspsUnready(error), true);
+  for (const other of [new Error('No USPS browser session is ready'), Object.assign(new Error('Session busy'), { statusCode: 503 }), undefined]) {
+    assert.equal(uspsUnready(other), false);
+  }
+});
+
+test('USPS sessions acquire a plain browser of their own, and the rest the pool', () => {
+  const source = 'import type { AcquireOptions } from "./orchestrator"\n  async use<T>(\n    id: string,\n    domain: string,\n'
+    + '      const acquired = await budget.run<BrowserHandle>(() =>\n        this.deps\n          .acquireBrowser(domain, budget.remaining(), {\n'
+    + '            signal: budget.signal,\n';
+  const patched = plainUspsBrowsers(source);
+  assert.match(patched, /^import \{ uspsPlainBrowsers \} from "\.\/utils\/usps-tracking\.mjs"\n/);
+  assert.match(patched, /\(id\.startsWith\("usps-tracking-"\) \? uspsPlainBrowsers\.acquirer\(id\)\n {10}: \(d: string, b: number, o: AcquireOptions\) => this\.deps\.acquireBrowser\(d, b, o\)\)\(domain, budget\.remaining\(\), \{\n {12}signal/);
+  assert.throws(() => plainUspsBrowsers(source.replace('this.deps\n          .acquireBrowser', 'this.deps.acquireBrowser')), /review the USPS plain browser/);
+  assert.throws(() => plainUspsBrowsers(source.replace('    id: string,', '    sessionId: string,')), /review the USPS plain browser/);
+});
+
+function plainBrowser() {
+  const browser = new EventEmitter();
+  const open = new Set();
+  Object.assign(browser, {
+    closed: false,
+    isConnected: () => !browser.closed,
+    contexts: () => [...open],
+    newContext: async () => {
+      const context = { newPage: async () => ({ evaluate: async () => 'Mozilla/5.0 Camoufox' }), close: async () => { open.delete(context); } };
+      open.add(context);
+      return context;
+    },
+    close: async () => { browser.closed = true; browser.emit('disconnected'); },
+  });
+  return browser;
+}
+
+test('a USPS session keeps its plain browser until it has had no context for a minute', async () => {
+  let now = 0;
+  const launched = [];
+  const plain = new UspsPlainBrowsers({ now: () => now, sweepMs: 3_600_000, launch: async timeoutMs => {
+    const browser = plainBrowser();
+    launched.push({ browser, timeoutMs });
+    return browser;
+  } });
+  const first = await plain.acquirer('usps-tracking-1')('tools.usps.com', 30_000, {});
+  assert.equal(first.fingerprint.userAgent, 'Mozilla/5.0 Camoufox');
+  assert.equal(launched[0].timeoutMs, 30_000);
+  assert.equal(launched[0].browser.contexts().length, 0, 'the user agent read closes its context');
+  const context = await first.browser.newContext();
+  assert.equal((await plain.acquire('usps-tracking-1', 30_000)).browser, first.browser);
+  const second = await plain.acquire('usps-tracking-2', 1_000);
+  assert.notEqual(second.browser, first.browser);
+  assert.equal(launched[1].timeoutMs, 5_000);
+  await second.browser.newContext();
+  await context.close();
+  plain.sweep();
+  now += 59_000;
+  plain.sweep();
+  assert.equal(first.browser.closed, false);
+  now += 1_000;
+  plain.sweep();
+  assert.equal(first.browser.closed, true);
+  assert.equal(plain.size, 1);
+  await second.browser.close();
+  assert.equal(plain.size, 0, 'a disconnected browser is forgotten');
+  const aborted = AbortSignal.abort();
+  await assert.rejects(plain.acquire('usps-tracking-3', 30_000, aborted));
+  const failing = new UspsPlainBrowsers({ launch: async () => { throw new Error('launch failed'); } });
+  await assert.rejects(failing.acquire('usps-tracking-4', 30_000), /launch failed/);
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(failing.size, 0);
 });
 
 test('the warm-up reads a tracking page the way the adapter does, and only for a USPS number', () => {

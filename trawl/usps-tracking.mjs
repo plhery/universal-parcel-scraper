@@ -118,7 +118,10 @@ export function uspsTrialOutcome(result, error) {
   if (uspsOutage(result)) return 'outage';
   return TRACKING.test(result?.html ?? '') ? 'loaded' : 'other_page';
 }
-const unready = () => Object.assign(new Error('No USPS browser session is ready'), { statusCode: 503 });
+const UNREADY = 'No USPS browser session is ready';
+const unready = () => Object.assign(new Error(UNREADY), { statusCode: 503 });
+/** The lookups' answer when no session is ready, which TRAWL's scrape route sends as HTTP 503. */
+export const uspsUnready = error => error?.message === UNREADY && statusOf(error) === 503;
 
 export class UspsSessions {
   #ready = [];
@@ -302,6 +305,101 @@ export class UspsSessions {
 // One per process, however the module is reached: the server's warm-up and the orchestrator share it.
 export const uspsSessions = globalThis[Symbol.for('upc.uspsSessions')] ??= new UspsSessions();
 
+// USPS turns away every session of a browser from TRAWL's pool: camoufox-js gives each pool browser a generated
+// fingerprint, and USPS's bot check refuses it, while the same Camoufox build launched without camoufox-js
+// loads tracking. So each USPS session gets a browser of its own, launched plainly, which closes once its
+// session has closed its context.
+export const USPS_PLAIN_IDLE_MS = 60_000;
+const PLAIN_SWEEP_MS = 30_000;
+const PLAIN_LAUNCH_MIN_MS = 5_000;
+
+async function launchPlainFirefox(timeoutMs) {
+  const { firefox } = await import('playwright-core');
+  const dir = process.env.CAMOUFOX_INSTALL_DIR?.trim() || '/opt/camoufox';
+  return firefox.launch({ executablePath: `${dir}/camoufox-bin`, headless: true, timeout: timeoutMs });
+}
+
+export class UspsPlainBrowsers {
+  #slots = new Map();
+  #timer;
+
+  constructor({ launch = launchPlainFirefox, now = Date.now, idleMs = USPS_PLAIN_IDLE_MS, sweepMs = PLAIN_SWEEP_MS } = {}) {
+    Object.assign(this, { launch, now, idleMs, sweepMs });
+  }
+
+  /** The browser sessions' acquire for one USPS session: always that session's own browser. */
+  acquirer(id) {
+    return (_domain, budgetMs, options) => this.acquire(id, budgetMs, options?.signal);
+  }
+
+  async acquire(id, budgetMs, signal) {
+    signal?.throwIfAborted();
+    this.sweep();
+    this.#timer ??= setInterval(() => this.sweep(), this.sweepMs);
+    this.#timer.unref?.();
+    let slot = this.#slots.get(id);
+    if (!slot) {
+      slot = { idleSince: null, handle: this.#open(id, Math.max(PLAIN_LAUNCH_MIN_MS, Math.floor(budgetMs ?? 0))) };
+      this.#slots.set(id, slot);
+      slot.handle.catch(() => { if (this.#slots.get(id) === slot) this.#slots.delete(id); });
+    }
+    return slot.handle;
+  }
+
+  async #open(id, timeoutMs) {
+    const browser = await this.launch(timeoutMs);
+    browser.on?.('disconnected', () => {
+      const slot = this.#slots.get(id);
+      if (slot?.browser === browser) this.#slots.delete(id);
+    });
+    let userAgent;
+    try {
+      const context = await browser.newContext();
+      try { userAgent = await (await context.newPage()).evaluate(() => navigator.userAgent); }
+      finally { await context.close().catch(() => {}); }
+    } catch (error) {
+      await browser.close().catch(() => {});
+      throw error;
+    }
+    const slot = this.#slots.get(id);
+    if (slot) slot.browser = browser;
+    return { id: -1, headful: false, lease: 0, context: undefined, browser,
+      fingerprint: { userAgent, platform: 'Linux x86_64', locale: 'en-US', timezone: 'UTC' } };
+  }
+
+  /** Closes the browsers whose session has had no context for `idleMs`, and forgets disconnected ones. */
+  sweep() {
+    for (const [id, slot] of this.#slots) {
+      const browser = slot.browser;
+      if (!browser) continue;
+      if (browser.isConnected?.() === false) { this.#slots.delete(id); continue; }
+      if (browser.contexts().length) { slot.idleSince = null; continue; }
+      slot.idleSince ??= this.now();
+      if (this.now() - slot.idleSince < this.idleMs) continue;
+      this.#slots.delete(id);
+      void browser.close().catch(() => {});
+    }
+  }
+
+  get size() {
+    return this.#slots.size;
+  }
+}
+
+export const uspsPlainBrowsers = globalThis[Symbol.for('upc.uspsPlainBrowsers')] ??= new UspsPlainBrowsers();
+
+const SESSION_ACQUIRE = '        this.deps\n          .acquireBrowser(domain, budget.remaining(), {\n';
+
+/** Gives TRAWL's USPS sessions their own plain browser, and stops the build when the code it changes has moved. */
+export function plainUspsBrowsers(source) {
+  if (source.split(SESSION_ACQUIRE).length !== 2 || !source.includes('  async use<T>(\n    id: string,\n')) {
+    throw new Error('TRAWL browser sessions changed: review the USPS plain browser');
+  }
+  return 'import { uspsPlainBrowsers } from "./utils/usps-tracking.mjs"\n' + source.replace(SESSION_ACQUIRE,
+    `        (id.startsWith("${SESSION_PREFIX}") ? uspsPlainBrowsers.acquirer(id)\n`
+    + '          : (d: string, b: number, o: AcquireOptions) => this.deps.acquireBrowser(d, b, o))(domain, budget.remaining(), {\n');
+}
+
 // A new container prepares its sessions before it opens its port while the container it replaces still
 // serves: a client that finds the new port closed connects to the old container under the same network
 // alias, and the deploy stops the old one once the new one answers its health check. The port stays
@@ -383,9 +481,13 @@ const SCRAPE_ENTRY = 'export async function scrape(\n  req: ScrapeRequest,\n  de
 
 /** Sends TRAWL's USPS tracking reads through the kept session, and stops the build when its entry moved. */
 export function keepUspsSession(source) {
-  if (source.split(SCRAPE_ENTRY).length !== 2) throw new Error('TRAWL orchestrator changed: review the USPS kept session');
-  return 'import { uspsSessions } from "./utils/usps-tracking.mjs"\n' + source.replace(SCRAPE_ENTRY, SCRAPE_ENTRY
-    + '  if (uspsSessions.routes(req, deps.sessions)) return uspsSessions.run(req, deps.sessions!, (read) => scrape(read, deps, runners))\n');
+  if (source.split(SCRAPE_ENTRY).length !== 2 || !/^ {2}RequestValidationError,$/m.test(source)) {
+    throw new Error('TRAWL orchestrator changed: review the USPS kept session');
+  }
+  // TRAWL's scrape route sends the status of its validation errors only, and 500 for anything else.
+  return 'import { uspsSessions, uspsUnready } from "./utils/usps-tracking.mjs"\n' + source.replace(SCRAPE_ENTRY, SCRAPE_ENTRY
+    + '  if (uspsSessions.routes(req, deps.sessions)) return uspsSessions.run(req, deps.sessions!, (read) => scrape(read, deps, runners))\n'
+    + '    .catch((error) => { throw uspsUnready(error) ? new RequestValidationError(error.message, 503) : error })\n');
 }
 
 /** Patches TRAWL's orchestrator, and stops the build when the code it changes has moved. */

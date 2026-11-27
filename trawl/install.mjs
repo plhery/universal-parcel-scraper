@@ -5,7 +5,7 @@ import { logTierFailures } from '/app/apps/api/src/tier-failure-log.mjs';
 import { trawlLicense } from '/app/packages/tiers/src/utils/license.mjs';
 import { fedexBrowserPool } from '/app/packages/tiers/src/utils/fedex-session.mjs';
 import { isolateSiteCookies } from '/app/packages/tiers/src/utils/site-cookies.mjs';
-import { forgetUspsOutageSessions, keepUspsSession, listenAfterUspsWarmup } from '/app/packages/tiers/src/utils/usps-tracking.mjs';
+import { forgetUspsOutageSessions, keepUspsSession, listenAfterUspsWarmup, plainUspsBrowsers } from '/app/packages/tiers/src/utils/usps-tracking.mjs';
 
 // Every caller of the reCAPTCHA solver stops once Google blocks or refuses its audio.
 const solverPath = '/app/packages/tiers/src/solvers/recaptcha.ts';
@@ -251,6 +251,9 @@ writeFileSync(orchestratorPath, orchestrator.replace(attempt, attempt + '\n     
 writeFileSync(orchestratorPath, forgetUspsOutageSessions(readFileSync(orchestratorPath, 'utf8')));
 // USPS tracking reads go through sessions prepared ahead: USPS refuses each session's first read.
 writeFileSync(orchestratorPath, keepUspsSession(readFileSync(orchestratorPath, 'utf8')));
+// USPS refuses the pool's browsers, so each USPS session reads through a plain browser of its own.
+const browserSessionsPath = '/app/packages/tiers/src/browserSessions.ts';
+writeFileSync(browserSessionsPath, plainUspsBrowsers(readFileSync(browserSessionsPath, 'utf8')));
 // With USPS_WARMUP_NUMBER set, a new container opens its port once those sessions are ready,
 // or at once when no other container under USPS_WARMUP_PEER is serving.
 const apiIndexPath = '/app/apps/api/src/index.ts';

@@ -190,12 +190,16 @@ A session is replaced after two refusals in a row, after two hours, or when its 
 After four new sessions in a row that USPS let none through, none is opened for two minutes, a
 rest that doubles up to sixteen minutes until one is let through, and none is opened once no
 lookup has come for half an hour. A lookup waits up to twenty seconds for a session
-being prepared; with none ready it fails without reading, since a fresh context's read is always
-refused. A `usps.session` warning records each session created, let through and ended, with its
+being prepared; with none ready it fails with HTTP 503 without reading, since a fresh context's
+read is always refused. A `usps.session` warning records each session created, let through and ended, with its
 reason, reads and age, and each rest. It also records each trial read with what it met (tracking,
 USPS's outage page, another page, an error or the read's timeout), a session that could not be
 opened with its status, and those counts on a session USPS did not let through, so refusals can be
 told apart by cause.
+
+Each USPS session runs in a browser of its own: the pool's Camoufox binary launched through
+`playwright-core` without camoufox-js's generated fingerprint, which USPS's bot check refuses. The
+browser closes a minute after its session has no context left.
 
 With `USPS_WARMUP_NUMBER` set to a public USPS sample and `USPS_WARMUP_PEER` to the network alias
 clients use, a new container prepares these sessions before it opens its port while another
