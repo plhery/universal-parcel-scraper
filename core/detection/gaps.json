@@ -4613,6 +4613,12 @@
     "reason": "TFM Express airwaybills are twelve digits, a plain run FedEx and other carriers share, so no rule claims them."
   },
   {
+    "carrier": "tfmxpress",
+    "pattern": "^[A-Z]{6}\\d{5}$",
+    "kind": "by_design",
+    "reason": "One public TFMXpress consignment number has this layout, six letters and five digits, from a tracking directory's carrier page; the letters look like a sender's code, so one sample does not show which are fixed, and the shape is a generic reference."
+  },
+  {
     "carrier": "tforce-logistics",
     "pattern": "^\\d{20}$",
     "kind": "by_design",

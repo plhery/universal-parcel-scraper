@@ -1,0 +1,22 @@
+{
+  "carrier": "tfmxpress",
+  "records": [
+    {
+      "number": "HSETUC17592",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/tfm-express/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's TFMXpress page gives it as a tracking code example. TFMXpress's tracker answers it with a consignment picked up in Melbourne and delivered in Adelaide."
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "id": "tfmxpress",
+  "displayName": "TFMXpress",
+  "aliases": [
+    "TFMXPRESS PTY LIMITED",
+    "TFM Xpress"
+  ],
+  "region": {
+    "countries": [
+      "AU"
+    ]
+  },
+  "brand": {
+    "color": "#E50019"
+  },
+  "selectable": true,
+  "timezone": "Australia/Melbourne",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "tfmxpress",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "eta",
+    "delivered_at"
+  ],
+  "portal": {
+    "url": "https://www.ezyfms.com/tfm/Tracker.asp?CN={trackingNumber}",
+    "searchUrl": "https://www.ezyfms.com/tfm/tracker.asp",
+    "canaryUrl": "https://www.ezyfms.com/tfm/tracker.asp",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "proof_of_delivery",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "delivered_at"
+    ],
+    "discarded": [
+      "proof_of_delivery",
+      "signatory"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.ezyfms.com",
+        "ezyfms.com"
+      ],
+      "pathPattern": "^/tfm/tracker\\.asp$",
+      "params": [
+        "CN"
+      ]
+    }
+  ],
+  "detection": []
+}

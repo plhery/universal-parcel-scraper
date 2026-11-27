@@ -1,0 +1,427 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>TFMXpress - Freight Management System</title>
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .logo {
+            width: 100%;
+            font-size: 12px;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0px;
+            padding: 0px;
+            margin-top: -3px;
+            text-align: left;
+        }
+
+        .headerContainer {
+            border: 1px solid #CFCFCF;
+            color: #FFFFFF;
+            width: 100%;
+            background-color: #5b7fba;
+            font-size: 18px;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: left;
+            padding: 10px 0px;
+        }
+
+        .headerInput {
+            font-size: 18px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .headerButton {
+            font-size: 18px;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #0099FF;
+        }
+
+        .headerText {
+            font-size: 24px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .error {
+            color: #FF0000;
+            font-size: 14px;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 5px;
+        }
+
+        .trackerContainer {
+            border: 0px solid #CFCFCF;
+            width: 100%;
+            background-color: #FFFFFF;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 10px 0px 0px 10px
+        }
+
+        .subHeader {
+            color: #337BA6;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .subText {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+        }
+
+        .trackerText {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+        }
+
+
+        .Padding-5px {
+            padding: 5px 5px 5px 5px;
+        }
+
+        .addfts {
+            height: 220px;
+            width: 220px;
+            border-radius: 110px;
+            border: 3px solid #B3B3B3;
+            text-align: center;
+            color: #cfcfcf;
+            float: left;
+            padding: 7px;
+            position: relative;
+        }
+
+        .ftsdel {
+            margin-left: 50px;
+        }
+
+        .ftscontainer {
+            width: 1050px;
+            height: 280px;
+            margin: 25px auto 0px;
+        }
+
+        .addinner {
+            height: 218px;
+            width: 218px;
+            border-radius: 100px;
+            border: 1px solid #B3B3B3;
+            text-align: center;
+            color: #B3B3B3;
+            float: left;
+        }
+
+        .addfts .fa {
+            width: 100%;
+            font-size: 60px;
+            padding: 10px 0;
+        }
+
+        .addfts.active .addinner {
+            color: #22B573;
+        }
+
+        .addfts.active {
+            border: 3px solid #22B573;
+        }
+
+        .addfts.active .fa {
+            color: #22B573;
+        }
+
+        /* small */
+        .ftssmall {
+            float: left;
+            color: #B3B3B3;
+            margin-left: 48px;
+            margin-top: 70px;
+            text-align: center;
+        }
+
+        .ftssmall .fa {
+            height: 75px;
+            width: 75px;
+            border: 2px solid #B3B3B3;
+            border-radius: 40px;
+            text-align: center;
+            line-height: 75px;
+            font-size: 35px;
+        }
+
+        .ftssmall.active .fa {
+            border: 3px solid #22B573;
+            color: #22B573;
+        }
+
+        .ftssmall.active .fa::after {
+            background: #22B573;
+            height: 3px;
+        }
+
+        .ftssmall.active {
+            color: #22B573;
+        }
+
+        .ftssmall .fa::after {
+            content: "";
+            display: block;
+            height: 1px;
+            width: 48px;
+            margin-left: -50px;
+            margin-top: -40px;
+            background: #B3B3B3;
+        }
+
+        .ftsdel::after {
+            content: "";
+            display: inline-block;
+            height: 1px;
+            width: 48px;
+            margin-left: -510px;
+            margin-top: 95px;
+            background: #B3B3B3;
+        }
+
+        .ftsdel.active::after {
+            background: #22B573;
+            height: 3px;
+        }
+
+        .addfts-title {
+            position: absolute;
+            top: 245px;
+            left: 0;
+            right: 0;
+        }
+
+        .addfts.active > .addfts-title {
+            color: #22B573;
+        }
+
+        .fa-map-marker{
+            height:35px;
+        }
+
+        .addfts .fa {
+        width: 100%;
+        font-size: 45px;
+        padding: 10px 0;
+        }
+
+        .tableWithOutBG{
+            border: 1px solid #22B573;
+        border-top: 1px solid #22B573;
+        }
+
+        .table-bordered td{
+            color: #666;
+        }
+
+        .table-bordered th, .table-bordered td {
+            border-left: 1px solid #22B573;
+        }
+    </style>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-38683751-3']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>    
+    <link href="css/awesome/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body style="width: 100%;">
+    <form name="frmTracker" id="frmTracker" action="Tracker.asp" method="post" style="margin: 0px;">        
+        
+        <div id="UpPnlMain">
+            <div class="container" style="width:670px; margin-top:15px;">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <table>
+                            <tr>
+                                <td><label class="pull-right" style="display:block;">* mandatory fields</label></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-inline ">
+                                        <label>Enter Consignment No / Tracking No *</label>
+                                        <input type="text" name="CN" id="CN" value="HSETQZ48213" class="form-control" maxlength="20" style="width:190px;" />
+                                        <label>Destination Postcode:</label>
+                                        <input type="text" name="PC" id="PC" value="" class="form-control" style="width: 60px;" maxlength="4" />
+                                        <input type="button" name="btnSearch" id="btnSearch" value="Search" class="btn btn-primary btn-sm btn-block" style="min-width: 100px;" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 text-center ">
+                        
+                        <span id="msg" class="subText" style="color: #ff0000; margin-top:10px; width:100%; text-align:center; display:block;">The tracking information is not available.</span>
+                        
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+        
+        <div id="fade" class="black_overlay"></div>
+        <div id="alert" style="width: auto; z-index: 1032; position: absolute; text-align: center; padding: 15px !important; vertical-align: middle; margin-bottom: 0px;"></div>
+        <div id="viewpod" style="width: auto; z-index: 1032; position: absolute; text-align: center; padding: 2px !important; vertical-align: middle; margin-bottom: 0px; font-size: 11px; display:none;">            
+            <table style='width: 900px; text-align: left; float: left;'>                
+                <tr>
+                    <td colspan="2">
+                        <ul class="nav nav-tabs" id="PODtab" style="margin-bottom: 0px; width: 100%;"></ul>
+                        <div class="tab-content" id="PODImage"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;"></td>
+                    <td><input type="button" value="Close" class="btn btn-mini btn-inverse pull-right" onclick='closeViewPODWindow();' /></td>
+                </tr>
+            </table>
+            <!--<span><i class='icon-remove' style='float: right; vertical-align: top; cursor: pointer; position: relative; top: -20px; left: 20px;' onclick='closeViewPODWindow();'></i></span>-->
+        </div>
+    </form>
+
+    <script type="text/javascript" src="assets/js/twitter/widgets.js" language="javascript"></script>
+    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/ui/1.8.21/jquery-ui.min.js"></script>
+    <script src="assets/js/google-code-prettify/prettify.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/bootstrap-transition.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/bootstrap-alert.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/bootstrap-modal.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/bootstrap-dropdown.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/bootstrap-scrollspy.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/bootstrap-tab.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/bootstrap-tooltip.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/bootstrap-popover.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/bootstrap-button.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/bootstrap-collapse.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/bootstrap-carousel.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/bootstrap-typeahead.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/application.js" type="text/javascript" language="javascript"></script>
+
+    <script src="assets/js/jquery.ui.core.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/jquery.ui.widget.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/jquery.ui.datepicker.js" type="text/javascript" language="javascript"></script>
+    <script src="assets/js/jquery-ui-sliderAccess.js" type="text/javascript" language="javascript"></script>
+
+    <script language="javascript" type="text/javascript">
+        var $viewpod = $("#viewpod");
+        var $divMessage = $("#alert");
+        var $divfade = $("#fade");
+        
+        jQuery(document).ready(function () {
+            $("#btnSearch").click(function(){
+                if($("#CN").val() == ""){
+                    alert("Please enter consignment number / tracking number");
+                    $("#CN").focus();
+                    return false;
+                }
+
+                document.frmTracker.action = "Tracker.asp"
+
+                document.frmTracker.target = '_self';
+                document.frmTracker.submit();
+            });
+
+            if ('FALSE' == 'FALSE' && 'FALSE' == 'TRUE') {
+                $("#divReceiver").addClass('active');
+                $("#divDel").addClass('active');
+                $("#divOB").addClass('active');
+            }
+
+            $viewpod.fadeOut();
+        });
+
+        function viewpod(consignment) {
+
+            $.post("jsdata/DownloadPOD.asp", {
+                Consignment: consignment,
+                "_": $.now()
+            },
+            function (data) {
+                $("#PODtab").html('');
+                $("#PODImage").html('');
+
+                if (data.length > 0) {
+                    var PODImage;
+                    var imageHeight;
+
+                    imageHeight = ($(window).height() / 2) + 50;
+                    $.each(data, function (i) {
+
+                        if (i == 0) {
+                            PODImage = '<div class="tab-pane active" id="' + this['identifier'] + '">';
+                            $("#PODtab").append('<li class="active"><a href="#' + this['identifier'] + '" data-toggle="tab" onclick="LoadForAddPOD(this)">' + this['identifier'] + '</a></li>');
+                        }
+                        else {
+                            PODImage = '<div class="tab-pane" id="' + this['identifier'] + '">';
+                            $("#PODtab").append('<li><a href="#' + this['identifier'] + '" data-toggle="tab" onclick="LoadForAddPOD(this)">' + this['identifier'] + '</a></li>');
+                        }
+
+                        PODImage = PODImage + '<table class="table table-bordered" style="width:100%;"><thead>';
+                        //<tr style="background-color:#E7E7E7; color:#555555;">';
+                        //PODImage = PODImage + '<th style="width:175px;">Registered Date : ' + this['rdate'] + '</th>';
+                        //PODImage = PODImage + '<th style="width:150px;">Actual Date : ' + this['adate'] + '</th>';
+                        //PODImage = PODImage + '<th>Image : ' + this['image'] + '</th></tr>';
+                        PODImage = PODImage + '</thead></table>';
+                        if (this['podpath'] != "") {
+                            PODImage = PODImage + '<embed src="net/rest/pod/DocumentHandler.ashx?path=' + this['podpath'] + '#navpanes=0&messages=0&toolbar=1&view=Fit" type="application/pdf" name="plugin" style="width:100%;height:' + imageHeight + 'px;"><noembed>Your browser does not support embedded PDF files</noembed></embed>';
+                        }
+                        else {
+                            PODImage = PODImage + "<p class='alert'>POD image not found, please contact administrator.</p>"
+                        }
+
+                        PODImage = PODImage + '</div>';
+
+                        $("#PODImage").append(PODImage);
+                    });
+
+                    $viewpod.addClass("alert");
+                    $viewpod.center();
+                    $viewpod.fadeIn('slow');
+                    $divfade.fadeIn('slow');
+
+                }
+                else {
+                    $("#PODImage").html("<div class='alert'>POD image not found.</div>");
+
+                    $viewpod.addClass("alert");
+                    $viewpod.center();
+                    $viewpod.fadeIn('slow');
+                    $divfade.fadeIn('slow');
+
+                    setTimeout(function () {
+                        $viewpod.fadeOut('slow');
+                        $divfade.fadeOut('slow');
+                    }, 2000);
+                }
+            }, "json");
+        }
+
+        function closeViewPODWindow() {
+            $("#loadpod").html('');
+            $viewpod.fadeOut('slow');
+            $divfade.fadeOut('slow');
+        }
+    </script>
+</body>
+</html>

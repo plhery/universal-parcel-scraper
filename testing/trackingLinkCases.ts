@@ -2949,6 +2949,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'fst-express', number: 'SAUZ900000000',
     route: /^https:\/\/www\.fstexpress\.com\.au\/track_and_trace\/\?jobno=SAUZ900000000$/,
     marker: /Track And Trace_FST EXPRESS|We couldn't find that tracking number/ },
+  // The tracker looks up the number in its address and puts it in its field.
+  { carrier: 'tfmxpress', number: 'ZZZZZZ00000',
+    route: /^https:\/\/www\.ezyfms\.com\/tfm\/Tracker\.asp\?CN=ZZZZZZ00000$/,
+    marker: /Enter Consignment No \/ Tracking No|The tracking information is not available\./ },
 ];
 
 /**

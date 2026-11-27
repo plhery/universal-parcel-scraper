@@ -1166,6 +1166,7 @@ import { statusMap as iqfulfillment } from '../../carriers/iqfulfillment/status.
 import { statusMap as passTheParcel } from '../../carriers/pass-the-parcel/status.js';
 import { statusMap as iberomail } from '../../carriers/iberomail/status.js';
 import { statusMap as fstExpress } from '../../carriers/fst-express/status.js';
+import { statusMap as tfmxpress } from '../../carriers/tfmxpress/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1400,6 +1401,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'pass-the-parcel': passTheParcel,
   iberomail,
   'fst-express': fstExpress,
+  tfmxpress,
 };
 
 /** The carrier the app files the universal providers' scans under. */

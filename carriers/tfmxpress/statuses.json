@@ -1,0 +1,10 @@
+{
+  "carrier": "tfmxpress",
+  "entries": [
+    {"wording": "PICKED UP", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A driver collected the consignment from the sender, who signs for it on the driver's device."},
+    {"wording": "UNLOADED IN DEPOT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The consignment came off a truck at the depot the row names: the pickup depot after collection, then the destination depot after the linehaul."},
+    {"wording": "LOAD FOR DELIVERY", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Loaded on the destination depot's delivery truck, hours before the delivery."},
+    {"wording": "DELIVERED", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Delivered; the row carries the signature and the signatory's name, which are not read."},
+    {"wording": "POD REGISTERED", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The proof of delivery recorded, just after the delivery row."}
+  ]
+}
