@@ -7219,6 +7219,11 @@
     "reason": "Torbon's one public waybill is TB, ten digits and CN, the test number kuaidi100 gives the firm: too few to tell the series from other carriers' numbers, so the adapter answers explicit selection."
   },
   {
+    "carrier": "longtengus",
+    "kind": "open",
+    "reason": "Longteng's one public waybill is S and thirteen digits, the test number kuaidi100 gives the firm: one letter before a date and a serial is too little to claim the shape, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
     "carrier": "meitongda",
     "kind": "open",
     "reason": "MEITONGDA numbers seen so far are MTD and seventeen digits, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."

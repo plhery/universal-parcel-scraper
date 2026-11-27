@@ -2919,6 +2919,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'good-express-us', number: 'GD66139900017US',
     route: /^https:\/\/www\.goodkuaidi\.com\/TrackingInfo\?TrackginNO=GD66139900017US$/,
     marker: /运单号：\s*GD66139900017US|无跟踪信息/ },
+  // Longteng's tracker runs on the same platform; an unknown waybill gets its one row under the number.
+  { carrier: 'longtengus', number: 'S2019000000017',
+    route: /^https:\/\/www\.longtengus\.com\/TrackingInfo\?TrackginNO=S2019000000017$/,
+    marker: /运单号：\s*S2019000000017|暂无查询结果/ },
   // The English page names the number over its history, or over the notice that it is incorrect.
   { carrier: 'swiss-universal-express', number: 'SUE9999000000017FR',
     route: /^https:\/\/swiss-universal-express\.ch\/tracking\/SUE9999000000017FR\?lang=en$/,

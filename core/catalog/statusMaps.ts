@@ -122,6 +122,7 @@ import { statusMap as ywd } from '../../carriers/ywd/status.js';
 import { statusMap as xingyou } from '../../carriers/xingyou/status.js';
 import { statusMap as yitu } from '../../carriers/yitu/status.js';
 import { statusMap as torbon } from '../../carriers/torbon/status.js';
+import { statusMap as longtengus } from '../../carriers/longtengus/status.js';
 import { statusMap as sengiExpress } from '../../carriers/sengi-express/status.js';
 import { statusMap as seventeenFeia } from '../../carriers/17feia/status.js';
 import { statusMap as twoGo } from '../../carriers/2go/status.js';
@@ -1330,6 +1331,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   xingyou,
   yitu,
   torbon,
+  longtengus,
   'j-and-t-br': jAndTBr,
   zheldor,
   'costco-logistics': costcoLogistics,

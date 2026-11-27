@@ -1,0 +1,82 @@
+{
+  "carrier": "longtengus",
+  "entries": [
+    {
+      "wording": "运单创建，等待处理",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Waybill created, waiting to be handled.\""
+    },
+    {
+      "wording": "包裹已扣款，等待发货",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"The parcel's fee is charged, waiting to be sent.\" Minutes after the waybill, before any row shows Longteng handling the parcel."
+    },
+    {
+      "wording": "已分拣，波特兰OR",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Sorted, Portland OR\": the first row that shows Longteng handling the parcel, at its Portland depot."
+    },
+    {
+      "wording": "已打板，波特兰OR",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Palletised, Portland OR.\""
+    },
+    {
+      "wording": "已发货，波特兰OR",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Sent, Portland OR\": the pallet leaves the depot."
+    },
+    {
+      "wording": "送往机场仓库，等待飞行",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Taken to the airport warehouse, waiting for the flight.\""
+    },
+    {
+      "wording": "航班已起飞",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"The flight has taken off.\""
+    },
+    {
+      "wording": "航班已降落机场",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"The flight has landed.\""
+    },
+    {
+      "wording": "到达口岸，等待清关",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Arrived at the port of entry, waiting for clearance\": the clearance is still to come."
+    },
+    {
+      "wording": "清关完毕，等待国内快递派送",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Cleared, waiting for the courier in China.\""
+    },
+    {
+      "wording": "清关完毕，正在派送，单号：…",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Cleared, being sent on, number …\": the parcel goes to a courier in China under the number the row ends with. The number varies."
+    }
+  ]
+}

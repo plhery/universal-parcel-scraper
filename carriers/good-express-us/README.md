@@ -20,6 +20,8 @@ Recognition asks the same page.
 - A number the tracker does not know gets HTTP 200 and one row, "无跟踪信息", stamped with the
   moment of the lookup. Only that answer is not found. A redirect or an error status is a moved
   route, a bot check is a challenge, and any other page is a schema failure.
+- [`trackingInfo.ts`](trackingInfo.ts) reads the waybill and its rows. Longteng's tracker runs on
+  the same platform and shares it; each site keeps its own wording, clock and hand-off.
 
 ## Notes
 
