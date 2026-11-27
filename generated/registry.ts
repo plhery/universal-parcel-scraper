@@ -57,6 +57,7 @@ import { adapter as anPost } from '../carriers/an-post/adapter.js';
 import { adapter as ancDelivers } from '../carriers/anc-delivers/adapter.js';
 import { adapter as andreani } from '../carriers/andreani/adapter.js';
 import { adapter as aneLogistics } from '../carriers/ane-logistics/adapter.js';
+import { adapter as anhuaInternational } from '../carriers/anhua-international/adapter.js';
 import { adapter as anjun } from '../carriers/anjun/adapter.js';
 import { adapter as anousith } from '../carriers/anousith/adapter.js';
 import { adapter as anserx } from '../carriers/anserx/adapter.js';
@@ -667,9 +668,11 @@ import { adapter as lindaoExpress } from '../carriers/lindao-express/adapter.js'
 import { adapter as lineClear } from '../carriers/line-clear/adapter.js';
 import { adapter as linearLogistics } from '../carriers/linear-logistics/adapter.js';
 import { adapter as lingdong } from '../carriers/lingdong/adapter.js';
+import { adapter as lingxunLogistics } from '../carriers/lingxun-logistics/adapter.js';
 import { adapter as linhan } from '../carriers/linhan/adapter.js';
 import { adapter as lionParcel } from '../carriers/lion-parcel/adapter.js';
 import { adapter as liuchen } from '../carriers/liuchen/adapter.js';
+import { adapter as ljs } from '../carriers/ljs/adapter.js';
 import { adapter as lmParcel } from '../carriers/lm-parcel/adapter.js';
 import { adapter as logen } from '../carriers/logen/adapter.js';
 import { adapter as loggi } from '../carriers/loggi/adapter.js';
@@ -1032,6 +1035,7 @@ import { adapter as stone3pl } from '../carriers/stone3pl/adapter.js';
 import { adapter as straightship } from '../carriers/straightship/adapter.js';
 import { adapter as suhu } from '../carriers/suhu/adapter.js';
 import { adapter as sundarbanCourier } from '../carriers/sundarban-courier/adapter.js';
+import { adapter as sunson } from '../carriers/sunson/adapter.js';
 import { adapter as sunyou } from '../carriers/sunyou/adapter.js';
 import { adapter as suocang } from '../carriers/suocang/adapter.js';
 import { adapter as suratKargo } from '../carriers/surat-kargo/adapter.js';
@@ -1092,6 +1096,7 @@ import { adapter as tntAu } from '../carriers/tnt-au/adapter.js';
 import { adapter as tntIt } from '../carriers/tnt-it/adapter.js';
 import { adapter as todayKr } from '../carriers/today-kr/adapter.js';
 import { adapter as tonami } from '../carriers/tonami/adapter.js';
+import { adapter as tongxi } from '../carriers/tongxi/adapter.js';
 import { adapter as topLogisticsAu } from '../carriers/top-logistics-au/adapter.js';
 import { adapter as topdelivery } from '../carriers/topdelivery/adapter.js';
 import { adapter as topest } from '../carriers/topest/adapter.js';
@@ -1315,6 +1320,7 @@ export const REGISTRY: RegistryDefinition = {
     "anc-delivers": ancDelivers,
     "andreani": andreani,
     "ane-logistics": aneLogistics,
+    "anhua-international": anhuaInternational,
     "anjun": anjun,
     "anousith": anousith,
     "anserx": anserx,
@@ -1925,9 +1931,11 @@ export const REGISTRY: RegistryDefinition = {
     "line-clear": lineClear,
     "linear-logistics": linearLogistics,
     "lingdong": lingdong,
+    "lingxun-logistics": lingxunLogistics,
     "linhan": linhan,
     "lion-parcel": lionParcel,
     "liuchen": liuchen,
+    "ljs": ljs,
     "lm-parcel": lmParcel,
     "logen": logen,
     "loggi": loggi,
@@ -2290,6 +2298,7 @@ export const REGISTRY: RegistryDefinition = {
     "straightship": straightship,
     "suhu": suhu,
     "sundarban-courier": sundarbanCourier,
+    "sunson": sunson,
     "sunyou": sunyou,
     "suocang": suocang,
     "surat-kargo": suratKargo,
@@ -2350,6 +2359,7 @@ export const REGISTRY: RegistryDefinition = {
     "tnt-it": tntIt,
     "today-kr": todayKr,
     "tonami": tonami,
+    "tongxi": tongxi,
     "top-logistics-au": topLogisticsAu,
     "topdelivery": topdelivery,
     "topest": topest,
@@ -2628,6 +2638,7 @@ export const REGISTRY: RegistryDefinition = {
     "andesmar-cargas": "universal",
     "andreani": "andreani",
     "ane-logistics": "ane-logistics",
+    "anhua-international": "anhua-international",
     "anjun": "anjun",
     "annto": "universal",
     "anousith": "anousith",
@@ -3642,11 +3653,13 @@ export const REGISTRY: RegistryDefinition = {
     "line-clear": "line-clear",
     "linear-logistics": "linear-logistics",
     "lingdong": "lingdong",
+    "lingxun-logistics": "lingxun-logistics",
     "linhan": "linhan",
     "lion-parcel": "lion-parcel",
     "lionwheel": "universal",
     "litexpress": "universal",
     "liuchen": "liuchen",
+    "ljs": "ljs",
     "ljx-express": "universal",
     "lm-parcel": "lm-parcel",
     "loadmaster-no": "universal",
@@ -4259,6 +4272,7 @@ export const REGISTRY: RegistryDefinition = {
     "sumxpress": "universal",
     "sundarban-courier": "sundarban-courier",
     "suning-logistics": "universal",
+    "sunson": "sunson",
     "sunyou": "sunyou",
     "suocang": "suocang",
     "super-parcel-track": "universal",
@@ -4350,6 +4364,7 @@ export const REGISTRY: RegistryDefinition = {
     "tolos": "universal",
     "tonami": "tonami",
     "tonda-global": "universal",
+    "tongxi": "tongxi",
     "too-express": "universal",
     "top-logistics-au": "top-logistics-au",
     "topdelivery": "topdelivery",

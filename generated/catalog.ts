@@ -9465,6 +9465,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "anhua-international": {
+    "displayName": "Anhua International",
+    "color": "#3F6EB2",
+    "aliases": [
+      "Anhua International Supply Chain",
+      "安华国际",
+      "安华国际供应链",
+      "广州安华国际供应链管理有限公司",
+      "Guangzhou Anhua International Supply Chain Management"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "anhua-international"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.ahgjgyl.com",
+          "ahgjgyl.com"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "anjun": {
     "displayName": "Anjun Logistics",
     "color": "#009944",
@@ -42738,6 +42772,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "lingxun-logistics": {
+    "displayName": "LingXun Logistics",
+    "color": "#1787C9",
+    "aliases": [
+      "LingXun",
+      "领讯",
+      "领讯物流",
+      "领讯物流有限公司",
+      "深圳市领讯物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "lingxun-logistics",
+      "recognitionRank": 49,
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.lingxun.top/a/kehufuwu/",
+    "trackingSearchUrl": "https://www.lingxun.top/a/kehufuwu/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^LX\\d{12}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "linhan": {
     "displayName": "LinHan International",
     "color": "#eb5c20",
@@ -42912,6 +42977,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "ljs": {
+    "displayName": "LJS International Freight",
+    "color": "#FFCC00",
+    "aliases": [
+      "LJS",
+      "Lijiashun",
+      "利佳顺",
+      "利佳顺国际",
+      "利佳顺国际货运",
+      "利佳顺国际物流",
+      "深圳利佳顺国际货运代理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ljs"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "ljx-express": {
     "displayName": "LJX Express",
@@ -63055,6 +63145,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "sunson": {
+    "displayName": "Sunson Logistics",
+    "color": "#006CBF",
+    "aliases": [
+      "Sunson",
+      "Sunson Express",
+      "Sunsonexpress",
+      "燊鑫",
+      "燊鑫国际物流",
+      "深圳燊鑫国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sunson",
+      "recognitionRank": 47
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^SUN\\d{12}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "suocang": {
     "displayName": "Suoexpress",
     "color": "#a264cd",
@@ -65905,6 +66025,46 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ],
     "detectionRules": []
+  },
+  "tongxi": {
+    "displayName": "Tongxi Supply Chain",
+    "color": "#0096AB",
+    "aliases": [
+      "TongXi",
+      "桐溪",
+      "桐溪供应链",
+      "深圳市桐溪供应链管理有限公司",
+      "Shenzhen Tongxi Supply Chain Management"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "tongxi",
+      "recognitionRank": 46,
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "1.14.133.93"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^TX\\d{16}$",
+        "confidence": "low"
+      }
+    ]
   },
   "too-express": {
     "displayName": "Too Express",
@@ -75084,6 +75244,7 @@ export const CARRIER_IDS = [
   "andesmar-cargas",
   "andreani",
   "ane-logistics",
+  "anhua-international",
   "anjun",
   "annto",
   "anousith",
@@ -76044,11 +76205,13 @@ export const CARRIER_IDS = [
   "line-clear",
   "linear-logistics",
   "lingdong",
+  "lingxun-logistics",
   "linhan",
   "lion-parcel",
   "lionwheel",
   "litexpress",
   "liuchen",
+  "ljs",
   "ljx-express",
   "lm-parcel",
   "loadmaster-no",
@@ -76632,6 +76795,7 @@ export const CARRIER_IDS = [
   "sumxpress",
   "sundarban-courier",
   "suning-logistics",
+  "sunson",
   "suocang",
   "super-parcel-track",
   "superb-express",
@@ -76716,6 +76880,7 @@ export const CARRIER_IDS = [
   "tolos",
   "tonami",
   "tonda-global",
+  "tongxi",
   "too-express",
   "top-logistics-au",
   "topdelivery",
@@ -77211,6 +77376,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "andesmar-cargas": [],
   "andreani": ["andreani-1"],
   "ane-logistics": [],
+  "anhua-international": [],
   "anjun": ["anjun-aj"],
   "annto": [],
   "anousith": [],
@@ -78171,11 +78337,13 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "line-clear": [],
   "linear-logistics": [],
   "lingdong": ["lingdong-1"],
+  "lingxun-logistics": ["lingxun-logistics-1"],
   "linhan": ["linhan-1"],
   "lion-parcel": ["lion-parcel-1"],
   "lionwheel": [],
   "litexpress": [],
   "liuchen": ["liuchen-1"],
+  "ljs": [],
   "ljx-express": [],
   "lm-parcel": ["lm-parcel-1"],
   "loadmaster-no": [],
@@ -78759,6 +78927,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sumxpress": [],
   "sundarban-courier": [],
   "suning-logistics": [],
+  "sunson": ["sunson-1"],
   "suocang": [],
   "super-parcel-track": [],
   "superb-express": [],
@@ -78843,6 +79012,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tolos": [],
   "tonami": [],
   "tonda-global": [],
+  "tongxi": ["tongxi-1"],
   "too-express": [],
   "top-logistics-au": [],
   "topdelivery": [],
