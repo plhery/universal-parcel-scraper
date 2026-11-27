@@ -8,8 +8,10 @@ freight between mainland China, Hong Kong and abroad. Its site is www.quick-fort
 One `direct` GET asks the tracker's order page, `/search_kuai_di/search/orderid/<number>` on
 www.quick-fort.com, as the site's search does; no key, cookie, session or browser is needed. It
 names Chinese as its language: the site answers HTTP 500 to a language it cannot read, such as
-Node's default `*`. The page holds the order's rows, newest first, each with a date and a
-sentence, and names the number only in its search field, which the adapter checks.
+Node's default `*`. The page lists the order's rows, newest first, each with a date and a
+sentence, as a timeline (a table on the site's earlier design), and names the number in its
+search field, which the adapter checks. A result laid out neither way is a failure, not an order
+without rows.
 
 A number the tracker does not hold gets the site's notice that no order was found
 (`未查询到对应订单`), with HTTP 200; that notice is the only not-found. Another notice, a block
@@ -32,7 +34,7 @@ page and a changed page keep their failure kinds.
   it is due, and a delivery dated ahead gives the expected day instead. The tracker has so far
   shown each row only once its time has come, so a row already due reads as a scan.
 - Some rows write a place before, within or after the sentence, with a region or country code and
-  a postcode: English rows name it after "in" or ", serving". The adapter takes it out of the
+  a postcode, which can precede the town in the same part: English rows name it after "in" or ", serving". The adapter takes it out of the
   sentence and keeps its names and codes as the row's place, without the postcode. The English
   delivery row ends with the recipient's street and house number, which the adapter leaves out.
 

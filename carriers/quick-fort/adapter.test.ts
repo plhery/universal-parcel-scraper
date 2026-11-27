@@ -24,6 +24,26 @@ describe('Quick Fort parser', () => {
     expect(result.events?.every(event => event.stage_source === 'carrier_map')).toBe(true);
   });
 
+  it('reads the timeline of the site\'s current design as it read the table', () => {
+    const timeline = parseQuickFort(fixture('timeline'), NUMBER);
+    expect(timeline).toEqual(parseQuickFort(fixture('found'), NUMBER));
+    expect(timeline.events).toHaveLength(8);
+    const round = fixture('timeline').replace('L\'envoi est dans le réseau de livraison local.', 'Out for delivery in Springfield,00000 Sampleton,ES');
+    expect(parseQuickFort(round, NUMBER).events?.[1]).toMatchObject({ description: 'Out for delivery', location: 'Springfield, Sampleton, ES',
+      stage: 'out_for_delivery' });
+    const empty = fixture('timeline').replace(/<div class="timeline">[\s\S]*?\n {8}<\/div>\n/, '<div class="timeline"></div>\n');
+    expect(() => parseQuickFort(empty, NUMBER)).toThrow(expect.objectContaining({ name: 'NoHistoryError', kind: 'indeterminate' }));
+    const unlabelled = fixture('timeline').replace('<div class="time">2026-03-13 20:48:59</div>', '<span>2026-03-13 20:48:59</span>');
+    expect(() => parseQuickFort(unlabelled, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it('refuses an order page laid out neither way, rather than reading it as one without rows', () => {
+    const redesigned = fixture('timeline').replaceAll('timeline', 'track-list');
+    expect(() => parseQuickFort(redesigned, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    const blank = fixture('found').replace(/<div id="result">[\s\S]*?<\/section>\s*<\/div>/, '<div id="result"> </div>');
+    expect(() => parseQuickFort(blank, NUMBER)).toThrow(expect.objectContaining({ name: 'NoHistoryError', kind: 'indeterminate' }));
+  });
+
   it('maps the network\'s sentences whatever city or airport they name, and leaves others to the shared rules', () => {
     for (const wording of ['Le colis est arrivé au centre de traitement d\'origine à Montréal.',
       'L\'envoi est arrivé au terminal de fret de l\'aéroport international Pearson de Toronto.',

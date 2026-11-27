@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { load, type CheerioAPI } from 'cheerio';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { CLOCK_SKEW_MS } from '../../core/result/due.js';
@@ -26,10 +26,12 @@ export function quickFortNumber(raw: string): string {
 const POSTCODE = /^(?=[A-Z0-9 -]*\d)[A-Z0-9][A-Z0-9 -]{1,9}$/;
 const CODE = /^[A-Z]{2}$/;
 const NAME = /^\p{L}[\p{L}\p{M}'’-]*(?: [\p{L}\p{M}'’-]+){0,2}$/u;
+// A town written after its postcode in the same part: "03195 Alicante".
+const POSTCODE_TOWN = /^\d{3,6} (\p{L}[\p{L}\p{M}'’-]*(?: [\p{L}\p{M}'’-]+){0,2})$/u;
 
 /** A comma-separated place without its postcode, names first; undefined when it holds no code or postcode, or a part of no place. */
 function placeOf(text: string): string | undefined {
-  const parts = text.split(',').map(part => part.trim()).filter(Boolean);
+  const parts = text.split(',').map(part => part.trim()).filter(Boolean).map(part => POSTCODE_TOWN.exec(part)?.[1] ?? part);
   if (!parts.some(part => POSTCODE.test(part) || CODE.test(part))) return undefined;
   if (!parts.every(part => POSTCODE.test(part) || CODE.test(part) || NAME.test(part))) return undefined;
   const names = parts.filter(part => !CODE.test(part) && !POSTCODE.test(part));
@@ -57,8 +59,43 @@ function splitRow(text: string): { description: string; location?: string } {
 }
 
 /**
+ * The order's rows as date and sentence: the page's timeline, or the table of its earlier design. A result
+ * holding neither is an order without rows only when it is empty.
+ */
+function orderRows($: CheerioAPI): [string, string][] {
+  const result = $('#result');
+  const timeline = result.find('.timeline');
+  if (timeline.length) {
+    const items = timeline.children('.timeline-item').toArray();
+    if (items.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Quick Fort returned too many scans');
+    if (!items.length) throw new NoHistoryError(PROVIDER);
+    return items.map((item) => {
+      const date = $(item).children('.time');
+      const sentence = $(item).children('.context');
+      if (date.length !== 1 || sentence.length !== 1) throw new SchemaError(PROVIDER, 'Quick Fort returned an invalid scan');
+      return [date.text(), sentence.text()];
+    });
+  }
+  const table = result.find('table');
+  if (!table.length) {
+    if (clean(result.text(), 200)) throw new SchemaError(PROVIDER, 'Quick Fort returned an order page it does not lay out as before');
+    throw new NoHistoryError(PROVIDER);
+  }
+  const header = table.find('thead th').map((_, node) => clean($(node).text(), 20)).get();
+  if (header.join('|') !== '日期|快件状态') throw new SchemaError(PROVIDER, 'Quick Fort tracking columns changed');
+  const rows = table.find('tbody > tr').toArray();
+  if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Quick Fort returned too many scans');
+  if (!rows.length) throw new NoHistoryError(PROVIDER);
+  return rows.map((row) => {
+    const cells = $(row).children('td');
+    if (cells.length !== 2) throw new SchemaError(PROVIDER, 'Quick Fort returned an invalid scan');
+    return [cells.eq(0).text(), cells.eq(1).text()];
+  });
+}
+
+/**
  * The tracker's page for one order: its rows, newest first, each with a date and a sentence. The
- * page names the number only in its search field, and a number it does not hold gets the site's
+ * page names the number in its search field, and a number it does not hold gets the site's
  * notice that no order was found. A delivery dated after `readAt` is the day the plan expects.
  */
 export function parseQuickFort(html: string, raw: string, readAt = Date.now()): CarrierResult {
@@ -72,19 +109,11 @@ export function parseQuickFort(html: string, raw: string, readAt = Date.now()): 
   const asked = $('#orderid').attr('value');
   if (asked === undefined || !$('#result').length) throw new SchemaError(PROVIDER, 'Quick Fort returned no order page');
   if (normalizeTrackingNumber(asked.slice(0, 64)) !== number) throw new IndeterminateError(PROVIDER, 'Quick Fort answered for another number');
-  const table = $('#result table');
-  if (!table.length) throw new NoHistoryError(PROVIDER);
-  const header = table.find('thead th').map((_, node) => clean($(node).text(), 20)).get();
-  if (header.join('|') !== '日期|快件状态') throw new SchemaError(PROVIDER, 'Quick Fort tracking columns changed');
-  const rows = table.find('tbody > tr').toArray();
-  if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Quick Fort returned too many scans');
-  if (!rows.length) throw new NoHistoryError(PROVIDER);
   const events: (CarrierEvent & { time: string })[] = [];
   const seen = new Set<string>();
-  for (const row of rows) {
-    const cells = $(row).children('td');
-    const written = cells.length === 2 ? clean(cells.eq(1).text(), 400) : '';
-    const time = cells.length === 2 ? zonedTime(cells.eq(0).text(), 'yyyy-MM-dd HH:mm:ss', ZONE)?.iso : undefined;
+  for (const [date, sentence] of orderRows($)) {
+    const written = clean(sentence, 400);
+    const time = zonedTime(date.trim(), 'yyyy-MM-dd HH:mm:ss', ZONE)?.iso;
     if (!written || !time) throw new SchemaError(PROVIDER, 'Quick Fort returned an invalid scan');
     const { description, location } = splitRow(written);
     const key = JSON.stringify([time, description, location]);
