@@ -1,0 +1,49 @@
+{
+  "carrier": "anjiexin56",
+  "records": [
+    {
+      "number": "2023462",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 安捷信物流. The firm's Lanqiao portal answers it as a road freight waybill from Shenzhen to Chongqing, signed for."
+    },
+    {
+      "number": "2029125",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/anjiexin56.shtml",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "Kuaidi100's 安捷信物流 page gives it as the example number. The firm's Lanqiao portal answers it as a road freight waybill from Shenzhen to Chengdu, signed for."
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "id": "anjiexin56",
+  "displayName": "ANJIEXIN Logistics",
+  "aliases": [
+    "安捷信物流",
+    "深圳市安捷信物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#15499A"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "anjiexin56",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://wx.lqfast.com/Pub/UnitListDetail?companyid=JNCqnZaL7Kz%2Bbo2dhhXzyQ%3D%3D&unit={trackingNumber}",
+    "searchUrl": "https://www.anjiexin56.com/cha",
+    "canaryUrl": "https://www.anjiexin56.com/cha",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "order_contents",
+      "parcel_count",
+      "office_contact_details",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "order_contents",
+      "parcel_count",
+      "office_contact_details",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "wx.lqfast.com"
+      ],
+      "pathPattern": "^/Pub/UnitListDetail$",
+      "query": "^(?=(?:.*&)?companyid=JNCqnZaL7Kz[+ ]bo2dhhXzyQ==(?:&|$))(?:.*&)?unit=([^&]+)(?=&|$)"
+    },
+    {
+      "domains": [
+        "wx.lqfast.com"
+      ],
+      "pathPattern": "^/wx/waybillquery/?$",
+      "fragment": "^/(?:waybillquery/orderDetail)?\\?(?=(?:.*&)?companyid=JNCqnZaL7Kz[+ ]bo2dhhXzyQ==(?:&|$))(?:.*&)?(?:unit|seek)=([^&]+)(?=&|$)"
+    }
+  ],
+  "detection": []
+}

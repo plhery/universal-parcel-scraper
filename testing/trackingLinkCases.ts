@@ -3071,6 +3071,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'bluegrace-logistics', number: 'BG000417203',
     route: /^https:\/\/mybluegrace\.com\/track\/\?id=BG000417203&docType=BOL$/,
     marker: /Ship Freight the Way You Just Tracked It/i },
+  // Lanqiao's waybill page renders the number into its script and looks it up on load; for an unknown
+  // one it shows the portal's notice, then asks for the last four digits of a phone.
+  { carrier: 'anjiexin56', number: '70318294',
+    route: /^https:\/\/wx\.lqfast\.com\/Pub\/UnitListDetail\?companyid=JNCqnZaL7Kz%2Bbo2dhhXzyQ%3D%3D&unit=70318294$/,
+    marker: /未找到运单|校验手机后四位|运单跟踪/ },
 ];
 
 /**

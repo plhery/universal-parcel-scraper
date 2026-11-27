@@ -1213,6 +1213,7 @@ import { statusMap as bjytsywl } from '../../carriers/bjytsywl/status.js';
 import { statusMap as yjsChina } from '../../carriers/yjs-china/status.js';
 import { statusMap as abxExpress } from '../../carriers/abx-express/status.js';
 import { statusMap as bvcLogistics } from '../../carriers/bvc-logistics/status.js';
+import { statusMap as anjiexin56 } from '../../carriers/anjiexin56/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1477,6 +1478,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'yjs-china': yjsChina,
   'abx-express': abxExpress,
   'bvc-logistics': bvcLogistics,
+  anjiexin56,
 };
 
 /** The carrier the app files the universal providers' scans under. */

@@ -7360,5 +7360,11 @@
     "pattern": "^DS\\d{7}$",
     "kind": "collision",
     "reason": "DS and seven digits is BVC Logistics' one public sample, and two letters and seven digits is the shape of R+L Carriers' PRO numbers, so one sample cannot give BVC the shape."
+  },
+  {
+    "carrier": "anjiexin56",
+    "pattern": "^\\d{7}$",
+    "kind": "by_design",
+    "reason": "ANJIEXIN's waybills seen are seven bare digits, a counter many carriers' numbers share, so nothing in the number points to ANJIEXIN."
   }
 ]
