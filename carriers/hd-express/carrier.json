@@ -1,0 +1,69 @@
+{
+  "id": "hd-express",
+  "displayName": "HD Express",
+  "aliases": [
+    "汇达物流",
+    "HDExpress",
+    "HD Cargo"
+  ],
+  "region": {
+    "countries": [
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#132B85"
+  },
+  "selectable": true,
+  "timezone": "America/Vancouver",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hd-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "offset_timestamps",
+    "provider_code",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "location",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "hd-express-1",
+      "pattern": "^HDC\\d{11}$",
+      "confidence": "high"
+    }
+  ]
+}

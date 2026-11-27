@@ -1,0 +1,59 @@
+{
+  "carrier": "hd-express",
+  "entries": [
+    {
+      "code": "1",
+      "wording": "运单创建成功",
+      "language": "zh",
+      "english": "Waybill created",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The waybill is in HD Express's system; the parcel is not with it yet."
+    },
+    {
+      "code": "2",
+      "wording": "分店已收件",
+      "language": "zh",
+      "english": "Received at the branch",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "A branch takes the parcel in from the sender."
+    },
+    {
+      "code": "3",
+      "wording": "快件中心已揽收",
+      "language": "zh",
+      "english": "Collected by the parcel centre",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The centre collects the parcel from the branch, hours after the branch took it in."
+    },
+    {
+      "code": "4",
+      "wording": "快件已发往国内",
+      "language": "zh",
+      "english": "Sent to China",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The parcel leaves Canada for China."
+    },
+    {
+      "code": "5",
+      "wording": "快件已到达海关,清关中",
+      "language": "zh",
+      "english": "Arrived at customs, being cleared",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "China's import clearance. The row names ZTO's waybill in brackets after it, which the adapter moves out as the delivery carrier's number."
+    },
+    {
+      "code": "7",
+      "wording": "清关完毕",
+      "language": "zh",
+      "english": "Customs clearance completed",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Cleared by China's customs: the parcel goes on with ZTO."
+    }
+  ]
+}
