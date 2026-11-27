@@ -54,7 +54,8 @@ export class PrecisionTracker {
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizePrecisionNumber(raw);
-    return runSteps({ carrier: 'precision-deliveries', budgetMs: context.budgetMs ?? 20_000, signal: context.signal,
+    // Precision's lookup often takes over ten seconds to answer: each try needs most of half a minute.
+    return runSteps({ carrier: 'precision-deliveries', budgetMs: context.budgetMs ?? 60_000, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [
       { id: 'direct', run: (step) => this.lookup(number, step.signal, firstAttemptMs(step.remainingMs), false) },
       // A session the service ended is opened again once, as the page does.

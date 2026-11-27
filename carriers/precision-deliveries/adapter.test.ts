@@ -279,6 +279,19 @@ describe('Precision Deliveries HTTP adapter', () => {
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
 
+  it('waits out a lookup that takes a while to answer when the caller names no budget', async () => {
+    const clock = fakeBudgetClock();
+    // Precision's lookup often takes over ten seconds; one that comes after 18 s still makes the first try.
+    const fetcher = vi.fn<typeof fetch>((input, init) => String(input) === PRECISION_SESSION_URL
+      ? Promise.resolve(session())
+      : new Promise((resolve, reject) => {
+        const timer = setTimeout(() => resolve(json(text('delivered'))), 18_000);
+        init?.signal?.addEventListener('abort', () => { clearTimeout(timer); reject(init.signal!.reason); }, { once: true });
+      }));
+    await expect(clock.settle(new PrecisionTracker({ fetcher }).fetch(DELIVERED))).resolves.toMatchObject({ status: 'delivered' });
+    expect(fetcher.mock.calls.filter(([url]) => String(url).startsWith(PRECISION_ITEM_URL))).toHaveLength(1);
+  });
+
   it('routes a number filed under Precision, or detected as one of its numbers, to the adapter', async () => {
     const fetcher = precision(() => json(text('delivered')));
     const tracker = createTracker({ fetcher, providers: [], env: {} });

@@ -15,7 +15,8 @@ parcels to Precision's tracker. Tracked through the lookup its tracking page mak
 2. `refresh`: a 401 means the service ended the session. A new one is opened and the lookup
    asked once more. A 401 on a fresh session is a challenge.
 3. `retry`: the requests once more when they fail to reach the site or hang. The first try gets
-   half of the budget, so the retry fits in the rest.
+   half of the budget, so the retry fits in the rest. The lookup often takes over ten seconds to
+   answer, so the budget is a minute.
 
 - An unknown number is HTTP 404 with `{"error":"No item was found","itemId":…}`, naming the
   number. The same answer for another number is inconclusive. A 404 without it, a 410 or a
