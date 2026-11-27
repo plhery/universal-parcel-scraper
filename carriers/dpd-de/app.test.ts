@@ -58,7 +58,8 @@ describe('DPD Germany app service', () => {
       { time: '2026-01-03T09:40:00+01:00', location: 'Musterstadt, DE', description: 'Unfortunately we have not been able to deliver your parcel.', stage: 'failed_attempt', stage_source: 'carrier_map' },
       { time: '2026-01-03T06:10:00+01:00', location: 'Musterstadt, DE', description: 'Out for delivery.', stage: 'out_for_delivery', stage_source: 'carrier_map' },
       { time: '2026-01-03T03:55:00+01:00', location: 'Musterstadt, DE', description: 'At parcel delivery centre.', stage: 'in_transit', stage_source: 'carrier_map' },
-      { local_time: '2026-01-02T17:39:00', provider_time_text: '02.01.2026 17:39', location: 'Musterville, FR', description: 'In transit.', stage: 'in_transit', stage_source: 'carrier_map' },
+      // The first depot's scan, before which nothing moved the parcel, is DPD taking it over.
+      { local_time: '2026-01-02T17:39:00', provider_time_text: '02.01.2026 17:39', location: 'Musterville, FR', description: 'In transit.', stage: 'accepted', stage_source: 'carrier_map' },
       { local_time: '2026-01-01T13:29:00', provider_time_text: '01.01.2026 13:29', description: 'Order information has been transmitted to DPD.', stage: 'registered', stage_source: 'carrier_map' },
     ]);
     expect(result.expected_delivery).toBe('2026-01-03');
@@ -325,16 +326,18 @@ describe('DPD Germany app service', () => {
   });
 });
 
+type Row = [day: string, time: string, wording: string, location: string, additional?: [code: string, text: string]];
+const scanList = (rows: Row[]) => fixture('scans').replace(/<TrackingScanList>[\s\S]*<\/TrackingScanList>/, `<TrackingScanList>${rows.map(([day, time, wording, location, additional]) =>
+  `<TrackingScan><ScanDate>${day}</ScanDate><ScanTime>${time}</ScanTime><StatusText>${wording}</StatusText><Location>${location}</Location>`
+  + `<ServiceCode>101</ServiceCode><TrackingScanAdditionalList>${additional ? `<TrackingScanAdditionalType><AdditionalCode>${additional[0]}</AdditionalCode>`
+  + `<Description>${additional[1]}</Description></TrackingScanAdditionalType>` : ''}</TrackingScanAdditionalList></TrackingScan>`).join('')}</TrackingScanList>`);
+/** The tracking data with the progress rail in the given state. */
+const railed = (rail: string, order = '') => fixture('tracking').replace('<StatusID>AT_DELIVERY_DEPOT</StatusID>', `<StatusID>${rail}</StatusID>`)
+  .replace('<Weight>2,50</Weight>', `<Weight>2,50</Weight>${order}`);
+
 describe('DPD Germany app projection', () => {
-  type Row = [day: string, time: string, wording: string, location: string, additional?: [code: string, text: string]];
-  const scanList = (rows: Row[]) => fixture('scans').replace(/<TrackingScanList>[\s\S]*<\/TrackingScanList>/, `<TrackingScanList>${rows.map(([day, time, wording, location, additional]) =>
-    `<TrackingScan><ScanDate>${day}</ScanDate><ScanTime>${time}</ScanTime><StatusText>${wording}</StatusText><Location>${location}</Location>`
-    + `<ServiceCode>101</ServiceCode><TrackingScanAdditionalList>${additional ? `<TrackingScanAdditionalType><AdditionalCode>${additional[0]}</AdditionalCode>`
-    + `<Description>${additional[1]}</Description></TrackingScanAdditionalType>` : ''}</TrackingScanAdditionalList></TrackingScan>`).join('')}</TrackingScanList>`);
-  const tracking = (rail: string, order = '') => fixture('tracking').replace('<StatusID>AT_DELIVERY_DEPOT</StatusID>', `<StatusID>${rail}</StatusID>`)
-    .replace('<Weight>2,50</Weight>', `<Weight>2,50</Weight>${order}`);
   const lookup = (rail: string, rows: Row[], order = '', shop?: () => Response) => {
-    const app = service({ getTrackingData: [() => xml(tracking(rail, order))], getTrackingScanList: [() => xml(scanList(rows))],
+    const app = service({ getTrackingData: [() => xml(railed(rail, order))], getTrackingScanList: [() => xml(scanList(rows))],
       ...(shop ? { getParcelShopByID: [shop] } : {}) });
     return { calls: app.calls, result: app.track() };
   };
@@ -406,6 +409,43 @@ describe('DPD Germany app projection', () => {
       ['Goods issue at sender.', 'registered'],
       ['Order information has been transmitted to DPD.', 'registered'],
     ]);
+  });
+
+  const depotScan: Row = ['05.01.2026', '23:45', 'In transit.', 'Musterstadt (DE)'];
+
+  it("reads the app's first depot scan as DPD taking the parcel over, in the guest API's words", async () => {
+    // The rail reads on the road from DPD's first scan on: the scan sets the stage.
+    const result = await track('ON_THE_ROAD', [['05.01.2026', '20:10', 'Order information has been transmitted to DPD.', 'DPD data centre'], depotScan]);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'accepted', current_stage_source: 'carrier_map',
+      last_status_text: 'Parcel handed to DPD', last_update: '2026-01-05T23:45:00+01:00' });
+    expect(stages(result)).toEqual([['In transit.', 'accepted'], ['Order information has been transmitted to DPD.', 'registered']]);
+    await expect(track('ON_THE_ROAD', [depotScan])).resolves.toMatchObject({ status: 'in_transit', current_stage: 'accepted',
+      last_status_text: 'Parcel handed to DPD' });
+  });
+
+  it.each([
+    ['a hub after the first depot', [depotScan, ['06.01.2026', '03:10', 'In transit.', 'Hubstadt (DE)']], 'accepted'],
+    ["the driver's collection from the sender", [['05.01.2026', '18:02', 'Parcel handed to DPD', 'Absenderstadt (DE)'], depotScan], 'accepted'],
+    ["the sender's drop-off at a shop", [['05.01.2026', '12:31', 'Parcel handed to Pickup parcelshop by consignor.', 'Absenderstadt (DE)'],
+      ['05.01.2026', '18:02', 'Pick-up from the Pickup parcelshop by DPD driver', 'Absenderstadt (DE)'], depotScan], 'in_transit'],
+  ] satisfies Array<[string, Row[], string]>)("reads the app's depot scan after %s as on the way", async (_, rows, before) => {
+    const result = await track('ON_THE_ROAD', rows);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'In transit.' });
+    expect(stages(result)?.slice(0, 2)).toEqual([['In transit.', 'in_transit'], [rows.at(-2)![2], before]]);
+  });
+
+  it.each([
+    ['ACCEPTED', [['05.01.2026', '20:10', 'Order information has been transmitted to DPD.', 'DPD data centre']], 'pending', 'registered'],
+    // A rail ahead of the scans leaves the stage to them.
+    ['AT_DELIVERY_DEPOT', [depotScan], 'in_transit', 'accepted'],
+    ['AT_DELIVERY_DEPOT', [depotScan, ['06.01.2026', '05:10', 'At parcel delivery centre.', 'Musterstadt (DE)']], 'in_transit', 'in_transit'],
+    ['OUT_FOR_DELIVERY', [depotScan, ['06.01.2026', '07:30', 'Out for delivery.', 'Musterstadt (DE)']], 'out_for_delivery', 'out_for_delivery'],
+    ['DELIVERED', [depotScan, ['06.01.2026', '12:31', 'Delivered.', 'Musterstadt (DE)']], 'delivered', 'delivered'],
+    // The rail's delivery stands beside a newest scan the map does not know.
+    ['DELIVERED', [depotScan, ['06.01.2026', '12:31', 'A future notice', 'Musterstadt (DE)']], 'delivered', 'delivered'],
+    ['RETURN_TO_SENDER', [depotScan, ['08.01.2026', '03:00', 'At parcel delivery centre. (Return to sender)', 'Absenderstadt (DE)']], 'exception', 'exception'],
+  ] satisfies Array<[string, Row[], string, string]>)('reads the %s rail beside the scans as before', async (rail, rows, status, stage) => {
+    await expect(track(rail, rows)).resolves.toMatchObject({ status, current_stage: stage });
   });
 
   it('skips a size with an unmeasured side', async () => {
@@ -481,7 +521,7 @@ describe('DPD Germany app projection', () => {
   ])('reads nothing more once stopped while it waits for %s', async (_, operation, expected) => {
     let answer!: () => void;
     const held = (reply: () => Response) => () => new Promise<Response>((resolve) => { answer = () => resolve(reply()); });
-    const data = () => xml(tracking('HANDOVER_TO_PARCELSHOP'));
+    const data = () => xml(railed('HANDOVER_TO_PARCELSHOP'));
     const scans = () => xml(scanList(atShop));
     const app = service({
       getTrackingData: [operation === 'getTrackingData' ? held(data) : data],
@@ -509,7 +549,7 @@ describe('DPD Germany app projection', () => {
 
   it('ends a lookup cancelled during the address request', async () => {
     const controller = new AbortController();
-    const app = service({ getTrackingData: [() => xml(tracking('HANDOVER_TO_PARCELSHOP'))], getTrackingScanList: [() => xml(scanList(atShop))],
+    const app = service({ getTrackingData: [() => xml(railed('HANDOVER_TO_PARCELSHOP'))], getTrackingScanList: [() => xml(scanList(atShop))],
       getParcelShopByID: [() => { controller.abort(new Error('Cancelled')); return xml('', 503); }] });
     await expect(app.track(controller.signal)).rejects.toThrow('Cancelled');
   });
@@ -597,6 +637,36 @@ describe('DPD Germany tiers', () => {
     expect(result.events).toHaveLength(5);
     expect(steps).toEqual([['app', 'ok']]);
     expect(guestCalls).toHaveLength(0);
+  });
+
+  it('gives a parcel whose only scan is the acceptance one stage and status line from either service', async () => {
+    // The app service's first depot scan and the guest protocol's hand-over, the same scan seconds apart.
+    const handed = { parcelNumber: NUMBER, status: { description: 'PARCEL_HANDED', countryCode: 'DE' },
+      parcelHistory: [{ description: 'PARCEL_HANDED', eventDateAndTime: '2026-01-05T23:45:58', eventDateAndTimeZoneId: '+01:00' }] };
+    const read = async (replies: Response[], answer: (app: ReturnType<typeof service>) => void) => {
+      const steps: Array<[string, string]> = [];
+      const { app, fetcher } = tiers(replies);
+      answer(app);
+      const { result } = await createTracker({ fetcher, providers: [],
+        recorder: { ...NOOP_RECORDER, step: event => { steps.push([event.step, event.outcome]); } } }).track({ number: NUMBER, carrier: 'dpd-de' });
+      return { result, steps };
+    };
+    const fromApp = await read([], (app) => {
+      app.replies.getTrackingData = [() => xml(railed('ON_THE_ROAD'))];
+      app.replies.getTrackingScanList = [() => xml(scanList([['05.01.2026', '23:45', 'In transit.', 'Musterstadt (DE)']]))];
+    });
+    const fromGuest = await read(guest(Response.json(handed)), (app) => {
+      app.replies.getSessionFullState = [() => Promise.reject(new TypeError('Synthetic network failure'))];
+    });
+    expect(fromApp.steps).toEqual([['app', 'ok']]);
+    expect(fromGuest.steps).toEqual([['app', 'transport'], ['direct', 'ok']]);
+    const reading = ({ result }: typeof fromApp) => ({ status: result.status, stage: result.current_stage, line: result.last_status_text });
+    expect(reading(fromApp)).toEqual({ status: 'in_transit', stage: 'accepted', line: 'Parcel handed to DPD' });
+    expect(reading(fromGuest)).toEqual(reading(fromApp));
+    // Each keeps its own words for the scan.
+    expect([fromApp, fromGuest].map(({ result }) => result.events?.map(event => [event.description, event.stage]))).toEqual([
+      [['In transit.', 'accepted']], [['Parcel handed to DPD', 'accepted']],
+    ]);
   });
 
   it('asks the guest protocol while the session opens and ends on a parcel it does not know', async () => {

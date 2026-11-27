@@ -240,6 +240,19 @@ describe('DPD Germany scan identity', () => {
     expect(matches({ ...handed, location: 'Andere Stadt, DE' }, depot)).toBe(false);
   });
 
+  it("matches the app's first depot scan, read as accepted, with the guest API's hand-over and DPD Austria's copy", () => {
+    const depot = { ...app, description: 'In transit.', stage: 'accepted' };
+    const handed = { stage: 'accepted', description: 'Parcel handed to DPD', location: '', providerCode: 'PARCEL_HANDED' };
+    const austria = { stage: 'in_transit', description: 'Parcel on the way', location: 'Musterstadt, DE', providerCode: 'ON_THE_WAY' };
+    for (const other of [handed, austria]) {
+      expect(matches(other, depot)).toBe(true);
+      expect(matches(depot, other)).toBe(true);
+    }
+    // The guest API's other scans keep their stage.
+    expect(matches({ ...guest, providerCode: 'IN_TRANSIT', description: 'Your parcel is on its way' }, depot)).toBe(false);
+    expect(matches(austria, { ...depot, description: 'At parcel delivery centre.' })).toBe(false);
+  });
+
   it('keeps scans of one service, of other stages or of other places apart', () => {
     expect(matches(guest, { ...guest, description: 'Your parcel arrived at our depot', providerCode: 'ORI' })).toBe(false);
     expect(matches(app, { ...app, description: 'In transit.' })).toBe(false);

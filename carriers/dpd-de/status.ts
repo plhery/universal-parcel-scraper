@@ -42,6 +42,20 @@ export const DPD_DE_APP_SCANS: Readonly<Record<string, Stage>> = {
 /** The key a scan's wording is mapped under: a booked collection's date becomes an ellipsis. */
 export const dpdDeScanKey = (wording: string) => wording.replace(/^(Pickup ordered for:) \d{1,2}\.\d{1,2}\.\d{4}$/i, '$1 …');
 
+/**
+ * The app words the first depot's scan as its hubs' scans, the way its progress rail goes from the
+ * order data ("Paketinfo an DPD übergeben") straight to "Paket unterwegs". Before any scan moved the
+ * parcel it is DPD taking the parcel over, which the guest API calls "Parcel handed to DPD" (ORI in
+ * a verified reply) and reads as accepted.
+ */
+export const DPD_DE_APP_DEPOT_SCAN = 'In transit.';
+
+/** An app scan's stage by its wording's key, oldest first: `previous` is the stage before it, `waited` whether the parcel waited at a shop. */
+export function dpdDeAppScanStage(key: string, waited: boolean, previous: Stage | undefined): Stage | undefined {
+  if (key === DPD_DE_APP_DEPOT_SCAN && (!previous || previous === 'registered')) return 'accepted';
+  return Object.hasOwn(DPD_DE_APP_SCANS, key) ? DPD_DE_APP_SCANS[key] : dpdDeShopCollectionStage(key, waited, previous);
+}
+
 const NOT_COLLECTED = 'The consignee did not collect the parcel.';
 const DRIVER_PICKUP = 'Pick-up from the Pickup parcelshop by DPD driver';
 const SHOP_COLLECTION_NOTE = 'Its stage depends on the scans before it. DPD writes it both when a driver collects a parcel the sender dropped at a Pickup shop and when the recipient left one there uncollected: after the parcel waited at the shop for its recipient it starts the way back.';

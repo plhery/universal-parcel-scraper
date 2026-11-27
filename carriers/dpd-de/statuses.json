@@ -72,7 +72,7 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-10-07",
-      "note": "Seen in the German app's scan list, which carries wording only."
+      "note": "Seen in the German app's scan list, which carries wording only. The app words the first depot's scan so too, the one the guest API calls PARCEL_HANDED: before any scan moved the parcel the adapter reads it as accepted, as the guest API's hand-over reads."
     },
     {
       "wording": "At parcel delivery centre.",

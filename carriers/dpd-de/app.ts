@@ -7,10 +7,11 @@ import { paddedDate } from '../../core/time/fields.js';
 import { calendarDay, isoTime, zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import type { XmlNode } from '../../core/transport/xml.js';
+import { API_LABELS } from '../dpd/status.js';
 import {
   children, DpdAppService, DpdOtherCountryError, invalid, one, optional, PostcodeRejected, scalar, SessionExpired, type DpdDePartner,
 } from './service.js';
-import { DPD_DE_APP_SCANS, dpdDeScanKey, dpdDeShopCollectionStage } from './status.js';
+import { DPD_DE_APP_DEPOT_SCAN, dpdDeAppScanStage, dpdDeScanKey } from './status.js';
 
 /** The app's progress rail: one coarse state for the whole parcel. */
 export const DPD_DE_APP_RAIL: Readonly<Record<string, ClassifiedStatus>> = {
@@ -165,8 +166,7 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): { 
     // German facilities keep German civil time; a clock elsewhere has no established zone.
     const clock = zonedTime(wall, 'dd.MM.yyyy HH:mm', place?.[2] === 'DE' ? 'Europe/Berlin' : 'UTC');
     if (!clock) invalid();
-    const key = dpdDeScanKey(wording);
-    const stage = Object.hasOwn(DPD_DE_APP_SCANS, key) ? DPD_DE_APP_SCANS[key] : dpdDeShopCollectionStage(key, waited, previous);
+    const stage = dpdDeAppScanStage(dpdDeScanKey(wording), waited, previous);
     if (stage === 'ready_for_pickup') [shop, waited] = [shopOf(row), true];
     previous = stage ?? previous;
     // A wording the map does not know that names who took the parcel is described neutrally, so the
@@ -223,9 +223,12 @@ function reply(
   const deliveredAt = status === 'delivered' ? events.find(event => event.stage === 'delivered')?.time : undefined;
   // The shop holding the parcel, while it waits there.
   const pickup = stage === 'ready_for_pickup' ? shop : undefined;
+  // The first depot's scan read as DPD taking the parcel over is told in the guest API's words for it,
+  // which say what its stage says, where the app's say what its rail says.
+  const handedOver = current.stage === 'accepted' && current.description === DPD_DE_APP_DEPOT_SCAN;
   const result: CarrierResult = {
     status, ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
-    last_status_text: current.description ?? null, last_update: current.time ?? null,
+    last_status_text: handedOver ? API_LABELS.PARCEL_HANDED! : current.description ?? null, last_update: current.time ?? null,
     ...(affirmative(scalar(tracking, 'Delivered', 8)) || rail?.status === 'delivered' || status === 'delivered' || status === 'exception'
       || stage === 'delivered' || stage === 'ready_for_pickup' ? { expected_delivery: null } : deliveryEstimate(tracking, announced)),
     ...(current.time ? {} : { last_update_local: current.local_time }),

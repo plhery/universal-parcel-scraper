@@ -71,7 +71,8 @@ country.
   less than a minute apart, the same place or none, and the match unique both
   ways. The guest API's hand-over, "Parcel handed to DPD", is the first
   depot's scan the app calls "In transit.", and the two match whatever stage
-  each reads.
+  each reads. Read as accepted, that app scan also matches DPD Austria's
+  copy of it, which is on the way.
 - The Swiss page fallback is not used for German lookups.
 
 ## App service
@@ -161,7 +162,12 @@ with [DPD Switzerland](../dpd/README.md), whose Pickup shops
   three-letter placeholder.
 - Scans carry English wording without codes. Each known wording is mapped
   whole in [status.ts](status.ts), because the shared classifier misreads
-  several of them. An unmapped wording that names who took the parcel is
+  several of them. The app words the first depot's scan "In transit.", as it
+  words a hub's, since its progress rail goes from the order data straight to
+  `ON_THE_ROAD`. Before any scan moved the parcel, that scan is DPD taking
+  the parcel over, the guest API's hand-over: it reads as accepted, with the
+  guest API's "Parcel handed to DPD" as the status line, so both services
+  give the parcel the same stage. An unmapped wording that names who took the parcel is
   described as a delivery update, keeping its wording as the original, so the
   shared classifier does not stage it. A collection the sender booked is still
   registration; the recipient's collection from a Pickup station or shop is the delivery, though

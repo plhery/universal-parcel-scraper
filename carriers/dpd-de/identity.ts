@@ -4,9 +4,10 @@ import { dpdAtMappedStage } from '../dpd-at/status.js';
 const place = (value: string) => value.replace(/\s+/g, ' ').trim().toLocaleLowerCase('de-DE');
 
 // The guest API's hand-over is the first depot's scan, which the app calls "In transit.":
-// DPD's map leaves the hand-over unstaged, so its wording reads as accepted.
-const handOver = (guest: SameInstantScan, app: SameInstantScan) => guest.providerCode === 'PARCEL_HANDED'
-  && app.description.replace(/\s+/g, ' ').trim().toLowerCase() === 'in transit.';
+// DPD's map leaves the hand-over unstaged, so its wording reads as accepted. The app reads
+// that scan as accepted before anything moved the parcel, where DPD Austria's copy is on the way.
+const handOver = (other: SameInstantScan, app: SameInstantScan) => app.description.replace(/\s+/g, ' ').trim().toLowerCase() === 'in transit.'
+  && (other.providerCode === 'PARCEL_HANDED' || (app.stage === 'accepted' && other.stage === 'in_transit' && service(other) === 'austria'));
 
 // The codes the guest API shares with myDPD's names for a scan's state.
 const SHARED_CODES: ReadonlySet<string> = new Set(['DELIVERED', 'RETURN_TO_SENDER']);
