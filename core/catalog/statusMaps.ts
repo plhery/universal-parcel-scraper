@@ -1202,6 +1202,7 @@ import { statusMap as xunTianInternational } from '../../carriers/xun-tian-inter
 import { statusMap as qinhangTransportation } from '../../carriers/qinhang-transportation/status.js';
 import { statusMap as hdExpress } from '../../carriers/hd-express/status.js';
 import { statusMap as eudore } from '../../carriers/eudore/status.js';
+import { statusMap as hotwms } from '../../carriers/hotwms/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1457,6 +1458,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'qinhang-transportation': qinhangTransportation,
   'hd-express': hdExpress,
   eudore,
+  hotwms,
 };
 
 /** The carrier the app files the universal providers' scans under. */

@@ -7303,5 +7303,11 @@
     "carrier": "eudore",
     "kind": "by_design",
     "reason": "Eudore's tracker finds a waybill by the shipper's own reference as well as by its waybill and system numbers, and the only public sample is a shipper's reference, which nothing ties to the line."
+  },
+  {
+    "carrier": "hotwms",
+    "pattern": "^\\d{19}$",
+    "kind": "by_design",
+    "reason": "HOTWMS's waybills are nineteen bare digits, which no prefix or check digit ties to it, so no rule claims them and the adapter answers explicit selection."
   }
 ]

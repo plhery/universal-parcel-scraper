@@ -1,0 +1,108 @@
+{
+  "carrier": "hotwms",
+  "entries": [
+    {
+      "wording": "已入库",
+      "language": "zh",
+      "english": "Received at the warehouse",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "HOTWMS's overseas warehouse takes the parcel in, the first step of the history."
+    },
+    {
+      "wording": "清关袋已就绪",
+      "language": "zh",
+      "english": "Customs bag ready",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The warehouse readies the bag the parcel goes into for China's customs."
+    },
+    {
+      "wording": "清关单已创建",
+      "language": "zh",
+      "english": "Customs declaration created",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The declaration for China's import customs is written while the parcel is still at the warehouse abroad; no customs hold."
+    },
+    {
+      "wording": "已装袋",
+      "language": "zh",
+      "english": "Bagged",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "已出库",
+      "language": "zh",
+      "english": "Left the warehouse",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "航班已预定",
+      "language": "zh",
+      "english": "Flight booked",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "航班已离港",
+      "language": "zh",
+      "english": "Flight departed",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "航班已到港",
+      "language": "zh",
+      "english": "Flight arrived",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "待提货",
+      "language": "zh",
+      "english": "Awaiting collection from the airport",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The bag waits at the arrival airport for HOTWMS to collect it, between the flight's arrival and customs; nothing waits for the recipient."
+    },
+    {
+      "wording": "已提货",
+      "language": "zh",
+      "english": "Collected from the airport",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "清关中",
+      "language": "zh",
+      "english": "Clearing customs",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "根据海关政策查验征税",
+      "language": "zh",
+      "english": "Inspected and taxed under customs policy",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "海关放行",
+      "language": "zh",
+      "english": "Released by customs",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "已交付末段 [EMS]",
+      "language": "zh",
+      "english": "Handed to the last leg [EMS]",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Handed to EMS for delivery in China; the step gives EMS's number after a colon. The map reads the wording without the carrier's name and number, so a hand-over to another carrier reads the same."
+    }
+  ]
+}
