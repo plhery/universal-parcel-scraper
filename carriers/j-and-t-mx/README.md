@@ -20,8 +20,9 @@ digits of the recipient's or sender's phone the tracker asks for.
   `phone_digits_mismatch`, and universal providers answer instead.
 - An unknown waybill is HTTP 200 with code 135020020, which the page reports as not found. A
   found waybill without scans has no history. Codes 999001010 and 999001030 refuse the request's
-  parameters and are schema failures. A 404 or a redirect is a moved route, and a page in place
-  of JSON is a challenge.
+  parameters and are schema failures. A 404 or a redirect is a moved route. A page in place
+  of JSON is a challenge, and so is the lookup's plain-text "Blocked by …", which it has sent
+  with HTTP 200 now and then beside answered lookups.
 - Any waybill the reply names must be the one asked.
 - The digits are a credential. They stay out of error messages and request diagnostics, and
   never reach a universal provider.

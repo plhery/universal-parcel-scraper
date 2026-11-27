@@ -14,6 +14,8 @@ const LANGUAGES = { es: 'ES', en: 'EN', zh: 'CN' } as const;
 const REDIRECTS = [301, 302, 303, 307, 308];
 // Bot checks a CDN or firewall could put in place of the reply.
 const CHALLENGE = /_cf_chl_opt|cf-turnstile|<title>\s*Just a moment|acw_sc__v2|aliyun_waf|_____tmd_____|AwsWafIntegration|awswaf\.com/i;
+// The lookup's own refusal in plain text, which it has sent with HTTP 200 in place of the reply: "Blocked by …".
+const BLOCKED = /^\s*Blocked by\b/i;
 
 /**
  * The phone digits the lookup takes: the last four of the recipient's or
@@ -37,6 +39,7 @@ function json(body: string): unknown {
     if (CHALLENGE.test(body.slice(0, 64_000)) || /^\s*</.test(body)) {
       throw new ChallengeError(PROVIDER, 'J&T Express Mexico answered with a page instead of its lookup', { cause });
     }
+    if (BLOCKED.test(body)) throw new ChallengeError(PROVIDER, 'J&T Express Mexico blocked the lookup', { cause });
     throw new SchemaError(PROVIDER, 'J&T Express Mexico returned a reply that is not JSON', { cause });
   }
 }

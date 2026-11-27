@@ -140,10 +140,13 @@ describe('J&T Express Mexico HTTP adapter', () => {
     }
   });
 
-  it('reads a page in place of the reply as a challenge, and a moved route as a transport failure', async () => {
+  it('reads a page or a refusal in place of the reply as a challenge, and a moved route as a transport failure', async () => {
     const tracked = (response: () => Response) => carrier(site(response)).track({ number: DELIVERED, phoneDigits: DIGITS });
     await expect(tracked(() => new Response('<html><title>Just a moment...</title></html>', { headers: { 'Content-Type': 'text/html' } })))
       .rejects.toMatchObject({ kind: 'challenge' });
+    // Its own plain-text refusal, sent with HTTP 200, is a block too.
+    await expect(tracked(() => new Response('Blocked by synthetic policy', { headers: { 'Content-Type': 'text/plain' } })))
+      .rejects.toMatchObject({ kind: 'challenge', message: expect.stringContaining('blocked the lookup') });
     await expect(tracked(() => new Response('not json'))).rejects.toMatchObject({ kind: 'schema' });
     await expect(tracked(() => new Response('', { status: 404 }))).rejects.toMatchObject({ kind: 'transport' });
     await expect(tracked(() => new Response(null, { status: 302, headers: { Location: '/elsewhere' } }))).rejects.toMatchObject({ kind: 'transport' });
