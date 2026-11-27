@@ -1032,6 +1032,7 @@ describe('classifyWording', () => {
       ['Your parcel is being held at our delivery depot, your premises were closed', 'failed_attempt'],
       // A delivery terminal is no delivery round.
       ['Shipment Unloaded in Delivery Terminal', 'in_transit'],
+      ['Received at delivery terminal', 'in_transit'],
       // The sender's deposit with a postal partner, an airline taking the
       // parcel, and the recipient collecting it.
       ['Your shipment has been deposited by the sender with postal partner in their country of origin', 'accepted'],

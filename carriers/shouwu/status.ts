@@ -49,6 +49,7 @@ const PATTERNS: readonly [RegExp, Stage][] = [
   [/^delivered, front door\/porch -> your item was delivered at the front door or porch\b/, 'delivered'],
   [/^on the way in transit, arriving on time -> your package is moving within the usps network\b/, 'in_transit'],
   [/^on the way, departed usps facility -> your item departed our usps facility\b/, 'in_transit'],
+  [/^on the way, arrived at usps facility -> your item arrived at our usps facility\b/, 'in_transit'],
   // The partner's sort and departure in China after its collection, naming the facility's town.
   [/^arrived at sort facility [a-z][a-z .-]{1,60}$/, 'in_transit'],
   [/^departed facility in [a-z][a-z .-]{1,60}$/, 'in_transit'],

@@ -74,6 +74,8 @@ const UNCODED: ReadonlyMap<string, Stage> = new Map([
   ['your shipment has departed from the transit origin', 'in_transit'],
   ['your shipment has arrived at the transit destination', 'in_transit'],
   ['shipment info received', 'registered'],
+  // The shipment's electronic data received, in Chinese: the same notice.
+  ['货物电子信息已经收到', 'registered'],
   // Export clearance started, a routine step before the flight and 4PX's coded release ("Export customs clearance
   // complete"): the parcel goes on its way, held by no customs.
   ['export customs clearance started', 'in_transit'],

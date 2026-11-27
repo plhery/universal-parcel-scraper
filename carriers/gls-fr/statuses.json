@@ -29,6 +29,9 @@
     { "code": "DEP", "stage": "in_transit", "confirmedBy": "official-doc", "firstSeen": "2026-09-12", "note": "ParcelShop delivery planned; present in the current official tracking frontend." },
     { "code": "DEK", "stage": "in_transit", "confirmedBy": "official-doc", "firstSeen": "2026-09-12", "note": "Locker delivery planned; present in the current official tracking frontend." },
     { "code": "DEL", "stage": "in_transit", "confirmedBy": "fixture", "firstSeen": "2026-09-12", "note": "Rescheduled delay. The same code becomes failed_attempt when the event's typeEvenement is LIV, which is how the official frontend reads it." },
-    { "code": "LIR", "stage": "returned", "confirmedBy": "official-doc", "firstSeen": "2026-09-12", "note": "Returned to sender." }
+    { "code": "LIR", "stage": "returned", "confirmedBy": "official-doc", "firstSeen": "2026-09-12", "note": "Returned to sender." },
+    { "code": "CCO", "stage": "registered", "confirmedBy": "official-doc", "note": "Parcel prepared by the sender for collection, in the official tracking frontend: GLS does not have it yet." },
+    { "code": "TRA", "stage": "in_transit", "confirmedBy": "official-doc", "note": "Parcel in transit, in the official tracking frontend." },
+    { "code": "MRP", "stage": "ready_for_pickup", "confirmedBy": "official-doc", "note": "Parcel handled by the Relais GLS, worded as LIP in the official tracking frontend." }
   ]
 }

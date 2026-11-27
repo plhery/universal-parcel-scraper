@@ -559,6 +559,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // A hand-over to the last-mile partner's regional centre, as 4PX relays iMile's: "Shipment delivered to iMile RDC or
   // lastmile vendor".
   if (/delivered to (?:the |a |an |our )?(?:[\w-]+ )?(?:rdc|regional distribution cent(?:er|re)|last[ -]?mile (?:vendor|carrier|courier|partner|provider|agent))\b/.test(text)) return 'in_transit';
+  // Received at the terminal or depot that delivers it, as a last mile words its first scan: the parcel has come that
+  // far, no carrier is accepting it.
+  if (/\breceived at (?:the |our )?delivery (?:terminal|depot|hub|station|cent(?:er|re))s?\b/.test(text)) return 'in_transit';
   // A hand-over to a warehouse on the way, as JCEX words its partner's depot: "Delivered to warehouse, waiting to be
   // scanned". A warehouse of the recipient's is a delivery.
   if (/delivered to (?:the |a |an |our )?(?:(?:origin|overseas|transit|destination|local|sorting) )?warehouse\b(?! of\b)/.test(text)) return 'in_transit';

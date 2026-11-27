@@ -71,6 +71,7 @@ it.each([
   ['Delivered, Front Door/Porch -> Your item was delivered at the front door or porch at noon.', 'delivered'],
   ['On the way in transit, arriving on time -> Your package is moving within the USPS network.', 'in_transit'],
   ['On the way, Departed USPS facility -> Your item departed our USPS facility.', 'in_transit'],
+  ['On the way, Arrived at USPS facility -> Your item arrived at our USPS facility in EXAMPLE TOWN IL DISTRIBUTION CENTER.', 'in_transit'],
 ] as const)('maps the Shouwu scan %s to %s', (wording, stage) => {
   const payload = changed((rows) => rows.splice(0, rows.length, trace(1775990469, wording)));
   expect(parseShouwu(payload, DELIVERED).events?.[0]).toMatchObject({

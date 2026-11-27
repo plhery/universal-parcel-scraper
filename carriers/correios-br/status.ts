@@ -36,6 +36,8 @@ const codes: Record<string, ClassifiedStatus> = {
   'FC/04': { status: 'exception', stage: 'exception' },
   // Content that is restricted or cannot fly: the item goes on by another route, with its route correction (FC/03).
   'FC/52': { status: 'in_transit', stage: 'in_transit' },
+  // Sent on to a Correios unit to be collected there, as the recipient asked: collection follows (LDI).
+  'FC/63': { status: 'in_transit', stage: 'in_transit' },
   'DO/01': { status: 'in_transit', stage: 'in_transit' },
   'RO/01': { status: 'in_transit', stage: 'in_transit' },
   'PAR/10': { status: 'in_transit', stage: 'in_transit' },

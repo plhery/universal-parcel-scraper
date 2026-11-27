@@ -553,6 +553,8 @@ describe('status map answers', () => {
 
   it("answers GLS France by its event code, and leaves its delay, a failed attempt for a delivery event, out on purpose", () => {
     expect(answer('gls-fr', 'CON', 'Shipment information received')).toEqual(mapped('registered'));
+    // A row an earlier release stored without wording is read by its code.
+    expect(answer('gls-fr', 'CCO', 'GLS France tracking update')).toEqual(mapped('registered'));
     expect(answer('gls-fr', 'TRV', 'Out for delivery')).toEqual(mapped('out_for_delivery'));
     expect(answer('gls-fr', 'LIP', 'Ready for pickup at GLS ParcelShop')).toEqual(mapped('ready_for_pickup'));
     expect(answer('gls-fr', 'LIV', 'Delivered')).toEqual(mapped('delivered'));

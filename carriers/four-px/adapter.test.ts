@@ -399,6 +399,7 @@ describe('4PX result projection', () => {
     expect(statusMap.stage('FPX_O_IR', 'order submited.')).toBe('registered');
     expect(statusMap.stage(null, 'shipment info received')).toBe('registered');
     expect(statusMap.stage(null, 'export customs clearance started')).toBe('in_transit');
+    expect(statusMap.stage(null, '货物电子信息已经收到')).toBe('registered');
     expect(statusMap.stage('FPX_NEW', 'manifest created')).toBeUndefined();
   });
 

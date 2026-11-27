@@ -232,6 +232,13 @@
       "language": "en",
       "confirmedBy": "live",
       "note": "The import cleared."
+    },
+    {
+      "wording": "About to be sent to the [France] warehouse",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The origin hub's row before the parcel leaves for the destination country's warehouse."
     }
   ]
 }

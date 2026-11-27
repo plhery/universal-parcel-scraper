@@ -65,6 +65,9 @@ export const GLS_FRANCE_STATUSES = new Map<string, GLSFranceStatusMetadata>([
   ['DEK', { status: 'in_transit', stage: 'in_transit', description: 'Locker delivery planned' }],
   ['DEL', DELAYED_DELIVERY],
   ['LIR', { status: 'exception', stage: 'returned', description: 'Returned to sender' }],
+  ['CCO', { status: 'pending', stage: 'registered', description: 'Parcel prepared by the sender for collection' }],
+  ['TRA', { status: 'in_transit', stage: 'in_transit', description: 'Parcel in transit' }],
+  ['MRP', { status: 'out_for_delivery', stage: 'ready_for_pickup', description: 'Ready for pickup at GLS ParcelShop' }],
 ]);
 
 /** A provider code is two to four letters; anything else is not a code we can read. */
