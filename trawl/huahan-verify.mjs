@@ -16,8 +16,11 @@ const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 // The widget's refusals that a new picture would not lift.
 const REFUSED = /频繁|上限|繁忙|冷却|too many|rate limit/i;
 const MAX_BODY = 1_000_000;
-// Each picture opens a verification session, and HuaHan caps those per address and hour.
-const MAX_PICTURES = 2;
+// Each picture opens a verification session, and HuaHan caps those per address and hour. The worker
+// is unsure of about two pictures in five, so two unsure pictures in a row ended about one lookup in six.
+const MAX_PICTURES = 3;
+// A later picture opens only with this much time left: one read, checked and answered took about 11 s.
+const PICTURE_MS = 12_000;
 // The worker's own score: pictures it read at 0.99 and better passed, one it read at 0.12 did not.
 const MIN_CONFIDENCE = 0.5;
 // The picture is 240 by 150 pixels; the clicks are offsets in it.
@@ -105,8 +108,8 @@ export function contextFetcher(context) {
 }
 
 /**
- * Up to two pictures, each in its own verification session; a picture the worker reads with
- * little confidence is not submitted. The result carries the tracking reply, or a refusal as the
+ * Up to three pictures, each in its own verification session, a later one only while the time
+ * left covers it; a picture the worker reads with little confidence is not submitted. The result carries the tracking reply, or a refusal as the
  * widget gave it, under the tracking address; none when no picture passed.
  */
 export async function runHuahanVerify({ url, capture, tier, maxTimeout, signal, fetcher = globalThis.fetch,
@@ -176,6 +179,7 @@ export async function runHuahanVerify({ url, capture, tier, maxTimeout, signal, 
       fetcher = contextFetcher(context);
     }
     for (let picture = 0; picture < MAX_PICTURES && !combined.aborted; picture++) {
+      if (picture > 0 && left() < PICTURE_MS) return;
       cookies.clear();
       const init = await request(`init.php?_=${Date.now()}`, 4096);
       const opened = parse(init.body);

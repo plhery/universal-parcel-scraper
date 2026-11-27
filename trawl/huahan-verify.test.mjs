@@ -26,7 +26,7 @@ function huahan(routes) {
 }
 const opened = { 'init.php': count => ({ ask: 1, token: `token-${count}-abcdef` }), 'tncode.php': () => picture };
 const sure = async () => ({ points: [{ x: 169, y: 50.5 }, { x: 77, y: 21 }], confidence: 0.999 });
-const run = (fetcher, options = {}) => runHuahanVerify({ url, capture, tier: 2, maxTimeout: 5000, fetcher, onReport: () => {}, ...options });
+const run = (fetcher, options = {}) => runHuahanVerify({ url, capture, tier: 2, maxTimeout: 30_000, fetcher, onReport: () => {}, ...options });
 
 test('HuaHan enters only the whole waybill with its tracking reply bound', () => {
   assert.equal(huahanVerifyNumber(url, capture), number);
@@ -81,16 +81,32 @@ test('HuaHan opens a new session instead of submitting an unsure reading', async
   assert.equal(result.capturedResponses.length, 1);
 });
 
-test('HuaHan stops after two pictures that do not pass, with no capture', async () => {
+test('HuaHan stops after three pictures that do not pass, with no capture', async () => {
   const { asked, fetcher } = huahan({ ...opened, 'check.php': () => 'error' });
   const reports = [];
   const result = await run(fetcher, { solve: sure, onReport: fields => reports.push(fields) });
-  assert.equal(asked.filter(entry => entry.path === 'init.php').length, 2);
+  assert.equal(asked.filter(entry => entry.path === 'init.php').length, 3);
   assert.equal(asked.some(entry => entry.path === 'CargoTrackActionPlus.php'), false);
   assert.deepEqual(result.capturedResponses, []);
   assert.equal(reports[0].outcome, 'unpassed');
-  assert.equal(reports[0].checks, 2);
+  assert.equal(reports[0].checks, 3);
   assert.ok(!JSON.stringify(reports).includes('token'));
+});
+
+test('HuaHan reads a third picture after two unsure ones, and opens none it has no time for', async () => {
+  const unsure = { points: [{ x: 1, y: 1 }, { x: 2, y: 2 }], confidence: 0.12 };
+  const { asked, fetcher } = huahan({ ...opened, 'check.php': () => 'ok', 'CargoTrackActionPlus.php': () => reply });
+  let readings = 0;
+  const result = await run(fetcher, { solve: async () => ++readings < 3 ? unsure : sure() });
+  assert.equal(asked.find(entry => entry.path === 'check.php').query.get('token'), 'token-3-abcdef');
+  assert.equal(result.capturedResponses.length, 1);
+
+  const short = huahan(opened);
+  const reports = [];
+  const ended = await run(short.fetcher, { maxTimeout: 11_000, solve: async () => unsure, onReport: fields => reports.push(fields) });
+  assert.equal(short.asked.filter(entry => entry.path === 'init.php').length, 1);
+  assert.deepEqual(ended.capturedResponses, []);
+  assert.equal(reports[0].outcome, 'unpassed');
 });
 
 test('HuaHan returns the hourly cap as the widget gives it, without another session', async () => {
@@ -113,12 +129,12 @@ test('HuaHan reports why a reading was withheld without submitting it or retaini
     const { asked, fetcher } = huahan(opened);
     const reports = [];
     const result = await run(fetcher, { solve: async () => reading, onReport: value => reports.push(value) });
-    assert.deepEqual(asked.map(row => row.path), ['init.php', 'tncode.php', 'init.php', 'tncode.php']);
+    assert.deepEqual(asked.map(row => row.path), ['init.php', 'tncode.php', 'init.php', 'tncode.php', 'init.php', 'tncode.php']);
     assert.deepEqual(result.capturedResponses, []);
     assert.equal(reports.length, 1);
-    assert.equal(reports[0].unsure, 2);
+    assert.equal(reports[0].unsure, 3);
     assert.deepEqual(reports[0].abstentions, Object.fromEntries(
-      ['missingPoints', 'pointCount', 'confidence', 'coordinates'].map(key => [key, key === reason ? 2 : 0])));
+      ['missingPoints', 'pointCount', 'confidence', 'coordinates'].map(key => [key, key === reason ? 3 : 0])));
     assert.ok(!JSON.stringify(reports).includes('PRIVATE'));
     assert.ok(!JSON.stringify(reports).includes(number));
   }
