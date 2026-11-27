@@ -1,0 +1,95 @@
+{
+  "id": "king-delivery",
+  "displayName": "King Delivery",
+  "aliases": [
+    "快达物流",
+    "快达",
+    "KuaiDa Logistics",
+    "Beijing KuaiDa International Logistics",
+    "北京快达国际物流服务有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#104E82"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "king-delivery",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "weight",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.kuaidaexp.com/cgi-bin/GInfo.dll?MfcISAPICommand=emmistrack&w=kuaidaexp&ntype=10001&cno={trackingNumber}",
+    "searchUrl": "https://www.kuaidaexp.com/",
+    "canaryUrl": "https://www.kuaidaexp.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination",
+      "parcel_count",
+      "delivered_at",
+      "signatory",
+      "recipient_name",
+      "recipient_address",
+      "recipient_contact",
+      "courier_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "destination",
+      "parcel_count",
+      "delivered_at",
+      "signatory",
+      "recipient_name",
+      "recipient_address",
+      "recipient_contact",
+      "courier_name"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "sender_name"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.kuaidaexp.com",
+        "kuaidaexp.com"
+      ],
+      "pathPattern": "^/cgi-bin/ginfo\\.dll$",
+      "query": "^(?=(?:.*&)?MfcISAPICommand=(?:emmistrack|EmsApiTrack)(?:&|$))(?:.*&)?cno=([^&]+)(?=&|$)"
+    }
+  ],
+  "detection": [
+    {
+      "id": "king-delivery-1",
+      "pattern": "^KDZGZ\\d{9}$",
+      "confidence": "high"
+    }
+  ]
+}

@@ -2953,6 +2953,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'tfmxpress', number: 'ZZZZZZ00000',
     route: /^https:\/\/www\.ezyfms\.com\/tfm\/Tracker\.asp\?CN=ZZZZZZ00000$/,
     marker: /Enter Consignment No \/ Tracking No|The tracking information is not available\./ },
+  // The GInfo server renders the waybill's page from its address, the number in its heading.
+  { carrier: 'king-delivery', number: 'KDZGZ999999999',
+    route: /^https:\/\/www\.kuaidaexp\.com\/cgi-bin\/GInfo\.dll\?MfcISAPICommand=emmistrack&w=kuaidaexp&ntype=10001&cno=KDZGZ999999999$/,
+    marker: /运单跟踪/ },
 ];
 
 /**

@@ -1,9 +1,9 @@
 /**
- * The Neoman GInfo tracking server, `GInfo.dll` on IIS, which HGD, SRJ and Yi Long Express each run
- * on a host of their own, over plain HTTP. Their sites' tracking forms post to the server's
- * `EmmisTrack` page; the adapters read `EmsApiTrack`, the record that page renders. Each carrier
- * keeps its host, number shape and status map; this module holds the request and the parser they
- * share.
+ * The Neoman GInfo tracking server, `GInfo.dll` on IIS, which HGD, SRJ, Yi Long Express and King
+ * Delivery each run on a host of their own, the first three over plain HTTP. Their sites' tracking
+ * forms post to the server's `EmmisTrack` page; the adapters read `EmsApiTrack`, the record that
+ * page renders. Each carrier keeps its host, number shape and status map; this module holds the
+ * request and the parser they share.
  */
 import { DateTime } from 'luxon';
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
@@ -45,6 +45,13 @@ export interface GinfoTenant {
   readonly statusMap: CarrierStatusMap;
   /** A row's wording, place and code, for a tenant that writes them all in `INFO`. Without it, `INFO` is the wording. */
   readonly row?: (info: string) => GinfoRowText;
+  /** The place a row's `PLACE` names, given its `INFO`, or '' when it holds something else. Without it, `PLACE` as written. */
+  readonly place?: (place: string, info: string) => string;
+  /**
+   * The catalog carrier each service `TRANSKIND` can name, for a tenant whose record gives that
+   * carrier's number in `TRANS_NBR`. Without it, only `REFER_NBR` can name a delivery carrier.
+   */
+  readonly transfers?: Readonly<Record<string, string>>;
   /**
    * The tenant's page was seen to show `STATE` 3 as delivered (送达！) with `ADATE` as the delivery
    * time: the record then reads as delivered whatever its rows say.
@@ -109,7 +116,8 @@ function wallClock(provider: string, value: string): string {
  * were written, each a wall clock without its zone, some a day alone. A row
  * dated after the lookup on the forwarder's clock is not a scan yet and is
  * left out. A row without wording says nothing, and a repeated one is read
- * once.
+ * once. A row without clock, place or wording is a blank line some tenants
+ * open their rows with.
  */
 function scans(tenant: GinfoTenant, rows: string, readAt: number): CarrierEvent[] {
   const { provider } = tenant;
@@ -120,12 +128,15 @@ function scans(tenant: GinfoTenant, rows: string, readAt: number): CarrierEvent[
   if (rows.replace(ROW, '').trim()) throw new SchemaError(provider, `${provider} returned an invalid scan`);
   if (matches.length > MAX_ROWS) throw new SchemaError(provider, `${provider} returned an oversized history`);
   for (const [, clock, place, info] of matches) {
+    if (![clock, place, info].some((part) => textFromHtml(part, 40))) continue;
     const local = wallClock(provider, textFromHtml(clock, 40));
     if (firstOccurrence(DateTime.fromISO(local, { zone: ZONE })).toMillis() > readAt) continue;
     const text = tenant.row ? tenant.row(textFromHtml(info, 1000)) : { description: textFromHtml(info, 300) };
     const description = clean(text.description, 300);
     if (!description) continue;
-    const location = textFromHtml(place, 120) || clean(text.location, 120);
+    const written = textFromHtml(place, 120);
+    const location = (written && tenant.place ? clean(tenant.place(written, textFromHtml(info, 1000)), 120) : written)
+      || clean(text.location, 120);
     const code = text.code ?? '';
     const key = JSON.stringify([local, location, description, code]);
     if (seen.has(key)) continue;
@@ -156,6 +167,21 @@ function handoff(tenant: GinfoTenant, reference: string, number: string): Pick<C
   const match = detectCarrierMatch(onward);
   return match.confidence === 'high' && match.carrier !== 'unknown' && match.carrier !== tenant.carrier
     ? { delivery_carrier: match.carrier, delivery_tracking_number: onward } : {};
+}
+
+/**
+ * The carrier a tenant's `TRANSKIND` names and its number in `TRANS_NBR`, when that
+ * carrier's own rules claim the whole number at high confidence: King Delivery's
+ * records name JD Logistics and its waybill there. Undefined otherwise.
+ */
+function transfer(tenant: GinfoTenant, info: string, number: string): Pick<CarrierResult, 'delivery_carrier' | 'delivery_tracking_number'> | undefined {
+  const kind = field(tenant.provider, info, 'TRANSKIND', 60);
+  const carrier = tenant.transfers && Object.hasOwn(tenant.transfers, kind) ? tenant.transfers[kind] : undefined;
+  if (!carrier) return undefined;
+  const onward = normalizeTrackingNumber(field(tenant.provider, info, 'TRANS_NBR', 64));
+  const match = REFERENCE.test(onward) && onward !== number ? detectCarrierMatch(onward) : undefined;
+  return match?.confidence === 'high' && match.carrier === carrier
+    ? { delivery_carrier: carrier, delivery_tracking_number: onward } : undefined;
 }
 
 /**
@@ -198,7 +224,7 @@ export function parseGinfo(tenant: GinfoTenant, body: string, raw: string, readA
     expected_delivery: null,
     ...(country ? { destination_country: country } : {}),
     ...(kilograms !== null ? { weight_kg: kilograms } : {}),
-    ...handoff(tenant, field(provider, info, 'REFER_NBR', 64), number),
+    ...(transfer(tenant, info, number) ?? handoff(tenant, field(provider, info, 'REFER_NBR', 64), number)),
     events,
   };
 }

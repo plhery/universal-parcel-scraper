@@ -1,0 +1,22 @@
+{
+  "carrier": "king-delivery",
+  "records": [
+    {
+      "number": "KDZGZ660002596",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/king-delivery/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "king-delivery",
+        "confidence": "high"
+      },
+      "note": "TrackShip's King Delivery page gives it as a tracking code example. King Delivery's tracker answers it as a parcel from Beijing that JD Logistics delivered in Wenzhou."
+    }
+  ]
+}
