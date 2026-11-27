@@ -123,9 +123,10 @@ describe('ECMS history', () => {
     expect(parseEcmsExpress(data, NUMBER).events?.[0]?.location).toBeUndefined();
   });
 
-  it('reads the arrival warehouse, a return notice and a parcel held for collection by ECMS\'s map', () => {
+  it('reads the arrival warehouse, a customs hold, a return notice and a parcel held for collection by ECMS\'s map', () => {
     for (const [code, wording, stage] of [['S06N616', 'Arriving notification received from terminal', 'in_transit'],
       ['S08N800', 'Shipment has arrived at ECMS transit warehouse', 'in_transit'], ['S08N804', 'Shipment has departed from ECMS transit warehouse', 'in_transit'],
+      ['S00A00009', 'Customs delay: doc / HS code issue, entry blocked', 'customs'],
       ['EVENT_20018', 'Return to origin', 'exception'], ['EVENT_308', 'Available for pickup', 'ready_for_pickup']] as const) {
       const data = fixture();
       const scan = { ...row(), eventCode: code, eventDescription: wording };

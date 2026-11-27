@@ -17,6 +17,7 @@
     {"code": "S08N800", "wording": "Shipment has arrived at ECMS transit warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "ECMS's warehouse at the arrival airport, before the import clearance."},
     {"code": "S08N804", "wording": "Shipment has departed from ECMS transit warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "After the import clearance, on the way to the destination facility."},
     {"wording": "Shipment started customs clearance process.", "stage": "customs", "language": "en", "confirmedBy": "portal"},
+    {"code": "S00A00009", "wording": "Customs delay: doc / HS code issue, entry blocked", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "Import clearance held over the documents or the HS code: the parcel waits in customs at the destination."},
     {"code": "EVENT_205", "wording": "Shipment completed customs clearance process.", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Import clearance finished; the parcel moves on."},
     {"code": "EVENT_203", "wording": "Shipment arrived at destination facility", "stage": "in_transit", "language": "en", "confirmedBy": "portal"},
     {"code": "S06A616", "wording": "Parcel at destination facility, ready for next step", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Scanned after import clearance at the destination facility, before the hand-over to the last-mile carrier."},
