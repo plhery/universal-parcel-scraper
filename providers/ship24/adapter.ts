@@ -23,7 +23,7 @@ import type { StepRecorder } from '../../core/telemetry/index.js';
 import { scrapeUniversalPage, type UniversalBrowserOptions } from '../../core/transport/browser.js';
 import {
   canadaProvinceTimeZone, countryCode, countryTimeZone, EXPLICIT_OFFSET_PATTERN, firstOccurrence, regionHasTown, sharedClockZone,
-  timeZoneCountry, usStateTimeZone,
+  timeZoneCountry, usStateTimeZone, usZipState,
 } from '../../core/time/index.js';
 import { isRecord } from '../../core/types.js';
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
@@ -382,11 +382,28 @@ function upuZone(journey: Journey, scan: Record<string, unknown>, wall: string):
   return country ? countryTimeZone(country) : null;
 }
 
+/** The postal union's and EMS's feeds, which relay the destination post's scans. */
+const POSTAL_FEEDS = new Set(['upu-tracking', 'ems-tracking']);
+const US_ZIP = /^\d{5}(?:-\d{4})?$/;
+
+/**
+ * A ZIP Code alone, in a postal feed's scan of an item bound for the US, is the
+ * delivery office's: EMS's feed gives its "Out for delivery" there on that
+ * office's wall clock. It is read in the ZIP's state, as ParcelsApp's copy is.
+ */
+function postalZipZone(journey: Journey, scan: Record<string, unknown>, location: string, wall: string): string | null {
+  const code = isRecord(scan.courier) ? scan.courier.crawler_code : null;
+  if (journey.destination !== 'US' || !journey.international || (journey.returned && wall > journey.returned)
+    || typeof code !== 'string' || !POSTAL_FEEDS.has(code) || !US_ZIP.test(location)) return null;
+  return usStateTimeZone(usZipState(location));
+}
+
 /**
  * The zone of a scan whose timestamp names no offset, or a relabelling
  * feed's: it is the scanning carrier's wall clock. Its location's clock comes
  * first (as the feed reads its own sites and stations, then by the names it holds,
- * then a bracketed code its courier's country confirms), then
+ * then a bracketed code its courier's country confirms, then a postal feed's
+ * ZIP Code on an item bound for the US), then
  * the country of a parcel that never leaves it, then the side of the border a
  * UPU event's words name. A courier name is the feed that relayed the scan,
  * not where it happened: a national post relays the destination's scans under
@@ -397,7 +414,7 @@ function placedZone(journey: Journey, scan: Record<string, unknown>, wall: strin
   const location = typeof scan.location === 'string' ? scan.location.trim() : '';
   const located = feed?.place?.(location, journey, typeof scan.status === 'string' ? scan.status : '')
     ?? locationZone(location, journey.northAmerican || northAmericanCourier(scan), feed?.country ?? null)
-    ?? courierCountryZone(scan, location);
+    ?? courierCountryZone(scan, location) ?? postalZipZone(journey, scan, location, wall);
   if (located) return { zone: located, basis: 'place' };
   // The parcel's one country places no scan: it is the destination's clock.
   const domestic = journey.domestic ? countryTimeZone(journey.domestic) : null;

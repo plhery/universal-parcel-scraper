@@ -257,6 +257,18 @@ describe('Ship24 result parsing', () => {
     ]);
   });
 
+  it('reads EMS\'s delivery office scans on an item bound for the US in the state of their ZIP Code', () => {
+    const ems = { crawler_code: 'ems-tracking', translation: { name: 'EMS' } };
+    const parse = (destination: string, location: string, courier: Record<string, unknown> = ems) => parseShip24Response({ data: {
+      tracking_number: 'ZZ123456785CN', origin_country_code: 'CN', destination_country_code: destination,
+      events: [{ timestamp: '2026-11-20T09:33:00', status: 'Out for delivery', location, courier }] } }, 'ZZ123456785CN').events![0]!;
+    expect(parse('US', '10001')).toMatchObject({ time: '2026-11-20T14:33:00.000Z', time_zone: 'America/New_York', time_zone_basis: 'place' });
+    expect(parse('US', '90001-1234').time).toBe('2026-11-20T17:33:00.000Z');
+    // Elsewhere five digits are another post's code; another feed's need not be the delivery office's.
+    expect(parse('FR', '75001').local_time).toBe('2026-11-20T09:33:00');
+    expect(parse('US', '10001', { crawler_code: 'example-tracking', translation: { name: 'Example Courier' } }).local_time).toBe('2026-11-20T09:33:00');
+  });
+
   it('leaves an unlocated scan of a cross-border parcel a wall time, not on its relay\'s or carrier\'s clock', () => {
     const correos = { couriers: [{ translation: { name: 'Correos de España' } }] };
     expect(noonAt(undefined, correos)).toBe('2026-09-20T10:00:00.000Z');
