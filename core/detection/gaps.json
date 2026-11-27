@@ -7263,5 +7263,10 @@
     "pattern": "^[A-Z]\\d{14}$",
     "kind": "open",
     "reason": "The one public ZMC Express reference is a letter and five digits, two digits and seven digits joined by hyphens, and its tracker also finds the shipment by the other reference its rows carry. One sample does not show which layout is ZMC Express's own, so no rule claims it."
+  },
+  {
+    "carrier": "anhua-international",
+    "kind": "open",
+    "reason": "Anhua International's tracker answers by Australia Post's article id, which its line hands the parcel to, and the only public samples, from one tracking directory page, are Australia Post's, so the adapter answers explicit selection or a link to its tracker."
   }
 ]

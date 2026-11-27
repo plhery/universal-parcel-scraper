@@ -1,0 +1,103 @@
+{
+  "id": "anhua-international",
+  "displayName": "Anhua International",
+  "aliases": [
+    "Anhua International Supply Chain",
+    "安华国际",
+    "安华国际供应链",
+    "广州安华国际供应链管理有限公司",
+    "Guangzhou Anhua International Supply Chain Management"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#3F6EB2"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "anhua-international",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "service_name",
+    "destination_country",
+    "canonical_tracking_number",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country",
+      "canonical_tracking_number",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "signatory",
+      "signature",
+      "proof_of_delivery",
+      "payment_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country",
+      "canonical_tracking_number",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "signatory",
+      "signature",
+      "proof_of_delivery",
+      "payment_details"
+    ],
+    "unavailable": [
+      "eta",
+      "delivered_at",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.ahgjgyl.com",
+        "ahgjgyl.com"
+      ],
+      "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+      "params": [
+        "documentCode"
+      ]
+    }
+  ],
+  "detection": []
+}

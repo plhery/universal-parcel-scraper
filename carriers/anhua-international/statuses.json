@@ -1,0 +1,25 @@
+{
+  "carrier": "anhua-international",
+  "entries": [
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Australia Post's first row for the article id, copied before Anhua has the parcel."},
+    {"wording": "货物电子信息已经收到", "language": "zh", "english": "The electronic cargo information has been received", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The platform's order row: the shipment's data received. The English is the platform's own, as its other tenants write it."},
+    {"code": "ARRIVAL", "wording": "货物揽收成功", "language": "zh", "english": "Goods collected", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Anhua's warehouse in Guangzhou collects the parcel, its first scan in Anhua's hands."},
+    {"code": "SHIPMENT", "wording": "货物离开操作中心", "language": "zh", "english": "Goods left the operation center", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The parcel leaves the operation centre in Guangzhou."},
+    {"code": "CO_C_CR", "wording": "Sent to the transit warehouse at the port", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The platform's custom track row: sent on to the port's transit warehouse. Listed as a planned step."},
+    {"wording": "到达收货点", "language": "zh", "english": "Arrived at the receiving point", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The receiving point in Shenzhen, after Guangzhou's collection and departure: the parcel goes on towards Hong Kong."},
+    {"wording": "…，申报过港中", "language": "zh", "english": "Declared for the crossing into Hong Kong", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The declaration for the crossing from Shenzhen into Hong Kong, with the batch, a day and a letter, read as an ellipsis. A routine step before the flight, not a hold."},
+    {"wording": "已到港，安排航班中", "language": "zh", "english": "Arrived in Hong Kong, booking a flight", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "In Hong Kong, waiting for a flight."},
+    {"wording": "Shipping information approved by Australia Post", "language": "en", "stage": null, "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Australia Post accepts the shipment's data, copied from its record while the parcel waits in Hong Kong for its flight. A notice, not a movement, so the parcel keeps the stage of the scan before it."},
+    {"wording": "预计…号的航班", "language": "zh", "english": "Expected on the flight of the …", "stage": null, "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Names the day of the flight booked for the parcel, read as an ellipsis, before it flies. A forecast, not a movement, so the parcel keeps the stage of the scan before it."},
+    {"wording": "航班已飞", "language": "zh", "english": "The flight has departed", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27"},
+    {"wording": "已落地，清关提货中", "language": "zh", "english": "Landed, clearing customs and collecting the goods", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Landed in Australia, with the import clearance under way."},
+    {"wording": "清关完成", "language": "zh", "english": "Customs clearance completed", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The import clearance done: the parcel goes on."},
+    {"wording": "已交仓扫描", "language": "zh", "english": "Scanned on handover to the delivery warehouse", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Handed in after the clearance, before Australia Post's pickup."},
+    {"wording": "Your consignment has been picked up", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Australia Post picks the parcel up from the line, its first scan, copied from its record."},
+    {"wording": "Item processed at sorting facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Copied from Australia Post's record."},
+    {"wording": "In transit to next facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Copied from Australia Post's record."},
+    {"wording": "Processing at facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Copied from Australia Post's record."},
+    {"wording": "Onboard for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Copied from Australia Post's record."},
+    {"wording": "Delivered Left with concierge/reception", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Australia Post's delivery, copied with the name of whoever signed after it, which the adapter drops."}
+  ]
+}

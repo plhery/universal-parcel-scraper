@@ -1,0 +1,46 @@
+{
+  "carrier": "anhua-international",
+  "records": [
+    {
+      "number": "39BRK509054301000931502",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/anhua-international/",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "australia-post",
+        "confidence": "high"
+      },
+      "note": "TrackShip's Anhua International page gives it as a tracking code example. Anhua's tracker answers it with a parcel on its line to Australia, delivered by Australia Post under the same article id."
+    },
+    {
+      "number": "39EQE1000223",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/anhua-international/",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "TrackShip's Anhua International page gives it as a second example. Anhua's track interface holds no row for it, and its tracking page shows the order with Australia Post's first row alone."
+    }
+  ]
+}
