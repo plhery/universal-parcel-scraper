@@ -1289,7 +1289,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   // The page renders the talón in its address on the server and names an unknown one in its notice.
   { carrier: 'castores', number: '00000000000',
     route: /^https:\/\/www\.castores\.com\.mx\/rastrear\.html\?guide_numbers=00000000000$/,
-    marker: /no existe en la base de datos|N[úu]mero de gu[íi]a/ },
+    marker: /no existen? en la base de datos|N[úu]mero de gu[íi]a/ },
   // The page looks the guía in its address up as it is served, puts it in its search box and shows an unknown one's notice.
   { carrier: 'tealca', number: '00000000',
     route: /^https:\/\/www\.tealca\.com\/rastrear-envio\/\?tracking=00000000$/,

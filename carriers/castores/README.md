@@ -11,8 +11,8 @@ Tracked by talón through its tracking page, which renders the shipment on the s
 2. `retry`: one more attempt after a failed connection or a timeout. An HTTP status is never
    sent again.
 
-- A talón the tracker does not know gets the notice "Las guias {talón} ingresados no existe en
-  la base de datos.", the only missing shipment. A notice naming another number, a page without
+- A talón the tracker does not know gets the notice "Las guías {talón} ingresadas no existen en
+  la base de datos." (or the same in the singular), the only missing shipment. A notice naming another number, a page without
   a notice or a history, a redirect and a 404 are not.
 - The shipment must name the whole talón asked. The form takes up to five talones; the adapter
   sends one.

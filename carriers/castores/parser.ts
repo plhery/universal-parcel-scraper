@@ -23,9 +23,9 @@ const MONTHS: ReadonlyMap<string, number> = new Map([
   ['ene', 1], ['feb', 2], ['mar', 3], ['abr', 4], ['may', 5], ['jun', 6],
   ['jul', 7], ['ago', 8], ['sep', 9], ['sept', 9], ['oct', 10], ['nov', 11], ['dic', 12],
 ]);
-// "Las guias 00000000000 ingresados no existe en la base de datos.", or "El talón …
-// ingresado no existe …", naming the numbers asked.
-const NOT_FOUND = /^(?:las guias|el talon) (\S+) ingresad[oa]s? no existe en la base de datos\.?$/;
+// "Las guías 00000000000 ingresadas no existen en la base de datos.", in the singular too
+// ("El talón … ingresado no existe …"), naming the numbers asked.
+const NOT_FOUND = /^(?:las guias|el talon) (\S+) ingresad[oa]s? no existen? en la base de datos\.?$/;
 // A firewall or bot check's page, which can come back with HTTP 200.
 const BLOCKED = /<title>\s*(?:Just a moment|Attention Required|Access Denied|Request Rejected|403 Forbidden)|_cf_chl_opt|cf-turnstile|requested URL was rejected|Incapsula incident|_Incapsula_Resource|AwsWafIntegration/i;
 const MAX_ROWS = 500;

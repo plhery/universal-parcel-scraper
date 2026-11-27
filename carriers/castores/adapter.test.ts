@@ -119,16 +119,18 @@ describe('Castores tracking adapter', () => {
 
   it('reads only the notice naming the talón as a missing shipment, and a block page as a challenge', () => {
     expect(() => parseCastores(page('not-found'), ABSENT)).toThrow(expect.objectContaining({ kind: 'not_found' }));
-    expect(() => parseCastores(page('not-found').replace('Las guias', 'El talón').replace('ingresados', 'ingresado'), ABSENT))
-      .toThrow(expect.objectContaining({ kind: 'not_found' }));
+    for (const [plural, singular] of [['Las guías', 'El talón'], ['ingresadas no existen', 'ingresado no existe'],
+      ['ingresadas no existen', 'ingresados no existe']]) {
+      expect(() => parseCastores(page('not-found').replace(plural!, singular!), ABSENT)).toThrow(expect.objectContaining({ kind: 'not_found' }));
+    }
     // A notice for another number, or for none, is not this talón's.
     expect(() => parseCastores(page('not-found'), DELIVERED)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     expect(() => parseCastores(page('not-found').replace(`<strong>${ABSENT}</strong>`, '<strong></strong>'), ABSENT))
       .toThrow(expect.objectContaining({ kind: 'schema' }));
     // The page renders nothing for a lookup it did not make.
-    expect(() => parseCastores(page('not-found').replace(/<p>Las guias[\s\S]*?<br>/, ''), ABSENT))
+    expect(() => parseCastores(page('not-found').replace(/<p>Las guías[\s\S]*?<br>/, ''), ABSENT))
       .toThrow(expect.objectContaining({ kind: 'indeterminate' }));
-    expect(() => parseCastores(page('not-found').replace('no existe en la base de datos', 'no está disponible'), ABSENT))
+    expect(() => parseCastores(page('not-found').replace('no existen en la base de datos', 'no está disponible'), ABSENT))
       .toThrow(expect.objectContaining({ kind: 'schema' }));
     for (const html of ['<html><head><title>Access Denied</title></head><body>Blocked</body></html>',
       '<!DOCTYPE html><html><head><title>Just a moment...</title></head><body></body></html>',
