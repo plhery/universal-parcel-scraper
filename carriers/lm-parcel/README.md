@@ -2,7 +2,9 @@
 
 The native adapter uses the public search page's anonymous summary POST and details GET. The
 single search result must echo the whole requested reference, and every detail row must name the
-same waybill. Only the bound empty search signature establishes absence. Partner barcodes keep
+same waybill. The summary's scan must be one of them; the search can write its clock to the
+millisecond while the history keeps it to the second, so they match by the second. Only the bound
+empty search signature establishes absence. Partner barcodes keep
 their issuer's detection and can propose a separate confirmation lookup. Ship24 names the carrier
 Liumai Express, the pinyin of 六脉速运, so that name is an alias.
 

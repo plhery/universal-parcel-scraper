@@ -39,7 +39,7 @@ describe('LM Parcel guest history', () => {
       (p: ReturnType<typeof fixture>) => { p.summary.data[0].waybillNo += '1'; },
       (p: ReturnType<typeof fixture>) => { p.summary.data.push(p.summary.data[0]); },
       (p: ReturnType<typeof fixture>) => { p.details.data[13].waybillNo += '1'; },
-      (p: ReturnType<typeof fixture>) => { p.summary.data[0].occurTime += 1; },
+      (p: ReturnType<typeof fixture>) => { p.summary.data[0].occurTime += 1000; },
       (p: ReturnType<typeof fixture>) => { p.summary.data[0].status = 2; },
       (p: ReturnType<typeof fixture>) => { p.details.success = false; },
       (p: ReturnType<typeof fixture>) => { p.details.error = { message: 'Lookup incomplete' }; },
@@ -51,6 +51,11 @@ describe('LM Parcel guest history', () => {
     }
     const p = fixture(); p.details.data = [];
     expect(() => parseLmParcel(p.summary, p.details, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+  });
+
+  it('matches the summary to its scan by the second when the search writes milliseconds', () => {
+    const p = fixture(); p.summary.data[0].occurTime += 44;
+    expect(parseLmParcel(p.summary, p.details, NUMBER)).toMatchObject({ current_stage: 'delivered', provider_code: '1300' });
   });
 
   it('accepts only the bound empty search signature and keeps business failures distinct', () => {

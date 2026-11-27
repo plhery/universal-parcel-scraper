@@ -94,19 +94,24 @@ function location(row: JsonObject): string {
   return /[<>@]|https?:|\d{7,}|\b(?:recipient|phone|street|road|avenue|apartment|address)\b|收件人|电话|地址/i.test(value) ? '' : value;
 }
 
+// The search can write the newest scan's clock to the millisecond while the history keeps it to the second.
+function second(value: unknown): number | undefined {
+  return typeof value === 'number' && Number.isSafeInteger(value) && value > 0 ? Math.floor(value / 1000) : undefined;
+}
+
 export function parseLmParcel(summaryPayload: unknown, detailsPayload: unknown, raw: string): CarrierResult {
   const number = normalizeLmParcelNumber(raw), summary = parseLmParcelSummary(summaryPayload, number), rows = envelope(detailsPayload);
   if (rows.length > 500) throw new SchemaError(PROVIDER, 'LM Parcel returned too many scans');
   if (!rows.length) throw new NoHistoryError(PROVIDER, 'LM Parcel returned no dated history');
   const references = new Set<string>(), seen = new Set<string>(), events: CarrierEvent[] = [];
-  const summaryEvents = new Set<string>();
+  const summaryEvents = new Set<string>(), summarySecond = second(summary.occurTime);
   for (const row of rows) {
     if (!isRecord(row) || identity(row.waybillNo) !== number) throw new SchemaError(PROVIDER, 'LM Parcel returned another parcel in its history');
     const providerCode = code(row.routeType), description = wording(row, references), stage = lmParcelStage(providerCode, description), place = location(row);
     const event: CarrierEvent = { ...clock(row.occurTime, row.timeZone), description, provider_code: providerCode,
       ...(place ? { location: place } : {}), ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
     const key = JSON.stringify(event);
-    if (row.routeType === summary.routeType && row.occurTime === summary.occurTime) summaryEvents.add(key);
+    if (row.routeType === summary.routeType && summarySecond !== undefined && second(row.occurTime) === summarySecond) summaryEvents.add(key);
     if (!seen.has(key)) { seen.add(key); events.push(event); }
   }
   if (!summaryEvents.size) throw new SchemaError(PROVIDER, 'LM Parcel returned a summary outside its history');
