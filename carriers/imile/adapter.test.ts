@@ -8,7 +8,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
 import { keepAdapterHolds, resetAdapterHolds, serviceTag, type AdapterHold } from '../../core/runner/holds.js';
-import { adapter, CAINIAO_UNKNOWN_MS, IMILE_API, IMILE_PAGE, IMILE_SIGNING, ImileTracker, imileSignature, scriptSigning, type ImileSigning } from './adapter.js';
+import { adapter, CAINIAO_UNKNOWN_MS, IMILE_API, IMILE_SIGNING, IMILE_SIGNING_SAMPLES, ImileTracker, imileSignature, type ImileSigning } from './adapter.js';
 import { cainiaoScans, withCainiaoLeg } from './cainiao.js';
 import { imileReceiver, imileSummary, imileWording, normalizeImileNumber, parseImile } from './parser.js';
 import { imileRelayedStage, imileStage, statusMap } from './status.js';
@@ -59,19 +59,18 @@ const FIRST = pair('syntheticSalt');
 const SECOND = pair('otherSalt');
 const decrypt = (privateKey: KeyObject, sign: string) => privateDecrypt({ key: privateKey, padding: constants.RSA_PKCS1_PADDING }, Buffer.from(sign, 'base64')).toString();
 
-const SCRIPT_PATH = '/_next/static/chunks/pages/%5BcountryAndLang%5D/track-0123456789abcdef.js';
-const page = (body = `<script src="${SCRIPT_PATH}" defer=""></script>`) => `<!DOCTYPE html><html><head>${body}</head><body></body></html>`;
-// The track page's signing, as its script writes it.
-const script = (signing: ImileSigning) => `V=async e=>{let t=new v.v;t.setPublicKey("${signing.key}");let i=t.encrypt(e),`
-  + `n="/saastms/mobileWeb/track/query?waybillNo=".concat(e,"&code=").concat(g().MD5("".concat(e,"${signing.salt}")).toString());`
-  + 'return window.fetch(n,{headers:{lang:a,sign:i}})}';
+const SAMPLES: readonly string[] = IMILE_SIGNING_SAMPLES;
+const isSample = (url: unknown) => SAMPLES.includes(new URL(String(url)).searchParams.get('waybillNo') ?? '');
 
 /**
- * iMile's site: the lookup answers a shipment only when its sign decrypts to
- * the number under the key in use, and the same empty reply otherwise.
+ * iMile's site: the lookup answers a shipment, the public samples' among them unless
+ * left out, only when its sign decrypts to the number under the key in use, and the
+ * same empty reply otherwise.
  */
 function site(key: { privateKey: KeyObject; signing: ImileSigning }, shipments: Record<string, unknown>,
-  pages: { page?: () => Response; script?: () => Response; cainiao?: (number: string, init?: RequestInit) => Response | Promise<Response> } = {}) {
+  pages: { samples?: readonly string[]; sample?: () => Response; cainiao?: (number: string, init?: RequestInit) => Response | Promise<Response> } = {}) {
+  const answered: Record<string, unknown> = { ...Object.fromEntries((pages.samples ?? SAMPLES)
+    .map((sample) => [sample, changed('delivered', (shipment) => { shipment.waybillNo = sample; })])), ...shipments };
   return vi.fn<typeof fetch>(async (input, init) => {
     const url = new URL(String(input));
     if (`${url.origin}${url.pathname}` === CAINIAO_DETAIL) {
@@ -80,15 +79,14 @@ function site(key: { privateKey: KeyObject; signing: ImileSigning }, shipments: 
     }
     if (`${url.origin}${url.pathname}` === IMILE_API) {
       const number = url.searchParams.get('waybillNo')!;
+      if (pages.sample && SAMPLES.includes(number)) return pages.sample();
       const sign = new Headers(init?.headers).get('sign') ?? '';
       let known = false;
       // A ciphertext from another key can also fail RSA decoding. The service
       // rejects either case with its empty reply, rather than a network error.
-      try { known = shipments[number] !== undefined && decrypt(key.privateKey, sign) === number; } catch { /* Rejected signature. */ }
-      return reply(known ? shipments[number] : fixture('not-found'));
+      try { known = answered[number] !== undefined && decrypt(key.privateKey, sign) === number; } catch { /* Rejected signature. */ }
+      return reply(known ? answered[number] : fixture('not-found'));
     }
-    if (String(input) === IMILE_PAGE) return pages.page?.() ?? new Response(page(), { headers: { 'Content-Type': 'text/html' } });
-    if (url.pathname === SCRIPT_PATH) return pages.script?.() ?? new Response(script(key.signing), { headers: { 'Content-Type': 'application/javascript' } });
     throw new Error(`unexpected request to ${String(input)}`);
   });
 }
@@ -114,17 +112,15 @@ describe('iMile HTTP adapter', () => {
     expect(recorder.lookup).toHaveBeenCalledTimes(1);
   });
 
-  it('signs with the values the tracking script holds', () => {
-    expect(scriptSigning(script(FIRST.signing))).toEqual(FIRST.signing);
+  it('signs as the tracking page signed', () => {
     const { code, sign } = imileSignature('CNBR00000000001', SECOND.signing);
     expect(code).toBe(createHash('md5').update('CNBR00000000001otherSalt').digest('hex'));
     expect(decrypt(SECOND.privateKey, sign)).toBe('CNBR00000000001');
     // The values shipped with the adapter read as a key.
     expect(imileSignature(DELIVERED, IMILE_SIGNING).sign).toMatch(/^[A-Za-z0-9+/]{342}==$/);
-    expect(() => scriptSigning('t.setPublicKey("short");')).toThrow(expect.objectContaining({ kind: 'schema' }));
-    expect(() => scriptSigning(script({ key: 'A'.repeat(300), salt: 'syntheticSalt' }))).toThrow(expect.objectContaining({ kind: 'schema' }));
-    expect(() => scriptSigning(script(FIRST.signing).replace('/saastms/mobileWeb/track/query', '/other')))
-      .toThrow(expect.objectContaining({ kind: 'schema' }));
+    // The samples are public numbers.
+    const numbers = JSON.parse(readFileSync(new URL('./numbers.json', import.meta.url), 'utf8')) as { records: { number: string }[] };
+    expect(SAMPLES.every((sample) => numbers.records.some(({ number }) => number === sample))).toBe(true);
   });
 
   it('places each scan on the recipient country’s clock and stages it by its code and sentence', () => {
@@ -453,41 +449,54 @@ describe('iMile HTTP adapter', () => {
       .toMatchObject({ description: 'Delivered', stage: 'delivered' });
   });
 
-  it('checks the page’s values once an hour before calling an empty reply not found', async () => {
-    let clock = 0;
+  it('asks a public sample once an hour, signed the same way, before calling an empty reply not found', async () => {
+    vi.useFakeTimers();
     const fetcher = site(FIRST, {});
-    const tracker = new ImileTracker({ fetcher, signing: FIRST.signing, now: () => clock });
-    await expect(tracker.fetch(UNKNOWN)).rejects.toMatchObject({ kind: 'not_found' });
-    expect(fetcher.mock.calls.map(([url]) => new URL(String(url)).pathname)).toEqual(['/saastms/mobileWeb/track/query', '/AE-en/track', SCRIPT_PATH]);
-    expect(fetcher.mock.calls.every(([, init]) => init?.signal instanceof AbortSignal)).toBe(true);
-    clock += 59 * 60_000;
-    await expect(tracker.fetch(UNKNOWN)).rejects.toMatchObject({ kind: 'not_found' });
-    expect(fetcher).toHaveBeenCalledTimes(4);
-    clock += 2 * 60_000;
-    await expect(tracker.fetch(UNKNOWN)).rejects.toMatchObject({ kind: 'not_found' });
-    expect(fetcher).toHaveBeenCalledTimes(7);
-  });
-
-  it('signs again with the page’s new values when they changed, and keeps them', async () => {
-    const fetcher = site(SECOND, { [DELIVERED]: fixture('delivered'), [IN_TRANSIT]: fixture('in-transit') });
     const tracker = new ImileTracker({ fetcher, signing: FIRST.signing });
-    await expect(tracker.fetch(DELIVERED)).resolves.toMatchObject({ current_stage: 'delivered' });
-    expect(imileCalls(fetcher)).toHaveLength(4);
-    const retried = new URL(String(fetcher.mock.calls[3]![0]));
-    expect(retried.searchParams.get('code')).toBe(createHash('md5').update(`${DELIVERED}otherSalt`).digest('hex'));
-    await expect(tracker.fetch(IN_TRANSIT)).resolves.toMatchObject({ current_stage: 'customs' });
+    const unknown = async () => {
+      const answer = expect(tracker.fetch(UNKNOWN, { budgetMs: 10_000 })).rejects.toMatchObject({ kind: 'not_found' });
+      await vi.advanceTimersByTimeAsync(1_100);
+      await answer;
+    };
+    await unknown();
+    expect(imileCalls(fetcher).map(([url]) => new URL(String(url)).searchParams.get('waybillNo'))).toEqual([UNKNOWN, SAMPLES[0]]);
+    expect(imileCalls(fetcher).every(([, init]) => init?.signal instanceof AbortSignal)).toBe(true);
+    await vi.advanceTimersByTimeAsync(58 * 60_000);
+    await unknown();
+    expect(imileCalls(fetcher)).toHaveLength(3);
+    await vi.advanceTimersByTimeAsync(2 * 60_000);
+    await unknown();
     expect(imileCalls(fetcher)).toHaveLength(5);
   });
 
-  it('keeps a changed or blocked page apart from an unknown number', async () => {
-    const lookup = (pages: Parameters<typeof site>[2]) => new ImileTracker({ fetcher: site(FIRST, {}, pages), signing: FIRST.signing }).fetch(UNKNOWN);
-    const html = (body: string, status = 200) => () => new Response(body, { status, headers: { 'Content-Type': 'text/html' } });
-    await expect(lookup({ page: html(page('<script src="/_next/static/chunks/main-0.js"></script>')) })).rejects.toMatchObject({ kind: 'schema' });
-    await expect(lookup({ page: html(page('<title>Just a moment...</title><script>window._cf_chl_opt={}</script>')) }))
-      .rejects.toMatchObject({ kind: 'challenge' });
-    await expect(lookup({ page: html('', 403) })).rejects.toMatchObject({ kind: 'challenge' });
-    await expect(lookup({ page: html('', 404) })).rejects.toMatchObject({ kind: 'transport' });
-    await expect(lookup({ script: html('console.log("moved")') })).rejects.toMatchObject({ kind: 'schema' });
+  it('asks the second sample when the first goes unanswered, and calls values neither is answered under refused', async () => {
+    vi.useFakeTimers();
+    const lookup = async (fetcher: ReturnType<typeof site>) => {
+      const answer = new ImileTracker({ fetcher, signing: FIRST.signing }).fetch(UNKNOWN, { budgetMs: 10_000 }).catch((error: unknown) => error);
+      await vi.advanceTimersByTimeAsync(2_200);
+      return answer;
+    };
+    const second = site(FIRST, {}, { samples: SAMPLES.slice(1) });
+    await expect(lookup(second)).resolves.toMatchObject({ kind: 'not_found' });
+    expect(imileCalls(second).filter(([url]) => isSample(url))).toHaveLength(2);
+    // iMile changed its key: neither sample is answered under the values shipped.
+    const changedKey = site(SECOND, { [DELIVERED]: fixture('delivered') });
+    await expect(lookup(changedKey)).resolves.toMatchObject({ kind: 'schema' });
+    expect(imileCalls(changedKey)).toHaveLength(3);
+  });
+
+  it('keeps a throttled or blocked sample apart from an unknown number', async () => {
+    vi.useFakeTimers();
+    const lookup = async (sample: () => Response) => {
+      const answer = new ImileTracker({ fetcher: site(FIRST, {}, { sample }), signing: FIRST.signing }).fetch(UNKNOWN, { budgetMs: 10_000 })
+        .catch((error: unknown) => error);
+      // A throttled sample sends the read again once iMile's wait is over.
+      await vi.advanceTimersByTimeAsync(10_000);
+      return answer;
+    };
+    await expect(lookup(throttled)).resolves.toMatchObject({ kind: 'rate_limited' });
+    await expect(lookup(() => new Response('<title>Just a moment...</title><script>window._cf_chl_opt={}</script>', { headers: { 'Content-Type': 'text/html' } })))
+      .resolves.toMatchObject({ kind: 'challenge' });
   });
 
   it('keeps an unknown number, a moved route, a refusal, a browser check and a broken reply apart', async () => {
@@ -604,8 +613,12 @@ describe('iMile HTTP adapter', () => {
   it('recognizes a waybill with scans and the empty reply, keeps a refusal an error and asks nothing for another number', async () => {
     const known = vi.fn<typeof fetch>().mockImplementation(async () => reply(changed('in-transit', (shipment) => { shipment.waybillNo = DATED; })));
     await expect(carrier(known).recognize!(DATED)).resolves.toMatchObject({ known: true });
-    // The page still signs with the values the adapter holds, so the empty reply is an unknown number.
-    await expect(carrier(site({ privateKey: FIRST.privateKey, signing: IMILE_SIGNING }, {})).recognize!(DATED)).resolves.toEqual({ known: false });
+    // A sample is still answered under the values the adapter holds, so the empty reply is an unknown number.
+    const empty = vi.fn<typeof fetch>().mockImplementation(async (input) => {
+      const number = new URL(String(input)).searchParams.get('waybillNo')!;
+      return reply(SAMPLES.includes(number) ? changed('delivered', (shipment) => { shipment.waybillNo = number; }) : fixture('not-found'));
+    });
+    await expect(carrier(empty).recognize!(DATED)).resolves.toEqual({ known: false });
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(new Response('', { status: 429 }))).recognize!(DATED, { budgetMs: 3_000 }))
       .rejects.toMatchObject({ kind: 'rate_limited' });
     const unasked = vi.fn<typeof fetch>();

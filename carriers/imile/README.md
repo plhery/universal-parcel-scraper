@@ -7,8 +7,8 @@ makes, with the China leg Cainiao's global tracker holds under the same number.
 ## How it works
 
 1. `direct`: one `GET https://www.imile.com/saastms/mobileWeb/track/query?waybillNo={number}&code={code}`
-   with the headers `lang: en_US` and `sign`, as the tracking page sends it. `sign` is the
-   number encrypted with the RSA public key in the page's script (PKCS#1 v1.5, base64), and
+   with the headers `lang: en_US` and `sign`, as the tracking page sent it. `sign` is the
+   number encrypted with the RSA public key the page's script held (PKCS#1 v1.5, base64), and
    `code` is the MD5 of the number followed by a salt from the same script. Both values are the
    same for every visitor and ship with the adapter. No cookie, account or browser. The JSON
    reply has the shipment and its scans, newest first, in English.
@@ -31,10 +31,14 @@ makes, with the China leg Cainiao's global tracker holds under the same number.
    (`keepAdapterHolds`) keeps that day across restarts.
 
 - An unknown number is HTTP 200 with `"resultObject": null`, which the page reports as no data.
-  A missing or wrong `sign` gets the same reply, so after an empty reply the adapter reads the
-  tracking page and its script, at most once an hour, and asks again if the key or salt
-  changed. A page that no longer names its script, or a script without the values, is a
-  changed page.
+  A missing or wrong `sign` gets the same reply, so after an empty reply the adapter asks for a
+  public sample signed the same way, at most once an hour. The sample's shipment means the
+  empty reply is absence; no shipment for either sample means iMile no longer accepts the
+  values, a changed reply.
+- The page itself now posts `{"wayBillNo": …}` to `POST /flash/track/getTrackByOfficialWeb`,
+  unsigned. It answers a known parcel's scans, but sets `captchaCheck` for an unknown number, and
+  can ask for the phone's last four digits, so the signed lookup stays the route while it is
+  served.
 - A `status` other than `success` is inconclusive, or rate limited when its message says so. A
   404 or a redirect is a moved route. Cloudflare, in front of the site, lets the package's
   default User-Agent through.

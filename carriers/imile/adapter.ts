@@ -18,8 +18,6 @@ import { IMILE_MAX_BYTES, normalizeImileNumber, parseImile, PROVIDER } from './p
 const ORIGIN = 'https://www.imile.com';
 /** The lookup the tracking page on www.imile.com makes for the number in its address. */
 export const IMILE_API = `${ORIGIN}/saastms/mobileWeb/track/query`;
-/** The tracking page, whose script holds the values it signs a lookup with. */
-export const IMILE_PAGE = `${ORIGIN}/AE-en/track`;
 
 /** How the page signs a lookup: the RSA public key the `sign` header encrypts the number with, and the salt of the MD5 `code`. */
 export interface ImileSigning {
@@ -27,20 +25,20 @@ export interface ImileSigning {
   salt: string;
 }
 
-/** The values in the page's script, the same for every visitor. */
+/** The values the tracking page's script signed its lookups with, the same for every visitor. */
 export const IMILE_SIGNING: Readonly<ImileSigning> = {
   key: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3dFPiKNZwt+HoBbPAG/t7kZC2k3pBX2eCl5LeyeW8woNuEV5bA5kB9Y9KKTOQng62ERGPLwi84CdIB8s265ljQUib//iO3jVrZesJueO5Xu+s80s3Z/89jgJleT1XawN1GubgkGXOoT1a7tvX8+aItkGgR//48ELqJVVUL+yGsBtXxFjNmOEWxBJNQuwAf9yWcCIl1enD60GjZjPWrsfw8QUqam7K5e45ealcPEYGenNePwuPpCq6twdD0YYYzKdRN0dZP1uTviFpNfph90c9YgQ8kgDkRMcpjVv6KZ+bg5JZ4sK6LkV4vwOjPijisthHBvUXhu3fyhMgvoDO/j5gwIDAQAB', // gitleaks:allow
   salt: 'imileTrackQuery2024', // gitleaks:allow
 };
 
-// How long the page's values stand once read: an empty reply in that time is an unknown number.
+/**
+ * Public samples (numbers.json) whose shipments iMile still answers. One of them answering, signed
+ * with the values in use, shows the service accepts the values; its page no longer holds them.
+ */
+export const IMILE_SIGNING_SAMPLES = ['6120924763844', '6061325954939'] as const;
+// How long a sample's answer stands: an empty reply in that time is an unknown number.
 const SIGNING_CHECKED_MS = 60 * 60_000;
-const PAGE_MAX_BYTES = 2 * 1024 * 1024;
 const REDIRECTS = [301, 302, 303, 307, 308];
-// The page's own script, by the route it serves; its name changes with every deploy.
-const TRACK_SCRIPT = /\/_next\/static\/chunks\/pages\/(?:%5B|\[)countryAndLang(?:%5D|\])\/track-[\w-]+\.js/;
-const SCRIPT_KEY = /setPublicKey\("([A-Za-z0-9+/]{200,1000}={0,2})"\)/;
-const SCRIPT_SALT = /\.MD5\(""\.concat\([\w$]+,"([\w-]{1,64})"\)\)/;
 // Bot checks Cloudflare, in front of the site, could put in place of a reply.
 const CHALLENGE = /_cf_chl_opt|cf-turnstile|challenge-platform|<title>\s*(?:Just a moment|Attention Required)/i;
 const DEFAULT_BUDGET_MS = 20_000;
@@ -130,21 +128,6 @@ export function imileSignature(number: string, signing: ImileSigning): { code: s
   };
 }
 
-/** The signing values in the tracking page's script; a script without them is a changed page. */
-export function scriptSigning(script: string): ImileSigning {
-  const key = SCRIPT_KEY.exec(script)?.[1];
-  const salt = SCRIPT_SALT.exec(script)?.[1];
-  if (!key || !salt || !script.includes('/saastms/mobileWeb/track/query')) {
-    throw new SchemaError(PROVIDER, 'iMile\'s tracking script no longer shows how it signs a lookup');
-  }
-  try {
-    publicKey(key);
-  } catch (cause) {
-    throw new SchemaError(PROVIDER, 'iMile\'s tracking script holds an unreadable key', { cause });
-  }
-  return { key, salt };
-}
-
 function json(body: string): unknown {
   try {
     return JSON.parse(body);
@@ -155,8 +138,8 @@ function json(body: string): unknown {
 }
 
 export class ImileTracker {
-  #signing: Readonly<ImileSigning>;
-  // When the page last showed the values in use.
+  readonly #signing: Readonly<ImileSigning>;
+  // When a public sample last showed the values are accepted.
   #checkedAt = Number.NEGATIVE_INFINITY;
   readonly #cainiao: CainiaoTracker;
 
@@ -186,16 +169,14 @@ export class ImileTracker {
     const read = async (signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> => {
       const deadline = performance.now() + timeoutMs;
       const left = () => Math.max(1, Math.floor(deadline - performance.now()));
-      const signing = this.#signing;
       try {
-        return parseImile(await this.#query(number, signing, signal, left()), number);
+        return parseImile(await this.#query(number, this.#signing, signal, left()), number);
       } catch (error) {
         if (!(error instanceof NotFoundError)) throw error;
         // A sign the service does not accept gets the same empty reply as an
-        // unknown number, so the page must still sign with the values used.
-        const current = await this.#currentSigning(signal, left);
-        if (current.key === signing.key && current.salt === signing.salt) throw error;
-        return parseImile(await this.#query(number, current, signal, left()), number);
+        // unknown number, so a public sample signed the same way must still be answered.
+        await this.#checkSigning(signal, left);
+        throw error;
       }
     };
     const deadline = performance.now() + context.budgetMs;
@@ -276,28 +257,21 @@ export class ImileTracker {
     return json(decodeText(bytes));
   }
 
-  /** The values the page signs with, read again once their last reading is an hour old. */
-  async #currentSigning(signal: AbortSignal, left: () => number): Promise<Readonly<ImileSigning>> {
+  /** Whether iMile accepts the values in use, asked of a public sample once an hour. */
+  async #checkSigning(signal: AbortSignal, left: () => number): Promise<void> {
     const now = (this.options.now ?? Date.now)();
-    if (now - this.#checkedAt < SIGNING_CHECKED_MS) return this.#signing;
-    const page = await this.#text(IMILE_PAGE, signal, left());
-    const path = TRACK_SCRIPT.exec(page)?.[0];
-    if (!path) {
-      if (CHALLENGE.test(page.slice(0, 64_000))) throw new ChallengeError(PROVIDER, 'iMile answered its tracking page with a browser check');
-      throw new SchemaError(PROVIDER, 'iMile\'s tracking page no longer names its tracking script');
+    if (now - this.#checkedAt < SIGNING_CHECKED_MS) return;
+    for (const sample of IMILE_SIGNING_SAMPLES) {
+      try {
+        parseImile(await this.#query(sample, this.#signing, signal, left()), sample);
+      } catch (error) {
+        if (error instanceof NotFoundError) continue;
+        throw error;
+      }
+      this.#checkedAt = now;
+      return;
     }
-    const signing = scriptSigning(await this.#text(`${ORIGIN}${path}`, signal, left()));
-    this.#signing = signing;
-    this.#checkedAt = now;
-    return signing;
-  }
-
-  async #text(url: string, signal: AbortSignal, timeoutMs: number): Promise<string> {
-    const { response, bytes } = await fetchBounded(url, { method: 'GET', signal, headers: { 'User-Agent': userAgentOf(this.options.userAgent) } },
-      { provider: PROVIDER, timeoutMs, maxBytes: PAGE_MAX_BYTES, redirect: 'manual', fetcher: this.options.fetcher,
-        allowHttpStatuses: [...REDIRECTS, 404, 410] });
-    if (response.status !== 200) throw new TransportError(PROVIDER, 'iMile\'s tracking page is unavailable', { status: response.status });
-    return decodeText(bytes);
+    throw new SchemaError(PROVIDER, 'iMile no longer answers its public samples signed with the values in use');
   }
 }
 

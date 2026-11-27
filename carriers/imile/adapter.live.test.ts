@@ -40,7 +40,7 @@ describe('iMile live retrieval', () => {
       : /^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2})?$/.test(String(event.local_time))))).toBe(true);
   }, 75_000);
 
-  it.skipIf(!process.env.IMILE_UNKNOWN_NUMBER)('reads an unknown number as not found after checking the page’s key', async () => {
+  it.skipIf(!process.env.IMILE_UNKNOWN_NUMBER)('reads an unknown number as not found after a public sample shows the key is accepted', async () => {
     await expect(direct().track({ number: process.env.IMILE_UNKNOWN_NUMBER! })).rejects.toMatchObject({ kind: 'not_found' });
   }, 75_000);
 });
