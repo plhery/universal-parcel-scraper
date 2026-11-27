@@ -4,9 +4,11 @@ Tracks S10 numbers (two letters, nine digits with a valid check digit, the issue
 through the guest tracking API of the An Post Android app, `ie.anpost.app`: An Post's own,
 ending `IE`, and those of mail other posts send to Ireland. It also takes the sender's
 reference from the postage label, six to 35 letters and digits, which the website accepts
-in the same field. No account, cookie, browser or device registration is needed. Mail from
-abroad reaches An Post when a caller names it, a provider names it, or a result gives
-Ireland as the destination of an S10 item.
+in the same field. Detection offers An Post at low confidence for references of AIE and
+eight digits, which carry no check digit, and recognition asks it about those only. No
+account, cookie, browser or device registration is needed. Mail from abroad reaches An Post
+when a caller names it, a provider names it, or a result gives Ireland as the destination
+of an S10 item.
 
 ## How it works
 
@@ -42,6 +44,9 @@ guest tracking client. It is included with the maintainer's approval.
   `anPostNo`. Asked by a reference, the item's `senderNo` must be that reference and its
   `anPostNo` a valid S10 number, which the result gives as `canonical_tracking_number`;
   a reference that opens several items is inconclusive.
+- Recognition is the ordinary lookup: scans are known, and the empty lists for the number as
+  an item and then as a reference are unknown. An empty history beside a bound summary, like
+  every failure, settles nothing.
 - Times: every clock is a wall time without an offset, kept in `local_time`. An Post's own
   scans, which carry seconds, are also dated on `Europe/Dublin`: the universal providers'
   copies of them show the same instants. After an outbound item's dispatch abroad (code 5,
@@ -98,8 +103,8 @@ guest tracking client. It is included with the maintainer's approval.
 
 - An expired item and an unknown number get the same empty summary, so both are not
   found.
-- Detection does not offer An Post for a sender's reference; it is asked when a caller or
-  a provider names An Post.
+- Detection offers An Post for no other sender's reference; such a reference is asked when a
+  caller or a provider names An Post.
 - Neither answer names an outbound item's destination, and the partner's relayed scans have
   no location, so the result reports no destination country.
 - The website, `www.anpost.com/Post-Parcels/Track/History`, is behind Radware Bot Manager

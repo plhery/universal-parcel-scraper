@@ -1,7 +1,8 @@
 // @vitest-environment node
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { parseTrackingInput } from '../../core/detection/index.js';
+import { recognitionAskedCarriers, recognitionCandidates } from '../../core/catalog/recognition.js';
+import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
@@ -480,6 +481,63 @@ describe('An Post guest history', () => {
       // The summary repeats a scan's wording without its code, and is staged as that scan.
       if (entry.wording) expect(anPostSummaryStage(entry.wording), entry.wording).toEqual(anPostScanStage(Number(entry.code), entry.wording));
     }
+  });
+});
+
+describe('An Post recognition', () => {
+  /** A sender's reference of the AIE shape, zero-filled. */
+  const AIE = 'AIE00000000';
+  const referenceItem = () => ({ ...(json('reference-summary.json') as { getCustItemSummaryResponse: { GetCustItemSummaryResult: Record<string, unknown>[] } })
+    .getCustItemSummaryResponse.GetCustItemSummaryResult[0], senderNo: AIE });
+  const referenceOf = (items: unknown[]) => ({ getCustItemSummaryResponse: { GetCustItemSummaryResult: items } });
+  /** No item by that number, then the item the reference opens, then its history; each replaceable. */
+  const byReference = (reference: () => Response = () => reply(referenceOf([referenceItem()])),
+    events: () => Response = () => reply(json('events.json'))) => vi.fn<typeof fetch>(async (input) => {
+    const operation = String(input).split('/').pop();
+    return operation === 'GetItemSummary' ? reply(json('unknown.json')) : operation === 'GetCustItemSummary' ? reference() : events();
+  });
+
+  it('is offered at low confidence for AIE and eight digits, and asked about those references only', () => {
+    expect(detectCarrierMatch(AIE)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['an-post'] });
+    expect(detectCarrierMatch(' aie 0000 0000 ').candidates).toEqual(['an-post']);
+    for (const countryHint of [undefined, 'IE', 'FR']) {
+      expect(recognitionCandidates(AIE, { countryHint })).toEqual([expect.objectContaining({ carrier: 'an-post', needsInput: null })]);
+      expect(recognitionAskedCarriers(AIE, { countryHint })).toEqual(['an-post']);
+    }
+    expect(recognitionCandidates(AIE, { phase: 'browser' })).toEqual([]);
+    for (const number of ['AIE0000000', 'AIE000000000', 'AIF00000000', REFERENCE]) {
+      expect(detectCarrierMatch(number).candidates).not.toContain('an-post');
+      expect(recognitionCandidates(number).map(({ carrier }) => carrier)).not.toContain('an-post');
+    }
+    // Its S10 numbers need no recognition.
+    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'an-post', confidence: 'high' });
+  });
+
+  it('knows a reference whose item has scans, and an empty answer as a number and as a reference is unknown', async () => {
+    const fetcher = byReference();
+    await expect(instance(fetcher).recognize!(AIE, { budgetMs: 5_000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T16:03:38.000Z' });
+    expect(fetcher.mock.calls.map(([input]) => String(input).slice(AN_POST_APP_API.length))).toEqual(['/GetItemSummary', '/GetCustItemSummary', '/GetEvents']);
+    const unknown = byReference(() => reply(referenceOf([])));
+    await expect(instance(unknown).recognize!(AIE)).resolves.toEqual({ known: false });
+    expect(unknown).toHaveBeenCalledTimes(2);
+    // A number An Post takes neither as an item nor as a reference is unknown without a request.
+    const unasked = byReference();
+    await expect(instance(unasked).recognize!('CP000000006IE')).resolves.toEqual({ known: false });
+    expect(unasked).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    ['a challenge', () => new Response(fixture('firewall.html'), { status: 403, headers: { 'Content-Type': 'text/html' } }), 'challenge'],
+    ['a spent quota', () => reply(fixture('quota-spent.json'), { status: 403, headers: { 'Retry-After': '30' } }), 'rate_limited'],
+    ['a moved route', () => reply(fixture('route-missing.json'), { status: 404 }), 'transport'],
+    ['another reference', () => reply(referenceOf([{ ...referenceItem(), senderNo: 'AIE00000001' }])), 'schema'],
+    ['two items', () => reply(referenceOf([referenceItem(), { ...referenceItem(), anPostNo: OTHER }])), 'indeterminate'],
+  ])('fails, never answering unknown, when the reference lookup answers %s', async (_, reference, kind) => {
+    await expect(instance(byReference(reference)).recognize!(AIE)).rejects.toMatchObject({ kind });
+  });
+
+  it('fails on an empty history beside a bound summary', async () => {
+    await expect(instance(byReference(undefined, () => reply(eventsOf([])))).recognize!(AIE)).rejects.toMatchObject({ kind: 'indeterminate' });
   });
 });
 

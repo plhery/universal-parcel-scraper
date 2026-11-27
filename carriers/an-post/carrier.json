@@ -18,7 +18,11 @@
     "steps": [
       "direct"
     ],
-    "localClocks": true
+    "localClocks": true,
+    "recognition": {
+      "rank": 343,
+      "pattern": "^AIE\\d{8}$"
+    }
   },
   "capabilities": [
     "history",
@@ -79,6 +83,11 @@
       "pattern": "^[A-Z]{2}\\d{9}IE$",
       "confidence": "high",
       "checksum": "s10"
+    },
+    {
+      "id": "an-post-reference-aie",
+      "pattern": "^AIE\\d{8}$",
+      "confidence": "low"
     }
   ]
 }

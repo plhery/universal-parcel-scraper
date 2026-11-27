@@ -476,6 +476,21 @@
         "confidence": "high"
       },
       "note": "A parcel from abroad quoted in a review of An Post and in An Post's reply, held for an EU customs charge. An Post's tracker answers for it under the same number with the charge and its payment."
+    },
+    {
+      "number": "AIE00000000",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-11-27",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "an-post"
+        ]
+      },
+      "note": "Invented placeholder used as a shape check: AIE and eight digits, a sender's reference from a postage label that An Post's tracker finds as such. Its serial is all zeros, far from the numbers in use."
     }
   ]
 }
