@@ -684,6 +684,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'now-couriers', number: '00000000000000000000',
     route: /^https:\/\/receiver\.nowcouriers\.co\.nz\/\?track=00000000000000000000$/,
     marker: /We cannot find a match for the tracking ID entered|Tracking ID can contain both letters/i },
+  // The page splits the code into its four fields and sends it to its barcode check, which calls this one invalid.
+  { carrier: 'pass-the-parcel', number: '1RBB0000ZZZZ0000',
+    route: /^https:\/\/www\.passtheparcel\.co\.nz\/Pass\/Track\?barcode=1RBB0000ZZZZ0000$/,
+    marker: /Type your 16 digit tracking code from your pack or box|Where do I find the tracking code\?/i },
   { carrier: 'poczta-polska', number: '00000000000000000001',
     route: /^https:\/\/emonitoring\.poczta-polska\.pl\//,
     marker: /Tracking|Enter.*number|Search/i },

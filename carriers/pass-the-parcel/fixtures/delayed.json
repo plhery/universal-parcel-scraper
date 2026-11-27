@@ -1,0 +1,106 @@
+{
+  "status": "Delivered",
+  "consignmentState": "delivered",
+  "consignmentStatusTitle": "We've delivered your parcel",
+  "consignmentMilestone": "delivered",
+  "showCallUs": false,
+  "shortConsignmentId": "1RBB18BZB1H16J58",
+  "toolTip": "",
+  "consignmentId": "FW.RB.1RBB18BZB1H16J58.B..",
+  "pickupDateTime": "2025-06-27T03:18:07Z",
+  "onboardDateTime": "2025-07-01T20:48:08.979Z",
+  "deliveryDateTime": "2025-07-02T00:40:39.097Z",
+  "eptlAvailable": false,
+  "consignmentItems": [
+    {
+      "consignmentItemId": "FW.RB.1RBB18BZB1H16J58.B...",
+      "partNumber": "01",
+      "trackingEvents": [
+        {
+          "barcode": "1RBB18BZB1H16J58",
+          "eventType": "P",
+          "status": "Picked Up",
+          "createdOn": "2025-06-27T03:18:07Z",
+          "createdBy": "30719",
+          "carrierName": "PostHaste",
+          "branchCode": "HLZ",
+          "runNumber": "750",
+          "location": {
+            "suburb": "Te Rapa Park",
+            "town": "HAMILTON",
+            "region": "Hamilton City",
+            "postCode": "3200",
+            "country": "New Zealand"
+          },
+          "locationIdType": false,
+          "attachments": []
+        },
+        {
+          "barcode": "1RBB18BZB1H16J58",
+          "eventType": "STAT",
+          "eventSubType": "DELAY",
+          "status": "Potential Transit Delay",
+          "createdOn": "2025-07-01T03:34:05.295Z",
+          "createdBy": "WLGO01",
+          "carrierName": "PostHaste",
+          "branchCode": "WLG",
+          "runNumber": "200",
+          "location": {
+            "suburb": "Ngauranga",
+            "town": "WELLINGTON",
+            "region": "Wellington City",
+            "postCode": "6035",
+            "country": "New Zealand"
+          },
+          "locationIdType": false,
+          "attachments": []
+        },
+        {
+          "barcode": "1RBB18BZB1H16J58",
+          "eventType": "ONBD",
+          "status": "Out for Delivery",
+          "createdOn": "2025-07-01T20:48:08.979Z",
+          "createdBy": "31036",
+          "carrierName": "PostHaste",
+          "branchCode": "WLG",
+          "runNumber": "216",
+          "locationIdType": false,
+          "attachments": []
+        },
+        {
+          "barcode": "1RBB18BZB1H16J58",
+          "eventType": "D",
+          "status": "Delivered",
+          "createdOn": "2025-07-02T00:40:39.097Z",
+          "createdBy": "31036",
+          "carrierName": "PostHaste",
+          "branchCode": "WLG",
+          "runNumber": "216",
+          "location": {
+            "suburb": "Karori",
+            "town": "WELLINGTON",
+            "region": "Wellington City",
+            "postCode": "6012",
+            "country": "New Zealand"
+          },
+          "locationIdType": false,
+          "attachments": [
+            {
+              "attachmentType": "SIGV",
+              "description": "Signer",
+              "href": [
+                "https://example.invalid/attachment"
+              ]
+            },
+            {
+              "attachmentType": "Photo",
+              "href": [
+                "https://example.invalid/attachment"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

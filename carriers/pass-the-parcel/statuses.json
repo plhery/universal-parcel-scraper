@@ -1,0 +1,16 @@
+{
+  "carrier": "pass-the-parcel",
+  "entries": [
+    {"wording": "Pickup", "stage": "accepted", "language": "en", "confirmedBy": "portal", "note": "Event heading on the Pass the Parcel tracking page, followed by 'Picked up in area … by Courier …'."},
+    {"wording": "On Board", "stage": "out_for_delivery", "language": "en", "confirmedBy": "portal", "note": "Event heading on the Pass the Parcel tracking page for the scan onto the delivering courier's vehicle."},
+    {"wording": "Delivery", "stage": "delivered", "language": "en", "confirmedBy": "portal", "note": "Event heading on the Pass the Parcel tracking page, followed by 'Delivered in area … by Courier …' and the signature."},
+    {"wording": "Status", "stage": "in_transit", "language": "en", "confirmedBy": "official-doc", "note": "The tracking page's legend: further information for the parcel, shown as 'Check'."},
+    {"wording": "Non Delivery", "stage": "failed_attempt", "language": "en", "confirmedBy": "official-doc", "note": "The tracking page's legend: the receiver was not home or the address could not be delivered to, and the parcel went back to the depot."},
+    {"wording": "Misdirect", "stage": "in_transit", "language": "en", "confirmedBy": "official-doc", "note": "The tracking page's legend: the parcel went to the wrong branch and will be delivered the next day."},
+    {"wording": "Rural", "stage": "in_transit", "language": "en", "confirmedBy": "official-doc", "note": "The tracking page's legend: the parcel is headed to a rural address and may take another day."},
+    {"code": "P", "wording": "Picked Up", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Made by New Zealand Couriers or Post Haste, whichever collected the parcel."},
+    {"code": "ONBD", "wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27"},
+    {"code": "D", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Comes with the signature and sometimes a delivery photo."},
+    {"code": "STAT/DELAY", "wording": "Potential Transit Delay", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A depot's notice days after pickup and before the parcel went out for delivery; the group's map has no code for it, and the wording rules read it as in transit."}
+  ]
+}

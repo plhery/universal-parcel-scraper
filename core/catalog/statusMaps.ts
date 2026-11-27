@@ -1163,6 +1163,7 @@ import { statusMap as jomkirim } from '../../carriers/jomkirim/status.js';
 import { statusMap as expeditors } from '../../carriers/expeditors/status.js';
 import { statusMap as nextSmartShip } from '../../carriers/next-smart-ship/status.js';
 import { statusMap as iqfulfillment } from '../../carriers/iqfulfillment/status.js';
+import { statusMap as passTheParcel } from '../../carriers/pass-the-parcel/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1394,6 +1395,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   expeditors,
   'next-smart-ship': nextSmartShip,
   iqfulfillment,
+  'pass-the-parcel': passTheParcel,
 };
 
 /** The carrier the app files the universal providers' scans under. */

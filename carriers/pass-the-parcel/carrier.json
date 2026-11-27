@@ -1,0 +1,85 @@
+{
+  "id": "pass-the-parcel",
+  "displayName": "Pass the Parcel",
+  "aliases": [
+    "PassTheParcel"
+  ],
+  "region": {
+    "countries": [
+      "NZ"
+    ]
+  },
+  "brand": {
+    "color": "#330072"
+  },
+  "selectable": true,
+  "timezone": "Pacific/Auckland",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "pass-the-parcel",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "eta",
+    "delivered_at",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "url": "https://www.passtheparcel.co.nz/Pass/Track?barcode={trackingNumber}",
+    "searchUrl": "https://www.passtheparcel.co.nz/Pass/Track",
+    "helpUrl": "https://www.passtheparcel.co.nz/Contact",
+    "canaryUrl": "https://www.passtheparcel.co.nz/Pass/Track",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "parcel_count",
+      "signatory",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "provider_code",
+      "eta",
+      "delivered_at"
+    ],
+    "discarded": [
+      "parcel_count",
+      "signatory",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "weight",
+      "service_name",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "passtheparcel.co.nz",
+        "www.passtheparcel.co.nz"
+      ],
+      "pathPattern": "^/(?:Pass|Customer)/Track/?$",
+      "params": [
+        "barcode"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "pass-the-parcel-1",
+      "pattern": "^1RBB(?![0-9A-F]{12}$)[0-9A-Z]{12}$",
+      "confidence": "high"
+    }
+  ]
+}

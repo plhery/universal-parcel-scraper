@@ -1,0 +1,80 @@
+{
+  "status": "Delivered",
+  "consignmentState": "delivered",
+  "consignmentStatusTitle": "We've delivered your parcel",
+  "consignmentMilestone": "delivered",
+  "showCallUs": false,
+  "shortConsignmentId": "1RBB1LBZI5E16LMG",
+  "toolTip": "",
+  "consignmentId": "FW.RB.1RBB1LBZI5E16LMG.B..",
+  "pickupDateTime": "2026-10-14T22:27:26Z",
+  "onboardDateTime": "2026-10-16T00:21:30.956Z",
+  "deliveryDateTime": "2026-10-16T02:49:36.493Z",
+  "eptlAvailable": false,
+  "consignmentItems": [
+    {
+      "consignmentItemId": "FW.RB.1RBB1LBZI5E16LMG.B...",
+      "partNumber": "01",
+      "trackingEvents": [
+        {
+          "barcode": "1RBB1LBZI5E16LMG",
+          "eventType": "P",
+          "status": "Picked Up",
+          "createdOn": "2026-10-14T22:27:26Z",
+          "createdBy": "12-901",
+          "carrierName": "NZCouriers",
+          "branchCode": "ROT",
+          "runNumber": "901",
+          "location": {
+            "suburb": "Springfield",
+            "town": "ROTORUA",
+            "region": "Rotorua District",
+            "postCode": "3015",
+            "country": "New Zealand"
+          },
+          "locationIdType": false,
+          "attachments": []
+        },
+        {
+          "barcode": "1RBB1LBZI5E16LMG",
+          "eventType": "ONBD",
+          "status": "Out for Delivery",
+          "createdOn": "2026-10-16T00:21:30.956Z",
+          "createdBy": "31496",
+          "carrierName": "PostHaste",
+          "branchCode": "WLG",
+          "runNumber": "240",
+          "locationIdType": false,
+          "attachments": []
+        },
+        {
+          "barcode": "1RBB1LBZI5E16LMG",
+          "eventType": "D",
+          "status": "Delivered",
+          "createdOn": "2026-10-16T02:49:36.493Z",
+          "createdBy": "31496",
+          "carrierName": "PostHaste",
+          "branchCode": "WLG",
+          "runNumber": "240",
+          "location": {
+            "suburb": "Seatoun",
+            "town": "WELLINGTON",
+            "region": "Wellington City",
+            "postCode": "6022",
+            "country": "New Zealand"
+          },
+          "locationIdType": false,
+          "attachments": [
+            {
+              "attachmentType": "SIGV",
+              "description": "Signer",
+              "href": [
+                "https://example.invalid/attachment"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

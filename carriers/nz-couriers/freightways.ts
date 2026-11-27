@@ -1,8 +1,9 @@
 /**
  * The Freightways group's tracking lookup, shared by its networks: New Zealand
- * Couriers, Post Haste, Castle Parcels and Now Couriers. Each network's folder
- * declares a `FreightwaysNetwork`; the lookup, its reply and the scan types'
- * status map (`./status.ts`) are the group's.
+ * Couriers, Post Haste, Castle Parcels and Now Couriers, and by Pass the
+ * Parcel, whose parcels ride them. Each folder declares a `FreightwaysNetwork`;
+ * the lookup, its reply and the scan types' status map (`./status.ts`) are the
+ * group's.
  */
 import { DateTime } from 'luxon';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
@@ -59,6 +60,12 @@ export interface FreightwaysNetwork {
   readonly label: RegExp;
   /** The numbers the network prints, for the refusal of anything else. */
   readonly numbers: string;
+  /**
+   * False for a service whose parcels ride the other networks, whose one
+   * lookup shows the whole trip: the network of the newest scan is then no
+   * delivery carrier.
+   */
+  readonly namesDeliveryCarrier?: false;
 }
 
 /**
@@ -187,7 +194,7 @@ function estimate(provider: string, data: Record<string, unknown>, first: number
  * number asked, and the sender's account when it was asked with one. Each of
  * its parcels has its own scans; they are kept together, newest first.
  * Another catalog network that made the newest scan becomes the delivery
- * carrier.
+ * carrier, unless the network names none.
  */
 export function parseFreightways(network: FreightwaysNetwork, payload: unknown, raw: string, account?: string): CarrierResult {
   const { provider } = network;
@@ -228,7 +235,7 @@ export function parseFreightways(network: FreightwaysNetwork, payload: unknown, 
   const delivered = stage === 'delivered' ? current!.time : undefined;
   // Freightways' networks share the tracker; the network that scanned the
   // parcel last can be another courier's.
-  const scanner = scans.find((scan) => scan.network)?.network;
+  const scanner = network.namesDeliveryCarrier === false ? undefined : scans.find((scan) => scan.network)?.network;
   const partner = scanner ? carrierIdFromPartner(scanner) : undefined;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',

@@ -1,0 +1,134 @@
+{
+  "carrier": "pass-the-parcel",
+  "records": [
+    {
+      "number": "1RBB-1LBZ-I5E1-6LMG",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261016213448/https://www.passtheparcel.co.nz/Pass/Track?barcode=1RBB-1LBZ-I5E1-6LMG",
+        "date": "2026-10-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "pass-the-parcel",
+        "confidence": "high"
+      },
+      "note": "A Parcel Tracking Code opened on Pass the Parcel's tracker, as an archived address shows. The Freightways lookup under Post Haste's name shows New Zealand Couriers' pickup, then Post Haste's on-board and delivery scans."
+    },
+    {
+      "number": "1RBB-16Q3-B8S1-D610",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250420065815/https://www.passtheparcel.co.nz/Pass/Track?barcode=1RBB-16Q3-B8S1-D610",
+        "date": "2025-04-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "pass-the-parcel",
+        "confidence": "high"
+      },
+      "note": "A Parcel Tracking Code opened on Pass the Parcel's tracker, as an archived address shows. The Freightways lookup under Post Haste's name shows its pickup, on-board and delivery scans."
+    },
+    {
+      "number": "1RBB-18BZ-B1H1-6J58",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250627023805/https://www.passtheparcel.co.nz/Pass/Track?barcode=1RBB-18BZ-B1H1-6J58",
+        "date": "2025-06-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "pass-the-parcel",
+        "confidence": "high"
+      },
+      "note": "A Parcel Tracking Code opened on Pass the Parcel's tracker, as an archived address shows. The Freightways lookup under Post Haste's name shows its pickup, a transit delay notice, then its on-board and delivery scans."
+    },
+    {
+      "number": "1RBB-1HFH-I5T1-JKZF",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250715211705/https://www.passtheparcel.co.nz/Pass/Track?barcode=1RBB-1HFH-I5T1-JKZF",
+        "date": "2025-07-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "pass-the-parcel",
+        "confidence": "high"
+      },
+      "note": "A Parcel Tracking Code opened on Pass the Parcel's tracker, as an archived address shows. The Freightways lookup under Post Haste's name shows its pickup, on-board and delivery scans."
+    },
+    {
+      "number": "1RBB-1OEM-XDL1-37FM",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250804225747/https://www.passtheparcel.co.nz/Pass/Track?barcode=1RBB-1OEM-XDL1-37FM",
+        "date": "2025-08-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "pass-the-parcel",
+        "confidence": "high"
+      },
+      "note": "A Parcel Tracking Code opened on Pass the Parcel's tracker, as an archived address shows. The Freightways lookup under Post Haste's name shows its pickup, on-board and delivery scans."
+    },
+    {
+      "number": "1RBB-1Y2S-MGY1-11JL",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.passtheparcel.co.nz/images/barcode.gif",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "pass-the-parcel",
+        "confidence": "high"
+      },
+      "note": "The code on the pack in the tracker's 'Where do I find the tracking code?' image. The site's barcode check calls it used, and the lookup holds no scans for it."
+    },
+    {
+      "number": "1RBB-1LDV-QWV1-4ECE",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.passtheparcel.co.nz/Help/Track",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "pass-the-parcel",
+        "confidence": "high"
+      },
+      "note": "The example code on the help page on tracking. The site's barcode check calls it valid and unused, and the lookup holds no scans for it."
+    }
+  ]
+}
