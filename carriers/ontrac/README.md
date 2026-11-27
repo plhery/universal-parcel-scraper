@@ -6,9 +6,10 @@ LaserShip merged into OnTrac, so a provider that names LaserShip names OnTrac.
 ## How it works
 
 One anonymous GET returns packages and scans. Exactly one returned tracking identifier must
-match the request. A generic missing-resource problem response cannot distinguish an
-unknown parcel from an unavailable endpoint, so it remains inconclusive. An empty or
-mismatched package list is inconclusive or a schema failure.
+match the request. The tracking route answers a number it does not hold with a 404 problem
+titled "Not Found", which is not-found; a route that no longer exists answers an empty 404,
+and that or any other missing-resource reply remains inconclusive. An empty or mismatched
+package list is inconclusive or a schema failure.
 
 When the user picks OnTrac, or opens an OnTrac link carrying one, a shipper's `AD`
 reference is sent too. The endpoint resolves it to the parcel without repeating it, so the

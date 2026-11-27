@@ -23,7 +23,12 @@ describe('OnTrac direct tracking', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
-  it('keeps missing resources and wrong identities as failed recognition probes', async () => {
+  it('answers unknown on OnTrac\'s Not Found problem, and keeps missing resources and wrong identities as failed probes', async () => {
+    const problem = new Response(JSON.stringify({ Type: 'https://tools.ietf.org/html/rfc9110#section-15.5.5', Title: 'Not Found', Status: 404 }),
+      { status: 404, headers: { 'Content-Type': 'application/json; charset=utf-8' } });
+    const unknown = adapter({ fetcher: vi.fn<typeof fetch>().mockResolvedValue(problem), trawl: null, browserExecutablePath: null, env: {},
+      recorder: NOOP_RECORDER });
+    await expect(unknown.recognize!('C00000000000001', { budgetMs: 1000 })).resolves.toEqual({ known: false });
     for (const response of [new Response('{}', { status: 404 }), new Response(JSON.stringify({ Packages: [] }))]) {
       const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response);
       const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
@@ -160,14 +165,20 @@ describe('OnTrac direct tracking', () => {
     expect(result.events).toHaveLength(3);
     expect(JSON.stringify(result)).not.toMatch(/Private Recipient|Example Address|Private signature|secret-image|reference-secret|PostalCode/);
   });
-  it('bounds requests, forwards cancellation and keeps generic missing-resource replies inconclusive', async () => {
+  it('bounds requests, forwards cancellation, reads the Not Found problem as not found and other missing resources as inconclusive', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(payload())));
     const signal = new AbortController().signal;
     await new OntracTracker({ fetcher }).fetch(NUMBER, { signal, budgetMs: 1000 });
     expect(fetcher.mock.calls[0]?.[0]).toBe(`https://webtrack.ontrac.com/PackageServices/tracking/${NUMBER}`);
     expect(fetcher.mock.calls[0]?.[1]?.signal).toBeInstanceOf(AbortSignal);
     fetcher.mockResolvedValue(new Response(JSON.stringify({ Title: 'Not Found', Status: 404 }), { status: 404 }));
-    await expect(new OntracTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(new OntracTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'not_found' });
+    // A route that is gone answers an empty 404; a 410 or another problem is no word about the parcel.
+    for (const reply of [() => new Response('', { status: 404 }), () => new Response(JSON.stringify({ Title: 'Not Found', Status: 404 }), { status: 410 }),
+      () => new Response(JSON.stringify({ Title: 'Bad Request', Status: 404 }), { status: 404 }), () => new Response('<html>Not Found</html>', { status: 404 })]) {
+      fetcher.mockResolvedValue(reply());
+      await expect(new OntracTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    }
     fetcher.mockResolvedValue(new Response('{}', { status: 503 }));
     await expect(new OntracTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'maintenance' });
     expect(normalizeOntracNumber('1ls 0000000000001')).toBe(NUMBER);

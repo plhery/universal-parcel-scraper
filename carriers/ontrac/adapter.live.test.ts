@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { OntracTracker } from './adapter.js';
 
 describe('OnTrac live tracking', () => {
-  it('keeps the generic missing-resource response inconclusive', async () => {
-    await expect(new OntracTracker().fetch('1LS0000000000000')).rejects.toMatchObject({ kind: 'indeterminate' });
+  it('reads the tracking route\'s Not Found problem as not found', async () => {
+    await expect(new OntracTracker().fetch('1LS0000000000000')).rejects.toMatchObject({ kind: 'not_found' });
   });
   it.skipIf(!process.env.ONTRAC_TRACKING_NUMBER)('returns matching real history', async () => {
     const result = await new OntracTracker().fetch(process.env.ONTRAC_TRACKING_NUMBER!);
