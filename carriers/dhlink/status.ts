@@ -24,9 +24,8 @@ const NODE_CODES: ReadonlyMap<string, Stage> = new Map([
   ['QG002', 'in_transit'],
   ['JH001', 'in_transit'],
   ['J013', 'out_for_delivery'],
-  // The rail's "Pending delivery", which DHLink words "Out for delivery": its own step once the last-mile partner
-  // has the parcel, a day or more before that partner's first hub scan on some parcels. The partner's round is the
-  // delivery round.
+  // The rail's "Pending delivery", which DHLink words "Out for delivery": in transit unless the partner's own scans
+  // came before it (`dhlinkRound`).
   ['DE002', 'in_transit'],
   ['J014', 'delivered'],
   ['DE001', 'delivered'],
@@ -268,14 +267,44 @@ export function dhlinkStage(code: string, name: string, wording: string): Classi
   return worded.source === 'none' ? null : worded;
 }
 
+/**
+ * The rail's "Pending delivery" (`DE002`), which DHLink words "Out for delivery". Straight after the last-mile
+ * partner's pickup it can come a day or more before that partner's first hub scan, and after DHLink's own trucking
+ * and warehouse on a US line it has stood for days with nothing after it. After the partner's own scans, at its
+ * local facility or delivery office, the delivery followed within the day: the partner's round.
+ */
+export const PENDING_DELIVERY = 'DE002';
+const PICKUP_CODES = new Set(['TQ001', 'WCTQ001']);
+// DHLink's own rows after the last-mile pickup: a US line's trucking between hubs and its warehouse, and the
+// hand-over to the local provider.
+const OWN_AFTER_PICKUP = new Set(['package picked up by last-mile carrier', 'arrived at origin hub', 'departed origin hub',
+  'arrived at destination hub', 'departed destination hub', 'arrived at warehouse',
+  'hand it over to local service provider, waiting for pickup']);
+
+/**
+ * Whether a pending delivery is the partner's round: older scans, newest first, reach the last-mile pickup only
+ * after at least one scan of the partner's own.
+ */
+export function dhlinkRound(older: readonly { provider_code?: string | null; description?: string | null }[]): boolean {
+  let partner = false;
+  for (const scan of older) {
+    const code = scan.provider_code ?? '';
+    const wording = normalizeStatusWording(scan.description ?? '');
+    if (PICKUP_CODES.has(code) || wording === 'package picked up by last-mile carrier') return partner;
+    if (!NODE_CODES.has(code) && !OWN_AFTER_PICKUP.has(wording)) partner = true;
+  }
+  return false;
+}
+
 // The destination warehouse's stocktaking holding the parcel up: no step.
 const STOCKTAKING = /^stocktaking delay\.?$/;
 // A clock alone in brackets, written after the hand-over to the airline: it names no step.
 const CLOCK_ONLY = /^\(\s*\d{1,2}[:：]\d{2}\s*\)$/;
 
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => (code ? NODE_CODES.get(code) : undefined) ?? wordingStage(wording),
-  gaps: [],
+  // The adapter stages a pending delivery by the scans before it, which a row does not keep.
+  stage: (code, wording) => (code === PENDING_DELIVERY ? undefined : (code ? NODE_CODES.get(code) : undefined) ?? wordingStage(wording)),
+  gaps: [{ code: PENDING_DELIVERY, note: 'Pending delivery, worded "Out for delivery": the delivery round after the last-mile partner\'s own scans, in transit straight after its pickup or after DHLink\'s own trucking and warehouse.' }],
   gapNote: (_code, wording) => (FLIGHT_BOOKED.test(wording)
     ? 'The flight the parcel is booked on, any date, not a movement: the adapter drops the row and the parcel keeps the stage it had.'
     : FLIGHT_DELAY_NOTICE.test(normalizeStatusWording(wording)) ? 'A delayed flight with an estimated departure, without a movement scan.'

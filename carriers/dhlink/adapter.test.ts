@@ -153,6 +153,25 @@ describe('DHLink HTTP adapter', () => {
     expect(timeline(result.events).map((entry) => entry[2])).toEqual(['in_transit', 'in_transit', 'accepted', 'accepted']);
   });
 
+  it('reads the pending delivery as the round only after the last-mile partner’s own scans', () => {
+    const row = (trackTime: string, info: string, nodeCode: string | null = null) =>
+      ({ trackTime, createDate: null, place: null, info, nodeCode, nodeName: null });
+    const read = (...rows: Row[]) => parseDhlink(changed('swiftx-at-warehouse', (parcel) => { parcel.trackinfoList.unshift(...rows); }),
+      WAREHOUSE, LATER);
+    const pickup = row('2026-03-03 10:00:00', 'Package picked up by last-mile carrier', 'TQ001');
+    const pending = row('2026-03-05 09:00:00', 'Out for delivery', 'DE002');
+    const facility = row('2026-03-05 08:00:00', 'Parcel received by local Facility.');
+    // Straight after the pickup, it can come days before the partner's first hub scan.
+    expect(read(pending, pickup)).toMatchObject({ current_stage: 'in_transit', last_status_text: 'Out for delivery' });
+    // After the partner's own scan at its local facility, it is the partner's round.
+    expect(read(pending, facility, pickup)).toMatchObject({ current_stage: 'out_for_delivery', current_stage_source: 'carrier_map' });
+    expect(read(pending, facility, { ...pickup, nodeCode: null })).toMatchObject({ current_stage: 'out_for_delivery' });
+    // DHLink's own trucking and warehouse after the pickup are not the partner's scans, and without a pickup there is no partner.
+    expect(read(pending, row('2026-03-05 07:00:00', 'Arrived At Warehouse'), row('2026-03-04 07:00:00', 'Departed Destination Hub'), pickup))
+      .toMatchObject({ current_stage: 'in_transit' });
+    expect(read(pending, facility)).toMatchObject({ current_stage: 'in_transit' });
+  });
+
   it('shows DHLink’s own nodes in Chinese in English, and a wording in both languages in its English half', () => {
     expect(dhlinkEnglish('国内清关完成')).toBe('Customs export clearance completed');
     expect(dhlinkEnglish('Arriving at the airport - arranging flights/到达机场-安排航班中')).toBe('Arriving at the airport - arranging flights');
@@ -653,9 +672,12 @@ describe('DHLink status vocabulary', () => {
     for (const entry of statuses.entries) {
       const code = entry.code ?? '';
       const wording = entry.wording ?? '';
-      expect(statusMap.stage(code || null, wording.toLowerCase()), `${code} ${wording}`).toBe(entry.stage);
-      expect(dhlinkStage(code, '', wording)?.stage, `${code} ${wording}`).toBe(entry.stage);
+      expect(statusMap.stage(code || null, wording.toLowerCase()), `${code} ${wording}`).toBe(entry.stage ?? undefined);
+      // The pending delivery's stage comes from the scans before it, in transit on its own.
+      expect(dhlinkStage(code, '', wording)?.stage, `${code} ${wording}`).toBe(code === 'DE002' ? 'in_transit' : entry.stage);
     }
+    expect(statusMapAnswer({ carrier: 'dhlink', providerCode: 'DE002', description: 'Out for delivery' }))
+      .toMatchObject({ kind: 'intentional_gap', note: expect.stringContaining('last-mile partner') });
     // A line whose codes the map does not know is read by its node's name: the rail's pending delivery is DHLink's
     // step once the last-mile partner has the parcel, before that partner's own round.
     expect(dhlinkStage('ZZ001', 'Pending delivery', 'Synthetic note')).toEqual({ stage: 'in_transit', source: 'carrier_map' });

@@ -12,7 +12,7 @@ import { gofoScanZone } from '../gofo/clock.js';
 import { isRecord } from '../../core/types.js';
 import { countryZones } from '../../places/zones.js';
 import { DHLINK_RECORD_ZONE as RECORD_ZONE, usClockReadings } from './clock.js';
-import { dhlinkEnglish, dhlinkStage, FLIGHT_BOOKED } from './status.js';
+import { dhlinkEnglish, dhlinkRound, dhlinkStage, FLIGHT_BOOKED, PENDING_DELIVERY } from './status.js';
 
 export const PROVIDER = 'DHLink';
 // A long history is a few dozen kilobytes.
@@ -462,6 +462,12 @@ export function parseDhlink(payload: unknown, raw: string, readAt = Date.now()):
     if (event.stage === 'accepted' && moved) Object.assign(event, { stage: 'in_transit', stage_source: 'carrier_map' });
     else if (event.stage && MOVED.has(event.stage)) moved = true;
   }
+  // A pending delivery after the last-mile partner's own scans is that partner's round.
+  events.forEach((event, index) => {
+    if (event.provider_code === PENDING_DELIVERY && dhlinkRound(events.slice(index + 1))) {
+      Object.assign(event, { stage: 'out_for_delivery', stage_source: 'carrier_map' });
+    }
+  });
 
   const newest = events[0]!;
   const current = events.find((event) => event.stage);
