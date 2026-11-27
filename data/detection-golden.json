@@ -98782,6 +98782,14 @@
     ]
   },
   {
+    "input": "GZXH999999990YQ",
+    "carrier": "xinghe-freight",
+    "confidence": "high",
+    "candidates": [
+      "xinghe-freight"
+    ]
+  },
+  {
     "input": "GZXH9999999980Y",
     "carrier": "xinghe-freight",
     "confidence": "high",
