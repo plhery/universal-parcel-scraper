@@ -1,4 +1,167 @@
 {
   "carrier": "fliway",
-  "entries": []
+  "entries": [
+    {
+      "code": "Pickup",
+      "wording": "Pickup",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "A consignment's first milestone, at the depot that collected it. The tracker shows it as Pickup, its older page as Picked Up."
+    },
+    {
+      "code": "InDepot",
+      "wording": "In Depot",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "Scanned into the collecting depot, which the row names by its code."
+    },
+    {
+      "code": "OnLinehaul",
+      "wording": "On Linehaul",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "Loaded for the trip between depots."
+    },
+    {
+      "code": "Unload",
+      "wording": "Unload",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "Unloaded at the destination depot, which the row names by its code. The older page shows it as In Depot."
+    },
+    {
+      "code": "DeliveryArranged",
+      "wording": "Delivery Arranged",
+      "stage": "pending",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "A milestone of residential deliveries with no scan clock: the delivery slot is agreed with the receiver. It moves nothing."
+    },
+    {
+      "code": "ContactReceiver",
+      "wording": "Contact Receiver",
+      "stage": "pending",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The tracker's script lists it among the residential milestones that arrange the delivery; it moves nothing."
+    },
+    {
+      "code": "ArrangingDelivery",
+      "wording": "Arranging Delivery",
+      "stage": "pending",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A residential milestone while the delivery slot is being agreed; it moves nothing."
+    },
+    {
+      "code": "AwaitingResponse",
+      "wording": "Awaiting Receiver Response",
+      "stage": "pending",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A residential milestone while Fliway waits for the receiver to choose a slot; it moves nothing."
+    },
+    {
+      "code": "OFD",
+      "wording": "Out for Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    },
+    {
+      "code": "Held",
+      "wording": "Held at customer request",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The tracker's script words the Held milestone this way and marks it with its alert icon: the consignment is held, not moving."
+    },
+    {
+      "code": "Delivered",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The consignment's proof of delivery gives the same clock, with the receiver's name and signature, which the adapter leaves out."
+    },
+    {
+      "wording": "Picked Up East Tamaki",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "An item's history: Picked Up and the suburb it was collected in."
+    },
+    {
+      "wording": "Arrived AUCKLAND Depot",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "An item's history names the depot in capitals between Arrived and Depot; the consignment's milestones give it as AKL."
+    },
+    {
+      "wording": "Arrived PALMERSTON NORTH Depot",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The destination depot, PMR in the consignment's milestones."
+    },
+    {
+      "wording": "In Transit Linehaul",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    },
+    {
+      "wording": "In Transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "Scans of an item between its arrival at the destination depot and its delivery round, which the consignment's milestones leave out."
+    },
+    {
+      "wording": "Out For Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    },
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "An item's delivery row goes on with Signed By: and the receiver's name, which the adapter leaves out."
+    },
+    {
+      "wording": "Connote Number is not found.",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The consignment lookup's answer for a number it does not know, with the number after Connote Number. Not a status."
+    },
+    {
+      "wording": "Unknown Ticket:",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The item lookup's answer for a number it does not know, followed by the number. Not a status."
+    }
+  ]
 }

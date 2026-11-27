@@ -2715,6 +2715,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'flippost', number: '00-0000009',
     route: /^https:\/\/flippost\.com\/instruments\/online\/\?number=00-0000009$/,
     marker: /Отследить отправление|Введите код для отслеживания/ },
+  // The page looks the number up on the server and answers an unknown one with an empty search field.
+  { carrier: 'fliway', number: 'QXZ4071953',
+    route: /^https:\/\/www\.fliway\.com\/transport\/tracking\/jobstatus\?connote_or_ticket=QXZ4071953$/,
+    marker: /Enter your Fliway or SCS reference number/i,
+    forwarding: { notFound: /No tracking details were found for this consignment/i } },
   // The page looks up the number in its address on load and answers an unknown one with "Проверьте корректность номера заказа.".
   { carrier: 'vozovoz', number: '100000000',
     route: /^https:\/\/vozovoz\.ru\/order\/manage\/\?id=100000000$/,

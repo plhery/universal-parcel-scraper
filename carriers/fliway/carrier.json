@@ -17,21 +17,71 @@
   "timezone": "Pacific/Auckland",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "fliway",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "delivered_at",
+    "eta",
+    "eta_window"
+  ],
   "portal": {
-    "url": "https://online.fliway.com/Public/Track/{trackingNumber}",
+    "url": "https://www.fliway.com/transport/tracking/jobstatus?connote_or_ticket={trackingNumber}",
     "searchUrl": "https://www.fliway.com/",
     "helpUrl": "https://www.fliway.com/services/contact-support",
     "canaryUrl": "https://www.fliway.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "progress_rail",
+      "history",
+      "location",
+      "depot_code",
+      "delivered_at",
+      "parcel_count",
+      "proof_of_delivery",
+      "signatory",
+      "signature"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivered_at",
+      "eta",
+      "eta_window"
+    ],
+    "discarded": [
+      "parcel_count",
+      "proof_of_delivery",
+      "signatory",
+      "signature"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "weight"
+    ]
   },
   "links": [
+    {
+      "domains": [
+        "www.fliway.com",
+        "fliway.com"
+      ],
+      "pathPattern": "^/transport/tracking/jobstatus/?$",
+      "params": [
+        "connote_or_ticket"
+      ]
+    },
     {
       "domains": [
         "online.fliway.com"

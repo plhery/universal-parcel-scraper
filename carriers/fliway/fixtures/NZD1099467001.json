@@ -1,0 +1,14 @@
+{
+  "trackNum": "NZD1099467001",
+  "location": "Delivered",
+  "trackingRecords": [
+    "17 Jul 24 13:29 Picked Up East Tamaki",
+    "17 Jul 24 13:29 Arrived AUCKLAND Depot",
+    "17 Jul 24 20:09 In Transit Linehaul",
+    "18 Jul 24 05:00 Arrived PALMERSTON NORTH Depot",
+    "18 Jul 24 16:30 In Transit",
+    "19 Jul 24 15:38 In Transit",
+    "22 Jul 24 07:24 Out For Delivery",
+    "22 Jul 24 09:18 Delivered Signed By: Receiver Name"
+  ]
+}

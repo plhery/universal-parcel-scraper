@@ -1783,6 +1783,12 @@
     "reason": "Three letters and five digits is a short layout other carriers print, and one sample cannot show a Fliway-only prefix."
   },
   {
+    "carrier": "fliway",
+    "pattern": "^[A-Z]{3}\\d{7}$",
+    "kind": "by_design",
+    "reason": "Three letters and seven digits is a layout Australia Post numbers share, and Fliway's samples each start with other letters, so no prefix marks its consignments."
+  },
+  {
     "kind": "open",
     "carrier": "flow-progressive-logistics",
     "reason": "The official tracker confirms one indexed FLOW waybill. Explicit selection is available while issuance and overlaps remain open."

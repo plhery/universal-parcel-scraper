@@ -423,6 +423,7 @@ import { statusMap as flashExpressPh } from '../../carriers/flash-express-ph/sta
 import { statusMap as flashbirdCa } from '../../carriers/flashbird-ca/status.js';
 import { statusMap as fleetex } from '../../carriers/fleetex/status.js';
 import { statusMap as fleetoptics } from '../../carriers/fleetoptics/status.js';
+import { statusMap as fliway } from '../../carriers/fliway/status.js';
 import { statusMap as flippost } from '../../carriers/flippost/status.js';
 import { statusMap as flipxpress } from '../../carriers/flipxpress/status.js';
 import { statusMap as fmx } from '../../carriers/fmx/status.js';
@@ -1351,7 +1352,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'flash-express': flashExpress,
   'flash-express-ph': flashExpressPh,
   'flashbird-ca': flashbirdCa,
-  fleetex, fleetoptics, flippost, flipxpress, fmx, followmont, 'fm-transportes': fmTransportes, 'forward-air': forwardAir, 'forza-delivery': forzaDelivery, 'four-px': fourPx, foxpost, 'franch-express': franchExpress, fukuyama, fynex, gaash, garudavega, gati, gdex,
+  fleetex, fleetoptics, fliway, flippost, flipxpress, fmx, followmont, 'fm-transportes': fmTransportes, 'forward-air': forwardAir, 'forza-delivery': forzaDelivery, 'four-px': fourPx, foxpost, 'franch-express': franchExpress, fukuyama, fynex, gaash, garudavega, gati, gdex,
   'gebrueder-weiss': gebruederWeiss, geis, 'gel-express': gelExpress, 'geniki-taxydromiki': geniki, geodis, 'geodis-pl': geodisPl, 'gfs-express': gfsExpress, 'gig-logistics': gigLogistics, 'global-delivery-network': globalDeliveryNetwork, 'gls-ch': glsCh, 'gls-de': glsDe, 'gls-es': glsEs, 'gls-fr': glsFr, 'gls-it': glsIt, 'gls-nl': glsNl, 'gls-us': glsUs,
   globalpost, 'gms-worldwide': gmsWorldwide, 'go-express': goExpress, 'go-logistics-au': goLogisticsAu, go4, gobolt, gofo, 'gofo-ca': gofoCa, 'gofo-es': gofoEs, 'gofo-fr': gofoFr, 'gofo-it': gofoIt, 'gofo-nl': gofoNl, 'gogo-xpress': gogoXpress,
   'grand-slam-express': grandSlamExpress, 'gruber-logistics': gruberLogistics, 'gs-postbox': gsPostbox, 'gsi-express': gsiExpress, 'gta-airskip': gtaAirskip, 'gtl-goto': gtlGoto, guatex, gzyl,

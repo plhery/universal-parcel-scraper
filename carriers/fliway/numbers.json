@@ -2,6 +2,26 @@
   "carrier": "fliway",
   "records": [
     {
+      "number": "NZD1099467",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/fliway/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "TrackShip's Fliway page gives it as a tracking number example. Fliway's consignment lookup answers it with a delivered consignment of one piece; its item lookup knows that piece by the number followed by 001."
+    },
+    {
       "number": "BW1940879",
       "role": "shipment",
       "evidence": "public_shipment_report",
@@ -21,7 +41,7 @@
           "rl-carriers"
         ]
       },
-      "note": "Archived lookup on Fliway's own consignment tracker; the opened capture shows only the empty result template, so the history was not visible."
+      "note": "Archived lookup on Fliway's own consignment tracker; the opened capture shows only the empty result template, so the history was not visible. Fliway's consignment lookup now answers that it does not know it."
     },
     {
       "number": "ZXL97264",
@@ -47,7 +67,7 @@
           "loggi"
         ]
       },
-      "note": "Archived lookup on Fliway's own consignment tracker; the opened capture shows only the empty result template, so the history was not visible."
+      "note": "Archived lookup on Fliway's own consignment tracker; the opened capture shows only the empty result template, so the history was not visible. Fliway's consignment lookup now answers that it does not know it."
     }
   ]
 }
