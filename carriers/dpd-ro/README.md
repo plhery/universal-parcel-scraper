@@ -22,7 +22,10 @@ covers.
    as its budget. While the check turns the service away, each page spends its time on the same
    refusal: after a page meets the check, lookups through that service leave the page for an hour
    and end with the endpoint's challenge, recognition included. The first lookup after the hour
-   opens it again. A host that keeps adapters' holds keeps the rest across restarts.
+   opens it again. A host that keeps adapters' holds keeps the rest across restarts. The check
+   turns some addresses away whatever the browser does: `DPD_RO_BROWSER_PROXY_URL`, an HTTP(S)
+   proxy origin, makes the service open the page through that proxy, never falling back to its
+   own address, and the proxy's route rests apart from the service's own.
 
 `tracking.dpd.ro`, which DPD Romania's site and shop plugins link, redirects to
 `services.dpd.ro/tracking/`, which serves a Cloudflare challenge as well, so it is not used.
@@ -80,5 +83,5 @@ MyDPD removed would answer the same 404 page as an unknown waybill.
 ## Live test
 
 Set `DPD_RO_TRACKING_NUMBER` outside the repository, and `FLARESOLVERR_URL` for the tracker page,
-and run `npm run test:carriers:live -- carriers/dpd-ro/adapter.live.test.ts`. Optionally set
+optionally with `DPD_RO_BROWSER_PROXY_URL`, and run `npm run test:carriers:live -- carriers/dpd-ro/adapter.live.test.ts`. Optionally set
 `DPD_RO_UNKNOWN_NUMBER` to check a not-found waybill.

@@ -15,7 +15,9 @@ the endpoint behind MySpeedy's public tracker.
    and the service's capture helper keeps that one reply for the whole number. The token stays in the
    browser. A page that sends no request did not pass its check. Passing it takes the page
    seconds: a lookup that cannot leave the service ten seconds does not open the page and fails
-   as its budget.
+   as its budget. The check turns some addresses away whatever the browser does:
+   `SPEEDY_BROWSER_PROXY_URL`, an HTTP(S) proxy origin, makes the service open the page through
+   that proxy, recognition included, never falling back to its own address.
 
 www.speedy.bg sits behind a Cloudflare challenge, and Speedy's REST API at api.speedy.bg needs
 a customer account, so neither is used.
@@ -71,5 +73,6 @@ from its path at `myspeedy.speedy.bg/pub/tracking/{number}`. Such links name Spe
 ## Live test
 
 Set `SPEEDY_TRACKING_NUMBER`, and optionally `SPEEDY_UNKNOWN_NUMBER` for a not-found shipment
-number, outside the repository, with `FLARESOLVERR_URL` for the browser checks, and run
+number, outside the repository, with `FLARESOLVERR_URL` for the browser checks and optionally
+`SPEEDY_BROWSER_PROXY_URL`, and run
 `npm run test:carriers:live -- carriers/speedy/adapter.live.test.ts`.

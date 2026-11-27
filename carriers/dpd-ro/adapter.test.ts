@@ -219,11 +219,11 @@ const page = (captures: Partial<TrawlScrapeResponse['capturedResponses'][number]
     truncated: false, base64Encoded: false, error: null, ...capture })),
 });
 // Without a service address no rest is kept; `service` names one.
-const browser = (answer: TrawlScrapeResponse, service?: string) => {
+const browser = (answer: TrawlScrapeResponse, service?: string, env: Record<string, string> = {}) => {
   const scrape = vi.fn<TrawlClient['scrape']>().mockResolvedValue(answer);
   const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response('{}', { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }));
   const trawl = { scrape, ...(service ? { endpoint: new URL(service) } : {}) } as unknown as TrawlClient;
-  return { scrape, fetcher, instance: adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl, browserExecutablePath: null }) };
+  return { scrape, fetcher, instance: adapter({ fetcher, recorder: NOOP_RECORDER, env, trawl, browserExecutablePath: null }) };
 };
 
 describe('DPD Romania through MyDPD\'s tracker page', () => {
@@ -329,6 +329,27 @@ describe('DPD Romania through MyDPD\'s tracker page', () => {
     } finally {
       resetAdapterHolds();
     }
+  });
+
+  it('opens the page through the configured proxy, which rests apart from the service\'s own address', async () => {
+    const proxy = 'http://user:opaque@proxy.invalid:8080';
+    const service = 'https://browser.example.test/dpd-ro-proxy';
+    const saved: AdapterHold[] = [];
+    await keepAdapterHolds({ load: async () => [], save: async (hold) => { saved.push(hold); } });
+    try {
+      const proxied = browser(page([]), service, { DPD_RO_BROWSER_PROXY_URL: ` ${proxy} ` });
+      await expect(proxied.instance.track({ number: DELIVERED })).rejects.toMatchObject({ kind: 'challenge' });
+      expect(proxied.scrape.mock.calls[0]![0]).toMatchObject({ proxy });
+      expect(JSON.stringify(saved)).not.toMatch(/opaque|proxy\.invalid/);
+      await expect(proxied.instance.track({ number: DELIVERED })).rejects.toMatchObject({ kind: 'challenge' });
+      expect(proxied.scrape).toHaveBeenCalledTimes(1);
+      const own = browser(page([{}]), service);
+      await expect(own.instance.track({ number: DELIVERED })).resolves.toMatchObject({ current_stage: 'delivered' });
+      expect(own.scrape.mock.calls[0]![0]).not.toHaveProperty('proxy');
+    } finally {
+      resetAdapterHolds();
+    }
+    for (const bad of ['relay.internal:3128', `${proxy}/path`]) expect(() => browser(page([{}]), service, { DPD_RO_BROWSER_PROXY_URL: bad })).toThrow(TypeError);
   });
 
   it('keeps asking the page after a throttle, a failed load or a not-found page', async () => {

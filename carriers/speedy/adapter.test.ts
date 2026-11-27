@@ -186,10 +186,10 @@ const page = (captures: Partial<TrawlScrapeResponse['capturedResponses'][number]
   capturedResponses: captures.map(capture => ({ url: speedyPageRequest(COLLECTED), status: 200, headers: {}, body: text('collected.json'),
     truncated: false, base64Encoded: false, error: null, ...capture })),
 });
-const browser = (answer: TrawlScrapeResponse) => {
+const browser = (answer: TrawlScrapeResponse, env: Record<string, string> = {}) => {
   const scrape = vi.fn<TrawlClient['scrape']>().mockResolvedValue(answer);
   const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response('{}', { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }));
-  return { scrape, fetcher, instance: adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: { scrape } as unknown as TrawlClient, browserExecutablePath: null }) };
+  return { scrape, fetcher, instance: adapter({ fetcher, recorder: NOOP_RECORDER, env, trawl: { scrape } as unknown as TrawlClient, browserExecutablePath: null }) };
 };
 
 describe('Speedy through its tracker page', () => {
@@ -223,6 +223,19 @@ describe('Speedy through its tracker page', () => {
     ] as const) {
       await expect(browser(answer).instance.track({ number: COLLECTED })).rejects.toMatchObject({ kind });
     }
+  });
+
+  it('opens the page through the configured proxy, recognition included, and refuses one that is not an HTTP(S) origin at setup', async () => {
+    const proxy = 'http://user:opaque@proxy.invalid:8080';
+    const { scrape, fetcher, instance } = browser(page([{}]), { SPEEDY_BROWSER_PROXY_URL: ` ${proxy} ` });
+    await expect(instance.track({ number: COLLECTED })).resolves.toMatchObject({ current_stage: 'delivered' });
+    await expect(instance.recognizeWithBrowser!(COLLECTED, { budgetMs: 60_000 })).resolves.toMatchObject({ known: true });
+    expect(scrape.mock.calls.map(([request]) => request.proxy)).toEqual([proxy, proxy]);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    for (const bad of ['relay.internal:3128', `${proxy}/path`]) expect(() => browser(page([{}]), { SPEEDY_BROWSER_PROXY_URL: bad })).toThrow(TypeError);
+    const own = browser(page([{}]), { SPEEDY_BROWSER_PROXY_URL: '  ' });
+    await own.instance.track({ number: COLLECTED });
+    expect(own.scrape.mock.calls[0]![0]).not.toHaveProperty('proxy');
   });
 
   it('leaves the page unopened when the budget cannot give the service the time its Turnstile check takes', async () => {

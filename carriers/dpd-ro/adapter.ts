@@ -6,6 +6,7 @@ import type { CarrierResult } from '../../core/result/index.js';
 import { HoldKind, serviceTag } from '../../core/runner/holds.js';
 import { runSteps, type StepSpec } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { browserContextProxy } from '../../core/transport/browserRouteTrial.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { retryAfterMs } from '../../core/transport/retryAfter.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport/trawl.js';
@@ -23,15 +24,16 @@ export const DPD_RO_ENDPOINT = 'https://mydpd.dpd.ro/rest/public/track';
  * How long lookups leave the tracker page after it met MyDPD's Turnstile check. While the check turns the
  * browser service away, each page spends the service's time on the same refusal, so lookups in the rest end
  * with the endpoint's challenge, recognition included. The first lookup after it opens the page again. Each
- * browser service has its own rest; a host that keeps adapters' holds (`keepAdapterHolds`) keeps it across
- * restarts.
+ * browser service, and each proxy it opens the page through, has its own rest; a host that keeps adapters'
+ * holds (`keepAdapterHolds`) keeps it across restarts.
  */
 export const DPD_RO_PAGE_REST_MS = 60 * 60_000;
 const pageRests = new Map<string, number>();
 const pageHolds = new HoldKind('dpd-ro-page-rest', (key, until) => {
   pageRests.set(key, Math.max(pageRests.get(key) ?? 0, Math.min(until, Date.now() + DPD_RO_PAGE_REST_MS)));
 });
-const restOf = (trawl: TrawlClient | null): string | null => (trawl?.endpoint?.href ? serviceTag(trawl.endpoint.href) : null);
+const restOf = (trawl: TrawlClient | null, proxy: string | null): string | null =>
+  (trawl?.endpoint?.href ? serviceTag(proxy ? `${trawl.endpoint.href} ${proxy}` : trawl.endpoint.href) : null);
 
 /** MyDPD's public tracker for the waybill, in English. */
 export const dpdRoTrackingUrl = (raw: string): string =>
@@ -58,12 +60,14 @@ export function parseDpdRoPage(page: TrawlScrapeResponse, number: string): Carri
 }
 
 export class DpdRoTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string; trawl?: TrawlClient | null } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string; trawl?: TrawlClient | null;
+    /** The proxy the browser service opens the tracker page through, for a service whose address the check turns away. */
+    browserProxy?: string | null; } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeDpdRoNumber(raw);
     const trawl = this.options.trawl ?? null;
-    const rest = restOf(trawl);
+    const rest = restOf(trawl, this.options.browserProxy ?? null);
     const resting = rest !== null && (pageRests.get(rest) ?? 0) > Date.now();
     return runSteps({ carrier: 'dpd-ro', budgetMs: context.budgetMs ?? (trawl ? 60_000 : 15_000), signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', run: async ({ signal, remainingMs }) => {
@@ -86,6 +90,7 @@ export class DpdRoTracker {
       // The page gets its own Turnstile token and asks for the waybill in its route; the token stays in the browser.
       const page = await trawl!.scrape({ url: dpdRoTrackingUrl(number), skipHttp: true, maxTier: 3, maxTimeout: timeoutMs,
         captureResponses: [DPD_RO_ENDPOINT], settleTimeout: Math.min(timeoutMs, 20_000),
+        ...(this.options.browserProxy ? { proxy: this.options.browserProxy } : {}),
       }, { provider: 'TRAWL while fetching DPD Romania', timeoutMs, signal, maxBytes: 6_000_000, requireSolved: false });
       signal.throwIfAborted();
       try {
@@ -103,8 +108,11 @@ export class DpdRoTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
+  const browserProxy = environment.env.DPD_RO_BROWSER_PROXY_URL?.trim() || null;
+  // Checked here, so a mistyped proxy fails at setup with a message that leaves its value out.
+  if (browserProxy) browserContextProxy(browserProxy);
   const tracker = new DpdRoTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent,
-    trawl: environment.trawl });
+    trawl: environment.trawl, browserProxy });
   // No HTTP recognition: without the tracker page's Turnstile token a plain request can only be refused. Browser
   // recognition makes the lookup with its page.
   return { id: 'dpd-ro', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context),

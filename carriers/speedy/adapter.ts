@@ -5,6 +5,7 @@ import {
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps, type StepSpec } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { browserContextProxy } from '../../core/transport/browserRouteTrial.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { retryAfterMs } from '../../core/transport/retryAfter.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport/trawl.js';
@@ -42,7 +43,9 @@ export function parseSpeedyPage(page: TrawlScrapeResponse, number: string): Carr
 }
 
 export class SpeedyTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string; trawl?: TrawlClient | null } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string; trawl?: TrawlClient | null;
+    /** The proxy the browser service opens the tracker page through, for a service whose address the check turns away. */
+    browserProxy?: string | null; } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeSpeedyNumber(raw);
@@ -77,6 +80,7 @@ export class SpeedyTracker {
       // The page gets its own Turnstile token and asks for the number in its route; the token stays in the browser.
       const page = await trawl!.scrape({ url: speedyTrackingUrl(number), skipHttp: true, maxTier: 3, maxTimeout: timeoutMs,
         captureResponses: [SPEEDY_ENDPOINT], settleTimeout: Math.min(timeoutMs, 20_000),
+        ...(this.options.browserProxy ? { proxy: this.options.browserProxy } : {}),
       }, { provider: 'TRAWL while fetching Speedy', timeoutMs, signal, maxBytes: 6_000_000, requireSolved: false });
       signal.throwIfAborted();
       return parseSpeedyPage(page, number);
@@ -85,8 +89,11 @@ export class SpeedyTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
+  const browserProxy = environment.env.SPEEDY_BROWSER_PROXY_URL?.trim() || null;
+  // Checked here, so a mistyped proxy fails at setup with a message that leaves its value out.
+  if (browserProxy) browserContextProxy(browserProxy);
   const options = { fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent };
-  const tracker = new SpeedyTracker({ ...options, trawl: environment.trawl });
+  const tracker = new SpeedyTracker({ ...options, trawl: environment.trawl, browserProxy });
   // Recognition stays on HTTP.
   const http = new SpeedyTracker(options);
   return { id: 'speedy', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context),
