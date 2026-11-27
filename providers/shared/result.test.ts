@@ -468,6 +468,16 @@ describe('shared provider result', () => {
     expect(statusMapAnswer({ carrier: 'unknown', description: 'The pick-up task has been cancelled.' })).toMatchObject({ kind: 'intentional_gap' });
   });
 
+  it("reads PTT's scans in ParcelsApp's English as PTT's map reads the Turkish", () => {
+    for (const [wording, stage] of [['Handed to the delivery person', 'out_for_delivery'],
+      ['Delivery not available at address/Closed - Notice left', 'failed_attempt'], ['Example PTT Waiting at the Workplace', 'ready_for_pickup']] as const) {
+      expect(event('2026-11-11T09:45:00+03:00', wording), wording).toMatchObject({ stage, stage_source: 'wording:provider' });
+      expect(statusMapAnswer({ carrier: 'unknown', description: wording }), wording).toMatchObject({ stage });
+    }
+    // Another office's wording is not PTT's.
+    expect(event('2026-11-11T09:45:00+03:00', 'Waiting at the workplace')).toMatchObject({ stage_source: 'none' });
+  });
+
   it("reads a warehouse order's creation as registered and leaves its packing and invoice without a stage, as Ship24 relays them", () => {
     expect(event('2026-11-11T01:45:00+01:00', 'Created')).toMatchObject({ stage: 'registered', stage_source: 'wording:provider' });
     expect(statusMapAnswer({ carrier: 'unknown', description: 'Created' })).toMatchObject({ stage: 'registered' });

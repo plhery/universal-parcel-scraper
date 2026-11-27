@@ -57,6 +57,8 @@ collected, "(MEVKUF)", is an exception. The weight is given in grams and kept in
 17TRACK relays PTT's statuses in its own English, such as "PTT in the workplace" for "PTT
 İŞYERİNDE" and "Distribution" for "DAĞITIMDA". Rules scoped to PTT
 ([scoped.ts](../../core/status/scoped.ts)) read those renderings as PTT's map reads the Turkish.
+ParcelsApp relays some in another English without naming PTT, such as "Handed to the delivery
+person"; the providers' wording rules read those.
 
 ## Limitations
 

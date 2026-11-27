@@ -630,6 +630,12 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^your delivery is in [^,]{1,60}, post office[.!]?$/i.test(value)) return 'ready_for_pickup';
   // An item waiting for its recipient at a post office, as ParcelsApp relayed it for one bound for Slovenia.
   if (/^item prepared for pick-up at the post office[.!]?$/i.test(value)) return 'ready_for_pickup';
+  // PTT's scans in ParcelsApp's English, which names no carrier for them, as PTT's own map reads the Turkish: the item
+  // handed to the postman ("Dağıtıcıya Verildi"), nobody at the address and a notice left ("Dağıtım Adreste Yok/Kapalı-
+  // Haber Kağıdı Bırakıldı"), and the item waiting at the PTT office the scan names first ("… PTT İşyerinde Bekliyor").
+  if (/^handed to the delivery person[.!]?$/i.test(value)) return 'out_for_delivery';
+  if (/^delivery not available at address ?\/ ?closed ?- ?notice left[.!]?$/i.test(value)) return 'failed_attempt';
+  if (/^[\p{L}' .-]{1,60} ptt waiting at the workplace[.!]?$/iu.test(value)) return 'ready_for_pickup';
   // The destination post's notice and its hold until the recipient pays the import charges, as USPS words them for an item
   // abroad and its own map reads them. ParcelsApp repeats the scan's place after USPS's wording.
   if (/^collect for pick ?up(?:, [^,]{1,80})?$/i.test(value)) return 'ready_for_pickup';

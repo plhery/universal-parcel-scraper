@@ -19,6 +19,10 @@ const UNKNOWN = 'JSD000000000000';
 const own = (name: string) => readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8');
 const reply = (body: string, status = 200) => new Response(body, { status, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
 const environment = (fetcher: typeof fetch) => ({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
+/** A tracker page for `NUMBER` with the rows given, newest first. */
+const rowsPage = (rows: readonly (readonly [string, string])[]) => `<div class="query-main" id="result"><div class="main-content">
+  <p>单号：<strong>${NUMBER}</strong></p><div class="timeline">${rows.map(([time, context]) =>
+  `<div class="timeline-item"><div class="time">${time}</div><div class="context">${context}</div></div>`).join('')}</div></div></div>`;
 
 describe('JETSPEED tracking adapter', () => {
   it('names JETSPEED for JSD and twelve digits, and for no other length', () => {
@@ -87,6 +91,32 @@ describe('JETSPEED tracking adapter', () => {
     await expect(adapter(environment(refused)).track({ number: NUMBER })).rejects.toMatchObject({ kind: 'challenge' });
     await expect(adapter(environment(refused)).track({ number: `${NUMBER};${UNKNOWN}` })).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(jetspeedUrl('A B')).toBe('https://www.jetspeed-express.com/search_kuai_di/search/orderid/A%20B');
+  });
+
+  it('reads the other line’s shorter rows, with the place in brackets before or after the words', () => {
+    const result = parseJetspeedPage(rowsPage([
+      ['2026-05-08 09:00:00', 'Clearance in the destination country has been completed'],
+      ['2026-05-07 18:00:00', 'Inspection documents are being submitted'],
+      ['2026-05-06 10:00:00', 'Arrive at airport [Example]'],
+      ['2026-05-03 12:00:00', 'Export customs/release [Example]'],
+      ['2026-05-01 12:00:00', '[Example Hub] Consignment received at transit point'],
+      ['2026-05-01 03:00:00', '[Example Hub] The order information has been sent'],
+    ]), NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map' });
+    expect(result.events?.map((event) => [event.stage, event.stage_source, event.location])).toEqual([
+      ['in_transit', 'carrier_map', undefined], ['customs', 'carrier_map', undefined], ['in_transit', 'carrier_map', 'Example'],
+      ['in_transit', 'carrier_map', 'Example'], ['accepted', 'carrier_map', 'Example Hub'], ['registered', 'carrier_map', 'Example Hub'],
+    ]);
+  });
+
+  it('reads a row the map does not know by the shared rules, so its answer shows the parcel moving', async () => {
+    const page = rowsPage([['2026-05-03 12:00:00', 'Arrived at the sorting center'], ['2026-05-02 12:00:00', 'Synthetic wording'],
+      ['2026-05-01 03:00:00', '[Example Hub] The order information has been sent']]);
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(page));
+    const registry = new AdapterRegistry({ factories: { jetspeed: adapter }, carriers: { jetspeed: 'jetspeed' } }, environment(fetcher));
+    const result = await trackCarrier('jetspeed', { number: NUMBER }, { registry, universal: {} as UniversalTracker });
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'wording:language' });
+    expect(result.events?.map((event) => event.stage_source)).toEqual(['wording:language', undefined, 'carrier_map']);
   });
 
   it('maps every row it has written, and the app reads the map', () => {

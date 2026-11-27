@@ -2,9 +2,8 @@ import { load } from 'cheerio';
 import { ChallengeError, IndeterminateError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus } from '../../core/status/index.js';
-import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { isoTime } from '../../core/time/index.js';
-import { jetspeedStage } from './status.js';
+import { jetspeedRowStage } from './status.js';
 
 export const PROVIDER = 'jetspeed';
 export const JETSPEED_ORIGIN = 'https://www.jetspeed-express.com';
@@ -37,6 +36,8 @@ const PLACES: readonly ((wording: string) => string | undefined)[] = [
   (wording) => /^Origin processing completed \[(.+)\]\.$/.exec(wording)?.[1],
   (wording) => /^Shipment arrived at (?:the )?([A-Z]{2}) (?:Airport|destination processing facility\.)$/.exec(wording)?.[1],
   (wording) => /, serving (.+?),\d{4,5}\.$/.exec(wording)?.[1],
+  // The other line's hub, town or country, in brackets before or after the words.
+  (wording) => /^\[([^\]]{1,60})\] /.exec(wording)?.[1] ?? / \[([^\]]{1,60})\]\.?$/.exec(wording)?.[1],
 ];
 const DESTINATION = /^Shipment arrived at the ([A-Z]{2}) destination processing facility\.$/;
 
@@ -74,22 +75,22 @@ export function parseJetspeedPage(html: string, number: string): CarrierResult {
     const clock = CLOCK.exec(text($(item).children('.time').text()));
     const description = text($(item).children('.context').text());
     if (!clock || !description) throw new SchemaError(PROVIDER, 'Invalid JETSPEED history row');
-    const stage = jetspeedStage(normalizeStatusWording(description));
+    const staged = jetspeedRowStage(description);
     const location = jetspeedPlace(description);
     const local = `${clock[1]}T${clock[2]}`;
     const time = isoTime(local, JETSPEED_ZONE)!.iso;
     events.push({ time, local_time: local, time_zone: JETSPEED_ZONE, time_zone_basis: 'carrier', description,
-      ...(location ? { location } : {}), ...(stage ? { stage, stage_source: 'carrier_map' as const } : {}) });
+      ...(location ? { location } : {}), ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) });
   }
   // The page lists rows newest first; keep that order for rows of one second.
   events.sort((a, b) => b.local_time!.localeCompare(a.local_time!));
   const latest = events[0];
   if (!latest) throw new NoHistoryError(PROVIDER);
-  const stage = events.map((event) => jetspeedStage(normalizeStatusWording(event.description!))).find(Boolean);
+  const staged = events.map((event) => jetspeedRowStage(event.description!)).find(Boolean);
   const destination = events.map((event) => DESTINATION.exec(event.description!)?.[1]).find(Boolean);
   return {
-    status: stage ? languageStageStatus(stage) : 'unknown',
-    ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' as const } : {}),
+    status: staged ? languageStageStatus(staged.stage) : 'unknown',
+    ...(staged ? { current_stage: staged.stage, current_stage_source: staged.source } : {}),
     ...(destination ? { destination_country: destination } : {}),
     last_status_text: latest.description, last_update: latest.time, last_update_local: latest.local_time, events,
   };

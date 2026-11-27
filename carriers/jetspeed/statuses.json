@@ -116,6 +116,122 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-27",
       "note": "The same notice naming the partner, between the facility's arrival and its processing."
+    },
+    {
+      "wording": "[Example Hub] The order information has been sent",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Another line's first row: the order's data, hours before the hub's first scan."
+    },
+    {
+      "wording": "[Example Hub] Consignment received at transit point",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "That line's first scan, at the origin hub the brackets name, after the order's data."
+    },
+    {
+      "wording": "Example processing center has received it [Example]",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Package has been sorted and is ready to be sent [Example]",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Package leaves processing center [Example]",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Export customs/release [Example]",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The export's clearance at the origin, not the destination's customs."
+    },
+    {
+      "wording": "Express delivery arrives at the international processing center [Example]",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "The shipment leaves the international processing center [Example]",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Handed over to the carrier for transportation [Example]",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Departure international airport",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "In air transportation",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrive at airport [Example]",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The destination's airport, its country in brackets."
+    },
+    {
+      "wording": "During the panel removal process",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The air freight taken off its pallet at the destination airport."
+    },
+    {
+      "wording": "The panel has been removed and is awaiting customs inspection.",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Off its pallet, held for the import's inspection."
+    },
+    {
+      "wording": "Customs clearance is in progress",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Inspection documents are being submitted",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "The customs clearance is in good condition",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The import's clearance under way, a day after its documents."
+    },
+    {
+      "wording": "Clearance in the destination country has been completed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The import cleared."
     }
   ]
 }

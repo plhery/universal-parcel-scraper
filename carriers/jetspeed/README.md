@@ -23,6 +23,11 @@ Recognition asks the same lookup.
 - Some rows name a place in the wording itself: the origin's town, the origin hub, the country of
   the airport or facility the parcel reached, the town the delivery station serves. The adapter
   reads it as the row's place, and the destination facility's country as the destination.
+- Another line writes shorter rows, with the origin hub or town, or the destination's country, in
+  brackets before or after the words; the adapter reads the brackets as the row's place. Its first
+  scan is at the hub, after the order's data.
+- A row the map does not know is read by the shared wording rules, as on Quick Fort's tracker, so
+  an answer of rows new to the map still shows the parcel moving.
 - The site fails with HTTP 500 when a request accepts any language (`Accept-Language: *`, Node's
   default), so the adapter names Chinese and English.
 - Universal providers do not always know these parcels, so the tracker is read directly.
