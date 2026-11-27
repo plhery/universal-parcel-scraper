@@ -20,19 +20,79 @@
   "timezone": "America/Toronto",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "valueway",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 133
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "weight",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
+    "url": "https://member.valueway.net/cgi-bin/GInfo.dll?MfcISAPICommand=EmmisTrack&w=valueway&ntype=1000&cmodel=new:tracking&cno={trackingNumber}",
     "searchUrl": "https://www.valueway.net/main.html",
     "helpUrl": "https://www.valueway.net/Contact/index.html#office",
     "canaryUrl": "https://www.valueway.net/main.html",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "parcel_count",
+      "delivered_at",
+      "signatory",
+      "courier_name",
+      "driver_phone"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "delivered_at",
+      "signatory",
+      "courier_name",
+      "driver_phone"
+    ],
+    "unavailable": [
+      "eta",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
   },
-  "links": [],
-  "detection": []
+  "links": [
+    {
+      "domains": [
+        "member.valueway.net"
+      ],
+      "pathPattern": "^/cgi-bin/ginfo\\.dll$",
+      "query": "^(?=(?:.*&)?MfcISAPICommand=(?:emmistrack|EmsApiTrack)(?:&|$))(?:.*&)?cno=([^&]+)(?=&|$)"
+    }
+  ],
+  "detection": [
+    {
+      "id": "valueway-1",
+      "pattern": "^VE\\d{9}CA$",
+      "confidence": "low"
+    }
+  ]
 }

@@ -1,4 +1,111 @@
 {
   "carrier": "valueway",
-  "entries": []
+  "entries": [
+    {
+      "wording": "中转仓揽收成功，Hub Pickup Scan",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The forwarding warehouse's first scan of the parcel, before it reaches the Toronto hub."
+    },
+    {
+      "wording": "中转仓出库成功，Hub Departure Scan",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The parcel leaves the forwarding warehouse, hours before the Toronto hub sends it to the airport."
+    },
+    {
+      "wording": "加拿大多伦多转运仓出库扫描,送往多伦多皮尔逊国际机场。Toronto Hub Depart Scan to Toronto Pearson Airport",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "发往中国…转运中心。In transit to …,China",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The Chinese transit centre the parcel flies to, written twice."
+    },
+    {
+      "wording": "航班延误，转运时间延长。Expection delay for flight",
+      "language": "zh",
+      "unmapped": true,
+      "confirmedBy": "live",
+      "note": "A notice between the flight's booking and the landing: not a movement, so the row keeps the stage of the one before it."
+    },
+    {
+      "wording": "抵达中国…转运中心，等待清关。Arrival Scan In …,China and pending for Customs clearance",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Landed at the Chinese transit centre, waiting for import clearance."
+    },
+    {
+      "wording": "清关中。Customs Clearance In Processing",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "清关完毕，等待转运。Customs released and pending for delivery",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Cleared, waiting for the domestic courier: not out for delivery."
+    },
+    {
+      "wording": "顺丰速运 已收取快件",
+      "language": "zh",
+      "english": "SF Express collected the parcel",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "SF's first scan, copied with its city first: the hand-over after customs, not the sender's drop-off."
+    },
+    {
+      "wording": "快件运输中",
+      "language": "zh",
+      "english": "In transit",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件在【…】完成分拣，准备发往 【…】",
+      "language": "zh",
+      "english": "Sorted at the first facility, leaving for the second",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件已发车",
+      "language": "zh",
+      "english": "Left on a truck",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件到达 【…】",
+      "language": "zh",
+      "english": "Arrived at the facility in brackets",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件交给，正在派送途中",
+      "language": "zh",
+      "english": "Handed to the courier, out for delivery",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "SF leaves the courier's name and phone out of the copy; the adapter drops them and the notes in brackets."
+    },
+    {
+      "wording": "您的快件代签收",
+      "language": "zh",
+      "english": "Signed for on the recipient's behalf",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The adapter drops who signed and the courier's contact after it. The record's STATE 3 reads as delivered too."
+    }
+  ]
 }

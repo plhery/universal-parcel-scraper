@@ -2995,6 +2995,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'ecparcel', number: 'YOTN20991231900000017',
     route: /^https:\/\/track\.ec-parcel\.com\/track\?trackingNumber=YOTN20991231900000017$/,
     marker: /NOT_FOUND: shipment tracking not found!/ },
+  // The GInfo server renders the waybill's page from its address, the number in its heading.
+  { carrier: 'valueway', number: 'VE900000000CA',
+    route: /^https:\/\/member\.valueway\.net\/cgi-bin\/GInfo\.dll\?MfcISAPICommand=EmmisTrack&w=valueway&ntype=1000&cmodel=new:tracking&cno=VE900000000CA$/,
+    marker: /运单跟踪/ },
 ];
 
 /**

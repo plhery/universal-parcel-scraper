@@ -1,14 +1,15 @@
 /**
- * The Neoman GInfo tracking server, `GInfo.dll` on IIS, which HGD, SRJ, Yi Long Express and King
- * Delivery each run on a host of their own, the first three over plain HTTP. Their sites' tracking
- * forms post to the server's `EmmisTrack` page; the adapters read `EmsApiTrack`, the record that
- * page renders. Each carrier keeps its host, number shape and status map; this module holds the
- * request and the parser they share.
+ * The Neoman GInfo tracking server, `GInfo.dll` on IIS, which HGD, SRJ, Yi Long Express, King
+ * Delivery and Valueway Express each run on a host of their own, the first three over plain HTTP.
+ * Their sites' tracking forms post to the server's `EmmisTrack` page; the adapters read
+ * `EmsApiTrack`, the record that page renders. Each carrier keeps its host, number shape and status
+ * map; this module holds the request and the parser they share.
  */
 import { DateTime } from 'luxon';
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { detectCarrierMatch, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { CLOCK_SKEW_MS } from '../../core/result/due.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { leadingScan } from '../../core/result/unstaged.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -25,6 +26,12 @@ export interface GinfoRowText {
   readonly description: string;
   readonly location?: string;
   readonly code?: string;
+}
+
+/** The zone a row's wall clock is on, and how it was chosen, as `time_zone_basis` says it. */
+export interface GinfoRowZone {
+  readonly zone: string;
+  readonly basis: 'place' | 'carrier';
 }
 
 /** One carrier's tenant of the server. */
@@ -47,6 +54,12 @@ export interface GinfoTenant {
   readonly row?: (info: string) => GinfoRowText;
   /** The place a row's `PLACE` names, given its `INFO`, or '' when it holds something else. Without it, `PLACE` as written. */
   readonly place?: (place: string, info: string) => string;
+  /**
+   * The zone of a row's wall clock, from its `PLACE` and `INFO` as written, for a tenant whose rows
+   * mix the clocks of several networks. Its rows are then dated on that zone and listed by their
+   * instants. Without it, or for a row it gives none, a row keeps its wall clock alone.
+   */
+  readonly zone?: (place: string, info: string) => GinfoRowZone | null;
   /**
    * The catalog carrier each service `TRANSKIND` can name, for a tenant whose record gives that
    * carrier's number in `TRANS_NBR`. Without it, only `REFER_NBR` can name a delivery carrier.
@@ -117,12 +130,14 @@ function wallClock(provider: string, value: string): string {
  * dated after the lookup on the forwarder's clock is not a scan yet and is
  * left out. A row without wording says nothing, and a repeated one is read
  * once. A row without clock, place or wording is a blank line some tenants
- * open their rows with.
+ * open their rows with. A tenant that names a row's zone has the row dated
+ * on it, unless that dates it after the lookup.
  */
 function scans(tenant: GinfoTenant, rows: string, readAt: number): CarrierEvent[] {
   const { provider } = tenant;
   const seen = new Set<string>();
-  const read: { local: string; event: CarrierEvent }[] = [];
+  // Rows sort by their wall clocks, or by their instants for a tenant that names their zones.
+  const read: { order: string | number; event: CarrierEvent }[] = [];
   const matches = [...rows.matchAll(ROW)];
   // Rows the pattern did not read are a changed reply.
   if (rows.replace(ROW, '').trim()) throw new SchemaError(provider, `${provider} returned an invalid scan`);
@@ -142,7 +157,12 @@ function scans(tenant: GinfoTenant, rows: string, readAt: number): CarrierEvent[
     if (seen.has(key)) continue;
     seen.add(key);
     const staged = tenant.stage(description, code);
-    read.push({ local, event: {
+    const zone = tenant.zone?.(written, textFromHtml(info, 1000)) ?? null;
+    const instant = firstOccurrence(DateTime.fromISO(local, { zone: zone?.zone ?? ZONE }));
+    const time = zone && local.includes('T') && instant.toMillis() <= readAt + CLOCK_SKEW_MS
+      ? instant.toISO({ suppressMilliseconds: true }) : null;
+    read.push({ order: tenant.zone ? instant.toMillis() : local, event: {
+      ...(zone && time ? { time, time_zone: zone.zone, time_zone_basis: zone.basis } : {}),
       local_time: local,
       ...(location ? { location } : {}),
       description,
@@ -153,7 +173,7 @@ function scans(tenant: GinfoTenant, rows: string, readAt: number): CarrierEvent[
   if (!read.length) throw new NoHistoryError(provider);
   // Newest first: the tracker's order reversed, then by clock, which keeps equal clocks in that order. A row
   // dated by its day alone comes after that day's timed rows.
-  return read.reverse().sort((left, right) => (left.local < right.local ? 1 : left.local > right.local ? -1 : 0)).map((scan) => scan.event);
+  return read.reverse().sort((left, right) => (left.order < right.order ? 1 : left.order > right.order ? -1 : 0)).map((scan) => scan.event);
 }
 
 /**
@@ -219,7 +239,7 @@ export function parseGinfo(tenant: GinfoTenant, body: string, raw: string, readA
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: source } : {}),
     last_status_text: latest.description!,
-    last_update: null,
+    last_update: latest.time ?? null,
     last_update_local: latest.local_time!,
     expected_delivery: null,
     ...(country ? { destination_country: country } : {}),

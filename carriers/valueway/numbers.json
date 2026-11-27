@@ -1,5 +1,25 @@
 {
   "carrier": "valueway",
-  "gap": "No public page shows a Valueway Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "VE015056238CA",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/valueway/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "valueway"
+        ]
+      },
+      "note": "TrackShip's Valueway page gives it as a tracking code example. Valueway's tracker answers it as a parcel from Toronto that SF Express delivered in Hebei. Its last digit is not the UPU check digit, so Canada Post's rules leave it alone."
+    }
+  ]
 }
