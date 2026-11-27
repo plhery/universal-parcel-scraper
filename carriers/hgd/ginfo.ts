@@ -1,6 +1,7 @@
 /**
  * The Neoman GInfo tracking server, `GInfo.dll` on IIS, which HGD, SRJ, Yi Long Express, King
- * Delivery and Valueway Express each run on a host of their own, the first three over plain HTTP.
+ * Delivery, Valueway Express and Qinhang Transportation each run on a host of their own, HGD, SRJ,
+ * Yi Long and Qinhang over plain HTTP.
  * Their sites' tracking forms post to the server's `EmmisTrack` page; the adapters read
  * `EmsApiTrack`, the record that page renders. Each carrier keeps its host, number shape and status
  * map; this module holds the request and the parser they share.
@@ -70,6 +71,8 @@ export interface GinfoTenant {
    * time: the record then reads as delivered whatever its rows say.
    */
   readonly deliveredState?: true;
+  /** The encoding the tenant's server answers in, for one that does not answer in UTF-8. */
+  readonly encoding?: string;
 }
 
 // One parcel's record is a kilobyte or two.
@@ -265,8 +268,8 @@ export class GinfoTracker {
         timeoutMs: Math.max(1, Math.floor(timeoutMs)), redirect: 'manual', allowHttpStatuses: [...GINFO_REDIRECTS, 400, 404, 410] });
       // An unknown number is HTTP 200 too; anything else is a moved route.
       if (response.status !== 200) throw new TransportError(tenant.provider, `${tenant.provider} tracking lookup is unavailable`, { status: response.status });
-      // The servers answer in UTF-8.
-      return parseGinfo(tenant, decodeText(bytes), number);
+      // The servers answer in UTF-8, unless the tenant names another encoding.
+      return parseGinfo(tenant, decodeText(bytes, tenant.encoding), number);
     };
     // A request that fails to reach the server, or hangs, gets one more try: the
     // first gets half of the budget, so the retry fits in the rest.

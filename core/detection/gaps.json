@@ -7292,5 +7292,11 @@
     "pattern": "^\\d{12}$",
     "kind": "collision",
     "reason": "The one public Xun Tian International waybill is twelve bare digits, a shape Japanese and many other carriers' numbers share, on a line delivered in Japan, so the shape cannot name Xun Tian."
+  },
+  {
+    "carrier": "qinhang-transportation",
+    "pattern": "^QH\\d{8}$",
+    "kind": "collision",
+    "reason": "Qinhang Transportation's waybills are QH and eight digits, a shape GLS Italy's and TNT Italy's low rules also suggest, and one tracking directory example does not establish the series, so the adapter answers explicit selection."
   }
 ]

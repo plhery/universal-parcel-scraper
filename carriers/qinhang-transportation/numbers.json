@@ -1,0 +1,28 @@
+{
+  "carrier": "qinhang-transportation",
+  "records": [
+    {
+      "number": "QH25032223",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/qinhang-transportation/",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it",
+          "tnt-it"
+        ]
+      },
+      "note": "TrackShip's Qinhang Transportation page gives it as a tracking code example. Qinhang's tracker answers it as a sea freight shipment from Shenzhen to the United States, handed to ArcBest and delivered."
+    }
+  ]
+}

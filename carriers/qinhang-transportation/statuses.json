@@ -1,0 +1,74 @@
+{
+  "carrier": "qinhang-transportation",
+  "entries": [
+    {
+      "wording": "Pre-forecast",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The shipment announced to the line, two days before its warehouse receives the goods."
+    },
+    {
+      "wording": "Receiving scan",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The Shenzhen warehouse receives the goods."
+    },
+    {
+      "wording": "Container loaded on …",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The goods are in a container, with the planned sailing and arrival, the vessel, the destination port and the shipping line."
+    },
+    {
+      "wording": "The ship set sail on …",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "The official website update is expected to arrive in … on …",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The shipping line's new arrival estimate for the vessel, at sea."
+    },
+    {
+      "wording": "It has arrived at the port on … and is awaiting unloading and customs clearance",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "The vessel is in the destination port; the container waits for unloading and import clearance."
+    },
+    {
+      "wording": "The customs clearance has been completed and the container is waiting for an appointment to be picked up",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Import clearance done; the container waits for its pickup at the port."
+    },
+    {
+      "wording": "The container has been picked up and unpacked, awaiting sorting and ordering",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Unpacked at the destination warehouse before the delivery is booked; the shared rules would read a pickup from the sender."
+    },
+    {
+      "wording": "Hello, tracking number and tracking website, please find the original single: … tracking number: … tracking website: …",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The US trucking firm that delivers, ArcBest on the sample, with its number and tracking site; the adapter leaves out the firm's phone that follows."
+    },
+    {
+      "wording": "…, delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The office's note of the delivery, after the day it names as month.day."
+    }
+  ]
+}
