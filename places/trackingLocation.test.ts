@@ -63,6 +63,23 @@ describe('tracking places', () => {
     expect(trackingPlace('Santa Cruz, BO')).toEqual({ country: 'BO', place: 'Santa Cruz' });
   });
 
+  it('reads a country in square brackets as one in round brackets', () => {
+    // Synthetic places, in the forms an aggregator and JETSPEED's shorter rows write.
+    expect(trackingPlace('EXAMPLE TOWN [France]')).toEqual({ country: 'FR', place: 'EXAMPLE TOWN' });
+    expect(trackingPlace('[España]')).toEqual({ country: 'ES', place: '' });
+    expect(trackingLocationCountry('[France]')).toBe('FR');
+    expect(trackingLocationCountry('Example Hub [España]')).toBe('ES');
+    expect(trackingPlace('1 EXAMPLE ST, EXAMPLE TOWN, TX, 00000, [US]')).toEqual({ country: 'US', place: '1 EXAMPLE ST, EXAMPLE TOWN, TX, 00000' });
+    expect(trackingLocationCountry('1 EXAMPLE ST, EXAMPLE TOWN, TX, 00000, [US]')).toBe('US');
+    // A province's code reads as in round brackets, and a hub or town names no country.
+    expect(trackingLocationCountry('EXAMPLE TOWN [BO]')).toBeNull();
+    expect(trackingLocationCountry('EXAMPLE TOWN [BO]', { countries: ['IT'] })).toBe('IT');
+    for (const location of ['[Example Hub]', '[Example Hub CHN]', 'About to be sent to the [France] warehouse']) {
+      expect(trackingPlace(location)).toEqual({ country: null, place: location });
+      expect(trackingLocationCountry(location)).toBeNull();
+    }
+  });
+
   it("reads a region's code as its country where the parcel may be", () => {
     // Synthetic towns. Bologna's code is Bolivia's, Paraná's Puerto Rico's, Kentucky's the Cayman Islands', Aargau's
     // Antigua's.

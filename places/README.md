@@ -154,7 +154,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   parcel's countries and a region of another names neither, unless the scans on either side
   agree. Only when nothing known fits is a code after a comma or in brackets the country. With
   nothing known, a code a US, Canadian or Australian state, a Swiss canton or an Italian
-  province in brackets shares names no country ("Wilmington, DE", "TORINO (TO)").
+  province in brackets shares names no country ("Wilmington, DE", "TORINO (TO)"). Square brackets
+  set a country or a code apart as round ones do ("EXAMPLE TOWN [France]", "…, 00000, [US]").
 - `trackingLocationCountries` reads a parcel's scans that way. A country's code after a comma
   or in brackets that is also a region's code of the country the scans on either side agree on
   is dropped, the town kept, when the parcel could not have flown there and back in the time

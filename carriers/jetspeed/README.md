@@ -24,7 +24,7 @@ Recognition asks the same lookup.
   the airport or facility the parcel reached, the town the delivery station serves. The adapter
   reads it as the row's place, and the destination facility's country as the destination.
 - Another line writes shorter rows, with the origin hub or town, or the destination's country, in
-  brackets before or after the words; the adapter reads the brackets as the row's place. Its first
+  brackets before, among or after the words; the adapter reads the brackets as the row's place. Its first
   scan is at the hub, after the order's data.
 - A row the map does not know is read by the shared wording rules, as on Quick Fort's tracker, so
   an answer of rows new to the map still shows the parcel moving.

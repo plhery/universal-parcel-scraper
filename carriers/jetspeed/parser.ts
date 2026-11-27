@@ -36,8 +36,9 @@ const PLACES: readonly ((wording: string) => string | undefined)[] = [
   (wording) => /^Origin processing completed \[(.+)\]\.$/.exec(wording)?.[1],
   (wording) => /^Shipment arrived at (?:the )?([A-Z]{2}) (?:Airport|destination processing facility\.)$/.exec(wording)?.[1],
   (wording) => /, serving (.+?),\d{4,5}\.$/.exec(wording)?.[1],
-  // The other line's hub, town or country, in brackets before or after the words.
-  (wording) => /^\[([^\]]{1,60})\] /.exec(wording)?.[1] ?? / \[([^\]]{1,60})\]\.?$/.exec(wording)?.[1],
+  // The other line's hub, town or country, in brackets before, among or after the words
+  // ("About to be sent to the [Example] warehouse").
+  (wording) => /(?:^| )\[([^\]]{1,60})\](?: |\.?$)/.exec(wording)?.[1],
 ];
 const DESTINATION = /^Shipment arrived at the ([A-Z]{2}) destination processing facility\.$/;
 

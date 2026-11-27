@@ -7,9 +7,10 @@ import { detectCarrierMatch } from '../../core/detection/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NoHistoryError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { trackingPlace } from '../../places/trackingLocation.js';
 import type { UniversalTracker } from '../../providers/universal.js';
 import { adapter, JetspeedTracker } from './adapter.js';
-import { jetspeedUrl, parseJetspeedPage } from './parser.js';
+import { jetspeedPlace, jetspeedUrl, parseJetspeedPage } from './parser.js';
 import { statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -107,6 +108,14 @@ describe('JETSPEED tracking adapter', () => {
       ['in_transit', 'carrier_map', undefined], ['customs', 'carrier_map', undefined], ['in_transit', 'carrier_map', 'Example'],
       ['in_transit', 'carrier_map', 'Example'], ['accepted', 'carrier_map', 'Example Hub'], ['registered', 'carrier_map', 'Example Hub'],
     ]);
+  });
+
+  it('reads the brackets among the words too, and a country there gives the row its country', () => {
+    // Synthetic rows of the other line, its countries in brackets after or among the words.
+    const rows = ['About to be sent to the [France] warehouse', 'Arrived at [España] warehouse, Sorting in progress', 'Arrive at Airport [France]'];
+    expect(rows.map((wording) => jetspeedPlace(wording))).toEqual(['France', 'España', 'France']);
+    expect(rows.map((wording) => trackingPlace(jetspeedPlace(wording)!).country)).toEqual(['FR', 'ES', 'FR']);
+    for (const wording of ['Package sorted [ready]x', 'Weight [kg]: 1', 'No brackets here']) expect(jetspeedPlace(wording)).toBeUndefined();
   });
 
   it('reads a row the map does not know by the shared rules, so its answer shows the parcel moving', async () => {

@@ -6,7 +6,7 @@ const regionCodes = new Set('AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA 
 /** Each country's ISO 3166-2 codes of two letters, former ones included (`scripts/generate-subdivisions.mjs`). */
 const subdivisions = new Map(Object.entries(subdivisionData.regions).map(([country, codes]) => [country, new Set(codes.split(' '))]));
 const subdivisionOf = (country: string, code: string): boolean => subdivisions.get(country)?.has(code) ?? false;
-/** How a code follows the town: "TOWN (XX)", "TOWN, XX", "TOWN - XX" or "TOWN/XX", "TOWN XX". */
+/** How a code follows the town: "TOWN (XX)" or "TOWN [XX]", "TOWN, XX", "TOWN - XX" or "TOWN/XX", "TOWN XX". */
 type CodeForm = 'bracket' | 'comma' | 'dash' | 'space';
 // The forms in which a country's addresses write a region's code after the town: US, Canadian and Australian states
 // after a comma, a dash or in brackets ("Hebron, KY"), Swiss cantons after a comma, a space or in brackets ("Buchs AG"),
@@ -38,9 +38,10 @@ export interface PlaceContext {
 interface ClosingCode { code: string; form: CodeForm }
 /** The two capital letters a location closes with, and how they follow the town. */
 function closingCode(text: string): ClosingCode | null {
-  const match = /\S(?:\s*\(\s*([A-Z]{2})\s*\)|\s*[,;|]\s*([A-Z]{2})|(?:\s+-\s*|\s*\/\s*)([A-Z]{2})|\s+([A-Z]{2}))$/.exec(text);
+  const match = /\S(?:\s*\(\s*([A-Z]{2})\s*\)|\s*\[\s*([A-Z]{2})\s*\]|\s*[,;|]\s*([A-Z]{2})|(?:\s+-\s*|\s*\/\s*)([A-Z]{2})|\s+([A-Z]{2}))$/.exec(text);
   if (!match) return null;
-  const [, bracket, comma, dash, space] = match;
+  const [, round, square, comma, dash, space] = match;
+  const bracket = round ?? square;
   return bracket ? { code: bracket, form: 'bracket' } : comma ? { code: comma, form: 'comma' }
     : dash ? { code: dash, form: 'dash' } : { code: space!, form: 'space' };
 }
@@ -157,7 +158,8 @@ function fieldCountry(field: string, location: string, display: boolean, context
  */
 export function trackingLocationCountry(location?: string | null, context: PlaceContext = {}): string | null {
   const text = location?.trim();
-  const field = text?.split(/[,;|()]/).map((value) => value.trim()).filter(Boolean).at(-1);
+  // Square brackets set a field apart as round ones do: "EXAMPLE TOWN [France]", "…, 00000, [US]".
+  const field = text?.split(/[,;|()[\]]/).map((value) => value.trim()).filter(Boolean).at(-1);
   if (!field || militaryPostOffice(text!)) return null;
   const closing = closingCode(text!);
   // A region's code after a dash or a space ("CURITIBA - PR", "Buchs AG").
@@ -182,7 +184,7 @@ function dashCountry(part: string): string | null {
 
 /**
  * For display, take an explicit country off a location: the final field ("Zürich, CH",
- * repeated in "Hebron, KY, US, US"), the name after the last dash ("SCARBOROUGH - ON -
+ * repeated in "Hebron, KY, US, US", or in brackets, "EXAMPLE TOWN [France]"), the name after the last dash ("SCARBOROUGH - ON -
  * CANADA") or a leading name ("Switzerland Haerkingen"). A region's code read against
  * `context` gives its country and stays in the place ("BENTIVOGLIO (BO)" on a parcel in Italy).
  */
@@ -198,7 +200,7 @@ export function trackingPlace(location: string, context: PlaceContext = {}): Tra
   if (prefixed && regionCodes.has(prefixed[1]!) && !ambiguousAddressCodes.has(prefixed[1]!) && !/^[SP]T$/.test(prefixed[1]!)) {
     return { country: prefixed[1]!, place: prefixed[2]!.trim() };
   }
-  const fields = [...text.matchAll(/[^,;|()]+/g)].filter((match) => match[0].trim());
+  const fields = [...text.matchAll(/[^,;|()[\]]+/g)].filter((match) => match[0].trim());
   // A code alone between empty fields is alone (",,,DE"). One a state or canton shares is the
   // country another field names, which stays the place: "HOLLAND, NL" is not in Newfoundland,
   // and "Luxembourg, LU" is the city.
@@ -210,7 +212,7 @@ export function trackingPlace(location: string, context: PlaceContext = {}): Tra
   while (kept > 0) {
     const { 0: written, index } = fields[kept - 1]!;
     const field = written.trim();
-    const own = fieldCountry(field, alone, true, context, text[index - 1] === '(' ? 'bracket' : 'comma');
+    const own = fieldCountry(field, alone, true, context, text[index - 1] === '(' || text[index - 1] === '[' ? 'bracket' : 'comma');
     const code = own ?? (regionCodes.has(field) && named.has(field) ? field : null);
     if (!code || (country && code !== country)) break;
     country = code;
@@ -220,7 +222,7 @@ export function trackingPlace(location: string, context: PlaceContext = {}): Tra
     if (!own) break;
   }
   if (country) {
-    const place = kept === fields.length ? text : kept ? text.slice(0, fields[kept]!.index).replace(/[\s,;|(]+$/u, '') : '';
+    const place = kept === fields.length ? text : kept ? text.slice(0, fields[kept]!.index).replace(/[\s,;|([]+$/u, '') : '';
     return { country, place };
   }
   // A code after a dash or a space: a region's stays with its town ("CURITIBA - PR"), the country's own goes ("MILANO IT").
