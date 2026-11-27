@@ -132,7 +132,11 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['GTMS_STA_SIGNED', 'out_for_delivery'],
   // "Delivered to PUDO": the pickup point took the parcel in, so it waits there, not delivered.
   ['PUDO_DELIVERY', 'out_for_delivery'],
+  // The pickup point's own inbound scan after that ("PUDO inbound"), as Ecoscooting's map reads it: waiting there.
+  ['PUDO_INBOUND', 'out_for_delivery'],
   ['GTMS_SIGNED', 'delivered'],
+  // The recipient collected the parcel from the pickup point ("PUDO sign success"), as Ecoscooting's map reads it.
+  ['PUDO_SIGN_SUCCESS', 'delivered'],
   ['LM_SIGN_SUCCESS', 'delivered'],
   // The recipient collected the parcel from the pickup point.
   ['GSTA_SIGN', 'delivered'],
@@ -166,7 +170,7 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
 ]);
 
 /** Out-for-delivery actions that mean "waiting at a pickup point", not "on the van". */
-export const CAINIAO_PICKUP_ACTIONS = new Set(['GSTA_INBOUND', 'GSTA_INFORM_BUYER', 'GTMS_WAIT_SELF_PICK', 'GTMS_STA_SIGNED', 'PUDO_DELIVERY']);
+export const CAINIAO_PICKUP_ACTIONS = new Set(['GSTA_INBOUND', 'GSTA_INFORM_BUYER', 'GTMS_WAIT_SELF_PICK', 'GTMS_STA_SIGNED', 'PUDO_DELIVERY', 'PUDO_INBOUND']);
 
 /** Normalize an action code: Cainiao has been seen spelling them with spaces and in lower case. */
 export function cainiaoActionCode(value: unknown): string {

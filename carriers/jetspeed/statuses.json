@@ -239,6 +239,13 @@
       "language": "en",
       "confirmedBy": "live",
       "note": "The origin hub's row before the parcel leaves for the destination country's warehouse."
+    },
+    {
+      "wording": "Arrived at [France] warehouse, sorting in progress",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The destination country's warehouse receiving the parcel from the origin hub, before the last mile."
     }
   ]
 }

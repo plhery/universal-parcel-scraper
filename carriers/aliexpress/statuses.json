@@ -573,6 +573,22 @@
       "note": "The pickup point signed for the parcel, not the recipient: it waits there."
     },
     {
+      "code": "PUDO_INBOUND",
+      "wording": "PUDO inbound",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "note": "The pickup point's own inbound scan after the courier left the parcel there: it waits for the recipient, as Ecoscooting's map reads the code."
+    },
+    {
+      "code": "PUDO_SIGN_SUCCESS",
+      "wording": "PUDO sign success",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The recipient collected the parcel from the pickup point, days after its inbound scan, as Ecoscooting's map reads the code."
+    },
+    {
       "code": "PUDO_DELIVERY_FAILURE",
       "wording": "Delivered to PUDO Failure",
       "language": "en",

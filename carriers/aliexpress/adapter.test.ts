@@ -792,6 +792,10 @@ describe('Cainiao projection', () => {
     expect(atPoint).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup' });
     expect(atPoint.events?.map((event) => event.stage)).toEqual(['ready_for_pickup', 'failed_attempt', 'out_for_delivery']);
     expect(journey(['PUDO_DELIVERY_FAILURE', 'LM_DELIVERY_DEPART'])).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+    // The point's own inbound scan holds it there, and its signing is the recipient collecting it.
+    const pointCollected = journey(['PUDO_SIGN_SUCCESS', 'PUDO_INBOUND', 'PUDO_DELIVERY']);
+    expect(pointCollected).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(pointCollected.events?.map((event) => event.stage)).toEqual(['delivered', 'ready_for_pickup', 'ready_for_pickup']);
     // A pickup point's own delivery scan is the recipient collecting the parcel.
     const collected = journey(['GTMS_SIGNED', 'GSTA_SIGN', 'GSTA_INBOUND', 'SC_HO_OUT_SUCCESS', 'GTMS_SC_ARRIVE']);
     expect(collected).toMatchObject({ status: 'delivered', current_stage: 'delivered' });

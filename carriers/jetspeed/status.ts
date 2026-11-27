@@ -32,6 +32,7 @@ const WORDINGS: readonly (readonly [RegExp, Stage])[] = [
   [/^[a-z][a-z ]{0,40} processing center has received it \[[^\]]{1,60}\]\.?$/, 'in_transit'],
   [/^package has been sorted and is ready to be sent \[[^\]]{1,60}\]\.?$/, 'in_transit'],
   [/^about to be sent to the \[[^\]]{1,60}\] warehouse\.?$/, 'in_transit'],
+  [/^arrived at \[[^\]]{1,60}\] warehouse, sorting in progress\.?$/, 'in_transit'],
   [/^package leaves processing center \[[^\]]{1,60}\]\.?$/, 'in_transit'],
   // The export's clearance at the origin, not the destination's customs.
   [/^export customs\/release \[[^\]]{1,60}\]\.?$/, 'in_transit'],
