@@ -34,7 +34,8 @@ const HISTORY = /^Historial de eventos: ([A-Za-z0-9]{1,40})$/;
 const MESSAGE = /\bmensaje\('[a-z]{1,20}',\s*'[^'\\]{0,80}',\s*'([^'\\]{0,300})'/;
 const NO_CODE = /^Ingrese al menos un código/i;
 // "Ago. 31, 2022" and "8:59": the day, with Spanish month abbreviations, and the wall clock.
-const DAY = /^([A-Za-z]{3,4})\.? (\d{1,2}), (\d{4})$/;
+/** A scan's day, written "Sep. 9, 2024" or "09/Sep/2024". */
+const DAY = /^(?:([A-Za-z]{3,4})\.? (\d{1,2}), (\d{4})|(\d{1,2})\/([A-Za-z]{3,4})\.?\/(\d{4}))$/;
 const CLOCK = /^([01]?\d|2[0-3]):([0-5]\d)$/;
 const MONTHS: Readonly<Record<string, number>> = {
   ene: 1, feb: 2, mar: 3, abr: 4, may: 5, jun: 6, jul: 7, ago: 8, sep: 9, sept: 9, oct: 10, nov: 11, dic: 12,
@@ -108,8 +109,9 @@ function split(node: Cheerio<AnyNode>, length: number): [string, string] {
 function wallClock(dayText: string, clockText: string): string {
   const day = DAY.exec(dayText);
   const clock = CLOCK.exec(clockText);
-  const month = day ? MONTHS[day[1]!.toLowerCase()] : undefined;
-  const date = day && month ? calendarDay(Number(day[3]), month, Number(day[2])) : null;
+  const [monthName, dayOfMonth, year] = day ? [day[1] ?? day[5], day[2] ?? day[4], day[3] ?? day[6]] : [];
+  const month = monthName ? MONTHS[monthName.toLowerCase()] : undefined;
+  const date = month ? calendarDay(Number(year), month, Number(dayOfMonth)) : null;
   if (!date || !clock) throw new SchemaError(PROVIDER, 'Servicios Postales del Ecuador returned an invalid scan time');
   return `${date}T${clock[1]!.padStart(2, '0')}:${clock[2]}:00`;
 }

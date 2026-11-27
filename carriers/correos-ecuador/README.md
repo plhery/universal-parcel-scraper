@@ -25,7 +25,8 @@ in [`numbers.json`](numbers.json).
 
 The answer has a card for the code, which repeats it, and the code's history under a heading that
 names it, newest first. Both must name the whole code. A scan has a day, a clock, its wording and
-the office or country where it was made.
+the office or country where it was made. The day comes as "Sep. 9, 2024" or "09/Sep/2024", with
+Spanish month abbreviations; anything else is a changed page.
 
 - A code the tracker holds nothing for gets a card saying it was not located, which is not found.
 - The form sent back without a card is a search without the code when the page asks for one, and

@@ -86,6 +86,12 @@ describe('Servicios Postales del Ecuador tracking adapter', () => {
     expect(result.events!.map((event) => event.local_time)).toEqual(months.map((_, index) => `2024-${String(index + 1).padStart(2, '0')}-02T09:05:00`));
     expect(parseCorreosEcuador(withScans([scan('May 2, 2024', '23:59', 'Recibido en oficina', 'Ag. Synthetic')]), ITEM).events![0]!.local_time)
       .toBe('2024-05-02T23:59:00');
+    // The page also writes the day first, between slashes.
+    const dayFirst = parseCorreosEcuador(withScans([
+      scan('03/Sep/2024', '10:00', 'Estado sintético', 'Ag. Synthetic'),
+      scan('2/Ago./2024', '9:05', 'Recibido en oficina', 'Ag. Synthetic'),
+    ]), ITEM);
+    expect(dayFirst.events!.map((event) => event.local_time)).toEqual(['2024-09-03T10:00:00', '2024-08-02T09:05:00']);
   });
 
   it('keeps wording it cannot stage visible, and the stage of the scans before it', () => {
@@ -116,7 +122,8 @@ describe('Servicios Postales del Ecuador tracking adapter', () => {
     expect(() => parseCorreosEcuador(page('delivered').replace('MainContent_rpt_envios_divDetalle_0', 'MainContent_rpt_envios_divDetalleNoExiste_0'), ITEM))
       .toThrow(expect.objectContaining({ kind: 'schema' }));
     expect(() => parseCorreosEcuador(withScans([]), ITEM)).toThrow(expect.objectContaining({ name: 'NoHistoryError' }));
-    for (const [day, clock] of [['Ago. 32, 2022', '10:00'], ['Aug. 1, 2022', '10:00'], ['Ago. 1, 2022', '24:00'], ['2022-08-01', '10:00']]) {
+    for (const [day, clock] of [['Ago. 32, 2022', '10:00'], ['Aug. 1, 2022', '10:00'], ['Ago. 1, 2022', '24:00'], ['2022-08-01', '10:00'],
+      ['32/Ago/2022', '10:00'], ['01/Aug/2022', '10:00'], ['08/01/2022', '10:00'], ['01/Ago/2022, 2022', '10:00']]) {
       expect(() => parseCorreosEcuador(withScans([scan(day!, clock!, 'Recibido en oficina', 'Ag. Synthetic')]), ITEM), day)
         .toThrow(expect.objectContaining({ kind: 'schema' }));
     }
