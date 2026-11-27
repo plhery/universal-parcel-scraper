@@ -1,0 +1,95 @@
+{
+  "carrier": "cloudlogistics365",
+  "entries": [
+    {
+      "code": null,
+      "wording": "国际运输环节中",
+      "language": "zh",
+      "english": "In international transport",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Qunhang's first row, once the parcel is on its way to China. The row goes on to name the operator's contact and the customs line, which are left out."
+    },
+    {
+      "code": null,
+      "wording": "正在办理清关手续",
+      "language": "zh",
+      "english": "Customs clearance in progress",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "The parcel waits for clearance in Tianjin."
+    },
+    {
+      "code": null,
+      "wording": "审验完毕海关放行",
+      "language": "zh",
+      "english": "Inspected and released by customs",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The airport or port that cleared the parcel follows the text, kept as the location."
+    },
+    {
+      "code": null,
+      "wording": "清关完成，进入国内物流环节，请您耐心等候",
+      "language": "zh",
+      "english": "Cleared, now with the domestic courier, please wait",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Qunhang's last row before YTO's."
+    },
+    {
+      "code": null,
+      "wording": "您的快件在【…】已揽收",
+      "language": "zh",
+      "english": "Your parcel was picked up at …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "YTO's first row, after clearance: the parcel was already on its way. The courier it names is left out."
+    },
+    {
+      "code": null,
+      "wording": "您的快件离开【…】，已发往【…】",
+      "language": "zh",
+      "english": "Your parcel left … for …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "YTO's row; the time it gives for the next update is left out."
+    },
+    {
+      "code": null,
+      "wording": "您的快件已经到达【…】",
+      "language": "zh",
+      "english": "Your parcel arrived at …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "YTO's row at a sorting centre or the delivery city."
+    },
+    {
+      "code": null,
+      "wording": "【…】正在为您派件",
+      "language": "zh",
+      "english": "Out for delivery from …",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "YTO's row, which names the courier and a mobile, left out."
+    },
+    {
+      "code": null,
+      "wording": "您的快件已到达[代收点](…)，请及时取件",
+      "language": "zh",
+      "english": "Your parcel is at the pickup point …, please collect it",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "note": "YTO's row; the point's address and phone are left out."
+    },
+    {
+      "code": null,
+      "wording": "您的快件已领取，收件人在[代收点](…)取件",
+      "language": "zh",
+      "english": "Your parcel was collected by the recipient at the pickup point …",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "YTO's delivery at a pickup point."
+    }
+  ]
+}

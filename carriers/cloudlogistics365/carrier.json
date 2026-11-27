@@ -1,0 +1,70 @@
+{
+  "id": "cloudlogistics365",
+  "displayName": "Qunhang International Logistics",
+  "aliases": [
+    "群航国际物流",
+    "天津群航",
+    "天津群航国际货运代理有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#05AFE3"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "cloudlogistics365",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "origin_country",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin_country",
+      "delivery_partner",
+      "courier_name",
+      "driver_phone"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "origin_country",
+      "delivery_partner"
+    ],
+    "discarded": [
+      "courier_name",
+      "driver_phone"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

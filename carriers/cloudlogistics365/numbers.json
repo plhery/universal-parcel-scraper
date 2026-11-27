@@ -1,0 +1,24 @@
+{
+  "carrier": "cloudlogistics365",
+  "records": [
+    {
+      "number": "YT2554632210988",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/cloudlogistics365.shtml",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yto",
+        "confidence": "high"
+      },
+      "note": "Kuaidi100's page for 群航国际物流 gives it as the example number. Qunhang's tracker answers it with a parcel from Japan cleared at Tianjin airport, then YTO's rows under the same waybill to a pickup point in Jiangxi."
+    }
+  ]
+}

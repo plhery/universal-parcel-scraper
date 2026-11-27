@@ -7420,5 +7420,11 @@
     "pattern": "^T\\d{8}$",
     "kind": "open",
     "reason": "T and eight digits is ZTCCE's waybill on Kuaidi100's example. One sample of a forwarder's own number does not establish the shape, so the adapter answers explicit selection for it."
+  },
+  {
+    "carrier": "cloudlogistics365",
+    "pattern": "^YT\\d{13}$",
+    "kind": "collision",
+    "reason": "Qunhang clears parcels into China under the YTO waybill YTO then delivers them under, and YTO's rule owns that shape, so detection reads them as YTO's. The adapter answers explicit selection and names YTO as the delivery carrier."
   }
 ]
