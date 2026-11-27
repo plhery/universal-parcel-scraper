@@ -1,0 +1,45 @@
+{
+  "id": "class-package",
+  "displayName": "Class Package",
+  "aliases": [
+    "Class Package Lda",
+    "Class Package, Lda."
+  ],
+  "region": {
+    "countries": [
+      "PT"
+    ]
+  },
+  "brand": {
+    "color": "#c03050"
+  },
+  "selectable": true,
+  "timezone": "Europe/Lisbon",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://classpackage.pt/pt/tracking?tracking={trackingNumber}",
+    "searchUrl": "https://classpackage.pt/pt/tracking",
+    "canaryUrl": "https://classpackage.pt/pt/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "classpackage.pt"
+      ],
+      "pathPattern": "^/(?:pt|en)/tracking/?$",
+      "params": [
+        "tracking"
+      ]
+    }
+  ],
+  "detection": []
+}

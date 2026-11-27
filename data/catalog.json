@@ -17386,6 +17386,38 @@
     ],
     "detectionRules": []
   },
+  "class-package": {
+    "displayName": "Class Package",
+    "color": "#c03050",
+    "aliases": [
+      "Class Package Lda",
+      "Class Package, Lda."
+    ],
+    "countries": [
+      "PT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Lisbon",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://classpackage.pt/pt/tracking",
+    "trackingUrlTemplate": "https://classpackage.pt/pt/tracking?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://classpackage.pt/pt/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "classpackage.pt"
+        ],
+        "pathPattern": "^/(?:pt|en)/tracking/?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "closer-logistics": {
     "displayName": "Closer Logistics",
     "color": "#7bb4b8",
@@ -26890,6 +26922,39 @@
         "confidence": "high"
       }
     ]
+  },
+  "exigent-express": {
+    "displayName": "ExigentExpress",
+    "color": "#e01828",
+    "aliases": [
+      "Exigentexpress",
+      "Exigent Express",
+      "Exigentexpress - Transportes, Unipessoal, Lda."
+    ],
+    "countries": [
+      "PT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Lisbon",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://exigentexpress.pt/pt/tracking",
+    "trackingUrlTemplate": "https://exigentexpress.pt/pt/tracking?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://exigentexpress.pt/pt/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "exigentexpress.pt"
+        ],
+        "pathPattern": "^/(?:pt|en)/tracking/?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "exline-kz": {
     "displayName": "Exline",
@@ -56291,6 +56356,39 @@
     "trackingSearchUrl": "https://www.ramberg.no/sporing/",
     "helpUrl": "https://www.ramberg.no/kontakt-ramberg/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "ran-express": {
+    "displayName": "RAN Express",
+    "color": "#2850a0",
+    "aliases": [
+      "RANEXPRESS",
+      "Ranexpress",
+      "RANEXPRESS - Transportes Rodoviários de Mercadorias, Lda"
+    ],
+    "countries": [
+      "PT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Lisbon",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ranexpress.pt/pt/tracking",
+    "trackingUrlTemplate": "https://ranexpress.pt/pt/tracking?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://ranexpress.pt/pt/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "ranexpress.pt"
+        ],
+        "pathPattern": "^/(?:pt|en)/tracking/?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "rangel": {

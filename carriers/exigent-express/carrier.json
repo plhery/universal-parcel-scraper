@@ -1,0 +1,46 @@
+{
+  "id": "exigent-express",
+  "displayName": "ExigentExpress",
+  "aliases": [
+    "Exigentexpress",
+    "Exigent Express",
+    "Exigentexpress - Transportes, Unipessoal, Lda."
+  ],
+  "region": {
+    "countries": [
+      "PT"
+    ]
+  },
+  "brand": {
+    "color": "#e01828"
+  },
+  "selectable": true,
+  "timezone": "Europe/Lisbon",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://exigentexpress.pt/pt/tracking?tracking={trackingNumber}",
+    "searchUrl": "https://exigentexpress.pt/pt/tracking",
+    "canaryUrl": "https://exigentexpress.pt/pt/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "exigentexpress.pt"
+      ],
+      "pathPattern": "^/(?:pt|en)/tracking/?$",
+      "params": [
+        "tracking"
+      ]
+    }
+  ],
+  "detection": []
+}

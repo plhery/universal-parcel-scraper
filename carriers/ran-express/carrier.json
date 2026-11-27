@@ -1,0 +1,46 @@
+{
+  "id": "ran-express",
+  "displayName": "RAN Express",
+  "aliases": [
+    "RANEXPRESS",
+    "Ranexpress",
+    "RANEXPRESS - Transportes Rodoviários de Mercadorias, Lda"
+  ],
+  "region": {
+    "countries": [
+      "PT"
+    ]
+  },
+  "brand": {
+    "color": "#2850a0"
+  },
+  "selectable": true,
+  "timezone": "Europe/Lisbon",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://ranexpress.pt/pt/tracking?tracking={trackingNumber}",
+    "searchUrl": "https://ranexpress.pt/pt/tracking",
+    "canaryUrl": "https://ranexpress.pt/pt/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "ranexpress.pt"
+      ],
+      "pathPattern": "^/(?:pt|en)/tracking/?$",
+      "params": [
+        "tracking"
+      ]
+    }
+  ],
+  "detection": []
+}

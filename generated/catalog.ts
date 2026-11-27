@@ -17391,6 +17391,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "class-package": {
+    "displayName": "Class Package",
+    "color": "#c03050",
+    "aliases": [
+      "Class Package Lda",
+      "Class Package, Lda."
+    ],
+    "countries": [
+      "PT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Lisbon",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://classpackage.pt/pt/tracking",
+    "trackingUrlTemplate": "https://classpackage.pt/pt/tracking?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://classpackage.pt/pt/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "classpackage.pt"
+        ],
+        "pathPattern": "^/(?:pt|en)/tracking/?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "closer-logistics": {
     "displayName": "Closer Logistics",
     "color": "#7bb4b8",
@@ -26895,6 +26927,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "high"
       }
     ]
+  },
+  "exigent-express": {
+    "displayName": "ExigentExpress",
+    "color": "#e01828",
+    "aliases": [
+      "Exigentexpress",
+      "Exigent Express",
+      "Exigentexpress - Transportes, Unipessoal, Lda."
+    ],
+    "countries": [
+      "PT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Lisbon",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://exigentexpress.pt/pt/tracking",
+    "trackingUrlTemplate": "https://exigentexpress.pt/pt/tracking?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://exigentexpress.pt/pt/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "exigentexpress.pt"
+        ],
+        "pathPattern": "^/(?:pt|en)/tracking/?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "exline-kz": {
     "displayName": "Exline",
@@ -56298,6 +56363,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "ran-express": {
+    "displayName": "RAN Express",
+    "color": "#2850a0",
+    "aliases": [
+      "RANEXPRESS",
+      "Ranexpress",
+      "RANEXPRESS - Transportes Rodoviários de Mercadorias, Lda"
+    ],
+    "countries": [
+      "PT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Lisbon",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ranexpress.pt/pt/tracking",
+    "trackingUrlTemplate": "https://ranexpress.pt/pt/tracking?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://ranexpress.pt/pt/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "ranexpress.pt"
+        ],
+        "pathPattern": "^/(?:pt|en)/tracking/?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "rangel": {
     "displayName": "Rangel",
     "color": "#1f285c",
@@ -76281,6 +76379,7 @@ export const CARRIER_IDS = [
   "cj-packet",
   "ck-line",
   "ckeex",
+  "class-package",
   "closer-logistics",
   "cmt-express",
   "cn-express-za",
@@ -76546,6 +76645,7 @@ export const CARRIER_IDS = [
   "evropat",
   "ewe",
   "exelot",
+  "exigent-express",
   "exline-kz",
   "exmate",
   "expedico",
@@ -77409,6 +77509,7 @@ export const CARRIER_IDS = [
   "rail-continent",
   "ram-hand-to-hand",
   "ramberg",
+  "ran-express",
   "rangel",
   "rapiboy",
   "rapid-courier-gr",
@@ -78442,6 +78543,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cj-packet": ["cj-packet-1"],
   "ck-line": [],
   "ckeex": [],
+  "class-package": [],
   "closer-logistics": [],
   "cmt-express": ["cmt-express-1"],
   "cn-express-za": [],
@@ -78707,6 +78809,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "evropat": [],
   "ewe": [],
   "exelot": ["exelot-1"],
+  "exigent-express": [],
   "exline-kz": [],
   "exmate": ["exmate-1"],
   "expedico": [],
@@ -79570,6 +79673,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "rail-continent": [],
   "ram-hand-to-hand": ["ram-hand-to-hand-1"],
   "ramberg": [],
+  "ran-express": [],
   "rangel": [],
   "rapiboy": [],
   "rapid-courier-gr": [],
