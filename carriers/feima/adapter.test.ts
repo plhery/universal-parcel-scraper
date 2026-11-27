@@ -73,6 +73,22 @@ describe('Feima tracking adapter', () => {
     for (const value of [REFERENCE, 'TEST1']) expect(text, value).not.toContain(value);
   });
 
+  it('holds back the delivery row a timeline written ahead ends in, and keeps one among scans', () => {
+    const reply = structuredClone(fixture('track'));
+    // The script's delivery, written hours after its clock, the rest of the record days before theirs.
+    reply[0].data[0].trackDetails.unshift({ track_date: '2026-03-24 10:00:00', track_createdate: '2026-03-24 15:05:00',
+      track_content: 'CA-Montreal，Delivered', track_location: 'CA-Montreal' });
+    const result = parseFeimaTrack(reply, NUMBER, READ_AT)!;
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'accepted', last_status_text: 'Shipment picked up' });
+    expect(result.events).toHaveLength(1);
+    expect(result.written_ahead).toHaveLength(10);
+    expect(result.planned_events!.at(-1)).toMatchObject({ time: '2026-03-24T10:00:00+08:00', description: 'Delivered', stage: 'delivered' });
+    for (const row of reply[0].data[0].trackDetails) row.track_createdate = row.track_date!;
+    const scanned = parseFeimaTrack(reply, NUMBER, READ_AT)!;
+    expect(scanned).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered' });
+    expect(scanned.written_ahead).toBeUndefined();
+  });
+
   it('reads rows written as scans with the stages its map and the shared rules give, without the place repeated', () => {
     const reply = structuredClone(fixture('track'));
     for (const row of reply[0].data[0].trackDetails) row.track_createdate = row.track_date!;

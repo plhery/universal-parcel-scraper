@@ -22,6 +22,10 @@ CAPTCHA or browser is needed.
   days or weeks ahead of theirs, from the pick-up to the courier at the destination. A row written
   well before its own clock is named as written ahead rather than kept as a scan, so the record
   moves only as its clocks pass the moment each row was written.
+- The script can end, as GZYL's does, in a delivery row written hours after its clock. On a record
+  with rows written ahead that row is held back and named with them; on one written as it
+  happened, a delivery is a scan. The page shows no creation times, so a delivery it shows is held
+  back too.
 - Rows name their place, "US" or a country code and town, and often repeat it at the head of the
   wording; the wording is read without it. Their clocks are on the platform's Beijing time, abroad
   too, and are read on it.

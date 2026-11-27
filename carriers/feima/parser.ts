@@ -4,7 +4,7 @@ import { feimaStage } from './status.js';
 
 export const PROVIDER = 'Feima';
 export const FEIMA_ORIGIN = 'http://47.111.22.87:8082';
-export const FEIMA: HualeiTenant = { carrier: 'feima', provider: PROVIDER, origin: FEIMA_ORIGIN, stage: feimaStage };
+export const FEIMA: HualeiTenant = { carrier: 'feima', provider: PROVIDER, origin: FEIMA_ORIGIN, stage: feimaStage, scriptedDelivery: true };
 
 /** The track interface's reply, or null when it holds no row for the number. */
 export const parseFeimaTrack = (payload: unknown, number: string, readAt?: number): CarrierResult | null =>
