@@ -148,6 +148,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-17",
       "note": "The return to the sender starts under its own waybill."
+    },
+    {
+      "wording": "Scheduled for delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "A remark that the parcel is put on a round, before the delivery centre receives it; the round itself is Out For Delivery."
     }
   ]
 }

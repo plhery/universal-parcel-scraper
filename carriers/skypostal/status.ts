@@ -15,6 +15,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['RUT', 'accepted'], // RECEPTACLE RECEIVED IN US TRANSPORT FACILITY: the bag holding the parcel reached the Miami hub.
   ['REC', 'accepted'], // RECEIVED at the Miami hub.
   ['XRS', 'in_transit'], // X-RAY SCAN at the hub.
+  ['SHV', 'in_transit'], // SHIPMENT VERIFIED at the hub, beside its receipt and X-ray.
   ['PLP', 'in_transit'], // PROVIDER LABEL PRINTED: the destination partner's label, printed at the hub.
   ['INC', 'in_transit'], // NESTED TO RECEPTACLE: bagged for export.
   ['PRO', 'in_transit'], // PROCESSED.
@@ -35,6 +36,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['INT', 'in_transit'], // IN TRANSIT.
   ['PRH', 'in_transit'], // PACKAGE RECEIVED AT TRANSFER HUB, which the wording rules would read as acceptance.
   ['PDH', 'in_transit'], // PACKAGE DEPARTED TRANSFER HUB.
+  ['PRS', 'in_transit'], // PACKAGE RECEIVED AT TRANSIT STATION: the destination partner's station on the way.
   ['OFD', 'out_for_delivery'],
   ['CNA', 'failed_attempt'], // CONSIGNEE NOT AVAILABLE.
   ['PIK', 'ready_for_pickup'], // AVAILABLE FOR PICKUP.

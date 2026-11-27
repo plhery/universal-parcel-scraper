@@ -234,6 +234,13 @@ describe('status map answers', () => {
     expect(answer('360lion', 'WSD022', 'INGRESO A CEDI')).toEqual(mapped('in_transit'));
   });
 
+  it("answers SkyPostal's hub check and transit station, Shouwu's carrier transit and DTDC's scheduled round", () => {
+    expect(answer('skypostal', 'SHV', 'SHIPMENT VERIFIED')).toEqual(mapped('in_transit'));
+    expect(answer('skypostal', 'PRS', 'PACKAGE RECEIVED AT TRANSIT STATION')).toEqual(mapped('in_transit'));
+    expect(answer('shouwu', null, 'In transit by carrier')).toEqual(mapped('in_transit'));
+    expect(answer('dtdc', null, 'Scheduled for delivery')).toEqual(mapped('in_transit'));
+  });
+
   it("reads Ukrposhta's Ukrainian wording as providers relay it without a code", () => {
     for (const carrier of ['ukrposhta', 'unknown']) {
       expect(answer(carrier, null, 'Прийнято')).toEqual(mapped('accepted'));

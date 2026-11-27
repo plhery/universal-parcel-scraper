@@ -21,6 +21,8 @@ const STATUS = new Map<string, ClassifiedStatus>([
   ['At Destination', { status: 'in_transit', stage: 'in_transit' }],
   ['Undelivered', { status: 'exception', stage: 'failed_attempt' }],
   ['Reattempt Initiated', { status: 'in_transit', stage: 'in_transit' }],
+  // A remark that the parcel is put on a round, before the delivery centre receives it; the round is Out For Delivery.
+  ['Scheduled for delivery', { status: 'in_transit', stage: 'in_transit' }],
   ['Return Approval awaited', { status: 'exception', stage: 'exception' }],
   ['Return Initiated', { status: 'exception', stage: 'exception' }],
   ['Return - Initiated', { status: 'exception', stage: 'exception' }],
