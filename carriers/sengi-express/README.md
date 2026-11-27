@@ -30,9 +30,9 @@ sengiexpress.com. Tracked through the tracker on its portal.
   with, so the consumer can follow the last mile there.
 - The order number beside each row is the shop's and is left out.
 - The tracker holds Sengi's consignments only. For a parcel with a Poste code it gives the line's
-  channel and Cainiao's advance notice to the last mile, which
-  [AliExpress / Cainiao](../aliexpress/README.md) already gives as the earlier leg (see
-  [Poste Italiane](../poste-italiane/README.md)).
+  channel and its rows up to the hand-over to the last mile, which
+  [AliExpress / Cainiao](../aliexpress/README.md) also gives as the earlier leg.
+  [Poste Italiane](../poste-italiane/README.md) asks it about a `5P` code Poste does not know yet.
 
 ## Limitations
 

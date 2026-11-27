@@ -19,6 +19,8 @@ import { sameInstantIdentityPolicy } from './identity.js';
 import { TrawlClient, type TrawlCapturedResponse } from '../../core/transport/trawl.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { fetchPosteItalianeInBrowser } from './browser.js';
+import { SENGI_API } from '../sengi-express/adapter.js';
+import { parseSengiExpress } from '../sengi-express/parser.js';
 
 vi.mock('./browser.js', () => ({ fetchPosteItalianeInBrowser: vi.fn() }));
 
@@ -892,5 +894,67 @@ describe('PosteItalianeTracker fetch', () => {
     await expect(recovering.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 3_600_000 - CAPTCHA_PAUSE_MS });
     expect(gated).toHaveBeenCalledTimes(1);
     expect(service.fetcher).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('Poste Italiane before Poste has a 5P code', () => {
+  // Synthetic: a 5P code's shape, and SENGI Express's row for it on its line to Poste ("PI").
+  const CODE = '5P00000000001';
+  const row = (overrides: Record<string, unknown> = {}) => ({
+    description: "Order information received. We're expecting your parcel to arrive with us.", eventCode: '10',
+    eventTime: '2026-03-20T09:12:40', location: '-', trackingNumber: CODE, timeZone: 1, relabelTrackingNumber: null,
+    channelCode: 'PI', serviceCode: 'CE', ...overrides,
+  });
+  const notAtPoste = () => response({ idTracciatura: CODE, esitoRicerca: '1' });
+  const sengiReplying = (body: unknown, status = 200) => vi.fn<typeof fetch>(async (url) =>
+    String(url) === SENGI_API ? response(body, status) : notAtPoste());
+
+  it("answers with SENGI Express's leg on its line to Poste, and recognition reads Poste alone", async () => {
+    const body = { [CODE]: [row()] };
+    const fetcher = sengiReplying(body);
+    const step = vi.fn();
+    const carrier = adapter({ fetcher, env: {}, trawl: null, browserExecutablePath: null, recorder: { lookup() {}, step } });
+    expect(carrier.steps).toEqual(['direct', 'trawl', 'sengi']);
+    const { delivery_carrier: line, ...leg } = parseSengiExpress(body, CODE);
+    expect(line).toBe('poste-italiane');
+    expect(await carrier.track({ number: CODE.toLowerCase() })).toEqual(leg);
+    expect(leg.events).toEqual([expect.objectContaining({ provider_code: '10', time: '2026-03-20T09:12:40+01:00' })]);
+    expect(step.mock.calls.map(([event]) => [event.step, event.outcome])).toEqual([['direct', 'not_found'], ['sengi', 'ok']]);
+    expect(await carrier.recognize!(CODE)).toEqual({ known: false });
+    expect(fetcher.mock.calls.filter(([url]) => String(url) === SENGI_API)).toHaveLength(1);
+  });
+
+  it("leaves Poste's not found when SENGI Express does not show the parcel on its line", async () => {
+    for (const [body, status] of [
+      [{}, 200], [{ [CODE]: [] }, 200], [{ [CODE]: [row({ channelCode: 'XX' })] }, 200],
+      [{ [CODE]: [row({ trackingNumber: '5P00000000002' })] }, 200], [{}, 503],
+      ['<html><title>Just a moment...</title></html>', 403],
+    ] as const) {
+      const carrier = adapter({ fetcher: sengiReplying(body, status), env: {}, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER });
+      await expect(carrier.track({ number: CODE }), JSON.stringify(body)).rejects.toMatchObject({ kind: 'not_found', provider: 'Poste Italiane' });
+    }
+  });
+
+  it('asks SENGI Express only about a 5P code Poste answered not found, within part of the budget', async () => {
+    const sengi = vi.fn(async () => parseSengiExpress({ [CODE]: [row()] }, CODE));
+    await expect(new PosteItalianeTracker({ fetcher: async () => response({ idTracciatura: TRACKING_NUMBER, esitoRicerca: '1' }), sengi })
+      .fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'not_found' });
+    await expect(new PosteItalianeTracker({ fetcher: async () => response({}, 429), sengi })
+      .fetch(CODE)).rejects.toMatchObject({ kind: 'rate_limited' });
+    await expect(new PosteItalianeTracker({ fetcher: async () => response(parcel({ idTracciatura: CODE })), sengi })
+      .fetch(CODE)).resolves.toMatchObject({ current_stage: 'delivered' });
+    expect(sengi).not.toHaveBeenCalled();
+    await new PosteItalianeTracker({ fetcher: async () => notAtPoste(), sengi }).fetch(CODE, { budgetMs: 60_000 });
+    expect(sengi).toHaveBeenCalledWith(CODE, expect.objectContaining({ budgetMs: 15_000, signal: expect.any(AbortSignal) }));
+  });
+
+  it('ends a cancelled lookup as cancelled, not as not found', async () => {
+    const controller = new AbortController();
+    const sengi = vi.fn(async () => {
+      controller.abort(new Error('cancelled'));
+      throw new Error('aborted');
+    });
+    await expect(new PosteItalianeTracker({ fetcher: async () => notAtPoste(), sengi }).fetch(CODE, { signal: controller.signal }))
+      .rejects.toThrow('cancelled');
   });
 });

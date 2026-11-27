@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { fetchPosteItalianeInBrowser } from './browser.js';
+import { SengiExpressTracker } from '../sengi-express/adapter.js';
 
 import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { isPosteItalianeLookup } from '../../core/detection/posteItaliane.js';
@@ -34,6 +35,13 @@ const DEFAULT_TIMEOUT_MS = 15_000;
 const TRANSIENT_RETRY_DELAY_MS = 1_000;
 const MAX_RESPONSE_BYTES = 1_000_000;
 const MAX_EVENTS_TO_RETURN = 20;
+/** A `5P` code, which SENGI Express's line from China to Poste ("PI") gives a parcel before Poste has it. */
+const SENGI_LINE_CODE = /^5P[A-Z0-9]{11}$/;
+/** The most of a lookup's budget SENGI Express's tracker gets. */
+const SENGI_BUDGET_MS = 15_000;
+
+/** SENGI Express's lookup of a code its line to Poste carries. */
+export type PosteItalianeSengiLookup = (number: string, context: TrackingContext) => Promise<CarrierResult>;
 
 const ITALIAN_MONTHS: Record<string, number> = {
   gennaio: 1, febbraio: 2, marzo: 3, aprile: 4, maggio: 5, giugno: 6,
@@ -355,7 +363,9 @@ export class PosteItalianeTracker {
 
   constructor(private readonly options: { timeoutMs?: number; fetcher?: typeof fetch; userAgent?: string; trawl?: TrawlClient | null; recorder?: StepRecorder; browserWsEndpoint?: string | null;
     /** Other egresses the searches spread over once the host's own one has no turn. */
-    egressPool?: readonly Egress[] } = {}) {
+    egressPool?: readonly Egress[];
+    /** SENGI Express's lookup, asked about a `5P` code Poste does not know yet. */
+    sengi?: PosteItalianeSengiLookup } = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.fetcher = options.fetcher;
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
@@ -380,6 +390,23 @@ export class PosteItalianeTracker {
           const payload = await fetchPosteItalianeInBrowser(trackingNumber, this.options.browserWsEndpoint!, signal,
             Math.min(15_000, remainingMs - 1000));
           return parsePosteItalianeTrackingResponse(payload, trackingNumber);
+        } },
+      { id: 'sengi',
+        // A `5P` code Poste does not know yet can be on SENGI Express's line to Poste, whose
+        // tracker holds the parcel from China until the hand-over. Only an answer on that
+        // line stands for Poste's; any other leaves Poste's not found.
+        enabled: !!this.options.sengi && SENGI_LINE_CODE.test(trackingNumber),
+        recovers: error => error instanceof NotFoundError,
+        run: async ({ signal, remainingMs, previousError }) => {
+          const answer = await this.options.sengi!(trackingNumber, { signal, budgetMs: Math.min(SENGI_BUDGET_MS, remainingMs) }).catch(() => {
+            context.signal?.throwIfAborted();
+            return null;
+          });
+          if (answer?.delivery_carrier !== 'poste-italiane' || !answer.events?.length) throw previousError;
+          const leg: CarrierResult = { ...answer };
+          delete leg.delivery_carrier;
+          delete leg.delivery_tracking_number;
+          return leg;
         } },
     ]);
   }
@@ -471,13 +498,15 @@ export const adapter: AdapterFactory = (environment) => {
   const options = { fetcher: environment.fetcher, userAgent: environment.userAgent, recorder: environment.recorder,
     egressPool: environment.egressPools?.datacenter };
   const endpoint = environment.env.POSTE_ITALIANE_BROWSER_WS_ENDPOINT?.trim() || null;
-  const tracker = new PosteItalianeTracker({ ...options, trawl: environment.trawl, browserWsEndpoint: endpoint });
-  // Cheap recognition never opens a browser or spends the shared audio allowance.
+  const sengi = new SengiExpressTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
+  const tracker = new PosteItalianeTracker({ ...options, trawl: environment.trawl, browserWsEndpoint: endpoint,
+    sengi: (number, context) => sengi.fetch(number, context) });
+  // Cheap recognition never opens a browser or spends the shared audio allowance, and reads Poste alone.
   const recognition = new PosteItalianeTracker(options);
   return {
     id: 'poste-italiane',
     recordsSteps: true,
-    steps: endpoint ? ['direct', 'trawl', 'browser'] : ['direct', 'trawl'],
+    steps: endpoint ? ['direct', 'trawl', 'browser', 'sengi'] : ['direct', 'trawl', 'sengi'],
     track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => recognition.fetch(number, context), () => accepted(() => normalizePosteItalianeTrackingNumber(number))),
   };

@@ -96,10 +96,13 @@ it is its receipt from that post and reads as transit.
 - AliExpress parcels to Italy can carry a `5P` code before Poste has them. Aggregators then name
   SENGI Express, Poste's line from China, beside Cainiao. Its keyless tracker, a POST of
   `{"trackingNumberList": [number], "type": 1}` to `https://portal.sengiexpress.com/api-v2/tracking/web`,
-  answers with the line's channel (`PI`) and Cainiao's advance notice to the last mile, which
-  [AliExpress / Cainiao](../aliexpress/README.md) already gives as the earlier leg, and with an
-  empty object for a number it does not know. [Sengi Express](../sengi-express/README.md) reads
-  it for the parcels filed under Sengi.
+  answers with the line's channel (`PI`) and its rows up to the hand-over to the last mile, which
+  [AliExpress / Cainiao](../aliexpress/README.md) also gives as the earlier leg, and with an
+  empty object for a number it does not know. While Poste answers not found for a `5P` code,
+  tracking asks that tracker with what is left of the budget, fifteen seconds at most, and its
+  rows stand for Poste's answer only when all of them are on the line to Poste. Any other
+  answer, or none, leaves Poste's not found. Recognition reads Poste alone.
+  [Sengi Express](../sengi-express/README.md) reads the tracker for the parcels filed under Sengi.
 - Poste Italiane also prints its codes inside an ISO 15459 plate: `J`, the UPU's issuing-agency
   code `J`, Poste's UPU operator code `ITA` and the thirteen-character code. Poste's tracker
   follows the whole plate and echoes it, so `poste-italiane-plate` claims it at high confidence.
