@@ -45,6 +45,7 @@ const WORDING = new Map<string, ClassifiedStatus>([
   // scan, so it is a handover rather than the parcel's acceptance.
   ['Pre-Shipment, USPS Awaiting Item', { status: 'pending', stage: 'registered' }],
   ['Shipment information received', { status: 'pending', stage: 'registered' }],
+  ["Order information received. We're expecting your parcel to arrive with us.", { status: 'pending', stage: 'registered' }],
   ['Registered parcel data, parcel not dispatched yet', { status: 'pending', stage: 'registered' }],
   ['Shipping information received. Your parcel is on its way to UniUni for delivery to you', { status: 'pending', stage: 'registered' }],
   ['Votre Colissimo va bientôt nous être confié ! Il est en cours de préparation chez votre expéditeur.', { status: 'pending', stage: 'registered' }],

@@ -7,6 +7,7 @@
     {"wording": "Shipment picked up", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The ERP's pickup from the merchant, for a DOT1 number."},
     {"wording": "Arrived at origin facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The ERP's arrival at the first facility, after the pickup."},
     {"wording": "Departed from sort facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The ERP's departure from the sorting facility, the parcel still in China."},
+    {"wording": "Arrived at the origin international airport", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-26", "note": "At the airport of departure in China, before the flight."},
     {"wording": "Order processed by shipper", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "Yanwen's record of the merchant's order data, the first scan."},
     {"wording": "SHIPPING INFORMATION RECEIVED", "stage": "registered", "language": "en", "confirmedBy": "live"},
     {"wording": "SHIPPING INFORMATION RECEIVED BY AUSTRALIA POST", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "Australia Post's manifest, relayed: it comes after the parcel has moved and is no step back."},

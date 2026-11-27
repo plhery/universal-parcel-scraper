@@ -22,6 +22,7 @@ const vocabulary: Record<string, ClassifiedStatus> = {
   'delay caused beyond control': { status: 'exception', stage: 'exception' },
   // A delay in Blue Dart's network, and a shipment held for its receiver to call Blue Dart: the scan asks for it.
   'network issues': { status: 'exception', stage: 'exception' },
+  'network delay, will impact timely delivery': { status: 'exception', stage: 'exception' },
   'contact customer service': { status: 'exception', stage: 'exception' },
   'cnee refused id/otp not shared-incorrect': { status: 'exception', stage: 'failed_attempt' },
   // The receiver refusing the shipment at the door, which Blue Dart confirms with a code the receiver gives: the

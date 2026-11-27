@@ -232,6 +232,14 @@
       "note": "Written before Yanwen's pickup scan."
     },
     {
+      "wording": "Order information received. We're expecting your parcel to arrive with us.",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The order's data, before the parcel reaches Yanwen: written like the row above."
+    },
+    {
       "wording": "Registered parcel data, parcel not dispatched yet",
       "language": "en",
       "stage": "registered",

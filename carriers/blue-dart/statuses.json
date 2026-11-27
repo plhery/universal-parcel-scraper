@@ -100,6 +100,14 @@
       "note": "A delay in Blue Dart's network, read like its other delay notices; the next arrival scan follows."
     },
     {
+      "wording": "Network Delay, Will Impact Timely Delivery",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The same delay in Blue Dart's network, at a hub between two connections; the hub's arrival scan follows."
+    },
+    {
       "wording": "Contact Customer Service",
       "language": "en",
       "stage": "exception",

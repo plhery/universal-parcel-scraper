@@ -220,6 +220,20 @@ describe('status map answers', () => {
     expect(answer('yunexpress', null, "Arrived at Carrier's Regional Hub")).toEqual(mapped('in_transit'));
   });
 
+  it("answers Blue Dart's network delay, DayOne's origin airport, PostNL's busy notice at Spring GDS, Yanwen's order data, La Poste's pickup point at Shouwu and 360Lion's distribution centre", () => {
+    expect(answer('blue-dart', null, 'Network Delay, Will Impact Timely Delivery')).toEqual(mapped('exception'));
+    expect(answer('dayone', null, 'Arrived at the origin international airport')).toEqual(mapped('in_transit'));
+    expect(answer('spring-gds', 'G03', 'It’s very busy. Please allow for slightly slower delivery times. We’ll deliver your parcel as soon as we can.')).toEqual(mapped('in_transit'));
+    expect(answer('yanwen', null, "Order information received. We're expecting your parcel to arrive with us.")).toEqual(mapped('registered'));
+    expect(answer('shouwu', null, 'FR, Votre envoi est disponible en point de retrait. Il y sera conservé pendant 15 jours calendaires et sera remis au destinataire sur présentation dune pièce didentité originale.,到达待取'))
+      .toEqual(mapped('ready_for_pickup'));
+    // La Poste's sort into the round (MD1) and its round put off (PB1), as Shouwu relays them, read as La Poste's map reads them.
+    expect(answer('shouwu', null, 'FR, Votre envoi est sur son site de distribution. Nous le préparons pour le mettre en livraison.,null')).toEqual(mapped('out_for_delivery'));
+    expect(answer('shouwu', null, 'FR, Votre envoi na pas pu être distribué ce jour en raison dune situation indépendante de notre volonté. Il sera remis en distribution au plus tôt.,null'))
+      .toEqual(mapped('in_transit'));
+    expect(answer('360lion', 'WSD022', 'INGRESO A CEDI')).toEqual(mapped('in_transit'));
+  });
+
   it("reads Ukrposhta's Ukrainian wording as providers relay it without a code", () => {
     for (const carrier of ['ukrposhta', 'unknown']) {
       expect(answer(carrier, null, 'Прийнято')).toEqual(mapped('accepted'));

@@ -113,6 +113,15 @@
       "note": "The last-mile courier taking the parcel out from the delivery office: the reply's own status then reads Out for delivery, and the page files the parcel under no group."
     },
     {
+      "code": "WSD022",
+      "wording": "INGRESO A CEDI",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The last mile's distribution centre (CEDI) receiving the parcel, minutes after its pickup from customs."
+    },
+    {
       "code": "WSD22",
       "wording": "Incidencia de entrega",
       "stage": "failed_attempt",

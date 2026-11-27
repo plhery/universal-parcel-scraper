@@ -48,6 +48,8 @@ const SCANS: ReadonlyMap<string, LionStatus> = new Map<string, LionStatus>([
   ['WSD00', { en: 'arrived at airport', stage: 'in_transit' }],
   ['WSD02', { en: 'handover to lastmile', stage: 'in_transit' }],
   ['WSD051', { en: 'Arrived at sorting center', stage: 'in_transit' }],
+  // The last mile's distribution centre (CEDI) receiving the parcel after its pickup from customs.
+  ['WSD022', { en: 'INGRESO A CEDI', stage: 'in_transit' }],
   ['WSD050', { en: 'package on the way to delivery office', stage: 'in_transit' }],
   ['WSD05', { en: 'package arrived at delivery office', stage: 'in_transit' }],
   ['WSD06', { en: 'out for delivery', stage: 'out_for_delivery' }],

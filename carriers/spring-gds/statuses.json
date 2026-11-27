@@ -365,6 +365,14 @@
       "note": "A label of PostNL's domestic tracker, with observation code G05, the morning after PostNL received the parcel and before any round: a new delivery day, not an attempt."
     },
     {
+      "wording": "It's very busy. Please allow for slightly slower delivery times. We'll deliver your parcel as soon as we can.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "A label of PostNL's domestic tracker, with observation code G03: a busy-period notice that the parcel moves a little slower, not a hold."
+    },
+    {
       "wording": "Accepted at FedEx Processing Centre",
       "language": "en",
       "stage": "accepted",
