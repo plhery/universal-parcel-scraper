@@ -12800,6 +12800,50 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "blackhaul": {
+    "displayName": "Blackhaul",
+    "color": "#000000",
+    "aliases": [
+      "Blackhaul Australia",
+      "Blackhaul Intermodal Logistics"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Perth",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "blackhaul",
+      "localClocks": true
+    },
+    "canaryUrl": "https://portal.transvirtual.com/Track/654472",
+    "trackingUrlTemplate": "https://portal.transvirtual.com/Track/654472/{trackingNumber}",
+    "trackingSearchUrl": "https://blackhaul.com.au/track/",
+    "helpUrl": "https://blackhaul.com.au/contact-us/",
+    "linkRules": [
+      {
+        "domains": [
+          "portal.transvirtual.com",
+          "portal.transvirtual.co",
+          "portal.transvirtual.com.au",
+          "mydel.info"
+        ],
+        "path": "^/[Tt]rack/654472/([^/?#]+)/?$"
+      },
+      {
+        "domains": [
+          "blackhaul.com.au",
+          "www.blackhaul.com.au"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "cn"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "blitznow": {
     "displayName": "Blitz",
     "color": "#231f20",
@@ -53874,6 +53918,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "primetime-express": {
+    "displayName": "Primetime Express",
+    "color": "#00567a",
+    "aliases": [
+      "Prime Time Express",
+      "PTE Logistics"
+    ],
+    "countries": [
+      "ZA"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Johannesburg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "primetime-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://primetimeexpress.pperfect.com/",
+    "trackingUrlTemplate": "https://primetimeexpress.pperfect.com/?w={trackingNumber}",
+    "trackingSearchUrl": "https://primetimeexpress.pperfect.com/",
+    "helpUrl": "https://ptexpress.co.za/contact/",
+    "linkRules": [
+      {
+        "domains": [
+          "primetimeexpress.pperfect.com"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "w"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "primewell": {
     "displayName": "Primewell",
     "color": "#ff5d15",
@@ -65269,6 +65347,49 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "tmw-express": {
+    "displayName": "TMW Express",
+    "color": "#066ebb",
+    "aliases": [
+      "明达速递",
+      "明达国际速递",
+      "Mingda Express"
+    ],
+    "countries": [
+      "AU",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Perth",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "tmw-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.tmw-express.com.au/",
+    "trackingUrlTemplate": "https://www.tmw-express.com.au/#/my/checkLogistics?doccode={trackingNumber}",
+    "trackingSearchUrl": "https://www.tmw-express.com.au/",
+    "linkRules": [
+      {
+        "domains": [
+          "tmw-express.com.au"
+        ],
+        "pathPattern": "^/(?:index\\.html)?$",
+        "fragment": "^/my/checkLogistics\\?(?:[^#]*&)?doccode=([^&,]+)"
+      },
+      {
+        "domains": [
+          "meian.expressgo.cn",
+          "shop.expressgo.cn"
+        ],
+        "pathPattern": "^/wx-query/queryOrder\\.html$",
+        "params": [
+          "doc"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "tnt-au": {
     "displayName": "TNT Australia",
     "color": "#ff6600",
@@ -74785,6 +74906,7 @@ export const CARRIER_IDS = [
   "biz-courier",
   "bjs-home-delivery",
   "bla-kurer",
+  "blackhaul",
   "blitznow",
   "blue-express",
   "blueex",
@@ -75971,6 +76093,7 @@ export const CARRIER_IDS = [
   "precision-deliveries",
   "premier-deliveries-uk",
   "premo",
+  "primetime-express",
   "primewell",
   "princesa-dos-campos",
   "prisma-courier",
@@ -76305,6 +76428,7 @@ export const CARRIER_IDS = [
   "tma-companies",
   "tmg-jp",
   "tmm-express",
+  "tmw-express",
   "tnt-au",
   "tnt-it",
   "today-kr",
@@ -76904,6 +77028,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "biz-courier": ["biz-courier-1"],
   "bjs-home-delivery": ["bjs-home-delivery-1"],
   "bla-kurer": [],
+  "blackhaul": [],
   "blitznow": [],
   "blue-express": [],
   "blueex": [],
@@ -78090,6 +78215,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "precision-deliveries": ["precision-deliveries-1"],
   "premier-deliveries-uk": [],
   "premo": [],
+  "primetime-express": [],
   "primewell": [],
   "princesa-dos-campos": [],
   "prisma-courier": [],
@@ -78424,6 +78550,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tma-companies": [],
   "tmg-jp": [],
   "tmm-express": [],
+  "tmw-express": [],
   "tnt-au": ["tnt-au-1"],
   "tnt-it": ["tnt-it-1","tnt-it-check"],
   "today-kr": [],

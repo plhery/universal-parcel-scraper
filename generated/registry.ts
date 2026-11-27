@@ -115,6 +115,7 @@ import { adapter as bimanBangladesh } from '../carriers/biman-bangladesh/adapter
 import { adapter as birGundeKargo } from '../carriers/bir-gunde-kargo/adapter.js';
 import { adapter as bizCourier } from '../carriers/biz-courier/adapter.js';
 import { adapter as bjsHomeDelivery } from '../carriers/bjs-home-delivery/adapter.js';
+import { adapter as blackhaul } from '../carriers/blackhaul/adapter.js';
 import { adapter as blitznow } from '../carriers/blitznow/adapter.js';
 import { adapter as blueDart } from '../carriers/blue-dart/adapter.js';
 import { adapter as blueExpress } from '../carriers/blue-express/adapter.js';
@@ -849,6 +850,7 @@ import { adapter as ppl } from '../carriers/ppl/adapter.js';
 import { adapter as prd } from '../carriers/prd/adapter.js';
 import { adapter as precisionDeliveries } from '../carriers/precision-deliveries/adapter.js';
 import { adapter as premo } from '../carriers/premo/adapter.js';
+import { adapter as primetimeExpress } from '../carriers/primetime-express/adapter.js';
 import { adapter as proCarrier } from '../carriers/pro-carrier/adapter.js';
 import { adapter as proconExpressLines } from '../carriers/procon-express-lines/adapter.js';
 import { adapter as professionalCouriers } from '../carriers/professional-couriers/adapter.js';
@@ -1072,6 +1074,7 @@ import { adapter as tipsa } from '../carriers/tipsa/adapter.js';
 import { adapter as tirupatiCourier } from '../carriers/tirupati-courier/adapter.js';
 import { adapter as tiui } from '../carriers/tiui/adapter.js';
 import { adapter as tmmExpress } from '../carriers/tmm-express/adapter.js';
+import { adapter as tmwExpress } from '../carriers/tmw-express/adapter.js';
 import { adapter as tnt } from '../carriers/tnt/adapter.js';
 import { adapter as tntAu } from '../carriers/tnt-au/adapter.js';
 import { adapter as tntIt } from '../carriers/tnt-it/adapter.js';
@@ -1354,6 +1357,7 @@ export const REGISTRY: RegistryDefinition = {
     "bir-gunde-kargo": birGundeKargo,
     "biz-courier": bizCourier,
     "bjs-home-delivery": bjsHomeDelivery,
+    "blackhaul": blackhaul,
     "blitznow": blitznow,
     "blue-dart": blueDart,
     "blue-express": blueExpress,
@@ -2088,6 +2092,7 @@ export const REGISTRY: RegistryDefinition = {
     "prd": prd,
     "precision-deliveries": precisionDeliveries,
     "premo": premo,
+    "primetime-express": primetimeExpress,
     "pro-carrier": proCarrier,
     "procon-express-lines": proconExpressLines,
     "professional-couriers": professionalCouriers,
@@ -2311,6 +2316,7 @@ export const REGISTRY: RegistryDefinition = {
     "tirupati-courier": tirupatiCourier,
     "tiui": tiui,
     "tmm-express": tmmExpress,
+    "tmw-express": tmwExpress,
     "tnt": tnt,
     "tnt-au": tntAu,
     "tnt-it": tntIt,
@@ -2691,6 +2697,7 @@ export const REGISTRY: RegistryDefinition = {
     "biz-courier": "biz-courier",
     "bjs-home-delivery": "bjs-home-delivery",
     "bla-kurer": "universal",
+    "blackhaul": "blackhaul",
     "blitznow": "blitznow",
     "blue-dart": "blue-dart",
     "blue-express": "blue-express",
@@ -3944,6 +3951,7 @@ export const REGISTRY: RegistryDefinition = {
     "precision-deliveries": "precision-deliveries",
     "premier-deliveries-uk": "universal",
     "premo": "premo",
+    "primetime-express": "primetime-express",
     "primewell": "universal",
     "princesa-dos-campos": "universal",
     "prisma-courier": "universal",
@@ -4296,6 +4304,7 @@ export const REGISTRY: RegistryDefinition = {
     "tma-companies": "universal",
     "tmg-jp": "universal",
     "tmm-express": "tmm-express",
+    "tmw-express": "tmw-express",
     "tnt": "tnt",
     "tnt-au": "tnt-au",
     "tnt-it": "tnt-it",
