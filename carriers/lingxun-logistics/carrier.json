@@ -1,0 +1,94 @@
+{
+  "id": "lingxun-logistics",
+  "displayName": "LingXun Logistics",
+  "aliases": [
+    "LingXun",
+    "领讯",
+    "领讯物流",
+    "领讯物流有限公司",
+    "深圳市领讯物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#1787C9"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "lingxun-logistics",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 49
+    },
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "service_name",
+    "destination_country"
+  ],
+  "portal": {
+    "searchUrl": "https://www.lingxun.top/a/kehufuwu/",
+    "canaryUrl": "https://www.lingxun.top/a/kehufuwu/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country",
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "signatory",
+      "signature",
+      "proof_of_delivery",
+      "payment_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country"
+    ],
+    "discarded": [
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "signatory",
+      "signature",
+      "proof_of_delivery",
+      "payment_details"
+    ],
+    "unavailable": [
+      "eta",
+      "delivered_at",
+      "offset_timestamps"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "lingxun-logistics-1",
+      "pattern": "^LX\\d{12}$",
+      "confidence": "low"
+    }
+  ]
+}

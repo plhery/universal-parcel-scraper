@@ -1,0 +1,17 @@
+{
+  "carrier": "lingxun-logistics",
+  "entries": [
+    {"wording": "The electronic information of the goods has been received", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The platform's order row: the shipment's data received, before LingXun has the parcel."},
+    {"code": "ARRIVAL", "wording": "The package has arrived at the processing center", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The first scan in LingXun's hands, at its processing station in China, with the platform's receipt code."},
+    {"code": "CO_C_CR", "wording": "The parcel arrived at the processing center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A custom track row the line writes ahead for Shenzhen, Hong Kong and Australia; the reader holds it back as planned."},
+    {"code": "CO_C_CR", "wording": "The parcel depart the processing center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A custom track row the line writes ahead for Shenzhen; held back as planned."},
+    {"code": "CO_C_CR", "wording": "Customs Clearance Completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A custom track row the line writes ahead for Hong Kong's export clearance; held back as planned. Cleared, so the parcel moves on."},
+    {"code": "CO_C_CR", "wording": "The flight has taken off from its origin", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A custom track row the line writes ahead for the flight from Hong Kong; held back as planned."},
+    {"wording": "Parcel arrived in destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The landing in Australia, copied from the delivery network, as DAI Post words its DA01 scan."},
+    {"wording": "Parcel collected by carrier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Collected in Brisbane the morning after the landing, a minute before clearance; the parcel is still on its way."},
+    {"wording": "Customs cleared", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Australian customs released the parcel, as DAI Post words its DC01 scan."},
+    {"wording": "Parcel processed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Sorted at the delivery network's Brisbane facility after clearance."},
+    {"wording": "Parcel out for final mile carrier delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Out for delivery in the recipient's town, as DAI Post words its FP05 scan; the delivery follows within the hour."},
+    {"wording": "Parcel delivered - authority to leave", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Left at the address with the recipient's authority, as DAI Post words its FD02 scan."}
+  ]
+}

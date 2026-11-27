@@ -1,0 +1,25 @@
+{
+  "carrier": "lingxun-logistics",
+  "records": [
+    {
+      "number": "LX000682622907",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/lingXun-logistics/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "lingxun-logistics"
+        ]
+      },
+      "note": "TrackShip's LingXun Logistics page gives it as a tracking code example. LingXun's tracker answers it as a parcel on its line to Australia, delivered in Queensland, with the delivery network's scans copied into the record."
+    }
+  ]
+}
