@@ -63,8 +63,7 @@ layout, so detection names Ecoscooting for it. Las Palmas labels, from 35, are t
 Ecoscooting lists them without scans while AliExpress's tracker holds the parcel, so detection
 suggests both and recognition asks both. A label that starts like bpost's
 `3232` numbers or Quickpac's `44` ones only puts Ecoscooting first when a number is
-recognised. Other 18-digit numbers are not asked: the query error that also
-answers a label not yet announced cannot settle that Ecoscooting does not know one.
+recognised. Other 18-digit numbers are not asked, since they don't follow that layout.
 A `CN` reference typed without its `CN` gets it back before the request and in the
 tracking link, since neither Ecoscooting nor Cainiao answers it without, and the
 result names the full reference as `canonical_tracking_number`. Without the prefix,

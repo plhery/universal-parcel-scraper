@@ -44,7 +44,7 @@ export class EstafetaTracker {
 export const adapter: AdapterFactory = environment => {
   const tracker = new EstafetaTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'estafeta', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
-    // A number Estafeta does not hold gets its generic page, which proves nothing: recognition can only confirm.
+    // A number Estafeta does not hold gets its generic page, marked `portal_not_found`, which recognition reads as unknown.
     recognize: async (number, context) => {
       let registered = false;
       const answer = await recognizeFromLookup(async () => {
