@@ -34675,6 +34675,42 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "huahai-express": {
+    "displayName": "Huahai Express",
+    "color": "#2F6E96",
+    "aliases": [
+      "Huahai",
+      "Huahai Supply Chain",
+      "Huahai International Logistics",
+      "Hangzhou Huahai Supply Chain Management",
+      "花海供应链",
+      "杭州花海供应链管理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "huahai-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.huahaiexpress.com/track.html",
+    "trackingSearchUrl": "https://www.huahaiexpress.com/track.html",
+    "linkRules": [
+      {
+        "domains": [
+          "119.45.241.73"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "huahan": {
     "displayName": "HuaHan Logistics",
     "color": "#0069e8",
@@ -75378,6 +75414,7 @@ export const CARRIER_IDS = [
   "hss-transport",
   "htt-logistics",
   "hua-express",
+  "huahai-express",
   "huahan",
   "huaqi-express",
   "huaya-express",
@@ -77496,6 +77533,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hss-transport": [],
   "htt-logistics": [],
   "hua-express": [],
+  "huahai-express": [],
   "huahan": ["huahan-1"],
   "huaqi-express": [],
   "huaya-express": ["huaya-express-1"],

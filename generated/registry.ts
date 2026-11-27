@@ -518,6 +518,7 @@ import { adapter as hrParcel } from '../carriers/hr-parcel/adapter.js';
 import { adapter as hrvatskaPosta } from '../carriers/hrvatska-posta/adapter.js';
 import { adapter as hrx } from '../carriers/hrx/adapter.js';
 import { adapter as huaExpress } from '../carriers/hua-express/adapter.js';
+import { adapter as huahaiExpress } from '../carriers/huahai-express/adapter.js';
 import { adapter as huahan } from '../carriers/huahan/adapter.js';
 import { adapter as huaqiExpress } from '../carriers/huaqi-express/adapter.js';
 import { adapter as huayaExpress } from '../carriers/huaya-express/adapter.js';
@@ -1756,6 +1757,7 @@ export const REGISTRY: RegistryDefinition = {
     "hrvatska-posta": hrvatskaPosta,
     "hrx": hrx,
     "hua-express": huaExpress,
+    "huahai-express": huahaiExpress,
     "huahan": huahan,
     "huaqi-express": huaqiExpress,
     "huaya-express": huayaExpress,
@@ -3359,6 +3361,7 @@ export const REGISTRY: RegistryDefinition = {
     "hss-transport": "universal",
     "htt-logistics": "universal",
     "hua-express": "hua-express",
+    "huahai-express": "huahai-express",
     "huahan": "huahan",
     "huaqi-express": "huaqi-express",
     "huaya-express": "huaya-express",
