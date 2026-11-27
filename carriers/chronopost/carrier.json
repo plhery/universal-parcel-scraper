@@ -118,6 +118,11 @@
       "id": "chronopost-gc",
       "pattern": "^GC\\d{9}FR$",
       "confidence": "low"
+    },
+    {
+      "id": "chronopost-nt",
+      "pattern": "^NT\\d{9}FR$",
+      "confidence": "low"
     }
   ]
 }

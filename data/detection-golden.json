@@ -106850,6 +106850,17 @@
     "candidates": []
   },
   {
+    "input": "NT999999998FR",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "chronopost"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "NTG999000001",
     "carrier": "unknown",
     "confidence": "low",

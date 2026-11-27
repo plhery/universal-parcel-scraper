@@ -1592,6 +1592,10 @@
       {
         "pattern": "^GC\\d{9}FR$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^NT\\d{9}FR$",
+        "confidence": "low"
       }
     ]
   },
