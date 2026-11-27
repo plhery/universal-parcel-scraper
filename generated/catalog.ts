@@ -12594,9 +12594,20 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "localClocks": true
     },
     "canaryUrl": "https://bigfootexpress.pperfect.com/",
+    "trackingUrlTemplate": "https://bigfootexpress.pperfect.com/?w={trackingNumber}",
     "trackingSearchUrl": "https://bigfootexpress.pperfect.com/",
     "helpUrl": "https://www.bigfootexpress.co.za/contact/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "bigfootexpress.pperfect.com"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "w"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "bigpost": {
@@ -36551,9 +36562,20 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "localClocks": true
     },
     "canaryUrl": "https://intertown.pperfect.com/",
+    "trackingUrlTemplate": "https://intertown.pperfect.com/?w={trackingNumber}",
     "trackingSearchUrl": "https://intertown.pperfect.com/",
     "helpUrl": "https://www.intertown.co.za/contact/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "intertown.pperfect.com"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "w"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "intex-courier": {

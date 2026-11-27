@@ -27,6 +27,7 @@
     "location"
   ],
   "portal": {
+    "url": "https://intertown.pperfect.com/?w={trackingNumber}",
     "searchUrl": "https://intertown.pperfect.com/",
     "helpUrl": "https://www.intertown.co.za/contact/",
     "canaryUrl": "https://intertown.pperfect.com/",
@@ -43,6 +44,16 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "intertown.pperfect.com"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "w"
+      ]
+    }
+  ],
   "detection": []
 }

@@ -21,6 +21,9 @@ shared rules. The depot captures the consignment and marks it ready for collecti
 driver has collected it, so those scans keep the stage the parcel has. "Dispatched" is a vehicle
 leaving: after the parcel is loaded for delivery, it is the delivery round.
 
+`bigfootexpress.pperfect.com/?w=<waybill>` opens one waybill: the page stores the number and moves
+to its waybill view, whose address no longer holds it.
+
 ## Testing
 
 `BIGFOOT_EXPRESS_TRACKING_NUMBER=… BIGFOOT_EXPRESS_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/bigfoot-express`

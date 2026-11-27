@@ -34,6 +34,7 @@
     "location"
   ],
   "portal": {
+    "url": "https://bigfootexpress.pperfect.com/?w={trackingNumber}",
     "searchUrl": "https://bigfootexpress.pperfect.com/",
     "helpUrl": "https://www.bigfootexpress.co.za/contact/",
     "canaryUrl": "https://bigfootexpress.pperfect.com/",
@@ -50,6 +51,16 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "bigfootexpress.pperfect.com"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "w"
+      ]
+    }
+  ],
   "detection": []
 }

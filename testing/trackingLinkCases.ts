@@ -404,6 +404,12 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/booking\.time-matters\.com\/en-US\/tracking\/S0000199$/,
     marker: /Where is my order\?/ },
   // The ParcelPerfect page stores the waybill and moves to its waybill view, which names an unknown one only by its answer.
+  { carrier: 'bigfoot-express', number: '00000000',
+    route: /^https:\/\/bigfootexpress\.pperfect\.com\/(?:\?w=00000000|view\/waybill)$/,
+    marker: /Shipment not Found|Orig Hub:/i, forwarding: { notFound: /We could not find a shipment with that identifier/i } },
+  { carrier: 'intertown-transport', number: '00000000',
+    route: /^https:\/\/intertown\.pperfect\.com\/(?:\?w=00000000|view\/waybill)$/,
+    marker: /Shipment not Found|Orig Hub:/i, forwarding: { notFound: /We could not find a shipment with that identifier/i } },
   { carrier: 'primetime-express', number: '00000000',
     route: /^https:\/\/primetimeexpress\.pperfect\.com\/(?:\?w=00000000|view\/waybill)$/,
     marker: /Shipment not Found|Orig Hub:/i, forwarding: { notFound: /We could not find a shipment with that identifier/i } },
