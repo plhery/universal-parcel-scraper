@@ -2043,12 +2043,6 @@
   },
   {
     "carrier": "gls-ro",
-    "pattern": "^\\d{11}$",
-    "kind": "by_design",
-    "reason": "Eleven digits are GLS's international parcel numbers, which other GLS networks track too, and GLS Romania's national numbers written with a leading zero; neither names GLS Romania."
-  },
-  {
-    "carrier": "gls-ro",
     "pattern": "^\\d{10}$",
     "kind": "open",
     "reason": "Detection does not offer GLS Romania for its ten-digit national numbers, a bare run of digits other carriers print too."
