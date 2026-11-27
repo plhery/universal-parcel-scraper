@@ -1526,6 +1526,19 @@ export function relayedWordingStage(carrier: string, description: string): Stage
   return map?.wholeWording && wording ? map.stage(null, wording) : undefined;
 }
 
+/**
+ * For a carrier whose map reads the scans after a return began as the trip back (`returnTrip`), whether its map
+ * reads a scan's wording as the return; undefined for every other carrier.
+ */
+export function returnTripStart(carrier: string): ((description: string) => boolean) | undefined {
+  const map = carrier === UNIVERSAL_CARRIER ? undefined : carrierStatusMap(carrier);
+  if (!map?.returnTrip) return undefined;
+  return (description) => {
+    const wording = normalizeStatusWording(description);
+    return !!wording && map.stage(null, wording) === 'returned';
+  };
+}
+
 export function statusMapAnswer(observed: ObservedStatus): StatusMapAnswer {
   const map = carrierStatusMap(observed.carrier);
   const wording = normalizeStatusWording(observed.description);

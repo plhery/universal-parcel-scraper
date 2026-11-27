@@ -42,6 +42,12 @@ export interface CarrierStatusMap {
    * (`relayedWordingStage`).
    */
   readonly wholeWording?: boolean;
+  /**
+   * Why the carrier's own answer reads the scans after a return began as the trip back to the sender: once its
+   * map reads a scan as `returned`, the later movements are the return and the sender's delivery its end. A
+   * universal provider's copy of the carrier's history reads them so too (`withReturnTrip`).
+   */
+  readonly returnTrip?: string;
 }
 
 /** Lower case, single spaces and at most 500 characters: the form the app keys its observations on. */

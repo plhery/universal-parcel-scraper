@@ -39,6 +39,7 @@ import { adapter as track718Adapter } from './track718/adapter.js';
 import { adapter as track123Adapter } from './track123/adapter.js';
 import { adapter as upuAdapter } from './upu/adapter.js';
 import { numberOf, type UniversalSource as Source } from './shared/result.js';
+import { withReturnTrip } from './shared/returnTrip.js';
 import { withScopedWording } from './shared/scoped.js';
 import { withoutScriptCopies } from './shared/scripts.js';
 
@@ -218,7 +219,7 @@ export class UniversalTracker {
       throw new NoHistoryError(source, `${source} names another carrier, or none, for a number this short`, { reason: 'unattributed_history' });
     }
     const history = withoutMinuteCopies(withoutScriptCopies(withScopedWording(result, source), source));
-    return readLateAcceptances(readLateRegistrations(withoutRepeatedScans(history, { distinguishCodes: true })));
+    return withReturnTrip(readLateAcceptances(readLateRegistrations(withoutRepeatedScans(history, { distinguishCodes: true }))), carrier);
   }
 
   /** One provider adapter, built from this tracker's environment. */

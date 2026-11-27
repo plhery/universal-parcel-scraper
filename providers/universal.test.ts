@@ -247,6 +247,21 @@ describe('universal discovery chain', () => {
     }
   });
 
+  it("reads a provider's copy of a USPS return as USPS does: the facility scans after it are the trip back", async () => {
+    // A public sample of jkeen/tracking_number_data; the scans are synthetic.
+    const usps = '9400111201080805483016';
+    const ship24History = { data: { tracking_number: usps, events: [
+      { timestamp: '2026-11-01T18:54:00Z', status: 'Arrived at USPS Facility' },
+      { timestamp: '2026-10-30T19:13:00Z', status: 'Return to Sender Processed' },
+      { timestamp: '2026-10-30T15:02:00Z', status: 'Out for Delivery' },
+    ] } };
+    const tracker = new UniversalTracker({ providers: ['Ship24'], fetcher: vi.fn<typeof fetch>().mockImplementation(async () => reply(ship24History)) });
+    const read = await tracker.fetchSource('Ship24', usps, 20_000, null, null, undefined, null, 'usps');
+    expect(read).toMatchObject({ current_stage: 'returned', tracking_provider: 'Ship24' });
+    expect(read.events?.map((event) => event.stage)).toEqual(['returned', 'returned', 'out_for_delivery']);
+    await expect(tracker.fetchSource('Ship24', usps, 20_000)).resolves.toMatchObject({ current_stage: 'in_transit' });
+  });
+
   it('forwards a stored delivery postcode into the provider track input', async () => {
     const ship24History = { data: { tracking_number: number,
       events: [{ timestamp: '2026-09-10T10:00:00+02:00', status: 'Delivered', dispatch_code_id: 7 }] } };

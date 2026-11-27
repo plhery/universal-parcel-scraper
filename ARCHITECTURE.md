@@ -623,6 +623,10 @@ stages the scan by that carrier's map when the map declares that it reads wordin
 whole (`wholeWording`), with the source `carrier_map` (`relayedWordingStage()`). A map that reads
 such wording by keywords is left out: a relayed sentence can carry its words in another sense.
 The `unknown` map cannot tell those scans apart, so it can read them otherwise.
+A carrier whose own answer reads the scans after a return began as the trip back, as USPS's
+does, declares it on its map (`returnTrip`). A provider's answer for that carrier then reads
+the scans from the oldest one the map reads as the return the same way, with the source
+`carrier_map` ([returnTrip.ts](providers/shared/returnTrip.ts)).
 A word one carrier uses in a sense of its own, which the shared rules leave open or read
 otherwise, is a scoped rule ([core/status/scoped.ts](core/status/scoped.ts)): the carrier, the
 providers whose copies it reads when only some relay the word so, the whole wording and the

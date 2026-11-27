@@ -118,4 +118,6 @@ const REMINDER_NOTE = "USPS's reminder to book a redelivery, sent days after its
 export const statusMap: CarrierStatusMap = {
   stage: (_code, wording) => uspsStage(wording) ?? undefined,
   gaps: [{ wording: 'reminder to schedule redelivery of your item', note: REMINDER_NOTE }],
+  returnTrip: "After Return to Sender Processed or Refused, USPS's facility, out-for-delivery and delivery scans are "
+    + 'the item on its way back to the sender, as the adapter reads them.',
 };
