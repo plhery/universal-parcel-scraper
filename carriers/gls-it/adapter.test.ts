@@ -304,6 +304,32 @@ describe('GLS Italy direct tracking', () => {
     await expect(new GLSItalyTracker({ fetcher: large }).fetch(NUMBER)).rejects.toThrow('unexpectedly large');
   });
 
+  it('asks a shipment the tracker does not find once more when tracking, and keeps the not-found otherwise', async () => {
+    const notFound = () => reply(fixture('not-found'), 404);
+    const cases = [
+      [[notFound(), reply()], 'delivered'],
+      [[notFound(), notFound()], 'not_found'],
+      [[notFound(), reply({ exceptionText: 'Internal system error [x].' }, 500)], 'not_found'],
+    ] as const;
+    for (const [replies, outcome] of cases) {
+      const fetcher = vi.fn<typeof fetch>();
+      for (const answer of replies) fetcher.mockResolvedValueOnce(answer);
+      const step = vi.fn();
+      const tracked = adapter({ ...environment(fetcher), recorder: { step, lookup() {} } }).track({ number: NUMBER });
+      if (outcome === 'delivered') await expect(tracked).resolves.toMatchObject({ status: 'delivered' });
+      else await expect(tracked).rejects.toMatchObject({ kind: outcome, provider: 'GLS Italy' });
+      expect(fetcher).toHaveBeenCalledTimes(2);
+      expect(step.mock.calls.map(([event]) => [event.step, event.outcome]))
+        .toEqual([['direct', 'not_found'], ['recheck', outcome === 'delivered' ? 'ok' : 'not_found']]);
+    }
+    // Without the time for a pause and a request, the not-found stands; recognition takes the first answer.
+    const once = vi.fn<typeof fetch>(async () => notFound());
+    await expect(adapter(environment(once)).track({ number: NUMBER }, { budgetMs: 2_500 })).rejects.toMatchObject({ kind: 'not_found' });
+    expect(await adapter(environment(once)).recognize!(NUMBER)).toEqual({ known: false });
+    expect(once).toHaveBeenCalledTimes(2);
+    expect(adapter(environment(once)).steps).toEqual(['direct', 'retry', 'recheck']);
+  });
+
   it('recognizes a known shipment and treats only the no-results notice as unknown', async () => {
     const known = vi.fn<typeof fetch>(async () => reply());
     const instance = adapter(environment(known));

@@ -11,6 +11,12 @@ tracking page.
    browser is needed.
 2. `retry`: one more try when the request fails to reach GLS or hangs. The first try gets
    half of the budget.
+3. `recheck`: when tracking, a shipment the tracker answers not found is asked once more after
+   a second's pause. Now and then, mostly around the Italian late morning, the tracker answers
+   not found for a shipment it holds and lists it again moments later. Only the second answer's
+   shipment or not-found replaces the first; its other failures leave the not-found.
+   Recognition takes the first answer, since a number the tracker does not find is most often
+   another carrier's.
 
 The GLS group tracker that GLS Switzerland and Germany use does not know Italian national
 numbers, so this adapter does not share their route.
@@ -75,9 +81,8 @@ rejects, so the catalog link carries it.
 - Parcel numbers, delivery-note references and international searches are not supported.
 - A shipment forwarded or returned under a new number is not followed.
 - No delivery estimate beyond a booked redelivery's day, no pickup point or sender name.
-- Older shipments drop out of the tracker and come back not found. Now and then it also answers
-  not found for a shipment it holds, then lists it again on the next lookup: the not-found is
-  the tracker's own answer, and a consumer with saved history keeps it.
+- Older shipments drop out of the tracker and come back not found. A not-found the recheck
+  confirms is still the tracker's own answer, so a consumer with saved history keeps it.
 
 ## Testing
 
