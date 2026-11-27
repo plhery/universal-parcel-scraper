@@ -1,0 +1,59 @@
+{
+  "carrier": "tmw-express",
+  "entries": [
+    {
+      "code": "4",
+      "wording": "包裏分拣完毕，等待机场揽收",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "bundle",
+      "note": "The first step the tracker shows: sorted at TMW Express's depot, waiting for the airport."
+    },
+    {
+      "code": "6",
+      "wording": "珀斯机场海关揽收",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle",
+      "note": "Collected at Perth Airport for export clearance, a routine step before the flight."
+    },
+    {
+      "code": "7",
+      "wording": "澳洲境内中转",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "8",
+      "wording": "航班中转",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "10",
+      "wording": "已抵达中国海关监管仓库，清关中",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "bundle",
+      "note": "In a Chinese customs warehouse with the clearance under way."
+    },
+    {
+      "code": "12",
+      "wording": "中国海关审完单，过机理货中",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "bundle",
+      "note": "Documents checked; the X-ray and tally are still under way."
+    },
+    {
+      "code": "99",
+      "wording": "等待国内派送",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle",
+      "note": "Waiting for the Chinese courier that delivers."
+    }
+  ]
+}

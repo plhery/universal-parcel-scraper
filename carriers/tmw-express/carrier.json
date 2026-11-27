@@ -1,0 +1,79 @@
+{
+  "id": "tmw-express",
+  "displayName": "TMW Express",
+  "aliases": [
+    "明达速递",
+    "明达国际速递",
+    "Mingda Express"
+  ],
+  "region": {
+    "countries": [
+      "AU",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#066ebb"
+  },
+  "selectable": true,
+  "timezone": "Australia/Perth",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "tmw-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://www.tmw-express.com.au/#/my/checkLogistics?doccode={trackingNumber}",
+    "searchUrl": "https://www.tmw-express.com.au/",
+    "canaryUrl": "https://www.tmw-express.com.au/",
+    "shows": [
+      "history"
+    ],
+    "scraped": [
+      "history",
+      "provider_code"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "location",
+      "eta",
+      "weight",
+      "service_name",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "tmw-express.com.au"
+      ],
+      "pathPattern": "^/(?:index\\.html)?$",
+      "fragment": "^/my/checkLogistics\\?(?:[^#]*&)?doccode=([^&,]+)"
+    },
+    {
+      "domains": [
+        "meian.expressgo.cn",
+        "shop.expressgo.cn"
+      ],
+      "pathPattern": "^/wx-query/queryOrder\\.html$",
+      "params": [
+        "doc"
+      ]
+    }
+  ],
+  "detection": []
+}

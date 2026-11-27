@@ -1,0 +1,22 @@
+{
+  "msg": "",
+  "code": "success",
+  "data": {
+    "airStepList": [
+      { "stepno": 0, "steptype": "Synthetic hidden step", "steptime": "2026-03-01 09:12:00" },
+      { "stepno": 2, "steptype": "Synthetic hidden step", "steptime": "2026-03-01 15:40:00" },
+      { "stepno": 4, "steptype": "包裏分拣完毕，等待机场揽收", "steptime": "2026-03-02 10:00:00" },
+      { "stepno": 6, "steptype": "珀斯机场海关揽收", "steptime": "2026-03-03 08:30:00" },
+      { "stepno": 8, "steptype": "航班中转", "steptime": "2026-03-04 00:00:00" },
+      { "stepno": 10, "steptype": "已抵达中国海关监管仓库，清关中", "steptime": "2026-03-05 14:20:00" },
+      { "stepno": 12, "steptype": "中国海关审完单，过机理货中", "steptime": "2026-03-06 11:05:00" },
+      { "stepno": 99, "steptype": "等待国内派送", "steptime": "2026-03-07 16:45:00" }
+    ],
+    "logisticsrecordList": [
+      { "time": "2026-03-10 15:02:11", "ftime": "2026-03-10 15:02:11", "context": "【合成市】您的快件已签收，签收人：本人。" },
+      { "time": "2026-03-10 08:31:40", "ftime": "2026-03-10 08:31:40", "context": "【合成市】派件员：合成名 电话：13800138000 正在为您派件" },
+      { "time": "2026-03-09 21:14:03", "ftime": "2026-03-09 21:14:03", "context": "快件已到达【合成转运中心】" },
+      { "time": "2026-03-08 18:09:57", "ftime": "2026-03-08 18:09:57", "context": "【合成市】快递员【合成名】已揽收" }
+    ]
+  }
+}
