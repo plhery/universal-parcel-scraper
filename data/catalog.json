@@ -29612,6 +29612,44 @@
       }
     ]
   },
+  "fst-express": {
+    "displayName": "FST Express",
+    "color": "#496545",
+    "aliases": [
+      "FST EXPRESS PTY LTD",
+      "Fstexpress"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "fst-express"
+    },
+    "canaryUrl": "https://www.fstexpress.com.au/track_and_trace/",
+    "trackingUrlTemplate": "https://www.fstexpress.com.au/track_and_trace/?jobno={trackingNumber}",
+    "trackingSearchUrl": "https://www.fstexpress.com.au/track_and_trace/",
+    "helpUrl": "https://www.fstexpress.com.au/contact-us/",
+    "linkRules": [
+      {
+        "domains": [
+          "fstexpress.com.au"
+        ],
+        "pathPattern": "^/(?:cn/)?track_and_trace/?$",
+        "params": [
+          "jobno"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^SAUZ\\d{9}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "ftd-nz": {
     "displayName": "FTD New Zealand",
     "color": "#00a54f",
@@ -33710,6 +33748,32 @@
     ],
     "detectionRules": []
   },
+  "high-energy-transport": {
+    "displayName": "High Energy Transport",
+    "color": "#5e229c",
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "high-energy-transport"
+    },
+    "canaryUrl": "https://highenergytransport.dispatchtrack.com/track_order/f7ea831",
+    "trackingUrlTemplate": "https://highenergytransport.dispatchtrack.com/track_order/f7ea831/{trackingNumber}",
+    "trackingSearchUrl": "https://highenergytransport.dispatchtrack.com/track_order/f7ea831",
+    "trackingSiteName": "DispatchTrack",
+    "linkRules": [
+      {
+        "domains": [
+          "highenergytransport.dispatchtrack.com"
+        ],
+        "path": "^/(?:a22/)?track_order/f7ea831/([^/?#]+)(?:/[^/?#]+)?/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "hintzen": {
     "displayName": "Hintzen Logistik",
     "color": "#164194",
@@ -35086,6 +35150,44 @@
     "trackingSearchUrl": "https://hztgjwl.com/query/",
     "helpUrl": "https://hztgjwl.com/contact/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "iberomail": {
+    "displayName": "Iberomail",
+    "color": "#1273E6",
+    "aliases": [
+      "Iberomail, SA"
+    ],
+    "countries": [
+      "PT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Lisbon",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "iberomail",
+      "localClocks": true
+    },
+    "canaryUrl": "https://iberomail.com/track-trace/",
+    "trackingUrlTemplate": "https://iberomail.com/track-trace/{trackingNumber}/",
+    "trackingSearchUrl": "https://iberomail.com/track-trace/",
+    "helpUrl": "https://iberomail.com/contactos/",
+    "linkRules": [
+      {
+        "domains": [
+          "iberomail.com"
+        ],
+        "pathPattern": "^/track-trace/[^/]+/?$",
+        "path": "^/track-trace/([A-Za-z0-9]+)/?$"
+      },
+      {
+        "domains": [
+          "iberomail.com"
+        ],
+        "pathPattern": "^/TrackAndTrace/?$",
+        "fragment": "^/(?:track/)?([A-Za-z0-9]+)$"
+      }
+    ],
     "detectionRules": []
   },
   "ibex-express-bo": {
@@ -36580,6 +36682,38 @@
     "trackingSearchUrl": "https://www.ipostel.gob.ve/",
     "helpUrl": "https://www.ipostel.gob.ve/atencion-al-ciudadano/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "iqfulfillment": {
+    "displayName": "IQ Fulfillment",
+    "color": "#520D72",
+    "aliases": [
+      "IQFulfillment"
+    ],
+    "countries": [
+      "AE"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Dubai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "iqfulfillment"
+    },
+    "canaryUrl": "https://track.iqfulfillment.com/",
+    "trackingUrlTemplate": "https://track.iqfulfillment.com/?deliveryNo={trackingNumber}",
+    "trackingSearchUrl": "https://track.iqfulfillment.com/",
+    "helpUrl": "https://www.iqfulfillment.com/contact-us/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.iqfulfillment.com"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "deliveryNo"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "iran-post": {
@@ -39882,6 +40016,46 @@
     ],
     "detectionRules": []
   },
+  "king-delivery": {
+    "displayName": "King Delivery",
+    "color": "#104E82",
+    "aliases": [
+      "快达物流",
+      "快达",
+      "KuaiDa Logistics",
+      "Beijing KuaiDa International Logistics",
+      "北京快达国际物流服务有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "king-delivery",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.kuaidaexp.com/",
+    "trackingUrlTemplate": "https://www.kuaidaexp.com/cgi-bin/GInfo.dll?MfcISAPICommand=emmistrack&w=kuaidaexp&ntype=10001&cno={trackingNumber}",
+    "trackingSearchUrl": "https://www.kuaidaexp.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.kuaidaexp.com",
+          "kuaidaexp.com"
+        ],
+        "pathPattern": "^/cgi-bin/ginfo\\.dll$",
+        "query": "^(?=(?:.*&)?MfcISAPICommand=(?:emmistrack|EmsApiTrack)(?:&|$))(?:.*&)?cno=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^KDZGZ\\d{9}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "king-kong-express": {
     "displayName": "King Kong Express",
     "color": "#21347c",
@@ -41278,6 +41452,45 @@
     "trackingSearchUrl": "https://tracking.latamglobalexpress.com/",
     "linkRules": [],
     "detectionRules": []
+  },
+  "latam-you": {
+    "displayName": "Latam You",
+    "color": "#30058d",
+    "aliases": [
+      "拉美邮",
+      "LatamYou"
+    ],
+    "countries": [
+      "BR",
+      "CL",
+      "MX",
+      "CO",
+      "PE"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "latam-you"
+    },
+    "canaryUrl": "https://latamyou.com/",
+    "trackingUrlTemplate": "https://latamyou.com/#/newTrack?no={trackingNumber}",
+    "trackingSearchUrl": "https://latamyou.com/#/newTrack",
+    "linkRules": [
+      {
+        "domains": [
+          "latamyou.com"
+        ],
+        "pathPattern": "^/?$",
+        "fragment": "^/newTrack\\?(?:[^#]*&)?no=([^&]+)"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^LTY[A-Z]{2}PD\\d{10}$",
+        "confidence": "high"
+      }
+    ]
   },
   "latvijas-pasts": {
     "displayName": "Latvijas Pasts",
@@ -50431,6 +50644,44 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "pass-the-parcel": {
+    "displayName": "Pass the Parcel",
+    "color": "#330072",
+    "aliases": [
+      "PassTheParcel"
+    ],
+    "countries": [
+      "NZ"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Auckland",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pass-the-parcel"
+    },
+    "canaryUrl": "https://www.passtheparcel.co.nz/Pass/Track",
+    "trackingUrlTemplate": "https://www.passtheparcel.co.nz/Pass/Track?barcode={trackingNumber}",
+    "trackingSearchUrl": "https://www.passtheparcel.co.nz/Pass/Track",
+    "helpUrl": "https://www.passtheparcel.co.nz/Contact",
+    "linkRules": [
+      {
+        "domains": [
+          "passtheparcel.co.nz",
+          "www.passtheparcel.co.nz"
+        ],
+        "pathPattern": "^/(?:Pass|Customer)/Track/?$",
+        "params": [
+          "barcode"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^1RBB(?![0-9A-F]{12}$)[0-9A-Z]{12}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "passport": {
     "displayName": "Passport",
     "color": "#00e796",
@@ -56680,12 +56931,21 @@
     "timezone": "America/New_York",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ryder-last-mile"
     },
-    "canaryUrl": "https://www.ryder.com/en-us/logistics/last-mile-delivery/tracking",
+    "canaryUrl": "https://mxd.dispatchtrack.com/track_order/6b8db72",
+    "trackingUrlTemplate": "https://mxd.dispatchtrack.com/track_order/6b8db72/{trackingNumber}",
     "trackingSearchUrl": "https://www.ryder.com/en-us/logistics/last-mile-delivery/tracking",
+    "trackingSiteName": "DispatchTrack",
     "helpUrl": "https://www.ryder.com/en-us/contact-us",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "mxd.dispatchtrack.com"
+        ],
+        "path": "^/(?:a22/)?track_order/6b8db72/([^/?#]+)(?:/[^/?#]+)?/?$"
+      }
+    ],
     "detectionRules": []
   },
   "saco-shipping-line": {
@@ -64131,6 +64391,39 @@
         "pathPattern": "^/Skybill/TrackSkybill/?$",
         "params": [
           "awb"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "tfmxpress": {
+    "displayName": "TFMXpress",
+    "color": "#E50019",
+    "aliases": [
+      "TFMXPRESS PTY LIMITED",
+      "TFM Xpress"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Melbourne",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "tfmxpress"
+    },
+    "canaryUrl": "https://www.ezyfms.com/tfm/tracker.asp",
+    "trackingUrlTemplate": "https://www.ezyfms.com/tfm/Tracker.asp?CN={trackingNumber}",
+    "trackingSearchUrl": "https://www.ezyfms.com/tfm/tracker.asp",
+    "linkRules": [
+      {
+        "domains": [
+          "www.ezyfms.com",
+          "ezyfms.com"
+        ],
+        "pathPattern": "^/tfm/tracker\\.asp$",
+        "params": [
+          "CN"
         ]
       }
     ],

@@ -414,6 +414,7 @@ import { adapter as freightClub } from '../carriers/freight-club/adapter.js';
 import { adapter as freightwaysGlobal } from '../carriers/freightways-global/adapter.js';
 import { adapter as frontierCa } from '../carriers/frontier-ca/adapter.js';
 import { adapter as fsqh } from '../carriers/fsqh/adapter.js';
+import { adapter as fstExpress } from '../carriers/fst-express/adapter.js';
 import { adapter as ftdNz } from '../carriers/ftd-nz/adapter.js';
 import { adapter as fukuyama } from '../carriers/fukuyama/adapter.js';
 import { adapter as fxdcPost } from '../carriers/fxdc-post/adapter.js';
@@ -495,6 +496,7 @@ import { adapter as heungALine } from '../carriers/heung-a-line/adapter.js';
 import { adapter as hgd } from '../carriers/hgd/adapter.js';
 import { adapter as hhh } from '../carriers/hhh/adapter.js';
 import { adapter as hiTrans } from '../carriers/hi-trans/adapter.js';
+import { adapter as highEnergyTransport } from '../carriers/high-energy-transport/adapter.js';
 import { adapter as hispapost } from '../carriers/hispapost/adapter.js';
 import { adapter as hitCargoNicaragua } from '../carriers/hit-cargo-nicaragua/adapter.js';
 import { adapter as hitch } from '../carriers/hitch/adapter.js';
@@ -525,6 +527,7 @@ import { adapter as hunterExpress } from '../carriers/hunter-express/adapter.js'
 import { adapter as huuneh } from '../carriers/huuneh/adapter.js';
 import { adapter as hytd } from '../carriers/hytd/adapter.js';
 import { adapter as hywl } from '../carriers/hywl/adapter.js';
+import { adapter as iberomail } from '../carriers/iberomail/adapter.js';
 import { adapter as ibexExpressBo } from '../carriers/ibex-express-bo/adapter.js';
 import { adapter as icasaCargo } from '../carriers/icasa-cargo/adapter.js';
 import { adapter as iccWorldwide } from '../carriers/icc-worldwide/adapter.js';
@@ -550,6 +553,7 @@ import { adapter as interrapidisimo } from '../carriers/interrapidisimo/adapter.
 import { adapter as intertownTransport } from '../carriers/intertown-transport/adapter.js';
 import { adapter as intexPaketdienst } from '../carriers/intex-paketdienst/adapter.js';
 import { adapter as intrasJp } from '../carriers/intras-jp/adapter.js';
+import { adapter as iqfulfillment } from '../carriers/iqfulfillment/adapter.js';
 import { adapter as israelPost } from '../carriers/israel-post/adapter.js';
 import { adapter as jAndT } from '../carriers/j-and-t/adapter.js';
 import { adapter as jAndTAu } from '../carriers/j-and-t-au/adapter.js';
@@ -603,6 +607,7 @@ import { adapter as kekeInternational } from '../carriers/keke-international/ada
 import { adapter as kenyaAirwaysCargo } from '../carriers/kenya-airways-cargo/adapter.js';
 import { adapter as kex } from '../carriers/kex/adapter.js';
 import { adapter as kexExpressHk } from '../carriers/kex-express-hk/adapter.js';
+import { adapter as kingDelivery } from '../carriers/king-delivery/adapter.js';
 import { adapter as kingKongExpress } from '../carriers/king-kong-express/adapter.js';
 import { adapter as kingSolutions } from '../carriers/king-solutions/adapter.js';
 import { adapter as kitTk } from '../carriers/kit-tk/adapter.js';
@@ -630,6 +635,7 @@ import { adapter as landmarkGlobal } from '../carriers/landmark-global/adapter.j
 import { adapter as laserLogistics } from '../carriers/laser-logistics/adapter.js';
 import { adapter as lastOneMileCoop } from '../carriers/last-one-mile-coop/adapter.js';
 import { adapter as latamCargo } from '../carriers/latam-cargo/adapter.js';
+import { adapter as latamYou } from '../carriers/latam-you/adapter.js';
 import { adapter as latvijasPasts } from '../carriers/latvijas-pasts/adapter.js';
 import { adapter as lbcExpress } from '../carriers/lbc-express/adapter.js';
 import { adapter as ledaExpress } from '../carriers/leda-express/adapter.js';
@@ -788,6 +794,7 @@ import { adapter as parcelpoint } from '../carriers/parcelpoint/adapter.js';
 import { adapter as pargo } from '../carriers/pargo/adapter.js';
 import { adapter as pasarex } from '../carriers/pasarex/adapter.js';
 import { adapter as pashaHawaii } from '../carriers/pasha-hawaii/adapter.js';
+import { adapter as passTheParcel } from '../carriers/pass-the-parcel/adapter.js';
 import { adapter as passport } from '../carriers/passport/adapter.js';
 import { adapter as pathaoCourier } from '../carriers/pathao-courier/adapter.js';
 import { adapter as paxel } from '../carriers/paxel/adapter.js';
@@ -903,6 +910,7 @@ import { adapter as runforint } from '../carriers/runforint/adapter.js';
 import { adapter as runnerExpress } from '../carriers/runner-express/adapter.js';
 import { adapter as russianPost } from '../carriers/russian-post/adapter.js';
 import { adapter as rxo } from '../carriers/rxo/adapter.js';
+import { adapter as ryderLastMile } from '../carriers/ryder-last-mile/adapter.js';
 import { adapter as sacoShippingLine } from '../carriers/saco-shipping-line/adapter.js';
 import { adapter as safewayExpressCargo } from '../carriers/safeway-express-cargo/adapter.js';
 import { adapter as safexpress } from '../carriers/safexpress/adapter.js';
@@ -1046,6 +1054,7 @@ import { adapter as techlink } from '../carriers/techlink/adapter.js';
 import { adapter as tejCouriers } from '../carriers/tej-couriers/adapter.js';
 import { adapter as teleship } from '../carriers/teleship/adapter.js';
 import { adapter as tfmExpress } from '../carriers/tfm-express/adapter.js';
+import { adapter as tfmxpress } from '../carriers/tfmxpress/adapter.js';
 import { adapter as tforceFreight } from '../carriers/tforce-freight/adapter.js';
 import { adapter as tforceLogistics } from '../carriers/tforce-logistics/adapter.js';
 import { adapter as thabitLogistics } from '../carriers/thabit-logistics/adapter.js';
@@ -1643,6 +1652,7 @@ export const REGISTRY: RegistryDefinition = {
     "freightways-global": freightwaysGlobal,
     "frontier-ca": frontierCa,
     "fsqh": fsqh,
+    "fst-express": fstExpress,
     "ftd-nz": ftdNz,
     "fukuyama": fukuyama,
     "fxdc-post": fxdcPost,
@@ -1724,6 +1734,7 @@ export const REGISTRY: RegistryDefinition = {
     "hgd": hgd,
     "hhh": hhh,
     "hi-trans": hiTrans,
+    "high-energy-transport": highEnergyTransport,
     "hispapost": hispapost,
     "hit-cargo-nicaragua": hitCargoNicaragua,
     "hitch": hitch,
@@ -1754,6 +1765,7 @@ export const REGISTRY: RegistryDefinition = {
     "huuneh": huuneh,
     "hytd": hytd,
     "hywl": hywl,
+    "iberomail": iberomail,
     "ibex-express-bo": ibexExpressBo,
     "icasa-cargo": icasaCargo,
     "icc-worldwide": iccWorldwide,
@@ -1779,6 +1791,7 @@ export const REGISTRY: RegistryDefinition = {
     "intertown-transport": intertownTransport,
     "intex-paketdienst": intexPaketdienst,
     "intras-jp": intrasJp,
+    "iqfulfillment": iqfulfillment,
     "israel-post": israelPost,
     "j-and-t": jAndT,
     "j-and-t-au": jAndTAu,
@@ -1832,6 +1845,7 @@ export const REGISTRY: RegistryDefinition = {
     "kenya-airways-cargo": kenyaAirwaysCargo,
     "kex": kex,
     "kex-express-hk": kexExpressHk,
+    "king-delivery": kingDelivery,
     "king-kong-express": kingKongExpress,
     "king-solutions": kingSolutions,
     "kit-tk": kitTk,
@@ -1859,6 +1873,7 @@ export const REGISTRY: RegistryDefinition = {
     "laser-logistics": laserLogistics,
     "last-one-mile-coop": lastOneMileCoop,
     "latam-cargo": latamCargo,
+    "latam-you": latamYou,
     "latvijas-pasts": latvijasPasts,
     "lbc-express": lbcExpress,
     "leda-express": ledaExpress,
@@ -2017,6 +2032,7 @@ export const REGISTRY: RegistryDefinition = {
     "pargo": pargo,
     "pasarex": pasarex,
     "pasha-hawaii": pashaHawaii,
+    "pass-the-parcel": passTheParcel,
     "passport": passport,
     "pathao-courier": pathaoCourier,
     "paxel": paxel,
@@ -2132,6 +2148,7 @@ export const REGISTRY: RegistryDefinition = {
     "runner-express": runnerExpress,
     "russian-post": russianPost,
     "rxo": rxo,
+    "ryder-last-mile": ryderLastMile,
     "saco-shipping-line": sacoShippingLine,
     "safeway-express-cargo": safewayExpressCargo,
     "safexpress": safexpress,
@@ -2275,6 +2292,7 @@ export const REGISTRY: RegistryDefinition = {
     "tej-couriers": tejCouriers,
     "teleship": teleship,
     "tfm-express": tfmExpress,
+    "tfmxpress": tfmxpress,
     "tforce-freight": tforceFreight,
     "tforce-logistics": tforceLogistics,
     "thabit-logistics": thabitLogistics,
@@ -3182,6 +3200,7 @@ export const REGISTRY: RegistryDefinition = {
     "frontdoor-collective": "universal",
     "frontier-ca": "frontier-ca",
     "fsqh": "fsqh",
+    "fst-express": "fst-express",
     "ftd-nz": "ftd-nz",
     "fudu-logistics": "universal",
     "fukuyama": "fukuyama",
@@ -3308,6 +3327,7 @@ export const REGISTRY: RegistryDefinition = {
     "hgd": "hgd",
     "hhh": "hhh",
     "hi-trans": "hi-trans",
+    "high-energy-transport": "high-energy-transport",
     "hintzen": "universal",
     "hispapost": "hispapost",
     "hit-cargo-nicaragua": "hit-cargo-nicaragua",
@@ -3354,6 +3374,7 @@ export const REGISTRY: RegistryDefinition = {
     "hytd": "hytd",
     "hywl": "hywl",
     "hzt": "universal",
+    "iberomail": "iberomail",
     "ibex-express-bo": "ibex-express-bo",
     "icasa-cargo": "icasa-cargo",
     "icc-courier-gr": "universal",
@@ -3400,6 +3421,7 @@ export const REGISTRY: RegistryDefinition = {
     "intl-post": "universal",
     "intras-jp": "intras-jp",
     "ipostel": "universal",
+    "iqfulfillment": "iqfulfillment",
     "iran-post": "universal",
     "irs-romexpress": "universal",
     "islandwide-express": "universal",
@@ -3499,6 +3521,7 @@ export const REGISTRY: RegistryDefinition = {
     "khazenly": "universal",
     "khubani-air-pack": "universal",
     "kilbourne": "universal",
+    "king-delivery": "king-delivery",
     "king-kong-express": "king-kong-express",
     "king-solutions": "king-solutions",
     "kit-tk": "kit-tk",
@@ -3544,6 +3567,7 @@ export const REGISTRY: RegistryDefinition = {
     "last-one-mile-coop": "last-one-mile-coop",
     "latam-cargo": "latam-cargo",
     "latam-global-express": "universal",
+    "latam-you": "latam-you",
     "latvijas-pasts": "latvijas-pasts",
     "lbc-express": "lbc-express",
     "lbtx": "universal",
@@ -3827,6 +3851,7 @@ export const REGISTRY: RegistryDefinition = {
     "parxl": "universal",
     "pasarex": "pasarex",
     "pasha-hawaii": "pasha-hawaii",
+    "pass-the-parcel": "pass-the-parcel",
     "passport": "passport",
     "pathao-courier": "pathao-courier",
     "patrus": "universal",
@@ -4016,7 +4041,7 @@ export const REGISTRY: RegistryDefinition = {
     "runner-express": "runner-express",
     "russian-post": "russian-post",
     "rxo": "rxo",
-    "ryder-last-mile": "universal",
+    "ryder-last-mile": "ryder-last-mile",
     "saco-shipping-line": "saco-shipping-line",
     "saee": "universal",
     "safeway-express-cargo": "safeway-express-cargo",
@@ -4240,6 +4265,7 @@ export const REGISTRY: RegistryDefinition = {
     "teleport": "universal",
     "teleship": "teleship",
     "tfm-express": "tfm-express",
+    "tfmxpress": "tfmxpress",
     "tforce-freight": "tforce-freight",
     "tforce-integrated-solutions": "universal",
     "tforce-logistics": "tforce-logistics",
