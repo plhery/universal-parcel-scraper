@@ -94,18 +94,23 @@ function childText(node: unknown, depth = 0): string {
 }
 
 /**
- * The tracking view's `data` objects, and the numbers the page's absence
- * sentence names. Every page also carries Next's generic 404 template, which
- * says nothing about the number and is not read.
+ * The tracking view's `data` objects, the numbers the page's absence sentence
+ * names, whether the route tree names the requested number as its segment
+ * (`["id", number, "d"]`), and whether a view lacks its number or its events.
+ * Every page also carries Next's generic 404 template, which says nothing
+ * about the number and is not read.
  */
-function scanRows(rows: unknown[]): { shipments: Record<string, unknown>[]; absent: string[] } {
+function scanRows(rows: unknown[], number: string): { shipments: Record<string, unknown>[]; absent: string[]; routed: boolean; partial: boolean } {
   const shipments = new Map<string, Record<string, unknown>>();
   const absent = new Set<string>();
+  let routed = false;
+  let partial = false;
   const stack: unknown[] = [...rows];
   for (let visited = 0; stack.length; visited += 1) {
     if (visited > MAX_NODES) throw new SchemaError(PROVIDER, 'SpeedX returned an oversized page');
     const node = stack.pop();
     if (Array.isArray(node)) {
+      if (node.length === 3 && node[1] === number && typeof node[0] === 'string' && typeof node[2] === 'string') routed = true;
       const props = node[0] === '$' && node.length === 4 && isRecord(node[3]) ? node[3] : null;
       const children = props?.children;
       if (Array.isArray(children) && typeof children[0] === 'string' && clean(children[0]) === ABSENT) {
@@ -117,11 +122,13 @@ function scanRows(rows: unknown[]): { shipments: Record<string, unknown>[]; abse
     } else if (isRecord(node)) {
       if (isRecord(node.data) && 'trackingNumber' in node.data && 'events' in node.data) {
         shipments.set(JSON.stringify(node.data), node.data);
+      } else if (isRecord(node.data) && ('trackingNumber' in node.data || 'events' in node.data)) {
+        partial = true;
       }
       for (const child of Object.values(node)) stack.push(child);
     }
   }
-  return { shipments: [...shipments.values()], absent: [...absent] };
+  return { shipments: [...shipments.values()], absent: [...absent], routed, partial };
 }
 
 interface Scan { event: CarrierEvent & { time: string; description: string }; timestamp: number; status?: ClassifiedStatus }
@@ -180,7 +187,7 @@ export function parseSpeedx(body: string, contentType: string | null, raw: strin
   }
   if (!type.includes('text/x-component')) throw new SchemaError(PROVIDER, 'SpeedX returned an unexpected tracking reply');
   const { rows, failures } = flightRows(body);
-  const { shipments, absent } = scanRows(rows);
+  const { shipments, absent, routed, partial } = scanRows(rows, number);
   if (absent.length && (shipments.length || absent.some((named) => named !== number))) {
     throw new SchemaError(PROVIDER, 'SpeedX answered for a different number');
   }
@@ -190,6 +197,10 @@ export function parseSpeedx(body: string, contentType: string | null, raw: strin
     // would be. A failed side component never hides a view that did render.
     if (failures.some((digest) => NEXT_CONTROL.test(digest))) throw new SchemaError(PROVIDER, 'SpeedX redirected or dropped its tracking page');
     if (failures.length) throw new IndeterminateError(PROVIDER, 'SpeedX could not render the tracking page');
+    // In short spells SpeedX serves the number's page with neither the view nor
+    // the unknown-number sentence, and the same parcel answers in full minutes
+    // later: no data yet, not a changed page.
+    if (routed && !partial) throw new IndeterminateError(PROVIDER, 'SpeedX served the tracking page without the shipment view');
     throw new SchemaError(PROVIDER, 'SpeedX returned no tracking data');
   }
   if (shipments.length > 1) throw new SchemaError(PROVIDER, 'SpeedX returned several shipments');

@@ -199,7 +199,13 @@ describe('SpeedX tracking page', () => {
     // Every page carries Next's generic not-found template; without the view it proves nothing.
     expect(DELIVERED).toContain('404: This page could not be found.');
     const templateOnly = DELIVERED.split('\n').filter((line) => !line.startsWith('e:')).join('\n');
-    expect(() => parse(templateOnly)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    // SpeedX serves the number's page without the view in short spells; the parcel answers later.
+    expect(() => parse(templateOnly)).toThrowError(expect.objectContaining({
+      kind: 'indeterminate', message: 'SpeedX served the tracking page without the shipment view',
+    }));
+    // Without the route naming the number, it is another page.
+    expect(() => parse(templateOnly, OTHER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    expect(() => parse(templateOnly.replace(`["id","${NUMBER}","d"]`, '["id","x","d"]'))).toThrowError(expect.objectContaining({ kind: 'schema' }));
     for (const page of [
       ABSENT.replace('is available at this time', 'is unavailable'),
       ABSENT.replace(`"children":"${NUMBER}"`, '"children":"$undefined"'),
@@ -213,6 +219,7 @@ describe('SpeedX tracking page', () => {
       withData((data) => { data.trackingNumber = OTHER; }),
       withData((data) => { data.trackingNumber = NUMBER.toLowerCase(); }),
       withData((data) => { delete data.trackingNumber; }),
+      withData((data) => { delete data.events; }),
       // Two different shipments, or a shipment next to an absence, are not one answer.
       withRow(DELIVERED, shipmentElement(dataOf(withData((data) => { data.trackingNumber = OTHER; })))),
       withRow(DELIVERED, shipmentElement({ ...dataOf(DELIVERED), events: [] })),

@@ -23,6 +23,10 @@ or a browser.
   rendered it), proves nothing and is indeterminate. Next's not-found and redirect signals
   arrive as error rows too; they mean the route changed and are a changed page. A failed
   side component does not hide a view that rendered.
+- In short spells SpeedX serves the number's page with neither the view nor the
+  unknown-number sentence, and the same parcel answers in full minutes later. That page is
+  indeterminate (no data yet) when its route names the requested number; a reply whose
+  route does not is a changed page.
 - Each event's `ts` is a UTC instant. It is written in the event's `timeZone`, where the
   page shows it, so a scan keeps its facility's clock. `localTs` restates the same instant
   and is not read; an event without a known zone stays in UTC.
