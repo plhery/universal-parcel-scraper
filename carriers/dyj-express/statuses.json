@@ -1,0 +1,24 @@
+{
+  "carrier": "dyj-express",
+  "entries": [
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The order's data, its first row, days before the warehouse's first row."},
+    {"code": "CO_C_CR", "wording": "warehouse and scanning is complete", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A row of the platform's custom track product at the Shenzhen warehouse, which the adapter holds back as written ahead and lists as a planned step."},
+    {"code": "CO_C_CR", "wording": "The package has been sorted and sent from the warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A custom track row, listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Departure from the starting port", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A custom track row, its place written again at the head of the wording; listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Hand over to airline", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A custom track row, listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Shipment arrived at airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A custom track row placed at Los Angeles, listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Complete customs clearance", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A custom track row placed at Los Angeles: import clearance done, the parcel goes on to USPS. Listed as a planned step."},
+    {"wording": "Shipping Label Created, USPS Awaiting Item", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "USPS's label, copied: USPS has the number but not the parcel."},
+    {"wording": "Accepted at USPS Origin Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "USPS's first scan, copied: USPS takes the parcel over from the line."},
+    {"wording": "Arrived at USPS Regional Origin Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "USPS's scan, copied."},
+    {"wording": "Departed USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "USPS's scan, copied."},
+    {"wording": "In Transit to Next Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "USPS's scan, copied; one came dated by its day alone."},
+    {"wording": "Arrived at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "USPS's scan, copied."},
+    {"wording": "Departed USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "USPS's scan, copied."},
+    {"wording": "Arrived at USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "USPS's scan, copied."},
+    {"wording": "In Transit, Arriving On Time", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "USPS's note while the parcel moves on schedule, copied."},
+    {"wording": "Arrived at Post Office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "USPS's delivering post office, copied before the round."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "USPS's round, copied."},
+    {"wording": "Delivered, Parcel Locker", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "USPS's delivery into a parcel locker, copied as the last row."}
+  ]
+}
