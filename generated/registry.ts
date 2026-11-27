@@ -539,6 +539,7 @@ import { adapter as icasaCargo } from '../carriers/icasa-cargo/adapter.js';
 import { adapter as iccWorldwide } from '../carriers/icc-worldwide/adapter.js';
 import { adapter as icsCourier } from '../carriers/ics-courier/adapter.js';
 import { adapter as idsLogistik } from '../carriers/ids-logistik/adapter.js';
+import { adapter as iflow } from '../carriers/iflow/adapter.js';
 import { adapter as ilyangLogis } from '../carriers/ilyang-logis/adapter.js';
 import { adapter as imile } from '../carriers/imile/adapter.js';
 import { adapter as indahLogistik } from '../carriers/indah-logistik/adapter.js';
@@ -1791,6 +1792,7 @@ export const REGISTRY: RegistryDefinition = {
     "icc-worldwide": iccWorldwide,
     "ics-courier": icsCourier,
     "ids-logistik": idsLogistik,
+    "iflow": iflow,
     "ilyang-logis": ilyangLogis,
     "imile": imile,
     "indah-logistik": indahLogistik,
@@ -3415,7 +3417,7 @@ export const REGISTRY: RegistryDefinition = {
     "ics-couriers-ua": "universal",
     "idexpress": "universal",
     "ids-logistik": "ids-logistik",
-    "iflow": "universal",
+    "iflow": "iflow",
     "ilyang-logis": "ilyang-logis",
     "imile": "imile",
     "indah-logistik": "indah-logistik",

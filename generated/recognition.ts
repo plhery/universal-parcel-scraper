@@ -256,6 +256,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "huiyu": 24,
   "hywl": 993,
   "icc-worldwide": 628,
+  "iflow": 647,
   "ilyang-logis": 703,
   "imile": 997,
   "indah-logistik": 798,

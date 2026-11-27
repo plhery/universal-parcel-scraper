@@ -35654,7 +35654,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Argentina/Buenos_Aires",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "iflow",
+      "recognitionRank": 647
     },
     "canaryUrl": "https://tracking.iflow21.com/",
     "trackingUrlTemplate": "https://tracking.iflow21.com/#/tracking/code/{trackingNumber}",
@@ -35671,8 +35672,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^TRI\\d{13}$",
-        "confidence": "low"
+        "pattern": "^[A-Z]{3}0{6}[1-9]\\d{6}$",
+        "confidence": "low",
+        "servedCountriesOnly": true
       }
     ]
   },
