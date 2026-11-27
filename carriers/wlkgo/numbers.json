@@ -1,0 +1,24 @@
+{
+  "carrier": "wlkgo",
+  "records": [
+    {
+      "number": "SO202403121566",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for WLKGO (窝里快购), and its WLKGO page as the example. WLKGO's tracker answers it with one package delivered in Hangzhou in five rows."
+    }
+  ]
+}

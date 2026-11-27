@@ -1,0 +1,50 @@
+{
+  "carrier": "wlkgo",
+  "entries": [
+    {
+      "code": null,
+      "wording": "【…】已装车,待出库",
+      "language": "zh",
+      "english": "Loaded on the van at …, waiting to leave",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The order is packed and loaded at WLKGO's warehouse in Hangzhou, the first row. The brackets name the warehouse."
+    },
+    {
+      "code": null,
+      "wording": "正发往【…】",
+      "language": "zh",
+      "english": "On its way to …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The order leaves the warehouse for the delivery station the brackets name."
+    },
+    {
+      "code": null,
+      "wording": "【…】已入库，待配送",
+      "language": "zh",
+      "english": "Arrived at …, waiting for delivery",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The delivery station received the order."
+    },
+    {
+      "code": null,
+      "wording": "【…】已出库,配送中",
+      "language": "zh",
+      "english": "Left …, out for delivery",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The courier takes the order out from the station. The carrier's text goes on to name the courier and a phone, which the adapter leaves out."
+    },
+    {
+      "code": null,
+      "wording": "配送完毕,客户已签收",
+      "language": "zh",
+      "english": "Delivered, signed for by the customer",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The delivery is done and the customer signed."
+    }
+  ]
+}

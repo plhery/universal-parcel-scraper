@@ -1,0 +1,67 @@
+{
+  "id": "wlkgo",
+  "displayName": "WLKGO",
+  "aliases": [
+    "窝里快购",
+    "窝里物流",
+    "窝里快递"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#E40000"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "wlkgo",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "searchUrl": "https://delivery.wlkgo.com/V1/DeliveryQuery.aspx",
+    "canaryUrl": "https://delivery.wlkgo.com/V1/DeliveryQuery.aspx",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "parcel_count",
+      "driver_name",
+      "driver_phone",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "parcel_count",
+      "driver_name",
+      "driver_phone",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

@@ -7390,5 +7390,11 @@
     "pattern": "^ZD\\d{12}$",
     "kind": "open",
     "reason": "ZD, the year, the month and six digits is HUBO Logistics' order number on Kuaidi100's example. One sample of a forwarder's own reference does not establish the shape, so the adapter answers explicit selection for it."
+  },
+  {
+    "carrier": "wlkgo",
+    "pattern": "^SO\\d{12}$",
+    "kind": "by_design",
+    "reason": "SO, the date and four digits is WLKGO's sales order on its public sample, a shape any shop's order system can print, so no rule offers WLKGO for it. The adapter answers explicit selection."
   }
 ]
