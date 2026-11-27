@@ -110,6 +110,13 @@
       "note": "The shipment's data reaching Take Send, seconds after the order's first row."
     },
     {
+      "wording": "Forecast has been received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The shipper's forecast of the parcel reaching Take Send, minutes after the order's first row and before its distribution centre takes the parcel in."
+    },
+    {
       "wording": "Enter the distribution center",
       "stage": "accepted",
       "language": "en",
@@ -132,6 +139,13 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-16",
       "note": "A receipt scan after the parcel left the distribution centre."
+    },
+    {
+      "wording": "Barcode scanning",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A facility's scan the day after the parcel left the distribution centre, before it is packed for its line."
     },
     {
       "wording": "Packaged",
