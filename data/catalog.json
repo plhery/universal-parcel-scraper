@@ -2282,7 +2282,7 @@
           "gls-group.eu",
           "gls-group.com"
         ],
-        "pathPattern": "^/(?:GROUP|BE|BG|DK|FI|HR|IE|LU|NL|RO|RS)/",
+        "pathPattern": "^/(?:GROUP|BE|BG|DK|FI|HR|IE|LU|NL|RS)/",
         "params": [
           "match",
           "parcelNumber",
@@ -31964,6 +31964,45 @@
         "checksum": "gls"
       }
     ]
+  },
+  "gls-ro": {
+    "displayName": "GLS Romania",
+    "color": "#ffdd00",
+    "aliases": [
+      "GLS România"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gls-ro",
+      "refresh": {
+        "minMinutes": 60,
+        "afterFailureMinutes": 240
+      }
+    },
+    "canaryUrl": "https://gls-group.com/RO/ro/urmarire-colet/",
+    "trackingUrlTemplate": "https://gls-group.com/RO/ro/urmarire-colet/?match={trackingNumber}",
+    "trackingSearchUrl": "https://gls-group.com/RO/ro/urmarire-colet/",
+    "helpUrl": "https://gls-group.com/RO/ro/gls-contact/",
+    "linkRules": [
+      {
+        "domains": [
+          "gls-group.com",
+          "gls-group.eu"
+        ],
+        "pathPattern": "^/RO/",
+        "params": [
+          "match",
+          "parcelNumber",
+          "matchParcelNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "gls-si": {
     "displayName": "GLS Slovenia",

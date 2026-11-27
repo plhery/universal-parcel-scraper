@@ -1,0 +1,62 @@
+{
+  "id": "gls-ro",
+  "displayName": "GLS Romania",
+  "aliases": [
+    "GLS România"
+  ],
+  "region": {
+    "countries": [
+      "RO"
+    ]
+  },
+  "brand": {
+    "color": "#ffdd00"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "gls-ro",
+    "steps": [
+      "direct"
+    ],
+    "refresh": {
+      "minMinutes": 60,
+      "afterFailureMinutes": 240
+    }
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://gls-group.com/RO/ro/urmarire-colet/?match={trackingNumber}",
+    "searchUrl": "https://gls-group.com/RO/ro/urmarire-colet/",
+    "helpUrl": "https://gls-group.com/RO/ro/gls-contact/",
+    "canaryUrl": "https://gls-group.com/RO/ro/urmarire-colet/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "pickup_point"
+    ],
+    "scraped": [
+      "status"
+    ],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "gls-group.com",
+        "gls-group.eu"
+      ],
+      "pathPattern": "^/RO/",
+      "params": [
+        "match",
+        "parcelNumber",
+        "matchParcelNumber"
+      ]
+    }
+  ],
+  "detection": []
+}

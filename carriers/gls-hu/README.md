@@ -22,8 +22,9 @@ Hungary, through the group's tracking service under Hungary's own path.
 - Only GLS's own `E000` and `E206` on an HTTP 404 are not found. Any other 404, and a 200 with no
   row, leave the answer open.
 - The lookup lives in `national.ts`, set to Hungary here: [GLS Czech Republic](../gls-cz/README.md),
-  [GLS Slovakia](../gls-sk/README.md) and [GLS Slovenia](../gls-si/README.md), whose national
-  numbers also exist only under their own paths, run the same one.
+  [GLS Slovakia](../gls-sk/README.md), [GLS Slovenia](../gls-si/README.md) and
+  [GLS Romania](../gls-ro/README.md), whose national numbers also exist only under their own
+  paths, run the same one.
 - Links to `gls-group.com/HU/` or `gls-group.eu/HU/` name this carrier, whatever the number,
   since that page tracks the same parcels as the adapter.
 

@@ -1,0 +1,10 @@
+{
+  "carrier": "gls-ro",
+  "entries": [
+    {"code": "PREADVICE", "stage": "registered", "confirmedBy": "portal", "note": "Parcel data entered; the parcel is not yet with GLS."},
+    {"code": "INTRANSIT", "stage": "in_transit", "confirmedBy": "portal", "note": ""},
+    {"code": "INWAREHOUSE", "stage": "in_transit", "confirmedBy": "portal", "note": "Final parcel center."},
+    {"code": "INDELIVERY", "stage": "out_for_delivery", "confirmedBy": "portal", "note": ""},
+    {"code": "DELIVERED", "stage": "delivered", "confirmedBy": "live", "note": ""}
+  ]
+}

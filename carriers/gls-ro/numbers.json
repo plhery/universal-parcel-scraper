@@ -1,0 +1,35 @@
+{
+  "carrier": "gls-ro",
+  "records": [
+    {
+      "number": "6238006415",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260403093840/https://gls-group.eu/app/service/open/rest/RO/ro/rstt029?match=6238006415&type=&caller=witt002&millis=1775209120690",
+        "date": "2026-04-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie"
+        ]
+      },
+      "note": "Archived overview of GLS Romania's tracking service (national owner RO01) for a national parcel number, which the group path answers as unknown."
+    }
+  ]
+}

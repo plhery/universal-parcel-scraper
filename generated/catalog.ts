@@ -2287,7 +2287,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "gls-group.eu",
           "gls-group.com"
         ],
-        "pathPattern": "^/(?:GROUP|BE|BG|DK|FI|HR|IE|LU|NL|RO|RS)/",
+        "pathPattern": "^/(?:GROUP|BE|BG|DK|FI|HR|IE|LU|NL|RS)/",
         "params": [
           "match",
           "parcelNumber",
@@ -31969,6 +31969,45 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "checksum": "gls"
       }
     ]
+  },
+  "gls-ro": {
+    "displayName": "GLS Romania",
+    "color": "#ffdd00",
+    "aliases": [
+      "GLS România"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gls-ro",
+      "refresh": {
+        "minMinutes": 60,
+        "afterFailureMinutes": 240
+      }
+    },
+    "canaryUrl": "https://gls-group.com/RO/ro/urmarire-colet/",
+    "trackingUrlTemplate": "https://gls-group.com/RO/ro/urmarire-colet/?match={trackingNumber}",
+    "trackingSearchUrl": "https://gls-group.com/RO/ro/urmarire-colet/",
+    "helpUrl": "https://gls-group.com/RO/ro/gls-contact/",
+    "linkRules": [
+      {
+        "domains": [
+          "gls-group.com",
+          "gls-group.eu"
+        ],
+        "pathPattern": "^/RO/",
+        "params": [
+          "match",
+          "parcelNumber",
+          "matchParcelNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "gls-si": {
     "displayName": "GLS Slovenia",
@@ -76379,6 +76418,7 @@ export const CARRIER_IDS = [
   "gls-it",
   "gls-nl",
   "gls-pl",
+  "gls-ro",
   "gls-si",
   "gls-sk",
   "gls-us",
@@ -78527,6 +78567,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gls-it": ["gls-it-1","gls-it-8-digits","gls-it-digit-depot"],
   "gls-nl": ["gls-nl-1","gls-nl-2","gls-nl-3"],
   "gls-pl": ["gls-pl-1","gls-pl-2"],
+  "gls-ro": [],
   "gls-si": [],
   "gls-sk": [],
   "gls-us": ["gls-us-1"],

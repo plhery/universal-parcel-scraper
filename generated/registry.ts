@@ -463,6 +463,7 @@ import { adapter as glsFr } from '../carriers/gls-fr/adapter.js';
 import { adapter as glsHu } from '../carriers/gls-hu/adapter.js';
 import { adapter as glsIt } from '../carriers/gls-it/adapter.js';
 import { adapter as glsNl } from '../carriers/gls-nl/adapter.js';
+import { adapter as glsRo } from '../carriers/gls-ro/adapter.js';
 import { adapter as glsSi } from '../carriers/gls-si/adapter.js';
 import { adapter as glsSk } from '../carriers/gls-sk/adapter.js';
 import { adapter as glsUs } from '../carriers/gls-us/adapter.js';
@@ -1742,6 +1743,7 @@ export const REGISTRY: RegistryDefinition = {
     "gls-hu": glsHu,
     "gls-it": glsIt,
     "gls-nl": glsNl,
+    "gls-ro": glsRo,
     "gls-si": glsSi,
     "gls-sk": glsSk,
     "gls-us": glsUs,
@@ -3350,6 +3352,7 @@ export const REGISTRY: RegistryDefinition = {
     "gls-it": "gls-it",
     "gls-nl": "gls-nl",
     "gls-pl": "gls-de",
+    "gls-ro": "gls-ro",
     "gls-si": "gls-si",
     "gls-sk": "gls-sk",
     "gls-us": "gls-us",

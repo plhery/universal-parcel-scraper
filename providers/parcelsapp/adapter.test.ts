@@ -741,7 +741,7 @@ describe('ParcelsApp result parsing', () => {
   });
 
   it('uses a bare brand clock only when all catalog networks agree', () => {
-    // DPD's catalog includes the UK, so a bare group name has no single clock.
+    // DPD's catalog includes the UK, and GLS's Romania, so a bare group name has no single clock.
     const scans = (carriers: string[], dates: string[], extra: Record<string, unknown> = {}) => parseParcelsAppResponse({
       carriers, states: dates.map((date) => ({ date, status: 'In transit', carrier: 0, ...extra })),
     }, number, identity()).events?.map((scan) => scan.time);
@@ -749,7 +749,7 @@ describe('ParcelsApp result parsing', () => {
     expect(scans(['DPD Group'], ['2026-07-02T18:30:00+00:00', '2026-01-14T09:15:00+00:00'])).toEqual([undefined, undefined]);
     expect(parseParcelsAppResponse({ carriers: ['DPD Group'], states: [{ date: '2026-07-02T18:30:00+00:00', status: 'In transit', carrier: 0 }] },
       number, identity()).events?.[0]?.local_time).toBe('2026-07-02T18:30:00.000');
-    expect(scans(['GLS'], ['2026-07-02T18:30:00+00:00'])).toEqual(['2026-07-02T16:30:00.000Z']);
+    expect(scans(['GLS'], ['2026-07-02T18:30:00+00:00'])).toEqual([undefined]);
     expect(scans(['Hermes'], ['2026-01-14T09:15:00+00:00'])).toEqual(['2026-01-14T08:15:00.000Z']);
     // A network the name or location places elsewhere keeps that country's clock.
     expect(scans(['DPD UK'], ['2026-07-02T18:30:00+00:00'])).toEqual(['2026-07-02T17:30:00.000Z']);
@@ -757,7 +757,7 @@ describe('ParcelsApp result parsing', () => {
       .toEqual(['2026-07-02T17:30:00.000Z']);
     // A location it cannot place may be a network outside the catalog: no brand clock, and the wall clock stays.
     for (const location of ['EXAMPLE CITY, CA, US', 'Example City, ON', 'Example Hub']) {
-      expect(scans(['GLS'], ['2026-07-02T18:30:00+00:00'], { location })).toEqual([undefined]);
+      expect(scans(['Hermes'], ['2026-07-02T18:30:00+00:00'], { location })).toEqual([undefined]);
     }
     // A name's country can be a branch: the scan's own location comes first.
     expect(scans(['Cainiao (China)'], ['2026-07-02T18:30:00+00:00'], { location: 'Example Hub, Spain' }))
