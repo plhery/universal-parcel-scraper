@@ -1,0 +1,24 @@
+{
+  "carrier": "jytwl",
+  "entries": [
+    {"code": "ARRIVAL", "wording": "Arriving at the receiving point", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The first scan in JYTWL's hands, at its Guangzhou warehouse."},
+    {"code": "SHIPMENT", "wording": "Goods leaving the operation center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The parcel leaves the Guangzhou operation centre."},
+    {"wording": "国内清关完成", "language": "zh", "english": "Export customs clearance completed", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "China's export clearance done, before the flight: the parcel is not held."},
+    {"wording": "预计配载航班…,Expected flight on …", "language": "zh", "stage": null, "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The flight the parcel is expected to board, its day in Chinese and in English read as ellipses. A forecast, not a movement, so the parcel keeps the stage of the scan before it."},
+    {"wording": "Office of exchange pre-alert/posting", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The postal dispatch announced to the exchange office that takes the parcel in Europe, before the take-off."},
+    {"wording": "航班已起飞,The flight has taken off from the origin", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The flight to Amsterdam left; the line writes the row in Chinese and English."},
+    {"wording": "航班已到达,清关拆板中 The flight has arrived, customs clearance and unpacking are underway", "language": "zh", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Landed and in import clearance."},
+    {"wording": "Notice of Arrival", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The arrival notice at Amsterdam's airport, the morning after the landing."},
+    {"wording": "目的港已提货 Delivery has been made at the destination port", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The parcel collected from the destination airport."},
+    {"wording": "Received at office of exchange", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The exchange office in Europe received the parcel."},
+    {"wording": "Item presentation notification sent", "language": "en", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The parcel presented to Dutch customs, minutes before the clearance."},
+    {"wording": "Customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Import clearance done in the Netherlands: the parcel goes on."},
+    {"wording": "货物已清关完成 Import customs clearance complete", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The line's own record of the import clearance: the parcel goes on."},
+    {"wording": "Departed from office of exchange", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The exchange office sends the parcel on to Posti."},
+    {"wording": "Vastaanotettu terminaalissa", "language": "fi", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Posti's scan at a terminal, copied: received at the terminal."},
+    {"wording": "Jakelun lastaus", "language": "fi", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Posti's scan, copied: loaded onto the vehicle that delivers it, here to a pick-up point."},
+    {"wording": "Toimitettu noutopisteeseen", "language": "fi", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Posti's scan, copied: delivered to the pick-up point, not yet collected."},
+    {"wording": "L?hetys noudettavissa", "language": "fi", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Posti's \"Lähetys noudettavissa\", copied: ready to collect at the pick-up point. GBK gives its ä as a question mark, kept as received."},
+    {"wording": "L?hetys haettu noutopisteest?", "language": "fi", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Posti's \"Lähetys haettu noutopisteestä\", copied: collected from the pick-up point. GBK gives its ä as question marks, kept as received."}
+  ]
+}

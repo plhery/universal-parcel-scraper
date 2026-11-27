@@ -1,0 +1,24 @@
+{
+  "carrier": "jytwl",
+  "records": [
+    {
+      "number": "JYT2026117575CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/jytwl/",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "jytwl",
+        "confidence": "high"
+      },
+      "note": "TrackShip's JYTWL page gives it as a tracking code example. JYTWL's tracker answers it with a parcel on its clothing line to Finland, flown to Amsterdam and collected from a Posti pick-up point, whose scans the record copies without Posti's number."
+    }
+  ]
+}

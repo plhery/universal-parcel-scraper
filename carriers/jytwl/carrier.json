@@ -1,0 +1,102 @@
+{
+  "id": "jytwl",
+  "displayName": "JYTWL",
+  "aliases": [
+    "JYT",
+    "玖运通",
+    "玖运通国际物流",
+    "广州玖运通国际物流",
+    "广州玖运通国际物流服务有限公司",
+    "Jiuyuntong",
+    "Jiuyuntong Logistics"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#0074D9"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "jytwl",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "service_name",
+    "destination_country"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country",
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "signatory",
+      "signature",
+      "proof_of_delivery",
+      "payment_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country"
+    ],
+    "discarded": [
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "signatory",
+      "signature",
+      "proof_of_delivery",
+      "payment_details"
+    ],
+    "unavailable": [
+      "eta",
+      "delivered_at",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "118.195.157.162"
+      ],
+      "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+      "params": [
+        "documentCode"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "jytwl-1",
+      "pattern": "^JYT\\d{10}CN$",
+      "confidence": "high"
+    }
+  ]
+}

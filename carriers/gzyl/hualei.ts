@@ -148,6 +148,12 @@ export interface HualeiTenant {
    * the scan before it, with no source of its own, and decides no status.
    */
   readonly notice?: (code: string | null, wording: string) => boolean;
+  /**
+   * The tenant copies a partner's rows in a language whose letters GBK cannot hold, as Posti's
+   * Finnish ä and ö: a question mark between two letters is such a letter, kept as the track
+   * interface gives it, not a space GBK lost.
+   */
+  readonly lostLetters?: true;
 }
 
 /**
@@ -372,8 +378,8 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
   const clocks = rows.map((row) => wallClock(row.clock, tenant.provider));
   const read = rows.map((row) => {
     const parts = tenant.split?.(row.content, row.location) ?? row;
-    const place = hualeiPlace(parts.location);
-    const wording = hualeiWording(parts.content, parts.location);
+    const place = hualeiPlace(parts.location, tenant);
+    const wording = hualeiWording(parts.content, parts.location, tenant);
     const description = wording || place;
     const notice = description !== '' && tenant.notice?.(row.code || null, normalizeStatusWording(description)) === true;
     return { wording, description, location: wording ? place : '', notice,

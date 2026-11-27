@@ -322,6 +322,12 @@ describe('Hualei track interface', () => {
     expect(hualeiScanText('Votre colis a été re?u au dép?t, puis à l\'entrep?t, avant la Bo?te aux lettres'))
       .toBe('Votre colis a été reçu au dépôt, puis à l\'entrepôt, avant la Boîte aux lettres');
     expect(hualeiScanText('Bientot?arrive')).toBe('Bientot arrive');
+    // A tenant whose copied rows hold letters GBK cannot carry, as Finnish ä, keeps each question mark as received.
+    expect(hualeiScanText('L?hetys noudettavissa')).toBe('L hetys noudettavissa');
+    expect(hualeiScanText('L?hetys noudettavissa', 500, { lostLetters: true })).toBe('L?hetys noudettavissa');
+    // It still loses no French letter, signatory or postcode.
+    expect(hualeiScanText('Votre colis arrive bient?t à EXAMPLETOWN 0000, signed by Synthetic Clerk', 500, { lostLetters: true }))
+      .toBe('Votre colis arrive bientôt à EXAMPLETOWN');
     // Longer runs, codes and clocks are not postcodes.
     expect(hualeiScanText('Flight CA123 at 10:30, bag 1234567')).toBe('Flight CA123 at 10:30, bag 1234567');
     // Nor is a date's year.

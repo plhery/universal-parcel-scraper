@@ -30,9 +30,20 @@ const MARKUP = /<\/?[a-z][^<>]*>|&lt;\/?[a-z][\s\S]*?&gt;/gi;
 const ENTITIES: Readonly<Record<string, string>> = { '&amp;': '&', '&quot;': '"', '&#39;': "'", '&apos;': "'", '&nbsp;': ' ' };
 const ENTITY = /&(?:amp|quot|#39|apos|nbsp);/g;
 
+/** How a tenant's scan text is read. */
+export interface HualeiTextOptions {
+  /**
+   * The tenant copies rows in a language whose letters GBK cannot hold, as Posti's Finnish ä and ö:
+   * a question mark between two letters is then such a letter, kept as the track interface gives
+   * it, not a space GBK lost.
+   */
+  readonly lostLetters?: true;
+}
+
 /** Scan text without markup, a signatory or a postcode. */
-export function hualeiScanText(value: string, maxLength = 500): string {
-  return clean(restoreLetters(value.replace(MARKUP, ' ').replace(ENTITY, (entity) => ENTITIES[entity]!)).replace(LOST_SPACE, ' ').replace(SIGNATORY, '').replace(POSTCODE_COUNTRY, '$1').replace(POSTCODE_FORM, '$1')
+export function hualeiScanText(value: string, maxLength = 500, options: HualeiTextOptions = {}): string {
+  const text = restoreLetters(value.replace(MARKUP, ' ').replace(ENTITY, (entity) => ENTITIES[entity]!));
+  return clean((options.lostLetters ? text : text.replace(LOST_SPACE, ' ')).replace(SIGNATORY, '').replace(POSTCODE_COUNTRY, '$1').replace(POSTCODE_FORM, '$1')
     .replace(POSTCODE_RUN, '$1').replace(EMPTY_BRACKETS, ''), maxLength)
     .replace(/^[\s,，:：;；/]+|[\s,，:：;；/]+$/g, '');
 }
@@ -42,8 +53,8 @@ export function hualeiScanText(value: string, maxLength = 500): string {
 const NO_PLACE = /^(?:(?:[A-Z]{2}, ?)?system(?:, ?system)*|delivery location)$/i;
 
 /** A row's place as scan text, or nothing where the tracker prints a word for no place. */
-export function hualeiPlace(value: string): string {
-  const place = hualeiScanText(value, 200);
+export function hualeiPlace(value: string, options: HualeiTextOptions = {}): string {
+  const place = hualeiScanText(value, 200, options);
   return NO_PLACE.test(place) ? '' : place;
 }
 
@@ -51,9 +62,9 @@ export function hualeiPlace(value: string): string {
  * A row's wording as scan text, without its place where the tracker writes that place again at the
  * head of the wording: "US, SYSTEM, SYSTEM, Shipping Label Created" at "US, SYSTEM, SYSTEM".
  */
-export function hualeiWording(content: string, location: string): string {
-  const wording = hualeiScanText(content);
-  const place = hualeiScanText(location, 200);
+export function hualeiWording(content: string, location: string, options: HualeiTextOptions = {}): string {
+  const wording = hualeiScanText(content, 500, options);
+  const place = hualeiScanText(location, 200, options);
   if (!place || wording.slice(0, place.length).toLowerCase() !== place.toLowerCase()) return wording;
   const rest = /^\s*[,，]\s*(\S[\s\S]*)$/.exec(wording.slice(place.length));
   return rest ? rest[1]! : wording;

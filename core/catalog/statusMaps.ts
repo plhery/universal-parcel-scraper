@@ -1195,6 +1195,7 @@ import { statusMap as ljs } from '../../carriers/ljs/status.js';
 import { statusMap as tongxi } from '../../carriers/tongxi/status.js';
 import { statusMap as anhuaInternational } from '../../carriers/anhua-international/status.js';
 import { statusMap as dyjExpress } from '../../carriers/dyj-express/status.js';
+import { statusMap as jytwl } from '../../carriers/jytwl/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1444,6 +1445,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   tongxi,
   'anhua-international': anhuaInternational,
   'dyj-express': dyjExpress,
+  jytwl,
 };
 
 /** The carrier the app files the universal providers' scans under. */
