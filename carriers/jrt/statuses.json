@@ -1495,6 +1495,15 @@
       "note": "On JRT's road line, three days after the Kazakhstan–Russia border: the region of Russia the parcel has reached, 州 misspelt 洲."
     },
     {
+      "wording": "白俄罗斯维捷布斯克州",
+      "language": "zh",
+      "english": "Vitebsk region, Belarus",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "On JRT's road line to Europe: the region of Belarus the parcel has reached."
+    },
+    {
       "wording": "落地清关中",
       "language": "zh",
       "english": "Landed, customs clearance in progress",

@@ -270,6 +270,11 @@ describe('status map answers', () => {
     expect(answer('qlgj', null, 'Customs clearance completed')).toEqual(mapped('in_transit'));
   });
 
+  it("answers Speedaf's tax-day notice as a gap and the Belarus region on JRT's road line", () => {
+    expect(answer('speedaf', '90', 'Parcel on the way')).toMatchObject({ kind: 'intentional_gap' });
+    expect(answer('jrt', null, '白俄罗斯维捷布斯克州')).toEqual(mapped('in_transit'));
+  });
+
   it("reads Ukrposhta's Ukrainian wording as providers relay it without a code", () => {
     for (const carrier of ['ukrposhta', 'unknown']) {
       expect(answer(carrier, null, 'Прийнято')).toEqual(mapped('accepted'));

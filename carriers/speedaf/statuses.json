@@ -35,6 +35,7 @@
     {"code": "-1:IP01", "wording": "Cause of problem【No Answer】", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "note": "After a delivery round: the recipient did not answer the courier."},
     {"code": "-1:IP06", "wording": "Issue Parcel Reason【Rescheduled delivery】", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "note": "After a delivery round; the new day follows in 【】."},
     {"code": "-1:IP05", "wording": "Issue Parcel Reason【Receiver Rejected Parcel】", "language": "en", "stage": "exception", "confirmedBy": "live"},
+    {"code": "90", "wording": "Parcel on the way", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "At the same minute as each day's pending-tax scan (360:36001), while the duty is unpaid: a notice, not a movement. No stage of its own."},
     {"code": "-1:IP08", "wording": "Issue Parcel Reason【Self Pick-up】", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "A second after the parcel arrived at a pick-up site and before the site's notice to collect it (18): the recipient collects it. No stage of its own."},
     {"code": "-1:5577", "wording": "Issue Parcel Reason【Delayed payment of tax by customer】", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "The courier came back with the duty unpaid."},
     {"code": "16", "wording": "Third party collection", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "source", "note": "The plugin's label; its comment says the parcel was booked in at a pickup point."},

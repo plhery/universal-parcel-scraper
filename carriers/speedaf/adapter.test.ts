@@ -291,6 +291,15 @@ describe('Speedaf status vocabulary', () => {
     // Self pick-up is the recipient's choice, before the site's notice: it keeps the stage of the scan before it.
     expect(speedafStage('-1:IP08', 'Issue Parcel Reason【Self Pick-up】')).toBeNull();
     expect(statusMapAnswer({ carrier: 'speedaf', providerCode: '-1:IP08', description: 'Issue Parcel Reason【Self Pick-up】' })).toMatchObject({ kind: 'intentional_gap' });
+    // "Parcel on the way" comes with each pending-tax scan while the duty is unpaid: not a movement out of customs.
+    expect(speedafStage('90', 'Parcel on the way')).toBeNull();
+    expect(statusMapAnswer({ carrier: 'speedaf', providerCode: '90', description: 'Parcel on the way' })).toMatchObject({ kind: 'intentional_gap' });
+    const notice = parseSpeedaf(changed('in-transit', (_reply, entry) => {
+      const [newest] = entry.tracks;
+      entry.tracks.unshift({ ...newest, action: '90', subAction: null, actionName: null, message: 'Parcel on the way', msgEng: 'Parcel on the way', msgLoc: 'Parcel on the way' });
+    }), IN_TRANSIT);
+    expect(notice).toMatchObject({ current_stage: 'customs', last_status_text: 'Parcel on the way' });
+    expect(notice.events?.[0]).not.toHaveProperty('stage');
     expect(statusMapAnswer({ carrier: 'speedaf', providerCode: '999', description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
     // A code the map does not know falls to the shared wording rules.
     expect(speedafStage('999', 'Delivered')).toEqual({ stage: 'delivered', source: 'wording:language' });

@@ -45,6 +45,13 @@ const ISSUES: ReadonlyMap<string, Stage> = new Map([
   ['-1:5577', 'customs'], // The recipient has not paid the duty yet.
 ]);
 
+/**
+ * "Parcel on the way" (90), written at the same minute as a pending-tax scan
+ * (360:36001), again each day the duty stays unpaid: a notice, not a movement.
+ */
+const NOTICES: ReadonlySet<string> = new Set(['90']);
+const NOTICE_NOTE = 'Written with each pending-tax scan, at the same minute: a notice, not a movement, so it keeps the stage of the scan before it.';
+
 /** The stage Speedaf's codes give a scan code, `action` or `action:subAction`. */
 export function speedafMappedStage(code: string): Stage | undefined {
   return ISSUES.get(code) ?? ACTIONS.get(code.replace(/:.*$/, ''));
@@ -52,6 +59,7 @@ export function speedafMappedStage(code: string): Stage | undefined {
 
 /** A scan's stage: its code, else the shared wording rules, else nothing. */
 export function speedafStage(code: string, wording: string): ClassifiedWording | null {
+  if (NOTICES.has(code)) return null;
   const mapped = speedafMappedStage(code);
   if (mapped) return { stage: mapped, source: 'carrier_map' };
   const worded = classifyWording(wording, 'in_transit');
@@ -63,6 +71,7 @@ export const statusMap: CarrierStatusMap = {
   gaps: [
     { code: '-1', note: 'An issue scan without a reason in its sub-action. The plugin labels the action invalid.' },
     { code: '-2', note: 'The page hides these scans unless the waybill carries its exception flag; their meaning is not documented.' },
+    { code: '90', note: NOTICE_NOTE },
     { code: '-1:IP08', note: 'The recipient collecting the parcel themselves, written a second after it arrived at the pick-up site and before the site asks them to come: a choice, not a scan, so it keeps the stage of the scan before it.' },
   ],
 };
