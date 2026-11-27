@@ -1096,6 +1096,8 @@ describe('classifyWording', () => {
       expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'pending', source: 'none' });
     }
     for (const wording of ['Shipment in letterbox', 'Your parcel was left in the mailbox']) expect(wordingStage(wording, 'pending'), wording).toBe('delivered');
+    expect(wordingStage('Handing over the parcel to the recipient at the GLS ParcelShop.', 'pending')).toBe('delivered');
+    expect(wordingStage('Handing over the parcel to the courier', 'pending')).toBe('accepted');
     // A collection still to come is none.
     expect(wordingStage('Once you have collected your parcel, rate your delivery', 'pending')).not.toBe('delivered');
   });

@@ -711,6 +711,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^vereinfachte (?:firmen)?zustellung$/.test(text)) return 'delivered';
   // Left in the recipient's letterbox, as Postal Ninja relays PostNL's "Shipment in letterbox".
   if (/^(?:the |your )?(?:shipment|parcel|package|item) (?:(?:is|was|has been) )?(?:(?:placed|left|put) )?in (?:the |your |a )?(?:letter|mail) ?box$/.test(text)) return 'delivered';
+  // GLS's ParcelShop handing the parcel to its recipient, as ParcelsApp relays it without the carrier: the GLS maps read
+  // "Handing over the parcel to the recipient at the GLS ParcelShop." as the delivery.
+  if (/^handing over the (?:parcel|package) to the (?:recipient|consignee) at the (?:gls )?parcel ?shop$/.test(text)) return 'delivered';
   // A delivery still to come ("una vez entregado", "que se entregue", "quando
   // for entregue") is not one; Spanish "entregue" is also a subjunctive.
   if (!/\b(?:una vez|cuando|hasta que|antes de que|para que|en cuanto|tan pronto como|uma vez|quando|assim que|ate que|logo que)\b[^.;:]*\bentreg/.test(text)
