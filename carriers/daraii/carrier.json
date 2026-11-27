@@ -1,0 +1,64 @@
+{
+  "id": "daraii",
+  "displayName": "Daraii",
+  "aliases": [
+    "香港全速易物流",
+    "全速易",
+    "全速易物流",
+    "香港全速易物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "HK"
+    ]
+  },
+  "brand": {
+    "color": "#0d3157"
+  },
+  "selectable": true,
+  "timezone": "Asia/Hong_Kong",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "daraii",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivered_at",
+    "destination_country",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "searchUrl": "https://www.kynitha.com/track",
+    "canaryUrl": "https://www.kynitha.com/track",
+    "shows": [
+      "status",
+      "history",
+      "origin_country",
+      "destination_country"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "delivered_at",
+      "destination_country",
+      "offset_timestamps"
+    ],
+    "discarded": [
+      "origin_country"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "recipient_name",
+      "proof_of_delivery",
+      "delivery_partner"
+    ]
+  },
+  "links": [],
+  "detection": []
+}
