@@ -354,6 +354,7 @@
       "relayedWordingStage",
       "resultTimezone",
       "sameInstantIdentityPolicy",
+      "scanTemplate",
       "scopedWordingStage",
       "statusMapAnswer",
       "trackingLocationCountry",
@@ -366,7 +367,9 @@
       "ParcelTrackingLink",
       "SameInstantIdentityPolicy",
       "SameInstantScan",
+      "ScanTemplate",
       "StatusMapAnswer",
+      "TemplatedScan",
       "TrackedParcel",
       "TrackingPlace",
       "WordingScope"
