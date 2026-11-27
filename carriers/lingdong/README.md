@@ -27,7 +27,10 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
   flight on …") and its expected landing once it flies ("It is expected to arrive at the local time on
   the …", after a delay to the schedule or not) are forecasts, notices on the stage of the scan before them. A partner's scan can be listed twice at one clock and place, its
   headline alone ("In transito") and with the partner's sentence after it: when both give one
-  stage, only the fuller row is kept.
+  stage, only the fuller row is kept. A row of punctuation alone, as the full stop the tracker can
+  show after the warehouse's departure, names nothing and keeps the stage of the scan before it.
+  On a line UPS delivers, the tracker copies UPS's label row in Chinese and in English, as
+  [JRT's](../jrt/README.md) does.
 - Scan times are wall clocks without an offset on the platform's Beijing clock, as
   [GZYL's](../gzyl/README.md) are, and are read on it; a row dated after the lookup is held
   back. Poste Italiane's relayed scans are on it too: the platform wrote one hours after its

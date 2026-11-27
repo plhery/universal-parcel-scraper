@@ -45,6 +45,9 @@ export function isLingdongArrivalForecast(wording: string): boolean {
   return [wording, ...(english === undefined ? [] : [english])].some((value) => ARRIVAL_FORECAST.test(normalizeStatusWording(value)));
 }
 
+/** Whether a row holds punctuation alone, as the full stop the tracker can show after the warehouse's departure: it names nothing. */
+export const isLingdongEmptyRow = (wording: string): boolean => /^[\p{P}\s]+$/u.test(wording);
+
 function mapped(wording: string): Stage | undefined {
   return WORDINGS.get(wording.replace(FLIGHT_DAY, '$1…$2…').replace(FLIGHT_DATE, '$1…$2…$3')
     .replace(ENGLISH_FLIGHT_DAY, '$1…').replace(ENGLISH_FLIGHT_DATE, '$1…$2').replace(AIRPORT_ARRIVAL, '$1…$2'));
@@ -63,8 +66,12 @@ export function lingdongStage(_code: string | null, wording: string): Stage | un
 
 const FLIGHT_BOOKED_NOTE = 'The flight booked for the parcel, before it flies: a forecast, so the parcel keeps the stage of the scan before it.';
 const ARRIVAL_FORECAST_NOTE = "The flight's expected landing, delayed or not: a forecast, so the parcel keeps the stage of the scan before it.";
+const EMPTY_ROW_NOTE = 'A row of punctuation alone names nothing, so the parcel keeps the stage of the scan before it.';
 
-/** The booked flight and its expected landing, whole or by the English half shown, have no stage of their own: they keep the one before them. */
+/**
+ * The booked flight and its expected landing, whole or by the English half shown, and a row of punctuation alone have no stage of
+ * their own: they keep the one before them.
+ */
 export const statusMap: CarrierStatusMap = { stage: lingdongStage, gaps: [],
   gapNote: (_code, wording) => (isLingdongFlightBooked(wording) ? FLIGHT_BOOKED_NOTE
-    : isLingdongArrivalForecast(wording) ? ARRIVAL_FORECAST_NOTE : undefined) };
+    : isLingdongArrivalForecast(wording) ? ARRIVAL_FORECAST_NOTE : isLingdongEmptyRow(wording) ? EMPTY_ROW_NOTE : undefined) };

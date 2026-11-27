@@ -118,6 +118,18 @@ describe('Lingdong International tracking adapter', () => {
     }
   });
 
+  it('reads a row of punctuation alone as a notice on the stage of the scan before it', () => {
+    const payload = structuredClone(fixture('track')) as Array<{ data: Array<{ trackDetails: Array<Record<string, string>> }> }>;
+    const details = payload[0]!.data[0]!.trackDetails;
+    details.unshift({ ...details[0]!, track_content: '.', track_kind: '', track_location: '', track_date: '2026-03-05 10:00:00',
+      track_createdate: '2026-03-05 10:00:00' });
+    const [row, before] = parseLingdongTrack(payload, NUMBER, Date.parse('2026-03-05T06:00:00Z'))!.events ?? [];
+    expect(row).toMatchObject({ description: '.', stage: before!.stage, stage_source: 'none' });
+    expect(before!.stage_source).toBe('carrier_map');
+    expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description: '.' }))
+      .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage of the scan before it/) });
+  });
+
   it('reads Poste Italiane’s relayed scans on Beijing time, the clock the platform writes them on', () => {
     const payload = structuredClone(fixture('track')) as Array<{ data: Array<{ trackDetails: Array<Record<string, string>> }> }>;
     const details = payload[0]!.data[0]!.trackDetails;
@@ -191,6 +203,14 @@ describe('Lingdong International tracking adapter', () => {
     for (const [description, stage] of [['Shipping Label Created', 'registered'], ['Order information has been transmitted to DPD.', 'registered'],
       ['Your package is being prepared by the sender and will be handed over to us soon', 'registered'], ['包裹交接给本地物流商处理/Received by local delivery company', 'in_transit'],
       ['Arrived at GOFO Regional Hub', 'in_transit']] as const) {
+      expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description })).toEqual({ kind: 'mapped', stage });
+    }
+    // UPS's label in Chinese and in English, then the export clearance, the airline, the import release and the delivering partner's
+    // collection on the line through UPS.
+    for (const [description, stage] of [['发件人已创建标签，但是 UPS 尚未收到包裹。', 'registered'],
+      ['Label Created, Shipper created a label, UPS has not received the package yet.', 'registered'], ['Customs export clearance completed', 'in_transit'],
+      ['Package handed over to airline', 'in_transit'], ['Customs import clearance completed, awaiting pickup by local carrier', 'in_transit'],
+      ['Package picked up by last-mile carrier', 'in_transit']] as const) {
       expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description })).toEqual({ kind: 'mapped', stage });
     }
     // The flight's departure in English alone, and its arrival at whichever airport it names.
