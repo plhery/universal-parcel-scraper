@@ -1,5 +1,22 @@
 {
   "carrier": "ecparcel",
-  "gap": "No public page shows an ecParcel tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "YOTN20260423100000003",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/ecparcel/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "ecparcel",
+        "confidence": "high"
+      },
+      "note": "TrackShip's ecParcel page gives it as a tracking number example. ecParcel's tracker answers it with a parcel sent through Dandenong South, Victoria, and delivered in Queensland; the eight digits after YOTN are the day of its first scan."
+    }
+  ]
 }

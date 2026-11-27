@@ -1,4 +1,72 @@
 {
   "carrier": "ecparcel",
-  "entries": []
+  "entries": [
+    {
+      "code": "InfoReceived_001",
+      "wording": "Document received by the courier",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The first scan, without a place, a minute before the collection: the shipment's details, not the parcel."
+    },
+    {
+      "code": "InTransit_001",
+      "wording": "Parcel collected by the courier",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "Filed under the in-transit status, but it is the collection from the shop."
+    },
+    {
+      "code": "InTransit_002",
+      "wording": "In transit to the destination",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    },
+    {
+      "code": "InTransit",
+      "wording": "In transit to next facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "A depot scan, with the depot's suburb and state."
+    },
+    {
+      "code": "InTransit",
+      "wording": "Item processed at sorting facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    },
+    {
+      "code": "InTransit",
+      "wording": "Arrived at facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    },
+    {
+      "code": "OutForDelivery",
+      "wording": "Onboard for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    },
+    {
+      "code": "Delivered",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    }
+  ]
 }

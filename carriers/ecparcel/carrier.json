@@ -18,19 +18,47 @@
   "timezone": "Australia/Melbourne",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "ecparcel",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "provider_code",
+    "delivered_at"
+  ],
   "portal": {
     "url": "https://track.ec-parcel.com/track?trackingNumber={trackingNumber}",
     "searchUrl": "https://track.ec-parcel.com/",
     "helpUrl": "https://www.ec-parcel.com/parcel-problem/",
     "canaryUrl": "https://track.ec-parcel.com/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "provider_code",
+      "delivered_at"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta",
+      "weight",
+      "recipient_name",
+      "signatory",
+      "proof_of_delivery",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
   },
   "links": [
     {
@@ -43,5 +71,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "ecparcel-1",
+      "pattern": "^YOTN20\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{9}$",
+      "confidence": "high"
+    }
+  ]
 }
