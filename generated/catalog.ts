@@ -2283,7 +2283,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "gls-group.eu",
           "gls-group.com"
         ],
-        "pathPattern": "^/(?:GROUP|BE|BG|DK|FI|HR|IE|LU|NL|RO|RS|SI|SK)/",
+        "pathPattern": "^/(?:GROUP|BE|BG|DK|FI|HR|IE|LU|NL|RO|RS|SI)/",
         "params": [
           "match",
           "parcelNumber",
@@ -31699,6 +31699,45 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "checksum": "gls"
       }
     ]
+  },
+  "gls-sk": {
+    "displayName": "GLS Slovakia",
+    "color": "#ffdd00",
+    "aliases": [
+      "GLS Slovensko"
+    ],
+    "countries": [
+      "SK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bratislava",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gls-sk",
+      "refresh": {
+        "minMinutes": 60,
+        "afterFailureMinutes": 240
+      }
+    },
+    "canaryUrl": "https://gls-group.com/SK/sk/sledovanie-zasielok/",
+    "trackingUrlTemplate": "https://gls-group.com/SK/sk/sledovanie-zasielok/?match={trackingNumber}",
+    "trackingSearchUrl": "https://gls-group.com/SK/sk/sledovanie-zasielok/",
+    "helpUrl": "https://gls-group.com/SK/sk/gls-kontakt/",
+    "linkRules": [
+      {
+        "domains": [
+          "gls-group.com",
+          "gls-group.eu"
+        ],
+        "pathPattern": "^/SK/",
+        "params": [
+          "match",
+          "parcelNumber",
+          "matchParcelNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "gls-us": {
     "displayName": "GLS US",
@@ -75677,6 +75716,7 @@ export const CARRIER_IDS = [
   "gls-it",
   "gls-nl",
   "gls-pl",
+  "gls-sk",
   "gls-us",
   "gms-worldwide",
   "go-express",
@@ -77803,6 +77843,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gls-it": ["gls-it-1","gls-it-8-digits","gls-it-digit-depot"],
   "gls-nl": ["gls-nl-1","gls-nl-2","gls-nl-3"],
   "gls-pl": ["gls-pl-1","gls-pl-2"],
+  "gls-sk": [],
   "gls-us": ["gls-us-1"],
   "gms-worldwide": [],
   "go-express": [],

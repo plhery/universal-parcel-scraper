@@ -1,0 +1,67 @@
+{
+  "carrier": "gls-sk",
+  "records": [
+    {
+      "number": "1928250692",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260813192022/https://gls-group.eu/app/service/open/rest/SK/sk/rstt029?match=1928250692&type=&caller=witt002&millis=1786648822403",
+        "date": "2026-08-13",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "cargus",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie",
+          "gls-es"
+        ]
+      },
+      "note": "Archived overview of GLS Slovakia's tracking service (national owner SK01) for a national parcel number, which the group path answers as unknown."
+    },
+    {
+      "number": "01927500147",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260714050806/https://gls-group.eu/app/service/open/rest/SK/sk/rstt029?match=01927500147&type=&caller=witt002&millis=1784005686127",
+        "date": "2026-07-14",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "Archived overview of GLS Slovakia's tracking service (national owner SK01) for a national parcel number, which the group path answers as unknown."
+    }
+  ]
+}

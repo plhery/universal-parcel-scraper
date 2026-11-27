@@ -941,6 +941,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'gls-cz', number: '0000000001',
     route: /^https:\/\/gls-group\.com\/CZ\/cs\/sledovani-zasilek\/\?/,
     marker: /Sledování|GLS Česká republika/i },
+  { carrier: 'gls-sk', number: '0000000001',
+    route: /^https:\/\/gls-group\.com\/SK\/sk\/sledovanie-zasielok\/\?/,
+    marker: /Sledovanie|GLS Slovensko/i },
   // GLS US's page reads the number from the link, then drops the query from the address.
   { carrier: 'gls-us', number: 'SH730418265903174526',
     route: /^https:\/\/gls-group\.com\/US\/en\/send-and-receive\/track-a-parcel\/(?:\?|$)/,

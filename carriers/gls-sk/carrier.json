@@ -1,0 +1,62 @@
+{
+  "id": "gls-sk",
+  "displayName": "GLS Slovakia",
+  "aliases": [
+    "GLS Slovensko"
+  ],
+  "region": {
+    "countries": [
+      "SK"
+    ]
+  },
+  "brand": {
+    "color": "#ffdd00"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bratislava",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "gls-sk",
+    "steps": [
+      "direct"
+    ],
+    "refresh": {
+      "minMinutes": 60,
+      "afterFailureMinutes": 240
+    }
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://gls-group.com/SK/sk/sledovanie-zasielok/?match={trackingNumber}",
+    "searchUrl": "https://gls-group.com/SK/sk/sledovanie-zasielok/",
+    "helpUrl": "https://gls-group.com/SK/sk/gls-kontakt/",
+    "canaryUrl": "https://gls-group.com/SK/sk/sledovanie-zasielok/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "pickup_point"
+    ],
+    "scraped": [
+      "status"
+    ],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "gls-group.com",
+        "gls-group.eu"
+      ],
+      "pathPattern": "^/SK/",
+      "params": [
+        "match",
+        "parcelNumber",
+        "matchParcelNumber"
+      ]
+    }
+  ],
+  "detection": []
+}

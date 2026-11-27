@@ -455,6 +455,7 @@ import { adapter as glsFr } from '../carriers/gls-fr/adapter.js';
 import { adapter as glsHu } from '../carriers/gls-hu/adapter.js';
 import { adapter as glsIt } from '../carriers/gls-it/adapter.js';
 import { adapter as glsNl } from '../carriers/gls-nl/adapter.js';
+import { adapter as glsSk } from '../carriers/gls-sk/adapter.js';
 import { adapter as glsUs } from '../carriers/gls-us/adapter.js';
 import { adapter as gmsWorldwide } from '../carriers/gms-worldwide/adapter.js';
 import { adapter as goExpress } from '../carriers/go-express/adapter.js';
@@ -1712,6 +1713,7 @@ export const REGISTRY: RegistryDefinition = {
     "gls-hu": glsHu,
     "gls-it": glsIt,
     "gls-nl": glsNl,
+    "gls-sk": glsSk,
     "gls-us": glsUs,
     "gms-worldwide": gmsWorldwide,
     "go-express": goExpress,
@@ -3298,6 +3300,7 @@ export const REGISTRY: RegistryDefinition = {
     "gls-it": "gls-it",
     "gls-nl": "gls-nl",
     "gls-pl": "gls-de",
+    "gls-sk": "gls-sk",
     "gls-us": "gls-us",
     "gms-worldwide": "gms-worldwide",
     "go-express": "go-express",
