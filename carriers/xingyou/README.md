@@ -37,9 +37,10 @@ USPS deliver the parcels. Tracked through its tenant of the rtb56 tracking platf
 
 ## Numbers
 
-The only public waybill is XY, ten digits and PQ. One sample is too few to tell its series from
-other carriers' numbers, so no rule claims it and the adapter answers explicit selection. The
-sample and its source are in [`numbers.json`](numbers.json).
+The two public waybills are XY, ten digits and PQ, one from a tracking directory's Xingyou page
+and one from TrackShip's, which names the company XYEX. Two samples are too few to tell the series from other carriers' numbers, so no
+rule claims it and the adapter answers explicit selection. The samples and their sources are in
+[`numbers.json`](numbers.json).
 
 ## Testing
 
