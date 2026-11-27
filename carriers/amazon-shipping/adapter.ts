@@ -135,12 +135,14 @@ function isNotFoundError(value: unknown): boolean {
 
 /**
  * City, region and country only; the same object also carries the street and postcode.
- * A region Amazon does not know reads "N/A".
+ * A region Amazon does not know reads "N/A". Some facility records spell Île-de-France without
+ * its accent, or with a lowercase L in place of the I: they are written the one way.
  */
 function location(raw: unknown): string {
   if (!isRecord(raw)) return '';
   const values = [raw.city, raw.stateProvince, raw.countryCode]
     .map((value) => cleanScalar(value, 100))
+    .map((value) => (/^[IlÎ]le[- ]de[- ]France$/i.test(value) ? 'Île-de-France' : value))
     .filter((value, index, all) => value && !/^n\/a$/i.test(value)
       && all.findIndex((candidate) => candidate.toLocaleLowerCase('en-US')
         === value.toLocaleLowerCase('en-US')) === index);

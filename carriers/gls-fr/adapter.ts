@@ -143,9 +143,9 @@ function parseEvent(raw: JsonObject): ParsedEvent | null {
     metadata,
     event: {
       ...(time ? { time: time.iso } : {}),
-      description: metadata?.description ?? 'GLS France tracking update',
-      // An unmapped code carries no stage: the sync classifies and records it.
-      ...(metadata ? { stage: metadata.stage } : {}),
+      // GLS sends codes and no words. An unmapped code carries neither words nor a stage: the sync
+      // classifies and records it, and the apps name the stage it gives.
+      ...(metadata ? { description: metadata.description, stage: metadata.stage } : {}),
       ...(code ? { provider_code: code } : {}),
     },
   };
@@ -303,9 +303,10 @@ function parseTracking(payload: unknown, trackingNumber: string): ParsedTracking
   return {
     result: {
       status,
+      // An unmapped newest code has no words to give.
       last_status_text: current?.description
         ?? latestEvent?.description
-        ?? 'Tracking information received',
+        ?? (latestEvent ? null : 'Tracking information received'),
       last_update: latestEvent?.time ?? fallbackUpdate?.iso ?? null,
       expected_delivery: settled ? null : expectedDelivery(parcel.dateTheoriqueLivraison),
       ...(sender ? { sender_name: sender } : {}),

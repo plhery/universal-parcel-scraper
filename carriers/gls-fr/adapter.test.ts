@@ -240,7 +240,7 @@ describe('GLS France status mapping', () => {
     expect(glsFranceStatus({ code: 'LIV' })).toBe('unknown');
   });
 
-  it('leaves an unmapped code without a stage so the sync can classify it', () => {
+  it('leaves an unmapped code without words or a stage so the sync can classify it', () => {
     const fixture = deliveredFixture();
     fixture.colis.statutColis = 'NEW';
     fixture.evenements = [{
@@ -252,9 +252,9 @@ describe('GLS France status mapping', () => {
 
     const result = parseGLSFranceTrackingResponse(fixture, TRACKING_NUMBER);
     expect(result.status).toBe('unknown');
+    expect(result.last_status_text).toBeNull();
     expect(result.events?.[0]).toEqual({
       time: '2026-08-29T11:42:00+02:00',
-      description: 'GLS France tracking update',
       provider_code: 'NEW',
     });
   });

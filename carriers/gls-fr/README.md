@@ -38,7 +38,7 @@ this confirmation before they can identify the French network.
 
 - GLS France sends codes, never wording. The map in `status.ts` is the only
   status source, and the English descriptions are ours. Unmapped codes produce
-  an event with no stage for the sync to classify.
+  an event with its code and neither words nor a stage, for the sync to classify.
 - `DEL` is read like the official frontend: a rescheduled delay (`in_transit`),
   and a failed attempt only when the same event's `typeEvenement` is `LIV`.
   `statutColis: DEL` is checked against the newest event the same way. The
