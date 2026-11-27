@@ -170,6 +170,22 @@ describe('Allegro One HTTP adapter', () => {
     ]);
   });
 
+  it('reads Multibox adding the parcel to its recipient\'s compartment as the parcel ready for pick-up, in English and Polish', () => {
+    for (const [multibox, waiting] of [
+      ['Multibox: Adding a new parcel to the locker', 'Parcel is awaiting pick-up'],
+      ['Multibox: dołączenie nowej przesyłki do skrytki', 'Przesyłka oczekuje na odbiór'],
+    ] as const) {
+      const result = parseAllegroOne({ status: [
+        { eventTimestamp: '2026-10-11T08:15:09Z', description: multibox },
+        { eventTimestamp: '2026-10-11T08:15:02Z', description: waiting },
+        { eventTimestamp: '2026-10-11T06:10:00Z', description: 'Parcel has been released for delivery' },
+      ] }, READY);
+      expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', current_stage_source: 'carrier_map',
+        last_status_text: multibox });
+      expect(result.events![0]).toMatchObject({ description: multibox, stage: 'ready_for_pickup', stage_source: 'carrier_map' });
+    }
+  });
+
   it('reads a round that ends with the day\'s delivery impossible as the parcel in transit, and a notice as the attempt', () => {
     const round = (wording: string, notice: string) => parseAllegroOne({ status: [
       { eventTimestamp: '2026-10-11T13:00:00Z', description: notice },

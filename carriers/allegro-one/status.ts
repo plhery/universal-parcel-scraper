@@ -45,6 +45,9 @@ export const ALLEGRO_ONE_SCANS: Readonly<Record<string, Stage>> = {
   // The recipient is asked to choose another point.
   'Parcel is waiting for an alternative point indication': 'exception',
   'Parcel is awaiting pick-up': 'ready_for_pickup',
+  // Multibox puts up to four of a recipient's parcels in one locker compartment: this parcel joins
+  // the others, at the minute it waits for its recipient.
+  'Multibox: Adding a new parcel to the locker': 'ready_for_pickup',
   'Parcel is awaiting pick-up — pick-up deadline is about to expire': 'ready_for_pickup',
   'Time for pick-up has been extended': 'ready_for_pickup',
   'Time for parcel pick-up has expired': 'exception',
@@ -85,6 +88,7 @@ export const ALLEGRO_ONE_POLISH: Readonly<Record<string, string>> = {
   Awizo: 'Notice',
   'Przesyłka oczekuje na wyznaczenie punktu alternatywnego': 'Parcel is waiting for an alternative point indication',
   'Przesyłka oczekuje na odbiór': 'Parcel is awaiting pick-up',
+  'Multibox: dołączenie nowej przesyłki do skrytki': 'Multibox: Adding a new parcel to the locker',
   'Przesyłka oczekuje na odbiór - zbliża się termin odbioru paczki': 'Parcel is awaiting pick-up — pick-up deadline is about to expire',
   'Czas na odbiór został przedłużony': 'Time for pick-up has been extended',
   'Skończył się czas na odbiór przesyłki': 'Time for parcel pick-up has expired',
