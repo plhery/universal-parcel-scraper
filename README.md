@@ -109,7 +109,9 @@ Detection has no Node imports and makes no requests.
 
 A shop's tracking-page link, from parcelLab's `delivery-status.com`, Narvar, AfterShip,
 Sendcloud or ParcelPanel, resolves to its carrier and number with `resolveShopTrackingLink(url)`,
-which makes at most two read-only requests.
+which makes at most two read-only requests. Given its words, `shopTrackingLink(url, words)` also
+takes a mailing tool's click redirect worded like tracking ("Track your parcel"), whose redirects
+the resolver follows to the carrier's or the platform's link without loading that page.
 
 ### HTTP and Docker
 

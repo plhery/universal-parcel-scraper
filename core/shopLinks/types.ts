@@ -1,8 +1,11 @@
 import type { CarrierId } from '../../generated/catalog.js';
 import type { DetectionConfidence } from '../detection/types.js';
 
-/** The shop tracking-page platforms whose links name a parcel. */
-export type ShopTrackingPlatform = 'parcellab' | 'narvar' | 'aftership' | 'sendcloud' | 'parcelpanel';
+/**
+ * The shop tracking-page platforms whose links name a parcel, and `redirect`, a mailing tool's click redirect to a
+ * carrier's or such a platform's page.
+ */
+export type ShopTrackingPlatform = 'parcellab' | 'narvar' | 'aftership' | 'sendcloud' | 'parcelpanel' | 'redirect';
 
 /** A link to a shop's tracking page, which names a parcel without being a carrier's link. */
 export interface ShopTrackingLink {

@@ -452,6 +452,19 @@ the buyer's e-mail or postcode. Shopify's order-status links are not read: their
 only a few visits and Shopify's shipping email links the carrier anyway. The resolver keeps
 no name or address. Links that carry their number also go through `parseTrackingInput`, with
 the carrier left to the number.
+A shipping email's tracking button often opens a mailing tool's click redirect instead (Emarsys'
+`nrd.php`, SendGrid's `ls/click` and `ss/c`, Mailchimp's `list-manage.com`, Klaviyo's
+`klclick`, Salesforce Marketing Cloud's `?qs=`, Amazon SES' `awstrack.me`, Shopify's `/_t/c/`).
+Every link of such an email, unsubscribing included, goes through it, so `shopTrackingLink`
+takes one only with the link's words, its text or the words written before it, when they read
+like tracking and neither they nor the address read like unsubscribing; words that also follow
+a shop on social networks or offer free shipping don't count. The resolver follows its
+redirects with no cookie, referrer or body read, for at most four requests, and stops at the
+first address that is no mailing tool's without loading it: a carrier's link names its parcel by
+the link rules, a shop platform's link is resolved as above, any other page is unsupported.
+Amazon SES writes the address into its link, which is read with no request. Following a
+redirect counts as the reader's click in the shop's mailing statistics. A browser's fetch
+hides where a redirect leads, so these links stay unresolved there.
 Consumers bound concurrency, cache answers and
 decide when another check is due. `recognizeAll` passes cancellation and its budget to each
 callback and discards late answers. A failed outcome that threw a carrier error carries its kind

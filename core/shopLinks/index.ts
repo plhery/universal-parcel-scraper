@@ -2,15 +2,18 @@
  * Shop tracking-page links.
  *
  * What it is: recognizes the links shops put in shipping emails to their own tracking page, run by a platform
- * such as parcelLab, Narvar, AfterShip, Sendcloud or ParcelPanel, and resolves one to the carrier and tracking number
- * of each parcel it names.
+ * such as parcelLab, Narvar, AfterShip, Sendcloud or ParcelPanel, and a mailing tool's click redirect worded like
+ * tracking, and resolves one to the carrier and tracking number of each parcel it names.
  * What it is not: no tracking. Recognition reads only the string. A link that carries its numbers resolves with no
- * request; parcelLab's order links take a bounded, anonymous, read-only request or two to the platform, through the
- * caller's fetch. No address or name is kept.
- * Browser-safe: plain fetch, no Node APIs.
+ * request; parcelLab's order links take a bounded, anonymous, read-only request or two to the platform, and a click
+ * redirect a few to the mailing tool, through the caller's fetch. No address or name is kept.
+ * Browser-safe: plain fetch, no Node APIs. A browser's fetch hides where a redirect leads, so click redirects stay
+ * unresolved there.
  */
+import { carrierLinkParcel } from './parcel.js';
 import { parcelLabLink, resolveParcelLabLink } from './parcellab.js';
 import { platformLink, resolvePlatformLink } from './platforms.js';
+import { followRedirectLink, redirectLink } from './redirects.js';
 import type { ShopLinkResolution, ShopLinkResolveOptions, ShopTrackingLink } from './types.js';
 
 export type {
@@ -20,8 +23,12 @@ export type {
 /** The most links one text is read for: an email prints a few dozen. */
 const MOST_LINKS = 200;
 
-/** The shop tracking-page link a URL is, if it is one. */
-export function shopTrackingLink(raw: string): ShopTrackingLink | undefined {
+/**
+ * The shop tracking-page link a URL is, if it is one. With the link's `words`, its text or the words written just
+ * before it, a mailing tool's click redirect is one too when they read like tracking ("Track your parcel",
+ * "Sendung verfolgen") and nothing reads like unsubscribing.
+ */
+export function shopTrackingLink(raw: string, words?: string): ShopTrackingLink | undefined {
   let url: URL;
   try {
     url = new URL(raw.trim().replace(/[>'")\],;.!?]+$/, ''));
@@ -29,7 +36,7 @@ export function shopTrackingLink(raw: string): ShopTrackingLink | undefined {
     return undefined;
   }
   if (url.protocol !== 'https:' && url.protocol !== 'http:') return undefined;
-  return parcelLabLink(url) ?? platformLink(url);
+  return parcelLabLink(url) ?? platformLink(url) ?? (words === undefined ? undefined : redirectLink(url, words));
 }
 
 /**
@@ -45,9 +52,23 @@ export function shopTrackingLinks(text: string): ShopTrackingLink[] {
   return [...found.values()];
 }
 
-/** The parcels a shop tracking-page link names, or why it named none. */
-export function resolveShopTrackingLink(link: ShopTrackingLink | string, options: ShopLinkResolveOptions = {}): Promise<ShopLinkResolution> {
+/**
+ * The parcels a shop tracking-page link names, or why it named none. A click redirect is followed to its destination,
+ * which is never loaded: a carrier's link names its parcel, a shop platform's link is resolved as one, and any other
+ * page stays unsupported.
+ */
+export async function resolveShopTrackingLink(link: ShopTrackingLink | string, options: ShopLinkResolveOptions = {}): Promise<ShopLinkResolution> {
   const known = typeof link === 'string' ? shopTrackingLink(link) : link;
-  if (!known) return Promise.resolve({ status: 'unresolved', reason: 'unsupported' });
-  return known.platform === 'parcellab' ? resolveParcelLabLink(known, options) : Promise.resolve(resolvePlatformLink(known));
+  if (!known) return { status: 'unresolved', reason: 'unsupported' };
+  if (known.platform === 'parcellab') return resolveParcelLabLink(known, options);
+  if (known.platform !== 'redirect') return resolvePlatformLink(known);
+  const started = Date.now();
+  const followed = await followRedirectLink(known, options);
+  if ('reason' in followed) return { platform: 'redirect', status: 'unresolved', reason: followed.reason };
+  const parcel = carrierLinkParcel(followed.destination);
+  if (parcel) return { platform: 'redirect', status: 'resolved', parcels: [parcel] };
+  const shop = shopTrackingLink(followed.destination.href);
+  if (!shop) return { platform: 'redirect', status: 'unresolved', reason: 'unsupported' };
+  const timeoutMs = Math.max(1, (options.timeoutMs ?? 10_000) - (Date.now() - started));
+  return resolveShopTrackingLink(shop, { ...options, timeoutMs });
 }
