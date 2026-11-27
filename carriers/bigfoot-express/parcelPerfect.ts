@@ -8,7 +8,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { depotless, type StageOf } from './parcelPerfectStages.js';
 
-type Tenant = 'bigfoot-express' | 'intertown-transport';
+type Tenant = 'bigfoot-express' | 'intertown-transport' | 'primetime-express';
 type Parser = (text: string, number: string, httpStatus: number) => CarrierResult;
 
 export function parcelPerfect(id: Tenant, origin: string, format: RegExp, parse: Parser): AdapterFactory {

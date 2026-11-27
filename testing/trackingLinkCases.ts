@@ -400,6 +400,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'time-matters', number: 'S0000199',
     route: /^https:\/\/booking\.time-matters\.com\/en-US\/tracking\/S0000199$/,
     marker: /Where is my order\?/ },
+  // The ParcelPerfect page stores the waybill and moves to its waybill view, which names an unknown one only by its answer.
+  { carrier: 'primetime-express', number: '00000000',
+    route: /^https:\/\/primetimeexpress\.pperfect\.com\/(?:\?w=00000000|view\/waybill)$/,
+    marker: /Shipment not Found|Orig Hub:/i, forwarding: { notFound: /We could not find a shipment with that identifier/i } },
   { carrier: 'western-bid', number: 'WBX000000000199',
     route: /^https:\/\/track\.westparcel\.com\/\?trackNumber=WBX000000000199$/,
     marker: /Have some troubles in tracking\?|We did not find a parcel with this number/ },

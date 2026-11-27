@@ -1,0 +1,79 @@
+{
+  "errorcode": "0",
+  "errormessage": "",
+  "total": 9,
+  "results": [
+    {
+      "waybill": "ZZ00000001",
+      "event": "Consignment details captured",
+      "eventdate": "2025-03-03",
+      "eventtime": "09:15:22",
+      "eventhub": "Cape Town",
+      "hidden": null
+    },
+    {
+      "waybill": "ZZ00000001",
+      "event": "Collected from origin address",
+      "eventdate": "2025-03-03",
+      "eventtime": "14:20:05",
+      "eventhub": "Cape Town",
+      "hidden": null
+    },
+    {
+      "waybill": "ZZ00000001",
+      "event": "Ready for collection",
+      "eventdate": "2025-03-03",
+      "eventtime": "15:02:41",
+      "eventhub": "Cape Town",
+      "hidden": null
+    },
+    {
+      "waybill": "ZZ00000001",
+      "event": "Loaded on manifest to Johannesburg facility",
+      "eventdate": "2025-03-03",
+      "eventtime": "17:45:10",
+      "eventhub": "Cape Town",
+      "hidden": null
+    },
+    {
+      "waybill": "ZZ00000001",
+      "event": "Dispatched",
+      "eventdate": "2025-03-03",
+      "eventtime": "18:30:57",
+      "eventhub": "Cape Town",
+      "hidden": null
+    },
+    {
+      "waybill": "ZZ00000001",
+      "event": "Checked in at Johannesburg facility",
+      "eventdate": "2025-03-04",
+      "eventtime": "06:10:33",
+      "eventhub": "Johannesburg",
+      "hidden": null
+    },
+    {
+      "waybill": "ZZ00000001",
+      "event": "Loaded for delivery from Johannesburg facility",
+      "eventdate": "2025-03-04",
+      "eventtime": "07:40:18",
+      "eventhub": "Johannesburg",
+      "hidden": null
+    },
+    {
+      "waybill": "ZZ00000001",
+      "event": "Dispatched",
+      "eventdate": "2025-03-04",
+      "eventtime": "08:05:44",
+      "eventhub": "Johannesburg",
+      "hidden": null
+    },
+    {
+      "waybill": "ZZ00000001",
+      "event": "Proof of delivery details captured",
+      "eventdate": "2025-03-04",
+      "eventtime": "12:30:09",
+      "eventhub": "Johannesburg",
+      "hidden": null
+    }
+  ]
+}

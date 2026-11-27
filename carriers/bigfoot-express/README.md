@@ -13,8 +13,9 @@ aggregator's examples show them, so there is no rule.
 
 The guest page loads its tenant identifier from `config/config.json` and requests `Waybill.getEventData` for one waybill. Each visible scan must name that waybill. Clocks retain their local time because the service gives no offsets.
 
-[Intertown Transport](../intertown-transport/README.md) runs on the same ParcelPerfect tracker, so
-both adapters share `parcelPerfect.ts`. Its wording names the depot, as in "Checked in at Durban
+[Intertown Transport](../intertown-transport/README.md) and
+[Primetime Express](../primetime-express/README.md) run on the same ParcelPerfect tracker, so the
+adapters share `parcelPerfect.ts`. Its wording names the depot, as in "Checked in at Durban
 facility"; a scan's stage is read without the depot, and wording no tenant has recorded goes to the
 shared rules. The depot captures the consignment and marks it ready for collection after the
 driver has collected it, so those scans keep the stage the parcel has. "Dispatched" is a vehicle

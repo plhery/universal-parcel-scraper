@@ -1040,6 +1040,7 @@ import { statusMap as heronaExpress } from '../../carriers/herona-express/status
 import { statusMap as hopEnvios } from '../../carriers/hop-envios/status.js';
 import { statusMap as interlogistica } from '../../carriers/interlogistica/status.js';
 import { statusMap as intertownTransport } from '../../carriers/intertown-transport/status.js';
+import { statusMap as primetimeExpress } from '../../carriers/primetime-express/status.js';
 import { statusMap as intrasJp } from '../../carriers/intras-jp/status.js';
 import { statusMap as jasWorldwide } from '../../carriers/jas-worldwide/status.js';
 import { statusMap as kingKongExpress } from '../../carriers/king-kong-express/status.js';
@@ -1297,7 +1298,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'ftd-nz': ftdNz, 'benniao-express': benniaoExpress, 'best-freight-cn': bestFreightCn, lhtex, polonez, 'v-xpress': vXpress, airspeed, topdelivery, kargoturk, expedico, 'professional-couriers': professionalCouriers, 'profit-fields': profitFields, 'lm-parcel': lmParcel, znlogic, 'freightways-global': freightwaysGlobal, 'fxdc-post': fxdcPost, 'frontier-ca': frontierCa, pdu,
   'airways-courier-in': airwaysCourierIn, 'akis-express': akisExpress, 'ambro-express': ambroExpress, 'apg-ecommerce': apgEcommerce, 'bigfoot-express': bigfootExpress, 'biz-courier': bizCourier, cvc,
   diakinisis, 'faster-shipe': fasterShipe, 'first-flight-me': firstFlightMe, 'gbs-broker': gbsBroker, 'herona-express': heronaExpress, 'hop-envios': hopEnvios, interlogistica,
-  'intertown-transport': intertownTransport, 'intras-jp': intrasJp, 'jas-worldwide': jasWorldwide, 'king-kong-express': kingKongExpress, lafasta, 'm24-logistics': m24Logistics,
+  'intertown-transport': intertownTransport, 'primetime-express': primetimeExpress, 'intras-jp': intrasJp, 'jas-worldwide': jasWorldwide, 'king-kong-express': kingKongExpress, lafasta, 'm24-logistics': m24Logistics,
   'moran-transportation': moranTransportation, paxel, 'pxc-pacific': pxcPacific, rayspeed, 'relay-express': relayExpress, 'rhenus-de': rhenusDe, 'rhenus-it': rhenusIt, shipgce, sway, tamex, 'tig-freight': tigFreight,
   'usea-express': useaExpress, 'velocity-express-in': velocityExpressIn, 'wangjing-3cq': wangjing3cq, xindus, 'uof-express': uofExpress, 'delivery-auto': deliveryAuto, 'fastway-za': fastwayZa,
   'gls-ca': glsCa, gollog, 'lex-th': lexTh, 'sentral-cargo': sentralCargo,
