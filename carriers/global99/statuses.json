@@ -1,0 +1,293 @@
+{
+  "carrier": "global99",
+  "entries": [
+    {
+      "code": null,
+      "wording": "【…】巴厘岛分公司已受理取件",
+      "language": "zh",
+      "english": "The Bali branch has taken the pickup request",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The first row of a parcel sent from Bali, before the branch has it. The brackets name the branch in English."
+    },
+    {
+      "code": null,
+      "wording": "【…】巴厘岛分公司已收入 Information Accepted",
+      "language": "zh",
+      "english": "The Bali branch has taken the parcel in",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The branch holds the parcel."
+    },
+    {
+      "code": null,
+      "wording": "全球速运 法国巴黎分公司已收件",
+      "language": "zh",
+      "english": "The Paris branch has received the parcel",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The first row of a parcel sent from France."
+    },
+    {
+      "code": null,
+      "wording": "包裹仓库分拣中 【…】",
+      "language": "zh",
+      "english": "Being sorted at the warehouse",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The brackets name the system's operator."
+    },
+    {
+      "code": null,
+      "wording": "准备发往下一站【…】",
+      "language": "zh",
+      "english": "Getting ready for the next stop",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The brackets name the branch the parcel leaves."
+    },
+    {
+      "code": null,
+      "wording": "【…】到达巴厘岛国际港口转运处理中心",
+      "language": "zh",
+      "english": "Arrived at the transit centre of Bali's international port",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The parcel waits at the port for its ship."
+    },
+    {
+      "code": null,
+      "wording": "出口申报完成，正在安排船舶【…】",
+      "language": "zh",
+      "english": "Export declared, a ship is being arranged",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The brackets repeat the row in English."
+    },
+    {
+      "code": null,
+      "wording": "【…】已装船，船舶即将离开巴厘岛国际转运港口，发往中国",
+      "language": "zh",
+      "english": "Loaded on the ship, which is about to leave Bali for China",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The parcel leaves the origin."
+    },
+    {
+      "code": null,
+      "wording": "发往中国上海途中【…】",
+      "language": "zh",
+      "english": "On its way to Shanghai, China",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The brackets repeat the row in English."
+    },
+    {
+      "code": null,
+      "wording": "到达【…】",
+      "language": "zh",
+      "english": "Arrived at …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The brackets name the port of arrival in China."
+    },
+    {
+      "code": null,
+      "wording": "已安排提货清关，请耐心等待",
+      "language": "zh",
+      "english": "Collection and customs clearance are arranged, please wait",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "The parcel waits for clearance at the port."
+    },
+    {
+      "code": null,
+      "wording": "清关完毕，海关已放行",
+      "language": "zh",
+      "english": "Cleared, released by customs",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Customs released the parcel; it moves on."
+    },
+    {
+      "code": null,
+      "wording": "包裹分拣至上海综合保税仓，即将中转国内快递",
+      "language": "zh",
+      "english": "Sorted to the Shanghai bonded warehouse, about to go to a domestic courier",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The row before the hand-off."
+    },
+    {
+      "code": null,
+      "wording": "转送出库，中转国内中通快运，单号：…",
+      "language": "zh",
+      "english": "Sent out, handed to ZTO Freight under number …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The hand-off to ZTO Freight, which gives the number the rows above it are under."
+    },
+    {
+      "code": null,
+      "wording": "转国内中通快递，单号：…",
+      "language": "zh",
+      "english": "Handed to ZTO Express under number …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The hand-off to ZTO Express, which gives the number the rows above it are under."
+    },
+    {
+      "code": null,
+      "wording": "正在安排下一站转运",
+      "language": "zh",
+      "english": "Arranging the transfer to the next stop",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The place comes after the text."
+    },
+    {
+      "code": null,
+      "wording": "快件正在转运途中",
+      "language": "zh",
+      "english": "The parcel is in transit",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The place comes after the text."
+    },
+    {
+      "code": null,
+      "wording": "到达转运中心",
+      "language": "zh",
+      "english": "Arrived at the transit centre",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The place comes after the text."
+    },
+    {
+      "code": null,
+      "wording": "离开转运中心",
+      "language": "zh",
+      "english": "Left the transit centre",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The place comes after the text."
+    },
+    {
+      "code": null,
+      "wording": "海关状态更新",
+      "language": "zh",
+      "english": "Customs status updated",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "A customs scan on the way, at the hub the place names."
+    },
+    {
+      "code": null,
+      "wording": "快件等待清关",
+      "language": "zh",
+      "english": "Waiting for customs clearance",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "The parcel waits for clearance in China."
+    },
+    {
+      "code": null,
+      "wording": "海关已放行",
+      "language": "zh",
+      "english": "Released by customs",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Customs released the parcel; it moves on."
+    },
+    {
+      "code": null,
+      "wording": "中通快运【…】已揽收",
+      "language": "zh",
+      "english": "ZTO Freight has picked the parcel up at …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "ZTO Freight's first row, copied from its tracker: the parcel was already on its way."
+    },
+    {
+      "code": null,
+      "wording": "货物 在 … 装车 下一站 …",
+      "language": "zh",
+      "english": "Loaded at …, next stop …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "ZTO Freight's row; the first station is where the parcel is."
+    },
+    {
+      "code": null,
+      "wording": "快件已到达【…】",
+      "language": "zh",
+      "english": "Arrived at …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "ZTO Freight's row at a sorting centre or the delivery station."
+    },
+    {
+      "code": null,
+      "wording": "【…】正在派送中",
+      "language": "zh",
+      "english": "Out for delivery from …",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "ZTO Freight's row, which named the courier and a mobile."
+    },
+    {
+      "code": null,
+      "wording": "您的快件已被【…】【…】",
+      "language": "zh",
+      "english": "Your parcel was signed for by the recipient",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "ZTO Freight's delivery: the brackets say who signed and that it was signed for."
+    },
+    {
+      "code": null,
+      "wording": "【…】 快件已揽收",
+      "language": "zh",
+      "english": "Picked up in …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "ZTO Express's first row, without the courier it named: the parcel was already on its way."
+    },
+    {
+      "code": null,
+      "wording": "【…】 快件已发往 …",
+      "language": "zh",
+      "english": "Sent to …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "ZTO Express's row; the brackets name the city, the text the station."
+    },
+    {
+      "code": null,
+      "wording": "【…】 快件已到达 …",
+      "language": "zh",
+      "english": "Arrived at …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "ZTO Express's row; the brackets name the city, the text the station."
+    },
+    {
+      "code": null,
+      "wording": "… 正在为您派件",
+      "language": "zh",
+      "english": "Out for delivery from …",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "ZTO Express's row, which named the courier and a mobile."
+    },
+    {
+      "code": null,
+      "wording": "您的快件已由【…】 收取",
+      "language": "zh",
+      "english": "Your parcel was taken in by …",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "ZTO Express's delivery: the brackets say who took the parcel."
+    }
+  ]
+}

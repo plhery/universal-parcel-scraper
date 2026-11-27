@@ -1,0 +1,49 @@
+{
+  "carrier": "global99",
+  "records": [
+    {
+      "number": "TK620061370079",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "global99"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 全球速运. The firm's tracker answers it with a parcel from its Bali branch, cleared at Shanghai and delivered by ZTO Freight under the number the hand-off row gives."
+    },
+    {
+      "number": "TK500261017008",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/global99.shtml",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "global99"
+        ]
+      },
+      "note": "Kuaidi100's page for 全球速运 gives it as the example number. The firm's tracker answers it with a parcel from its Paris branch through Leipzig to Shanghai, delivered by ZTO Express under the number the hand-off row gives."
+    }
+  ]
+}

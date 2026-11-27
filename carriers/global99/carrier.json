@@ -1,0 +1,83 @@
+{
+  "id": "global99",
+  "displayName": "Global Courier International",
+  "aliases": [
+    "全球速运",
+    "全球速运国际物流",
+    "全球速运国际物流有限公司",
+    "全球特快国际物流有限公司",
+    "Global Courier International Logistics",
+    "Global Express International Logistics"
+  ],
+  "region": {
+    "countries": [
+      "HK"
+    ]
+  },
+  "brand": {
+    "color": "#F5B82A"
+  },
+  "selectable": true,
+  "timezone": "Asia/Hong_Kong",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "global99",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 593,
+      "pattern": "^TK\\d{12}$"
+    }
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "origin_country",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "courier_name",
+      "driver_phone"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "courier_name",
+      "driver_phone"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "global99-1",
+      "pattern": "^TK\\d{12}$",
+      "confidence": "low"
+    }
+  ]
+}
