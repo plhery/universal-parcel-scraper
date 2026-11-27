@@ -22603,6 +22603,48 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "dpd-cn": {
+    "displayName": "DPD China",
+    "color": "#dc0032",
+    "aliases": [
+      "DPD (CN)"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dpd-cn",
+      "recognitionRank": 517,
+      "recognitionPattern": "^8415\\d{10}$",
+      "localClocks": true
+    },
+    "canaryUrl": "https://tracking.dpd.cn/",
+    "trackingUrlTemplate": "https://tracking.dpd.cn/?trackNo={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.dpd.cn/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.dpd.cn"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "trackNo",
+          "trackingNumber"
+        ],
+        "fragment": "^/\\?(?:[^#]*&)?(?:trackNo|trackingNumber)=([^&]+)"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^8415\\d{10}$",
+        "confidence": "low",
+        "preferred": true
+      }
+    ]
+  },
   "dpd-de": {
     "displayName": "DPD Germany",
     "color": "#dc0032",
@@ -75890,6 +75932,7 @@ export const CARRIER_IDS = [
   "dpd-at",
   "dpd-be",
   "dpd-by",
+  "dpd-cn",
   "dpd-de",
   "dpd-gr",
   "dpd-hk",
@@ -78030,6 +78073,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dpd-at": ["dpd-at-1"],
   "dpd-be": ["dpd-be-1"],
   "dpd-by": [],
+  "dpd-cn": ["dpd-cn-1"],
   "dpd-de": ["dpd-de-3","dpd-de-4","dpd-de-1","dpd-de-2"],
   "dpd-gr": [],
   "dpd-hk": [],

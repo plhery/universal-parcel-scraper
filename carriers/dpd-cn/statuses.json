@@ -1,0 +1,33 @@
+{
+  "carrier": "dpd-cn",
+  "entries": [
+    { "wording": "Order Created", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "DPD China's first row: the shipper's data received in Shenzhen." },
+    { "wording": "Order Printed", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The label is printed; the parcel is not yet in DPD China's hands." },
+    { "wording": "Depot scan in Shenzhen", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The first scan of the parcel at DPD China's Shenzhen depot." },
+    { "wording": "Add Hawb to Mawb …", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The parcel is consolidated under the master air waybill the wording names, read as an ellipsis." },
+    { "wording": "Processed for export", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Export processing in China before the flight; no customs hold is stated." },
+    { "wording": "Shipment check weight via supplier", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Hub sorted", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Hub inbound", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Hub out-scanned", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "In transit", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Arrival TS Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Arrival at a transit hub of the DPD network on the way to the destination." },
+    { "wording": "Despatched from Sorting Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Arrived at destination depot", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The destination's DPD unit receives the parcel at the depot that delivers it." },
+    { "wording": "Out for Delivery Scan", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live" },
+    { "wording": "Information that the parcel is delivered successfully.", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The destination unit's delivery scan." },
+    { "wording": "Signature available", "stage": null, "language": "en", "confirmedBy": "live", "note": "The recipient's signature for a delivery already scanned is on file. It follows the delivery and is not a second one, so the parcel keeps the stage of the scan before it." },
+    { "wording": "The signature or the runsheet completed has been received. POD available", "stage": null, "language": "en", "confirmedBy": "live", "note": "The proof of delivery reaches DPD China after the delivery; the tracker marks the row delivered. It is not a second delivery, so the parcel keeps the stage of the scan before it." },
+    { "wording": "Email notification has been sent successfully!", "stage": null, "language": "en", "confirmedBy": "live", "note": "A notice sent to the recipient. A notice, not a movement, so the parcel keeps the stage of the scan before it." },
+    { "wording": "Notification has been sent successfully!", "stage": null, "language": "en", "confirmedBy": "live", "note": "A notice sent to the recipient. A notice, not a movement, so the parcel keeps the stage of the scan before it." },
+    { "wording": "Redirection Requested to safe place", "stage": null, "language": "en", "confirmedBy": "live", "note": "The recipient asks the destination unit to leave the parcel at a safe place, which can come before the parcel leaves China. A choice, not a movement, so the parcel keeps the stage of the scan before it." },
+    { "wording": "Redirection requested to PUDO", "stage": null, "language": "en", "confirmedBy": "live", "note": "The recipient asks the destination unit to deliver to a pickup point, which can come before the parcel leaves China. A choice, not a movement, so the parcel keeps the stage of the scan before it." },
+    { "code": "Unpickup", "wording": "Info Received", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "The row's status, which the tracker shows as Info Received: the shipment's data received, waiting for the pickup or the drop-off. The adapter reads a row's status only when no scan has a stage." },
+    { "code": "InTransit", "wording": "InTransit", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "The row's status: on the way to the destination. Read only when no scan has a stage." },
+    { "code": "Delivered", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "bundle", "note": "The row's status: delivered. Read only when no scan has a stage." },
+    { "code": "Return", "wording": "Return", "stage": "returned", "language": "en", "confirmedBy": "bundle", "note": "The row's status: returned to the origin, to the overseas warehouse or picked up there by the sender, as the tracker's help says. Read only when no scan has a stage." },
+    { "code": "Exception", "wording": "Exception", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "The row's status: a failed delivery, a customs hold, damage or loss, as the tracker's help says. Read only when no scan has a stage." },
+    { "code": "NoRecord", "wording": "NoRecord", "stage": null, "language": "en", "confirmedBy": "bundle", "note": "The status the tracker's filter gives a number it holds nothing under; the adapter reads the row's NotFound mark instead." },
+    { "code": "Not Found", "wording": "Not Found", "stage": null, "language": "en", "confirmedBy": "live", "note": "The row's status for a number the tracker holds nothing under, beside its NotFound mark; not a stage." }
+  ]
+}

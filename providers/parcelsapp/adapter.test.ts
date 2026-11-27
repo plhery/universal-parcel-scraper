@@ -3976,8 +3976,10 @@ describe('ParcelsApp result parsing', () => {
     for (const reply of [{ destinationCode: 'GB' }, { originCode: 'GB' }, { destinationCode: 'US' }, { destinationCode: undefined }]) {
       expect(wall(reply)).toEqual([undefined, '2026-07-02T10:37:00.000']);
     }
-    // An origin without a DPD network, or one on the same clock, leaves it.
+    // An origin without a DPD network that may have labelled the parcel, or one on the same clock, leaves it:
+    // DPD China numbers its parcels by its depot prefix, which the parcel's numbers do not carry.
     expect(time({ originCode: 'DE' })).toBe('2026-07-02T08:37:00.000Z');
+    expect(wall({ next_tracking_ids: [swiss, '84159999999990'] })).toEqual([undefined, '2026-07-02T10:37:00.000']);
     // A scan with a location is read there.
     expect(time({ states: [{ date: '2026-07-02T10:37:00+00:00', status: 'Parcel handed', carrier: 1, location: 'Example Hub, United Kingdom' }] }))
       .toBe('2026-07-02T09:37:00.000Z');

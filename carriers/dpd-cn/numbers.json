@@ -1,0 +1,34 @@
+{
+  "carrier": "dpd-cn",
+  "records": [
+    {
+      "number": "84159999999990",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-cn",
+          "dpd",
+          "chronopost",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog"
+        ]
+      },
+      "note": "Made-up number, a shape check of DPD China's depot prefix: 8415 and ten more digits, as on the DPD China parcels the app tracked. No public page shows a whole DPD China number. Its serial sits far beyond the range in use."
+    }
+  ]
+}

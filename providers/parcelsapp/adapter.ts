@@ -1317,11 +1317,11 @@ function filedNetworkZone(carrier: string | undefined, filed: string | null): st
  * networks keep several (DPD's, with the UK's): the clock of the network that
  * labelled the parcel, which the number asked or a number ParcelsApp names
  * next for it (`next_tracking_ids`) gives by its depot range, with the
- * destination's and, where the brand has a network, the origin's. A line
- * carrier's parcel from China that DPD Switzerland delivers names DPD's number
- * next, and its "DPD Group" scan has the digits DPD Switzerland's own tracker
- * dates "+02:00". With no such number, or no destination with one clock, there
- * is none.
+ * destination's and, where the brand has a network that may have labelled
+ * it, the origin's. A line carrier's parcel from China that DPD Switzerland
+ * delivers names DPD's number next, and its "DPD Group" scan has the digits DPD
+ * Switzerland's own tracker dates "+02:00". With no such number, or no
+ * destination with one clock, there is none.
  */
 function brandNetworkZones(payload: Record<string, unknown>, name: string, number: string, destination: string | null,
   origin: string | null): string[] {
@@ -1330,7 +1330,12 @@ function brandNetworkZones(payload: Record<string, unknown>, name: string, numbe
   const labelled = new Set(numbers.flatMap((candidate) => brandCarrierForNumber(name, candidate) ?? []));
   const arrival = countryTimeZone(destination);
   if (!labelled.size || !arrival) return [];
-  const departure = origin ? brandCarrierIds(name).filter((id) => carrierDefinition(id).countries?.includes(origin)) : [];
+  const fitting = new Set(numbers.flatMap((candidate) => detectCarrierMatch(candidate).candidates as readonly string[]));
+  // An origin network that numbers its parcels only by its depot prefix, as DPD China does, labelled the
+  // parcel only when a number carries that prefix: a line carrier's parcel from China is not DPD China's.
+  const prefixed = (id: string) => carrierDefinition(id).detectionRules.length > 0 && carrierDefinition(id).detectionRules.every((rule) => rule.preferred);
+  const departure = origin ? brandCarrierIds(name).filter((id) => carrierDefinition(id).countries?.includes(origin)
+    && (!prefixed(id) || fitting.has(id))) : [];
   return [...new Set([...[...labelled, ...departure].map((id) => carrierTimezone(id)), arrival])];
 }
 

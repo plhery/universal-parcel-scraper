@@ -341,6 +341,7 @@ import { statusMap as dpdAt } from '../../carriers/dpd-at/status.js';
 import { statusMap as dpdBe } from '../../carriers/dpd-be/status.js';
 import { statusMap as dpdDe } from '../../carriers/dpd-de/status.js';
 import { statusMap as dpdFr } from '../../carriers/dpd-fr/status.js';
+import { statusMap as dpdCn } from '../../carriers/dpd-cn/status.js';
 import { statusMap as dpdHu } from '../../carriers/dpd-hu/status.js';
 import { statusMap as dpdIe } from '../../carriers/dpd-ie/status.js';
 import { statusMap as dpdNl } from '../../carriers/dpd-nl/status.js';
@@ -1355,7 +1356,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'cyprus-post': cyprusPost, 'd-express': dExpress, dachser, 'dai-post': daiPost, 'danske-fragtmaend': danskeFragtmaend, dao, 'datian-logistics': datianLogistics, 'day-ross': dayRoss,
   dayone, 'daylight-transport': daylightTransport, 'dayton-freight': daytonFreight, dealersend, delhivery, delivro, dellin, delnext, deppon, 'der-kurier': derKurier, 'dex-pk': dexPk, dhl, 'dhl-ecommerce': dhlEcommerce, 'dhl-ecommerce-es': dhlEcommerceEs, 'dhl-ecommerce-nl': dhlEcommerceNl, 'dhl-ecommerce-pl': dhlEcommercePl, 'dhl-ecommerce-uk': dhlEcommerceUk, 'dhl-express': dhlExpress,
   'dhl-freight': dhlFreight, dhlink, direx, 'dnipro-llc': dniproLlc, dobropost, 'dohrn-transfer': dohrnTransfer, 'domain-logistics': domainLogistics, domex, 'domex-do': domexDo, dongdu, dpd,
-  'dpd-at': dpdAt, 'dpd-be': dpdBe, 'dpd-de': dpdDe, 'dpd-fr': dpdFr, 'dpd-hu': dpdHu, 'dpd-ie': dpdIe,
+  'dpd-at': dpdAt, 'dpd-be': dpdBe, 'dpd-cn': dpdCn, 'dpd-de': dpdDe, 'dpd-fr': dpdFr, 'dpd-hu': dpdHu, 'dpd-ie': dpdIe,
   'dpd-nl': dpdNl, 'dpd-pl': dpdPl, 'dpd-pt': dpdPt, 'dpd-ro': dpdRo, 'dpd-ru': dpdRu, 'dpd-uk': dpdUk, 'dpd-za': dpdZa, dpex, 'dragon-star-curier': dragonStarCurier, drop2shop, dropp, dsv, dtdc, dx, dynalogic,
   'e-commerce-international': eCommerceInternational, 'early-bird': earlyBird, 'easy-mail': easyMail,
   'ecms-express': ecmsExpress, 'ecom-logistics': ecomLogistics, econt, ecparcel, ecoscooting, ecourier, 'ed-post': edPost, 'edi-express': ediExpress,'egypt-post': egyptPost, egxpress, ekart, elta, emile, 'emirates-post': emiratesPost, ems, 'ems-vietnam': emsVietnam, 'energia-tk': energiaTk, 'envia-colombia': enviaColombia,

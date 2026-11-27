@@ -2293,6 +2293,28 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
+      "jadlog",
+      "gls-nl",
+      "dpd-cn"
+    ],
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. DPD China's low rule takes those starting 8415, its Shenzhen depot's. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-be",
+      "dpd-nl",
+      "dpd-de",
+      "dpd-uk",
+      "seur",
+      "dhl-ecommerce-uk",
+      "dpd-pt",
+      "dpd-hu",
+      "chronopost",
       "mondial-relay",
       "jadlog",
       "gls-nl"

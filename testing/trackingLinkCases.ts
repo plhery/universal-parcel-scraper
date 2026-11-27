@@ -1155,6 +1155,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'dpd-za', number: 'ZZ9999999980',
     route: /^https:\/\/www\.dpd\.com\/za\/en\/receiving-parcels\/track-my-parcel\/tracking-details\/\?ZZ9999999980$/,
     marker: /Track your parcel \/ Parcel Tracking/ },
+  // The tracker's script searches the number in the link and lists it in its results.
+  { carrier: 'dpd-cn', number: '00000000000000',
+    route: /^https:\/\/tracking\.dpd\.cn\/\?trackNo=00000000000000$/,
+    marker: /Customer Reference Number/i },
   // The server-rendered page names the reference and its not-found notice repeats it.
   { carrier: 'dpd-pt', number: '09999999999999',
     route: /^https:\/\/tracking\.dpd\.pt\/pt\?reference=09999999999999$/,

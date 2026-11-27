@@ -1,0 +1,46 @@
+{
+  "AllCount": 1,
+  "NoRecordCount": 0,
+  "InTransitCount": 0,
+  "DeliveredCount": 1,
+  "ReturnCount": 0,
+  "UnpickupCount": 0,
+  "ExceptionCount": 0,
+  "ListHawbDetails": [
+    {
+      "Id": 1,
+      "RowKey": 1,
+      "TrackingNumber": "84159999999990",
+      "CustomerRef": null,
+      "FromTo": ["China", "Spain "],
+      "Status": "Delivered",
+      "LatestEvent": ["Spain", "The signature or the runsheet completed has been received. POD available"],
+      "LatestEventDate": "2026-11-12 18:02:41",
+      "Level": null,
+      "ShipmentType": "Package",
+      "Pieces": 1,
+      "NotFound": false,
+      "ListTrackingDetails": [
+        { "Desc": "The signature or the runsheet completed has been received. POD available", "LocationName": "Spain", "EventTime": "2026-11-12 18:02:41", "IsDelivered": true, "Url": null },
+        { "Desc": "Signature available", "LocationName": "Spain", "EventTime": "2026-11-12 13:48:10", "IsDelivered": false, "Url": null },
+        { "Desc": "Information that the parcel is delivered successfully.", "LocationName": "Spain", "EventTime": "2026-11-12 13:47:55", "IsDelivered": false, "Url": null },
+        { "Desc": "Out for Delivery Scan", "LocationName": "Spain", "EventTime": "2026-11-12 08:31:02", "IsDelivered": false, "Url": null },
+        { "Desc": "Email notification has been sent successfully!", "LocationName": "Spain", "EventTime": "2026-11-12 07:15:20", "IsDelivered": false, "Url": null },
+        { "Desc": "Arrived at destination depot", "LocationName": "Spain", "EventTime": "2026-11-12 06:40:13", "IsDelivered": false, "Url": null },
+        { "Desc": "Despatched from Sorting Facility", "LocationName": "Spain", "EventTime": "2026-11-11 22:05:37", "IsDelivered": false, "Url": null },
+        { "Desc": "Arrival TS Hub", "LocationName": "Spain", "EventTime": "2026-11-11 19:22:08", "IsDelivered": false, "Url": null },
+        { "Desc": "In transit", "LocationName": "Germany", "EventTime": "2026-11-10 23:51:44", "IsDelivered": false, "Url": null },
+        { "Desc": "Hub out-scanned", "LocationName": "Germany", "EventTime": "2026-11-10 21:16:30", "IsDelivered": false, "Url": null },
+        { "Desc": "Hub sorted", "LocationName": "Germany", "EventTime": "2026-11-10 14:02:51", "IsDelivered": false, "Url": null },
+        { "Desc": "Hub inbound", "LocationName": "Germany", "EventTime": "2026-11-10 09:37:19", "IsDelivered": false, "Url": null },
+        { "Desc": "Shipment check weight via supplier", "LocationName": "Belgium", "EventTime": "2026-11-09 16:44:02", "IsDelivered": false, "Url": null },
+        { "Desc": "Processed for export", "LocationName": "ShenZhen", "EventTime": "2026-11-05 03:05:42", "IsDelivered": false, "Url": null },
+        { "Desc": "Add Hawb to Mawb 000-00000000", "LocationName": "ShenZhen", "EventTime": "2026-11-05 02:30:11", "IsDelivered": false, "Url": null },
+        { "Desc": "Depot scan in Shenzhen", "LocationName": "Shenzhen", "EventTime": "2026-11-04 21:15:27", "IsDelivered": false, "Url": null },
+        { "Desc": "Redirection Requested to safe place", "LocationName": "Spain", "EventTime": "2026-11-04 19:20:00", "IsDelivered": false, "Url": null },
+        { "Desc": "Order Printed", "LocationName": "ShenZhen", "EventTime": "2026-11-03 18:40:03", "IsDelivered": false, "Url": null },
+        { "Desc": "Order Created", "LocationName": "ShenZhen", "EventTime": "2026-11-03 10:12:45", "IsDelivered": false, "Url": null }
+      ]
+    }
+  ]
+}

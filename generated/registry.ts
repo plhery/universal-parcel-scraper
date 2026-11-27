@@ -298,6 +298,7 @@ import { adapter as doraGate } from '../carriers/dora-gate/adapter.js';
 import { adapter as dpd } from '../carriers/dpd/adapter.js';
 import { adapter as dpdAt } from '../carriers/dpd-at/adapter.js';
 import { adapter as dpdBe } from '../carriers/dpd-be/adapter.js';
+import { adapter as dpdCn } from '../carriers/dpd-cn/adapter.js';
 import { adapter as dpdDe } from '../carriers/dpd-de/adapter.js';
 import { adapter as dpdFr } from '../carriers/dpd-fr/adapter.js';
 import { adapter as dpdHu } from '../carriers/dpd-hu/adapter.js';
@@ -1569,6 +1570,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpd": dpd,
     "dpd-at": dpdAt,
     "dpd-be": dpdBe,
+    "dpd-cn": dpdCn,
     "dpd-de": dpdDe,
     "dpd-fr": dpdFr,
     "dpd-hu": dpdHu,
@@ -3062,6 +3064,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpd-at": "dpd-at",
     "dpd-be": "dpd-be",
     "dpd-by": "dpd-ru",
+    "dpd-cn": "dpd-cn",
     "dpd-de": "dpd-de",
     "dpd-fr": "dpd-fr",
     "dpd-gr": "universal",

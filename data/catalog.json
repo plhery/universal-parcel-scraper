@@ -22598,6 +22598,48 @@
     ],
     "detectionRules": []
   },
+  "dpd-cn": {
+    "displayName": "DPD China",
+    "color": "#dc0032",
+    "aliases": [
+      "DPD (CN)"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dpd-cn",
+      "recognitionRank": 517,
+      "recognitionPattern": "^8415\\d{10}$",
+      "localClocks": true
+    },
+    "canaryUrl": "https://tracking.dpd.cn/",
+    "trackingUrlTemplate": "https://tracking.dpd.cn/?trackNo={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.dpd.cn/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.dpd.cn"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "trackNo",
+          "trackingNumber"
+        ],
+        "fragment": "^/\\?(?:[^#]*&)?(?:trackNo|trackingNumber)=([^&]+)"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^8415\\d{10}$",
+        "confidence": "low",
+        "preferred": true
+      }
+    ]
+  },
   "dpd-de": {
     "displayName": "DPD Germany",
     "color": "#dc0032",

@@ -1,0 +1,93 @@
+{
+  "id": "dpd-cn",
+  "displayName": "DPD China",
+  "aliases": [
+    "DPD (CN)"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#dc0032"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "dpd-cn",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 517,
+      "pattern": "^8415\\d{10}$"
+    }
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country"
+  ],
+  "portal": {
+    "url": "https://tracking.dpd.cn/?trackNo={trackingNumber}",
+    "searchUrl": "https://tracking.dpd.cn/",
+    "canaryUrl": "https://tracking.dpd.cn/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin_country",
+      "destination_country",
+      "parcel_count",
+      "customer_reference",
+      "event_links"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country"
+    ],
+    "discarded": [
+      "origin_country",
+      "parcel_count",
+      "customer_reference",
+      "event_links"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "offset_timestamps",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.dpd.cn"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "trackNo",
+        "trackingNumber"
+      ],
+      "fragment": "^/\\?(?:[^#]*&)?(?:trackNo|trackingNumber)=([^&]+)"
+    }
+  ],
+  "detection": [
+    {
+      "id": "dpd-cn-1",
+      "pattern": "^8415\\d{10}$",
+      "confidence": "low",
+      "preferred": true
+    }
+  ]
+}
