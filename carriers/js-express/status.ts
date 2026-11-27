@@ -24,7 +24,14 @@ const WORDINGS = statusWordings(ENTRIES.flatMap(({ wording, stage, english }) =>
 /** A partner's record of the parcel's data, or a message to the recipient: no scan, so no stage. */
 const GAPS = ENTRIES.filter((entry) => entry.unmapped)
   .map((entry) => ({ wording: normalizeStatusWording(entry.wording), note: entry.note ?? '' }));
-const GAP_WORDINGS = new Set(GAPS.map((gap) => gap.wording));
+
+// iMile's booking of a new delivery after a missed one, relayed without its centre and with the day booked:
+// "NDR re-delivery audit confirmed,appointment date [2026-12-02]". Like iMile's "Shipment is scheduled to" line, it
+// moves nothing.
+const REDELIVERY_BOOKED = /^ndr re-delivery audit confirmed\s*,\s*appointment date \[\d{4}-\d{2}-\d{2}\]$/;
+const REDELIVERY_NOTE = "iMile's booking of a new delivery day after a missed delivery: it moves nothing, so the stage before it stands.";
+const GAP_NOTES: ReadonlyMap<string, string> = new Map(GAPS.map((gap) => [gap.wording, gap.note]));
+const isGap = (normalized: string): boolean => GAP_NOTES.has(normalized) || REDELIVERY_BOOKED.test(normalized);
 
 // USPS's forwarding alert as JS Express relays it, with the time, day and town it names: the parcel goes on to another
 // address, as USPS's own map reads its "Forwarded".
@@ -67,10 +74,15 @@ const ipsStage = (normalized: string): Stage | undefined => {
   return stage === 'accepted' ? 'in_transit' : stage;
 };
 
+// iMile's receipt at the airport of departure, relayed without its centre and with the flight it books: "Origin port
+// warehouse receive，Flight Schedule ETD【HKG】…, ETA【AMS】…", in transit as iMile reads it.
+const ORIGIN_PORT = /^origin port warehouse receive\s*[,，]\s*flight schedule etd\b/;
+
 // iMile's scans as its destination courier, which open with the centre's name in 【】, take iMile's reading. China
 // Post's labels for the destination leg, in Chinese, take its reading too.
 const mappedStage = (normalized: string): Stage | undefined =>
   WORDINGS.stage(normalized.replace(WAYBILL_REFERENCE, '$1').replace(RETURNED_TO, '$1[]$2')) ?? bracketedStage(normalized)
+    ?? (ORIGIN_PORT.test(normalized) ? 'in_transit' : undefined)
     ?? (FORWARDED.test(normalized) ? 'in_transit' : undefined)
     ?? (HELD_FOR_RECIPIENT.test(normalized) ? 'exception' : undefined)
     ?? uspsSentenceStage(normalized)
@@ -97,7 +109,7 @@ export const jsExpressEnglish = (wording: string): string | undefined => WORDING
 export function jsExpressRelayedScan(label: string): { stage: Stage; wording: string } | undefined {
   const normalized = normalizeStatusWording(label);
   const wording = jsExpressEnglish(label) ?? label;
-  if (GAP_WORDINGS.has(normalized)) return { stage: 'pending', wording };
+  if (isGap(normalized)) return { stage: 'pending', wording };
   const stage = mappedStage(normalized);
   return stage && { stage, wording };
 }
@@ -122,18 +134,16 @@ const codeStage = (code: string | null, normalized: string): Stage | undefined =
  * A row's stage: the map, else its code, else the shared wording rules, else nothing. A recorded gap has none.
  */
 export function jsExpressStage(wording: string, code: string | null = null): ClassifiedWording | null {
-  if (GAP_WORDINGS.has(normalizeStatusWording(wording))) return null;
+  if (isGap(normalizeStatusWording(wording))) return null;
   const mapped = jsExpressMappedStage(wording) ?? codeStage(code, normalizeStatusWording(wording));
   if (mapped) return { stage: mapped, source: 'carrier_map' };
   const worded = classifyWording(wording, 'in_transit');
   return worded.source === 'none' ? null : worded;
 }
 
-const GAP_NOTES = new Map(GAPS.map((gap) => [gap.wording, gap.note]));
-
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => GAP_WORDINGS.has(wording) ? undefined : mappedStage(wording) ?? codeStage(code, wording),
+  stage: (code, wording) => isGap(wording) ? undefined : mappedStage(wording) ?? codeStage(code, wording),
   gaps: GAPS,
   // A gap is one by its wording, whatever code the row carries.
-  gapNote: (_code, wording) => GAP_NOTES.get(wording),
+  gapNote: (_code, wording) => GAP_NOTES.get(wording) ?? (REDELIVERY_BOOKED.test(wording) ? REDELIVERY_NOTE : undefined),
 };

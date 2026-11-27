@@ -92,6 +92,30 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-11-22"
+    },
+    {
+      "wording": "Shipment arrived at UNITED KINGDOM Airport",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The destination's airport named by its country's name instead of its code."
+    },
+    {
+      "wording": "Shipment arrived at the ALL UNITED KINGDOM destination processing facility.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The destination facility named by a partner and its country, a day after the airport."
+    },
+    {
+      "wording": "Shipment information has been received for destination processing. ALL.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The same notice naming the partner, between the facility's arrival and its processing."
     }
   ]
 }

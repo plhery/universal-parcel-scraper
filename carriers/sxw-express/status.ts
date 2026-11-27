@@ -1,6 +1,6 @@
 import type { Stage } from '../../core/status/index.js';
 import { statusWordings } from '../../core/status/english.js';
-import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import { jtMexicoKey } from '../gzyl/jt-mexico-rows.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -25,7 +25,10 @@ export const sxwEnglish = (_code: string | null, wording: string): string | unde
 // A row at a place with no words, only a mark such as ".": it moves nothing.
 const WORDLESS = /^[^\p{L}\p{N}]*$/u;
 
+// A row the map lists without a stage, such as the recipient's enquiry lodged with the delivering post: it moves nothing.
+const GAPS = statuses.entries.flatMap((entry) => (entry.stage ? [] : [{ wording: normalizeStatusWording(entry.wording), note: entry.note ?? '' }]));
+
 export const statusMap: CarrierStatusMap = {
-  stage: sxwStage, gaps: [],
+  stage: sxwStage, gaps: GAPS,
   gapNote: (_code, wording) => (WORDLESS.test(wording) ? 'A row without words: the parcel keeps the stage it had.' : undefined),
 };

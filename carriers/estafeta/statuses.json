@@ -26,6 +26,14 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "Envio recibido en oficina …",
+      "language": "es",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "Followed by the office's address: the sender's drop-off there, at the minute of Recibido por Estafeta."
+    },
+    {
       "wording": "CARGA DEMORADA POR BLOQUEO O ACCIDENTE EXTERNO EN VIA FEDERAL",
       "language": "es",
       "stage": "exception",

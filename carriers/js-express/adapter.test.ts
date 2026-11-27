@@ -388,6 +388,18 @@ describe('JS Express tracking adapter', () => {
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: wording })).toMatchObject({ kind: 'intentional_gap' });
   });
 
+  it("reads iMile's lines relayed without their centre: the airport receipt with its flight, and a booked re-delivery day", () => {
+    const flight = 'Origin port warehouse receive，Flight Schedule ETD【HKG】2030-01-02 04:05:13, ETA【AMS】2030-01-03 06:08:36.';
+    expect(jsExpressStage(flight, 'OIT')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: flight })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    const booked = 'NDR re-delivery audit confirmed,appointment date [2030-01-07]';
+    const scan = { ...row('2030-01-03 09:40:00', '', booked), code: 'OIT' };
+    const result = parseJsExpress(withList([scan]), DELIVERED);
+    expect(result.events![0]).not.toHaveProperty('stage');
+    expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: booked })).toMatchObject({ kind: 'intentional_gap' });
+    expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: 'NDR re-delivery audit confirmed' })).toEqual({ kind: 'unknown' });
+  });
+
   it("reads USPS's forwarding alert, which names its time, day and town, as the parcel going on", () => {
     const alert = 'Alert, Forwarded -> Your item was forwarded to a different address at 7:00 am on January 2, 2030 in SAMPLE TOWN, MA. '
       + 'This was because of forwarding instructions or because the address or ZIP Code on the label was incorrect.';

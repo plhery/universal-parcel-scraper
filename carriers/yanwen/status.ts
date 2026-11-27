@@ -267,8 +267,15 @@ const NOTICES = new Map([
 /** Whether a scan is its country's code alone ("UA."), without words: it names no stage. */
 export const yanwenCodeOnly = (description: string): boolean => /^[a-z]{2}\.$/i.test(description.trim());
 
+// iMile's delivery day booked, between its centre's scans, with the day in angle brackets: "Scheduled to <2026-11-27> .".
+const SCHEDULED_DAY = /^scheduled to <\d{4}-\d{2}-\d{2}> ?\.$/;
+const SCHEDULED_NOTE = "iMile's delivery day booked, between its delivery centre's scans: it moves nothing, so it keeps the stage the parcel already had.";
+
 /** Whether a scan is a notice: it keeps the stage of the scan before it and names no place. */
-export const yanwenNotice = (description: string): boolean => NOTICES.has(normalizeStatusWording(withoutPrefix(description)));
+export const yanwenNotice = (description: string): boolean => {
+  const normalized = normalizeStatusWording(withoutPrefix(description));
+  return NOTICES.has(normalized) || SCHEDULED_DAY.test(normalized);
+};
 
 /** What the map says about one scan by its milestone icon, the only code it keeps, else its wording. */
 export const statusMap: CarrierStatusMap = {
@@ -278,6 +285,7 @@ export const statusMap: CarrierStatusMap = {
     { wording: 'ua.', note: "A partner's scan in Ukraine that Yanwen relays as its country's code alone, without words: it names no stage." },
     ...[...NOTICES].map(([wording, note]) => ({ wording, note })),
   ],
+  gapNote: (_code, wording) => (SCHEDULED_DAY.test(normalizeStatusWording(withoutPrefix(wording))) ? SCHEDULED_NOTE : undefined),
 };
 
 /** The parcel's status from the category on its identity field, for scans the map does not know. */

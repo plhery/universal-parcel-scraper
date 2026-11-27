@@ -160,6 +160,8 @@ describe('Estafeta bound history', () => {
   it('keeps external transport delays nonterminal', () => {
     expect(estafetaStatus('CARGA DEMORADA POR BLOQUEO O ACCIDENTE EXTERNO EN VIA FEDERAL')).toEqual({ status: 'exception', stage: 'exception' });
     expect(estafetaStatus('No entregado')).toBeUndefined();
+    expect(estafetaStatus('Envio recibido en oficina De Ejemplo 100 A,Centro,Ejemplo')).toEqual({ status: 'in_transit', stage: 'accepted' });
+    expect(estafetaStatus('Envio recibido en oficina')).toBeUndefined();
   });
   it('preserves unknown and equal-time scans in provider order, deduplicating and bounding output', () => {
     const $ = load(historyHtml()); const latest = $('.eventInfo').first(); latest.children().last().text('__proto__');

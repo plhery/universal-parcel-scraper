@@ -9,7 +9,7 @@ import {
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean, escapeRegExp } from '../../core/transport/index.js';
-import { xdpStage } from './status.js';
+import { isXdpMessage, xdpStage } from './status.js';
 
 export const PROVIDER = 'XDP';
 
@@ -25,9 +25,6 @@ const HEADER = ['Date/Time', 'Bar Code', 'Location', 'Status Type', 'Status Data
 // "18 Jul 2024 11:19AM": a 24-hour clock with a meridiem that agrees with it.
 const CLOCK = /^(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4}) (\d{2}):(\d{2})(AM|PM)$/;
 const TYPE = /^[A-Z][A-Z0-9 /&-]{0,39}$/;
-// Messages XDP sent the recipient or the sender, a failed service's e-mail among them (SERVICE FAIL MESSAGE): they move
-// nothing, and some name the recipient.
-const MESSAGE = /(?:^|\s)(?:EMAIL|SMS|MESSAGE)$|\bMESSAGE SENT$/;
 // The scanning system's name around the status it reports: Spirit at the depots, DriverX and ScanX on the round.
 const SYSTEM_STATUS = /^(?:Spirit|DriverX|ScanX) Status: "([^"]{1,200})"$/;
 // Wording that goes on to name a person; the scan is staged and told apart without the name.
@@ -147,7 +144,8 @@ export function parseXdp(html: string, raw: string): CarrierResult {
     const type = clean($(tds[3]).text(), 60).toUpperCase();
     const data = clean($(tds[4]).text(), 300);
     if (!TYPE.test(type)) throw new SchemaError(PROVIDER, 'XDP returned a scan without its status type');
-    if (MESSAGE.test(type)) continue;
+    // Messages move nothing, and some name the recipient.
+    if (isXdpMessage(type)) continue;
     const description = wording(type, data);
     const worded = description.replace(PERSON, '').trim();
     if (!worded) throw new SchemaError(PROVIDER, 'XDP returned a scan without its wording');

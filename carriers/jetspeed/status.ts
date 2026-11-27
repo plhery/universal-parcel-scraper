@@ -2,7 +2,8 @@ import type { Stage } from '../../core/status/index.js';
 import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 // The tracker's English rows, by their `normalizeStatusWording` wording. Some name a place, a
-// warehouse's address or the area a delivery station serves, before or after the fixed words.
+// warehouse's address, the area a delivery station serves, or the destination by its country code
+// or by a partner and country's names, before or after the fixed words.
 const WORDINGS: readonly (readonly [RegExp, Stage])[] = [
   [/(?:^|,)order information received by the carrier\.?$/, 'registered'],
   [/^consignment received at the local warehouse in .+\.$/, 'accepted'],
@@ -14,9 +15,9 @@ const WORDINGS: readonly (readonly [RegExp, Stage])[] = [
   [/^shipment arrived at the departure airport cargo facility\.$/, 'in_transit'],
   [/^shipment handed over to the air carrier at the departure airport\.$/, 'in_transit'],
   [/^shipment departed the origin airport; international line-haul transit is in progress\.$/, 'in_transit'],
-  [/^shipment arrived at [a-z]{2} airport$/, 'in_transit'],
-  [/^shipment arrived at the [a-z]{2} destination processing facility\.$/, 'in_transit'],
-  [/^shipment information has been received for destination processing\.(?: \.)?$/, 'in_transit'],
+  [/^shipment arrived at [a-z][a-z ]{1,40} airport$/, 'in_transit'],
+  [/^shipment arrived at the [a-z][a-z ]{1,60} destination processing facility\.$/, 'in_transit'],
+  [/^shipment information has been received for destination processing\.(?: (?:[a-z][a-z ]{0,60})?\.)?$/, 'in_transit'],
   [/^arrival processing is in progress\.$/, 'in_transit'],
   [/^destination processing completed\.$/, 'in_transit'],
   [/^shipment transferred to the carrier\.$/, 'in_transit'],

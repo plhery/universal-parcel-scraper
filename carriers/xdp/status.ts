@@ -31,6 +31,12 @@ function deliveryStage(wording: string): Stage | undefined {
 /** PRINT, a label printed for the consignment, moves nothing. */
 const GAPS = [{ code: 'PRINT', note: 'A label printed for the consignment, with its order or a return; it moves nothing.' }];
 
+// Messages XDP sent the recipient or the sender, a failed service's e-mail among them (SERVICE FAIL MESSAGE).
+const MESSAGE = /(?:^|\s)(?:EMAIL|SMS|MESSAGE)$|\bMESSAGE SENT$/;
+
+/** Whether a status type is a message XDP sent the recipient or the sender, which the adapter leaves out. */
+export const isXdpMessage = (type: string): boolean => MESSAGE.test(type);
+
 /** The stage a status type and its wording give a consignment on its way to the recipient, if any. */
 export function xdpStage(type: string, wording: string): Stage | undefined {
   if (type === 'DELIVERY') return deliveryStage(wording);
@@ -44,4 +50,6 @@ export function xdpStage(type: string, wording: string): Stage | undefined {
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code ? xdpStage(code, wording) : undefined),
   gaps: GAPS,
+  gapNote: (code) => (code && isXdpMessage(code)
+    ? 'A message XDP sent the recipient or the sender, which a relayed history can keep; the adapter leaves it out, and it moves nothing.' : undefined),
 };

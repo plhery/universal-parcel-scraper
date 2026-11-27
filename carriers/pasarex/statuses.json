@@ -18,6 +18,8 @@
     {"wording": "Shipment delivered in perfect condition", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Under DELIVERED."},
     {"wording": "No one at home at the time of delivery", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The round found no one at the address, hours after it left; the parcel went out again the next day."},
     {"wording": "Applies to shipments that go out on route and the courier is unable to make a delivery attempt.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "A round that ended without trying the door: a delay, not an attempt, as the notice of possible delays reads."},
+    {"wording": "Vuelo retrasado", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The international flight is late, days after the manifest arrived: a delay on the way."},
+    {"wording": "International flight delayed.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The same delay in English, a day later."},
     {"wording": "A delivery agreement has been made with the consignee", "stage": null, "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "An arrangement with the recipient while the round is out, hours before the delivery: it moves nothing, so the parcel keeps the stage it had."}
   ]
 }

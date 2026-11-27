@@ -473,6 +473,14 @@
       "note": "\"Le destinataire est informé par e-mail de la nécessité de reprogrammer sa livraison\", minutes after the round that did not deliver: a notice to the recipient, which keeps the stage of the scan before it."
     },
     {
+      "wording": "la livraison de votre colis est programmée",
+      "language": "fr",
+      "stage": null,
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "\"La livraison de votre colis est programmée Date\", at the delivering agency hours after its transit scan, the template's word standing for the day: a notice to the recipient, which keeps the stage of the scan before it."
+    },
+    {
       "wording": "a programme une nouvelle livraison",
       "language": "fr",
       "stage": "in_transit",

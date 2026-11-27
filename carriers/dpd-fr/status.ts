@@ -63,6 +63,14 @@ function isPostponementNotice(value: string): boolean {
   return value.includes('du report de sa livraison');
 }
 
+/**
+ * The notice of the delivery's planned day, by its `comparableText` form: "La livraison de votre colis est programmée
+ * <day>", where DPD can leave its template's "Date" in place of the day.
+ */
+function isScheduleNotice(value: string): boolean {
+  return value.includes('la livraison de votre colis est programmee');
+}
+
 /** The recipient's booking of a new day, by its `comparableText` form. */
 export function isRebooking(value: string): boolean {
   return value.includes('a programme une nouvelle livraison');
@@ -71,12 +79,12 @@ export function isRebooking(value: string): boolean {
 /**
  * A notice to the recipient that names no step of its own: of the acceptance, of the parcel on its way (which can
  * come during the round), of the delivery's current step, that the delivery is put off, which comes during the round
- * before its own scan, or that the delivery must be booked again, which follows the scan of the round that did not
- * deliver.
+ * before its own scan, that the delivery must be booked again, which follows the scan of the round that did not
+ * deliver, or of the delivery's planned day.
  */
 export function isRecipientNotice(value: string): boolean {
   return isAcceptanceNotice(value) || isShipmentNotice(value) || isStepNotice(value) || isRebookNotice(value)
-    || isPostponementNotice(value);
+    || isPostponementNotice(value) || isScheduleNotice(value);
 }
 
 export function classifyStatus(description: string): ClassifiedStatus {
@@ -220,6 +228,7 @@ export const statusMap: CarrierStatusMap = {
     if (isShipmentNotice(value)) return 'The recipient told the parcel is on its way, which can come during the round: it keeps the stage it had.';
     if (isRebookNotice(value)) return 'The recipient asked to book the delivery again, after the round that did not deliver: it keeps the stage it had.';
     if (isPostponementNotice(value)) return 'The recipient told the delivery is put off, during the round whose own scan follows: it keeps the stage it had.';
+    if (isScheduleNotice(value)) return "The recipient told of the delivery's planned day, at the delivering agency: it keeps the stage it had.";
     return isStepNotice(value) ? "The recipient told of the delivery's current step, during the round: it keeps the stage it had." : undefined;
   },
 };

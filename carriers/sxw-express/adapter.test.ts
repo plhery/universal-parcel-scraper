@@ -43,6 +43,11 @@ it('keeps a parcel in transit when the delivering partner\'s warehouse takes it 
   }
 });
 
+it("leaves Australia Post's record of a customer's enquiry unstaged, on purpose", () => {
+  expect(statusMap.stage(null, normalizeStatusWording('Customer enquiry lodged'))).toBeUndefined();
+  expect(statusMapAnswer({ carrier: 'sxw-express', providerCode: null, description: 'Customer enquiry lodged' })).toMatchObject({ kind: 'intentional_gap' });
+});
+
 it('reads the last-mile carrier\'s locker token as the parcel waiting for collection, not delivered', () => {
   expect(statusMapAnswer({ carrier: 'sxw-express', providerCode: null, description: 'DELIVERED_TO_LOCKER' }))
     .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
@@ -228,7 +233,7 @@ describe('SXW Express tracking adapter', () => {
   });
 
   it('maps every row it has written, and the app reads the map', () => {
-    for (const entry of statuses.entries) expect(statusMap.stage(null, normalizeStatusWording(entry.wording)), entry.wording).toBe(entry.stage);
+    for (const entry of statuses.entries) expect(statusMap.stage(null, normalizeStatusWording(entry.wording)), entry.wording).toBe(entry.stage ?? undefined);
     // A row with a mark and no words moves nothing; one with words stays for review.
     expect(statusMapAnswer({ carrier: 'sxw-express', providerCode: null, description: '.' }))
       .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/without words/) });

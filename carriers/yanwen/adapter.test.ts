@@ -345,6 +345,20 @@ describe('Yanwen result projection', () => {
     expect(history([['2026-03-07', '07:29:00 [GMT-08]', '', 'In Transit to Next Facility']]).events?.[0]?.time).toBe('2026-03-07T07:29:00-08:00');
   });
 
+  it("keeps iMile's booked delivery day, with its day in angle brackets, on the stage before it", () => {
+    const result = history([
+      ['2026-03-07', '08:54:00 [GMT+01]', 'Example07', '【Example07】Dispatch task assigned to DA.'],
+      ['2026-03-06', '13:49:00 [GMT+01]', '', 'Scheduled to <2026-03-07> .'],
+      ['2026-03-06', '08:08:00 [GMT+01]', 'Example07', '【Example07】Arrived.'],
+    ], '运输途中', 'DE');
+    expect(result.events?.[1]).toMatchObject({ description: 'Scheduled to <2026-03-07> .', stage: 'in_transit', stage_source: 'none' });
+    expect(yanwenStatus('Scheduled to <2026-03-07> .')).toBeUndefined();
+    expect(statusMap.stage(null, normalizeStatusWording('Scheduled to <2026-03-07> .'))).toBeUndefined();
+    expect(statusMap.gapNote?.(null, normalizeStatusWording('Scheduled to <2026-03-07> .'))).toMatch(/moves nothing/);
+    // A sentence that only opens the same way is not the notice.
+    expect(statusMap.gapNote?.(null, normalizeStatusWording('Scheduled to depart on the next planned movement'))).toBeUndefined();
+  });
+
   it("keeps a partner's arrival rows relayed at its announcement's second, before Yanwen's pickup, on the registration", () => {
     const result = history([
       ['2026-10-31', '01:13:00 [GMT+08]', '', 'Yanwen facility - Outbound'],

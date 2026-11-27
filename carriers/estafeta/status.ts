@@ -22,6 +22,8 @@ export function estafetaRoundNotice(description: string): boolean {
 export function estafetaStatus(wording: string): ClassifiedStatus | undefined {
   const normalized = estafetaWording(wording);
   if (/^.+ llegada a centro operativo plaza destino$/.test(normalized)) return { status: 'in_transit', stage: 'in_transit' };
+  // The sender's drop-off at an office, named by its address, at the minute of "Recibido por Estafeta".
+  if (/^envio recibido en oficina \S/.test(normalized)) return { status: 'in_transit', stage: 'accepted' };
   return WORDINGS.get(normalized);
 }
 
