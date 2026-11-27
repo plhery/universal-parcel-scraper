@@ -47,7 +47,7 @@ how a consumer learns that DHL holds one behind a postcode.
   after `JJD` name the network that issued a plate, and detection gives the
   plate to it: `000090` and fourteen to sixteen digits more to
   [DHL eCommerce Netherlands](../dhl-ecommerce-nl/README.md), `000061`,
-  `000268`, `000269` or `000368` and fourteen more to
+  `000064`, `000268`, `000269` or `000368` and fourteen more to
   [DHL eCommerce Iberia](../dhl-ecommerce-es/README.md). This endpoint holds no
   record of those, so a parcel filed under DHL with one is handed to the issuer's
   tracker (`deliveryHandoff`). Every other plate is DHL Paket's. Plates that cross

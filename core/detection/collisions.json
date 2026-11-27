@@ -1185,7 +1185,7 @@
     "reason": "A licence plate the Dutch network issues. DHL Paket's tracker holds no record of it, so DHL only suggests it and the Dutch rule decides."
   },
   {
-    "shape": "JJD000061, JJD000268, JJD000269 or JJD000368 and fourteen digits",
+    "shape": "JJD000061, JJD000064, JJD000268, JJD000269 or JJD000368 and fourteen digits",
     "carriers": [
       "dhl",
       "dhl-ecommerce-es"

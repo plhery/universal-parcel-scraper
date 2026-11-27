@@ -63,8 +63,8 @@ the gateway behind its customer tracking page. German DHL Paket is
   Recognition asks it about them beside the other carriers for a lookup from
   Spain or Portugal (`servedCountriesOnly`), and for any other once they have
   all missed the number.
-- `JJD` licence plates whose digits after `JJD` start with `000061`, `000268`,
-  `000269` or `000368`, with fourteen more, are issued by this network. DHL
+- `JJD` licence plates whose digits after `JJD` start with `000061`, `000064`,
+  `000268`, `000269` or `000368`, with fourteen more, are issued by this network. DHL
   Paket's tracker holds no record of them, so detection selects this carrier.
   Twelve and twenty-two digits, other `JJD` plates and S10 numbers are accepted
   when the carrier is named and claimed by no rule here.

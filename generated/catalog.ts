@@ -746,7 +746,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "checksum": "frankier-id"
       },
       {
-        "pattern": "^JJD(?:0146\\d{14}|000090\\d{14,16}|000(?:061|268|269|368)\\d{14})$",
+        "pattern": "^JJD(?:0146\\d{14}|000090\\d{14,16}|000(?:061|064|268|269|368)\\d{14})$",
         "confidence": "low"
       },
       {
@@ -21173,7 +21173,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       },
       {
-        "pattern": "^JJD000(?:061|268|269|368)\\d{14}$",
+        "pattern": "^JJD000(?:061|064|268|269|368)\\d{14}$",
         "confidence": "high"
       }
     ]
