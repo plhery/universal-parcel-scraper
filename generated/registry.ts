@@ -319,6 +319,7 @@ import { adapter as dropp } from '../carriers/dropp/adapter.js';
 import { adapter as dsv } from '../carriers/dsv/adapter.js';
 import { adapter as dtdc } from '../carriers/dtdc/adapter.js';
 import { adapter as dx } from '../carriers/dx/adapter.js';
+import { adapter as dyjExpress } from '../carriers/dyj-express/adapter.js';
 import { adapter as dynalogic } from '../carriers/dynalogic/adapter.js';
 import { adapter as dypaq } from '../carriers/dypaq/adapter.js';
 import { adapter as eCommerceInternational } from '../carriers/e-commerce-international/adapter.js';
@@ -358,6 +359,7 @@ import { adapter as estes } from '../carriers/estes/adapter.js';
 import { adapter as estesForwarding } from '../carriers/estes-forwarding/adapter.js';
 import { adapter as ethiopianCargo } from '../carriers/ethiopian-cargo/adapter.js';
 import { adapter as etomars } from '../carriers/etomars/adapter.js';
+import { adapter as eudore } from '../carriers/eudore/adapter.js';
 import { adapter as eurodis } from '../carriers/eurodis/adapter.js';
 import { adapter as euroexpressBa } from '../carriers/euroexpress-ba/adapter.js';
 import { adapter as europochta } from '../carriers/europochta/adapter.js';
@@ -491,6 +493,7 @@ import { adapter as happyPost } from '../carriers/happy-post/adapter.js';
 import { adapter as haypost } from '../carriers/haypost/adapter.js';
 import { adapter as hcrd } from '../carriers/hcrd/adapter.js';
 import { adapter as hctLogistics } from '../carriers/hct-logistics/adapter.js';
+import { adapter as hdExpress } from '../carriers/hd-express/adapter.js';
 import { adapter as hdgj } from '../carriers/hdgj/adapter.js';
 import { adapter as hecnyShipping } from '../carriers/hecny-shipping/adapter.js';
 import { adapter as hedeShipping } from '../carriers/hede-shipping/adapter.js';
@@ -611,6 +614,7 @@ import { adapter as jumppointInternational } from '../carriers/jumppoint-interna
 import { adapter as junfengInternational } from '../carriers/junfeng-international/adapter.js';
 import { adapter as justShipSg } from '../carriers/just-ship-sg/adapter.js';
 import { adapter as jytd } from '../carriers/jytd/adapter.js';
+import { adapter as jytwl } from '../carriers/jytwl/adapter.js';
 import { adapter as kLineRoro } from '../carriers/k-line-roro/adapter.js';
 import { adapter as kargolife } from '../carriers/kargolife/adapter.js';
 import { adapter as kargoturk } from '../carriers/kargoturk/adapter.js';
@@ -881,6 +885,7 @@ import { adapter as pwb } from '../carriers/pwb/adapter.js';
 import { adapter as pxcPacific } from '../carriers/pxc-pacific/adapter.js';
 import { adapter as qatarAirwaysCargo } from '../carriers/qatar-airways-cargo/adapter.js';
 import { adapter as qatarPost } from '../carriers/qatar-post/adapter.js';
+import { adapter as qinhangTransportation } from '../carriers/qinhang-transportation/adapter.js';
 import { adapter as qlgj } from '../carriers/qlgj/adapter.js';
 import { adapter as qqwy } from '../carriers/qqwy/adapter.js';
 import { adapter as qtExpress } from '../carriers/qt-express/adapter.js';
@@ -1132,6 +1137,7 @@ import { adapter as tuomeida } from '../carriers/tuomeida/adapter.js';
 import { adapter as turkonLine } from '../carriers/turkon-line/adapter.js';
 import { adapter as tuskLogistics } from '../carriers/tusk-logistics/adapter.js';
 import { adapter as twsExpress } from '../carriers/tws-express/adapter.js';
+import { adapter as uSpeedExpress } from '../carriers/u-speed-express/adapter.js';
 import { adapter as ubiSmartParcel } from '../carriers/ubi-smart-parcel/adapter.js';
 import { adapter as ukpWorldwide } from '../carriers/ukp-worldwide/adapter.js';
 import { adapter as ukrposhta } from '../carriers/ukrposhta/adapter.js';
@@ -1217,6 +1223,7 @@ import { adapter as xpressCourierLink } from '../carriers/xpress-courier-link/ad
 import { adapter as xpressLogisticsLu } from '../carriers/xpress-logistics-lu/adapter.js';
 import { adapter as xpressbees } from '../carriers/xpressbees/adapter.js';
 import { adapter as xsExpress } from '../carriers/xs-express/adapter.js';
+import { adapter as xunTianInternational } from '../carriers/xun-tian-international/adapter.js';
 import { adapter as xylShips } from '../carriers/xyl-ships/adapter.js';
 import { adapter as xysLogistics } from '../carriers/xys-logistics/adapter.js';
 import { adapter as yalidine } from '../carriers/yalidine/adapter.js';
@@ -1583,6 +1590,7 @@ export const REGISTRY: RegistryDefinition = {
     "dsv": dsv,
     "dtdc": dtdc,
     "dx": dx,
+    "dyj-express": dyjExpress,
     "dynalogic": dynalogic,
     "dypaq": dypaq,
     "e-commerce-international": eCommerceInternational,
@@ -1622,6 +1630,7 @@ export const REGISTRY: RegistryDefinition = {
     "estes-forwarding": estesForwarding,
     "ethiopian-cargo": ethiopianCargo,
     "etomars": etomars,
+    "eudore": eudore,
     "eurodis": eurodis,
     "euroexpress-ba": euroexpressBa,
     "europochta": europochta,
@@ -1755,6 +1764,7 @@ export const REGISTRY: RegistryDefinition = {
     "haypost": haypost,
     "hcrd": hcrd,
     "hct-logistics": hctLogistics,
+    "hd-express": hdExpress,
     "hdgj": hdgj,
     "hecny-shipping": hecnyShipping,
     "hede-shipping": hedeShipping,
@@ -1875,6 +1885,7 @@ export const REGISTRY: RegistryDefinition = {
     "junfeng-international": junfengInternational,
     "just-ship-sg": justShipSg,
     "jytd": jytd,
+    "jytwl": jytwl,
     "k-line-roro": kLineRoro,
     "kargolife": kargolife,
     "kargoturk": kargoturk,
@@ -2145,6 +2156,7 @@ export const REGISTRY: RegistryDefinition = {
     "pxc-pacific": pxcPacific,
     "qatar-airways-cargo": qatarAirwaysCargo,
     "qatar-post": qatarPost,
+    "qinhang-transportation": qinhangTransportation,
     "qlgj": qlgj,
     "qqwy": qqwy,
     "qt-express": qtExpress,
@@ -2396,6 +2408,7 @@ export const REGISTRY: RegistryDefinition = {
     "turkon-line": turkonLine,
     "tusk-logistics": tuskLogistics,
     "tws-express": twsExpress,
+    "u-speed-express": uSpeedExpress,
     "ubi-smart-parcel": ubiSmartParcel,
     "ukp-worldwide": ukpWorldwide,
     "ukrposhta": ukrposhta,
@@ -2481,6 +2494,7 @@ export const REGISTRY: RegistryDefinition = {
     "xpress-logistics-lu": xpressLogisticsLu,
     "xpressbees": xpressbees,
     "xs-express": xsExpress,
+    "xun-tian-international": xunTianInternational,
     "xyl-ships": xylShips,
     "xys-logistics": xysLogistics,
     "yalidine": yalidine,
@@ -3075,6 +3089,7 @@ export const REGISTRY: RegistryDefinition = {
     "dtdc": "dtdc",
     "duxiuexp": "universal",
     "dx": "dx",
+    "dyj-express": "dyj-express",
     "dylo-express": "universal",
     "dynalogic": "dynalogic",
     "dypaq": "dypaq",
@@ -3150,6 +3165,7 @@ export const REGISTRY: RegistryDefinition = {
     "etomars": "etomars",
     "ets-express": "universal",
     "eu-entrego": "universal",
+    "eudore": "eudore",
     "eurodis": "eurodis",
     "euroexpress-ba": "euroexpress-ba",
     "europochta": "europochta",
@@ -3366,6 +3382,7 @@ export const REGISTRY: RegistryDefinition = {
     "haypost": "haypost",
     "hcrd": "hcrd",
     "hct-logistics": "hct-logistics",
+    "hd-express": "hd-express",
     "hdgj": "hdgj",
     "hecny-ecom": "universal",
     "hecny-shipping": "hecny-shipping",
@@ -3558,6 +3575,7 @@ export const REGISTRY: RegistryDefinition = {
     "juxi-express": "universal",
     "jy-express": "universal",
     "jytd": "jytd",
+    "jytwl": "jytwl",
     "k-line-roro": "k-line-roro",
     "kaizen-express": "universal",
     "kakao-t-same-day": "universal",
@@ -4028,6 +4046,7 @@ export const REGISTRY: RegistryDefinition = {
     "qatar-airways-cargo": "qatar-airways-cargo",
     "qatar-post": "qatar-post",
     "qiantong-hk": "universal",
+    "qinhang-transportation": "qinhang-transportation",
     "qlgj": "qlgj",
     "qls-quince": "universal",
     "qqwy": "qqwy",
@@ -4444,6 +4463,7 @@ export const REGISTRY: RegistryDefinition = {
     "tws-express": "tws-express",
     "u-envios": "universal",
     "u-post": "universal",
+    "u-speed-express": "u-speed-express",
     "ubi-smart-parcel": "ubi-smart-parcel",
     "ubsend": "universal",
     "ubx-uk": "universal",
@@ -4590,6 +4610,7 @@ export const REGISTRY: RegistryDefinition = {
     "xpressen": "universal",
     "xs-express": "xs-express",
     "xuchuan-logistics": "universal",
+    "xun-tian-international": "xun-tian-international",
     "xwwt": "universal",
     "xyl": "universal",
     "xyl-ships": "xyl-ships",

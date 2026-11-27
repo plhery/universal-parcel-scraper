@@ -17188,7 +17188,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "CJPacket",
       "CJ Dropshipping",
-      "CJ Packet Ordinary"
+      "CJ Packet Ordinary",
+      "LuWei Express"
     ],
     "countries": [
       "CN"
@@ -17217,7 +17218,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^CJP[A-Z]{2,3}\\d{10}YQ$",
+        "pattern": "^(?:CJP|LWP)[A-Z]{2,3}\\d{10}YQ$",
         "confidence": "high"
       }
     ]
@@ -23755,6 +23756,45 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "dyj-express": {
+    "displayName": "DYJ Express",
+    "color": "#0078C0",
+    "aliases": [
+      "DYJ",
+      "达运佳",
+      "达运佳国际物流",
+      "深圳达运佳国际物流",
+      "Shenzhen Dayunjia International Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dyj-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "43.138.180.250"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^DYJCN\\d{10}CN$",
+        "confidence": "high"
+      }
+    ]
+  },
   "dylo-express": {
     "displayName": "Dylo Express",
     "color": "#00827e",
@@ -26236,6 +26276,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.euentrego.com.br/",
     "trackingSearchUrl": "https://tracking.euentrego.com.br/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "eudore": {
+    "displayName": "Eudore",
+    "color": "#009688",
+    "aliases": [
+      "腾博物流"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "eudore",
+      "localClocks": true
+    },
+    "canaryUrl": "https://tbwl.t6soft.com/track",
+    "trackingUrlTemplate": "https://tbwl.t6soft.com/track?waybillnumber={trackingNumber}",
+    "trackingSearchUrl": "https://tbwl.t6soft.com/track",
+    "linkRules": [
+      {
+        "domains": [
+          "tbwl.t6soft.com"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "waybillnumber"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "eurodis": {
@@ -33531,6 +33603,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "hd-express": {
+    "displayName": "HD Express",
+    "color": "#132B85",
+    "aliases": [
+      "汇达物流",
+      "HDExpress",
+      "HD Cargo"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Vancouver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hd-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^HDC\\d{11}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "hdgj": {
     "displayName": "Bright East International",
     "color": "#2880a8",
@@ -39659,6 +39758,47 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ],
     "detectionRules": []
+  },
+  "jytwl": {
+    "displayName": "JYTWL",
+    "color": "#0074D9",
+    "aliases": [
+      "JYT",
+      "玖运通",
+      "玖运通国际物流",
+      "广州玖运通国际物流",
+      "广州玖运通国际物流服务有限公司",
+      "Jiuyuntong",
+      "Jiuyuntong Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jytwl",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "118.195.157.162"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^JYT\\d{10}CN$",
+        "confidence": "high"
+      }
+    ]
   },
   "k-line-roro": {
     "displayName": "K Line Global RoRo",
@@ -55010,6 +55150,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "qinhang-transportation": {
+    "displayName": "Qinhang Transportation",
+    "color": "#0375D8",
+    "aliases": [
+      "Qinhang"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "qinhang-transportation",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "qlgj": {
     "displayName": "Qilin International",
     "color": "#1F6BD6",
@@ -68541,6 +68701,41 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "u-speed-express": {
+    "displayName": "U-Speed Express",
+    "color": "#cf2024",
+    "aliases": [
+      "U-Speed",
+      "优时派",
+      "优时派跨境物流供应链（深圳）有限公司"
+    ],
+    "countries": [
+      "CN",
+      "IL"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "u-speed-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.u-speedex.com/",
+    "trackingUrlTemplate": "https://www.u-speedex.com/queryTracks?no={trackingNumber}",
+    "trackingSearchUrl": "https://www.u-speedex.com/order_query",
+    "linkRules": [
+      {
+        "domains": [
+          "u-speedex.com"
+        ],
+        "pathPattern": "^/queryTracks/?$",
+        "params": [
+          "no"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "ubi-smart-parcel": {
     "displayName": "UBI Smart Parcel",
     "color": "#053c80",
@@ -72571,7 +72766,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "星邮国际",
       "星邮",
       "上海星邮供应链有限公司",
-      "Shanghai Xingyou Supply Chain"
+      "Shanghai Xingyou Supply Chain",
+      "XYEX"
     ],
     "countries": [
       "CN"
@@ -73161,6 +73357,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "xun-tian-international": {
+    "displayName": "Xun Tian International",
+    "color": "#0a5191",
+    "aliases": [
+      "迅田国际",
+      "广东阿信物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xun-tian-international",
+      "localClocks": true
+    },
+    "canaryUrl": "https://xtl.itdida.com/itdida-flash/website/landing",
+    "trackingSearchUrl": "https://xtl.itdida.com/itdida-flash/website/landing",
+    "linkRules": [],
+    "detectionRules": []
   },
   "xwwt": {
     "displayName": "XWWT",
@@ -75692,6 +75910,7 @@ export const CARRIER_IDS = [
   "dtd-pk",
   "duxiuexp",
   "dx",
+  "dyj-express",
   "dylo-express",
   "dynalogic",
   "dypaq",
@@ -75764,6 +75983,7 @@ export const CARRIER_IDS = [
   "etomars",
   "ets-express",
   "eu-entrego",
+  "eudore",
   "eurodis",
   "euroexpress-ba",
   "europochta",
@@ -75972,6 +76192,7 @@ export const CARRIER_IDS = [
   "haypost",
   "hcrd",
   "hct-logistics",
+  "hd-express",
   "hdgj",
   "hecny-ecom",
   "hecny-shipping",
@@ -76154,6 +76375,7 @@ export const CARRIER_IDS = [
   "juxi-express",
   "jy-express",
   "jytd",
+  "jytwl",
   "k-line-roro",
   "kaizen-express",
   "kakao-t-same-day",
@@ -76603,6 +76825,7 @@ export const CARRIER_IDS = [
   "qatar-airways-cargo",
   "qatar-post",
   "qiantong-hk",
+  "qinhang-transportation",
   "qlgj",
   "qls-quince",
   "qqwy",
@@ -77001,6 +77224,7 @@ export const CARRIER_IDS = [
   "tws-express",
   "u-envios",
   "u-post",
+  "u-speed-express",
   "ubi-smart-parcel",
   "ubsend",
   "ubx-uk",
@@ -77142,6 +77366,7 @@ export const CARRIER_IDS = [
   "xpressen",
   "xs-express",
   "xuchuan-logistics",
+  "xun-tian-international",
   "xwwt",
   "xyl",
   "xyl-ships",
@@ -77825,6 +78050,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dtd-pk": [],
   "duxiuexp": [],
   "dx": ["dx-1","dx-2"],
+  "dyj-express": ["dyj-express-1"],
   "dylo-express": [],
   "dynalogic": [],
   "dypaq": [],
@@ -77897,6 +78123,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "etomars": ["etomars-1"],
   "ets-express": ["ets-express-1"],
   "eu-entrego": [],
+  "eudore": [],
   "eurodis": [],
   "euroexpress-ba": [],
   "europochta": ["europochta-1"],
@@ -78105,6 +78332,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "haypost": ["haypost-s10"],
   "hcrd": [],
   "hct-logistics": [],
+  "hd-express": ["hd-express-1"],
   "hdgj": [],
   "hecny-ecom": [],
   "hecny-shipping": [],
@@ -78287,6 +78515,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "juxi-express": ["juxi-express-1","juxi-express-2"],
   "jy-express": [],
   "jytd": [],
+  "jytwl": ["jytwl-1"],
   "k-line-roro": [],
   "kaizen-express": [],
   "kakao-t-same-day": [],
@@ -78736,6 +78965,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "qatar-airways-cargo": [],
   "qatar-post": ["qatar-post-ems-s10"],
   "qiantong-hk": [],
+  "qinhang-transportation": [],
   "qlgj": ["qlgj-1"],
   "qls-quince": [],
   "qqwy": [],
@@ -79134,6 +79364,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tws-express": ["tws-express-1"],
   "u-envios": [],
   "u-post": [],
+  "u-speed-express": [],
   "ubi-smart-parcel": ["ubi-smart-parcel-1"],
   "ubsend": [],
   "ubx-uk": [],
@@ -79275,6 +79506,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xpressen": [],
   "xs-express": [],
   "xuchuan-logistics": ["xuchuan-logistics-1"],
+  "xun-tian-international": [],
   "xwwt": [],
   "xyl": [],
   "xyl-ships": ["xyl-ships-1","xyl-ships-2","xyl-ships-3"],

@@ -51431,6 +51431,34 @@
     ]
   },
   {
+    "input": "481736539745",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "purolator",
+      "japan-post",
+      "sf-express",
+      "sto",
+      "zto",
+      "yamato",
+      "j-and-t",
+      "lbc-express",
+      "paquetexpress",
+      "sagawa",
+      "sending"
+    ],
+    "asked": [
+      "purolator",
+      "japan-post",
+      "brt",
+      "colis-prive"
+    ]
+  },
+  {
     "input": "481817",
     "carrier": "unknown",
     "confidence": "none",
@@ -86324,6 +86352,12 @@
     ]
   },
   {
+    "input": "BS241202023FAI",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "BSIC1064576117",
     "carrier": "ekart",
     "confidence": "high",
@@ -92006,6 +92040,14 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "DYJCN1020496267CN",
+    "carrier": "dyj-express",
+    "confidence": "high",
+    "candidates": [
+      "dyj-express"
+    ]
   },
   {
     "input": "DYY013552509XB",
@@ -98307,6 +98349,14 @@
     "candidates": []
   },
   {
+    "input": "HDC22120600014",
+    "carrier": "hd-express",
+    "confidence": "high",
+    "candidates": [
+      "hd-express"
+    ]
+  },
+  {
     "input": "HDMUNBOM63007200",
     "carrier": "unknown",
     "confidence": "none",
@@ -101258,6 +101308,14 @@
     ]
   },
   {
+    "input": "JYT2026117575CN",
+    "carrier": "jytwl",
+    "confidence": "high",
+    "candidates": [
+      "jytwl"
+    ]
+  },
+  {
     "input": "K1506235620",
     "carrier": "unknown",
     "confidence": "low",
@@ -103935,6 +103993,14 @@
     "asked": [
       "tnt-au",
       "purolator"
+    ]
+  },
+  {
+    "input": "LWPBJB0110600409YQ",
+    "carrier": "cj-packet",
+    "confidence": "high",
+    "candidates": [
+      "cj-packet"
     ]
   },
   {
@@ -110000,6 +110066,19 @@
     ]
   },
   {
+    "input": "QH25032223",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it",
+      "tnt-it"
+    ],
+    "asked": [
+      "gls-it",
+      "tnt-it"
+    ]
+  },
+  {
     "input": "QH999999999980FS",
     "carrier": "unknown",
     "confidence": "low",
@@ -113713,6 +113792,12 @@
     "candidates": [
       "china-post"
     ]
+  },
+  {
+    "input": "RUN10001202229377",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "RUTD000239675UL",
@@ -121360,6 +121445,12 @@
     "candidates": [
       "chronopost"
     ]
+  },
+  {
+    "input": "XY0000095357PQ",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "XY123456789NZ",
