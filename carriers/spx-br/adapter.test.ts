@@ -635,6 +635,10 @@ describe('SPX Express Brazil status vocabulary', () => {
     // A sorting centre's pickup at the drop-off point is the parcel's collection, as a first-mile hub's.
     expect(statusMapAnswer({ carrier: 'spx-br', providerCode: 'SOC_Pickup_Done', description: 'Seu pacote foi coletado' }))
       .toEqual({ kind: 'mapped', stage: 'accepted' });
+    // A transit status on the way back to the seller reads like F671-F680; a status with no transit reading stays unknown.
+    expect(statusMapAnswer({ carrier: 'spx-br', providerCode: 'Return_SOC_LHTransporting', description: 'Pacote está sendo transportado' }))
+      .toEqual({ kind: 'mapped', stage: 'returned' });
+    expect(statusMapAnswer({ carrier: 'spx-br', providerCode: 'Return_Delivered', description: 'Sintético' })).toEqual({ kind: 'unknown' });
     // A code the map does not know falls to the shared wording rules.
     expect(spxBrStage('F981', 'Pedido entregue')).toMatchObject({ stage: 'delivered' });
     expect(spxBrStage('3PL_Delivered', '[00000] Pacote foi entregue')).toEqual({ stage: 'delivered', source: 'carrier_map' });

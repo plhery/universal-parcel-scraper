@@ -554,6 +554,15 @@
       "note": "Fleet feed: paired with F510. The sorting centre, in brackets before the line, is the place."
     },
     {
+      "code": "Return_SOC_Received",
+      "wording": "Seu pacote foi recebido pelo centro de triagem",
+      "language": "pt",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "Fleet feed: SOC_Received on the way back to the seller, hours after the parcel's sorting centre received it again. Return_ before a transit status marks the return leg, read like F671-F680."
+    },
+    {
       "code": "SOC_LHTransporting",
       "wording": "Pacote […] está sendo transportado para […]",
       "language": "pt",

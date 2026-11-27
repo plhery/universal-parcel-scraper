@@ -104,8 +104,10 @@ label's first fifteen characters.
   the page's milestones stay at sorting. Brazilian customs holding or inspecting a parcel is customs, its refusal to
   import is an exception. The F988 return announcement starts the return, as F680 does: the sorting
   scans after it carry the parcel back towards the seller, until a delivery round takes it to the
-  buyer again, and F999 confirms the seller's receipt. A parcel lost (F969) or disposed
-  of (F996, "Pedido descartado") is an exception: it reaches neither the buyer nor the seller.
+  buyer again, and F999 confirms the seller's receipt. A fleet status with `Return_` before a
+  transit status, such as `Return_SOC_Received`, is that way back too. A parcel lost (F969), seized by the
+  authorities (F990) or disposed of (F996, "Pedido descartado") is an exception: it reaches neither
+  the buyer nor the seller.
   A round that did not deliver ends in F650, or in A106 alone ("Um imprevisto ocorreu…"): a failed
   attempt. When both come for one round, A106 is a notice that keeps the round's stage.
 

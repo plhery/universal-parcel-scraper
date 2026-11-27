@@ -77,11 +77,19 @@ const FLEET: ReadonlyMap<string, Stage> = new Map(([
 // line that names its hub, "[OF Hub_…] Seu pacote está sendo entregue pelo entregador", is the round.
 const ROUND = /^\[[^\]]+\]/;
 
+// The fleet feed's scans on the way back to the seller carry `Return_` before the status they have on the way out:
+// "Return_SOC_Received", a sorting centre's receipt of the return. A move there reads like F671-F680, on the way back.
+const RETURN_LEG = /^RETURN_(.+)$/;
+const returnLegStage = (key: string): Stage | undefined => {
+  const out = RETURN_LEG.exec(key)?.[1];
+  return out && FLEET.get(out) === 'in_transit' ? 'returned' : undefined;
+};
+
 /** The stage SPX's order code or fleet status gives a scan with this wording. */
 export function spxBrMappedStage(code: string, wording: string): Stage | undefined {
   const key = code.toUpperCase();
   if (key === 'DELIVERING' && !ROUND.test(wording.trim())) return 'in_transit';
-  return CODES.get(key) ?? FLEET.get(key);
+  return CODES.get(key) ?? FLEET.get(key) ?? returnLegStage(key);
 }
 
 /** A scan's stage: its code, else the shared wording rules, else nothing. */
