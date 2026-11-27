@@ -754,6 +754,21 @@ describe('the detection engine', () => {
     ]) expect(keywordNumberInText(text), text).toBeUndefined();
   });
 
+  it("reads a number under its carrier's name only when the number fits that carrier", () => {
+    // Synthetic numbers. A shop's order table prints its carrier's name above the number; an email reader can join the two with a colon.
+    for (const text of ['DPD: 01234567890128', 'Transporteur DPD : 01234567890128.', 'Your order\nCarrier\nDPD\n01234567890128\n']) {
+      expect(keywordNumberInText(text), text).toBe('01234567890128');
+    }
+    expect(keywordNumberInText('Colissimo : 6A12345678901')).toBe('6A12345678901');
+    expect(parseTrackingInput('DPD: 01234567890128')).toMatchObject({ trackingNumber: '01234567890128', source: 'text', confidence: 'low' });
+    expect(parseTrackingInput('DPD: 01234567890128').candidates).toContain('dpd');
+    // A phone line, a name that is no carrier's, a name inside a sentence, two numbers, and a number in another carrier's shape.
+    for (const text of [
+      'DPD: 0800 123 456', 'DPD: 0800123456', 'UPS: 1-800-742-5877', 'Order: 01234567890128', 'Sent by DPD\n01234567890128',
+      'DPD: 01234567890128 or 01234567890135', 'DPD: LX12345678',
+    ]) expect(keywordNumberInText(text), text).toBeUndefined();
+  });
+
   it('reads the number after a Russian or Chinese label', () => {
     for (const text of ['Трек-номер: 1234567899', 'трек номер 1234567899', 'Номер отслеживания: 1234567899', 'Номер отправления: 1234567899',
       'ШПИ: 1234567899', 'Почтовый идентификатор 1234567899', '运单号：1234567899', '快递单号: 1234567899', '物流单号 1234567899',

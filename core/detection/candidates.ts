@@ -7,7 +7,7 @@
  * engine) and no provider I/O.
  */
 import { calendarDay } from '../time/index.js';
-import { isKnownCarrierName } from '../catalog/hints.js';
+import { brandCarrierIds, carrierIdFromName, isKnownCarrierName } from '../catalog/hints.js';
 import { TRACKING_CANDIDATE_PATTERNS } from './candidatePatterns.js';
 import { detectCarrierMatch } from './detect.js';
 import { validTrackingNumberInText } from './valid.js';
@@ -132,9 +132,17 @@ export function isDateToken(token: string): boolean {
  * label that offers two numbers names neither, and a date is no number, though
  * a later label may still introduce one. A number printed in groups is read
  * whole when a carrier claims it or when its groups are short and make eight
- * characters or more: "0034 0434 1234 5678".
+ * characters or more: "0034 0434 1234 5678". A text with no such label can
+ * still use a carrier's name as one, for a number in that carrier's shape:
+ * "DPD: 01234567890128".
  */
 export function keywordNumberInText(raw: string): string | undefined {
+  const labelled = labelledNumberInText(raw);
+  return labelled === undefined ? namedNumberInText(raw) : labelled ?? undefined;
+}
+
+// The number a tracking label introduces; null when a label introduces none and decides the text holds none.
+function labelledNumberInText(raw: string): string | null | undefined {
   const labels = new RegExp(LABELLED_NUMBER);
   for (let match = labels.exec(raw); match; match = labels.exec(raw)) {
     const { carrier, number } = match.groups!;
@@ -155,7 +163,7 @@ export function keywordNumberInText(raw: string): string | undefined {
     }
     const start = match.index + match[0].length - number!.length;
     const end = start + groups.join(' ').length;
-    if (ALTERNATIVE_NUMBER.test(raw.slice(end))) return undefined;
+    if (ALTERNATIVE_NUMBER.test(raw.slice(end))) return null;
     // A sentence can end right after its number.
     const joins = groups.map((_, count) => groups.slice(0, count + 1).join('').replace(/[.-]+$/, ''));
     const claimed = joins.slice(1).reverse().find((joined) => detectCarrierMatch(joined).confidence === 'high');
@@ -169,8 +177,41 @@ export function keywordNumberInText(raw: string): string | undefined {
     const grouped = groups.length > 1 && groups.every((group) => group.length <= 6) && joins.at(-1)!.length >= 8
       ? joins.at(-1) : undefined;
     const candidate = claimed ?? grouped ?? joins[0]!;
-    if (candidate.length < 4 || isDateToken(candidate)) return undefined;
-    return validTrackingNumberInText(candidate) ? candidate : undefined;
+    if (candidate.length < 4 || isDateToken(candidate)) return null;
+    return validTrackingNumberInText(candidate) ? candidate : null;
+  }
+  return undefined;
+}
+
+// A carrier's name standing as its number's label, before a colon or alone on the line above it: "DPD: 01234567890128",
+// as a shop's order table prints its carrier's column. The number is one unbroken token, so a phone line printed in
+// groups, "DPD : 0800 …", introduces none.
+const NAMED_NUMBER = new RegExp(
+  String.raw`(?:(?<![\p{L}0-9'’&-])(?<name>${NAME_WORD}(?:[ \t]+${NAME_WORD}){0,2}?)[ \t]*[:：]`
+  + String.raw`|(?:^|\n)[ \t]*(?<alone>${NAME_WORD}(?:[ \t]+${NAME_WORD}){0,2})[ \t]*\r?\n(?:[ \t]*\r?\n)?)[ \t]*`
+  + String.raw`(?<number>(?=[A-Z]*\d)[A-Z0-9]{8,40})(?![\p{L}0-9_-]|[./][\p{L}0-9])`,
+  'giu',
+);
+// A national phone number written whole: a 0 and eight to ten more digits.
+const WHOLE_PHONE = /^0\d{8,10}$/;
+
+/**
+ * A number after a carrier's name used as its label, read only when the number's shape fits a carrier the name
+ * stands for: the name's own carrier, or one of its brand's networks for a brand such as DPD or GLS.
+ */
+function namedNumberInText(raw: string): string | undefined {
+  const labels = new RegExp(NAMED_NUMBER);
+  for (let match = labels.exec(raw); match; match = labels.exec(raw)) {
+    const { name, alone, number } = match.groups!;
+    labels.lastIndex = match.index + 1;
+    const named = name ?? alone!;
+    const own = carrierIdFromName(named);
+    const carriers = own ? [own] : brandCarrierIds(named);
+    if (carriers.length === 0 || WHOLE_PHONE.test(number!)) continue;
+    const detected = detectCarrierMatch(number!, { inText: true });
+    if (![detected.carrier, ...detected.candidates].some((carrier) => carriers.includes(carrier))) continue;
+    if (ALTERNATIVE_NUMBER.test(raw.slice(match.index + match[0].length))) return undefined;
+    return validTrackingNumberInText(number!) ? number : undefined;
   }
   return undefined;
 }

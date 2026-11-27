@@ -126,7 +126,8 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     expect(recognitionAskedCarriers('LX12345678')).toContain('ontrac');
     const table = 'Your order\nLE-nummer\n\n1234567\nIN12345678 / LE12345678\nDPD\n01234567890128\n';
     expect(recognizedNumberInText(table)).toBeUndefined();
-    expect(keywordNumberInText(table)).toBeUndefined();
+    // The carrier's name labels its own number in the table.
+    expect(keywordNumberInText(table)).toBe('01234567890128');
     expect(keywordNumberInText('Tracking number: LX12345678')).toBe('LX12345678');
   });
 
