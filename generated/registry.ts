@@ -406,6 +406,7 @@ import { adapter as fleetoptics } from '../carriers/fleetoptics/adapter.js';
 import { adapter as flickpost } from '../carriers/flickpost/adapter.js';
 import { adapter as flippost } from '../carriers/flippost/adapter.js';
 import { adapter as flipxpress } from '../carriers/flipxpress/adapter.js';
+import { adapter as fliway } from '../carriers/fliway/adapter.js';
 import { adapter as flowProgressiveLogistics } from '../carriers/flow-progressive-logistics/adapter.js';
 import { adapter as fmTransportes } from '../carriers/fm-transportes/adapter.js';
 import { adapter as fmx } from '../carriers/fmx/adapter.js';
@@ -561,6 +562,7 @@ import { adapter as intertownTransport } from '../carriers/intertown-transport/a
 import { adapter as intexPaketdienst } from '../carriers/intex-paketdienst/adapter.js';
 import { adapter as intrasJp } from '../carriers/intras-jp/adapter.js';
 import { adapter as iqfulfillment } from '../carriers/iqfulfillment/adapter.js';
+import { adapter as islandwideExpress } from '../carriers/islandwide-express/adapter.js';
 import { adapter as israelPost } from '../carriers/israel-post/adapter.js';
 import { adapter as jAndT } from '../carriers/j-and-t/adapter.js';
 import { adapter as jAndTAu } from '../carriers/j-and-t-au/adapter.js';
@@ -1659,6 +1661,7 @@ export const REGISTRY: RegistryDefinition = {
     "flickpost": flickpost,
     "flippost": flippost,
     "flipxpress": flipxpress,
+    "fliway": fliway,
     "flow-progressive-logistics": flowProgressiveLogistics,
     "fm-transportes": fmTransportes,
     "fmx": fmx,
@@ -1814,6 +1817,7 @@ export const REGISTRY: RegistryDefinition = {
     "intex-paketdienst": intexPaketdienst,
     "intras-jp": intrasJp,
     "iqfulfillment": iqfulfillment,
+    "islandwide-express": islandwideExpress,
     "israel-post": israelPost,
     "j-and-t": jAndT,
     "j-and-t-au": jAndTAu,
@@ -3209,7 +3213,7 @@ export const REGISTRY: RegistryDefinition = {
     "flight-logistics": "universal",
     "flippost": "flippost",
     "flipxpress": "flipxpress",
-    "fliway": "universal",
+    "fliway": "fliway",
     "flow-progressive-logistics": "flow-progressive-logistics",
     "flyking": "universal",
     "flyt-express": "universal",
@@ -3457,7 +3461,7 @@ export const REGISTRY: RegistryDefinition = {
     "iqfulfillment": "iqfulfillment",
     "iran-post": "universal",
     "irs-romexpress": "universal",
-    "islandwide-express": "universal",
+    "islandwide-express": "islandwide-express",
     "isle-of-man-post": "universal",
     "israel-post": "israel-post",
     "itc-delivery": "universal",

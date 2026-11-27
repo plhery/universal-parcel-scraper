@@ -28983,13 +28983,24 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Pacific/Auckland",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "fliway",
+      "localClocks": true
     },
     "canaryUrl": "https://www.fliway.com/",
-    "trackingUrlTemplate": "https://online.fliway.com/Public/Track/{trackingNumber}",
+    "trackingUrlTemplate": "https://www.fliway.com/transport/tracking/jobstatus?connote_or_ticket={trackingNumber}",
     "trackingSearchUrl": "https://www.fliway.com/",
     "helpUrl": "https://www.fliway.com/services/contact-support",
     "linkRules": [
+      {
+        "domains": [
+          "www.fliway.com",
+          "fliway.com"
+        ],
+        "pathPattern": "^/transport/tracking/jobstatus/?$",
+        "params": [
+          "connote_or_ticket"
+        ]
+      },
       {
         "domains": [
           "online.fliway.com"
@@ -36940,7 +36951,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Puerto_Rico",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "islandwide-express",
+      "recognitionRank": 52,
+      "localClocks": true
     },
     "canaryUrl": "https://www.islandwide.com/tracking",
     "trackingUrlTemplate": "https://www.islandwide.com/tracking?TrackingNumber={trackingNumber}",
@@ -36958,7 +36971,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^\\d{9}[A-Z]{6}\\d{7}$",
+        "confidence": "low"
+      }
+    ]
   },
   "isle-of-man-post": {
     "displayName": "Isle of Man Post",
@@ -77845,7 +77863,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "iqfulfillment": [],
   "iran-post": [],
   "irs-romexpress": [],
-  "islandwide-express": [],
+  "islandwide-express": ["islandwide-express-1"],
   "isle-of-man-post": [],
   "israel-post": ["israel-post-1","israel-post-s10"],
   "itc-delivery": [],

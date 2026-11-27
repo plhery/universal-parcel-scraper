@@ -264,6 +264,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "integral-pack": 644,
   "intel-valley": 66,
   "interrapidisimo": 969,
+  "islandwide-express": 52,
   "israel-post": 81,
   "j-and-t": 530,
   "j-and-t-au": 698,
