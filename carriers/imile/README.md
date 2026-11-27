@@ -77,7 +77,8 @@ makes, with the China leg Cainiao's global tracker holds under the same number.
   place, they would come fourteen hours early. Ship24 and
   ParcelsApp relay these digits and read them on the same clock ([`clock.ts`](clock.ts)). They
   relay iMile's sentences without its codes, and the map reads those sentences whole, as on
-  iMile's page.
+  iMile's page. "Shipment received." after a centre's name comes only under the return code, so
+  without a code it is the return under way.
 - The order record (`1001`) is on the recipient's clock too. On a parcel with Cainiao's leg it
   lands seconds after Cainiao's last sorting-centre dispatch, when Cainiao notifies iMile; read
   on China's clock it would come hours before that dispatch.

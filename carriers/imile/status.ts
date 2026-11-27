@@ -177,12 +177,21 @@ function phraseStage(code: string, wording: string): Stage | null | undefined {
 export const imileSentenceStage = (code: string, wording: string): Stage | null | undefined => phraseStage(code, wording);
 
 /**
+ * Sentences iMile writes only under its return code (`1008`), read so when a relay drops the code: a centre receiving
+ * the returning parcel, "【Maglod RDC】Shipment received.". Its receipts on the way to the recipient say "Your order
+ * has been received." or "Received.".
+ */
+const RELAYED_RETURN: ReadonlyMap<string, Stage> = new Map([['shipment received', 'exception']]);
+
+/**
  * The stage one of iMile's sentences gives its scan as another tracker relays it, without a code:
  * opening with the centre's name in 【】, as iMile writes it. Undefined for any other wording and for
  * a scan that moves nothing.
  */
 export function imileRelayedStage(wording: string): Stage | undefined {
-  return /^\s*【[^】]+】/.test(wording) ? phraseStage('', wording) ?? undefined : undefined;
+  if (!/^\s*【[^】]+】/.test(wording)) return undefined;
+  const stage = phraseStage('', wording);
+  return stage === undefined ? RELAYED_RETURN.get(imilePhrase(wording)) : stage ?? undefined;
 }
 
 /**
@@ -242,7 +251,7 @@ const IMILE_CODE = /^\d{1,6}$/;
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code && !IMILE_CODE.test(code)
     ? cainiaoStatusMap.stage(code, wording)
-    : imileMappedStage(code ?? '', wording) ?? undefined),
+    : imileMappedStage(code ?? '', wording) ?? (code ? undefined : imileRelayedStage(wording))),
   gaps: [
     { wording: 'the pick-up task has been cancelled.', note: 'The courier\'s collection from the sender called off, before a pickup driver is assigned again: the parcel is still with the sender, so it keeps the stage of the scan before it.' },
     { wording: 'out of stores', note: 'A store sending the parcel out, logged without a code before iMile\'s first centre receives it; the reply does not say the store is iMile\'s, so the parcel keeps its order record\'s stage and the receipt that follows is its acceptance.' },

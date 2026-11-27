@@ -11,7 +11,7 @@ import { keepAdapterHolds, resetAdapterHolds, serviceTag, type AdapterHold } fro
 import { adapter, CAINIAO_UNKNOWN_MS, IMILE_API, IMILE_PAGE, IMILE_SIGNING, ImileTracker, imileSignature, scriptSigning, type ImileSigning } from './adapter.js';
 import { cainiaoScans, withCainiaoLeg } from './cainiao.js';
 import { imileReceiver, imileSummary, imileWording, normalizeImileNumber, parseImile } from './parser.js';
-import { imileStage, statusMap } from './status.js';
+import { imileRelayedStage, imileStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const DELIVERED = '6000000000001';
@@ -908,6 +908,12 @@ describe('iMile status vocabulary', () => {
       .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage of the scan before it/) });
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'Change of delivery time' }))
       .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage of the scan before it/) });
+    // A relay that drops the code reads a centre receiving the returning parcel as iMile's return code does; a code
+    // iMile gives keeps deciding.
+    expect(imileRelayedStage('【Sample RDC】Shipment received.')).toBe('exception');
+    expect(statusMap.stage(null, '【sample rdc】shipment received.')).toBe('exception');
+    expect(statusMap.stage('2004', '【sample rdc】shipment received.')).toBe('in_transit');
+    expect(imileRelayedStage('Shipment received.')).toBeUndefined();
     // The booked day moves nothing; the review learns why.
     for (const providerCode of ['1003', '1002', null]) {
       expect(statusMapAnswer({ carrier: 'imile', providerCode, description: 'Shipment is scheduled to [2026-05-20].' }))
