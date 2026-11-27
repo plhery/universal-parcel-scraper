@@ -68,10 +68,13 @@ describe('carrier search pages (rendered at phone size)', () => {
         }
         throw error;
       }
-      // Some pages show the field on phones only once controls are tapped.
+      // Some pages show the field on phones only once controls are tapped. A cookie banner over a
+      // control (Moovin's country choice) would take the tap, which a reader dismisses first.
       for (const selector of reveal ?? []) {
         const control = page.locator(selector).filter({ visible: true }).first();
-        await control.waitFor({ state: 'visible', timeout: 10_000 }).then(() => control.click({ timeout: 5_000 })).catch(() => undefined);
+        await control.waitFor({ state: 'visible', timeout: 10_000 })
+          .then(() => control.click({ timeout: 5_000 }).catch(() => control.dispatchEvent('click')))
+          .catch(() => undefined);
       }
       let fields = 0;
       // Allow hydration and client redirects; stop at the first field.
