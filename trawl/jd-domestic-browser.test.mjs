@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { jdDomesticNumber, jdDomesticReply, jdDisplayedPuzzle, jdRefreshGeometry, runJdDomestic } from './jd-domestic-browser.mjs';
+import { jdCheckAnswer, jdDomesticNumber, jdDomesticReply, jdDisplayedPuzzle, jdRefreshGeometry, runJdDomestic } from './jd-domestic-browser.mjs';
 import { jdIconGeometry } from './jd-icon.mjs';
 
 const number = 'JDJ146283975062', other = 'JDJ257394086173';
@@ -9,15 +9,27 @@ const track = 'https://www.jdl.com/waybill/trackNoPin';
 const proxy = 'https://api.jdl.com/waybillQuery/trackWaybill';
 const verify = 'https://api.jdl.com/waybillQuery/needVerify';
 const sessionUrl = 'https://www.jdl.com/ecology/getSession';
+const trackNew = 'https://www.jdl.com/waybill/trackNoPinNew';
+const checkUrl = 'https://api.jdl.com/batchQueryWaybillCheckResult';
 const url = `${pageUrl}?waybillCodes=${number}`, capture = { captureResponses: [track, proxy] };
+const captureNew = { captureResponses: [track, proxy, trackNew] };
+// CHECK's answers: the waybill may be searched without a phone, or the page asks for one.
+const passed = { code: 0, success: true, fail: false, message: '', data: { allNotPassedByNoData: false, allPassed: true, allPassedByOwner: false,
+  notPassedCodes: [], passedCodes: [number], traceId: 'PRIVATE' } };
+const phone = { code: 0, success: true, fail: false, message: '', data: { allNotPassedByNoData: false, allPassed: false, allPassedByOwner: false,
+  notPassedCodes: [number], passedCodes: [], traceId: 'PRIVATE' } };
 const puzzle = { scene: 'data:image/png;base64,AA==', tip: 'data:image/png;base64,AQ==' };
 // The puzzle each refresh displays: a new scene and prompt every time.
 const puzzleAt = n => n ? { scene: `data:image/png;base64,S${n}==`, tip: `data:image/png;base64,T${n}==` } : puzzle;
+const payloadNew = () => ({ code: 1, msg: 'PRIVATE', obj: { passedCodes: [number], trackData: [{ rawWaybillCode: number, receiverName: 'PRIVATE',
+  traceAllVoList: [{ categoryName: 'In transit', traceVoList: [{ operateMessage: 'In transit', trackDay: '2026-04-03', trackTime: '12:00:00', phone: 'PRIVATE' }] }] }] } });
 const payload = () => ({ code: 1, token: 'PRIVATE', obj: [{ rawWaybillCode: number, exists: true, receiverName: 'PRIVATE', map: 'PRIVATE',
   traceAllVoList: [{ categoryName: 'In transit', traceVoList: [{ operateMessage: 'In transit', trackDay: '2026-04-03', trackTime: '12:00:00',
     recipientName: 'PRIVATE', phone: 'PRIVATE', attachments: ['PRIVATE'] }] }] }] });
 
-function fixture({ plan = { x: 30, y: 40 }, verified = true, restarted = false, wrongRequest = false, wrongSession = false, proof = 'PRIVATE-PROOF', body = payload(), status = 200, stale = false, plans, decline = 'unreadable', refreshStale = false, refreshSession = false } = {}) {
+function fixture({ plan = { x: 30, y: 40 }, verified = true, restarted = false, wrongRequest = false, wrongSession = false, proof = 'PRIVATE-PROOF', body, status = 200, stale = false, plans, decline = 'unreadable', refreshStale = false, refreshSession = false,
+  fresh = false, checked = passed, searched = {} } = {}) {
+  body ??= fresh ? payloadNew() : payload();
   const state = { contexts: 0, closed: 0, plans: 0, clicks: 0, requests: 0, blocked: 0, started: 0, captures: [], refreshes: 0 };
   const listeners = new Map();
   const request = (target, method = 'GET', data) => ({ url: () => target, method: () => method, postDataJSON: () => data });
@@ -26,7 +38,19 @@ function fixture({ plan = { x: 30, y: 40 }, verified = true, restarted = false, 
       body: async () => Buffer.from(typeof value === 'string' ? value : JSON.stringify(value)) });
     await new Promise(resolve => setImmediate(resolve));
   };
+  // The newer page: CHECK after the answer, then the search without a phone when CHECK lets it.
+  const search = async () => {
+    await emit(checkUrl, checked, 200, request(checkUrl, 'POST', [{ waybillCodes: [number] }]));
+    if (checked !== passed) return;
+    const req = request(trackNew, 'POST', [{ waybillCodes: wrongRequest ? other : number, sessionId: wrongSession ? 'PRIVATE-OTHER' : 'PRIVATE-SESSION',
+      verifyCode: proof, groupFlag: true, ...searched }]);
+    await state.route({ request: () => req,
+      fallback: async () => { state.requests++; await emit(trackNew, body, status, req); },
+      abort: async () => { state.blocked++; },
+    });
+  };
   const history = async () => {
+    if (fresh) return search();
     const target = verified ? `${track}?${new URLSearchParams({ waybillCodes: wrongRequest ? other : number,
       sessionId: wrongSession ? 'PRIVATE-OTHER' : 'PRIVATE-SESSION', verifyCode: proof, type: '2', groupFlag: 'true' })}` : proxy;
     const req = request(target, verified ? 'GET' : 'POST', [{ waybillCodes: wrongRequest ? other : number, type: 2, pin: '' }]);
@@ -40,7 +64,7 @@ function fixture({ plan = { x: 30, y: 40 }, verified = true, restarted = false, 
     on: (event, fn) => listeners.set(event, fn), off: event => listeners.delete(event),
     goto: async target => {
       assert.equal(target, url); state.started++;
-      await emit(verify, { code: 1, obj: verified });
+      if (!fresh) await emit(verify, { code: 1, obj: verified });
       if (verified) {
         await emit(sessionUrl, { code: 1, obj: 'PRIVATE-SESSION' });
         if (restarted) await emit(sessionUrl, { code: 1, obj: 'PRIVATE-RESTART' });
@@ -62,7 +86,7 @@ function fixture({ plan = { x: 30, y: 40 }, verified = true, restarted = false, 
     } },
   };
   const context = { newPage: async () => tab, close: async () => { state.closed++; } };
-  const options = { url, capture, tier: 3, maxTimeout: 8000, refreshDwellMs: 0,
+  const options = { url, capture: fresh ? captureNew : capture, tier: 3, maxTimeout: 8000, refreshDwellMs: 0,
     handle: { browser: { newContext: async () => { state.contexts++; return context; } } },
     installPolicy: async () => {}, locate: async (input, _signal, budget, report) => {
       const selected = plans ? plans[state.plans] : plan;
@@ -280,4 +304,59 @@ test('an unchanged puzzle expires its refresh wait without a second analysis', a
   assert.equal(result.capturedResponses[0].error, 'jd-domestic-stale_puzzle');
   assert.equal(active.state.plans, 1); assert.equal(active.state.refreshes, 1);
   assert.equal(active.state.clicks, 0); assert.equal(active.state.closed, 1);
+});
+
+test('the newer adapter lists the new search third; any other list is refused', () => {
+  assert.equal(jdDomesticNumber(url, captureNew), number);
+  for (const list of [[track, proxy, sessionUrl], [track, proxy, trackNew, trackNew], [proxy, track, trackNew], [track, trackNew]]) {
+    assert.equal(jdDomesticNumber(url, { captureResponses: list }), null);
+  }
+});
+
+test('the page that opens the puzzle at once searches without a phone once CHECK lets it', async () => {
+  const active = fixture({ fresh: true }), result = await runJdDomestic(active.options);
+  assert.equal(active.state.clicks, 1); assert.equal(active.state.requests, 1); assert.equal(active.state.closed, 1);
+  const [entry] = result.capturedResponses;
+  assert.equal(entry.url, trackNew); assert.equal(entry.trackingNumberSubmitted, number);
+  assert.deepEqual(JSON.parse(entry.body), jdDomesticReply(payloadNew()));
+  assert.equal(JSON.parse(entry.body).obj.trackData[0].traceAllVoList[0].traceVoList[0].operateMessage, 'In transit');
+  assert.equal(JSON.stringify(result).includes('PRIVATE'), false);
+  assert.deepEqual(active.state.captures.map(x => [x.outcome, x.check]), [['response', 'passed']]);
+});
+
+test('a waybill CHECK keeps for the last digits of a phone ends at once without a search', async () => {
+  const active = fixture({ fresh: true, checked: phone }), result = await runJdDomestic({ ...active.options, maxTimeout: 40000 });
+  assert.equal(active.state.clicks, 1); assert.equal(active.state.requests, 0); assert.equal(active.state.closed, 1);
+  assert.equal(result.capturedResponses[0].error, 'jd-domestic-phone_required');
+  assert.ok(result.durationMs < 1000, 'The phone dialog must not wait out the lookup budget');
+  assert.equal(JSON.stringify(result).includes('PRIVATE'), false);
+  assert.equal(active.state.captures[0].check, 'phone');
+});
+
+test('the new search is aborted unless it carries the whole waybill, the session, the proof and no phone', async () => {
+  for (const setup of [{ wrongRequest: true }, { wrongSession: true }, { proof: '' }, { searched: { phoneLast4: '0000' } },
+    { searched: { pin: 'PRIVATE' } }, { searched: { groupFlag: false } }]) {
+    const active = fixture({ fresh: true, ...setup }), result = await runJdDomestic(active.options);
+    assert.equal(active.state.requests, 0); assert.equal(active.state.blocked, 1);
+    assert.equal(result.capturedResponses[0].error, 'jd-domestic-verification_refused');
+  }
+});
+
+test('an adapter that does not capture the new search never lets it through', async () => {
+  const active = fixture({ fresh: true });
+  const result = await runJdDomestic({ ...active.options, capture });
+  assert.equal(active.state.requests, 0); assert.equal(active.state.blocked, 1);
+  assert.equal(result.capturedResponses[0].error, 'jd-domestic-verification_refused');
+});
+
+test('CHECK answers only for the request of the whole waybill alone', () => {
+  assert.equal(jdCheckAnswer([{ waybillCodes: [number] }], passed, number), 'passed');
+  assert.equal(jdCheckAnswer([{ waybillCodes: [number] }], phone, number), 'phone');
+  assert.equal(jdCheckAnswer([{ waybillCodes: [number] }], { ...phone, data: { ...phone.data, allNotPassedByNoData: true } }, number), 'passed');
+  for (const body of [[{ waybillCodes: [other] }], [{ waybillCodes: [number, other] }], [{ packageCodes: [number] }], [{ waybillCodes: [number], phoneLast4: '' }], {}]) {
+    assert.equal(jdCheckAnswer(body, passed, number), null);
+  }
+  for (const reply of [{ ...passed, success: false }, { success: true, data: { passedCodes: [other], notPassedCodes: [other] } }, null]) {
+    assert.equal(jdCheckAnswer([{ waybillCodes: [number] }], reply, number), null);
+  }
 });

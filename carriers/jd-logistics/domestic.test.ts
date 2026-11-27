@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../app.js';
 import { adapter, JdLogisticsTracker } from './adapter.js';
-import { jdDomesticBrowser, jdDomesticWording, jdRoute, JD_DOMESTIC_PROXY, JD_DOMESTIC_TRACK, parseJdDomestic } from './domestic.js';
+import { jdDomesticBrowser, jdDomesticWording, jdRoute, JD_DOMESTIC_PROXY, JD_DOMESTIC_TRACK, JD_DOMESTIC_TRACK_NEW, parseJdDomestic } from './domestic.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import statuses from './statuses.json' with { type: 'json' };
@@ -200,7 +200,7 @@ describe('JD domestic recovery boundaries', () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => empty());
     const result = await new JdLogisticsTracker({ trawl, fetcher }).fetch(NUMBER);
     expect(result.events).toHaveLength(2); expect(fetcher).not.toHaveBeenCalled(); expect(scrape).toHaveBeenCalledTimes(1);
-    expect(scrape.mock.calls[0]?.[0]).toMatchObject({ captureResponses: [JD_DOMESTIC_TRACK, JD_DOMESTIC_PROXY], skipHttp: true });
+    expect(scrape.mock.calls[0]?.[0]).toMatchObject({ captureResponses: [JD_DOMESTIC_TRACK, JD_DOMESTIC_PROXY, JD_DOMESTIC_TRACK_NEW], skipHttp: true });
   });
 
   it('asks the international feed for a mainland series when no browser service is configured', async () => {
@@ -242,6 +242,26 @@ describe('JD domestic recovery boundaries', () => {
       scrape.mockResolvedValue({ tier: 3, statusCode: 200, capturedResponses } as never);
       await expect(jdDomesticBrowser(trawl, NUMBER, new AbortController().signal, 20000)).rejects.toMatchObject({ kind: 'transport' });
     }
+  });
+
+  it('reads the new search, which lists the waybill under trackData without saying it exists', async () => {
+    const listed: Record<string, unknown> = { ...history().obj[0]! };
+    delete listed.exists;
+    const { trawl } = client({ code: 1, msg: '成功', obj: { passedCodes: [NUMBER], trackData: [listed] } }, { url: JD_DOMESTIC_TRACK_NEW });
+    const result = await jdDomesticBrowser(trawl, NUMBER, new AbortController().signal, 20000);
+    expect(result.events?.map(event => event.description)).toEqual(['已签收', 'In transit']);
+    expect(JSON.stringify(result)).not.toContain('PRIVATE');
+    expect(() => parseJdDomestic({ code: 1, obj: { trackData: [] } }, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => parseJdDomestic({ code: 1, obj: { trackData: [{ ...listed, exists: false }] } }, NUMBER)).toThrow(expect.objectContaining({ kind: 'not_found' }));
+    expect(() => parseJdDomestic({ code: 1, obj: [listed] }, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it('the dialog for the last digits of a phone is an inconclusive answer, never a missing parcel or an outage', async () => {
+    const { trawl, scrape } = client();
+    scrape.mockResolvedValue({ tier: 3, statusCode: 200, capturedResponses: [{ url: 'https://www.jdl.com/orderSearch/', status: 200,
+      body: null, headers: {}, truncated: false, base64Encoded: false, error: 'jd-domestic-phone_required' }] } as never);
+    await expect(jdDomesticBrowser(trawl, NUMBER, new AbortController().signal, 20000))
+      .rejects.toMatchObject({ kind: 'indeterminate', reason: 'phone_required' });
   });
 
   it('a matching international answer takes precedence without any browser request', async () => {

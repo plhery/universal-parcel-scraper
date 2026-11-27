@@ -13,6 +13,9 @@ import { withoutCourierContact, withoutDeliveryPlace } from './wording.js';
 const PROVIDER = 'JD Logistics';
 export const JD_DOMESTIC_TRACK = 'https://www.jdl.com/waybill/trackNoPin';
 export const JD_DOMESTIC_PROXY = 'https://api.jdl.com/waybillQuery/trackWaybill';
+/** The search of the page that opens its puzzle at once, which lists the waybills as `obj.trackData`. */
+export const JD_DOMESTIC_TRACK_NEW = 'https://www.jdl.com/waybill/trackNoPinNew';
+const CAPTURED = [JD_DOMESTIC_TRACK, JD_DOMESTIC_PROXY, JD_DOMESTIC_TRACK_NEW];
 const PAGE = 'https://www.jdl.com/orderSearch/';
 const WAYBILL = /^JD(?:\d{13}|[A-Z]\d{12}|[A-Z]{2}\d{11})$/;
 const DOMESTIC = /^JD(?:0\d{12}|[JKVX]\d{12}|V[ABC]\d{11}|AZ\d{11})$/;
@@ -85,16 +88,19 @@ function clock(row: Record<string, unknown>): { time?: string; local_time?: stri
 
 export function parseJdDomestic(payload: unknown, raw: string): CarrierResult {
   const number = normalizeJdNumber(raw);
-  if (!isRecord(payload) || payload.code !== 1 || !Array.isArray(payload.obj) || !payload.obj.length) {
+  // The older searches list the waybills as `obj`, the newer one as `obj.trackData` and without `exists`.
+  const listed = isRecord(payload) && isRecord(payload.obj) ? payload.obj.trackData : isRecord(payload) ? payload.obj : undefined;
+  if (!isRecord(payload) || payload.code !== 1 || !Array.isArray(listed) || !listed.length) {
     // In particular, -200010 after a guest-session mismatch is not NotFound.
     throw new IndeterminateError(PROVIDER, 'JD domestic tracking returned no verified shipment');
   }
-  if (payload.obj.length !== 1 || !isRecord(payload.obj[0]) || returnedTrackingNumber(payload.obj[0].rawWaybillCode) !== number) {
+  if (listed.length !== 1 || !isRecord(listed[0]) || returnedTrackingNumber(listed[0].rawWaybillCode) !== number) {
     throw new SchemaError(PROVIDER, 'JD domestic tracking returned a different or ambiguous shipment');
   }
-  const item = payload.obj[0];
+  const item = listed[0];
   if (item.exists === false) throw new NotFoundError(PROVIDER);
-  if (item.exists !== true || !Array.isArray(item.traceAllVoList) || item.traceAllVoList.length > 100) {
+  const known = item.exists === true || (listed !== payload.obj && item.exists == null);
+  if (!known || !Array.isArray(item.traceAllVoList) || item.traceAllVoList.length > 100) {
     throw new SchemaError(PROVIDER, 'JD domestic tracking returned an incomplete shipment');
   }
   const events: CarrierEvent[] = [];
@@ -142,16 +148,22 @@ export async function jdDomesticBrowser(trawl: TrawlClient, number: string, sign
   const timeoutMs = Math.min(40_000, Math.floor(remainingMs - 2000));
   if (timeoutMs < 5000) throw new BudgetExceededError(PROVIDER, remainingMs);
   const page = await trawl.scrape({ url: jdDomesticUrl(number), skipHttp: true, maxTier: 3,
-    captureResponses: [JD_DOMESTIC_TRACK, JD_DOMESTIC_PROXY], maxTimeout: timeoutMs, settleTimeout: timeoutMs },
+    captureResponses: CAPTURED, maxTimeout: timeoutMs, settleTimeout: timeoutMs },
   { provider: PROVIDER, timeoutMs, signal, requireSolved: false, captureWindow: 'last', maxBytes: 2_000_000 });
   signal.throwIfAborted();
-  const rows = page.capturedResponses.filter(row => [JD_DOMESTIC_TRACK, JD_DOMESTIC_PROXY].includes(row.url));
+  const rows = page.capturedResponses.filter(row => CAPTURED.includes(row.url));
   const response = rows.at(-1);
   if (!response) {
     const marker = page.capturedResponses.filter(row => row.url === PAGE).at(-1);
     if (marker?.error === 'jd-domestic-budget') throw new BudgetExceededError(PROVIDER, remainingMs);
     if (marker?.status === 429 || page.statusCode === 429) throw new RateLimitedError(PROVIDER);
     if (marker?.status === 403 || page.statusCode === 403) throw new ChallengeError(PROVIDER);
+    // The page asks for the last four digits of the recipient's or sender's phone, even for a number JD never issued:
+    // the guest search says nothing about the parcel without them.
+    if (marker?.error === 'jd-domestic-phone_required') {
+      throw new IndeterminateError(PROVIDER, 'JD Logistics shows this waybill only with the last four digits of the recipient’s or sender’s phone',
+        { reason: 'phone_required' });
+    }
     if (!marker || !['jd-domestic-unreadable', 'jd-domestic-stale_puzzle', 'jd-domestic-guest_session_changed', 'jd-domestic-verification_refused'].includes(marker.error ?? '')) {
       throw new TransportError(PROVIDER, 'JD domestic browser service did not prepare tracking');
     }

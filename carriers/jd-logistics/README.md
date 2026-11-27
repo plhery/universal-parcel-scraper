@@ -17,11 +17,17 @@ rejected because selecting one could return another parcel's progress.
 
 The domestic step, `trawl`, opens the official order-search page in a fresh context and uses its
 own search, guest session and service-selected verification branch. The service asks every guest
-to click one icon, whatever the browser or network. Its single-icon worker may refresh up to three
+to click one icon, whatever the browser or network. The current page opens the puzzle as soon as
+it has a guest session; the older one asked `needVerify` first, and the helper serves both. Its single-icon worker may refresh up to three
 times after uncertain matches, within the same session and lookup deadline. A fourth uncertainty
 stops without submitting an answer or sending a history request. Worker failures
 and submitted refusals are not retried. Accepted verification must still belong to the original guest session;
-only then may the page query `trackNoPin`. The helper also permits the normal proxy request
+only then may the page query `trackNoPin`. The current page first posts
+`batchQueryWaybillCheckResult` for the waybill. When the check passes it, the page posts
+`trackNoPinNew` with the waybill, session and proof and no phone digits, and only that request
+gets through. Otherwise the page asks for the last four digits of the recipient's or sender's
+phone, as it does even for a number JD never issued: the helper stops there, and the lookup is
+inconclusive with the reason `phone_required`. The helper also permits the normal proxy request
 when the service itself selects the branch without verification.
 When a prompt mask falls outside the accepted foreground size, verification diagnostics
 keep only its pixel count; puzzle images and mask data are not logged.
@@ -29,8 +35,9 @@ keep only its pixel count; puzzle images and mask data are not logged.
 A declined verification is not remembered: the matcher declines puzzles, not waybills, so the
 next lookup opens a fresh session.
 
-Domestic replies require exactly one matching `rawWaybillCode` and an explicit `exists`.
-Only a bound `exists:false` is not found. Empty or refused replies stay inconclusive, and
+Domestic replies require exactly one matching `rawWaybillCode` and an explicit `exists`; the
+new search lists it under `obj.trackData` and may leave `exists` out. Only a bound
+`exists:false` is not found. Empty or refused replies stay inconclusive, and
 browser failure or abstention leaves enabled providers available. No phone, login, map,
 attachment or proof-of-delivery route is entered. HTTP recognition never starts this browser
 step; browser recognition is a separate opt-in.
@@ -88,7 +95,9 @@ in JD's order; any local clock keeps JD's order, newest first.
 
 Domestic recovery needs the TRAWL image with the JD helper. Its conservative matcher supports
 one observed image geometry and declines other puzzles; it does not promise verification on
-every lookup. Public unattended history has been observed for JDJ and JDAZ. Domestic clocks
+every lookup. Public unattended history has been observed for JDJ and JDAZ on the older page;
+the current page asked a guest for the last four digits of a phone for every waybill tried, so
+the step answers only for a waybill its check passes. Domestic clocks
 without a stated offset remain unresolved. Other domestic service variants can require
 recipient inputs and are not followed. The international feed's empty
 answer remains inconclusive with `portal_not_found`, never proof that a parcel does not exist.

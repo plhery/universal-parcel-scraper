@@ -3,6 +3,10 @@ import { jdIconGeometry, locateJdIcon } from './jd-icon.mjs';
 const PAGE = 'https://www.jdl.com/orderSearch/';
 const TRACK = 'https://www.jdl.com/waybill/trackNoPin';
 const PROXY = 'https://api.jdl.com/waybillQuery/trackWaybill';
+// The page that opens the puzzle at once posts its search here, after asking CHECK whether the
+// waybill needs the last four digits of a phone.
+const TRACK_NEW = 'https://www.jdl.com/waybill/trackNoPinNew';
+const CHECK = 'https://api.jdl.com/batchQueryWaybillCheckResult';
 const VERIFY = 'https://api.jdl.com/waybillQuery/needVerify';
 const SESSION = 'https://www.jdl.com/ecology/getSession';
 // The adapter sends mainland series and unseen ones; JD's international series never come here.
@@ -21,8 +25,14 @@ export function jdDomesticNumber(raw, capture = {}) {
   const number = url.searchParams.get('waybillCodes');
   return url.origin === new URL(PAGE).origin && url.pathname === '/orderSearch/' && !url.username && !url.password && !url.hash
     && [...url.searchParams].length === 1 && NUMBER.test(number ?? '') && !INTERNATIONAL.test(number)
-    && capture.captureResponses?.length === 2 && capture.captureResponses[0] === TRACK && capture.captureResponses[1] === PROXY
-    ? number : null;
+    && newSearch(capture) !== null ? number : null;
+}
+
+// An adapter that captures the new search lists it third; an older one lists the first two only.
+function newSearch(capture) {
+  const list = capture?.captureResponses;
+  if (!Array.isArray(list) || list[0] !== TRACK || list[1] !== PROXY) return null;
+  return list.length === 3 && list[2] === TRACK_NEW ? true : list.length === 2 ? false : null;
 }
 
 // Only tracking fields cross the browser boundary. Proofs, names, phones, maps,
@@ -30,19 +40,38 @@ export function jdDomesticNumber(raw, capture = {}) {
 const scalar = value => typeof value === 'string' ? value.slice(0, 2000)
   : typeof value === 'number' && Number.isFinite(value) ? value : undefined;
 const fields = (source, keys) => Object.fromEntries(keys.map(key => [key, scalar(source?.[key])]).filter(([, value]) => value !== undefined));
+const record = value => !!value && typeof value === 'object' && !Array.isArray(value);
+const waybill = item => ({
+  ...fields(item, ['rawWaybillCode']), exists: typeof item?.exists === 'boolean' ? item.exists : null,
+  ...(Array.isArray(item?.traceAllVoList) && { traceAllVoList: item.traceAllVoList.slice(0, 101).map(group => ({
+    ...fields(group, ['category', 'categoryName', 'operateDay']),
+    ...(Array.isArray(group?.traceVoList) && { traceVoList: group.traceVoList.slice(0, 201).map(row =>
+      fields(row, ['operateMessage', 'createTime', 'operateTime', 'trackDay', 'trackTime', 'state'])) }),
+  })) }),
+});
+/** The old searches list the waybills as `obj`; the new one as `obj.trackData`. */
 export function jdDomesticReply(payload) {
-  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return null;
+  if (!record(payload)) return null;
   const result = { ...fields(payload, ['code']) };
-  if (!Array.isArray(payload.obj) || payload.obj.length > 5) return result;
-  result.obj = payload.obj.map(item => ({
-    ...fields(item, ['rawWaybillCode']), exists: typeof item?.exists === 'boolean' ? item.exists : null,
-    ...(Array.isArray(item?.traceAllVoList) && { traceAllVoList: item.traceAllVoList.slice(0, 101).map(group => ({
-      ...fields(group, ['category', 'categoryName', 'operateDay']),
-      ...(Array.isArray(group?.traceVoList) && { traceVoList: group.traceVoList.slice(0, 201).map(row =>
-        fields(row, ['operateMessage', 'createTime', 'operateTime', 'trackDay', 'trackTime', 'state'])) }),
-    })) }),
-  }));
+  if (Array.isArray(payload.obj) && payload.obj.length <= 5) result.obj = payload.obj.map(waybill);
+  else if (record(payload.obj) && Array.isArray(payload.obj.trackData) && payload.obj.trackData.length <= 5) {
+    result.obj = { trackData: payload.obj.trackData.map(waybill) };
+  }
   return result;
+}
+
+/**
+ * CHECK's answer for the request's only waybill: `passed` when the page may search without a phone,
+ * `phone` when it asks for the last four digits of one instead.
+ */
+export function jdCheckAnswer(body, reply, number) {
+  const asked = Array.isArray(body) && body.length === 1 && record(body[0]) && Object.keys(body[0]).length === 1
+    && Array.isArray(body[0].waybillCodes) && body[0].waybillCodes.length === 1 && body[0].waybillCodes[0] === number;
+  const data = record(reply) && reply.success === true ? reply.data : null;
+  if (!asked || !record(data)) return null;
+  const listed = key => Array.isArray(data[key]) && data[key].includes(number);
+  if (listed('passedCodes') || data.allNotPassedByNoData === true) return 'passed';
+  return listed('notPassedCodes') ? 'phone' : null;
 }
 
 export function jdDisplayedPuzzle() {
@@ -117,6 +146,7 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
   locate = locateJdIcon, onVerification = reportVerification, refreshDwellMs = REFRESH_DWELL_MS }) {
   const number = jdDomesticNumber(url, capture);
   if (!number) return undefined;
+  const capturesNew = newSearch(capture);
   const started = Date.now(), ending = new AbortController();
   const combined = signal ? AbortSignal.any([signal, ending.signal]) : ending.signal;
   const left = () => Math.max(1, maxTimeout - (Date.now() - started));
@@ -124,7 +154,7 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
   const entries = [], pending = new Set(), allowed = new WeakSet();
   let context, page, timer, navigationStatus = 0, needVerify, session = '', sessionCount = 0;
   let accepting = true, requests = 0, blocked = 0, clicked = false, analysis = 'not_started', outcome = 'unprepared', lastResponse = 0;
-  let foregroundPixels, refreshes = 0;
+  let foregroundPixels, refreshes = 0, check;
   const attempts = [];
   const marker = () => ({ url: PAGE, status: navigationStatus, body: null, headers: {}, truncated: false,
     base64Encoded: false, error: `jd-domestic-${outcome}` });
@@ -135,6 +165,16 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
     let target;
     try { target = new URL(response.url()); } catch { return; }
     const endpoint = target.origin + target.pathname;
+    if (endpoint === CHECK) {
+      void (async () => {
+        const bytes = await during(() => response.body(), Math.min(5000, left()));
+        if (!accepting || response.status() !== 200 || !bytes || bytes.length > 32_000) return;
+        let reply, body;
+        try { reply = JSON.parse(bytes.toString('utf8')); body = request.postDataJSON(); } catch { return; }
+        check ??= jdCheckAnswer(body, reply, number) ?? undefined;
+      })();
+      return;
+    }
     if (endpoint === VERIFY || endpoint === SESSION) {
       void (async () => {
         const bytes = await during(() => response.body(), Math.min(5000, left()));
@@ -191,17 +231,24 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
     if (!await during(async () => { await installPolicy?.(page); return true; }, left(), false) || combined.aborted) {
       outcome = 'budget'; return result();
     }
-    await page.route(candidate => [TRACK, PROXY].includes(candidate.origin + candidate.pathname), async route => {
+    await page.route(candidate => [TRACK, PROXY, TRACK_NEW].includes(candidate.origin + candidate.pathname), async route => {
       const request = route.request(); let permitted = false;
       try {
         const target = new URL(request.url()), endpoint = target.origin + target.pathname;
         if (!accepting || combined.aborted || requests >= MAX_RESPONSES || sessionCount > 1) throw new Error('Stopped');
-        if (endpoint === TRACK && request.method() === 'GET' && needVerify === true && clicked) {
+        if (endpoint === TRACK && request.method() === 'GET' && needVerify !== false && clicked) {
           const q = target.searchParams;
           permitted = q.getAll('waybillCodes').length === 1 && q.get('waybillCodes') === number && q.get('sessionId') === session
             && q.get('type') === '2' && q.get('groupFlag') === 'true'
             && sessionCount === 1 && ['sessionId', 'verifyCode', 'type', 'groupFlag'].every(key => q.getAll(key).length === 1)
             && typeof q.get('verifyCode') === 'string' && q.get('verifyCode').length > 0;
+        } else if (endpoint === TRACK_NEW && capturesNew && request.method() === 'POST' && needVerify !== false && clicked) {
+          // The search the page sends without a phone: the whole waybill, the original session and the puzzle's proof.
+          const body = request.postDataJSON(), row = Array.isArray(body) && body.length === 1 ? body[0] : null;
+          permitted = record(row) && Object.keys(row).every(key => ['waybillCodes', 'sessionId', 'verifyCode', 'phoneLast4', 'groupFlag'].includes(key))
+            && row.waybillCodes === number && sessionCount === 1 && row.sessionId === session && row.groupFlag === true
+            && typeof row.verifyCode === 'string' && row.verifyCode.length > 0 && row.verifyCode.length < 2000
+            && (row.phoneLast4 === undefined || row.phoneLast4 === null || row.phoneLast4 === '');
         } else if (endpoint === PROXY && request.method() === 'POST' && needVerify === false) {
           const body = request.postDataJSON(), row = Array.isArray(body) && body.length === 1 ? body[0] : null;
           permitted = !!row && row.waybillCodes === number && String(row.type) === '2' && !row.pin;
@@ -217,19 +264,21 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
     if (combined.aborted) { outcome = 'budget'; return result(); }
     navigationStatus = navigation?.status() ?? 0;
     if (navigationStatus !== 200) { outcome = 'navigation'; return result(); }
-    const readyUntil = Date.now() + Math.min(10000, left() - 1000);
-    while (!combined.aborted && Date.now() < readyUntil && typeof needVerify !== 'boolean') await pause(80, combined);
-    if (typeof needVerify !== 'boolean') { outcome = 'unprepared'; return result(); }
+    // The older page asks needVerify first, then opens the puzzle or sends the proxy query; the newer
+    // one opens the puzzle once its guest session is issued. Neither within the wait leaves it unprepared.
+    const readyUntil = Date.now() + Math.min(15000, left() - 1000);
     let puzzle;
-    if (needVerify) {
-      const puzzleUntil = Date.now() + Math.min(10000, left() - 1000);
-      while (!combined.aborted && Date.now() < puzzleUntil && !blocked) {
-        if (sessionCount > 1) { outcome = 'guest_session_changed'; return result(); }
+    while (!combined.aborted && Date.now() < readyUntil && needVerify !== false && !blocked) {
+      if (sessionCount > 1) { outcome = 'guest_session_changed'; return result(); }
+      if (sessionCount === 1) {
         puzzle = await during(() => page.evaluate(jdDisplayedPuzzle), Math.min(1000, left()));
         if (puzzle && sessionCount === 1) break;
-        await pause(80, combined);
       }
-      if (!puzzle || sessionCount !== 1) { outcome = 'unreadable'; return result(); }
+      await pause(80, combined);
+    }
+    if (combined.aborted) { outcome = 'budget'; return result(); }
+    if (needVerify !== false) {
+      if (!puzzle || sessionCount !== 1) { outcome = needVerify === true || sessionCount ? 'unreadable' : 'unprepared'; return result(); }
       let point, shownAt = Date.now();
       for (let attempt = 0; attempt < MAX_PUZZLES; attempt++) {
         analysis = 'not_started'; foregroundPixels = undefined;
@@ -284,6 +333,8 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
     }
     while (!combined.aborted && left() > 1000) {
       if (blocked) { outcome = 'verification_refused'; return result(); }
+      // The page then asks for the last four digits of a phone and sends no search.
+      if (check === 'phone' && !requests) { outcome = 'phone_required'; return result(); }
       if (entries.length && !pending.size && Date.now() - lastResponse >= 250) { outcome = 'response'; return result(); }
       await pause(80, combined);
     }
@@ -300,7 +351,7 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
       if (!closed) handle.requestBrowserReplacement?.('JD domestic context cleanup failed');
     }
     try { onVerification({ outcome, analysis, ...(foregroundPixels === undefined ? {} : { foregroundPixels }),
-      puzzles: attempts.length, refreshes, attempts, clicked, trackingRequests: requests, blockedRequests: blocked, durationMs: Date.now() - started }); }
+      puzzles: attempts.length, refreshes, attempts, clicked, ...(check ? { check } : {}), trackingRequests: requests, blockedRequests: blocked, durationMs: Date.now() - started }); }
     catch { /* Telemetry cannot change the result. */ }
   }
 }
