@@ -58,6 +58,29 @@ const TRANSMITTED = /^order information has been transmitted to /i;
 // destination's zone, it came seconds after the facility's measurement on the facility's clock.
 const WAITING_AT_ORIGIN = 'FPX_O_NM';
 
+// On some lines 4PX writes its own milestones, to the minute, on the facility's clock but labels
+// them with the destination's zone, even its departure from the origin airport and its pickups in
+// Hong Kong. On a parcel to Saudi Arabia, "Last mile pick up" and "Linehaul transit" read under
+// +03:00 hours after the replies that first listed them, and the reply's own epoch reads every row
+// on the facility's clock. A departure or a row placed at the origin under a zone other than the
+// facility's marks that zone as such a label. On other lines the departure keeps the facility's
+// zone, and an arrival under the destination's zone reads on the destination's clock.
+const ORIGIN_DEPARTURE = 'FPX_M_DFOA';
+const AT_ORIGIN = /hong\s*kong|china/i;
+const OFFSET_LABEL = /^UTC[+-]\d{2}:\d{2}$/;
+
+/** The destination's zone 4PX puts on its facility-clock milestones, when a row at the origin carries it. */
+function stampedZone(tracks: unknown[], facility: string | undefined): string | undefined {
+  if (!facility) return undefined;
+  return tracks.map((raw) => {
+    if (!isRecord(raw)) return '';
+    const code = clean(raw.tkCode, 64);
+    const zone = clean(raw.tkTimezone, 64);
+    const origin = code === ORIGIN_DEPARTURE || AT_ORIGIN.test(clean(raw.tkLocation, 200));
+    return origin && code.startsWith('FPX_') && OFFSET_LABEL.test(zone) && zone !== facility ? zone : '';
+  }).find(Boolean);
+}
+
 // 4PX's own record that a returned parcel is back from the destination
 // country, written at its origin facility. It comes without a zone; on the
 // destination's clock it reads hours after the reply that lists it.
@@ -147,6 +170,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   const seen = new Set<string>();
   let pickupPoint: string | undefined;
   const facility = facilityZone(item.tracks);
+  const stamped = stampedZone(item.tracks, facility);
   const copies = utcCopies(item.tracks);
   const country = clean(item.ctEndCode, 8).toUpperCase();
   for (const raw of item.tracks) {
@@ -162,7 +186,10 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     const description = clean(wording.replace(QUALIFIER, ''), 500);
     const location = clean(raw.tkLocation, 200).replace(DOUBLED_POSTCODE, '$1$2');
     const code = clean(raw.tkCode, 64);
-    const facilityClock = TRANSMITTED.test(description) || code === WAITING_AT_ORIGIN || (code === BACK_FROM_ABROAD && !clean(raw.tkTimezone, 64));
+    const stampedMilestone = Boolean(stamped) && clean(raw.tkTimezone, 64) === stamped && code.startsWith('FPX_')
+      && clean(raw.tkDateStr, 64).endsWith(':00');
+    const facilityClock = TRANSMITTED.test(description) || code === WAITING_AT_ORIGIN || (code === BACK_FROM_ABROAD && !clean(raw.tkTimezone, 64))
+      || stampedMilestone;
     const time = eventTime(facility && facilityClock ? { ...raw, tkTimezone: facility }
       : laPosteTransitCopy(raw, description, country) || ASENDIA.test(location) ? { ...raw, tkTimezone: 'UTC' } : raw);
     const key = JSON.stringify([time, description, location, code]);

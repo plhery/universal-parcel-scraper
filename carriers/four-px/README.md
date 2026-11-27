@@ -19,13 +19,20 @@ The portal displays each scan's `tkDateStr` with `tkTimezone`, an offset or,
 for some partners' scans, a zone name. The adapter uses that pair because
 `tkDate` carries different clock digits. A scan without a zone, or with a zone
 name the clock database does not know, is retained as `local_time`, without an
-invented instant. Three exceptions take the offset of 4PX's own facility scans.
+invented instant. Four exceptions take the offset of 4PX's own facility scans.
 "Order information has been transmitted to …": 4PX sends the partner the order
 data when its facility measures the parcel and keeps the facility's clock for
 it, but labels it with the partner's zone. So does its wait at the origin facility
 for the line haul ("Waiting for pick up", `FPX_O_NM`), seconds after the measurement. "Returned from overseas", 4PX's
 record that a returned parcel is back in the country it left, comes without a
-zone; on the destination's clock it would read hours after the reply listing it. On a parcel to France, 4PX's
+zone; on the destination's clock it would read hours after the reply listing it. On some lines 4PX
+writes its own milestones, to the minute, on the facility's clock under the destination's zone,
+even its departure from the origin airport and its pickups in Hong Kong: on a parcel to Saudi
+Arabia the last-mile pickup and the line haul read hours after the replies that first listed
+them. When the departure or a row placed in Hong Kong or China carries a zone other than the
+facility's, 4PX's minute-stamped rows under that zone take the facility's offset; a partner's scan
+with its seconds keeps its own. On lines whose departure keeps the facility's zone, an arrival
+under the destination's zone reads on the destination's clock. On a parcel to France, 4PX's
 copies of La Poste's arrival and transit (arrived at destination, handled by
 local carrier, transport to delivery centre, stamped to the second) carry La
 Poste's UTC digits under Paris's offset, two hours before La Poste's own scans,

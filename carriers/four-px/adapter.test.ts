@@ -117,6 +117,35 @@ describe('4PX result projection', () => {
     expect(parse(payload, NUMBER).events![0]).toMatchObject({ local_time: '2026-04-07T10:27:00' });
   });
 
+  it("reads 4PX's milestones on the facility's clock when even its departure from the origin carries the destination's zone", () => {
+    const payload = fixture();
+    const facility = payload.data[0].tracks.filter((raw: { tkCode: string }) => raw.tkCode.startsWith('FPX_C_'));
+    const row = (tkCode: string, tkDesc: string, tkDateStr: string, tkTimezone: string, tkLocation = '') =>
+      ({ ...facility[0], tkCode, tkDesc, tkDateStr, tkTimezone, tkLocation });
+    const relay = row('FPX_O_RR', 'Arrived at delivery depot', '2026-03-14 10:11:12', 'UTC+03:00', 'Example City');
+    const lastMile = row('FPX_O_RR', 'Last mile pick up', '2026-03-13 02:40:00', 'UTC+03:00', 'Example City');
+    const arrived = row('FPX_M_ATA', 'Flight arrived', '2026-03-12 03:20:00', 'UTC+03:00');
+    const departed = row('FPX_M_DFOA', 'Flight departed', '2026-03-11 17:40:00', 'UTC+03:00');
+    const picked = row('FPX_O_DW', 'Shipment picked', '2026-03-10 21:00:00', 'UTC+03:00', 'HongKong');
+    payload.data[0].ctEndCode = 'SA';
+    const read = (...tracks: unknown[]) => {
+      payload.data[0].tracks = [...tracks, ...facility];
+      return Object.fromEntries(parse(payload, NUMBER).events!.map((event) => [event.description, event.time]));
+    };
+    expect(read(relay, lastMile, arrived, departed, picked)).toMatchObject({
+      'Last mile pick up': '2026-03-13T02:40:00+08:00', 'Flight arrived': '2026-03-12T03:20:00+08:00',
+      'Flight departed': '2026-03-11T17:40:00+08:00', 'Shipment picked': '2026-03-10T21:00:00+08:00',
+      // A partner's scan with its seconds keeps the zone it comes with.
+      'Arrived at delivery depot': '2026-03-14T10:11:12+03:00',
+    });
+    // A row placed at the origin is enough, and so is the departure alone.
+    expect(read(lastMile, picked)['Last mile pick up']).toBe('2026-03-13T02:40:00+08:00');
+    expect(read(lastMile, departed)['Last mile pick up']).toBe('2026-03-13T02:40:00+08:00');
+    // A departure on the facility's zone leaves an arrival on the destination's clock.
+    expect(read(lastMile, arrived, { ...departed, tkTimezone: 'UTC+08:00' })).toMatchObject({
+      'Last mile pick up': '2026-03-13T02:40:00+03:00', 'Flight arrived': '2026-03-12T03:20:00+03:00' });
+  });
+
   it("reads 4PX's copies of La Poste's arrival and transit in France as UTC, not on the Paris offset they are labelled with", () => {
     const payload = fixture();
     payload.data[0].ctEndCode = 'FR';
