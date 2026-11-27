@@ -10,7 +10,9 @@ import { HoldKind, serviceTag } from '../../core/runner/holds.js';
 import { recoverableByDefault, runSteps, type StepContext, type StepSpec } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecord, type StepRecorder } from '../../core/telemetry/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
+import { envPositive } from '../../core/adapter/envChoice.js';
 import { browserContextProxy } from '../../core/transport/browserRouteTrial.js';
+import { DailyShare } from '../../core/transport/dailyShare.js';
 import { clean, TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/index.js';
 import { readUspsPage, USPS_OUTAGE_URL } from './browser.js';
 import { STATE_PATTERN, uspsRowZone, uspsScanZone } from './clock.js';
@@ -48,10 +50,10 @@ function outageRedirect(error: unknown): boolean {
  * not, whether it comes seconds or minutes later. So once three reads in a row through the
  * browser service's own route land on the outage page, its reads pause for five minutes. The
  * pause spares reads; it does not wait a spell out, as a read twenty minutes on fares about as a
- * read five minutes on. While the own route is paused, other lookups read through the fallback
- * proxy when one is configured, until USPS sends one of them to the outage page too: the proxy
- * then rests until the own route's pause ends. A lookup redirected on either route is not read
- * through the proxy again. Lookups that cannot read end before any read, as the adapter's own
+ * read five minutes on. While the own route is paused, other lookups read through a proxy when one
+ * is configured, the datacenter one first and the fallback one after it, until USPS sends one of them
+ * to the outage page too: that proxy then rests until the own route's pause ends. A lookup redirected
+ * on any route is not read through a proxy again. Lookups that cannot read end before any read, as the adapter's own
  * pacing (`self_paced`) with the wait, so a consumer can hold its checks until then rather than
  * count a failure of USPS. The next read after the pause pauses the own route again if it is
  * redirected too; a loaded page ends the run. A host that keeps adapters' holds
@@ -165,6 +167,17 @@ const unserved = (error: unknown): boolean => error instanceof UpstreamHttpError
   && /"error"\s*:\s*"No USPS browser session is ready"/.test(error.diagnostics?.body_excerpt ?? '');
 
 type Route = NonNullable<StepRecord['networkRoute']>;
+/** A proxy the browser service reads through while its own route is paused, named by its kind in telemetry. */
+interface ProxyRoute { route: 'datacenter' | 'residential'; url: string }
+
+/**
+ * The fallback proxy is paid by the byte, and shared with other carriers. A tracking read through a proxy
+ * measures about 2 MB, a redirected one about 0.6 MB, and the service's session trials come on top, so a
+ * read is charged 4 MB against a daily share of 60 MB by default. Past the share the lookup waits as
+ * during a pause.
+ */
+const FALLBACK_READ_BYTES = 4_000_000;
+const FALLBACK_DAILY_BYTES = 60_000_000;
 
 /** One lookup's reads: the latest one's route, or null when it made none, and whether it returned dated history. */
 interface ReadRoute { route: Route | null; reads: number; history: boolean }
@@ -503,6 +516,10 @@ export interface USPSTrackerOptions {
   trawl?: TrawlClient | null;
   /** An HTTP(S) proxy the browser service reads through while USPS sends its own reads to the outage page. */
   fallbackProxy?: string | null;
+  /** The fallback proxy's bytes a day; it is paid by the byte. */
+  fallbackDailyBytes?: number;
+  /** A datacenter HTTP(S) proxy, read before the fallback proxy. */
+  datacenterProxy?: string | null;
   /** The WebSocket endpoint of a private Chrome with a window, read before the browser service. */
   browserEndpoint?: string | null;
   /** Replaced in tests. */
@@ -514,7 +531,8 @@ export interface USPSTrackerOptions {
 export class USPSTracker {
   readonly timeoutMs: number;
   readonly #trawl: TrawlClient | null;
-  readonly #fallbackProxy: string | null;
+  readonly #proxies: readonly ProxyRoute[];
+  readonly #share: DailyShare;
   readonly #browserEndpoint: string | null;
   readonly #readBrowserPage: typeof readUspsPage;
   readonly #fetcher: typeof fetch | undefined;
@@ -526,10 +544,15 @@ export class USPSTracker {
     }
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.#trawl = options.trawl ?? null;
-    const proxy = options.fallbackProxy?.trim() || null;
+    const datacenter = options.datacenterProxy?.trim() || null;
+    const fallback = options.fallbackProxy?.trim() || null;
+    this.#proxies = [
+      ...(datacenter ? [{ route: 'datacenter' as const, url: datacenter }] : []),
+      ...(fallback ? [{ route: 'residential' as const, url: fallback }] : []),
+    ];
     // Checked here, so a mistyped proxy fails at setup with a message that leaves its value out.
-    if (proxy) browserContextProxy(proxy);
-    this.#fallbackProxy = proxy;
+    for (const { url } of this.#proxies) browserContextProxy(url);
+    this.#share = new DailyShare(options.fallbackDailyBytes ?? FALLBACK_DAILY_BYTES, FALLBACK_READ_BYTES);
     this.#browserEndpoint = options.browserEndpoint?.trim() || null;
     this.#readBrowserPage = options.readBrowserPage ?? readUspsPage;
     this.#fetcher = options.fetcher;
@@ -573,10 +596,12 @@ export class USPSTracker {
       // The private Chrome's share running out leaves the browser service the rest of the lookup.
       { id: 'trawl', enabled: !!trawl, recovers: error => recoverableByDefault(error) || error instanceof BudgetExceededError, run },
       // USPS refuses one address's sessions for hours while it lets others through: when the service holds
-      // none USPS let through on its own address, the lookup is read again at once through the proxy, whose
-      // sessions the service keeps apart.
-      { id: 'trawl', enabled: !!trawl && !!this.#fallbackProxy,
-        recovers: error => unserved(error) && read.route === 'default' && this.#proxyReads(trawl!), run },
+      // none USPS let through on its own address, the lookup is read again at once through a proxy, whose
+      // sessions the service keeps apart, and through the fallback one when the datacenter one has none either.
+      { id: 'trawl', enabled: !!trawl && this.#proxies.length > 0,
+        recovers: error => unserved(error) && read.route === 'default' && this.#proxyRoute(trawl!) !== null, run },
+      { id: 'trawl', enabled: !!trawl && this.#proxies.length > 1,
+        recovers: error => unserved(error) && read.route === 'datacenter' && this.#proxyRoute(trawl!) !== null, run },
       // While the Chrome rests it reads a lookup the service could not, paused ones included, every
       // five minutes at most, or every minute while the service has no session ready. The read is
       // claimed as it starts, so lookups running together take one.
@@ -607,15 +632,14 @@ export class USPSTracker {
     return cleanUSPSNumber(trackingNumber) !== number ? { ...result, canonical_tracking_number: number } : result;
   }
 
-  /** The fallback proxy's run while the service's own route is paused, null while it is not. */
-  #fallbackRun(trawl: TrawlClient): OutageRun | null {
-    return this.#fallbackProxy && pausedMs(outageRun(trawl)) > 0 ? outageRun(trawl, this.#fallbackProxy) : null;
-  }
-
-  /** Whether the proxy is read now: the service's own route is paused and the proxy's is not. */
-  #proxyReads(trawl: TrawlClient): boolean {
-    const run = this.#fallbackRun(trawl);
-    return run !== null && pausedMs(run) === 0;
+  /**
+   * The proxy a lookup reads through while the service's own route is paused: the first that is not resting,
+   * the fallback one only within its daily share. Null while the own route is not paused or no proxy reads.
+   */
+  #proxyRoute(trawl: TrawlClient): ProxyRoute | null {
+    if (pausedMs(outageRun(trawl)) === 0) return null;
+    return this.#proxies.find(proxy => pausedMs(outageRun(trawl, proxy.url)) === 0
+      && (proxy.route !== 'residential' || this.#share.affords())) ?? null;
   }
 
   /** Whether a read the service's own route sent to the outage page is read again there. */
@@ -651,13 +675,14 @@ export class USPSTracker {
     read.route = null;
     read.history = false;
     const own = outageRun(trawl);
-    const fallback = this.#fallbackRun(trawl);
-    const run = fallback ?? own;
-    if (pausedMs(run) > 0) {
-      throw new RateLimitedError('USPS', fallback ? Math.min(pausedMs(own), pausedMs(fallback)) : pausedMs(own),
+    const proxy = this.#proxyRoute(trawl);
+    if (pausedMs(own) > 0 && !proxy) {
+      throw new RateLimitedError('USPS', pausedMs(own),
         'USPS sent the last reads to its service outage page; no read until the pause ends', { reason: 'self_paced' });
     }
-    read.route = fallback ? 'residential' : 'default';
+    const run = proxy ? outageRun(trawl, proxy.url) : own;
+    if (proxy?.route === 'residential') this.#share.take();
+    read.route = proxy?.route ?? 'default';
     read.reads += 1;
     const reading = trawl.scrape({
       url: uspsTrackingUrl(number),
@@ -668,7 +693,7 @@ export class USPSTracker {
       contentWaitForSelector: '#trackingNum',
       captureResponses: [uspsTrackingUrl(number)],
       // The service carries the whole browser context through the proxy, with no direct downgrade.
-      ...(fallback ? { proxy: this.#fallbackProxy! } : {}),
+      ...(proxy ? { proxy: proxy.url } : {}),
     }, {
       provider: 'TRAWL while fetching USPS',
       timeoutMs,
@@ -677,9 +702,11 @@ export class USPSTracker {
       signal,
     });
     // No session USPS let through on the service's own address: USPS is turning that address away, so
-    // lookups read through the proxy until the pause ends, when the own route is asked again.
+    // lookups read through a proxy until the pause ends, when the own route is asked again. A proxy with
+    // none rests for the rest of that pause.
     const page = await reading.catch((error: unknown) => {
-      if (!fallback && this.#fallbackProxy && unserved(error)) pauseRun(own, Date.now() + OUTAGE_PAUSE_MS);
+      if (unserved(error) && proxy) pauseRun(run, own.pausedUntil);
+      else if (unserved(error) && this.#proxies.length) pauseRun(own, Date.now() + OUTAGE_PAUSE_MS);
       throw error;
     });
     let result: CarrierResult;
@@ -691,8 +718,8 @@ export class USPSTracker {
         response.url === uspsTrackingUrl(number) && response.trackingNumberSubmitted === number
         && response.status === 302 && response.headers.location === OUTAGE && !response.error
         && !response.truncated && !response.base64Encoded)) {
-        // The proxy is read only during the own route's pause, and rests for the rest of it once redirected.
-        if (fallback) pauseRun(run, own.pausedUntil);
+        // A proxy is read only during the own route's pause, and rests for the rest of it once redirected.
+        if (proxy) pauseRun(run, own.pausedUntil);
         else if (++run.redirects >= OUTAGE_RUN) pauseRun(run, Date.now() + OUTAGE_PAUSE_MS);
         // This lookup was redirected; it does not prove every USPS lookup is down.
         throw new IndeterminateError('USPS', 'USPS sent the lookup to its service outage page', { reason: 'maintenance_page' });
@@ -714,6 +741,8 @@ export const adapter: AdapterFactory = (environment) => {
     fetcher: environment.fetcher,
     trawl: environment.trawl,
     fallbackProxy: environment.env.USPS_FALLBACK_PROXY_URL,
+    fallbackDailyBytes: envPositive(environment.env, 'USPS_FALLBACK_PROXY_DAILY_BYTES', FALLBACK_DAILY_BYTES),
+    datacenterProxy: environment.env.USPS_DATACENTER_PROXY_URL,
     browserEndpoint: environment.env.USPS_BROWSER_WS_ENDPOINT,
     recorder: environment.recorder,
   });

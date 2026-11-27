@@ -313,6 +313,10 @@ export class UspsSessions {
 // through that proxy, rather than through the pool's browsers, which USPS refuses on any address. At most
 // two proxies get sessions; reads through any other keep the pool.
 export const USPS_PROXY_EXITS = 2;
+// A proxy is paid by the byte, and a tracking read through one costs about 2 MB, a redirected one about 0.6 MB,
+// whether or not images, fonts and styles load: USPS's scripts are most of it. So a proxy's exit keeps one
+// session, rests after two USPS refused, and prepares none once no lookup came for five minutes.
+export const USPS_PROXY_EXIT = { readySessions: 1, trialsBeforeRest: 2, idleMs: 5 * 60_000 };
 
 /** TRAWL's USPS sessions by exit: its own address, and each proxy a read names. */
 export class UspsExits {
@@ -327,7 +331,8 @@ export class UspsExits {
     if (proxy === undefined) return this.direct;
     let exit = this.#exits.get(proxy);
     if (!exit && open && this.#exits.size < USPS_PROXY_EXITS) {
-      this.#exits.set(proxy, exit = new UspsSessions({ ...this.options, proxy, prefix: `proxy${this.#exits.size + 1}-` }));
+      this.#exits.set(proxy, exit = new UspsSessions({ ...this.options, ...USPS_PROXY_EXIT, proxy,
+        prefix: `proxy${this.#exits.size + 1}-` }));
     }
     return exit;
   }

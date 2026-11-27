@@ -84,18 +84,27 @@ unavailability. An unresolved verification page remains a challenge; a complete 
 history takes precedence over an earlier outage reply.
 
 USPS turns some server addresses away for hours while others load. With
-`USPS_FALLBACK_PROXY_URL` set to an HTTP(S) proxy, such as a residential connection, other
-lookups read through it while the service's own reads are paused. Besides three redirects in a
+`USPS_DATACENTER_PROXY_URL` or `USPS_FALLBACK_PROXY_URL` set to an HTTP(S) proxy, other lookups read
+through a proxy while the service's own reads are paused: the datacenter one first, and the fallback
+one, such as a residential connection, once the datacenter one rests too. Besides three redirects in a
 row, the service answering that it holds no session USPS let through on its own address pauses
-them for five minutes, and that lookup is read again at once through the proxy. The browser
-service carries the whole context through the proxy, in sessions it prepares there, and never
-falls back to its own address. Outside a pause the proxy carries nothing. A refusal of the
-service's address leaves the proxy's sessions loading tracking; USPS's own outage sends both to
-its outage page. A lookup that met the outage page is never read again through the
-proxy: USPS's outage pages follow its own hours, and reads through the proxy met them too. Once
-USPS sends a read through the proxy to its outage page, the proxy rests until the own route's
-pause ends, and lookups until then end as `self_paced`. Each read's step record names its
-route, `default` or `residential`, without the proxy's address.
+them for five minutes, and that lookup is read again at once through a proxy, then through the
+fallback one if the datacenter one has no session either. The browser service carries the whole
+context through the proxy, in sessions it prepares there, and never falls back to its own address.
+Outside a pause no proxy carries anything. A refusal of the service's address leaves the proxies'
+sessions loading tracking; USPS's own outage sends all of them to its outage page. A lookup that met
+the outage page is never read again through a proxy: USPS's outage pages follow its own hours, and
+reads through a proxy met them too. Once USPS sends a read through a proxy to its outage page, or the
+service has no session there, that proxy rests until the own route's pause ends; with no proxy left,
+lookups until then end as `self_paced`. Each read's step record names its route, `default`,
+`datacenter` or `residential`, without the proxy's address.
+
+The fallback proxy is paid by the byte and shared with other carriers. A tracking read through a
+proxy measures about 2 MB, a redirected one about 0.6 MB, whether or not images, fonts and styles
+load, and the service's session trials come on top. So a read through it is charged 4 MB against a
+daily share, `USPS_FALLBACK_PROXY_DAILY_BYTES`, 60 MB by default. The share refills continuously,
+holds at most a quarter of a day's share and starts with one read. While it is spent, lookups the
+datacenter proxy cannot read wait as during a pause.
 
 A host that keeps adapters' holds (`keepAdapterHolds`, see [ARCHITECTURE.md](../../ARCHITECTURE.md))
 keeps both pauses across restarts.

@@ -201,6 +201,8 @@ USPS refuses one address's sessions for hours while it lets another's through, s
 a proxy has sessions of its own, `usps-tracking-proxy<n>-<n>`, prepared through that proxy, kept and
 rested apart from those on TRAWL's own address. Up to two proxies get sessions; a read through any
 other uses the pool. Their `usps.session` warnings carry `route: "proxy"`, never the proxy's address.
+A proxy is paid by the byte, so its exit keeps one session, rests after two USPS refused, and
+prepares none once no lookup came for five minutes.
 
 Each USPS session runs in a browser of its own: the pool's Camoufox binary launched through
 `playwright-core` without camoufox-js's generated fingerprint, which USPS's bot check refuses. The

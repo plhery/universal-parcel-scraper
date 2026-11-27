@@ -20,6 +20,7 @@ import { envChoice, envPositive } from '../../core/adapter/envChoice.js';
 import { budgetWhenOutOfTime, trawlOutOfTime } from '../../core/transport/trawl.js';
 import { australiaPostCode, australiaPostCodeParts, australiaPostStatus } from './status.js';
 import { retryAfterMs } from '../../core/transport/retryAfter.js';
+import { DailyShare } from '../../core/transport/dailyShare.js';
 
 const PROVIDER = 'Australia Post';
 const DETAIL = 'https://auspost.com.au/mypost/track/details/';
@@ -377,33 +378,7 @@ type Route = 'default' | 'datacenter' | 'residential';
  */
 const RESIDENTIAL_READ_BYTES = 150_000;
 const RESIDENTIAL_DAILY_BYTES = 33_000_000;
-const DAY_MS = 86_400_000;
 const SPENT_WARNING_MS = 3_600_000;
-
-/**
- * A daily byte share, refilled continuously and holding at most a quarter of a day's share. It starts
- * with one read, so a restart adds almost nothing to the day's traffic.
- */
-class DailyShare {
-  private bytes = RESIDENTIAL_READ_BYTES;
-  private at = Date.now();
-
-  constructor(private readonly daily: number) {}
-
-  affords(): boolean {
-    if (this.daily === Infinity) return true;
-    const now = Date.now();
-    this.bytes = Math.min(Math.max(this.daily / 4, RESIDENTIAL_READ_BYTES), this.bytes + Math.max(0, now - this.at) * this.daily / DAY_MS);
-    this.at = now;
-    return this.bytes >= RESIDENTIAL_READ_BYTES;
-  }
-
-  take(): boolean {
-    if (!this.affords()) return false;
-    if (this.daily !== Infinity) this.bytes -= RESIDENTIAL_READ_BYTES;
-    return true;
-  }
-}
 
 export class AustraliaPostTracker {
   private readonly fallbackProxy: string | null;
@@ -423,7 +398,7 @@ export class AustraliaPostTracker {
     for (const value of this.datacenterProxies) browserContextProxy(value);
     const daily = options.residentialDailyBytes ?? RESIDENTIAL_DAILY_BYTES;
     if (typeof daily !== 'number' || !(daily > 0)) throw new TypeError('Australia Post residential daily bytes must be a positive number');
-    this.share = new DailyShare(daily);
+    this.share = new DailyShare(daily, RESIDENTIAL_READ_BYTES);
     if (options.firstRoute !== undefined && !FIRST_ROUTES.has(options.firstRoute)) {
       throw new TypeError('Australia Post first route must be default, residential or adaptive');
     }
