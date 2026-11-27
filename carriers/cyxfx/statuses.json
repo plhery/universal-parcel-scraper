@@ -1,0 +1,104 @@
+{
+  "carrier": "cyxfx",
+  "entries": [
+    {
+      "code": "10",
+      "wording": "运单创建",
+      "language": "zh",
+      "english": "Waybill created",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "Label 运单创建. The waybill is in the system; the parcel has not reached the warehouse yet."
+    },
+    {
+      "code": "3000",
+      "wording": "集散仓已收货",
+      "language": "zh",
+      "english": "Received at the consolidation warehouse",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Label 包裹入库. The warehouse in Aurora takes the parcel in."
+    },
+    {
+      "code": "4000",
+      "wording": "仓库已收款",
+      "language": "zh",
+      "english": "Warehouse took the payment",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Label 仓库扣款. The warehouse charges the shipping fee seconds after taking the parcel in; the parcel does not move."
+    },
+    {
+      "code": "5000",
+      "wording": "组批次",
+      "language": "zh",
+      "english": "Added to a batch",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Label 组批次. The parcel joins the batch for a flight to China."
+    },
+    {
+      "code": "7000",
+      "wording": "包裹已出库 送往机场",
+      "language": "zh",
+      "english": "Left the warehouse for the airport",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Label 送机场."
+    },
+    {
+      "code": "8000",
+      "wording": "国际运输环节中",
+      "language": "zh",
+      "english": "In international transport",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Label 飞行中: on the flight to China."
+    },
+    {
+      "code": "8100",
+      "wording": "航班到达",
+      "language": "zh",
+      "english": "Flight arrived",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Label 航班到达. The flight lands in China; customs comes next."
+    },
+    {
+      "code": "9000",
+      "wording": "已运抵 待申报",
+      "language": "zh",
+      "english": "Arrived, awaiting customs declaration",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Label 准备清关. The carrier's remark goes on to give a customer service agent's name and mobile, which the adapter leaves out."
+    },
+    {
+      "code": "9500",
+      "wording": "清关完成，进入国内物流环节，请您耐心等待派送",
+      "language": "zh",
+      "english": "Customs cleared, handed to delivery in China, please wait for delivery",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Label 清关完成. Customs released the parcel."
+    },
+    {
+      "code": "110",
+      "wording": "国内开始派送,快递公司:顺丰速运,单号:…",
+      "language": "zh",
+      "english": "Delivery in China started, courier SF Express, number …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Label 国内配送. The parcel is handed to the courier in China under the number the remark gives."
+    },
+    {
+      "code": "110",
+      "wording": "已签收",
+      "language": "zh",
+      "english": "Signed for",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Label 国内签收. The courier in China delivered the parcel."
+    }
+  ]
+}

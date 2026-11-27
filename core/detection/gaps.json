@@ -7396,5 +7396,11 @@
     "pattern": "^SO\\d{12}$",
     "kind": "by_design",
     "reason": "SO, the date and four digits is WLKGO's sales order on its public sample, a shape any shop's order system can print, so no rule offers WLKGO for it. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "cyxfx",
+    "pattern": "^70\\d{8}$",
+    "kind": "by_design",
+    "reason": "70 and eight digits is C&Y Global Logistics' waybill on its public samples, a bare digit run many carriers' numbers share, so nothing in it points to C&Y. The adapter answers explicit selection."
   }
 ]
