@@ -3042,6 +3042,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'u-speed-express', number: 'RUN10009999999917',
     route: /^https:\/\/www\.u-speedex\.com\/queryTracks\?no=RUN10009999999917$/,
     marker: /单号有误，请核对后重新查询|运单追踪/ },
+  // The T6 tracker renders the number into its search field from the address and looks it up on load.
+  { carrier: 'eudore', number: 'ZQ58301746XK',
+    route: /^https:\/\/tbwl\.t6soft\.com\/track\?waybillnumber=ZQ58301746XK$/,
+    marker: /T6跨境物流软件/ },
 ];
 
 /**

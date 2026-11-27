@@ -1,0 +1,471 @@
+<!-- 自定义图标 -->
+<link rel="stylesheet" href="/resources/iconfont/iconfont.css" media="all">
+<link rel="stylesheet" href="/resources/layuiAdmin/style/step.css" />
+<style>
+/* ====== 与内部轨迹页一致的横向图标进度条（自适应宽度版） ====== */
+.track-progress-wrap{
+	padding: 12px 16px 8px 0px;
+	width: 100%;
+	border-radius: 8px;
+}
+.track-progress{
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	position: relative;
+}
+.tp-step{
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+	text-align: center;
+	min-width: 0;
+}
+.tp-node{
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	z-index: 2;
+	background: #fff;
+	transition: all .3s;
+}
+.tp-node svg{
+	width: 20px;
+	height: 20px;
+	color: inherit;
+}
+.tp-num{
+	font-size: 14px;
+	font-weight: 600;
+	color: inherit;
+}
+.tp-step.done .tp-node{
+	background: #009688;
+	border: 2px solid #009688;
+	box-shadow: 0 4px 12px rgba(0,150,136,0.28);
+}
+.tp-step.done .tp-node svg,
+.tp-step.done .tp-node .tp-num{ color: #fff; }
+.tp-step.current .tp-node{
+	background: #fff;
+	border: 2px solid #009688;
+	box-shadow: 0 0 0 4px rgba(0,150,136,0.12), 0 4px 12px rgba(0,150,136,0.18);
+}
+.tp-step.current .tp-node svg,
+.tp-step.current .tp-node .tp-num{ color: #009688; }
+.tp-pulse{
+	position: absolute;
+	top: -2px;
+	left: -2px;
+	right: -2px;
+	bottom: -2px;
+	border-radius: 50%;
+	border: 2px solid #009688;
+	animation: tpPulse 1.8s ease-out infinite;
+}
+@keyframes tpPulse{
+	0%{ transform: scale(1); opacity: 0.7; }
+	100%{ transform: scale(1.55); opacity: 0; }
+}
+.tp-step.pending .tp-node{
+	background: #f7f9f9;
+	border: 2px solid #d8e0df;
+	box-shadow: none;
+}
+.tp-step.pending .tp-node svg,
+.tp-step.pending .tp-node .tp-num{ color: #b8c4c3; }
+.tp-step.done .tp-node::after{
+	content: "";
+	position: absolute;
+	right: -2px;
+	bottom: -2px;
+	width: 13px;
+	height: 13px;
+	background: #fff;
+	border: 2px solid #009688;
+	border-radius: 50%;
+	z-index: 3;
+}
+.tp-step.done .tp-node::before{
+	content: "";
+	position: absolute;
+	right: 2px;
+	bottom: 4px;
+	width: 4px;
+	height: 7px;
+	border: solid #009688;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+	z-index: 4;
+}
+.tp-line{
+	position: absolute;
+	top: 19px;
+	left: calc(50% + 24px);
+	width: calc(100% - 48px);
+	height: 2px;
+	z-index: 1;
+	border-radius: 2px;
+}
+.tp-step.done .tp-line{
+	background: #009688;
+}
+.tp-step.current .tp-line{
+	background: linear-gradient(90deg,#009688 0%,#c0c0c0 100%);
+}
+.tp-step.pending .tp-line{
+	background: repeating-linear-gradient(90deg,#d8e0df 0 6px,transparent 6px 12px);
+	height: 2px;
+}
+.tp-info{ margin-top: 8px; }
+.tp-title{
+	font-size: 13px;
+	font-weight: 600;
+	color: #333;
+	margin-bottom: 4px;
+}
+.tp-step.done .tp-title{ color: #009688; }
+.tp-step.current .tp-title{ color: #009688; }
+.tp-step.pending .tp-title{ color: #bbb; font-weight: 500; }
+.tp-time-name{
+	font-size: 12px;
+	color: #999;
+	margin-bottom: 2px;
+}
+.tp-time{
+	font-size: 12px;
+	color: #555;
+	font-family: Consolas, "Microsoft YaHei", monospace;
+}
+.tp-step.pending .tp-time,
+.tp-step.pending .tp-time-name{ color: #ccc; }
+/* ====== 展开明细内的时间轴（与内部轨迹列表风格统一） ====== */
+.t6-track-detail hr{
+	border: 0;
+	border-top: 1px solid #eef2f1;
+	margin: 0px 0px 5px 0px;
+}
+.t6-track-detail .layui-timeline{
+	padding-left: 5px;
+}
+.t6-track-detail .layui-timeline-item{
+	padding-bottom: 8px;
+}
+.t6-track-detail .layui-timeline-axis{
+	top: 3px;
+	color: #009688;
+}
+.t6-track-detail .trackitem{
+	font-size: 14px;
+	cursor: default;
+	border-radius: 4px;
+	transition: background .15s;
+}
+.t6-track-detail .trackitem:hover{
+	background: #f5fafa;
+}
+.t6-track-detail .trackdate{
+	font-size: 14px;
+	font-weight: 600;
+	color: #333;
+}
+.t6-track-detail .tracklocation{
+	color: #009688;
+}
+.t6-track-detail .trackinfo{
+	color: #555;
+}
+/* "复制单个运单轨迹详情"图标：锚定轨迹明细列表右上（点击事件由 track.ftl 委托处理） */
+.t6-timeline-wrap{
+	position: relative;
+}
+.t6-copy-one{
+	position: absolute; right: 10px; top: 2px; width: 26px; height: 26px;
+	border: 1px solid #dde3e8; border-radius: 6px; background: #fff; color: #57606a;
+	display: inline-flex; align-items: center; justify-content: center;
+	padding: 0; cursor: pointer; transition: .15s; z-index: 2;
+}
+.t6-copy-one:hover{ border-color:#009688; color:#009688; background:#eaf6f4; }
+.t6-copy-one svg{ width: 14px; height: 14px; }
+</style>
+<div class="t6-track-detail" style="padding:2px 4px;width:100%;" id='track-item-data-TS0004515CN'>
+			<div class="track-progress-wrap">
+				<div class="track-progress">
+						 
+												<div class="tp-step done">
+							<div class="tp-node">
+		<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M4 10.5V19C4 19.5523 4.44772 20 5 20H9V14C9 13.4477 9.44772 13 10 13H14C14.5523 13 15 13.4477 15 14V20H19C19.5523 20 20 19.5523 20 19V10.5"/>
+			<path d="M2 11L11.1056 4.44721C11.6686 4.07121 12.3314 4.07121 12.8944 4.44721L22 11"/>
+			<path d="M11 20H13" stroke-linecap="round"/>
+		</svg>
+								
+							</div>
+							<div class="tp-info">
+								<div class="tp-title">入库</div>
+									<div class="tp-time-name layui-hide">收货时间</div>
+									<div class="tp-time" title="收货时间">2024-12-14 17:29:02</div>
+							</div>
+							<span class="tp-line"></span>
+						</div>
+						 
+												<div class="tp-step done">
+							<div class="tp-node">
+		<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M4 10.5V19C4 19.5523 4.44772 20 5 20H9V14C9 13.4477 9.44772 13 10 13H14C14.5523 13 15 13.4477 15 14V20H19C19.5523 20 20 19.5523 20 19V10.5"/>
+			<path d="M2 11L11.1056 4.44721C11.6686 4.07121 12.3314 4.07121 12.8944 4.44721L22 11"/>
+			<path d="M16 7H22M22 7L19 4M22 7L19 10"/>
+		</svg>
+								
+							</div>
+							<div class="tp-info">
+								<div class="tp-title">出库</div>
+									<div class="tp-time-name layui-hide">发货时间</div>
+									<div class="tp-time" title="发货时间">2024-12-14 16:32:12</div>
+							</div>
+							<span class="tp-line"></span>
+						</div>
+						 
+												<div class="tp-step done">
+							<div class="tp-node">
+		<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M22 2L11 13"/>
+			<path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+		</svg>
+								
+							</div>
+							<div class="tp-info">
+								<div class="tp-title">起运地</div>
+									<div class="tp-time-name layui-hide">离港时间</div>
+									<div class="tp-time" title="离港时间">2024-12-22 18:00:11</div>
+							</div>
+							<span class="tp-line"></span>
+						</div>
+						 
+												<div class="tp-step done">
+							<div class="tp-node">
+		<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z"/>
+			<circle cx="12" cy="11" r="2.5"/>
+		</svg>
+								
+							</div>
+							<div class="tp-info">
+								<div class="tp-title">目的地</div>
+									<div class="tp-time-name layui-hide">实际到港时间</div>
+									<div class="tp-time" title="实际到港时间">2025-02-05 11:27:58</div>
+							</div>
+							<span class="tp-line"></span>
+						</div>
+						 
+												<div class="tp-step done">
+							<div class="tp-node">
+		<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M1.5 5.5h12v11h-12z"/>
+			<path d="M13.5 9.5h4l3 3v3.5h-7z"/>
+			<circle cx="6" cy="18.5" r="1.8"/>
+			<circle cx="17" cy="18.5" r="1.8"/>
+		</svg>
+								
+							</div>
+							<div class="tp-info">
+								<div class="tp-title">派送</div>
+									<div class="tp-time-name layui-hide">实际提取时间</div>
+									<div class="tp-time" title="实际提取时间">2025-02-05 11:28:06</div>
+							</div>
+							<span class="tp-line"></span>
+						</div>
+						 
+						<div class="tp-step current">
+							<div class="tp-node">
+		<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M4.5 8.5h15a1 1 0 0 1 1 1V19a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1V9.5a1 1 0 0 1 1-1z"/>
+			<path d="M3.5 8.5L12 4.5l8.5 4"/>
+			<path d="M9 14l2.5 2.5L15.5 12"/>
+		</svg>
+								<span class="tp-pulse"></span>
+							</div>
+							<div class="tp-info">
+								<div class="tp-title">签收</div>
+									<div class="tp-time-name layui-hide">签收时间</div>
+									<div class="tp-time" title="签收时间">2025-02-13 10:12:17</div>
+							</div>
+							
+						</div>
+				</div>
+			</div>
+			<hr>
+		<div class="t6-timeline-wrap">
+		<ul class="layui-timeline">
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2025-02-13 10:07:05</span>
+							<span class="tracklocation">【NEW YORK,NY,US】</span>
+							<span class="trackinfo">签收单（POD）已回传</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2025-02-11 11:00:48</span>
+							<span class="tracklocation">【NEW YORK,NY,US】</span>
+							<span class="trackinfo">卡车派件已送达，POD签收单待回传</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2025-02-11 09:35:35</span>
+							<span class="tracklocation">【NEW YORK,NY,US】</span>
+							<span class="trackinfo">卡车派送已出仓，预计1工作日送达</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2025-02-05 17:48:59</span>
+							<span class="tracklocation">【NEW YORK,NY,US】</span>
+							<span class="trackinfo">货件分拣已完成</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2025-02-05 15:55:41</span>
+							<span class="tracklocation">【NEW YORK,NY,US】</span>
+							<span class="trackinfo">已拆柜</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2025-02-05 13:12:56</span>
+							<span class="tracklocation">【NEW YORK,NY,US】</span>
+							<span class="trackinfo">码头提柜已完成</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2025-01-30 11:20:14</span>
+							<span class="tracklocation">【NEW YORK,NY,US】</span>
+							<span class="trackinfo">预约提柜中</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2025-01-28 14:40:03</span>
+							<span class="tracklocation">【NEW YORK,NY,US】</span>
+							<span class="trackinfo">已抵港</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2025-01-25 09:40:31</span>
+							<span class="tracklocation">【NEW YORK,NY,US】</span>
+							<span class="trackinfo">清关已放行</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2025-01-20 16:27:20</span>
+							<span class="tracklocation">【NEW YORK,NY,US】</span>
+							<span class="trackinfo">航程延误，ETA延迟至27.JAN</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2024-12-22 18:00:11</span>
+							<span class="tracklocation">【CHINA】</span>
+							<span class="trackinfo">已离港</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2024-12-16 21:55:47</span>
+							<span class="tracklocation">【SHENZHEN,CHINA】</span>
+							<span class="trackinfo">出境通关已放行</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2024-12-14 20:16:05</span>
+							<span class="tracklocation">【SHENZHEN,CHINA】</span>
+							<span class="trackinfo">出境通关中</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2024-12-14 17:29:04</span>
+							<span class="tracklocation">【SHENZHEN, CHINA】</span>
+							<span class="trackinfo">申报信息&计费数据已确认</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2024-12-14 16:32:12</span>
+							<span class="tracklocation">【SHENZHEN,CHINA】</span>
+							<span class="trackinfo">提单配载已完成，运件离开我司操作中心</span>
+						</p>
+					</div>
+				</li>
+				<li class="layui-timeline-item trackitem">
+					<i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content">
+						<p>
+							<span class="trackdate">2024-12-14 15:02:36</span>
+							<span class="tracklocation">【SHENZHEN, CHINA】</span>
+							<span class="trackinfo">运件抵达我司操作中心</span>
+						</p>
+					</div>
+				</li>
+		</ul>
+		<span class="t6-copy-one" data-waybillnumber="TS0004515CN" title="复制该单轨迹详情">
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+		</span>
+		</div>
+</div>

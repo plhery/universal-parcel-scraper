@@ -7298,5 +7298,10 @@
     "pattern": "^QH\\d{8}$",
     "kind": "collision",
     "reason": "Qinhang Transportation's waybills are QH and eight digits, a shape GLS Italy's and TNT Italy's low rules also suggest, and one tracking directory example does not establish the series, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "eudore",
+    "kind": "by_design",
+    "reason": "Eudore's tracker finds a waybill by the shipper's own reference as well as by its waybill and system numbers, and the only public sample is a shipper's reference, which nothing ties to the line."
   }
 ]

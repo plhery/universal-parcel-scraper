@@ -1,0 +1,21 @@
+{
+  "carrier": "eudore",
+  "entries": [
+    {"wording": "运件抵达我司操作中心", "stage": "accepted", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The shipment reached the line's operation centre in Shenzhen: the first row in its hands."},
+    {"wording": "提单配载已完成，运件离开我司操作中心", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Loaded under its bill of lading and left the operation centre for the port."},
+    {"wording": "申报信息&计费数据已确认", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The declaration and the billing data confirmed, after the shipment left the operation centre: paperwork on the way to the port."},
+    {"wording": "出境通关中", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Export clearance under way in Shenzhen, a routine step before the sailing."},
+    {"wording": "出境通关已放行", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Export customs released the shipment."},
+    {"wording": "已离港", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The ship left the port of loading in China."},
+    {"wording": "航程延误，ETA延迟至…", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The voyage is late and its arrival moved to the date after the ellipsis, as 27.JAN: the shipment is still at sea."},
+    {"wording": "清关已放行", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Import customs in the United States released the shipment, three days before the ship arrived."},
+    {"wording": "已抵港", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The ship reached the port of discharge."},
+    {"wording": "预约提柜中", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Booking the container's pickup at the terminal."},
+    {"wording": "码头提柜已完成", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The container was picked up from the terminal."},
+    {"wording": "已拆柜", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The container was unloaded at the destination warehouse."},
+    {"wording": "货件分拣已完成", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The shipment was sorted for its delivery."},
+    {"wording": "卡车派送已出仓，预计1工作日送达", "stage": "out_for_delivery", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The delivery truck left the warehouse, due within a working day; it delivered the same morning."},
+    {"wording": "卡车派件已送达，POD签收单待回传", "stage": "delivered", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The truck delivered the shipment; the signed proof of delivery is still to come back."},
+    {"wording": "签收单（POD）已回传", "stage": "delivered", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The signed proof of delivery came back, after the delivery: the platform's status is then signed."}
+  ]
+}

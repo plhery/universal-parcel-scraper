@@ -1,0 +1,79 @@
+{
+  "id": "eudore",
+  "displayName": "Eudore",
+  "aliases": [
+    "腾博物流"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#009688"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "eudore",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country"
+  ],
+  "portal": {
+    "url": "https://tbwl.t6soft.com/track?waybillnumber={trackingNumber}",
+    "searchUrl": "https://tbwl.t6soft.com/track",
+    "canaryUrl": "https://tbwl.t6soft.com/track",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "progress_rail",
+      "related_tracking_numbers",
+      "customer_reference",
+      "parcel_count",
+      "postcodes",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country"
+    ],
+    "discarded": [
+      "progress_rail",
+      "related_tracking_numbers",
+      "customer_reference",
+      "parcel_count",
+      "postcodes",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "tbwl.t6soft.com"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "waybillnumber"
+      ]
+    }
+  ],
+  "detection": []
+}
