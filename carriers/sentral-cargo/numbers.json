@@ -28,8 +28,7 @@
           "dhl-ecommerce-pl",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "The sender reports this receipt number for a two-piece shipment. The carrier's public tracker returned depot and delivery scans for the full number."

@@ -46,7 +46,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -77,7 +76,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -126,8 +124,7 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "Looked up on Mainfreight's own tracker under its New Zealand transport (MSNZS) service code, as an archived address shows; the capture was not opened."
@@ -157,8 +154,7 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "Looked up on Mainfreight's own tracker under its New Zealand transport (MSNZS) service code, as an archived address shows; the capture was not opened."
@@ -187,8 +183,7 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "Looked up on Mainfreight's own tracker under its New Zealand transport (MSNZS) service code, as an archived address shows; the capture was not opened."
@@ -219,7 +214,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -253,7 +247,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -325,8 +318,7 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "Mainfreight's tracking webhook documentation gives it as the consignment number in its New Zealand transport example."

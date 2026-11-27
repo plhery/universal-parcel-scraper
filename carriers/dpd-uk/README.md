@@ -64,7 +64,10 @@ on HTTP.
 - Recognition makes the same lookup. DPD's group tracker and other DPD networks
   also know a British parcel, sometimes only as an order, so recognition asks
   DPD UK first for those ranges or a British country hint, and files the parcel
-  under it when they all know it.
+  under it when they all know it. Other fourteen digits looked up from another
+  country are other networks' parcels: the rules for them keep DPD UK to its
+  country (`servedCountriesOnly`), so it is asked once the others have all missed
+  the number, and its rate limit is not spent on them.
 - Scan times carry no offset. Scans recorded by `DPD` are on UK time: DPD's
   group tracking service gives the same scans, at the same wall clocks, with
   London's offset. The sender's data record, under the account's display name

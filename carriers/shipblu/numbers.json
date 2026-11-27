@@ -29,7 +29,6 @@
           "zto",
           "j-and-t",
           "lbc-express",
-          "metropolitan-warehouse",
           "paquetexpress",
           "sending"
         ]
@@ -60,8 +59,7 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "ShipBlu's own API collection, published on its developer documentation site, uses it as the tracking number in its shipping-label requests; no history is shown."

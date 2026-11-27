@@ -23,8 +23,7 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "TrackShip's Southwestern Motor Transport page gives it as its example tracking number, zero-padded to the trace's eleven digits. SMT's Shipment Tracing screen answers it with freight picked up in Houston and delivered in Angleton, Texas."

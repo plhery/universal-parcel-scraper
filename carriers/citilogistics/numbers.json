@@ -51,8 +51,7 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "The archived request carries Citilogistics's eleven-digit consignment code; the live guest tracker returns its dated history."

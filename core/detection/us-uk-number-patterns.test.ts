@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { carrierIdFromName } from '../catalog/hints.js';
-import { recognitionCandidates } from '../catalog/recognition.js';
+import { recognitionAskedCarriers, recognitionCandidates } from '../catalog/recognition.js';
 import { settleRecognition, type RecognitionOutcome } from '../recognition/index.js';
 import { checksumRejections, detectCarrierMatch, normalizeTrackingNumber, parseTrackingInput } from './index.js';
 import { isValidFedEx1DBarcode } from './fedex.js';
@@ -220,6 +220,13 @@ describe('UK fourteen-digit parcel numbers', () => {
     expect(recognitionCandidates('15979999999981')[0]).toMatchObject({ carrier: 'dpd-uk', preferred: true });
     expect(recognitionCandidates('15500000000001')[0]).toMatchObject({ carrier: 'dpd-uk', preferred: true });
     expect(recognitionCandidates('09440000000000', { countryHint: 'GB' })[0]).toMatchObject({ carrier: 'dpd-uk', countryMatch: 'home' });
+    // Fourteen digits outside its ranges are other networks' abroad: DPD UK comes once they have all missed the number.
+    for (const countryHint of ['FR', 'CN', 'DE']) {
+      expect(outsideCountryLast('09440000000000', 'dpd-uk', { countryHint }), countryHint).toBe(true);
+      expect(outsideCountryLast('15500000000001', 'dpd-uk', { countryHint }), countryHint).toBe(false);
+      expect(recognitionCandidates('15500000000001', { countryHint })[0], countryHint).toMatchObject({ carrier: 'dpd-uk', preferred: true });
+    }
+    expect(recognitionCandidates('09440000000000').find(({ carrier }) => carrier === 'dpd-uk')?.lastResort).toBeUndefined();
     for (const [number, countryHint] of [['15979999999981', undefined], ['09440000000000', 'GB']] as const) {
       const known: RecognitionOutcome[] = recognitionCandidates(number, { countryHint })
         .filter(({ carrier }) => ['dpd-uk', 'dpd', 'dpd-be'].includes(carrier))
@@ -319,12 +326,13 @@ describe('Saia twelve-digit PRO numbers', () => {
 });
 
 describe('Metropolitan Warehouse twelve-digit numbers', () => {
-  // Made-up numbers across leading digits and check-digit outcomes; the tracker takes any twelve digits.
-  const TWELVE = ['000000000000', '100000000009', '123456789012', '200000000000', '599999999980', '5000 0000 0013', '700000000000',
-    '900000000005', '999999999999'];
+  // Made-up serials padded with zeros, and twelve digits without the padding, across check-digit outcomes.
+  const SERIALS = ['000000000000', '009000000000', '009999999980', '0099 9999 9998'];
+  const OTHERS = ['010000000000', '100000000009', '123456789012', '200000000000', '599999999980', '5000 0000 0013',
+    '700000000000', '900000000005', '999999999999'];
 
-  it('suggests Metropolitan for every twelve-digit number, beside the carriers that share the length', () => {
-    for (const number of TWELVE) {
+  it('suggests Metropolitan for its zero-padded serials, beside the carriers that share the shape', () => {
+    for (const number of SERIALS) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low',
         candidates: expect.arrayContaining(['metropolitan-warehouse']) });
       expect(recognitionCandidates(number, { countryHint: 'US' }).map(({ carrier }) => carrier), number).toContain('metropolitan-warehouse');
@@ -333,9 +341,16 @@ describe('Metropolitan Warehouse twelve-digit numbers', () => {
       // The check is HTTP; the browser phase does not ask it.
       expect(recognitionCandidates(number, { phase: 'browser' }).map(({ carrier }) => carrier), number).not.toContain('metropolitan-warehouse');
     }
-    // A US caller asks Metropolitan first; a lookup elsewhere asks it after the others.
-    expect(recognitionCandidates('599999999980', { countryHint: 'US' })[0]).toMatchObject({ carrier: 'metropolitan-warehouse', countryMatch: 'home' });
-    expect(outsideCountryLast('599999999980', 'metropolitan-warehouse', { countryHint: 'ES' })).toBe(true);
+    // A US caller asks Metropolitan beside the others; a lookup elsewhere asks it after them.
+    expect(recognitionAskedCarriers('009999999980', { countryHint: 'US' })).toContain('metropolitan-warehouse');
+    expect(outsideCountryLast('009999999980', 'metropolitan-warehouse', { countryHint: 'ES' })).toBe(true);
+  });
+
+  it('leaves twelve digits without the padding to FedEx and the other carriers', () => {
+    for (const number of OTHERS) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('metropolitan-warehouse');
+      expect(recognitionCandidates(number, { countryHint: 'US' }).map(({ carrier }) => carrier), number).not.toContain('metropolitan-warehouse');
+    }
   });
 
   it('leaves Metropolitan out for other lengths and for letters', () => {

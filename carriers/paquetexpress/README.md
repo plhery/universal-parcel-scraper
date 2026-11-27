@@ -22,9 +22,11 @@ the history alone, as the adapter does, since its rows carry the same fields.
 
 ## Numbers
 
-Tracking codes are eleven to thirteen digits, and the adapter takes ten to fourteen. Paquetexpress
-publishes no layout or check digit for them, and other carriers share each of those lengths, GLS
-and PostLogistics among them, so `paquetexpress-2` only suggests Paquetexpress for a code, and
+Tracking codes are eleven to thirteen digits, and the adapter takes ten to fourteen. Every
+eleven-digit code seen, on the tracker's archived addresses from several years, is one series
+starting with 01, so `paquetexpress-2` takes eleven digits only from it. Paquetexpress publishes
+no layout or check digit for the codes, and other carriers share each of those lengths, GLS and
+PostLogistics among them, so `paquetexpress-2` only suggests Paquetexpress for a code, and
 recognition asks it about one beside the other carriers only for a parcel looked up from Mexico,
 and for any other once they have all missed the number. A guía is the issuing
 branch's code, three letters and two digits as the service names its branches, then two letters and

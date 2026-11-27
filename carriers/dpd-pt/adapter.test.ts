@@ -322,7 +322,7 @@ describe('DPD Portugal tracking adapter', () => {
       expect(match.candidates, number).toContain('dpd-pt');
       expect(match.preferred, number).not.toContain('dpd-pt');
       expect(recognitionAskedCarriers(number, { countryHint: 'PT' }).slice(0, 2), number).toContain('dpd-pt');
-      expect(recognitionAskedCarriers(number, { countryHint: 'IT' }), number).not.toContain('dpd-pt');
+      expect(recognitionAskedCarriers(number, { countryHint: 'IT' }).slice(0, 2), number).not.toContain('dpd-pt');
     }
     for (const countryHint of [undefined, 'DE', 'ES', 'FR', 'GB', 'NL']) {
       expect(recognitionAskedCarriers('01500000000000', { countryHint }), countryHint).not.toContain('dpd-pt');

@@ -22,7 +22,9 @@ BOX NOW's [partner API manual](https://www.boxnow.bg/media/PDF/API%20integration
 says a parcel id is always ten digits, so other inputs are invalid without a request. Ten
 digits are shared with several carriers and nothing in the number points to BOX NOW, so
 `box-now-1` only suggests it. Its lookup is one anonymous request that answers an unknown id
-with an empty list, so recognition asks it, first for a lookup from one of its countries.
+with an empty list, so recognition asks it beside the other carriers for a lookup from one of its
+countries (`servedCountriesOnly`). Elsewhere ten digits are other carriers' numbers, and BOX NOW is
+asked once they have all missed the number.
 
 ## Notes
 

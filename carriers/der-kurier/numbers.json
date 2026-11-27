@@ -32,7 +32,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -64,8 +63,7 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "An archived tracking link on DER KURIER's own tracker. The tracker still lists the parcel's rows, ending with its delivery."
@@ -97,7 +95,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -129,8 +126,7 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "The buyer names Hamburg DER KURIER as the shipping service and posts its tracking history with this shipment number. The review identifies GLS as the delivery partner. DER KURIER's tracker lists the review's parcel under the number, and a later parcel that reused it."

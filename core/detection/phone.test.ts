@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { recognitionAskedCarriers } from '../catalog/recognition.js';
+import { recognitionCandidates } from '../catalog/recognition.js';
 import { isPhoneNumber, isValidDhlExpressWaybill } from './index.js';
 
 const carriers = new URL('../../carriers/', import.meta.url);
@@ -29,8 +29,8 @@ describe('phone numbers', () => {
   });
 
   it('asks no carrier about a phone number of the caller country', () => {
-    expect(recognitionAskedCarriers('0981000001', { countryHint: 'PY' })).toEqual([]);
-    expect(recognitionAskedCarriers('0981000001')).not.toEqual([]);
+    expect(recognitionCandidates('0981000001', { countryHint: 'PY' })).toEqual([]);
+    expect(recognitionCandidates('0981000001')).not.toEqual([]);
   });
 
   it('matches no shipment number a carrier was seen to issue, in any country', () => {

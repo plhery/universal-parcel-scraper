@@ -2,7 +2,7 @@
   "carrier": "metropolitan-warehouse",
   "records": [
     {
-      "number": "599999999980",
+      "number": "009999999980",
       "role": "shipment",
       "evidence": "synthetic",
       "derivedFrom": "donated_real",
@@ -11,6 +11,9 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "fedex",
+          "dhl",
+          "dpd-fr",
           "mondial-relay",
           "colis-prive",
           "mrw",
@@ -25,7 +28,7 @@
           "sending"
         ]
       },
-      "note": "Made-up number in the shape of the twelve-digit tracking numbers Metropolitan's own tracker checks and follows. Its serial sits far beyond the range in use."
+      "note": "Made-up number in the shape of the twelve-digit tracking numbers Metropolitan's own tracker checks and follows, a serial padded with zeros. Its serial sits far beyond the range in use."
     }
   ]
 }

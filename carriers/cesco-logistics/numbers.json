@@ -24,8 +24,7 @@
           "dhl-ecommerce-pl",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "Public April 2026 CESCO waybill. The guest tracker returns five dated milestones ending in delivery."
@@ -52,8 +51,7 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "Full example printed in the carrier's tracking field. The guest tracker still returns five dated December 2019 milestones."

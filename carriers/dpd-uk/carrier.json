@@ -97,13 +97,15 @@
     {
       "id": "dpd-uk-1",
       "pattern": "^\\d{14}$",
-      "confidence": "low"
+      "confidence": "low",
+      "servedCountriesOnly": true
     },
     {
       "id": "dpd-uk-2",
       "pattern": "^\\d{14}[0-9A-Z]$",
       "confidence": "low",
-      "checksum": "dpd"
+      "checksum": "dpd",
+      "servedCountriesOnly": true
     }
   ]
 }

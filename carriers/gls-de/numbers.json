@@ -20,8 +20,7 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to GLS Germany, which stays one candidate among several."
@@ -52,7 +51,6 @@
           "gls-nl",
           "gls-pl",
           "lbc-express",
-          "metropolitan-warehouse",
           "paquetexpress",
           "sending"
         ]
@@ -78,7 +76,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -171,7 +168,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -207,7 +203,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -247,7 +242,6 @@
           "gls-nl",
           "gls-pl",
           "lbc-express",
-          "metropolitan-warehouse",
           "paquetexpress",
           "sending"
         ]
@@ -282,7 +276,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -324,7 +317,6 @@
           "gls-nl",
           "gls-pl",
           "lbc-express",
-          "metropolitan-warehouse",
           "paquetexpress",
           "sending"
         ]
@@ -479,8 +471,7 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "A GLS parcel number from a public Paketda question. GLS's group tracking overview returned its status history without a postcode."
@@ -510,7 +501,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl",
           "speedy"
         ]
@@ -543,7 +533,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -574,7 +563,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -608,7 +596,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -639,7 +626,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -671,7 +657,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -702,7 +687,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -733,7 +717,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },

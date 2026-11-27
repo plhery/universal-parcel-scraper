@@ -303,9 +303,14 @@ describe('Metropolitan Warehouse status vocabulary', () => {
 });
 
 describe('Metropolitan Warehouse numbers', () => {
-  it('stays a twelve-digit suggestion, asked first for a lookup in the United States and after the others elsewhere', () => {
-    const number = '599999999980';
+  it('stays a suggestion for its zero-padded serials, asked first for a lookup in the United States and after the others elsewhere', () => {
+    const number = '009999999980';
     expect(detectCarrierMatch(number).candidates).toContain('metropolitan-warehouse');
+    // Twelve digits without the padding are FedEx's, Vinted Go's or another carrier's.
+    for (const other of ['599999999980', '019999999980']) {
+      expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('metropolitan-warehouse');
+      expect(recognitionAskedCarriers(other, { countryHint: 'US' }), other).not.toContain('metropolitan-warehouse');
+    }
     expect(recognitionAskedCarriers(number, { countryHint: 'US' })).toContain('metropolitan-warehouse');
     for (const countryHint of [undefined, 'FR', 'ES', 'DE', 'CO', 'CN']) {
       expect(outsideCountryLast(number, 'metropolitan-warehouse', { countryHint }), `${countryHint}`).toBe(true);

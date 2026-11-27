@@ -17,7 +17,15 @@
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
-        "candidates": ["correos-chile", "yunda", "korea-post", "aras-kargo", "econt", "ozon-logistics", "paquetexpress"]
+        "candidates": [
+          "correos-chile",
+          "yunda",
+          "korea-post",
+          "aras-kargo",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
       },
       "note": "COSHIP's own tracking tutorial video types it into the tracking page, which shows its rows to Korea Post's delivery. The tracker now answers it with COSHIP's own rows, from its Vancouver warehouse to Incheon airport."
     },
@@ -37,7 +45,15 @@
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
-        "candidates": ["correos-chile", "yunda", "korea-post", "aras-kargo", "econt", "ozon-logistics", "paquetexpress"]
+        "candidates": [
+          "correos-chile",
+          "yunda",
+          "korea-post",
+          "aras-kargo",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
       },
       "note": "The same video shows it, grouped with hyphens, on a COSHIP waybill as where to find the tracking number. The tracker answers it with COSHIP's rows from Vancouver to Incheon."
     },
@@ -57,7 +73,15 @@
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
-        "candidates": ["correos-chile", "yunda", "korea-post", "aras-kargo", "econt", "ozon-logistics", "paquetexpress"]
+        "candidates": [
+          "correos-chile",
+          "yunda",
+          "korea-post",
+          "aras-kargo",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
       },
       "note": "The same video shows it as the tracking number on a Korea Post parcel label COSHIP printed. The tracker now answers it with its blank record, as it does an unknown number."
     }

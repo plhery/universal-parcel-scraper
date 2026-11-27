@@ -462,8 +462,10 @@ describe('Packeta bare packet IDs', () => {
   it('keeps a checksum-backed carrier among the carriers asked', () => {
     const waybill = '1234567891';
     expect(isValidDhlExpressWaybill(waybill)).toBe(true);
-    expect(recognitionAskedCarriers(waybill)).toEqual(['dhl-express', 'acs-courier', 'geniki-taxydromiki', 'packeta', 'dhl-ecommerce-es']);
-    expect(recognitionAskedCarriers(BARE)).toEqual(['packeta', 'dhl-ecommerce-es', 'box-now']);
+    expect(recognitionAskedCarriers(waybill)).toEqual(['dhl-express', 'acs-courier', 'geniki-taxydromiki', 'packeta']);
+    // DHL eCommerce Spain and BOX NOW, kept to their countries for ten digits, come once these have missed the number.
+    expect(recognitionAskedCarriers(BARE)).toEqual(['packeta']);
+    expect(recognitionAskedCarriers(BARE, { countryHint: 'ES' })).toContain('dhl-ecommerce-es');
   });
 
   it('recognizes a known packet from its bare ID and a missing one as unknown', async () => {

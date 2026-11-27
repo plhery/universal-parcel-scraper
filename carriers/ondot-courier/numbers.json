@@ -51,8 +51,7 @@
           "dhl-ecommerce-pl",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "A separate indexed On-Dot complaint title identifies this exact waybill. A match on the current tracker remains unverified."

@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { recognitionCandidates } from '../../core/catalog/recognition.js';
+import { outsideCountryLast } from '../../core/testing/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
@@ -121,6 +122,10 @@ describe('BOX NOW HTTP adapter', () => {
     expect(detectCarrierMatch('900000001').candidates).not.toContain('box-now');
     for (const countryHint of ['GR', 'SI']) {
       expect(recognitionCandidates(IN_TRANSIT, { countryHint })[0]?.carrier).toBe('box-now');
+    }
+    // Ten digits are other carriers' elsewhere: BOX NOW comes once they have all missed the number.
+    for (const countryHint of [undefined, 'DE', 'PL', 'GB']) {
+      expect(outsideCountryLast(IN_TRANSIT, 'box-now', { countryHint }), `${countryHint}`).toBe(true);
     }
   });
 

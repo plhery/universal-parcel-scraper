@@ -82,7 +82,7 @@
   "detection": [
     {
       "id": "metropolitan-warehouse-1",
-      "pattern": "^\\d{12}$",
+      "pattern": "^00\\d{10}$",
       "confidence": "low"
     }
   ]

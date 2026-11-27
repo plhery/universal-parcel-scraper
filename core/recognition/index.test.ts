@@ -28,7 +28,12 @@ describe('recognition candidates', () => {
     expect(detectCarrierMatch(number)).toEqual(detected);
     expect(recognitionAskedCarriers(number, { countryHint: 'GB' })).toContain('dhl-ecommerce-uk');
     expect(recognitionCandidates(number, { countryHint: 'United Kingdom' })).toEqual(baseline);
-    expect(recognitionCandidates(number, { countryHint: 'XX' })).toEqual(baseline);
+    // A code that names no served country orders nothing, but DPD UK's numbers outside its ranges stay in its country:
+    // it is asked after the others.
+    const elsewhere = recognitionCandidates(number, { countryHint: 'XX' });
+    const others = (candidates: typeof baseline) => candidates.filter(({ carrier }) => carrier !== 'dpd-uk');
+    expect(others(elsewhere)).toEqual(others(baseline));
+    expect(elsewhere.find(({ carrier }) => carrier === 'dpd-uk')).toMatchObject({ outsideCountry: true, lastResort: true });
     expect(recognitionCandidates('1Z999AA10123456784', { countryHint: 'GB', priorities: { dpd: 1e6 } })).toEqual([]);
   });
 
@@ -168,11 +173,14 @@ describe('recognition candidates', () => {
     const candidates = recognitionCandidates('12345678901231');
     expect(candidates.map((candidate) => candidate.carrier)).toEqual(['hermes-de', 'dpd-be', 'dpd', 'dpd-nl', 'dpd-de', 'chronopost', 'seur', 'brt', 'dpd-uk', 'dpd-pt', 'dpd-hu', 'dpd-fr', 'ciblex', 'jadlog', 'delhivery']);
     expect(candidates.filter((candidate) => candidate.outsideCountry).map((candidate) => candidate.carrier)).toEqual(['jadlog', 'delhivery']);
-    // In Brazil, Jadlog is asked with the others; Delhivery stays last, even named by the hint.
+    // In Brazil, Jadlog is asked with the others; Delhivery stays among the last resorts, even named by the hint, and
+    // DPD UK joins it for fourteen digits outside its ranges.
     const brazil = recognitionCandidates('12345678901231', { countryHint: 'BR', hint: 'delhivery' });
     expect(brazil.find((candidate) => candidate.carrier === 'jadlog')).toMatchObject({ countryMatch: 'home' });
     expect(brazil.find((candidate) => candidate.carrier === 'jadlog')?.outsideCountry).toBeUndefined();
-    expect(brazil.at(-1)).toEqual({ carrier: 'delhivery', needsInput: null, preferred: false, outsideCountry: true, lastResort: true });
+    expect(brazil.filter(({ lastResort }) => lastResort).map(({ carrier }) => carrier)).toEqual(['delhivery', 'dpd-uk']);
+    expect(brazil.find(({ carrier }) => carrier === 'delhivery'))
+      .toEqual({ carrier: 'delhivery', needsInput: null, preferred: false, outsideCountry: true, lastResort: true });
     expect(recognitionCandidates('06080000000002')).toEqual([
       { carrier: 'dpd', needsInput: null, preferred: true },
       { carrier: 'dpd-be', needsInput: null, preferred: false },

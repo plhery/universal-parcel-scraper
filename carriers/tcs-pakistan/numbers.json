@@ -27,7 +27,6 @@
           "zto",
           "j-and-t",
           "lbc-express",
-          "metropolitan-warehouse",
           "paquetexpress",
           "sending"
         ]
@@ -62,7 +61,6 @@
           "yamato",
           "j-and-t",
           "lbc-express",
-          "metropolitan-warehouse",
           "paquetexpress",
           "sagawa",
           "sending"
@@ -97,7 +95,6 @@
           "zto",
           "j-and-t",
           "lbc-express",
-          "metropolitan-warehouse",
           "paquetexpress",
           "sending"
         ]
@@ -141,7 +138,6 @@
           "gls-nl",
           "gls-pl",
           "lbc-express",
-          "metropolitan-warehouse",
           "paquetexpress",
           "sagawa",
           "sending"
@@ -178,7 +174,6 @@
           "yamato",
           "j-and-t",
           "lbc-express",
-          "metropolitan-warehouse",
           "paquetexpress",
           "sagawa",
           "sending"
@@ -213,7 +208,6 @@
           "zto",
           "j-and-t",
           "lbc-express",
-          "metropolitan-warehouse",
           "paquetexpress",
           "sending"
         ]
@@ -246,7 +240,6 @@
           "zto",
           "j-and-t",
           "lbc-express",
-          "metropolitan-warehouse",
           "paquetexpress",
           "saia",
           "sending"
@@ -280,7 +273,6 @@
           "zto",
           "j-and-t",
           "lbc-express",
-          "metropolitan-warehouse",
           "paquetexpress",
           "sending"
         ]
@@ -313,7 +305,6 @@
           "zto",
           "j-and-t",
           "lbc-express",
-          "metropolitan-warehouse",
           "paquetexpress",
           "sending"
         ]
@@ -345,7 +336,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -376,7 +366,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -446,7 +435,6 @@
           "zto",
           "j-and-t",
           "lbc-express",
-          "metropolitan-warehouse",
           "paquetexpress",
           "sending"
         ]
@@ -478,7 +466,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },

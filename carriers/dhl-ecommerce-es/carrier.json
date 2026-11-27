@@ -25,7 +25,8 @@
       "direct"
     ],
     "recognition": {
-      "rank": 630
+      "rank": 630,
+      "servedCountriesOnly": true
     },
     "localClocks": true
   },

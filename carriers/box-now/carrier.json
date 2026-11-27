@@ -27,7 +27,8 @@
       "direct"
     ],
     "recognition": {
-      "rank": 250
+      "rank": 250,
+      "servedCountriesOnly": true
     }
   },
   "capabilities": [

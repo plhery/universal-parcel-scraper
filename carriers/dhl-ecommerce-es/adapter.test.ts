@@ -1,4 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { recognitionCandidates } from '../../core/catalog/recognition.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
+import { outsideCountryLast } from '../../core/testing/recognition.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { STAGES } from '../../core/status/index.js';
@@ -344,5 +347,18 @@ describe('DHL eCommerce Iberia adapter', () => {
     }
     const limited = adapter(environment(async () => new Response('', { status: 429 })));
     await expect(limited.track({ number: NUMBER })).rejects.toMatchObject({ kind: 'rate_limited' });
+  });
+
+  it('is asked about ten digits beside the others from Spain and Portugal, and once they have all missed elsewhere', () => {
+    const number = '2899999980';
+    expect(detectCarrierMatch(number).candidates).toContain('dhl-ecommerce-es');
+    for (const countryHint of ['ES', 'PT']) {
+      expect(recognitionCandidates(number, { countryHint }).find(({ carrier }) => carrier === 'dhl-ecommerce-es'), countryHint)
+        .toMatchObject({ countryMatch: expect.any(String) });
+      expect(outsideCountryLast(number, 'dhl-ecommerce-es', { countryHint }), countryHint).toBe(false);
+    }
+    for (const countryHint of [undefined, 'DE', 'GB', 'AR']) {
+      expect(outsideCountryLast(number, 'dhl-ecommerce-es', { countryHint }), `${countryHint}`).toBe(true);
+    }
   });
 });

@@ -9,11 +9,24 @@
         "url": "https://digitallibrary.un.org/record/4023494/files/S_2023_724-EN.pdf",
         "access": "full_page"
       },
-      "context": { "assessment": "confirmed" },
+      "context": {
+        "assessment": "confirmed"
+      },
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
-        "candidates": ["postlogistics", "gls-ch", "gls-fr", "gls-de", "old-dominion", "coordinadora", "gls-at", "gls-pl", "mainfreight", "paquetexpress", "ppl"]
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "old-dominion",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "ppl"
+        ]
       },
       "note": "The report appendix reproduces the Astral Aviation air waybill. Its native public tracker returns the identical AWB and dated booking and departure messages."
     }

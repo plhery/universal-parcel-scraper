@@ -99,7 +99,7 @@
     },
     {
       "id": "paquetexpress-2",
-      "pattern": "^\\d{11,13}$",
+      "pattern": "^(?:01\\d{9}|\\d{12,13})$",
       "confidence": "low"
     }
   ]

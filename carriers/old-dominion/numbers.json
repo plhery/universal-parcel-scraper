@@ -77,7 +77,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -104,7 +103,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -135,7 +133,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -167,7 +164,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -199,7 +195,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -231,7 +226,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -263,7 +257,6 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "paquetexpress",
           "ppl"
         ]
       },
@@ -313,8 +306,7 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "An Old Dominion trace page archived by the Wayback Machine, showing the shipment's status."

@@ -1462,8 +1462,7 @@
       "japan-post",
       "mainfreight",
       "postlogistics",
-      "ppl",
-      "paquetexpress"
+      "ppl"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -1483,8 +1482,7 @@
       "mainfreight",
       "postlogistics",
       "ppl",
-      "speedy",
-      "paquetexpress"
+      "speedy"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
   },
@@ -1502,8 +1500,7 @@
       "japan-post",
       "mainfreight",
       "postlogistics",
-      "ppl",
-      "paquetexpress"
+      "ppl"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -1522,8 +1519,7 @@
       "mainfreight",
       "postlogistics",
       "ppl",
-      "speedy",
-      "paquetexpress"
+      "speedy"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
   },
@@ -1541,13 +1537,12 @@
       "gls-pl",
       "japan-post",
       "mainfreight",
-      "postlogistics",
-      "paquetexpress"
+      "postlogistics"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. PPL drops out: its numbers start with a product digit from 2 to 9. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
   {
-    "shape": "Eleven digits starting 0 or 1 that pass the mod 7 check, failing DHL eCommerce Poland's check",
+    "shape": "Eleven digits starting 01 that pass the mod 7 check, failing DHL eCommerce Poland's check",
     "carriers": [
       "aramex",
       "blue-dart",
@@ -1561,6 +1556,23 @@
       "mainfreight",
       "postlogistics",
       "paquetexpress"
+    ],
+    "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. PPL drops out: its numbers start with a product digit from 2 to 9. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Paquetexpress joins them for its 01 series."
+  },
+  {
+    "shape": "Eleven digits starting 00, 02 to 09 or 1 that pass the mod 7 check, failing DHL eCommerce Poland's check",
+    "carriers": [
+      "aramex",
+      "blue-dart",
+      "coordinadora",
+      "gls-at",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "gls-pl",
+      "japan-post",
+      "mainfreight",
+      "postlogistics"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. PPL drops out: its numbers start with a product digit from 2 to 9. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -1578,8 +1590,7 @@
       "gls-pl",
       "japan-post",
       "mainfreight",
-      "postlogistics",
-      "paquetexpress"
+      "postlogistics"
     ],
     "reason": "CDEK's own numbers count up from 10, so it joins the mod 7 carriers and the carriers that accept any eleven digits; nothing in the number decides between them, so it stays a low-confidence suggestion. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -1667,8 +1678,7 @@
       "mainfreight",
       "old-dominion",
       "postlogistics",
-      "ppl",
-      "paquetexpress"
+      "ppl"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape and the mod 7 check Aramex, Blue Dart and Japan Post share. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -1688,8 +1698,7 @@
       "old-dominion",
       "postlogistics",
       "ppl",
-      "speedy",
-      "paquetexpress"
+      "speedy"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape and the mod 7 check Aramex, Blue Dart and Japan Post share. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
   },
@@ -1707,8 +1716,7 @@
       "japan-post",
       "mainfreight",
       "old-dominion",
-      "postlogistics",
-      "paquetexpress"
+      "postlogistics"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape and the mod 7 check Aramex, Blue Dart and Japan Post share. PPL drops out: its numbers start with a product digit from 2 to 9. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -3473,7 +3481,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -3495,7 +3502,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -3518,7 +3524,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -3551,7 +3556,7 @@
     "reason": "The complete identifier matches overlapping catalog formats, the two letters and ten digits of Aramex Australia and Aramex New Zealand among them. Direct tracking must confirm its service and network; a matching shape or checksum alone does not establish ownership."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250 that pass the FedEx and Purolator checks",
+    "shape": "Twelve digits starting with 00 that pass the FedEx and Purolator checks",
     "carriers": [
       "brt",
       "colis-prive",
@@ -3560,6 +3565,26 @@
       "j-and-t",
       "lbc-express",
       "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "paquetexpress"
+    ],
+    "reason": "A passing check digit adds FedEx and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "Twelve digits starting with 01 to 09, 1 or 250 that pass the FedEx and Purolator checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "fedex",
+      "j-and-t",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -3578,7 +3603,6 @@
       "colis-prive",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -3596,7 +3620,6 @@
       "colis-prive",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -3615,7 +3638,6 @@
       "colis-prive",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -3635,7 +3657,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -3656,7 +3677,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -3678,7 +3698,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -3700,7 +3719,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -3715,7 +3733,7 @@
     "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250 that pass the mod 7 check",
+    "shape": "Twelve digits starting with 00 that pass the mod 7 check",
     "carriers": [
       "brt",
       "colis-prive",
@@ -3724,6 +3742,27 @@
       "japan-post",
       "lbc-express",
       "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto",
+      "sending",
+      "paquetexpress"
+    ],
+    "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "Twelve digits starting with 01 to 09, 1 or 250 that pass the mod 7 check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -3745,7 +3784,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -3760,7 +3798,7 @@
     "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250 that pass the FedEx and mod 7 checks",
+    "shape": "Twelve digits starting with 00 that pass the FedEx and mod 7 checks",
     "carriers": [
       "brt",
       "colis-prive",
@@ -3770,6 +3808,28 @@
       "japan-post",
       "lbc-express",
       "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto",
+      "sending",
+      "paquetexpress"
+    ],
+    "reason": "Passing check digits add FedEx, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "Twelve digits starting with 01 to 09, 1 or 250 that pass the FedEx and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "fedex",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -3793,7 +3853,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -3820,7 +3879,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -3848,7 +3906,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -3873,7 +3930,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -3895,7 +3951,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -3918,7 +3973,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -3980,8 +4034,7 @@
       "gls-pl",
       "mainfreight",
       "postlogistics",
-      "ppl",
-      "paquetexpress"
+      "ppl"
     ],
     "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -3996,8 +4049,7 @@
       "gls-pl",
       "mainfreight",
       "postlogistics",
-      "ppl",
-      "paquetexpress"
+      "ppl"
     ],
     "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -4014,8 +4066,7 @@
       "mainfreight",
       "postlogistics",
       "ppl",
-      "speedy",
-      "paquetexpress"
+      "speedy"
     ],
     "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
   },
@@ -4031,13 +4082,12 @@
       "mainfreight",
       "postlogistics",
       "ppl",
-      "speedy",
-      "paquetexpress"
+      "speedy"
     ],
     "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
   },
   {
-    "shape": "9{11} starting 0 or 1 that fails the mod 7 check, passing DHL eCommerce Poland's check",
+    "shape": "9{11} starting 01 that fails the mod 7 check, passing DHL eCommerce Poland's check",
     "carriers": [
       "coordinadora",
       "dhl-ecommerce-pl",
@@ -4050,10 +4100,25 @@
       "postlogistics",
       "paquetexpress"
     ],
+    "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. PPL drops out: its numbers start with a product digit from 2 to 9. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Paquetexpress joins them for its 01 series."
+  },
+  {
+    "shape": "9{11} starting 00, 02 to 09 or 1 that fails the mod 7 check, passing DHL eCommerce Poland's check",
+    "carriers": [
+      "coordinadora",
+      "dhl-ecommerce-pl",
+      "gls-at",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "gls-pl",
+      "mainfreight",
+      "postlogistics"
+    ],
     "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. PPL drops out: its numbers start with a product digit from 2 to 9. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
   {
-    "shape": "9{11} starting 0 or 1 that fails the mod 7 check, failing DHL eCommerce Poland's check",
+    "shape": "9{11} starting 01 that fails the mod 7 check, failing DHL eCommerce Poland's check",
     "carriers": [
       "coordinadora",
       "gls-at",
@@ -4064,6 +4129,20 @@
       "mainfreight",
       "postlogistics",
       "paquetexpress"
+    ],
+    "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. PPL drops out: its numbers start with a product digit from 2 to 9. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Paquetexpress joins them for its 01 series."
+  },
+  {
+    "shape": "9{11} starting 00, 02 to 09 or 1 that fails the mod 7 check, failing DHL eCommerce Poland's check",
+    "carriers": [
+      "coordinadora",
+      "gls-at",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "gls-pl",
+      "mainfreight",
+      "postlogistics"
     ],
     "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. PPL drops out: its numbers start with a product digit from 2 to 9. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -4079,8 +4158,7 @@
       "gls-fr",
       "gls-pl",
       "mainfreight",
-      "postlogistics",
-      "paquetexpress"
+      "postlogistics"
     ],
     "reason": "CDEK's own numbers count up from 10, so it joins the carriers that accept any eleven digits; compact numbers stay a low-confidence suggestion. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -4095,8 +4173,7 @@
       "gls-fr",
       "gls-pl",
       "mainfreight",
-      "postlogistics",
-      "paquetexpress"
+      "postlogistics"
     ],
     "reason": "CDEK's own numbers count up from 10, so it joins the carriers that accept any eleven digits; compact numbers stay a low-confidence suggestion. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -4185,7 +4262,6 @@
       "fedex",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -4204,7 +4280,6 @@
       "fedex",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -4224,7 +4299,6 @@
       "fedex",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -4244,7 +4318,6 @@
       "fedex",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -4267,7 +4340,6 @@
       "gls-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -4292,7 +4364,6 @@
       "gls-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -4318,7 +4389,6 @@
       "gls-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -4342,7 +4412,6 @@
       "fedex",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -4432,7 +4501,6 @@
       "gls-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -4456,7 +4524,6 @@
       "gls-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -4481,7 +4548,6 @@
       "gls-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -4506,7 +4572,6 @@
       "gls-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -4531,7 +4596,6 @@
       "gls-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -4547,7 +4611,7 @@
     "reason": "A passing check digit adds GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250 that pass the GLS check",
+    "shape": "Twelve digits starting with 00 that pass the GLS check",
     "carriers": [
       "brt",
       "colis-prive",
@@ -4569,10 +4633,34 @@
       "paquetexpress",
       "gls-nl"
     ],
+    "reason": "A passing check digit adds GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "Twelve digits starting with 01 to 09, 1 or 250 that pass the GLS check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "gls-at",
+      "gls-pl",
+      "paquetexpress",
+      "gls-nl"
+    ],
     "reason": "A passing check digit adds GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250 that pass the GLS and Poste Italiane checks",
+    "shape": "Twelve digits starting with 00 that pass the GLS and Poste Italiane checks",
     "carriers": [
       "brt",
       "colis-prive",
@@ -4583,6 +4671,31 @@
       "j-and-t",
       "lbc-express",
       "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "poste-italiane",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "gls-at",
+      "gls-pl",
+      "paquetexpress",
+      "gls-nl"
+    ],
+    "reason": "A passing check digit adds GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "Twelve digits starting with 01 to 09, 1 or 250 that pass the GLS and Poste Italiane checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -4609,7 +4722,6 @@
       "gls-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -4632,7 +4744,6 @@
       "j-and-t",
       "j-and-t-cargo",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -4651,7 +4762,6 @@
       "j-and-t",
       "j-and-t-cargo",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -4672,7 +4782,6 @@
       "j-and-t",
       "j-and-t-cargo",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -4691,7 +4800,6 @@
       "j-and-t",
       "j-and-t-cargo",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -4711,7 +4819,6 @@
       "j-and-t",
       "j-and-t-cargo",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -4733,7 +4840,6 @@
       "j-and-t-cargo",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -4756,7 +4862,6 @@
       "gls-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -4803,7 +4908,7 @@
     "reason": "When La Poste's ISO 7064 check character is a digit and the fifteen digits also pass GS1, FedEx's fifteen-digit rule matches too, as do BRT's and Yunda's. La Poste's high-confidence rule decides. Unseparated Ozon postings also share this length and remain low-confidence candidates requiring direct confirmation."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250 that pass none of the FedEx, GLS, Identcode, Purolator and mod 7 checks",
+    "shape": "Twelve digits starting with 00 that pass none of the FedEx, GLS, Identcode, Purolator and mod 7 checks",
     "carriers": [
       "brt",
       "colis-prive",
@@ -4819,10 +4924,28 @@
       "sending",
       "paquetexpress"
     ],
+    "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "Twelve digits starting with 01 to 09, 1 or 250 that pass none of the FedEx, GLS, Identcode, Purolator and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "paquetexpress"
+    ],
     "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250 that pass the Poste Italiane check and none of the FedEx, GLS, Identcode, Purolator and mod 7 checks",
+    "shape": "Twelve digits starting with 00 that pass the Poste Italiane check and none of the FedEx, GLS, Identcode, Purolator and mod 7 checks",
     "carriers": [
       "brt",
       "colis-prive",
@@ -4830,6 +4953,25 @@
       "j-and-t",
       "lbc-express",
       "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "poste-italiane",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "paquetexpress"
+    ],
+    "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "Twelve digits starting with 01 to 09, 1 or 250 that pass the Poste Italiane check and none of the FedEx, GLS, Identcode, Purolator and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "j-and-t",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -4854,8 +4996,7 @@
       "mainfreight",
       "old-dominion",
       "postlogistics",
-      "ppl",
-      "paquetexpress"
+      "ppl"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -4871,8 +5012,7 @@
       "mainfreight",
       "old-dominion",
       "postlogistics",
-      "ppl",
-      "paquetexpress"
+      "ppl"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -4889,8 +5029,7 @@
       "old-dominion",
       "postlogistics",
       "ppl",
-      "speedy",
-      "paquetexpress"
+      "speedy"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
   },
@@ -4906,13 +5045,12 @@
       "gls-pl",
       "mainfreight",
       "old-dominion",
-      "postlogistics",
-      "paquetexpress"
+      "postlogistics"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. PPL drops out: its numbers start with a product digit from 2 to 9. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
   {
-    "shape": "9{11} starting 0 or 1 that fails the mod 7 check and passes the Luhn check, failing DHL eCommerce Poland's check",
+    "shape": "9{11} starting 01 that fails the mod 7 check and passes the Luhn check, failing DHL eCommerce Poland's check",
     "carriers": [
       "coordinadora",
       "gls-at",
@@ -4924,6 +5062,21 @@
       "old-dominion",
       "postlogistics",
       "paquetexpress"
+    ],
+    "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. PPL drops out: its numbers start with a product digit from 2 to 9. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Paquetexpress joins them for its 01 series."
+  },
+  {
+    "shape": "9{11} starting 00, 02 to 09 or 1 that fails the mod 7 check and passes the Luhn check, failing DHL eCommerce Poland's check",
+    "carriers": [
+      "coordinadora",
+      "gls-at",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "gls-pl",
+      "mainfreight",
+      "old-dominion",
+      "postlogistics"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. PPL drops out: its numbers start with a product digit from 2 to 9. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -4939,8 +5092,7 @@
       "gls-pl",
       "mainfreight",
       "old-dominion",
-      "postlogistics",
-      "paquetexpress"
+      "postlogistics"
     ],
     "reason": "CDEK's own numbers count up from 10 and Old Dominion's Luhn check adds it as a suggestion; neither decides, so the number stays a low-confidence suggestion. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -4997,7 +5149,6 @@
       "fedex",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -5017,7 +5168,6 @@
       "fedex",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -5038,7 +5188,6 @@
       "colis-prive",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -5057,7 +5206,6 @@
       "colis-prive",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -5077,7 +5225,6 @@
       "colis-prive",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -5091,7 +5238,7 @@
     "reason": "A passing check digit adds Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250 that pass the FedEx check",
+    "shape": "Twelve digits starting with 00 that pass the FedEx check",
     "carriers": [
       "brt",
       "colis-prive",
@@ -5100,6 +5247,25 @@
       "j-and-t",
       "lbc-express",
       "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "paquetexpress"
+    ],
+    "reason": "A passing check digit adds FedEx to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "Twelve digits starting with 01 to 09, 1 or 250 that pass the FedEx check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "fedex",
+      "j-and-t",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -5119,7 +5285,6 @@
       "fedex",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -5276,7 +5441,6 @@
       "dhl",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -5295,7 +5459,6 @@
       "dhl",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -5308,7 +5471,7 @@
     "reason": "A passing Identcode check digit adds DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250 that pass the Identcode check",
+    "shape": "Twelve digits starting with 00 that pass the Identcode check",
     "carriers": [
       "brt",
       "colis-prive",
@@ -5325,10 +5488,29 @@
       "sending",
       "paquetexpress"
     ],
+    "reason": "A passing Identcode check digit adds DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "Twelve digits starting with 01 to 09, 1 or 250 that pass the Identcode check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "dpd-fr",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "paquetexpress"
+    ],
     "reason": "A passing Identcode check digit adds DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250 that pass the Identcode and Poste Italiane checks",
+    "shape": "Twelve digits starting with 00 that pass the Identcode and Poste Italiane checks",
     "carriers": [
       "brt",
       "colis-prive",
@@ -5337,6 +5519,26 @@
       "j-and-t",
       "lbc-express",
       "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "poste-italiane",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "paquetexpress"
+    ],
+    "reason": "A passing Identcode check digit adds DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "Twelve digits starting with 01 to 09, 1 or 250 that pass the Identcode and Poste Italiane checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "dpd-fr",
+      "j-and-t",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -5357,7 +5559,6 @@
       "j-and-t",
       "j-and-t-cargo",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -5376,7 +5577,6 @@
       "dhl",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -5397,7 +5597,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -5419,7 +5618,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -5442,7 +5640,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -5469,7 +5666,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -5494,7 +5690,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -5517,7 +5712,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -5674,7 +5868,7 @@
     "reason": "La Poste accepts any two characters followed by 11 digits, which also covers PTT's KP numbers; the PTT rule decides."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250 that pass the Purolator check",
+    "shape": "Twelve digits starting with 00 that pass the Purolator check",
     "carriers": [
       "brt",
       "colis-prive",
@@ -5682,6 +5876,25 @@
       "j-and-t",
       "lbc-express",
       "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "paquetexpress"
+    ],
+    "reason": "A passing check digit adds Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "Twelve digits starting with 01 to 09, 1 or 250 that pass the Purolator check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "j-and-t",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -5701,7 +5914,6 @@
       "dpd-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -5721,7 +5933,6 @@
       "colis-prive",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "saia",
@@ -5734,7 +5945,7 @@
     "reason": "A passing Saia check digit adds Saia to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250, with a 0 before the last, that pass the Saia check",
+    "shape": "Twelve digits starting with 00, with a 0 before the last, that pass the Saia check",
     "carriers": [
       "brt",
       "colis-prive",
@@ -5751,10 +5962,29 @@
       "sending",
       "paquetexpress"
     ],
+    "reason": "A passing Saia check digit adds Saia to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "Twelve digits starting with 01 to 09, 1 or 250, with a 0 before the last, that pass the Saia check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "j-and-t",
+      "lbc-express",
+      "mondial-relay",
+      "mrw",
+      "saia",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "paquetexpress"
+    ],
     "reason": "A passing Saia check digit adds Saia to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "Twelve digits starting with 0, 1 or 250, with a 0 before the last, that pass the FedEx, Identcode and Saia checks",
+    "shape": "Twelve digits starting with 00 that pass the FedEx and Identcode checks",
     "carriers": [
       "brt",
       "colis-prive",
@@ -5764,6 +5994,48 @@
       "j-and-t",
       "lbc-express",
       "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "paquetexpress"
+    ],
+    "reason": "Passing check digits add FedEx and DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "Twelve digits starting with 00, with a 0 before the last, that pass the FedEx, Identcode and Saia checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "dpd-fr",
+      "fedex",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "saia",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "paquetexpress"
+    ],
+    "reason": "Passing check digits add FedEx, DHL and Saia to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "Twelve digits starting with 01 to 09, 1 or 250, with a 0 before the last, that pass the FedEx, Identcode and Saia checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "dpd-fr",
+      "fedex",
+      "j-and-t",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "saia",
@@ -6145,7 +6417,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -6184,7 +6455,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -6211,7 +6481,6 @@
       "gls-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -6226,7 +6495,7 @@
     "reason": "shree-maruti numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
   {
-    "shape": "^\\d{12}$",
+    "shape": "^00\\d{10}$",
     "carriers": [
       "brt",
       "colis-prive",
@@ -6238,6 +6507,33 @@
       "japan-post",
       "lbc-express",
       "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto",
+      "sending",
+      "gls-at",
+      "gls-pl",
+      "paquetexpress",
+      "gls-nl"
+    ],
+    "reason": "skynet-worldwide numbers of this shape fall in each of these carriers' rules; recognition asks them in turn. Metropolitan Warehouse joins them for its serials padded with zeros."
+  },
+  {
+    "shape": "^\\d{12}$",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dpd-fr",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -6265,7 +6561,6 @@
       "gls-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sf-express",
@@ -6290,7 +6585,6 @@
       "gls-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -6676,7 +6970,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -6707,7 +7000,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -6733,7 +7025,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -6757,7 +7048,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -7037,7 +7327,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -7085,7 +7374,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -7108,7 +7396,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -7132,7 +7419,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -7350,7 +7636,6 @@
       "j-and-t",
       "j-and-t-cargo",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -7621,7 +7906,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -7891,7 +8175,6 @@
       "dpd-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -7913,7 +8196,6 @@
       "dpd-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "saia",
@@ -7933,7 +8215,6 @@
       "dpd-fr",
       "j-and-t",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -7971,7 +8252,6 @@
       "j-and-t-cargo",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "purolator",
@@ -7995,7 +8275,6 @@
       "j-and-t-cargo",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -8042,7 +8321,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -8068,7 +8346,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -8270,8 +8547,7 @@
       "gls-pl",
       "mainfreight",
       "postlogistics",
-      "ppl",
-      "paquetexpress"
+      "ppl"
     ],
     "reason": "An IATA air waybill with Amerijet's 810 prefix printed with its dash also fits several carriers' broad eleven-digit candidates; the dashed Amerijet rule decides. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. DPD Romania joins them for eleven digits starting with 8, asked only for lookups in Romania."
   },
@@ -8286,8 +8562,7 @@
       "gls-fr",
       "gls-pl",
       "mainfreight",
-      "postlogistics",
-      "paquetexpress"
+      "postlogistics"
     ],
     "reason": "An IATA air waybill with GOL's 127 prefix printed with its dash also fits several carriers' broad eleven-digit candidates; the dashed GOLLOG rule decides. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -8307,8 +8582,7 @@
       "japan-post",
       "mainfreight",
       "postlogistics",
-      "ppl",
-      "paquetexpress"
+      "ppl"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. DPD Romania joins them for eleven digits starting with 8, asked only for lookups in Romania."
   },
@@ -8327,8 +8601,7 @@
       "japan-post",
       "mainfreight",
       "postlogistics",
-      "ppl",
-      "paquetexpress"
+      "ppl"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. DPD Romania joins them for eleven digits starting with 8, asked only for lookups in Romania."
   },
@@ -8345,8 +8618,7 @@
       "mainfreight",
       "old-dominion",
       "postlogistics",
-      "ppl",
-      "paquetexpress"
+      "ppl"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. DPD Romania joins them for eleven digits starting with 8, asked only for lookups in Romania."
   },
@@ -8362,8 +8634,7 @@
       "gls-pl",
       "mainfreight",
       "postlogistics",
-      "ppl",
-      "paquetexpress"
+      "ppl"
     ],
     "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. DPD Romania joins them for eleven digits starting with 8, asked only for lookups in Romania."
   },
@@ -8520,7 +8791,6 @@
       "j-and-t",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -8545,7 +8815,6 @@
       "j-and-t-cargo",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "poste-italiane",
@@ -8603,7 +8872,6 @@
       "j-and-t-cargo",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -8627,7 +8895,6 @@
       "j-and-t-cargo",
       "japan-post",
       "lbc-express",
-      "metropolitan-warehouse",
       "mondial-relay",
       "mrw",
       "sagawa",
@@ -8656,7 +8923,6 @@
       "gls-at",
       "gls-pl",
       "mainfreight",
-      "paquetexpress",
       "ppl"
     ],
     "reason": "These numeric waybill layouts overlap for the public BEST China freight reference; their lengths and check digits do not establish shipment ownership."

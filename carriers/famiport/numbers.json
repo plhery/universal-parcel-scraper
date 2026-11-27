@@ -25,8 +25,7 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight",
-          "paquetexpress"
+          "mainfreight"
         ]
       },
       "note": "SmilePay's FamilyMart C2C printing guide shows this value below the barcode labelled as the store-to-store shipment number."
