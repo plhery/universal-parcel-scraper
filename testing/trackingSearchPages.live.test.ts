@@ -69,7 +69,9 @@ describe('carrier search pages (rendered at phone size)', () => {
         throw error;
       }
       // Some pages show the field on phones only once controls are tapped. A cookie banner over a
-      // control (Moovin's country choice) would take the tap, which a reader dismisses first.
+      // control (Moovin's country choice) would take the tap, which a reader dismisses first. A tap
+      // before the page's scripts have run (ZimPost's Track button) opens nothing.
+      if (reveal) await page.waitForLoadState('load', { timeout: 10_000 }).catch(() => undefined);
       for (const selector of reveal ?? []) {
         const control = page.locator(selector).filter({ visible: true }).first();
         await control.waitFor({ state: 'visible', timeout: 10_000 })

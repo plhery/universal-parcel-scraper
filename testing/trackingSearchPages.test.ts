@@ -37,6 +37,7 @@ describe('carrier search pages', () => {
       '<input type="text" disabled>',
       '<input type="text" name="email">',
       '<input type="text" name="user" autocomplete="current-password">',
+      '<input type="text" name="UserId" placeholder="User ID">',
       '<input type="text" name="q" placeholder="Search">',
       '<input type="checkbox">',
       '<span contenteditable="false" role="textbox"></span>',

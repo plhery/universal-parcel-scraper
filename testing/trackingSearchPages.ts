@@ -28,7 +28,7 @@ export function countNumberFields(elements: Element[]): number {
     const autocomplete = field.getAttribute('autocomplete') ?? '';
     const label = [field.name, field.id, field.getAttribute('placeholder'), field.getAttribute('aria-label'),
       /^\s*new-password\s*$/i.test(autocomplete) ? '' : autocomplete].join(' ');
-    if (/e-?mail|user ?name|login|password|passwort|mot de passe/i.test(label)) return false;
+    if (/e-?mail|user ?(?:name|id)|login|password|passwort|mot de passe/i.test(label)) return false;
     const siteSearch = /^(?:q|query|s|search|keywords?)$/i.test(field.name)
       || /^\s*(?:search|rechercher|suchen|buscar|cerca|szukaj)\b/i.test(field.getAttribute('placeholder') || field.getAttribute('aria-label') || '');
     return !siteSearch || /track|suivi|sendung|colis|parcel|package|shipment|waybill|consignment|number|numéro|nummer|número|numero|трек|номер|дугаар|លេខ|运单|運單|单号|單號/i.test(label);
@@ -71,11 +71,15 @@ export const carriersWithoutSearchPage: Partial<Record<CarrierId, string>> = {
  * controls in turn, as Playwright selectors. The check taps the first one shown of each.
  */
 export const searchFieldReveals: Partial<Record<CarrierId, readonly string[]>> = {
+  'airways-courier-in': ['a.trackBtn'], // the header's track button; before it only the sign-in shows
+  'alfa-transportes': ['button:has-text("Rastrear mercadoria")'], // the invoice-number pop-up
   castores: ['.js-tools-label', '#tab-1'], // the header's tools menu, then its Rastrear form
   eurodis: ['text="Tracking by EURODIS shipment number"'], // the collapsed tracking methods
   moovin: ['a[href*="pais=CR"]'], // the country choice; Costa Rica and Honduras share the form
   primewell: ['.burger'], // the menu holds the tracker's voucher box; the page shows only a picture
   'ross-express': ['button:has-text("Ross Pro Number")'], // each kind of number is a collapsed section
+  xgs: ['a.track-shipment-activator:has-text("Track a Shipment")'], // the tracking-number pop-up
+  zimpost: ['button:has-text("Track")'], // the home page's tracker overlay
 };
 
 /**
@@ -86,8 +90,6 @@ export const uncheckedSearchPages: Partial<Record<CarrierId, string>> = {
   '360zebra': 'the tracking page sends the check\'s browser on to the home page, which has no number field; tracking links open the tracker with the number',
   'aaa-cooper': 'www.aaacooper.com refuses connections from many networks; an archived copy of the home page shows its Action Trac number field',
   'act-argos': 'the waybill field on www.argoscom.gr has the id Password, which the check reads as a sign-in field',
-  'airways-courier-in': 'the AWB field stays hidden until the track button in the page header opens it; the only field shown before that is the sign-in user id',
-  'alfa-transportes': 'alfatransportes.com.br keeps its invoice-number field in a hidden pop-up that its "Rastrear mercadoria" button opens, so the check finds no field on load',
   'algerie-poste': 'www.ems.dz answers only Algerian networks; an archived copy shows its tracking code field',
   'aloha-freight': 'the Quick Shipment Search names its field keyword, which the check reads as a site search',
   'ams-egroup': 'the Track & Trace page has no field; its Track Shipment button opens the tracker, which answers plain HTTP only, on port 8084',
@@ -201,10 +203,8 @@ export const uncheckedSearchPages: Partial<Record<CarrierId, string>> = {
   'ward-trucking': 'wardtlctools.com refuses connections from many networks; an archived copy shows its PRO number fields',
   webrinq: 'the tracker names its field q, which the check reads as a site search',
   wiio: 'wiio.com has no number field; its tracker answers plain HTTP only, which the catalog does not link',
-  xgs: 'www.xgsi.com keeps its tracking number field in a hidden pop-up that its "Track a Shipment" link opens, so the check finds no field on load',
   xingyunyi: 'the tracking number field on www.xingyunyi.com/tracking shows only on desktop-size screens, which the phone-size check does not use',
   'yamato-america': 'the phone page names its number field s and asks for "No.", which the check reads as a site search; the desktop page asks for a tracking number',
   'yc-delivery': 'www.e1.yc-otodoke.com answers 403 or 503 to many networks outside Japan; an archived copy shows its inquiry-number fields',
   ziegler: 'the Easytrack page opens on its sign-in form; its tracking number field shows once its "Tracking number" choice is clicked',
-  zimpost: 'www.zimpost.co.zw keeps its tracker in an overlay that a home-page button opens, so the check finds no field on load',
 };
