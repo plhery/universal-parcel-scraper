@@ -2283,7 +2283,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "gls-group.eu",
           "gls-group.com"
         ],
-        "pathPattern": "^/(?:GROUP|BE|BG|DK|FI|HR|IE|LU|NL|RO|RS|SI)/",
+        "pathPattern": "^/(?:GROUP|BE|BG|DK|FI|HR|IE|LU|NL|RO|RS)/",
         "params": [
           "match",
           "parcelNumber",
@@ -31733,6 +31733,45 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "checksum": "gls"
       }
     ]
+  },
+  "gls-si": {
+    "displayName": "GLS Slovenia",
+    "color": "#ffdd00",
+    "aliases": [
+      "GLS Slovenija"
+    ],
+    "countries": [
+      "SI"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Ljubljana",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gls-si",
+      "refresh": {
+        "minMinutes": 60,
+        "afterFailureMinutes": 240
+      }
+    },
+    "canaryUrl": "https://gls-group.com/SI/sl/sledenje-posiljki/",
+    "trackingUrlTemplate": "https://gls-group.com/SI/sl/sledenje-posiljki/?match={trackingNumber}",
+    "trackingSearchUrl": "https://gls-group.com/SI/sl/sledenje-posiljki/",
+    "helpUrl": "https://gls-group.com/SI/sl/gls-kontakt/",
+    "linkRules": [
+      {
+        "domains": [
+          "gls-group.com",
+          "gls-group.eu"
+        ],
+        "pathPattern": "^/SI/",
+        "params": [
+          "match",
+          "parcelNumber",
+          "matchParcelNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "gls-sk": {
     "displayName": "GLS Slovakia",
@@ -75877,6 +75916,7 @@ export const CARRIER_IDS = [
   "gls-it",
   "gls-nl",
   "gls-pl",
+  "gls-si",
   "gls-sk",
   "gls-us",
   "gms-worldwide",
@@ -78009,6 +78049,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gls-it": ["gls-it-1","gls-it-8-digits","gls-it-digit-depot"],
   "gls-nl": ["gls-nl-1","gls-nl-2","gls-nl-3"],
   "gls-pl": ["gls-pl-1","gls-pl-2"],
+  "gls-si": [],
   "gls-sk": [],
   "gls-us": ["gls-us-1"],
   "gms-worldwide": [],

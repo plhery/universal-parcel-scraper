@@ -57,8 +57,8 @@ postcode optional: without one, the overview's status is the whole answer, marke
 - Recognition cannot tell a German parcel from a Swiss one. The overview is one
   group-wide service whatever its country path (the path only sets the language,
   but for the national numbers of [GLS Hungary](../gls-hu/README.md),
-  [GLS Czech Republic](../gls-cz/README.md) and [GLS Slovakia](../gls-sk/README.md), which
-  exist only under their own paths),
+  [GLS Czech Republic](../gls-cz/README.md), [GLS Slovakia](../gls-sk/README.md) and
+  [GLS Slovenia](../gls-si/README.md), which exist only under their own paths),
   and its overview of a delivered parcel names no owner. When both networks
   recognize a number, the caller's country decides: Switzerland or
   Liechtenstein chooses GLS Switzerland, Poland GLS Poland and Austria GLS

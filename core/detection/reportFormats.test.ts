@@ -334,11 +334,13 @@ describe('evidence-backed tracking formats', () => {
       .toMatchObject({ trackingNumber: 'ZY0AB12C', carrier: 'gls-de', source: 'link' });
     expect(parseTrackingInput('https://gls-group.eu/CH/de/paketverfolgung?match=AALZJR'))
       .toMatchObject({ trackingNumber: 'AALZJR', carrier: 'gls-ch', source: 'link' });
-    // GLS Czech Republic's and GLS Slovakia's pages track their national numbers, which the group path does not know.
+    // GLS Czech Republic's, GLS Slovakia's and GLS Slovenia's pages track their national numbers, which the group path does not know.
     expect(parseTrackingInput('https://gls-group.com/CZ/cs/sledovani-zasilek/?match=0000000001'))
       .toMatchObject({ trackingNumber: '0000000001', carrier: 'gls-cz', confidence: 'high', source: 'link' });
     expect(parseTrackingInput('https://gls-group.com/SK/sk/sledovanie-zasielok/?match=12345678901'))
       .toMatchObject({ trackingNumber: '12345678901', carrier: 'gls-sk', confidence: 'high', source: 'link' });
+    expect(parseTrackingInput('https://gls-group.com/SI/sl/sledenje-posiljki/?match=1234567890'))
+      .toMatchObject({ trackingNumber: '1234567890', carrier: 'gls-si', confidence: 'high', source: 'link' });
     // The group tracker's pages for countries without a GLS network of their own in the catalog ask the same service.
     expect(parseTrackingInput('https://gls-group.com/RO/en/parcel-tracking?match=12345678901'))
       .toMatchObject({ trackingNumber: '12345678901', carrier: 'gls-de', confidence: 'high', source: 'link' });

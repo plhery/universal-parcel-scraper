@@ -1,0 +1,62 @@
+{
+  "id": "gls-si",
+  "displayName": "GLS Slovenia",
+  "aliases": [
+    "GLS Slovenija"
+  ],
+  "region": {
+    "countries": [
+      "SI"
+    ]
+  },
+  "brand": {
+    "color": "#ffdd00"
+  },
+  "selectable": true,
+  "timezone": "Europe/Ljubljana",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "gls-si",
+    "steps": [
+      "direct"
+    ],
+    "refresh": {
+      "minMinutes": 60,
+      "afterFailureMinutes": 240
+    }
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://gls-group.com/SI/sl/sledenje-posiljki/?match={trackingNumber}",
+    "searchUrl": "https://gls-group.com/SI/sl/sledenje-posiljki/",
+    "helpUrl": "https://gls-group.com/SI/sl/gls-kontakt/",
+    "canaryUrl": "https://gls-group.com/SI/sl/sledenje-posiljki/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "pickup_point"
+    ],
+    "scraped": [
+      "status"
+    ],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "gls-group.com",
+        "gls-group.eu"
+      ],
+      "pathPattern": "^/SI/",
+      "params": [
+        "match",
+        "parcelNumber",
+        "matchParcelNumber"
+      ]
+    }
+  ],
+  "detection": []
+}

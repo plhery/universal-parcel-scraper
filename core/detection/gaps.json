@@ -2036,6 +2036,18 @@
     "reason": "Old tracking links carry the GLS number without its check digit, and the tracker takes it, but eleven bare digits fit too many carriers to offer GLS Netherlands for them."
   },
   {
+    "carrier": "gls-si",
+    "pattern": "^\\d{11}$",
+    "kind": "by_design",
+    "reason": "Eleven digits are GLS's international parcel numbers, which other GLS networks track too, and GLS Slovenia's national numbers written with a leading zero; neither names GLS Slovenia."
+  },
+  {
+    "carrier": "gls-si",
+    "pattern": "^\\d{10}$",
+    "kind": "open",
+    "reason": "Detection does not offer GLS Slovenia for its ten-digit national numbers, a bare run of digits other carriers print too."
+  },
+  {
     "carrier": "gls-sk",
     "pattern": "^\\d{11}$",
     "kind": "by_design",

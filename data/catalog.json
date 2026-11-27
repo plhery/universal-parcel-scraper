@@ -2278,7 +2278,7 @@
           "gls-group.eu",
           "gls-group.com"
         ],
-        "pathPattern": "^/(?:GROUP|BE|BG|DK|FI|HR|IE|LU|NL|RO|RS|SI)/",
+        "pathPattern": "^/(?:GROUP|BE|BG|DK|FI|HR|IE|LU|NL|RO|RS)/",
         "params": [
           "match",
           "parcelNumber",
@@ -31728,6 +31728,45 @@
         "checksum": "gls"
       }
     ]
+  },
+  "gls-si": {
+    "displayName": "GLS Slovenia",
+    "color": "#ffdd00",
+    "aliases": [
+      "GLS Slovenija"
+    ],
+    "countries": [
+      "SI"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Ljubljana",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gls-si",
+      "refresh": {
+        "minMinutes": 60,
+        "afterFailureMinutes": 240
+      }
+    },
+    "canaryUrl": "https://gls-group.com/SI/sl/sledenje-posiljki/",
+    "trackingUrlTemplate": "https://gls-group.com/SI/sl/sledenje-posiljki/?match={trackingNumber}",
+    "trackingSearchUrl": "https://gls-group.com/SI/sl/sledenje-posiljki/",
+    "helpUrl": "https://gls-group.com/SI/sl/gls-kontakt/",
+    "linkRules": [
+      {
+        "domains": [
+          "gls-group.com",
+          "gls-group.eu"
+        ],
+        "pathPattern": "^/SI/",
+        "params": [
+          "match",
+          "parcelNumber",
+          "matchParcelNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "gls-sk": {
     "displayName": "GLS Slovakia",
