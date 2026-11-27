@@ -83,6 +83,11 @@ test('capture excludes recipient, signature, document and arbitrary remark field
   }]}]});
   assert.equal(selectJtHistory(body,'different').identityMismatch,true);
   assert.equal(selectJtHistory(body,'different').data,null);
+  // The page's line for the scan, as text, and never a link or markup.
+  const lined=(customerTracking)=>selectJtHistory({code:1,succ:true,data:[{keyword:'synthetic',details:[{
+    code:90,scanTime:'2026-08-20 10:30:00',status:'Em transferencia',customerTracking}]}]},'synthetic').data[0].details[0].customerTracking;
+  assert.equal(lined(' Chegada da encomenda expressa 【CD Exemplo】 '),'Chegada da encomenda expressa 【CD Exemplo】');
+  for(const value of ['Veja https://private.invalid','<b>x</b>','x'.repeat(301),'',' ',7])assert.equal(lined(value),undefined);
 });
 
 const TEST_NUMBER = '888000000000198';

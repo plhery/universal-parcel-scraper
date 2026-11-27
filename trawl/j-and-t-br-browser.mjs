@@ -23,11 +23,14 @@ export function selectJtHistory(d,number) {
   if(!Array.isArray(d?.data)||d.data.length>30)return {code,succ,data:null};
   if(d.data.some(row=>row?.keyword!==number))return {code,succ,data:null,identityMismatch:true};
   if(d.data.some(row=>!Array.isArray(row.details)||row.details.length>1000))return {code,succ,data:null};
-  // Exclude recipient/staff names, remarks, addresses, signatures and POD URLs.
-  return {code,succ,data:d.data.map(row=>({keyword:row.keyword,details:row.details.map(scan=>({
-    code:scalar(scan?.code),scanTime:typeof scan?.scanTime==='string'&&CLOCK.test(scan.scanTime)?scan.scanTime:null,
-    scanTypeName:scalar(scan?.scanTypeName),status:scalar(scan?.status),
-  }))}))};
+  // Exclude recipient/staff names, remarks, addresses, signatures and POD URLs. The line the page shows for a scan
+  // (customerTracking) is kept as text: it names the centres, and the adapter drops the courier it names.
+  const line=x=>typeof x==='string'&&x.trim().length>0&&x.length<=300&&!/\p{Cc}|[<>]|https?:|www\./iu.test(x)?x.trim():null;
+  return {code,succ,data:d.data.map(row=>({keyword:row.keyword,details:row.details.map(scan=>{
+    const tracking=line(scan?.customerTracking);
+    return {code:scalar(scan?.code),scanTime:typeof scan?.scanTime==='string'&&CLOCK.test(scan.scanTime)?scan.scanTime:null,
+      scanTypeName:scalar(scan?.scanTypeName),status:scalar(scan?.status),...(tracking?{customerTracking:tracking}:{})};
+  })}))};
 }
 
 export function boundJtRequest(request, number, page) {
