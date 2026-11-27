@@ -1,0 +1,46 @@
+{
+  "id": "netco-post",
+  "displayName": "NETCO POST",
+  "aliases": [
+    "Netco",
+    "Netco Post",
+    "Công ty cổ phần thương mại và chuyển phát nhanh Nội Bài"
+  ],
+  "region": {
+    "countries": [
+      "VN"
+    ]
+  },
+  "brand": {
+    "color": "#068850"
+  },
+  "selectable": true,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://netco.com.vn/vi/tracking?code={trackingNumber}",
+    "searchUrl": "https://netco.com.vn/vi/tracking",
+    "canaryUrl": "https://netco.com.vn/vi/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "netco.com.vn"
+      ],
+      "pathPattern": "^/vi/tracking/?$",
+      "params": [
+        "code"
+      ]
+    }
+  ],
+  "detection": []
+}

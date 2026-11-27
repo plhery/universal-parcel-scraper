@@ -1,0 +1,41 @@
+{
+  "id": "darna-express",
+  "displayName": "Darna Express",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "CA",
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#010066"
+  },
+  "selectable": true,
+  "timezone": "America/Vancouver",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://darnaexpress.com/track/{trackingNumber}",
+    "searchUrl": "https://darnaexpress.com/track",
+    "canaryUrl": "https://darnaexpress.com/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "darnaexpress.com"
+      ],
+      "pathPattern": "^/track/[^/]+/?$",
+      "path": "^/track/([^/]+)/?$"
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,35 @@
+{
+  "id": "atlas-shippers",
+  "displayName": "Atlas Shippers",
+  "aliases": [
+    "Atlas Shippers International",
+    "Atlas Shippers International, Inc."
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#0c468a"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://tracker.atlasshippers.com/",
+    "canaryUrl": "https://tracker.atlasshippers.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

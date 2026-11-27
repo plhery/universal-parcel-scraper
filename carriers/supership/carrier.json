@@ -1,0 +1,45 @@
+{
+  "id": "supership",
+  "displayName": "SuperShip",
+  "aliases": [
+    "Supership Việt Nam",
+    "Công ty cổ phần Supership Việt Nam"
+  ],
+  "region": {
+    "countries": [
+      "VN"
+    ]
+  },
+  "brand": {
+    "color": "#e5103f"
+  },
+  "selectable": true,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.supership.vn/?code={trackingNumber}",
+    "searchUrl": "https://tracking.supership.vn/",
+    "canaryUrl": "https://tracking.supership.vn/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.supership.vn"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "code"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,34 @@
+{
+  "id": "futa-express",
+  "displayName": "FUTA Express",
+  "aliases": [
+    "Phương Trang Express",
+    "Công ty cổ phần dịch vụ chuyển phát nhanh Phương Trang FUTA"
+  ],
+  "region": {
+    "countries": [
+      "VN"
+    ]
+  },
+  "brand": {
+    "color": "#006b39"
+  },
+  "selectable": true,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://futaexpress.vn/",
+    "canaryUrl": "https://futaexpress.vn/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

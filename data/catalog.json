@@ -6825,6 +6825,26 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "abest-express": {
+    "displayName": "ABest Express",
+    "color": "#283890",
+    "aliases": [
+      "ABestExpress"
+    ],
+    "countries": [
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Manila",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.abestexpress.com/newtracking/",
+    "trackingSearchUrl": "https://www.abestexpress.com/newtracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "abf-freight": {
     "displayName": "ABF Freight",
     "color": "#1e6630",
@@ -11232,6 +11252,28 @@
     ],
     "detectionRules": []
   },
+  "atlas-shippers": {
+    "displayName": "Atlas Shippers",
+    "color": "#0c468a",
+    "aliases": [
+      "Atlas Shippers International",
+      "Atlas Shippers International, Inc."
+    ],
+    "countries": [
+      "US",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracker.atlasshippers.com/",
+    "trackingSearchUrl": "https://tracker.atlasshippers.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ats-healthcare": {
     "displayName": "ATS Healthcare",
     "color": "#e41937",
@@ -12352,7 +12394,8 @@
     "aliases": [
       "BEST Express Việt Nam",
       "BEST Inc. Vietnam",
-      "BEST Express VN"
+      "BEST Express VN",
+      "Công ty TNHH Best Logistics Technology (Việt Nam)"
     ],
     "countries": [
       "VN"
@@ -13634,7 +13677,8 @@
       "WeFast",
       "WEFAST India Pvt Ltd",
       "Banabikurye",
-      "Hemen Getir Teknoloji Ltd. Şti."
+      "Hemen Getir Teknoloji Ltd. Şti.",
+      "Mr. Speedy"
     ],
     "countries": [
       "IN",
@@ -20514,6 +20558,33 @@
     "canaryUrl": "https://www.kynitha.com/track",
     "trackingSearchUrl": "https://www.kynitha.com/track",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "darna-express": {
+    "displayName": "Darna Express",
+    "color": "#010066",
+    "countries": [
+      "CA",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "America/Vancouver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://darnaexpress.com/track",
+    "trackingUrlTemplate": "https://darnaexpress.com/track/{trackingNumber}",
+    "trackingSearchUrl": "https://darnaexpress.com/track",
+    "linkRules": [
+      {
+        "domains": [
+          "darnaexpress.com"
+        ],
+        "pathPattern": "^/track/[^/]+/?$",
+        "path": "^/track/([^/]+)/?$"
+      }
+    ],
     "detectionRules": []
   },
   "datian-logistics": {
@@ -29758,6 +29829,50 @@
     ],
     "detectionRules": []
   },
+  "forex-cargo": {
+    "displayName": "Forex Cargo",
+    "color": "#144e8f",
+    "aliases": [
+      "Forex eShip",
+      "Forex Cargo, Inc.",
+      "Forex Cargo USA"
+    ],
+    "countries": [
+      "US",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://apps.forexcargo.us/box_tracking2",
+    "trackingSearchUrl": "https://forexeship.com/trackmybox/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "forex-cargo-au": {
+    "displayName": "Forex Cargo Australia",
+    "color": "#0054a4",
+    "aliases": [
+      "Forex Cargo AU"
+    ],
+    "countries": [
+      "AU",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://forexcargo.com.au/box-tracking",
+    "trackingSearchUrl": "https://forexcargo.com.au/box-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "forward-air": {
     "displayName": "Forward Air",
     "color": "#c8102e",
@@ -30361,6 +30476,27 @@
     "canaryUrl": "https://furniturelogis.es/acceso-seguimiento-clientes/",
     "trackingSearchUrl": "https://furniturelogis.es/acceso-seguimiento-clientes/",
     "helpUrl": "https://furniturelogis.es/contacto/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "futa-express": {
+    "displayName": "FUTA Express",
+    "color": "#006b39",
+    "aliases": [
+      "Phương Trang Express",
+      "Công ty cổ phần dịch vụ chuyển phát nhanh Phương Trang FUTA"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://futaexpress.vn/",
+    "trackingSearchUrl": "https://futaexpress.vn/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -31259,7 +31395,8 @@
       "Giao Hàng Nhanh",
       "Giao Hang Nhanh",
       "GHN Express",
-      "Giaohangnhanh"
+      "Giaohangnhanh",
+      "Công ty cổ phần dịch vụ Giao Hàng Nhanh"
     ],
     "countries": [
       "VN"
@@ -31293,7 +31430,8 @@
     "aliases": [
       "Giao Hàng Tiết Kiệm",
       "Giao Hang Tiet Kiem",
-      "iGHTK"
+      "iGHTK",
+      "Công ty cổ phần Giao Hàng Tiết Kiệm"
     ],
     "countries": [
       "VN"
@@ -33087,6 +33225,39 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "gopost": {
+    "displayName": "GoPost",
+    "color": "#ee7b03",
+    "aliases": [
+      "Tín Phát Express",
+      "Tin Phat Express",
+      "Công ty TNHH Tín Phát Express"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://trackinggopost.com/",
+    "trackingUrlTemplate": "https://trackinggopost.com/?tpCode={trackingNumber}",
+    "trackingSearchUrl": "https://trackinggopost.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "trackinggopost.com"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "tpCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "gordom-logistika": {
     "displayName": "Gordom Logistika",
     "color": "#1f4d76",
@@ -34569,6 +34740,28 @@
     ],
     "detectionRules": []
   },
+  "highlight-express": {
+    "displayName": "Highlight Express",
+    "color": "#f4dd22",
+    "aliases": [
+      "Highlight Express International",
+      "Highlight Express International Ltd"
+    ],
+    "countries": [
+      "GB",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://highlightexpress.co.uk/shipment-tracking/",
+    "trackingSearchUrl": "https://highlightexpress.co.uk/shipment-tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hintzen": {
     "displayName": "Hintzen Logistik",
     "color": "#164194",
@@ -35090,6 +35283,29 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "hop-nhat": {
+    "displayName": "Hợp Nhất Express",
+    "color": "#2a53a5",
+    "aliases": [
+      "Hop Nhat Express",
+      "HNC Hợp Nhất",
+      "Công ty cổ phần Hợp Nhất quốc tế",
+      "Công ty cổ phần chuyển phát nhanh quốc tế Hợp Nhất"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://hopnhat.com/track-and-trace",
+    "trackingSearchUrl": "https://hopnhat.com/track-and-trace",
+    "linkRules": [],
     "detectionRules": []
   },
   "hopexpress": {
@@ -39649,6 +39865,28 @@
       }
     ]
   },
+  "johnny-air-cargo": {
+    "displayName": "Johnny Air Cargo",
+    "color": "#1b417e",
+    "aliases": [
+      "Johnny Air",
+      "Johnny Air Plus"
+    ],
+    "countries": [
+      "US",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://johnnyaircargo.ph/tracking",
+    "trackingSearchUrl": "https://johnnyaircargo.ph/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "jomkirim": {
     "displayName": "Jomkirim",
     "color": "#0B71B7",
@@ -42559,7 +42797,8 @@
     "displayName": "LBC Express",
     "color": "#e30613",
     "aliases": [
-      "LBC"
+      "LBC",
+      "LBC Mundial Cargo Corp"
     ],
     "countries": [
       "PH"
@@ -42881,7 +43120,9 @@
       "Lazada Express Vietnam",
       "Lazada eLogistics Express Vietnam",
       "Lazada Logistics Vietnam",
-      "Giao Hàng Flex Speed"
+      "Giao Hàng Flex Speed",
+      "Công ty TNHH chuyển phát nhanh Lazada Việt Nam",
+      "Công ty TNHH Giao hàng Flex Speed"
     ],
     "countries": [
       "VN"
@@ -45415,6 +45656,29 @@
     ],
     "detectionRules": []
   },
+  "manila-forwarder": {
+    "displayName": "Manila Forwarder",
+    "color": "#2a92ce",
+    "aliases": [
+      "Manila Forwarders"
+    ],
+    "countries": [
+      "US",
+      "DK",
+      "PG",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.manilaforwarder.com/MF/packagetrack1.php",
+    "trackingSearchUrl": "https://www.manilaforwarder.com/MF/packagetrack1.php",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "maple-logistics": {
     "displayName": "Maple Logistics",
     "color": "#f42014",
@@ -47859,6 +48123,38 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "nasco-express": {
+    "displayName": "Nasco Express",
+    "color": "#a60053",
+    "aliases": [
+      "NasCo Express",
+      "Công ty cổ phần giao nhận hàng hóa NasCo"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://nascoexpress.com/tra-cuu-van-don.html",
+    "trackingUrlTemplate": "https://nascoexpress.com/tra-cuu-van-don.html?s={trackingNumber}",
+    "trackingSearchUrl": "https://nascoexpress.com/tra-cuu-van-don.html",
+    "linkRules": [
+      {
+        "domains": [
+          "nascoexpress.com"
+        ],
+        "pathPattern": "^/tra-cuu-van-don\\.html$",
+        "params": [
+          "s"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "national-delivery-systems": {
     "displayName": "National Delivery Systems",
     "color": "#2f4a9c",
@@ -48165,6 +48461,39 @@
       }
     ]
   },
+  "netco-post": {
+    "displayName": "NETCO POST",
+    "color": "#068850",
+    "aliases": [
+      "Netco",
+      "Netco Post",
+      "Công ty cổ phần thương mại và chuyển phát nhanh Nội Bài"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://netco.com.vn/vi/tracking",
+    "trackingUrlTemplate": "https://netco.com.vn/vi/tracking?code={trackingNumber}",
+    "trackingSearchUrl": "https://netco.com.vn/vi/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "netco.com.vn"
+        ],
+        "pathPattern": "^/vi/tracking/?$",
+        "params": [
+          "code"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "netpost-vn": {
     "displayName": "Netpost",
     "color": "#ed1c24",
@@ -48195,6 +48524,39 @@
         "pathPattern": "^/Home/tra_cuu_van_don/?$",
         "params": [
           "hawbNo"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "new-post-vn": {
+    "displayName": "New Post",
+    "color": "#20004f",
+    "aliases": [
+      "NewPost",
+      "New Post Express",
+      "Công ty cổ phần chuyển phát nhanh New Post"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://newpost.vn/tracking",
+    "trackingUrlTemplate": "https://newpost.vn/tracking?code={trackingNumber}",
+    "trackingSearchUrl": "https://newpost.vn/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "newpost.vn"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "code"
         ]
       }
     ],
@@ -48311,7 +48673,8 @@
       "Nhất Tín Logistics",
       "Nhất Tín",
       "NTL",
-      "Nhat Tin Express"
+      "Nhat Tin Express",
+      "Công ty cổ phần đầu tư thương mại phát triển Nhất Tín"
     ],
     "countries": [
       "VN"
@@ -53344,6 +53707,29 @@
       }
     ]
   },
+  "pinas-cargo": {
+    "displayName": "Pinas Cargo",
+    "color": "#c11717",
+    "aliases": [
+      "Pinas Express Cargo",
+      "Pinas Express Cargo & Clearing LLC"
+    ],
+    "countries": [
+      "AE",
+      "QA",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Dubai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://pinascargo.com/tracking/",
+    "trackingSearchUrl": "https://pinascargo.com/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pink-post": {
     "displayName": "Pink Post",
     "color": "#df306d",
@@ -53363,6 +53749,28 @@
     "canaryUrl": "https://trackawb.izzygo.ro/",
     "trackingUrlTemplate": "https://trackawb.izzygo.ro/#/track/{trackingNumber}",
     "trackingSearchUrl": "https://trackawb.izzygo.ro/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "pinoy24": {
+    "displayName": "Pinoy24",
+    "color": "#f90101",
+    "aliases": [
+      "Pinoy 24",
+      "Pinoy24 Balikbayan Box Service"
+    ],
+    "countries": [
+      "DE",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://pinoy24.de/index.php/de/balikbayan-box-tracking",
+    "trackingSearchUrl": "https://pinoy24.de/index.php/de/balikbayan-box-tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -53495,6 +53903,27 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "plus-cargo": {
+    "displayName": "Plus Cargo",
+    "color": "#005b38",
+    "aliases": [
+      "Plus Cargo Australia"
+    ],
+    "countries": [
+      "AU",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.pluscargo.com.au/track/",
+    "trackingSearchUrl": "https://www.pluscargo.com.au/track/",
+    "linkRules": [],
     "detectionRules": []
   },
   "plycon": {
@@ -55440,6 +55869,28 @@
     ],
     "detectionRules": []
   },
+  "proship-vn": {
+    "displayName": "Proship",
+    "color": "#35a6dd",
+    "aliases": [
+      "Proship Vietnam",
+      "Công ty cổ phần Proship",
+      "Công ty cổ phần vận tải Proship"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://proship.vn/tra-cuu-don-hang/",
+    "trackingSearchUrl": "https://proship.vn/tra-cuu-don-hang/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "proships": {
     "displayName": "ProShips",
     "color": "#f8b909",
@@ -56451,6 +56902,37 @@
         "confidence": "low"
       }
     ]
+  },
+  "raf-ph": {
+    "displayName": "RAF International Forwarding",
+    "color": "#ed1c24",
+    "aliases": [
+      "RAF Express",
+      "RAF International Forwarding Phils. Inc.",
+      "RAF Philippines"
+    ],
+    "countries": [
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Manila",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.frontierforce.com/go/plm-tracking",
+    "trackingUrlTemplate": "https://tracking.frontierforce.com/go/plm-tracking?cn={trackingNumber}&stid=raf",
+    "trackingSearchUrl": "https://tracking.frontierforce.com/go/plm-tracking_search?stid=raf",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.frontierforce.com"
+        ],
+        "pathPattern": "^/go/plm-tracking/?$",
+        "query": "^(?=(?:[^&]*&)*stid=raf(?:&|$))(?:[^&]*&)*?cn=([^&]+)"
+      }
+    ],
+    "detectionRules": []
   },
   "rail-continent": {
     "displayName": "Rail Continent",
@@ -63382,7 +63864,9 @@
     "aliases": [
       "Shopee Express Vietnam",
       "Shopee Xpress Vietnam",
-      "SPX Vietnam"
+      "SPX Vietnam",
+      "Công ty TNHH SPX Express",
+      "Công ty TNHH Shopee Express"
     ],
     "countries": [
       "VN"
@@ -64245,6 +64729,38 @@
         "pathPattern": "^/site/searchview/?$",
         "params": [
           "tracking_code"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "supership": {
+    "displayName": "SuperShip",
+    "color": "#e5103f",
+    "aliases": [
+      "Supership Việt Nam",
+      "Công ty cổ phần Supership Việt Nam"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.supership.vn/",
+    "trackingUrlTemplate": "https://tracking.supership.vn/?code={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.supership.vn/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.supership.vn"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "code"
         ]
       }
     ],
@@ -66296,6 +66812,39 @@
           "www.tiki.id"
         ],
         "path": "^/id/track/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "tikinow-logistics": {
+    "displayName": "TikiNOW Smart Logistics",
+    "color": "#4792f6",
+    "aliases": [
+      "TNSL",
+      "TikiNOW",
+      "Công ty TNHH TikiNow Smart Logistics"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tnsl-tracking.tiki.com.vn/",
+    "trackingUrlTemplate": "https://tnsl-tracking.tiki.com.vn/?id={trackingNumber}",
+    "trackingSearchUrl": "https://tnsl-tracking.tiki.com.vn/",
+    "linkRules": [
+      {
+        "domains": [
+          "tnsl-tracking.tiki.com.vn"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "id"
+        ]
       }
     ],
     "detectionRules": []
@@ -71224,7 +71773,8 @@
     "color": "#89c53b",
     "aliases": [
       "Việt An Express",
-      "Vietan International"
+      "Vietan International",
+      "Công ty TNHH Dịch vụ Giao nhận Quốc tế Việt An"
     ],
     "countries": [
       "VN"
@@ -71260,7 +71810,8 @@
       "ViettelPost",
       "Viettel Post Corporation",
       "Bưu chính Viettel",
-      "VTP"
+      "VTP",
+      "Tổng công ty cổ phần Bưu chính Viettel"
     ],
     "countries": [
       "VN"
@@ -71485,7 +72036,8 @@
     "aliases": [
       "Vietnam Post",
       "Vietnam Post Corporation",
-      "Bưu điện Việt Nam"
+      "Bưu điện Việt Nam",
+      "Tổng công ty Bưu điện Việt Nam"
     ],
     "countries": [
       "VN"

@@ -6830,6 +6830,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "abest-express": {
+    "displayName": "ABest Express",
+    "color": "#283890",
+    "aliases": [
+      "ABestExpress"
+    ],
+    "countries": [
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Manila",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.abestexpress.com/newtracking/",
+    "trackingSearchUrl": "https://www.abestexpress.com/newtracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "abf-freight": {
     "displayName": "ABF Freight",
     "color": "#1e6630",
@@ -11237,6 +11257,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "atlas-shippers": {
+    "displayName": "Atlas Shippers",
+    "color": "#0c468a",
+    "aliases": [
+      "Atlas Shippers International",
+      "Atlas Shippers International, Inc."
+    ],
+    "countries": [
+      "US",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracker.atlasshippers.com/",
+    "trackingSearchUrl": "https://tracker.atlasshippers.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ats-healthcare": {
     "displayName": "ATS Healthcare",
     "color": "#e41937",
@@ -12357,7 +12399,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "BEST Express Việt Nam",
       "BEST Inc. Vietnam",
-      "BEST Express VN"
+      "BEST Express VN",
+      "Công ty TNHH Best Logistics Technology (Việt Nam)"
     ],
     "countries": [
       "VN"
@@ -13639,7 +13682,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "WeFast",
       "WEFAST India Pvt Ltd",
       "Banabikurye",
-      "Hemen Getir Teknoloji Ltd. Şti."
+      "Hemen Getir Teknoloji Ltd. Şti.",
+      "Mr. Speedy"
     ],
     "countries": [
       "IN",
@@ -20519,6 +20563,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.kynitha.com/track",
     "trackingSearchUrl": "https://www.kynitha.com/track",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "darna-express": {
+    "displayName": "Darna Express",
+    "color": "#010066",
+    "countries": [
+      "CA",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "America/Vancouver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://darnaexpress.com/track",
+    "trackingUrlTemplate": "https://darnaexpress.com/track/{trackingNumber}",
+    "trackingSearchUrl": "https://darnaexpress.com/track",
+    "linkRules": [
+      {
+        "domains": [
+          "darnaexpress.com"
+        ],
+        "pathPattern": "^/track/[^/]+/?$",
+        "path": "^/track/([^/]+)/?$"
+      }
+    ],
     "detectionRules": []
   },
   "datian-logistics": {
@@ -29763,6 +29834,50 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "forex-cargo": {
+    "displayName": "Forex Cargo",
+    "color": "#144e8f",
+    "aliases": [
+      "Forex eShip",
+      "Forex Cargo, Inc.",
+      "Forex Cargo USA"
+    ],
+    "countries": [
+      "US",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://apps.forexcargo.us/box_tracking2",
+    "trackingSearchUrl": "https://forexeship.com/trackmybox/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "forex-cargo-au": {
+    "displayName": "Forex Cargo Australia",
+    "color": "#0054a4",
+    "aliases": [
+      "Forex Cargo AU"
+    ],
+    "countries": [
+      "AU",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://forexcargo.com.au/box-tracking",
+    "trackingSearchUrl": "https://forexcargo.com.au/box-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "forward-air": {
     "displayName": "Forward Air",
     "color": "#c8102e",
@@ -30366,6 +30481,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://furniturelogis.es/acceso-seguimiento-clientes/",
     "trackingSearchUrl": "https://furniturelogis.es/acceso-seguimiento-clientes/",
     "helpUrl": "https://furniturelogis.es/contacto/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "futa-express": {
+    "displayName": "FUTA Express",
+    "color": "#006b39",
+    "aliases": [
+      "Phương Trang Express",
+      "Công ty cổ phần dịch vụ chuyển phát nhanh Phương Trang FUTA"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://futaexpress.vn/",
+    "trackingSearchUrl": "https://futaexpress.vn/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -31264,7 +31400,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Giao Hàng Nhanh",
       "Giao Hang Nhanh",
       "GHN Express",
-      "Giaohangnhanh"
+      "Giaohangnhanh",
+      "Công ty cổ phần dịch vụ Giao Hàng Nhanh"
     ],
     "countries": [
       "VN"
@@ -31298,7 +31435,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Giao Hàng Tiết Kiệm",
       "Giao Hang Tiet Kiem",
-      "iGHTK"
+      "iGHTK",
+      "Công ty cổ phần Giao Hàng Tiết Kiệm"
     ],
     "countries": [
       "VN"
@@ -33092,6 +33230,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "gopost": {
+    "displayName": "GoPost",
+    "color": "#ee7b03",
+    "aliases": [
+      "Tín Phát Express",
+      "Tin Phat Express",
+      "Công ty TNHH Tín Phát Express"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://trackinggopost.com/",
+    "trackingUrlTemplate": "https://trackinggopost.com/?tpCode={trackingNumber}",
+    "trackingSearchUrl": "https://trackinggopost.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "trackinggopost.com"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "tpCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "gordom-logistika": {
     "displayName": "Gordom Logistika",
     "color": "#1f4d76",
@@ -34574,6 +34745,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "highlight-express": {
+    "displayName": "Highlight Express",
+    "color": "#f4dd22",
+    "aliases": [
+      "Highlight Express International",
+      "Highlight Express International Ltd"
+    ],
+    "countries": [
+      "GB",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://highlightexpress.co.uk/shipment-tracking/",
+    "trackingSearchUrl": "https://highlightexpress.co.uk/shipment-tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hintzen": {
     "displayName": "Hintzen Logistik",
     "color": "#164194",
@@ -35095,6 +35288,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "hop-nhat": {
+    "displayName": "Hợp Nhất Express",
+    "color": "#2a53a5",
+    "aliases": [
+      "Hop Nhat Express",
+      "HNC Hợp Nhất",
+      "Công ty cổ phần Hợp Nhất quốc tế",
+      "Công ty cổ phần chuyển phát nhanh quốc tế Hợp Nhất"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://hopnhat.com/track-and-trace",
+    "trackingSearchUrl": "https://hopnhat.com/track-and-trace",
+    "linkRules": [],
     "detectionRules": []
   },
   "hopexpress": {
@@ -39654,6 +39870,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "johnny-air-cargo": {
+    "displayName": "Johnny Air Cargo",
+    "color": "#1b417e",
+    "aliases": [
+      "Johnny Air",
+      "Johnny Air Plus"
+    ],
+    "countries": [
+      "US",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://johnnyaircargo.ph/tracking",
+    "trackingSearchUrl": "https://johnnyaircargo.ph/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "jomkirim": {
     "displayName": "Jomkirim",
     "color": "#0B71B7",
@@ -42564,7 +42802,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "LBC Express",
     "color": "#e30613",
     "aliases": [
-      "LBC"
+      "LBC",
+      "LBC Mundial Cargo Corp"
     ],
     "countries": [
       "PH"
@@ -42886,7 +43125,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Lazada Express Vietnam",
       "Lazada eLogistics Express Vietnam",
       "Lazada Logistics Vietnam",
-      "Giao Hàng Flex Speed"
+      "Giao Hàng Flex Speed",
+      "Công ty TNHH chuyển phát nhanh Lazada Việt Nam",
+      "Công ty TNHH Giao hàng Flex Speed"
     ],
     "countries": [
       "VN"
@@ -45420,6 +45661,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "manila-forwarder": {
+    "displayName": "Manila Forwarder",
+    "color": "#2a92ce",
+    "aliases": [
+      "Manila Forwarders"
+    ],
+    "countries": [
+      "US",
+      "DK",
+      "PG",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.manilaforwarder.com/MF/packagetrack1.php",
+    "trackingSearchUrl": "https://www.manilaforwarder.com/MF/packagetrack1.php",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "maple-logistics": {
     "displayName": "Maple Logistics",
     "color": "#f42014",
@@ -47864,6 +48128,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "nasco-express": {
+    "displayName": "Nasco Express",
+    "color": "#a60053",
+    "aliases": [
+      "NasCo Express",
+      "Công ty cổ phần giao nhận hàng hóa NasCo"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://nascoexpress.com/tra-cuu-van-don.html",
+    "trackingUrlTemplate": "https://nascoexpress.com/tra-cuu-van-don.html?s={trackingNumber}",
+    "trackingSearchUrl": "https://nascoexpress.com/tra-cuu-van-don.html",
+    "linkRules": [
+      {
+        "domains": [
+          "nascoexpress.com"
+        ],
+        "pathPattern": "^/tra-cuu-van-don\\.html$",
+        "params": [
+          "s"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "national-delivery-systems": {
     "displayName": "National Delivery Systems",
     "color": "#2f4a9c",
@@ -48170,6 +48466,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "netco-post": {
+    "displayName": "NETCO POST",
+    "color": "#068850",
+    "aliases": [
+      "Netco",
+      "Netco Post",
+      "Công ty cổ phần thương mại và chuyển phát nhanh Nội Bài"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://netco.com.vn/vi/tracking",
+    "trackingUrlTemplate": "https://netco.com.vn/vi/tracking?code={trackingNumber}",
+    "trackingSearchUrl": "https://netco.com.vn/vi/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "netco.com.vn"
+        ],
+        "pathPattern": "^/vi/tracking/?$",
+        "params": [
+          "code"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "netpost-vn": {
     "displayName": "Netpost",
     "color": "#ed1c24",
@@ -48200,6 +48529,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/Home/tra_cuu_van_don/?$",
         "params": [
           "hawbNo"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "new-post-vn": {
+    "displayName": "New Post",
+    "color": "#20004f",
+    "aliases": [
+      "NewPost",
+      "New Post Express",
+      "Công ty cổ phần chuyển phát nhanh New Post"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://newpost.vn/tracking",
+    "trackingUrlTemplate": "https://newpost.vn/tracking?code={trackingNumber}",
+    "trackingSearchUrl": "https://newpost.vn/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "newpost.vn"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "code"
         ]
       }
     ],
@@ -48316,7 +48678,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Nhất Tín Logistics",
       "Nhất Tín",
       "NTL",
-      "Nhat Tin Express"
+      "Nhat Tin Express",
+      "Công ty cổ phần đầu tư thương mại phát triển Nhất Tín"
     ],
     "countries": [
       "VN"
@@ -53349,6 +53712,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "pinas-cargo": {
+    "displayName": "Pinas Cargo",
+    "color": "#c11717",
+    "aliases": [
+      "Pinas Express Cargo",
+      "Pinas Express Cargo & Clearing LLC"
+    ],
+    "countries": [
+      "AE",
+      "QA",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Dubai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://pinascargo.com/tracking/",
+    "trackingSearchUrl": "https://pinascargo.com/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pink-post": {
     "displayName": "Pink Post",
     "color": "#df306d",
@@ -53368,6 +53754,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://trackawb.izzygo.ro/",
     "trackingUrlTemplate": "https://trackawb.izzygo.ro/#/track/{trackingNumber}",
     "trackingSearchUrl": "https://trackawb.izzygo.ro/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "pinoy24": {
+    "displayName": "Pinoy24",
+    "color": "#f90101",
+    "aliases": [
+      "Pinoy 24",
+      "Pinoy24 Balikbayan Box Service"
+    ],
+    "countries": [
+      "DE",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://pinoy24.de/index.php/de/balikbayan-box-tracking",
+    "trackingSearchUrl": "https://pinoy24.de/index.php/de/balikbayan-box-tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -53500,6 +53908,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "plus-cargo": {
+    "displayName": "Plus Cargo",
+    "color": "#005b38",
+    "aliases": [
+      "Plus Cargo Australia"
+    ],
+    "countries": [
+      "AU",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.pluscargo.com.au/track/",
+    "trackingSearchUrl": "https://www.pluscargo.com.au/track/",
+    "linkRules": [],
     "detectionRules": []
   },
   "plycon": {
@@ -55445,6 +55874,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "proship-vn": {
+    "displayName": "Proship",
+    "color": "#35a6dd",
+    "aliases": [
+      "Proship Vietnam",
+      "Công ty cổ phần Proship",
+      "Công ty cổ phần vận tải Proship"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://proship.vn/tra-cuu-don-hang/",
+    "trackingSearchUrl": "https://proship.vn/tra-cuu-don-hang/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "proships": {
     "displayName": "ProShips",
     "color": "#f8b909",
@@ -56456,6 +56907,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "raf-ph": {
+    "displayName": "RAF International Forwarding",
+    "color": "#ed1c24",
+    "aliases": [
+      "RAF Express",
+      "RAF International Forwarding Phils. Inc.",
+      "RAF Philippines"
+    ],
+    "countries": [
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Manila",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.frontierforce.com/go/plm-tracking",
+    "trackingUrlTemplate": "https://tracking.frontierforce.com/go/plm-tracking?cn={trackingNumber}&stid=raf",
+    "trackingSearchUrl": "https://tracking.frontierforce.com/go/plm-tracking_search?stid=raf",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.frontierforce.com"
+        ],
+        "pathPattern": "^/go/plm-tracking/?$",
+        "query": "^(?=(?:[^&]*&)*stid=raf(?:&|$))(?:[^&]*&)*?cn=([^&]+)"
+      }
+    ],
+    "detectionRules": []
   },
   "rail-continent": {
     "displayName": "Rail Continent",
@@ -63387,7 +63869,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Shopee Express Vietnam",
       "Shopee Xpress Vietnam",
-      "SPX Vietnam"
+      "SPX Vietnam",
+      "Công ty TNHH SPX Express",
+      "Công ty TNHH Shopee Express"
     ],
     "countries": [
       "VN"
@@ -64250,6 +64734,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/site/searchview/?$",
         "params": [
           "tracking_code"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "supership": {
+    "displayName": "SuperShip",
+    "color": "#e5103f",
+    "aliases": [
+      "Supership Việt Nam",
+      "Công ty cổ phần Supership Việt Nam"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.supership.vn/",
+    "trackingUrlTemplate": "https://tracking.supership.vn/?code={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.supership.vn/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.supership.vn"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "code"
         ]
       }
     ],
@@ -66301,6 +66817,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "www.tiki.id"
         ],
         "path": "^/id/track/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "tikinow-logistics": {
+    "displayName": "TikiNOW Smart Logistics",
+    "color": "#4792f6",
+    "aliases": [
+      "TNSL",
+      "TikiNOW",
+      "Công ty TNHH TikiNow Smart Logistics"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tnsl-tracking.tiki.com.vn/",
+    "trackingUrlTemplate": "https://tnsl-tracking.tiki.com.vn/?id={trackingNumber}",
+    "trackingSearchUrl": "https://tnsl-tracking.tiki.com.vn/",
+    "linkRules": [
+      {
+        "domains": [
+          "tnsl-tracking.tiki.com.vn"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "id"
+        ]
       }
     ],
     "detectionRules": []
@@ -71229,7 +71778,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#89c53b",
     "aliases": [
       "Việt An Express",
-      "Vietan International"
+      "Vietan International",
+      "Công ty TNHH Dịch vụ Giao nhận Quốc tế Việt An"
     ],
     "countries": [
       "VN"
@@ -71265,7 +71815,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "ViettelPost",
       "Viettel Post Corporation",
       "Bưu chính Viettel",
-      "VTP"
+      "VTP",
+      "Tổng công ty cổ phần Bưu chính Viettel"
     ],
     "countries": [
       "VN"
@@ -71490,7 +72041,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Vietnam Post",
       "Vietnam Post Corporation",
-      "Bưu điện Việt Nam"
+      "Bưu điện Việt Nam",
+      "Tổng công ty Bưu điện Việt Nam"
     ],
     "countries": [
       "VN"
@@ -76312,6 +76864,7 @@ export const CARRIER_IDS = [
   "aaa-cooper",
   "ab-courier",
   "abc-cargo-express",
+  "abest-express",
   "abf-freight",
   "abx-express",
   "ace-ee",
@@ -76442,6 +76995,7 @@ export const CARRIER_IDS = [
   "ativa-logistica",
   "atlantic-container-line",
   "atlantic-courier",
+  "atlas-shippers",
   "ats-healthcare",
   "atual-cargas",
   "auexpress",
@@ -76717,6 +77271,7 @@ export const CARRIER_IDS = [
   "danx",
   "dao",
   "daraii",
+  "darna-express",
   "datian-logistics",
   "day-ross",
   "daylight-transport",
@@ -76972,6 +77527,8 @@ export const CARRIER_IDS = [
   "focus-logistics-il",
   "fofr",
   "followmont",
+  "forex-cargo",
+  "forex-cargo-au",
   "forward-air",
   "forza-delivery",
   "foxpost",
@@ -76990,6 +77547,7 @@ export const CARRIER_IDS = [
   "fukuyama",
   "furdeco",
   "furniture-logis",
+  "futa-express",
   "fxdc-post",
   "fynex",
   "g2-ocean",
@@ -77063,6 +77621,7 @@ export const CARRIER_IDS = [
   "good-express-us",
   "goodluck-courier",
   "goodmaji",
+  "gopost",
   "gordom-logistika",
   "grand-slam-express",
   "greenposta",
@@ -77110,6 +77669,7 @@ export const CARRIER_IDS = [
   "hhh",
   "hi-trans",
   "high-energy-transport",
+  "highlight-express",
   "hintzen",
   "hispapost",
   "hit-cargo-nicaragua",
@@ -77129,6 +77689,7 @@ export const CARRIER_IDS = [
   "hongtai-logistics",
   "honour-lane-shipping",
   "hop-envios",
+  "hop-nhat",
   "hopexpress",
   "horoz",
   "hotwms",
@@ -77262,6 +77823,7 @@ export const CARRIER_IDS = [
   "jiufang",
   "jlog",
   "jne",
+  "johnny-air-cargo",
   "jomkirim",
   "joom-logistics",
   "jordan-post",
@@ -77432,6 +77994,7 @@ export const CARRIER_IDS = [
   "maldives-post",
   "maltapost",
   "mandae",
+  "manila-forwarder",
   "maple-logistics",
   "maraton",
   "marfret",
@@ -77513,6 +78076,7 @@ export const CARRIER_IDS = [
   "mzz-briefdienst",
   "naqel",
   "nas-express",
+  "nasco-express",
   "national-delivery-systems",
   "nationex",
   "navata",
@@ -77523,7 +78087,9 @@ export const CARRIER_IDS = [
   "neighbour-express",
   "nepal-can-move",
   "nepal-post",
+  "netco-post",
   "netpost-vn",
+  "new-post-vn",
   "neway-transport",
   "next-level-delivery",
   "next-smart-ship",
@@ -77666,10 +78232,13 @@ export const CARRIER_IDS = [
   "piggy-express",
   "pilot-freight",
   "pin-ag",
+  "pinas-cargo",
   "pink-post",
+  "pinoy24",
   "pitney-bowes",
   "pitt-ohio",
   "planete-courrier",
+  "plus-cargo",
   "plycon",
   "pml-tw",
   "pmm",
@@ -77725,6 +78294,7 @@ export const CARRIER_IDS = [
   "prompt-xpress",
   "pronto-envios",
   "pronto-lanka",
+  "proship-vn",
   "proships",
   "pts-worldwide-express",
   "ptt",
@@ -77755,6 +78325,7 @@ export const CARRIER_IDS = [
   "qwqer",
   "qyun",
   "raben",
+  "raf-ph",
   "rail-continent",
   "ram-hand-to-hand",
   "ramberg",
@@ -77981,6 +78552,7 @@ export const CARRIER_IDS = [
   "suocang",
   "super-parcel-track",
   "superb-express",
+  "supership",
   "surat-kargo",
   "suteng-express",
   "suto-logistics",
@@ -78041,6 +78613,7 @@ export const CARRIER_IDS = [
   "thhy",
   "tig-freight",
   "tiki",
+  "tikinow-logistics",
   "time-critical-line",
   "time-matters",
   "timely-titan",
@@ -78484,6 +79057,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aaa-cooper": [],
   "ab-courier": [],
   "abc-cargo-express": [],
+  "abest-express": [],
   "abf-freight": [],
   "abx-express": [],
   "ace-ee": [],
@@ -78614,6 +79188,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ativa-logistica": [],
   "atlantic-container-line": [],
   "atlantic-courier": [],
+  "atlas-shippers": [],
   "ats-healthcare": [],
   "atual-cargas": [],
   "auexpress": [],
@@ -78889,6 +79464,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "danx": [],
   "dao": ["dao-1"],
   "daraii": [],
+  "darna-express": [],
   "datian-logistics": ["datian-logistics-1"],
   "day-ross": ["day-ross-1"],
   "daylight-transport": [],
@@ -79144,6 +79720,8 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "focus-logistics-il": [],
   "fofr": [],
   "followmont": [],
+  "forex-cargo": [],
+  "forex-cargo-au": [],
   "forward-air": [],
   "forza-delivery": ["forza-delivery-1"],
   "foxpost": ["foxpost-1","foxpost-home-delivery"],
@@ -79162,6 +79740,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "fukuyama": [],
   "furdeco": [],
   "furniture-logis": [],
+  "futa-express": [],
   "fxdc-post": [],
   "fynex": [],
   "g2-ocean": [],
@@ -79235,6 +79814,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "good-express-us": ["good-express-us-gd"],
   "goodluck-courier": [],
   "goodmaji": [],
+  "gopost": [],
   "gordom-logistika": [],
   "grand-slam-express": [],
   "greenposta": [],
@@ -79282,6 +79862,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hhh": [],
   "hi-trans": [],
   "high-energy-transport": [],
+  "highlight-express": [],
   "hintzen": [],
   "hispapost": [],
   "hit-cargo-nicaragua": [],
@@ -79301,6 +79882,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hongtai-logistics": [],
   "honour-lane-shipping": [],
   "hop-envios": [],
+  "hop-nhat": [],
   "hopexpress": [],
   "horoz": [],
   "hotwms": [],
@@ -79434,6 +80016,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jiufang": [],
   "jlog": [],
   "jne": ["jne-1"],
+  "johnny-air-cargo": [],
   "jomkirim": [],
   "joom-logistics": [],
   "jordan-post": ["jordan-post-s10"],
@@ -79604,6 +80187,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "maldives-post": [],
   "maltapost": ["maltapost-s10","maltapost-sengi"],
   "mandae": [],
+  "manila-forwarder": [],
   "maple-logistics": [],
   "maraton": [],
   "marfret": [],
@@ -79685,6 +80269,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mzz-briefdienst": [],
   "naqel": [],
   "nas-express": [],
+  "nasco-express": [],
   "national-delivery-systems": [],
   "nationex": [],
   "navata": [],
@@ -79695,7 +80280,9 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "neighbour-express": [],
   "nepal-can-move": [],
   "nepal-post": ["nepal-post-s10"],
+  "netco-post": [],
   "netpost-vn": [],
+  "new-post-vn": [],
   "neway-transport": [],
   "next-level-delivery": [],
   "next-smart-ship": ["next-smart-ship-1"],
@@ -79838,10 +80425,13 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "piggy-express": [],
   "pilot-freight": [],
   "pin-ag": ["pin-ag-1"],
+  "pinas-cargo": [],
   "pink-post": [],
+  "pinoy24": [],
   "pitney-bowes": ["pitney-bowes-1","pitney-bowes-2","pitney-bowes-3"],
   "pitt-ohio": [],
   "planete-courrier": [],
+  "plus-cargo": [],
   "plycon": [],
   "pml-tw": [],
   "pmm": [],
@@ -79897,6 +80487,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "prompt-xpress": ["prompt-xpress-1"],
   "pronto-envios": [],
   "pronto-lanka": [],
+  "proship-vn": [],
   "proships": [],
   "pts-worldwide-express": [],
   "ptt": ["ptt-1","ptt-s10"],
@@ -79927,6 +80518,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "qwqer": [],
   "qyun": [],
   "raben": ["raben-1"],
+  "raf-ph": [],
   "rail-continent": [],
   "ram-hand-to-hand": ["ram-hand-to-hand-1"],
   "ramberg": [],
@@ -80153,6 +80745,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "suocang": [],
   "super-parcel-track": [],
   "superb-express": [],
+  "supership": [],
   "surat-kargo": [],
   "suteng-express": [],
   "suto-logistics": [],
@@ -80213,6 +80806,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "thhy": ["thhy-1"],
   "tig-freight": [],
   "tiki": [],
+  "tikinow-logistics": [],
   "time-critical-line": [],
   "time-matters": [],
   "timely-titan": ["timely-titan-1"],

@@ -1,0 +1,36 @@
+{
+  "id": "pinas-cargo",
+  "displayName": "Pinas Cargo",
+  "aliases": [
+    "Pinas Express Cargo",
+    "Pinas Express Cargo & Clearing LLC"
+  ],
+  "region": {
+    "countries": [
+      "AE",
+      "QA",
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#c11717"
+  },
+  "selectable": true,
+  "timezone": "Asia/Dubai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://pinascargo.com/tracking/",
+    "canaryUrl": "https://pinascargo.com/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

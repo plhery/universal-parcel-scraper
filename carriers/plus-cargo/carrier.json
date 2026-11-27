@@ -1,0 +1,34 @@
+{
+  "id": "plus-cargo",
+  "displayName": "Plus Cargo",
+  "aliases": [
+    "Plus Cargo Australia"
+  ],
+  "region": {
+    "countries": [
+      "AU",
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#005b38"
+  },
+  "selectable": true,
+  "timezone": "Australia/Sydney",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.pluscargo.com.au/track/",
+    "canaryUrl": "https://www.pluscargo.com.au/track/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

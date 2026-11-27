@@ -1,0 +1,36 @@
+{
+  "id": "hop-nhat",
+  "displayName": "Hợp Nhất Express",
+  "aliases": [
+    "Hop Nhat Express",
+    "HNC Hợp Nhất",
+    "Công ty cổ phần Hợp Nhất quốc tế",
+    "Công ty cổ phần chuyển phát nhanh quốc tế Hợp Nhất"
+  ],
+  "region": {
+    "countries": [
+      "VN"
+    ]
+  },
+  "brand": {
+    "color": "#2a53a5"
+  },
+  "selectable": true,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://hopnhat.com/track-and-trace",
+    "canaryUrl": "https://hopnhat.com/track-and-trace",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

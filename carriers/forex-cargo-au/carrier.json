@@ -1,0 +1,34 @@
+{
+  "id": "forex-cargo-au",
+  "displayName": "Forex Cargo Australia",
+  "aliases": [
+    "Forex Cargo AU"
+  ],
+  "region": {
+    "countries": [
+      "AU",
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#0054a4"
+  },
+  "selectable": true,
+  "timezone": "Australia/Sydney",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://forexcargo.com.au/box-tracking",
+    "canaryUrl": "https://forexcargo.com.au/box-tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

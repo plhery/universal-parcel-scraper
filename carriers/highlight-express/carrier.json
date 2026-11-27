@@ -1,0 +1,35 @@
+{
+  "id": "highlight-express",
+  "displayName": "Highlight Express",
+  "aliases": [
+    "Highlight Express International",
+    "Highlight Express International Ltd"
+  ],
+  "region": {
+    "countries": [
+      "GB",
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#f4dd22"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://highlightexpress.co.uk/shipment-tracking/",
+    "canaryUrl": "https://highlightexpress.co.uk/shipment-tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

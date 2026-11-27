@@ -1,0 +1,46 @@
+{
+  "id": "tikinow-logistics",
+  "displayName": "TikiNOW Smart Logistics",
+  "aliases": [
+    "TNSL",
+    "TikiNOW",
+    "Công ty TNHH TikiNow Smart Logistics"
+  ],
+  "region": {
+    "countries": [
+      "VN"
+    ]
+  },
+  "brand": {
+    "color": "#4792f6"
+  },
+  "selectable": true,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tnsl-tracking.tiki.com.vn/?id={trackingNumber}",
+    "searchUrl": "https://tnsl-tracking.tiki.com.vn/",
+    "canaryUrl": "https://tnsl-tracking.tiki.com.vn/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "tnsl-tracking.tiki.com.vn"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "id"
+      ]
+    }
+  ],
+  "detection": []
+}

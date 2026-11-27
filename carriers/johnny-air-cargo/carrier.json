@@ -1,0 +1,35 @@
+{
+  "id": "johnny-air-cargo",
+  "displayName": "Johnny Air Cargo",
+  "aliases": [
+    "Johnny Air",
+    "Johnny Air Plus"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#1b417e"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://johnnyaircargo.ph/tracking",
+    "canaryUrl": "https://johnnyaircargo.ph/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

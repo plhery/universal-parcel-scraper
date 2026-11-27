@@ -1,0 +1,35 @@
+{
+  "id": "proship-vn",
+  "displayName": "Proship",
+  "aliases": [
+    "Proship Vietnam",
+    "Công ty cổ phần Proship",
+    "Công ty cổ phần vận tải Proship"
+  ],
+  "region": {
+    "countries": [
+      "VN"
+    ]
+  },
+  "brand": {
+    "color": "#35a6dd"
+  },
+  "selectable": true,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://proship.vn/tra-cuu-don-hang/",
+    "canaryUrl": "https://proship.vn/tra-cuu-don-hang/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

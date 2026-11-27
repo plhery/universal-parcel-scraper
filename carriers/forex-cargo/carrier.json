@@ -1,0 +1,36 @@
+{
+  "id": "forex-cargo",
+  "displayName": "Forex Cargo",
+  "aliases": [
+    "Forex eShip",
+    "Forex Cargo, Inc.",
+    "Forex Cargo USA"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#144e8f"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://forexeship.com/trackmybox/",
+    "canaryUrl": "https://apps.forexcargo.us/box_tracking2",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,44 @@
+{
+  "id": "raf-ph",
+  "displayName": "RAF International Forwarding",
+  "aliases": [
+    "RAF Express",
+    "RAF International Forwarding Phils. Inc.",
+    "RAF Philippines"
+  ],
+  "region": {
+    "countries": [
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#ed1c24"
+  },
+  "selectable": true,
+  "timezone": "Asia/Manila",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.frontierforce.com/go/plm-tracking?cn={trackingNumber}&stid=raf",
+    "searchUrl": "https://tracking.frontierforce.com/go/plm-tracking_search?stid=raf",
+    "canaryUrl": "https://tracking.frontierforce.com/go/plm-tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.frontierforce.com"
+      ],
+      "pathPattern": "^/go/plm-tracking/?$",
+      "query": "^(?=(?:[^&]*&)*stid=raf(?:&|$))(?:[^&]*&)*?cn=([^&]+)"
+    }
+  ],
+  "detection": []
+}

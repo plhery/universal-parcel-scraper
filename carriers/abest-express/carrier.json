@@ -1,0 +1,33 @@
+{
+  "id": "abest-express",
+  "displayName": "ABest Express",
+  "aliases": [
+    "ABestExpress"
+  ],
+  "region": {
+    "countries": [
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#283890"
+  },
+  "selectable": true,
+  "timezone": "Asia/Manila",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.abestexpress.com/newtracking/",
+    "canaryUrl": "https://www.abestexpress.com/newtracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

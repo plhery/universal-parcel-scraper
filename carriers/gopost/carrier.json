@@ -1,0 +1,46 @@
+{
+  "id": "gopost",
+  "displayName": "GoPost",
+  "aliases": [
+    "Tín Phát Express",
+    "Tin Phat Express",
+    "Công ty TNHH Tín Phát Express"
+  ],
+  "region": {
+    "countries": [
+      "VN"
+    ]
+  },
+  "brand": {
+    "color": "#ee7b03"
+  },
+  "selectable": true,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://trackinggopost.com/?tpCode={trackingNumber}",
+    "searchUrl": "https://trackinggopost.com/",
+    "canaryUrl": "https://trackinggopost.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "trackinggopost.com"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "tpCode"
+      ]
+    }
+  ],
+  "detection": []
+}

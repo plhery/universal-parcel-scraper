@@ -1,0 +1,46 @@
+{
+  "id": "new-post-vn",
+  "displayName": "New Post",
+  "aliases": [
+    "NewPost",
+    "New Post Express",
+    "Công ty cổ phần chuyển phát nhanh New Post"
+  ],
+  "region": {
+    "countries": [
+      "VN"
+    ]
+  },
+  "brand": {
+    "color": "#20004f"
+  },
+  "selectable": true,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://newpost.vn/tracking?code={trackingNumber}",
+    "searchUrl": "https://newpost.vn/tracking",
+    "canaryUrl": "https://newpost.vn/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "newpost.vn"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "code"
+      ]
+    }
+  ],
+  "detection": []
+}

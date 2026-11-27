@@ -1,0 +1,45 @@
+{
+  "id": "nasco-express",
+  "displayName": "Nasco Express",
+  "aliases": [
+    "NasCo Express",
+    "Công ty cổ phần giao nhận hàng hóa NasCo"
+  ],
+  "region": {
+    "countries": [
+      "VN"
+    ]
+  },
+  "brand": {
+    "color": "#a60053"
+  },
+  "selectable": true,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://nascoexpress.com/tra-cuu-van-don.html?s={trackingNumber}",
+    "searchUrl": "https://nascoexpress.com/tra-cuu-van-don.html",
+    "canaryUrl": "https://nascoexpress.com/tra-cuu-van-don.html",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "nascoexpress.com"
+      ],
+      "pathPattern": "^/tra-cuu-van-don\\.html$",
+      "params": [
+        "s"
+      ]
+    }
+  ],
+  "detection": []
+}

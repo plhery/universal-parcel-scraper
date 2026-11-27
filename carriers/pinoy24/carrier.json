@@ -1,0 +1,35 @@
+{
+  "id": "pinoy24",
+  "displayName": "Pinoy24",
+  "aliases": [
+    "Pinoy 24",
+    "Pinoy24 Balikbayan Box Service"
+  ],
+  "region": {
+    "countries": [
+      "DE",
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#f90101"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://pinoy24.de/index.php/de/balikbayan-box-tracking",
+    "canaryUrl": "https://pinoy24.de/index.php/de/balikbayan-box-tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

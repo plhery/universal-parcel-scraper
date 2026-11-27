@@ -1,0 +1,36 @@
+{
+  "id": "manila-forwarder",
+  "displayName": "Manila Forwarder",
+  "aliases": [
+    "Manila Forwarders"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "DK",
+      "PG",
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#2a92ce"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.manilaforwarder.com/MF/packagetrack1.php",
+    "canaryUrl": "https://www.manilaforwarder.com/MF/packagetrack1.php",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
