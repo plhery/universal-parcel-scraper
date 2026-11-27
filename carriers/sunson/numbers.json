@@ -1,0 +1,25 @@
+{
+  "carrier": "sunson",
+  "records": [
+    {
+      "number": "SUN202305005325",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/sunson/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sunson"
+        ]
+      },
+      "note": "TrackShip's Sunson page gives it as a tracking code example. Sunson's tracker answers it as a parcel on its line to Israel, received at its Shenzhen warehouse and then at Guangzhou."
+    }
+  ]
+}

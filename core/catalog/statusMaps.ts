@@ -1189,6 +1189,7 @@ import { statusMap as valueway } from '../../carriers/valueway/status.js';
 import { statusMap as ddExpress } from '../../carriers/dd-express/status.js';
 import { statusMap as yuemaExpress } from '../../carriers/yuema-express/status.js';
 import { statusMap as zmcExpress } from '../../carriers/zmc-express/status.js';
+import { statusMap as sunson } from '../../carriers/sunson/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1432,6 +1433,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'dd-express': ddExpress,
   'yuema-express': yuemaExpress,
   'zmc-express': zmcExpress,
+  sunson,
 };
 
 /** The carrier the app files the universal providers' scans under. */

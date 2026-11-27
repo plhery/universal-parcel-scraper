@@ -1,0 +1,9 @@
+{
+  "carrier": "sunson",
+  "entries": [
+    {"wording": "货物电子信息已经收到", "language": "zh", "english": "The electronic cargo information has been received", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The platform's order row: the shipment's data received, before Sunson has the parcel. The English is the platform's own, as BYHD's tenant writes it."},
+    {"wording": "Received shipping information", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The order's data again, a second after the platform's Chinese row, written by the line."},
+    {"code": "ARRIVAL", "wording": "到达收货点", "language": "zh", "english": "Arrived at the receiving point", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The first scan in Sunson's hands, at its Shenzhen warehouse."},
+    {"wording": "货物到达收货点", "language": "zh", "english": "The goods arrive at the receiving point", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The goods reached a receiving point of the line, here Guangzhou after Shenzhen's receipt. The English is the platform's own, as DHLink's lines write it."}
+  ]
+}
