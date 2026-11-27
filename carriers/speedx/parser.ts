@@ -96,14 +96,18 @@ function childText(node: unknown, depth = 0): string {
 /**
  * The tracking view's `data` objects, the numbers the page's absence sentence
  * names, whether the route tree names the requested number as its segment
- * (`["id", number, "d"]`), and whether a view lacks its number or its events.
+ * (`["id", number, "d"]`) or another one, and whether a view lacks its number
+ * or its events.
  * Every page also carries Next's generic 404 template, which says nothing
  * about the number and is not read.
  */
-function scanRows(rows: unknown[], number: string): { shipments: Record<string, unknown>[]; absent: string[]; routed: boolean; partial: boolean } {
+function scanRows(rows: unknown[], number: string): {
+  shipments: Record<string, unknown>[]; absent: string[]; routed: boolean; elsewhere: boolean; partial: boolean;
+} {
   const shipments = new Map<string, Record<string, unknown>>();
   const absent = new Set<string>();
   let routed = false;
+  let elsewhere = false;
   let partial = false;
   const stack: unknown[] = [...rows];
   for (let visited = 0; stack.length; visited += 1) {
@@ -111,6 +115,7 @@ function scanRows(rows: unknown[], number: string): { shipments: Record<string, 
     const node = stack.pop();
     if (Array.isArray(node)) {
       if (node.length === 3 && node[1] === number && typeof node[0] === 'string' && typeof node[2] === 'string') routed = true;
+      else if (node.length === 3 && node[0] === 'id' && typeof node[1] === 'string' && typeof node[2] === 'string') elsewhere = true;
       const props = node[0] === '$' && node.length === 4 && isRecord(node[3]) ? node[3] : null;
       const children = props?.children;
       if (Array.isArray(children) && typeof children[0] === 'string' && clean(children[0]) === ABSENT) {
@@ -128,7 +133,7 @@ function scanRows(rows: unknown[], number: string): { shipments: Record<string, 
       for (const child of Object.values(node)) stack.push(child);
     }
   }
-  return { shipments: [...shipments.values()], absent: [...absent], routed, partial };
+  return { shipments: [...shipments.values()], absent: [...absent], routed, elsewhere, partial };
 }
 
 interface Scan { event: CarrierEvent & { time: string; description: string }; timestamp: number; status?: ClassifiedStatus }
@@ -187,7 +192,7 @@ export function parseSpeedx(body: string, contentType: string | null, raw: strin
   }
   if (!type.includes('text/x-component')) throw new SchemaError(PROVIDER, 'SpeedX returned an unexpected tracking reply');
   const { rows, failures } = flightRows(body);
-  const { shipments, absent, routed, partial } = scanRows(rows, number);
+  const { shipments, absent, routed, elsewhere, partial } = scanRows(rows, number);
   if (absent.length && (shipments.length || absent.some((named) => named !== number))) {
     throw new SchemaError(PROVIDER, 'SpeedX answered for a different number');
   }
@@ -201,7 +206,10 @@ export function parseSpeedx(body: string, contentType: string | null, raw: strin
     // the unknown-number sentence, and the same parcel answers in full minutes
     // later: no data yet, not a changed page.
     if (routed && !partial) throw new IndeterminateError(PROVIDER, 'SpeedX served the tracking page without the shipment view');
-    throw new SchemaError(PROVIDER, 'SpeedX returned no tracking data');
+    // Which page came instead stays in the reason: a view without its number or events, a route for
+    // another number, or neither.
+    throw new SchemaError(PROVIDER, 'SpeedX returned no tracking data', {
+      reason: partial ? 'view_incomplete' : elsewhere ? 'other_route' : 'unrouted' });
   }
   if (shipments.length > 1) throw new SchemaError(PROVIDER, 'SpeedX returned several shipments');
   const data = shipments[0]!;

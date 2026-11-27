@@ -203,9 +203,11 @@ describe('SpeedX tracking page', () => {
     expect(() => parse(templateOnly)).toThrowError(expect.objectContaining({
       kind: 'indeterminate', message: 'SpeedX served the tracking page without the shipment view',
     }));
-    // Without the route naming the number, it is another page.
-    expect(() => parse(templateOnly, OTHER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
-    expect(() => parse(templateOnly.replace(`["id","${NUMBER}","d"]`, '["id","x","d"]'))).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    // Without the route naming the number, it is another page; the reason says which.
+    expect(() => parse(templateOnly, OTHER)).toThrowError(expect.objectContaining({ kind: 'schema', reason: 'other_route' }));
+    expect(() => parse(templateOnly.replace(`["id","${NUMBER}","d"]`, '["id","x","d"]')))
+      .toThrowError(expect.objectContaining({ kind: 'schema', reason: 'other_route' }));
+    expect(() => parse(templateOnly.replace(`["id","${NUMBER}","d"]`, '"x"'))).toThrowError(expect.objectContaining({ kind: 'schema', reason: 'unrouted' }));
     for (const page of [
       ABSENT.replace('is available at this time', 'is unavailable'),
       ABSENT.replace(`"children":"${NUMBER}"`, '"children":"$undefined"'),
@@ -225,6 +227,7 @@ describe('SpeedX tracking page', () => {
       withRow(DELIVERED, shipmentElement({ ...dataOf(DELIVERED), events: [] })),
       withRow(DELIVERED, ABSENT_ROW),
     ]) expect(() => parse(page)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    expect(() => parse(withData((data) => { delete data.events; }))).toThrowError(expect.objectContaining({ kind: 'schema', reason: 'view_incomplete' }));
     // The same object streamed twice is still one shipment.
     expect(parse(withRow(DELIVERED, shipmentElement(dataOf(DELIVERED)))).events).toHaveLength(7);
   });
