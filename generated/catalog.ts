@@ -60490,6 +60490,44 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "skynet-in": {
+    "displayName": "Skynet Express India",
+    "color": "#d9261c",
+    "aliases": [
+      "Skynet India",
+      "Skynet (India)",
+      "Skynet Express India Private Limited",
+      "Skynet Worldwide Express India"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "skynet-in",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.skynetww.com/in-en/tracking",
+    "trackingUrlTemplate": "https://www.skynetww.com/in-en/tracking?awb={trackingNumber}",
+    "trackingSearchUrl": "https://www.skynetww.com/in-en/tracking",
+    "helpUrl": "https://www.skynetww.com/in-en/contact",
+    "linkRules": [
+      {
+        "domains": [
+          "www.skynetww.com",
+          "skynetww.com"
+        ],
+        "pathPattern": "^/in-(?:en|hi)/tracking/?$",
+        "params": [
+          "awb",
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "skynet-my": {
     "displayName": "SkyNet Malaysia",
     "color": "#ec1c24",
@@ -76430,6 +76468,7 @@ export const CARRIER_IDS = [
   "skyex-ae",
   "skyex-gr",
   "skyking",
+  "skynet-in",
   "skynet-my",
   "skynet-sa",
   "skynet-worldwide",
@@ -78554,6 +78593,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "skyex-ae": [],
   "skyex-gr": [],
   "skyking": [],
+  "skynet-in": [],
   "skynet-my": [],
   "skynet-sa": [],
   "skynet-worldwide": [],

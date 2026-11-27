@@ -982,6 +982,7 @@ import { adapter as skladusa } from '../carriers/skladusa/adapter.js';
 import { adapter as skroutzLastMile } from '../carriers/skroutz-last-mile/adapter.js';
 import { adapter as skybox } from '../carriers/skybox/adapter.js';
 import { adapter as skyking } from '../carriers/skyking/adapter.js';
+import { adapter as skynetIn } from '../carriers/skynet-in/adapter.js';
 import { adapter as skynetSa } from '../carriers/skynet-sa/adapter.js';
 import { adapter as skynetWorldwide } from '../carriers/skynet-worldwide/adapter.js';
 import { adapter as skypostal } from '../carriers/skypostal/adapter.js';
@@ -2237,6 +2238,7 @@ export const REGISTRY: RegistryDefinition = {
     "skroutz-last-mile": skroutzLastMile,
     "skybox": skybox,
     "skyking": skyking,
+    "skynet-in": skynetIn,
     "skynet-sa": skynetSa,
     "skynet-worldwide": skynetWorldwide,
     "skypostal": skypostal,
@@ -4183,6 +4185,7 @@ export const REGISTRY: RegistryDefinition = {
     "skyex-ae": "universal",
     "skyex-gr": "universal",
     "skyking": "skyking",
+    "skynet-in": "skynet-in",
     "skynet-my": "universal",
     "skynet-sa": "skynet-sa",
     "skynet-worldwide": "skynet-worldwide",
