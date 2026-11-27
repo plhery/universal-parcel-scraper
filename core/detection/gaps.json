@@ -548,6 +548,12 @@
     "reason": "Ten digits are shared by many carriers and no known prefix or check digit sets BlueEX apart."
   },
   {
+    "carrier": "bluegrace-logistics",
+    "pattern": "^BG\\d{9}$",
+    "kind": "collision",
+    "reason": "BlueGrace's bills of lading are BG and nine digits, the shape of GLS Italy's two-letter depot code and nine digits, so the shape cannot name BlueGrace."
+  },
+  {
     "carrier": "bob-go",
     "pattern": "^UA[A-Z0-9]{6}$",
     "kind": "by_design",

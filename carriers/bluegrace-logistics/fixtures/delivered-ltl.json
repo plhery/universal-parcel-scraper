@@ -1,0 +1,31 @@
+[
+  {"bol":"BG879578524","addresses":[{"stateProvince":"CA","country":"USA"},{"stateProvince":"WA","country":"USA"}],"carrier":{"scac":"CNWY"},"references":[{"name":"PRO","value":"968307804"},{"name":"Tracking","value":"true"}],"trackingInfo":{"pro":"968307804","estimatedDeliveryDate":"2024-12-19T09:00:00","details":[
+      {"trackingDate":"2024-12-10T15:08:00","trackStatusCode":"AF","trackStatus":"ACTUAL PICKUP","lateReasonCode":"NS","lateReason":"NORMAL STATUS","city":"SANTEE","state":"CA"},
+      {"trackingDate":"2024-12-13T00:00:00","trackStatusCode":"AG","trackStatus":"ESTIMATED DELIVERY","lateReasonCode":"NS","lateReason":"NORMAL STATUS","city":"San Diego","state":"CA"},
+      {"trackingDate":"2024-12-10T15:08:00","trackStatusCode":"X3","trackStatus":"ARRIVED AT PICK-UP LOCATION","lateReasonCode":"NS","lateReason":"NORMAL STATUS","city":"SANTEE","state":"CA"},
+      {"trackingDate":"2024-12-11T00:22:00","trackStatusCode":"X4","trackStatus":"ARRIVED AT TERMINAL LOCATION","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Orange","state":"CA"},
+      {"trackingDate":"2024-12-16T00:00:00","trackStatusCode":"AG","trackStatus":"ESTIMATED DELIVERY","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Orange","state":"CA"},
+      {"trackingDate":"2024-12-12T22:46:00","trackStatusCode":"P1","trackStatus":"DEPARTED TERMINAL LOCATION","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Orange","state":"CA"},
+      {"trackingDate":"2024-12-13T02:50:00","trackStatusCode":"X4","trackStatus":"ARRIVED AT TERMINAL LOCATION","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Kettleman City","state":"CA"},
+      {"trackingDate":"2024-12-13T05:10:00","trackStatusCode":"P1","trackStatus":"DEPARTED TERMINAL LOCATION","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Kettleman City","state":"CA"},
+      {"trackingDate":"2024-12-13T06:00:00","trackStatusCode":"X4","trackStatus":"ARRIVED AT TERMINAL LOCATION","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Fresno","state":"CA"},
+      {"trackingDate":"2024-12-13T07:24:00","trackStatusCode":"P1","trackStatus":"DEPARTED TERMINAL LOCATION","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Fresno","state":"CA"},
+      {"trackingDate":"2024-12-13T12:08:00","trackStatusCode":"X4","trackStatus":"ARRIVED AT TERMINAL LOCATION","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Corning","state":"CA"},
+      {"trackingDate":"2024-12-13T12:30:00","trackStatusCode":"P1","trackStatus":"DEPARTED TERMINAL LOCATION","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Corning","state":"CA"},
+      {"trackingDate":"2024-12-13T15:57:00","trackStatusCode":"X4","trackStatus":"ARRIVED AT TERMINAL LOCATION","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Central Point","state":"OR"},
+      {"trackingDate":"2024-12-13T18:18:00","trackStatusCode":"P1","trackStatus":"DEPARTED TERMINAL LOCATION","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Central Point","state":"OR"},
+      {"trackingDate":"2024-12-13T22:48:00","trackStatusCode":"X4","trackStatus":"ARRIVED AT TERMINAL LOCATION","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Clackamas","state":"OR"},
+      {"trackingDate":"2024-12-14T04:36:00","trackStatusCode":"P1","trackStatus":"DEPARTED TERMINAL LOCATION","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Clackamas","state":"OR"},
+      {"trackingDate":"2024-12-14T09:20:00","trackStatusCode":"AV","trackStatus":"AVAILABLE FOR DELIVERY","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Clackamas","state":"OR"},
+      {"trackingDate":"2024-12-14T09:20:00","trackStatusCode":"X4","trackStatus":"ARRIVED AT TERMINAL LOCATION","lateReasonCode":"AM","lateReason":"SHIPPER RELATED","city":"Mount Vernon","state":"WA"},
+      {"trackingDate":"2024-12-16T09:45:00","trackStatusCode":"SD","trackStatus":"SHIPMENT DELAYED","lateReasonCode":"B2","lateReason":"TRAP FOR CUSTOMER","city":"Mount Vernon","state":"WA"},
+      {"trackingDate":"2024-12-17T00:00:00","trackStatusCode":"AG","trackStatus":"ESTIMATED DELIVERY","lateReasonCode":"B2","lateReason":"TRAP FOR CUSTOMER","city":"Mount Vernon","state":"WA"},
+      {"trackingDate":"2024-12-16T14:25:00","trackStatusCode":"X9","trackStatus":"DELIVERY APPT SECURED ON DATE/TIME","lateReasonCode":"B2","lateReason":"TRAP FOR CUSTOMER","city":"Mount Vernon","state":"WA"},
+      {"trackingDate":"2024-12-19T09:00:00","trackStatusCode":"AB","trackStatus":"DELIVERY APPOINTMENT DATE/TIME","lateReasonCode":"B2","lateReason":"TRAP FOR CUSTOMER","city":"","state":"  "},
+      {"trackingDate":"2024-12-19T08:10:00","trackStatusCode":"AJ","trackStatus":"TENDERED FOR DELIVERY","lateReasonCode":"B2","lateReason":"TRAP FOR CUSTOMER","city":"Mount Vernon","state":"WA"},
+      {"trackingDate":"2024-12-19T08:10:00","trackStatusCode":"J1","trackStatus":"DELIVERED TO CONNECTING LINE","lateReasonCode":"B2","lateReason":"TRAP FOR CUSTOMER","city":"Mount Vernon","state":"WA"},
+      {"trackingDate":"2024-12-19T00:00:00","trackStatusCode":"AG","trackStatus":"ESTIMATED DELIVERY","lateReasonCode":"B2","lateReason":"TRAP FOR CUSTOMER","city":"Mount Vernon","state":"WA"},
+      {"trackingDate":"2024-12-19T11:35:00","trackStatusCode":"D1","trackStatus":"COMPLETED UNLOADING AT DELIVERY LOCATION","lateReasonCode":"B2","lateReason":"TRAP FOR CUSTOMER","city":"Mount Vernon","state":"WA"},
+      {"trackingDate":"2024-12-19T11:35:00","trackStatusCode":"X1","trackStatus":"ARRIVED AT DELIVERY LOCATION","lateReasonCode":"B2","lateReason":"TRAP FOR CUSTOMER","city":"Mount Vernon","state":"WA"}
+    ]}}
+]

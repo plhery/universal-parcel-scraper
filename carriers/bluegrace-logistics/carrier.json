@@ -1,0 +1,96 @@
+{
+  "id": "bluegrace-logistics",
+  "displayName": "BlueGrace Logistics",
+  "aliases": [
+    "BlueGrace"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#009ade"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "bluegrace-logistics",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "eta",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://mybluegrace.com/track/?id={trackingNumber}&docType=BOL",
+    "searchUrl": "https://mybluegrace.com/track/",
+    "helpUrl": "https://mybluegrace.com/get-in-touch/",
+    "canaryUrl": "https://mybluegrace.com/track/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "progress_rail",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "sender_address",
+      "recipient_address",
+      "postcodes",
+      "delivery_instructions"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "provider_code",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "progress_rail",
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "sender_address",
+      "recipient_address",
+      "postcodes",
+      "delivery_instructions"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "service_name",
+      "signatory",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "mybluegrace.com",
+        "www.mybluegrace.com"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "id"
+      ]
+    }
+  ],
+  "detection": []
+}

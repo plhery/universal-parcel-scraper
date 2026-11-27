@@ -3050,6 +3050,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'eudore', number: 'ZQ58301746XK',
     route: /^https:\/\/tbwl\.t6soft\.com\/track\?waybillnumber=ZQ58301746XK$/,
     marker: /T6跨境物流软件/ },
+  // BlueGrace's tracking page reads the number and its kind from its address and looks it up on load;
+  // an unknown one gets a notice with the number in its search field.
+  { carrier: 'bluegrace-logistics', number: 'BG000417203',
+    route: /^https:\/\/mybluegrace\.com\/track\/\?id=BG000417203&docType=BOL$/,
+    marker: /Ship Freight the Way You Just Tracked It/i },
 ];
 
 /**

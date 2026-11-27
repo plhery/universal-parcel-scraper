@@ -1,0 +1,13 @@
+[
+  {"bol":"BG652690023","addresses":[{"stateProvince":"TX","country":"USA"},{"stateProvince":"AZ","country":"USA"}],"carrier":{"scac":""},"references":[{"name":"PRO","value":"BG652690023"},{"name":"Tracking","value":"true"}],"trackingInfo":{"pro":"BG652690023","estimatedDeliveryDate":"2023-08-07T09:00:00","details":[
+      {"trackingDate":"2023-08-03T11:38:16","trackStatusCode":"XB","trackStatus":"Shipment Acknowledged","lateReasonCode":"NS","lateReason":"Normal Status","city":"Houston","state":"TX"},
+      {"trackingDate":"2023-08-04T08:56:00","trackStatusCode":"XB","trackStatus":"Shipment Acknowledged","lateReasonCode":"NS","lateReason":"Normal Status","city":"","state":"TX"},
+      {"trackingDate":"2023-08-04T10:30:00","trackStatusCode":"X3","trackStatus":"Arrived at Pickup Location","lateReasonCode":"","lateReason":"","city":"Houston","state":"TX"},
+      {"trackingDate":"2023-08-04T11:07:00","trackStatusCode":"XB","trackStatus":"Shipment Acknowledged","lateReasonCode":"NS","lateReason":"Normal Status","city":"Houston","state":"TX"},
+      {"trackingDate":"2023-08-04T12:44:00","trackStatusCode":"XB","trackStatus":"Shipment Acknowledged","lateReasonCode":"NS","lateReason":"Normal Status","city":"Houston","state":"TX"},
+      {"trackingDate":"2023-08-04T13:25:00","trackStatusCode":"XB","trackStatus":"Shipment Acknowledged","lateReasonCode":"NS","lateReason":"Normal Status","city":"Houston","state":"TX"},
+      {"trackingDate":"2023-08-04T13:49:00","trackStatusCode":"AF","trackStatus":"Actual Pickup","lateReasonCode":"","lateReason":"","city":"Houston","state":"TX"},
+      {"trackingDate":"2023-08-07T09:00:00","trackStatusCode":"X1","trackStatus":"Arrived at Delivery Location","lateReasonCode":"NS","lateReason":"Normal Status","city":"Phoenix","state":"AZ"},
+      {"trackingDate":"2023-08-07T13:08:36","trackStatusCode":"D1","trackStatus":"Completed Unloading at Delivery Location","lateReasonCode":"NS","lateReason":"Normal Status","city":"Phoenix","state":"AZ"}
+    ]}}
+]

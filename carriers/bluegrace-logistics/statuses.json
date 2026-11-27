@@ -1,0 +1,21 @@
+{
+  "carrier": "bluegrace-logistics",
+  "entries": [
+    {"code": "XB", "wording": "Shipment Acknowledged", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The carrier accepted the load tender; a truckload's carrier sends it several times before the pickup."},
+    {"code": "X3", "wording": "ARRIVED AT PICK-UP LOCATION", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The driver is at the shipper; the freight is not on board yet."},
+    {"code": "X3", "wording": "Arrived at Pickup Location", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "A truckload carrier's spelling of the code."},
+    {"code": "AF", "wording": "ACTUAL PICKUP", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The tracking page dates its pickup step by this wording."},
+    {"code": "X4", "wording": "ARRIVED AT TERMINAL LOCATION", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "P1", "wording": "DEPARTED TERMINAL LOCATION", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "AV", "wording": "AVAILABLE FOR DELIVERY", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "At the delivering terminal, before a delivery is booked; later rows show the freight still moving."},
+    {"code": "SD", "wording": "SHIPMENT DELAYED", "stage": "exception", "language": "en", "confirmedBy": "live", "note": "The adapter adds the row's late reason, as in SHIPMENT DELAYED: TRAP FOR CUSTOMER."},
+    {"code": "X9", "wording": "DELIVERY APPT SECURED ON DATE/TIME", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "AJ", "wording": "TENDERED FOR DELIVERY", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
+    {"code": "J1", "wording": "DELIVERED TO CONNECTING LINE", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Handed to another carrier, not to the consignee; XPO sends it beside its tender for delivery."},
+    {"code": "X1", "wording": "ARRIVED AT DELIVERY LOCATION", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The truck is at the consignee; carriers send it beside, before or after the unloading of the same minute."},
+    {"code": "D1", "wording": "COMPLETED UNLOADING AT DELIVERY LOCATION", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The tracking page dates its delivered step by this code."},
+    {"code": "X6", "wording": "EN ROUTE TO DELIVERY LOCATION", "stage": "out_for_delivery", "language": "en", "confirmedBy": "bundle", "note": "The tracking page's script reads it as out for delivery when the row's state is the consignee's; the adapter stages it in transit elsewhere, so the code alone gets no stage."},
+    {"code": "AG", "wording": "ESTIMATED DELIVERY", "language": "en", "confirmedBy": "live", "note": "A forecast dated on the estimated day, often at midnight: the adapter reads it as the estimate when the tracking record gives none, never as a scan."},
+    {"code": "AB", "wording": "DELIVERY APPOINTMENT DATE/TIME", "language": "en", "confirmedBy": "live", "note": "The booked delivery slot, without a place: the adapter reads it as the estimate when the tracking record gives none, never as a scan."}
+  ]
+}

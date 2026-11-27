@@ -1,0 +1,56 @@
+{
+  "carrier": "bluegrace-logistics",
+  "records": [
+    {
+      "number": "BG879578524",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/bluegrace-logistics/",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "the example of BlueGrace's tracking number pattern on TrackShip's provider page",
+        "assessment": "confirmed"
+      },
+      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["gls-it"] },
+      "note": "BlueGrace's tracker answers it as a bill of lading with a delivered LTL history from California to Washington, carried by XPO under a PRO number of its own."
+    },
+    {
+      "number": "BG652690023",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230810182048/https://mybluegrace.com/track/?docType=BOL&id=BG652690023",
+        "date": "2023-08-10",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "an archived BlueGrace tracking link for a bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["gls-it"] },
+      "note": "BlueGrace's tracker answers it with a delivered truckload history from Texas to Arizona whose PRO number is the bill of lading."
+    },
+    {
+      "number": "BG988712325",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250728143717/https://mybluegrace.com/track/?id=BG988712325&docType=BOL",
+        "date": "2025-07-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "an archived BlueGrace tracking link for a bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["gls-it"] },
+      "note": "BlueGrace's tracker answers it with a delivered LTL history from North Carolina to Florida, carried by AAA Cooper under a PRO number of its own."
+    }
+  ]
+}

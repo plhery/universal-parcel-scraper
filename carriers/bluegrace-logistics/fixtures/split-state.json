@@ -1,0 +1,10 @@
+[
+  {"bol":"BG988712325","addresses":[{"stateProvince":"NC","country":"USA"},{"stateProvince":"FL","country":"USA"}],"carrier":{"scac":"AACT"},"references":[{"name":"PRO","value":"661164889"},{"name":"Tracking","value":"true"}],"trackingInfo":{"pro":"661164889","estimatedDeliveryDate":"2025-07-29T17:00:00","details":[
+      {"trackingDate":"2025-07-25T15:24:00","trackStatusCode":"X3","trackStatus":"ARRIVED AT PICK-UP LOCATION","lateReasonCode":"NS","lateReason":"NORMAL STATUS","city":"MORRISVILLE","state":"NC"},
+      {"trackingDate":"2025-07-25T15:26:00","trackStatusCode":"AF","trackStatus":"ACTUAL PICKUP","lateReasonCode":"NS","lateReason":"NORMAL STATUS","city":"MORRISVILLE","state":"NC"},
+      {"trackingDate":"2025-07-29T17:00:00","trackStatusCode":"AG","trackStatus":"ESTIMATED DELIVERY","lateReasonCode":"NS","lateReason":"NORMAL STATUS","city":"","state":"  "},
+      {"trackingDate":"2025-07-30T02:25:00","trackStatusCode":"AV","trackStatus":"AVAILABLE FOR DELIVERY","lateReasonCode":"AJ","lateReason":"OTHER CARRIER RELATED","city":"JACKSONVILLE","state":"FL"},
+      {"trackingDate":"2025-07-31T14:32:00","trackStatusCode":"D1","trackStatus":"COMPLETED UNLOADING AT DELIVERY LOCATION","lateReasonCode":"AI","lateReason":"MECHANICAL BREAKDOWN","city":"MIAMI","state":"FL"},
+      {"trackingDate":"2025-07-31T14:31:00","trackStatusCode":"X1","trackStatus":"ARRIVED AT DELIVERY LOCATION","lateReasonCode":"AI","lateReason":"MECHANICAL BREAKDOWN","city":"MIAMI","state":"FL"}
+    ]}}
+]
