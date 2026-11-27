@@ -1,0 +1,68 @@
+{
+  "id": "iqfulfillment",
+  "displayName": "IQ Fulfillment",
+  "aliases": [
+    "IQFulfillment"
+  ],
+  "region": {
+    "countries": [
+      "AE"
+    ]
+  },
+  "brand": {
+    "color": "#520D72"
+  },
+  "selectable": true,
+  "timezone": "Asia/Dubai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "iqfulfillment",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "url": "https://track.iqfulfillment.com/?deliveryNo={trackingNumber}",
+    "searchUrl": "https://track.iqfulfillment.com/",
+    "helpUrl": "https://www.iqfulfillment.com/contact-us/",
+    "canaryUrl": "https://track.iqfulfillment.com/",
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "offset_timestamps"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "location",
+      "eta",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "proof_of_delivery",
+      "signatory",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "track.iqfulfillment.com"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "deliveryNo"
+      ]
+    }
+  ],
+  "detection": []
+}

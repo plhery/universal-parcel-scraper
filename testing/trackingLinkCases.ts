@@ -2933,6 +2933,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'next-smart-ship', number: 'NSS9000000000000000017',
     route: /^https:\/\/fulfillship\.nextsmartship\.com\/track\?s=NSS9000000000000000017$/,
     marker: /Logistics tracking not found|NSS Tracking Number/ },
+  // The page fills its field from deliveryNo, uppercased, and asks the tracking service for it on load.
+  { carrier: 'iqfulfillment', number: 'IQFZZ990000',
+    route: /^https:\/\/track\.iqfulfillment\.com\/\?deliveryNo=IQFZZ990000$/,
+    marker: /Where can I find my order tracking number/ },
 ];
 
 /**

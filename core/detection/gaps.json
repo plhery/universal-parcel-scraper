@@ -2449,6 +2449,12 @@
     "reason": "INTEX shipment numbers are seven digits, a hyphen and one digit, eight digits once the hyphen is removed, a length several carriers share, so no rule claims them."
   },
   {
+    "carrier": "iqfulfillment",
+    "pattern": "^(?:IQF[A-Z]{3}\\d{6}|ECO\\d{10}|AYE\\d{5}|\\d{12})$",
+    "kind": "by_design",
+    "reason": "IQ Fulfillment tracks each merchant's own order references, in that merchant's layout, so no layout points to IQ Fulfillment."
+  },
+  {
     "carrier": "iran-post",
     "pattern": "^\\d{24}$",
     "kind": "by_design",

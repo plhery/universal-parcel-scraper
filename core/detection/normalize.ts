@@ -1,3 +1,4 @@
+import { iqfulfillmentReference } from '../../carriers/iqfulfillment/number.js';
 import { jrsReference } from '../../carriers/jrs-express/number.js';
 import { postlogisticsIdentifier } from '../../carriers/postlogistics/number.js';
 import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
@@ -103,12 +104,14 @@ export function normalizeTrackingNumber(raw: string): string {
 
 /**
  * The number as its carrier knows it, to store and look up: the normalized number, except a Tiui
- * folio and a JRS Express reference, an airbill and its branch code, which keep their hyphens
- * since the digits alone do not give them back. The exception is the carrier's alone: another
- * carrier's number of the same shape, Seino's or Flip Post's, normalizes.
+ * folio, a JRS Express reference, an airbill and its branch code, and an IQ Fulfillment order
+ * reference with a suffix, which keep their hyphens since the digits alone do not give them back.
+ * The exception is the carrier's alone: another carrier's number of the same shape, Seino's or
+ * Flip Post's, normalizes.
  */
 export function carrierTrackingNumber(raw: string, carrier: string | undefined): string {
-  const kept = raw.length > 64 ? undefined : carrier === 'tiui' ? tiuiFolio(raw) : carrier === 'jrs-express' ? jrsReference(raw) : undefined;
+  const kept = raw.length > 64 ? undefined : carrier === 'tiui' ? tiuiFolio(raw) : carrier === 'jrs-express' ? jrsReference(raw)
+    : carrier === 'iqfulfillment' ? iqfulfillmentReference(raw) : undefined;
   return kept ?? normalizeTrackingNumber(raw);
 }
 
@@ -117,7 +120,7 @@ export function isPlanzerSharedTrackingNumber(raw: string): boolean {
   return /^99990\d{8}$/.test(normalizeTrackingNumber(raw));
 }
 
-/** Swiss carriers show 18-digit barcodes as 99.34.123456.12345678; a Tiui folio and a JRS Express reference show their hyphens. */
+/** Swiss carriers show 18-digit barcodes as 99.34.123456.12345678; a Tiui folio, a JRS Express reference and an IQ Fulfillment reference show their hyphens. */
 export function formatTrackingNumber(raw: string, carrier?: string): string {
   if (carrier === 'postlogistics') return postlogisticsIdentifier(raw);
   const value = carrierTrackingNumber(raw, carrier);

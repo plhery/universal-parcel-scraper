@@ -1162,6 +1162,7 @@ import { statusMap as austway } from '../../carriers/austway/status.js';
 import { statusMap as jomkirim } from '../../carriers/jomkirim/status.js';
 import { statusMap as expeditors } from '../../carriers/expeditors/status.js';
 import { statusMap as nextSmartShip } from '../../carriers/next-smart-ship/status.js';
+import { statusMap as iqfulfillment } from '../../carriers/iqfulfillment/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1392,6 +1393,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   jomkirim,
   expeditors,
   'next-smart-ship': nextSmartShip,
+  iqfulfillment,
 };
 
 /** The carrier the app files the universal providers' scans under. */

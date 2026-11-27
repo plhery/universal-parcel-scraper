@@ -1,0 +1,13 @@
+{
+  "carrier": "iqfulfillment",
+  "entries": [
+    {"code": null, "wording": "Order received", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The merchant's order reached IQ Fulfillment's warehouse, which holds the goods; nothing is packed or handed over yet."},
+    {"code": null, "wording": "Under process", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The order is being picked and packed in the warehouse. Some orders go from Order received straight to Shipped."},
+    {"code": null, "wording": "Shipped", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The packed order was handed to the delivery partner, whose name and number the tracker does not give; the parcel's first movement, not its delivery."},
+    {"code": null, "wording": "In transit", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live"},
+    {"code": null, "wording": "Not delivered", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "note": "The delivery did not happen; its sentence gives no reason and asks the recipient to call IQ Fulfillment."},
+    {"code": null, "wording": "Cancelled", "stage": "exception", "language": "en", "confirmedBy": "live", "note": "The order was cancelled before it was shipped, after Order received or Under process."}
+  ]
+}
