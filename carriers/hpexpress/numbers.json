@@ -1,0 +1,71 @@
+{
+  "carrier": "hpexpress",
+  "records": [
+    {
+      "number": "HP888189116",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 海派国际速递. HP Express's tracker answers it with a parcel flown from Australia to Xiamen, cleared at Quanzhou and delivered by China Post."
+    },
+    {
+      "number": "HP888331722",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/hpexpress.shtml",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "Kuaidi100's page for 海派国际速递 gives it as the example. HP Express's tracker answers it with the same route, delivered by China Post in Yunnan."
+    },
+    {
+      "number": "HP888183356",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.hpexpress.com.au/index",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "The example HP Express's home page prints under its tracking box. The tracker now answers it as an order it does not know."
+    }
+  ]
+}

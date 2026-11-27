@@ -7402,5 +7402,11 @@
     "pattern": "^70\\d{8}$",
     "kind": "by_design",
     "reason": "70 and eight digits is C&Y Global Logistics' waybill on its public samples, a bare digit run many carriers' numbers share, so nothing in it points to C&Y. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "hpexpress",
+    "pattern": "^HP\\d{9}$",
+    "kind": "collision",
+    "reason": "HP and nine digits, 888 first on every public sample, is HP Express's order number, and two letters and nine digits is a shape GLS Italy's rule takes, so detection does not name HP Express. The adapter answers explicit selection."
   }
 ]

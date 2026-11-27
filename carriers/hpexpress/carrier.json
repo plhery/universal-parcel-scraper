@@ -1,0 +1,77 @@
+{
+  "id": "hpexpress",
+  "displayName": "HP Express",
+  "aliases": [
+    "海派国际速递",
+    "海派",
+    "澳大利亚海派",
+    "HP Trust"
+  ],
+  "region": {
+    "countries": [
+      "AU",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#095AA9"
+  },
+  "selectable": true,
+  "timezone": "Australia/Melbourne",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hpexpress",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.hpexpress.com.au/express/trackingInfo?orderSns={trackingNumber}",
+    "searchUrl": "https://www.hpexpress.com.au/index",
+    "canaryUrl": "https://www.hpexpress.com.au/index",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "hpexpress.com.au"
+      ],
+      "pathPattern": "^/express/trackingInfo/?$",
+      "params": [
+        "orderSns"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -1219,6 +1219,7 @@ import { statusMap as chinastarlogistics } from '../../carriers/chinastarlogisti
 import { statusMap as hubologistics } from '../../carriers/hubologistics/status.js';
 import { statusMap as wlkgo } from '../../carriers/wlkgo/status.js';
 import { statusMap as cyxfx } from '../../carriers/cyxfx/status.js';
+import { statusMap as hpexpress } from '../../carriers/hpexpress/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1489,6 +1490,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   hubologistics,
   wlkgo,
   cyxfx,
+  hpexpress,
 };
 
 /** The carrier the app files the universal providers' scans under. */

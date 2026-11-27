@@ -2923,6 +2923,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'longtengus', number: 'S2019000000017',
     route: /^https:\/\/www\.longtengus\.com\/TrackingInfo\?TrackginNO=S2019000000017$/,
     marker: /运单号：\s*S2019000000017|暂无查询结果/ },
+  // The page asks the service for the number in its address and heads the order's box with it, over its legs or the notice that it is unknown.
+  { carrier: 'hpexpress', number: 'HP000000017',
+    route: /^https:\/\/www\.hpexpress\.com\.au\/express\/trackingInfo\?orderSns=HP000000017$/,
+    marker: /快递单号:\s*HP000000017/ },
   // The English page names the number over its history, or over the notice that it is incorrect.
   { carrier: 'swiss-universal-express', number: 'SUE9999000000017FR',
     route: /^https:\/\/swiss-universal-express\.ch\/tracking\/SUE9999000000017FR\?lang=en$/,
