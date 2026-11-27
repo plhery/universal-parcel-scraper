@@ -1,0 +1,24 @@
+{
+  "carrier": "yjs-china",
+  "records": [
+    {
+      "number": "CHNYJS51450228",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/yjs.shtml",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "yjs-china",
+        "confidence": "high"
+      },
+      "note": "Kuaidi100's example in its YJS Express search box, also the test number its company list gives the firm. The firm's tracker answers it with a Shenzhen courier's round, a parcel station and the signature."
+    }
+  ]
+}

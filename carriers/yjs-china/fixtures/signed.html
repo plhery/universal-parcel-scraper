@@ -1,0 +1,208 @@
+
+
+
+
+<!doctype html>
+<html class="no-js">
+<head>
+    <title>查询轨迹</title>
+    <meta name="description" content="这是一个 查询轨迹 页面">
+    <link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+    <link rel="stylesheet" href="/assets/css/all.css">
+    <link rel="stylesheet" href="/assets/css/slick.css">
+    <link rel="stylesheet" href="/assets/css/slick-menu.css">
+    <link rel="stylesheet" href="/assets/css/default.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <script src="/framework/jquery-1.11.3.min.js"></script>
+    <script src="/layui/layui.js"></script>
+    <script src="/framework/printThis.js"></script>
+    <link href="../../css/amazeui.min.css" rel="stylesheet" />
+    <style>
+        .layui-table td, .layui-table th {
+            padding: 8px;
+            font-size: 13px !important;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .layui-table th {
+            font-weight: bold;
+            color: #5FB878;
+        }
+
+        .layui-table {
+            width: 100%;
+            background-color: #fff;
+            color: #666;
+        }
+
+            .layui-table tr {
+                transition: all .3s;
+                -webkit-transition: all .3s;
+            }
+
+            .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table[lay-even] tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            .layui-table td, .layui-table th, .layui-table-fixed-r, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row] {
+                border-width: 1px;
+                border-style: solid;
+                border-color: #e6e6e6;
+            }
+    </style>
+    <script type="text/javascript">
+        function btnClick() {
+            window.location.href = "../Home/NewIndex";
+        }
+        //打印方法
+        function printTable(id) {
+            $('#' + id).printThis({ importCss: true, importStyle: true });
+        }
+    </script>
+</head>
+<body>
+    <div id="loading">
+        <div id="loading-center">
+            <div id="loading-center-absolute">
+                <div class="object" id="object_one"></div>
+                <div class="object" id="object_two"></div>
+                <div class="object" id="object_three"></div>
+                <div class="object" id="object_four"></div>
+            </div>
+        </div>
+    </div>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2 col-md-3">
+                    <div class="logo"> <a href="index.html"><img src="/assets/images/yjs-1.png" alt=""></a> </div>
+                </div>
+                <div class="col-lg-8 col-md-10">
+                    <div class="main-menu">
+                        <nav>
+                            <ul id="mobile-menu">
+                                <li>
+                                    <a href="/index.html">首页 </a>
+                                </li>
+                                <li><a href="/product.html">综合服务</a></li>
+                                <li>
+                                    <a href="/about.html">关于我们</a>
+                                    
+                                </li>
+                                <li><a href="/contact.html">联系我们</a></li>
+                                <li><a href="../Home/QueryOrder">轨迹查询</a></li>
+                                <li><a style="cursor:pointer" onclick="window.open('http://www.kuaidi100.com/')">快递100查询</a></li>
+                                <li><div class="col-lg-2 text-right"> <a href="/contact.html" class="main-btn header-btn">电话查询</a> </div></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div id="mobile-menu-wrapp"></div>
+            </div>
+        </div>
+    </header>
+    <section>
+        <!--class="breadcrumb-area breadcrumb-bg"-->
+        <div><img src="/assets/images/product/%e8%bd%a8%e8%bf%b9%e6%9f%a5%e8%af%a2%e8%bd%ae%e6%92%ad%e5%9b%be.jpg" style="width:100%" /></div>
+        
+    </section>
+
+    <div class="admin-content">
+        <div class="admin-content-body">
+            
+            <br />
+            <div style="position:relative;left:5%;bottom:10%">
+                <div>
+                    <form action="../Home/QueryOrder" method="post">
+                        <table>
+                            <tr>
+                                <td style="width: 10%"><img src="/Img/logo.png" style="cursor: pointer;" onclick="btnClick()" /></td>
+                                <td style="width: 40%"><input placeholder="请输入单号，将为您智能查询" style="width:100%;height: 40px;position:relative;right:5%; font-size: 12px; font-weight: bold" name="WayBillNo" value="CHNYJS51450228" /></td>
+                                <td style="width: 10%">
+                                    <span class="am-input-group-btn">
+                                        <button class="am-btn am-btn-primary" style="font-size:15px;" type="submit">查快递</button>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div class="am-g">
+                <div class="layui-row" id="tt">
+                    <table class="layui-table printTable">
+                        <tbody>
+                            <tr>
+                                <td class="printName" colspan="1"><span style="font-size: 13px; font-weight: bold">益加盛物流</span></td>
+                                <td class="printName" colspan="1"><span style="font-size: 13px; cursor: pointer; color: #0082FA; font-weight: bold" onclick="btnClick()">官网</span></td>
+                                <td class="printName" colspan="1"><span style="font-size:13px;font-weight:bold">0476-5602057</span></td>
+                                <td class="printName" colspan="1"><span style="font-size: 13px; font-weight: bold; cursor: pointer; color: #0082FA;" onclick="printTable('tt')">打印查询结果</span></td>
+                            </tr>
+                            <tr>
+                                <th width="18%">时间</th>
+                                <th width="7%"></th>
+                                <th width="60%">地点和跟踪进度</th>
+                                <th width="15%"></th>
+                            </tr>
+                                        <tr>
+                                            <td>2021-04-24 19:55:00</td>
+                                            <td></td>
+                                            <td>广东省深圳市宝安区龙华公司 已签收 签收人:本人签收拍照签收。快件已送达，如有疑问请联系：13900002222</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2021-04-24 16:34:00</td>
+                                            <td></td>
+                                            <td>快件已暂存至深圳龙华民治樟坑区98栋菜鸟驿站，如有疑问请联系13900003333</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2021-04-24 14:24:00</td>
+                                            <td></td>
+                                            <td>【广东省深圳市宝安区龙华公司】 派件中 派件人: 张三 电话 13900001111 如有疑问，请联系：0755-1234567</td>
+                                            <td></td>
+                                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <section class="catagories-area contact-page pb-80 pt-80">
+        <div class="container">
+            <div class="row" style="width:100%">
+              <div class="c4">
+
+              </div>
+            </div>
+        </div>
+    </section>
+    <div style="height：200px;margin-top:8%" class="foot">
+
+    </div>
+    <script>
+        $(function () {
+            $('.c4').load("../content4.html");
+            $(".foot").load("../down1.html");
+        });
+    </script>
+
+    <a id="button"><i class="fa fa-arrow-up"></i></a>
+    <script src="/assets/js/vendor/modernizr-3.6.0.min.js" type="342322c464f76c5fbec13164-text/javascript"></script>
+    
+    <script src="/assets/js/bootstrap.min.js" type="342322c464f76c5fbec13164-text/javascript"></script>
+    <script src="/assets/js/popper.min.js" type="342322c464f76c5fbec13164-text/javascript"></script>
+    <script src="/assets/js/slick.min.js" type="342322c464f76c5fbec13164-text/javascript"></script>
+    <script src="/assets/js/slick-menu.min.js" type="342322c464f76c5fbec13164-text/javascript"></script>
+    <script src="/assets/js/jquery.counterup.min.js" type="342322c464f76c5fbec13164-text/javascript"></script>
+    <script src="/assets/js/waypoints.min.js" type="342322c464f76c5fbec13164-text/javascript"></script>
+    <script src="/assets/js/main.js" type="342322c464f76c5fbec13164-text/javascript"></script>
+    <script src="/assets/js/rocket-loader.min.js" data-cf-settings="342322c464f76c5fbec13164-|49" defer=""></script>
+</body>
+</html>
+

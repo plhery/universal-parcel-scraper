@@ -1,0 +1,8 @@
+{
+  "carrier": "yjs-china",
+  "entries": [
+    {"wording": "【广东省深圳市宝安区龙华公司】 派件中", "stage": "out_for_delivery", "language": "zh", "confirmedBy": "live", "note": "A branch's courier has it on the round. The page names the courier and their phone after it and gives the branch's phone; the adapter takes them out. Any branch."},
+    {"wording": "快件已暂存至深圳龙华民治樟坑区98栋菜鸟驿站", "stage": "ready_for_pickup", "language": "zh", "confirmedBy": "live", "note": "Left at a parcel station to be collected. The page gives the station's phone after it; the adapter takes it out. Any station."},
+    {"wording": "广东省深圳市宝安区龙华公司 已签收。快件已送达", "stage": "delivered", "language": "zh", "confirmedBy": "live", "note": "Signed for. The page names the signer (签收人) and gives a phone; the adapter takes them out. Any branch."}
+  ]
+}

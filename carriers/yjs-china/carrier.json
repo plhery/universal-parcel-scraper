@@ -1,0 +1,67 @@
+{
+  "id": "yjs-china",
+  "displayName": "YJS Express",
+  "aliases": [
+    "益加盛快递",
+    "益加盛物流",
+    "益加盛国际快递",
+    "赤峰益加盛物流有限公司",
+    "YJS-EXPRESS"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#F4B251"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "yjs-china",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "history"
+    ],
+    "scraped": [
+      "history"
+    ],
+    "discarded": [
+      "courier_name",
+      "driver_phone",
+      "office_contact_details",
+      "signatory"
+    ],
+    "unavailable": [
+      "status",
+      "eta",
+      "location",
+      "weight",
+      "service_name",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "yjs-china-1",
+      "pattern": "^CHNYJS\\d{8}$",
+      "confidence": "high"
+    }
+  ]
+}
