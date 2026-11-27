@@ -19,7 +19,10 @@ covers.
    service's capture helper keeps that one reply for the whole waybill. The token stays in the
    browser. A page that sends no request did not pass its check. Passing it takes the page
    seconds: a lookup that cannot leave the service ten seconds does not open the page and fails
-   as its budget.
+   as its budget. While the check turns the service away, each page spends its time on the same
+   refusal: after a page meets the check, lookups through that service leave the page for an hour
+   and end with the endpoint's challenge, recognition included. The first lookup after the hour
+   opens it again. A host that keeps adapters' holds keeps the rest across restarts.
 
 `tracking.dpd.ro`, which DPD Romania's site and shop plugins link, redirects to
 `services.dpd.ro/tracking/`, which serves a Cloudflare challenge as well, so it is not used.

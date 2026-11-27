@@ -3,11 +3,12 @@ import { describe, expect, it, vi } from 'vitest';
 import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
+import { keepAdapterHolds, resetAdapterHolds, type AdapterHold } from '../../core/runner/holds.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { outsideCountryLast } from '../../core/testing/recognition.js';
 import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport/trawl.js';
 import { createTracker } from '../../facade/index.js';
-import { adapter, DPD_RO_ENDPOINT, dpdRoPageRequest, DpdRoTracker } from './adapter.js';
+import { adapter, DPD_RO_ENDPOINT, DPD_RO_PAGE_REST_MS, dpdRoPageRequest, DpdRoTracker } from './adapter.js';
 import { parseDpdRo, parseDpdRoReply } from './parser.js';
 import { dpdRoOperation, dpdRoPhase, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
@@ -217,10 +218,12 @@ const page = (captures: Partial<TrawlScrapeResponse['capturedResponses'][number]
   capturedResponses: captures.map(capture => ({ url: dpdRoPageRequest(DELIVERED), status: 200, headers: {}, body: text('delivered.json'),
     truncated: false, base64Encoded: false, error: null, ...capture })),
 });
-const browser = (answer: TrawlScrapeResponse) => {
+// Without a service address no rest is kept; `service` names one.
+const browser = (answer: TrawlScrapeResponse, service?: string) => {
   const scrape = vi.fn<TrawlClient['scrape']>().mockResolvedValue(answer);
   const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response('{}', { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }));
-  return { scrape, fetcher, instance: adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: { scrape } as unknown as TrawlClient, browserExecutablePath: null }) };
+  const trawl = { scrape, ...(service ? { endpoint: new URL(service) } : {}) } as unknown as TrawlClient;
+  return { scrape, fetcher, instance: adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl, browserExecutablePath: null }) };
 };
 
 describe('DPD Romania through MyDPD\'s tracker page', () => {
@@ -299,6 +302,42 @@ describe('DPD Romania through MyDPD\'s tracker page', () => {
     expect(scrape).not.toHaveBeenCalled();
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response('{}'));
     await expect(carrier(fetcher).recognizeWithBrowser!(DELIVERED)).rejects.toMatchObject({ kind: 'challenge' });
+  });
+
+  it('leaves the page for a while after it met the Turnstile check, on that browser service only', async () => {
+    const saved: AdapterHold[] = [];
+    await keepAdapterHolds({ load: async () => [], save: async (hold) => { saved.push(hold); } });
+    try {
+      const { scrape, fetcher, instance } = browser(page([]), 'https://browser.example.test/dpd-ro-rest');
+      await expect(instance.track({ number: DELIVERED })).rejects.toMatchObject({ kind: 'challenge' });
+      expect(scrape).toHaveBeenCalledTimes(1);
+      expect(saved).toEqual([{ key: expect.stringMatching(/^dpd-ro-page-rest\//), until: expect.any(Number) }]);
+      expect(JSON.stringify(saved)).not.toContain('browser.example.test');
+      // In the rest a lookup ends with the endpoint's challenge, recognition included, without opening the page.
+      await expect(instance.track({ number: ABROAD })).rejects.toMatchObject({ kind: 'challenge' });
+      await expect(instance.recognizeWithBrowser!(DELIVERED)).rejects.toMatchObject({ kind: 'challenge' });
+      expect(scrape).toHaveBeenCalledTimes(1);
+      expect(fetcher).toHaveBeenCalledTimes(3);
+      await expect(browser(page([{}]), 'https://browser.example.test/dpd-ro-other').instance.track({ number: DELIVERED }))
+        .resolves.toMatchObject({ current_stage: 'delivered' });
+      scrape.mockResolvedValue(page([{}]));
+      const later = vi.spyOn(Date, 'now').mockReturnValue(Date.now() + DPD_RO_PAGE_REST_MS + 1);
+      try {
+        await expect(instance.track({ number: DELIVERED })).resolves.toMatchObject({ current_stage: 'delivered' });
+      } finally { later.mockRestore(); }
+      expect(scrape).toHaveBeenCalledTimes(2);
+    } finally {
+      resetAdapterHolds();
+    }
+  });
+
+  it('keeps asking the page after a throttle, a failed load or a not-found page', async () => {
+    for (const answer of [page([{ status: 429, body: null }]), page([{}], { tier: 1 }), page([{ status: 404, body: text('not-found.html') }])]) {
+      const { scrape, instance } = browser(answer, 'https://browser.example.test/dpd-ro-answers');
+      await expect(instance.track({ number: DELIVERED })).rejects.toThrow();
+      await expect(instance.track({ number: DELIVERED })).rejects.toThrow();
+      expect(scrape).toHaveBeenCalledTimes(2);
+    }
   });
 
   it('answers a found waybill over HTTP without the browser', async () => {

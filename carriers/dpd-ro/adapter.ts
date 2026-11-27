@@ -3,6 +3,7 @@ import {
   BudgetExceededError, carrierErrorKind, ChallengeError, NoHistoryError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError,
 } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
+import { HoldKind, serviceTag } from '../../core/runner/holds.js';
 import { runSteps, type StepSpec } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
@@ -17,6 +18,20 @@ const PAGE_MIN_MS = 10_000;
 // the same path. It answers only a request carrying the token of the page's
 // Turnstile check. tracking.dpd.ro sits behind a Cloudflare challenge as well.
 export const DPD_RO_ENDPOINT = 'https://mydpd.dpd.ro/rest/public/track';
+
+/**
+ * How long lookups leave the tracker page after it met MyDPD's Turnstile check. While the check turns the
+ * browser service away, each page spends the service's time on the same refusal, so lookups in the rest end
+ * with the endpoint's challenge, recognition included. The first lookup after it opens the page again. Each
+ * browser service has its own rest; a host that keeps adapters' holds (`keepAdapterHolds`) keeps it across
+ * restarts.
+ */
+export const DPD_RO_PAGE_REST_MS = 60 * 60_000;
+const pageRests = new Map<string, number>();
+const pageHolds = new HoldKind('dpd-ro-page-rest', (key, until) => {
+  pageRests.set(key, Math.max(pageRests.get(key) ?? 0, Math.min(until, Date.now() + DPD_RO_PAGE_REST_MS)));
+});
+const restOf = (trawl: TrawlClient | null): string | null => (trawl?.endpoint?.href ? serviceTag(trawl.endpoint.href) : null);
 
 /** MyDPD's public tracker for the waybill, in English. */
 export const dpdRoTrackingUrl = (raw: string): string =>
@@ -48,6 +63,8 @@ export class DpdRoTracker {
   async fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeDpdRoNumber(raw);
     const trawl = this.options.trawl ?? null;
+    const rest = restOf(trawl);
+    const resting = rest !== null && (pageRests.get(rest) ?? 0) > Date.now();
     return runSteps({ carrier: 'dpd-ro', budgetMs: context.budgetMs ?? (trawl ? 60_000 : 15_000), signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', run: async ({ signal, remainingMs }) => {
       signal.throwIfAborted();
@@ -57,10 +74,10 @@ export class DpdRoTracker {
         allowHttpStatuses: [404, 406], fetcher: this.options.fetcher,
       });
       return parseDpdRoReply(response.status, decodeText(bytes), number);
-    } }, { ...this.#page(number, trawl), recovers: (error) => carrierErrorKind(error) === 'challenge' }]);
+    } }, { ...this.#page(number, trawl, rest), enabled: Boolean(trawl) && !resting, recovers: (error) => carrierErrorKind(error) === 'challenge' }]);
   }
 
-  #page(number: string, trawl: TrawlClient | null): StepSpec<CarrierResult> {
+  #page(number: string, trawl: TrawlClient | null, rest: string | null): StepSpec<CarrierResult> {
     return { id: 'trawl', enabled: Boolean(trawl), run: async ({ signal, remainingMs }) => {
       const timeoutMs = Math.floor(Math.min(45_000, remainingMs - TRAWL_TRANSPORT_ALLOWANCE_MS));
       // The page passes its Turnstile check before it asks for the waybill: with less of the service's time it ends
@@ -71,7 +88,16 @@ export class DpdRoTracker {
         captureResponses: [DPD_RO_ENDPOINT], settleTimeout: Math.min(timeoutMs, 20_000),
       }, { provider: 'TRAWL while fetching DPD Romania', timeoutMs, signal, maxBytes: 6_000_000, requireSolved: false });
       signal.throwIfAborted();
-      return parseDpdRoPage(page, number);
+      try {
+        return parseDpdRoPage(page, number);
+      } catch (error) {
+        if (rest !== null && carrierErrorKind(error) === 'challenge') {
+          const until = Date.now() + DPD_RO_PAGE_REST_MS;
+          pageRests.set(rest, until);
+          pageHolds.save(rest, until);
+        }
+        throw error;
+      }
     } };
   }
 }

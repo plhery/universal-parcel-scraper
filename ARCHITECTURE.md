@@ -145,8 +145,8 @@ Such pauses and pacing live in the process. A long-lived host that restarts ofte
 with `keepAdapterHolds(store)` from `universal-parcel-scraper/node`
 ([holds](core/runner/holds.ts)): each hold is saved as it starts, with its kind, a key holding no
 address or secret, and when it ends, and the holds still running are taken up at start. The
-direct-step rest, USPS's outage pause and its private Chrome's rest, Correios's read window and the numbers Cainiao had no
-record of for iMile are kept this way. A saved hold is never longer than its rule allows, and a
+direct-step rest, USPS's outage pause and its private Chrome's rest, DPD Romania's rest from its tracker page,
+Correios's read window and the numbers Cainiao had no record of for iMile are kept this way. A saved hold is never longer than its rule allows, and a
 store that fails leaves the adapters as they are without one.
 
 ## A lookup
