@@ -4,9 +4,12 @@ import type { CarrierId } from '../generated/catalog.js';
  * The fields a search page may show, in any frame and open shadow root. Tag
  * widgets such as Tagify (SkyEx) hide their text area under an editable text box,
  * and Patuen's tracker takes numbers in an editable box with a placeholder.
+ * On phones CodeMirror edits its lines in place, so RTB56 trackers (GoWorld
+ * Express) hide their text area behind its editable code box.
  */
 export const FIELD_SELECTOR = 'input, textarea, '
-  + ':is([contenteditable][role="textbox"], [contenteditable][placeholder]):not([contenteditable="false"])';
+  + ':is([contenteditable][role="textbox"], [contenteditable][placeholder], .CodeMirror-code[contenteditable])'
+  + ':not([contenteditable="false"])';
 
 /**
  * Counts the visible, enabled fields that are neither a sign-in field nor the
@@ -28,7 +31,7 @@ export function countNumberFields(elements: Element[]): number {
     if (/e-?mail|user ?name|login|password|passwort|mot de passe/i.test(label)) return false;
     const siteSearch = /^(?:q|query|s|search|keywords?)$/i.test(field.name)
       || /^\s*(?:search|rechercher|suchen|buscar|cerca|szukaj)\b/i.test(field.getAttribute('placeholder') || field.getAttribute('aria-label') || '');
-    return !siteSearch || /track|suivi|sendung|colis|parcel|package|shipment|waybill|consignment|number|numéro|nummer|número|numero|трек|номер|дугаар|运单|運單|单号|單號/i.test(label);
+    return !siteSearch || /track|suivi|sendung|colis|parcel|package|shipment|waybill|consignment|number|numéro|nummer|número|numero|трек|номер|дугаар|លេខ|运单|運單|单号|單號/i.test(label);
   }).length;
 }
 
@@ -60,6 +63,19 @@ export const carriersWithoutSearchPage: Partial<Record<CarrierId, string>> = {
   trusk: 'track.trusk.com has no search box; an order opens only at its own address',
   xpressen: 'track.xpressen.dk has no number field and answers that it cannot find the shipment without one; a shipment opens only at its own address',
   yimidida: 'www.yimidida.com answers the search-page check with its cloud firewall\'s 405 block page; a waybill opens at its own address',
+  'zes-express': 'zes-express.com has no number field; its tracker is a plain-HTTP page on a bare IP address, which the catalog does not link',
+};
+
+/**
+ * Search pages that show their number field on phones only once controls are tapped: those
+ * controls in turn, as Playwright selectors. The check taps the first one shown of each.
+ */
+export const searchFieldReveals: Partial<Record<CarrierId, readonly string[]>> = {
+  castores: ['.js-tools-label', '#tab-1'], // the header's tools menu, then its Rastrear form
+  eurodis: ['text="Tracking by EURODIS shipment number"'], // the collapsed tracking methods
+  moovin: ['a[href*="pais=CR"]'], // the country choice; Costa Rica and Honduras share the form
+  primewell: ['.burger'], // the menu holds the tracker's voucher box; the page shows only a picture
+  'ross-express': ['button:has-text("Ross Pro Number")'], // each kind of number is a collapsed section
 };
 
 /**
@@ -170,6 +186,7 @@ export const uncheckedSearchPages: Partial<Record<CarrierId, string>> = {
   tolos: 'the tracking field carries the aria-label "Recipient\'s username", left from a page template, which the check reads as a sign-in field',
   'topex-logistics': 'www.topex.group has no number field; its tracker answers plain HTTP only, which the catalog does not link',
   topyou: 'the number box on track.szty56.com shows only on desktop-size screens, which the phone-size check does not use',
+  toyou: 'the home page\'s Track a parcel box enables its order number field once a retailer is chosen; the tracking page shows "not found" without a number',
   'total-express': 'totalconecta.totalexpress.com.br answers many networks with an Akamai Access Denied page; to the networks it lets through it shows its number field',
   'trans-express-lk': 'tracking.transexpress.lk shows its waybill field only after its DOMESTIC or COD tab is chosen, so the check finds no field on load',
   'trans-o-flex': 'www.trans-o-flex.com answers the burst of script requests its tracking app makes with HTTP 429, so the form often stays empty past the render window',

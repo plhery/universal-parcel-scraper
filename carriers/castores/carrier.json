@@ -32,7 +32,7 @@
   ],
   "portal": {
     "url": "https://www.castores.com.mx/rastrear.html?guide_numbers={trackingNumber}",
-    "searchUrl": "https://www.castores.com.mx/rastrear.html",
+    "searchUrl": "https://www.castores.com.mx/",
     "helpUrl": "https://www.castores.com.mx/globales/contacto.html",
     "canaryUrl": "https://www.castores.com.mx/rastrear.html",
     "shows": [

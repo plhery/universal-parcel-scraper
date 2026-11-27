@@ -62,7 +62,9 @@ apps paint the carrier's parcels with it, and the grey is kept for the unknown c
 1. Fill `carrier.json`: the portal facts, the tracking links and the detection rules.
    `portal.searchUrl` is the page, with no number in it, where someone on a phone types a
    tracking number. Open it at phone size before you set it: some trackers only show their
-   field on a desktop. `portal.helpUrl` is the carrier's own help or contact page for someone
+   field on a desktop, and a field that shows only after a tap needs its controls in
+   `searchFieldReveals` ([trackingSearchPages.ts](testing/trackingSearchPages.ts)) for the
+   weekly check. `portal.helpUrl` is the carrier's own help or contact page for someone
    receiving a parcel, which the parcel's page links once it stops moving: leave it out
    rather than link a shipper's contact form, a tracking page or another site.
 2. Add public or synthetic sample numbers to `numbers.json`.

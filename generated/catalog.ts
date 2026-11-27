@@ -8638,8 +8638,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "universal"
     },
-    "canaryUrl": "https://alilpost.com/en/tracking/",
-    "trackingSearchUrl": "https://alilpost.com/en/tracking/",
+    "canaryUrl": "https://alilpost.com/en/",
+    "trackingSearchUrl": "https://alilpost.com/en/",
     "helpUrl": "https://alilpost.com/en/contacts/",
     "linkRules": [],
     "detectionRules": []
@@ -15335,7 +15335,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.castores.com.mx/rastrear.html",
     "trackingUrlTemplate": "https://www.castores.com.mx/rastrear.html?guide_numbers={trackingNumber}",
-    "trackingSearchUrl": "https://www.castores.com.mx/rastrear.html",
+    "trackingSearchUrl": "https://www.castores.com.mx/",
     "helpUrl": "https://www.castores.com.mx/globales/contacto.html",
     "linkRules": [
       {
@@ -66327,7 +66327,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.toyou.co.uk/",
     "trackingUrlTemplate": "https://www.toyou.co.uk/track/{trackingNumber}",
-    "trackingSearchUrl": "https://www.toyou.co.uk/track",
+    "trackingSearchUrl": "https://www.toyou.co.uk/",
     "helpUrl": "https://www.toyou.co.uk/help",
     "linkRules": [
       {
@@ -74295,7 +74295,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "localClocks": true
     },
     "canaryUrl": "https://www.zes-express.com/",
-    "trackingSearchUrl": "https://www.zes-express.com/",
     "helpUrl": "https://www.zes-express.com/language/en/contact-us-2/",
     "linkRules": [],
     "detectionRules": [

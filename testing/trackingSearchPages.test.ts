@@ -2,7 +2,7 @@ import { parseHTML } from 'linkedom';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { CARRIERS } from '../core/catalog/index.js';
 import type { CarrierId } from '../generated/catalog.js';
-import { carriersWithoutSearchPage, countNumberFields, FIELD_SELECTOR, uncheckedSearchPages } from './trackingSearchPages.js';
+import { carriersWithoutSearchPage, countNumberFields, FIELD_SELECTOR, searchFieldReveals, uncheckedSearchPages } from './trackingSearchPages.js';
 
 /** The fields the check counts in a page body. A field is laid out unless it is marked hidden. */
 function numberFields(body: string): number {
@@ -27,6 +27,8 @@ describe('carrier search pages', () => {
     // Patuen's tracker takes its numbers in an editable box with a placeholder.
     expect(numberFields('<div contenteditable="true" placeholder="請輸入物流單號，多個物流單號由回車分隔"></div>')).toBe(1);
     expect(numberFields('<div contenteditable="true" placeholder="Search the site"></div>')).toBe(0);
+    // On phones GoWorld Express's CodeMirror box edits its lines in place over a hidden text area.
+    expect(numberFields('<textarea data-hidden></textarea><div class="CodeMirror-code" contenteditable="true"></div>')).toBe(1);
   });
 
   it('skips hidden, disabled, sign-in and site search fields, and boxes that are not editable text fields', () => {
@@ -45,6 +47,8 @@ describe('carrier search pages', () => {
     expect(numberFields('<input type="text" name="q" placeholder="Илгээмжийн дугаараа оруулна уу!">')).toBe(1);
     // Benniao names its field keyword and asks for the waybill in Chinese.
     expect(numberFields('<input type="text" name="keyword" placeholder="请输入运单号查询快件信息">')).toBe(1);
+    // Cambodia Post names its field search and asks for the code number in Khmer.
+    expect(numberFields('<input type="text" name="search" placeholder="បំពេញលេខកូដ">')).toBe(1);
   });
 
   it('names a search page for every carrier with a tracking link, or says why it has none', () => {
@@ -63,6 +67,13 @@ describe('carrier search pages', () => {
   it('keeps exclusions from the weekly check only for carriers with a search page', () => {
     for (const carrier of Object.keys(uncheckedSearchPages) as CarrierId[]) {
       expect(CARRIERS[carrier].trackingSearchUrl, carrier).toBeDefined();
+    }
+  });
+
+  it('keeps controls to tap only for search pages the weekly check opens', () => {
+    for (const carrier of Object.keys(searchFieldReveals) as CarrierId[]) {
+      expect(CARRIERS[carrier].trackingSearchUrl, carrier).toBeDefined();
+      expect(uncheckedSearchPages[carrier], carrier).toBeUndefined();
     }
   });
 });

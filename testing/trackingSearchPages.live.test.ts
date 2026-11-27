@@ -3,7 +3,7 @@ import { chromium, devices, type Browser, type Frame, type Page, type Response }
 import { CARRIERS } from '../core/catalog/index.js';
 import type { CarrierId } from '../generated/catalog.js';
 import { landedAddress, searchPageVerdict } from './trackingLinkProbe.js';
-import { countNumberFields, FIELD_SELECTOR, uncheckedSearchPages } from './trackingSearchPages.js';
+import { countNumberFields, FIELD_SELECTOR, searchFieldReveals, uncheckedSearchPages } from './trackingSearchPages.js';
 
 const RENDER_WINDOW_MS = 15_000;
 
@@ -13,7 +13,9 @@ const searchPages = [...Object.values(CARRIERS).reduce((pages, carrier) => {
     pages.set(carrier.trackingSearchUrl, [...pages.get(carrier.trackingSearchUrl) ?? [], carrier.id]);
   }
   return pages;
-}, new Map<string, CarrierId[]>())].map(([url, carriers]) => ({ url, name: carriers.join(', ') }));
+}, new Map<string, CarrierId[]>())].map(([url, carriers]) => ({
+  url, name: carriers.join(', '), reveal: carriers.map((carrier) => searchFieldReveals[carrier]).find(Boolean),
+}));
 
 /** Visible, enabled fields that are neither a sign-in field nor the site's own search. */
 function frameFields(frame: Frame): Promise<number> {
@@ -39,7 +41,7 @@ describe('carrier search pages (rendered at phone size)', () => {
 
   // The app links these pages when a shared parcel hides its number, and it is
   // read mostly on phones, where some trackers drop the field they show on a desktop.
-  it.for(searchPages)('$name shows a field for the number', { timeout: RENDER_WINDOW_MS + 45_000, concurrent: true }, async ({ name, url }, context) => {
+  it.for(searchPages)('$name shows a field for the number', { timeout: RENDER_WINDOW_MS + 60_000, concurrent: true }, async ({ url, reveal }, context) => {
     const { viewport, userAgent, deviceScaleFactor, isMobile, hasTouch } = devices['iPhone 15'];
     const phoneContext = await browser.newContext({ viewport, userAgent, deviceScaleFactor, isMobile, hasTouch, locale: 'en-US' });
     const page = await phoneContext.newPage();
@@ -66,10 +68,10 @@ describe('carrier search pages (rendered at phone size)', () => {
         }
         throw error;
       }
-      // EURODIS keeps the fields inside collapsed tracking methods on phones.
-      if (name === 'eurodis') {
-        const shipmentNumberMethod = page.getByText('Tracking by EURODIS shipment number', { exact: true });
-        if (await shipmentNumberMethod.isVisible()) await shipmentNumberMethod.click({ timeout: 5_000 });
+      // Some pages show the field on phones only once controls are tapped.
+      for (const selector of reveal ?? []) {
+        const control = page.locator(selector).filter({ visible: true }).first();
+        await control.waitFor({ state: 'visible', timeout: 10_000 }).then(() => control.click({ timeout: 5_000 })).catch(() => undefined);
       }
       let fields = 0;
       // Allow hydration and client redirects; stop at the first field.
