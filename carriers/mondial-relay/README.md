@@ -224,6 +224,11 @@ eight-digit shipment number; the brand remains part of the identity.
 - Scans at a relay or locker have no location: the website names the relay on
   drop-off and collection scans, but the app does not, and one scan would then
   differ by source.
+- In Germany, Hermes delivers Mondial Relay's parcels under a number of its own,
+  sent to the recipient by email
+  ([paketda](https://www.paketda.de/wissen/hermes-zustellpartner.html)). The
+  adapter finds no partner number in either reply, so tracking stops at the
+  hand-over; the rest is tracked under Hermes's number.
 - A relay's contacts, opening hours and coordinates are never read; the
   offline tests assert none reach the result. The app's pickup code is read,
   and so are the recipient's name and postcode on the website.
