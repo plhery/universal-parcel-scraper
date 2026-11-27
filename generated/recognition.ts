@@ -216,6 +216,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "geis": 90,
   "geniki-taxydromiki": 140,
   "geodis-pl": 994,
+  "global99": 593,
   "gls-at": 604,
   "gls-ch": 920,
   "gls-de": 940,

@@ -17607,6 +17607,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "cloudlogistics365": {
+    "displayName": "Qunhang International Logistics",
+    "color": "#05AFE3",
+    "aliases": [
+      "群航国际物流",
+      "天津群航",
+      "天津群航国际货运代理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cloudlogistics365",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "cmt-express": {
     "displayName": "CMT Express",
     "color": "#ed010b",
@@ -20054,6 +20076,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "preferred": true
       }
     ]
+  },
+  "cyxfx": {
+    "displayName": "C&Y Global Logistics",
+    "color": "#004392",
+    "aliases": [
+      "小飞侠速递",
+      "小飞侠",
+      "CYXFX",
+      "C&Y Global Logistics Service"
+    ],
+    "countries": [
+      "US",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "America/Chicago",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cyxfx",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "czl-express": {
     "displayName": "CZL Express",
@@ -31733,6 +31779,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "global99": {
+    "displayName": "Global Courier International",
+    "color": "#F5B82A",
+    "aliases": [
+      "全球速运",
+      "全球速运国际物流",
+      "全球速运国际物流有限公司",
+      "全球特快国际物流有限公司",
+      "Global Courier International Logistics",
+      "Global Express International Logistics"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Hong_Kong",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "global99",
+      "recognitionRank": 593,
+      "recognitionPattern": "^TK\\d{12}$",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^TK\\d{12}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "globalpost": {
     "displayName": "GlobalPost",
     "color": "#11003a",
@@ -35507,6 +35585,41 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/(?:servisi/pracenje-posiljke|services/track-and-trace)/?$",
         "params": [
           "tntnumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "hpexpress": {
+    "displayName": "HP Express",
+    "color": "#095AA9",
+    "aliases": [
+      "海派国际速递",
+      "海派",
+      "澳大利亚海派",
+      "HP Trust"
+    ],
+    "countries": [
+      "AU",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Melbourne",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hpexpress"
+    },
+    "canaryUrl": "https://www.hpexpress.com.au/index",
+    "trackingUrlTemplate": "https://www.hpexpress.com.au/express/trackingInfo?orderSns={trackingNumber}",
+    "trackingSearchUrl": "https://www.hpexpress.com.au/index",
+    "linkRules": [
+      {
+        "domains": [
+          "hpexpress.com.au"
+        ],
+        "pathPattern": "^/express/trackingInfo/?$",
+        "params": [
+          "orderSns"
         ]
       }
     ],
@@ -76599,6 +76712,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "ztcce": {
+    "displayName": "ZTCCE",
+    "color": "#192988",
+    "aliases": [
+      "中途速递",
+      "美国中途速递"
+    ],
+    "countries": [
+      "US",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ztcce",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.ztcce.com/index.html",
+    "trackingUrlTemplate": "https://www.ztcce.com/waybill.html?order={trackingNumber}",
+    "trackingSearchUrl": "https://www.ztcce.com/index.html",
+    "linkRules": [
+      {
+        "domains": [
+          "ztcce.com"
+        ],
+        "pathPattern": "^/waybill\\.html$",
+        "params": [
+          "order"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "zto-freight": {
     "displayName": "ZTO Freight",
     "color": "#1e50a2",
@@ -77182,6 +77329,7 @@ export const CARRIER_IDS = [
   "ckeex",
   "class-package",
   "closer-logistics",
+  "cloudlogistics365",
   "cmt-express",
   "cn-express-za",
   "cne",
@@ -77256,6 +77404,7 @@ export const CARRIER_IDS = [
   "cvc",
   "cycloon",
   "cyprus-post",
+  "cyxfx",
   "czl-express",
   "d-express",
   "dac-uy",
@@ -77585,6 +77734,7 @@ export const CARRIER_IDS = [
   "global-business-tw",
   "global-delivery-network",
   "global-parcel-service",
+  "global99",
   "globalpost",
   "globex-post",
   "globkurier",
@@ -77697,6 +77847,7 @@ export const CARRIER_IDS = [
   "houng-ah-loun",
   "hovership",
   "hp-mostar",
+  "hpexpress",
   "hr-parcel",
   "hrvatska-posta",
   "hrx",
@@ -78916,6 +79067,7 @@ export const CARRIER_IDS = [
   "znlogic",
   "zoom-ve",
   "zr-express",
+  "ztcce",
   "zto-freight",
   "zto-international",
   "zufall",
@@ -79375,6 +79527,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ckeex": [],
   "class-package": [],
   "closer-logistics": [],
+  "cloudlogistics365": [],
   "cmt-express": ["cmt-express-1"],
   "cn-express-za": [],
   "cne": ["cne-1"],
@@ -79449,6 +79602,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cvc": [],
   "cycloon": ["cycloon-1"],
   "cyprus-post": ["cyprus-post-s10"],
+  "cyxfx": [],
   "czl-express": [],
   "d-express": [],
   "dac-uy": [],
@@ -79778,6 +79932,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "global-business-tw": [],
   "global-delivery-network": [],
   "global-parcel-service": [],
+  "global99": ["global99-1"],
   "globalpost": ["globalpost-1"],
   "globex-post": [],
   "globkurier": [],
@@ -79890,6 +80045,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "houng-ah-loun": [],
   "hovership": [],
   "hp-mostar": [],
+  "hpexpress": [],
   "hr-parcel": ["hr-parcel-1"],
   "hrvatska-posta": ["hrvatska-posta-own","hrvatska-posta-s10"],
   "hrx": [],
@@ -81109,6 +81265,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "znlogic": ["znlogic-1"],
   "zoom-ve": [],
   "zr-express": ["zr-express-1"],
+  "ztcce": [],
   "zto-freight": ["zto-freight-1"],
   "zto-international": ["zto-international-1"],
   "zufall": [],

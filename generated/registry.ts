@@ -204,6 +204,7 @@ import { adapter as cjLogistics } from '../carriers/cj-logistics/adapter.js';
 import { adapter as cjPacket } from '../carriers/cj-packet/adapter.js';
 import { adapter as ckLine } from '../carriers/ck-line/adapter.js';
 import { adapter as closerLogistics } from '../carriers/closer-logistics/adapter.js';
+import { adapter as cloudlogistics365 } from '../carriers/cloudlogistics365/adapter.js';
 import { adapter as cmtExpress } from '../carriers/cmt-express/adapter.js';
 import { adapter as cne } from '../carriers/cne/adapter.js';
 import { adapter as codexpress } from '../carriers/codexpress/adapter.js';
@@ -256,6 +257,7 @@ import { adapter as cuLines } from '../carriers/cu-lines/adapter.js';
 import { adapter as customCompanies } from '../carriers/custom-companies/adapter.js';
 import { adapter as cvc } from '../carriers/cvc/adapter.js';
 import { adapter as cyprusPost } from '../carriers/cyprus-post/adapter.js';
+import { adapter as cyxfx } from '../carriers/cyxfx/adapter.js';
 import { adapter as dExpress } from '../carriers/d-express/adapter.js';
 import { adapter as dachser } from '../carriers/dachser/adapter.js';
 import { adapter as daiPost } from '../carriers/dai-post/adapter.js';
@@ -455,6 +457,7 @@ import { adapter as gfsExpress } from '../carriers/gfs-express/adapter.js';
 import { adapter as gigLogistics } from '../carriers/gig-logistics/adapter.js';
 import { adapter as gintracom } from '../carriers/gintracom/adapter.js';
 import { adapter as globalDeliveryNetwork } from '../carriers/global-delivery-network/adapter.js';
+import { adapter as global99 } from '../carriers/global99/adapter.js';
 import { adapter as globalpost } from '../carriers/globalpost/adapter.js';
 import { adapter as globkurier } from '../carriers/globkurier/adapter.js';
 import { adapter as glsCa } from '../carriers/gls-ca/adapter.js';
@@ -539,6 +542,7 @@ import { adapter as hotwms } from '../carriers/hotwms/adapter.js';
 import { adapter as houndExpress } from '../carriers/hound-express/adapter.js';
 import { adapter as houngAhLoun } from '../carriers/houng-ah-loun/adapter.js';
 import { adapter as hovership } from '../carriers/hovership/adapter.js';
+import { adapter as hpexpress } from '../carriers/hpexpress/adapter.js';
 import { adapter as hrParcel } from '../carriers/hr-parcel/adapter.js';
 import { adapter as hrvatskaPosta } from '../carriers/hrvatska-posta/adapter.js';
 import { adapter as hrx } from '../carriers/hrx/adapter.js';
@@ -1283,6 +1287,7 @@ import { adapter as zmcExpress } from '../carriers/zmc-express/adapter.js';
 import { adapter as znlogic } from '../carriers/znlogic/adapter.js';
 import { adapter as zoomVe } from '../carriers/zoom-ve/adapter.js';
 import { adapter as zrExpress } from '../carriers/zr-express/adapter.js';
+import { adapter as ztcce } from '../carriers/ztcce/adapter.js';
 import { adapter as zto } from '../carriers/zto/adapter.js';
 import { adapter as ztoFreight } from '../carriers/zto-freight/adapter.js';
 import { adapter as ztoInternational } from '../carriers/zto-international/adapter.js';
@@ -1493,6 +1498,7 @@ export const REGISTRY: RegistryDefinition = {
     "cj-packet": cjPacket,
     "ck-line": ckLine,
     "closer-logistics": closerLogistics,
+    "cloudlogistics365": cloudlogistics365,
     "cmt-express": cmtExpress,
     "cne": cne,
     "codexpress": codexpress,
@@ -1545,6 +1551,7 @@ export const REGISTRY: RegistryDefinition = {
     "custom-companies": customCompanies,
     "cvc": cvc,
     "cyprus-post": cyprusPost,
+    "cyxfx": cyxfx,
     "d-express": dExpress,
     "dachser": dachser,
     "dai-post": daiPost,
@@ -1744,6 +1751,7 @@ export const REGISTRY: RegistryDefinition = {
     "gig-logistics": gigLogistics,
     "gintracom": gintracom,
     "global-delivery-network": globalDeliveryNetwork,
+    "global99": global99,
     "globalpost": globalpost,
     "globkurier": globkurier,
     "gls-ca": glsCa,
@@ -1828,6 +1836,7 @@ export const REGISTRY: RegistryDefinition = {
     "hound-express": houndExpress,
     "houng-ah-loun": houngAhLoun,
     "hovership": hovership,
+    "hpexpress": hpexpress,
     "hr-parcel": hrParcel,
     "hrvatska-posta": hrvatskaPosta,
     "hrx": hrx,
@@ -2572,6 +2581,7 @@ export const REGISTRY: RegistryDefinition = {
     "znlogic": znlogic,
     "zoom-ve": zoomVe,
     "zr-express": zrExpress,
+    "ztcce": ztcce,
     "zto": zto,
     "zto-freight": ztoFreight,
     "zto-international": ztoInternational,
@@ -2941,6 +2951,7 @@ export const REGISTRY: RegistryDefinition = {
     "ckeex": "universal",
     "class-package": "universal",
     "closer-logistics": "closer-logistics",
+    "cloudlogistics365": "cloudlogistics365",
     "cmt-express": "cmt-express",
     "cn-express-za": "universal",
     "cne": "cne",
@@ -3023,6 +3034,7 @@ export const REGISTRY: RegistryDefinition = {
     "cvc": "cvc",
     "cycloon": "universal",
     "cyprus-post": "cyprus-post",
+    "cyxfx": "cyxfx",
     "czl-express": "universal",
     "d-express": "d-express",
     "dac-uy": "universal",
@@ -3367,6 +3379,7 @@ export const REGISTRY: RegistryDefinition = {
     "global-business-tw": "universal",
     "global-delivery-network": "global-delivery-network",
     "global-parcel-service": "universal",
+    "global99": "global99",
     "globalpost": "globalpost",
     "globex-post": "universal",
     "globkurier": "globkurier",
@@ -3487,6 +3500,7 @@ export const REGISTRY: RegistryDefinition = {
     "houng-ah-loun": "houng-ah-loun",
     "hovership": "hovership",
     "hp-mostar": "universal",
+    "hpexpress": "hpexpress",
     "hr-parcel": "hr-parcel",
     "hrvatska-posta": "hrvatska-posta",
     "hrx": "hrx",
@@ -4761,6 +4775,7 @@ export const REGISTRY: RegistryDefinition = {
     "znlogic": "znlogic",
     "zoom-ve": "zoom-ve",
     "zr-express": "zr-express",
+    "ztcce": "ztcce",
     "zto": "zto",
     "zto-freight": "zto-freight",
     "zto-international": "zto-international",
