@@ -263,7 +263,8 @@ export class UspsSessions {
   /** Reads `req` through a session USPS has let through; `scrape` runs one read of a named session. */
   async run(request, sessions, scrape) {
     // The session carries the proxy: its reads name the session alone.
-    const { proxy: _proxy, ...req } = request;
+    const req = { ...request };
+    delete req.proxy;
     const started = this.now();
     const total = req.maxTimeout ?? 60_000;
     const left = () => total - (this.now() - started);
