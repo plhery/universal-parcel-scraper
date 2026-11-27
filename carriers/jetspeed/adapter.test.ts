@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { AdapterRegistry } from '../../core/adapter/index.js';
 import { trackCarrier } from '../../core/adapter/track.js';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
@@ -116,6 +117,18 @@ describe('JETSPEED tracking adapter', () => {
     expect(rows.map((wording) => jetspeedPlace(wording))).toEqual(['France', 'España', 'France']);
     expect(rows.map((wording) => trackingPlace(jetspeedPlace(wording)!).country)).toEqual(['FR', 'ES', 'FR']);
     for (const wording of ['Package sorted [ready]x', 'Weight [kg]: 1', 'No brackets here']) expect(jetspeedPlace(wording)).toBeUndefined();
+  });
+
+  it('lets a row a release gives its place take over the row stored without one', () => {
+    const policy = sameInstantIdentityPolicy('jetspeed', { supportsScanMatching: true })!;
+    const stored = { stage: 'in_transit', description: 'About to be sent to the [Example] warehouse', location: '', providerCode: '' };
+    expect(policy.matches!({ ...stored, location: 'Example' }, stored)).toBe(true);
+    expect(policy.matches!({ ...stored, stage: '', location: 'Example' }, { ...stored, stage: '' })).toBe(true);
+    expect(policy.matches!(stored, stored)).toBe(true);
+    // Another place, another wording, or a place the stored row already had, is another scan.
+    expect(policy.matches!({ ...stored, location: 'Elsewhere' }, stored)).toBe(false);
+    expect(policy.matches!({ ...stored, location: 'Example' }, { ...stored, location: 'Elsewhere' })).toBe(false);
+    expect(policy.matches!({ ...stored, description: 'Arrive at Airport [Example]', location: 'Example' }, stored)).toBe(false);
   });
 
   it('reads a row the map does not know by the shared rules, so its answer shows the parcel moving', async () => {

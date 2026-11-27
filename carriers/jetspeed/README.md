@@ -26,6 +26,9 @@ Recognition asks the same lookup.
 - Another line writes shorter rows, with the origin hub or town, or the destination's country, in
   brackets before, among or after the words; the adapter reads the brackets as the row's place. Its first
   scan is at the hub, after the order's data.
+- A release that reads a row's place where an earlier one read none gives the stored row that place:
+  the app's scan-identity policy lets the row with the place its wording names take over the row
+  stored without one, at the same instant, so the scan is not stored twice.
 - A row the map does not know is read by the shared wording rules, as on Quick Fort's tracker, so
   an answer of rows new to the map still shows the parcel moving.
 - The site fails with HTTP 500 when a request accepts any language (`Accept-Language: *`, Node's

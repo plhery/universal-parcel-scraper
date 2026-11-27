@@ -3,6 +3,7 @@ import { ChallengeError, IndeterminateError, NoHistoryError, NotFoundError, Sche
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus } from '../../core/status/index.js';
 import { isoTime } from '../../core/time/index.js';
+import { jetspeedPlace } from './place.js';
 import { jetspeedRowStage } from './status.js';
 
 export const PROVIDER = 'jetspeed';
@@ -24,32 +25,9 @@ export function jetspeedUrl(number: string): string {
 
 const text = (value: string) => value.replace(/\s+/g, ' ').trim();
 
-// The places rows name in their wording: the origin's town, with its state and country, ahead of
-// or inside the words; the origin hub in brackets; the country of the airport or facility the
-// parcel reached; the town the delivery station serves, before its postcode.
-const PLACES: readonly ((wording: string) => string | undefined)[] = [
-  (wording) => /^(.+?),([A-Z]{2}),([A-Z]{2}),[^,]+,Order information received by the carrier\.?$/.exec(wording)?.slice(1).join(', '),
-  (wording) => {
-    const match = /^Consignment received at the local warehouse in ([A-Z]{2}),([A-Z]{2}),[^,]+,(.+)\.$/.exec(wording);
-    return match ? `${match[3]}, ${match[1]}, ${match[2]}` : undefined;
-  },
-  (wording) => /^Origin processing completed \[(.+)\]\.$/.exec(wording)?.[1],
-  (wording) => /^Shipment arrived at (?:the )?([A-Z]{2}) (?:Airport|destination processing facility\.)$/.exec(wording)?.[1],
-  (wording) => /, serving (.+?),\d{4,5}\.$/.exec(wording)?.[1],
-  // The other line's hub, town or country, in brackets before, among or after the words
-  // ("About to be sent to the [Example] warehouse").
-  (wording) => /(?:^| )\[([^\]]{1,60})\](?: |\.?$)/.exec(wording)?.[1],
-];
-const DESTINATION = /^Shipment arrived at the ([A-Z]{2}) destination processing facility\.$/;
+export { jetspeedPlace } from './place.js';
 
-/** The place a row's wording names, if any. */
-export function jetspeedPlace(wording: string): string | undefined {
-  for (const read of PLACES) {
-    const place = read(wording)?.trim();
-    if (place) return place;
-  }
-  return undefined;
-}
+const DESTINATION = /^Shipment arrived at the ([A-Z]{2}) destination processing facility\.$/;
 
 /**
  * The tracker's server-rendered answer for `number`. Its rows carry wall clocks without a zone, all
