@@ -123,6 +123,8 @@ describe('BFE Express tracking', () => {
       ['ar, en tránsito', 'in_transit'],
       ['ar, en reparto', 'out_for_delivery'],
       ['ar, reparto en curso', 'out_for_delivery'],
+      ['ar, no entregado', 'failed_attempt'],
+      ['ar, local comercial cerrado', 'failed_attempt'],
       ['abc01, entregado', 'delivered'],
       ['tu paquete está en viaje a oficina ejemplo', 'in_transit'],
       ['reparto en curso', 'out_for_delivery'],
