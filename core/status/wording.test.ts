@@ -672,6 +672,8 @@ describe('classifyWording', () => {
       ['Não foi possível efetuar a entrega', 'failed_attempt'],
       ['Objeto não entregue - carteiro não atendido', 'failed_attempt'],
       ['Estabelecimento fechado', 'failed_attempt'],
+      // BFE's reason in Argentina a minute after its failed round, the country first.
+      ['AR, Local comercial cerrado', 'failed_attempt'],
       ['Em distribuição', 'out_for_delivery'],
       ['Está a ser entregue', 'out_for_delivery'],
       ['Chegada ao centro de distribuição', 'in_transit'],
