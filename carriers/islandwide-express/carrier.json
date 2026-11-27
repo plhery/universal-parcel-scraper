@@ -20,19 +20,61 @@
   "timezone": "America/Puerto_Rico",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "islandwide-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 52
+    },
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "delivered_at",
+    "eta_window"
+  ],
   "portal": {
     "url": "https://www.islandwide.com/tracking?TrackingNumber={trackingNumber}",
     "searchUrl": "https://www.islandwide.com/tracking",
     "helpUrl": "https://www.islandwide.com/contact",
     "canaryUrl": "https://www.islandwide.com/tracking",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "progress_rail",
+      "history",
+      "location",
+      "eta_window",
+      "delivered_at",
+      "recipient_address",
+      "sender_address",
+      "signatory",
+      "signature",
+      "coordinates",
+      "related_tracking_numbers"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta_window",
+      "delivered_at"
+    ],
+    "discarded": [
+      "progress_rail",
+      "recipient_address",
+      "sender_address",
+      "signatory",
+      "signature",
+      "coordinates",
+      "related_tracking_numbers"
+    ],
+    "unavailable": [
+      "offset_timestamps"
+    ]
   },
   "links": [
     {
@@ -46,5 +88,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "islandwide-express-1",
+      "pattern": "^\\d{9}[A-Z]{6}\\d{7}$",
+      "confidence": "low"
+    }
+  ]
 }

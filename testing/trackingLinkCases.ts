@@ -2290,6 +2290,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/erp\.szendex\.com\/DlWebTrackingVWE\/\?seg=999999999999999999$/,
     marker: /No se ha encontrado el envío solicitado/,
     forwarding: { notFound: /No se ha encontrado el envío solicitado/ } },
+  // The Wix page frames Islandwide's OutSystems tracker, which looks the number in its address up as it opens.
+  { carrier: 'islandwide-express', number: '999000999QZQZQZ9990009',
+    route: /^https:\/\/www\.islandwide\.com\/tracking\?TrackingNumber=999000999QZQZQZ9990009$/,
+    marker: /Get real time updates on all your shipments/ },
   // The page on tdn.es forwards the number to the tracker on plain HTTP a moment after it loads,
   // so the route takes both. The tracker's heading names the number over its notice for an
   // unregistered one.

@@ -1,4 +1,171 @@
 {
   "carrier": "islandwide-express",
-  "entries": []
+  "entries": [
+    {
+      "code": "8",
+      "wording": "Label has been generated for shipping",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "State packageCreated: the sender printed the label, before Islandwide has the parcel."
+    },
+    {
+      "code": "3",
+      "wording": "Pickup At",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "State packagePickedUp. The page follows the wording with the sender's address, which the adapter leaves out."
+    },
+    {
+      "code": "13",
+      "wording": "Picked up",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "State packageLogicalPickedUp, which the page heads with the same Picked up image as a pickup."
+    },
+    {
+      "code": "4",
+      "wording": "In Terminal",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "State inTerminal: a scan at one of Islandwide's terminals, which the row names."
+    },
+    {
+      "code": "5",
+      "wording": "Left Terminal",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "State outOfTerminal: the parcel left the terminal the row names."
+    },
+    {
+      "code": "33",
+      "wording": "In transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "State preOutForDelivery, which the page heads with its In transit image."
+    },
+    {
+      "code": "30",
+      "wording": "In transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "State dPInTerminal, which the page heads with its In transit image."
+    },
+    {
+      "code": "23",
+      "wording": "In transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "State deliveredToExternalCarrier, a hand-over to another carrier, which the page heads with its In transit image."
+    },
+    {
+      "code": "11",
+      "wording": "Out For Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "State outForDelivery; the row names the terminal the round leaves from."
+    },
+    {
+      "code": "10",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "State delivered. The page follows it with the delivery address and the signer's name, which the adapter leaves out."
+    },
+    {
+      "code": "25",
+      "wording": "Delivered to Drop-off / Pickup Center",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "State dPDeliveryDropOff, the caption of the page's image for it: the parcel waits at a drop-off and pickup center."
+    },
+    {
+      "code": "1",
+      "wording": "On Hold",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "State hold, the caption of the page's image for it."
+    },
+    {
+      "code": "7",
+      "wording": "Exception",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "State exception, the caption of the page's image for it."
+    },
+    {
+      "code": "9",
+      "wording": "Package Unavailable At Pickup",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "State packageUnavailableAtPickup, the caption of the page's image for it: the courier found no parcel to collect."
+    },
+    {
+      "code": "14",
+      "wording": "Canceled",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "State canceled, the caption of the page's image for it."
+    },
+    {
+      "code": "15",
+      "wording": "Incorrect Return",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "State misreturned, the caption of the page's image for it."
+    },
+    {
+      "code": "16",
+      "wording": "Wrong Delivery",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "State misdelivered, the caption of the page's image for it."
+    },
+    {
+      "code": "18",
+      "wording": "Deactivated",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "State deactivated, the caption of the page's image for it."
+    },
+    {
+      "code": "36",
+      "wording": "Additional Documentation Required",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "State additionalDocumentationRequired, the caption of the page's image for it."
+    },
+    {
+      "code": "38",
+      "wording": "Damaged Package",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "State packageDamage, the caption of the page's image for it."
+    }
+  ]
 }

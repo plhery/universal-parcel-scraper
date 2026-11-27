@@ -1,5 +1,26 @@
 {
   "carrier": "islandwide-express",
-  "gap": "The only public Islandwide numbers are fourteen digits from 2013 to 2016, a length many carriers share, and its current layout is unknown.",
-  "records": []
+  "gap": "Only an aggregator's example shows a current Islandwide number.",
+  "records": [
+    {
+      "number": "002836100CABXND0000000",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/island-wide/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "islandwide-express"
+        ]
+      },
+      "note": "TrackShip's Island Wide page gives it as a tracking number example. Islandwide's tracker answers it with a delivered shipment, and its list of formats gives the shape, nine digits, six letters and seven digits, as Islandwide's own."
+    }
+  ]
 }
