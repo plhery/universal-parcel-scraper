@@ -468,6 +468,17 @@ describe('shared provider result', () => {
     expect(statusMapAnswer({ carrier: 'unknown', description: 'The pick-up task has been cancelled.' })).toMatchObject({ kind: 'intentional_gap' });
   });
 
+  it("reads a warehouse order's creation as registered and leaves its packing and invoice without a stage, as Ship24 relays them", () => {
+    expect(event('2026-11-11T01:45:00+01:00', 'Created')).toMatchObject({ stage: 'registered', stage_source: 'wording:provider' });
+    expect(statusMapAnswer({ carrier: 'unknown', description: 'Created' })).toMatchObject({ stage: 'registered' });
+    for (const wording of ['Packed', 'Pack Start', 'Invoiced']) {
+      expect(event('2026-11-11T01:45:00+01:00', wording), wording).toMatchObject({ stage_source: 'none' });
+      expect(statusMapAnswer({ carrier: 'unknown', description: wording }), wording).toMatchObject({ kind: 'intentional_gap' });
+    }
+    // A creation that names something else stays unread.
+    expect(event('2026-11-11T01:45:00+01:00', 'Created return')).toMatchObject({ stage_source: 'none' });
+  });
+
   it("reads DHLink's export declaration and its warehouse in China, as providers relay them", () => {
     for (const wording of ['出口申报完成', '您的物品已到达华东仓', '您的物品已离开华东仓']) {
       expect(event('2026-01-07T12:45:00+08:00', wording), wording).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });

@@ -72,6 +72,10 @@ const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
   ['the parcel has reached the parcelshop', "GLS's ParcelShop scan as Postal Ninja relays it: the sender's drop-off or a parcel waiting for collection. A provider's result reads it by the carrier scans around it."],
   ['barcode scanning', "A Shenzhen forwarder's warehouse scan that First Line reads as its intake and PFC Express as transit: the wording names neither."],
   ['packaged', "A forwarder's packing, or a seller's: the wording does not say whose."],
+  // A warehouse's order steps, as Ship24 relays them beside the order's creation and before any carrier's scan.
+  ['packed', "An order packed, by a shop's warehouse or a forwarder's: the wording does not say whose."],
+  ['pack start', "An order's packing begun, by a shop's warehouse or a forwarder's: the wording does not say whose."],
+  ['invoiced', 'An order invoiced: a billing step, not a scan.'],
   ['ready for dispatch', "A parcel made ready to go, by a shop before any carrier has it or by a carrier on its way: the wording does not say whose."],
   ['returns', "A bare returns scan: a courier bringing the parcel back to its depot after a round, as BUFFALO's between two rounds, or a return to the sender: the wording does not say which."],
   ['exceptional parcel returned', "A forwarder's line, relayed between export and import clearance for parcels that went on to the last-mile carrier: the wording does not say what went back, or where."],
