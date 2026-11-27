@@ -572,6 +572,11 @@ export class USPSTracker {
       ...(resting ? [] : [browser]),
       // The private Chrome's share running out leaves the browser service the rest of the lookup.
       { id: 'trawl', enabled: !!trawl, recovers: error => recoverableByDefault(error) || error instanceof BudgetExceededError, run },
+      // USPS refuses one address's sessions for hours while it lets others through: when the service holds
+      // none USPS let through on its own address, the lookup is read again at once through the proxy, whose
+      // sessions the service keeps apart.
+      { id: 'trawl', enabled: !!trawl && !!this.#fallbackProxy,
+        recovers: error => unserved(error) && read.route === 'default' && this.#proxyReads(trawl!), run },
       // While the Chrome rests it reads a lookup the service could not, paused ones included, every
       // five minutes at most, or every minute while the service has no session ready. The read is
       // claimed as it starts, so lookups running together take one.
@@ -605,6 +610,12 @@ export class USPSTracker {
   /** The fallback proxy's run while the service's own route is paused, null while it is not. */
   #fallbackRun(trawl: TrawlClient): OutageRun | null {
     return this.#fallbackProxy && pausedMs(outageRun(trawl)) > 0 ? outageRun(trawl, this.#fallbackProxy) : null;
+  }
+
+  /** Whether the proxy is read now: the service's own route is paused and the proxy's is not. */
+  #proxyReads(trawl: TrawlClient): boolean {
+    const run = this.#fallbackRun(trawl);
+    return run !== null && pausedMs(run) === 0;
   }
 
   /** Whether a read the service's own route sent to the outage page is read again there. */
@@ -648,7 +659,7 @@ export class USPSTracker {
     }
     read.route = fallback ? 'residential' : 'default';
     read.reads += 1;
-    const page = await trawl.scrape({
+    const reading = trawl.scrape({
       url: uspsTrackingUrl(number),
       skipHttp: true,
       maxTier: 3,
@@ -664,6 +675,12 @@ export class USPSTracker {
       maxBytes: MAX_BYTES,
       fetcher: this.#fetcher,
       signal,
+    });
+    // No session USPS let through on the service's own address: USPS is turning that address away, so
+    // lookups read through the proxy until the pause ends, when the own route is asked again.
+    const page = await reading.catch((error: unknown) => {
+      if (!fallback && this.#fallbackProxy && unserved(error)) pauseRun(own, Date.now() + OUTAGE_PAUSE_MS);
+      throw error;
     });
     let result: CarrierResult;
     try { result = parseUSPSTrackingHtml(page.html, number); }

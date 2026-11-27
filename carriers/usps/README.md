@@ -85,9 +85,13 @@ history takes precedence over an earlier outage reply.
 
 USPS turns some server addresses away for hours while others load. With
 `USPS_FALLBACK_PROXY_URL` set to an HTTP(S) proxy, such as a residential connection, other
-lookups read through it while the service's own reads are paused. The browser service carries
-the whole context through the proxy and never falls back to its own address. Outside a pause
-the proxy carries nothing. A lookup that met the outage page is never read again through the
+lookups read through it while the service's own reads are paused. Besides three redirects in a
+row, the service answering that it holds no session USPS let through on its own address pauses
+them for five minutes, and that lookup is read again at once through the proxy. The browser
+service carries the whole context through the proxy, in sessions it prepares there, and never
+falls back to its own address. Outside a pause the proxy carries nothing. A refusal of the
+service's address leaves the proxy's sessions loading tracking; USPS's own outage sends both to
+its outage page. A lookup that met the outage page is never read again through the
 proxy: USPS's outage pages follow its own hours, and reads through the proxy met them too. Once
 USPS sends a read through the proxy to its outage page, the proxy rests until the own route's
 pause ends, and lookups until then end as `self_paced`. Each read's step record names its
