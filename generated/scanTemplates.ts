@@ -290,4 +290,9 @@ export const SCAN_TEMPLATE_KEYS: Readonly<Record<string, {
       "your shipment is out for delivery": ["out_for_delivery","en"],
     },
   },
+  "zto-international": {
+    wordings: {
+      "received on the recipient's behalf": ["received_for_recipient","en"],
+    },
+  },
 };

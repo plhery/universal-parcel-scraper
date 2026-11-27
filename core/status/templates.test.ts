@@ -41,6 +41,8 @@ describe('scan templates', () => {
       .toEqual({ id: 'picked_up', language: 'en' });
     expect(scanTemplate('dhl', { description: 'Die Sendung wurde erfolgreich zugestellt.' }))
       .toEqual({ id: 'delivered', language: 'de' });
+    expect(scanTemplate('zto-international', { providerCode: '16', description: 'Received on the recipient\'s behalf' }))
+      .toEqual({ id: 'received_for_recipient', language: 'en' });
   });
 
   it('reads a scan by a code whose entry has no wording, or a wording with a placeholder', () => {
