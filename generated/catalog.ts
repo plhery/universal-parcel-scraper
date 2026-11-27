@@ -6865,6 +6865,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "abx-express": {
+    "displayName": "ABX Express",
+    "color": "#da1f34",
+    "aliases": [
+      "ABX Express (M) Sdn. Bhd."
+    ],
+    "countries": [
+      "MY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "abx-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.abxexpress.com.my/tracking",
+    "trackingSearchUrl": "https://www.abxexpress.com.my/tracking",
+    "helpUrl": "https://www.abxexpress.com.my/Home/FAQ",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ace-ee": {
     "displayName": "ACE Logistics Estonia",
     "color": "#004f7c",
@@ -12854,6 +12876,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "bjytsywl": {
+    "displayName": "Yuantongshengyuan Logistics",
+    "color": "#0180C7",
+    "aliases": [
+      "远通盛源物流",
+      "远通盛源",
+      "北京远通盛源物流有限公司",
+      "YTSY"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bjytsywl",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "bla-kurer": {
     "displayName": "Blå Kurér",
     "color": "#001c37",
@@ -13078,6 +13123,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/index\\.php$",
         "params": [
           "trackno"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "bluegrace-logistics": {
+    "displayName": "BlueGrace Logistics",
+    "color": "#009ade",
+    "aliases": [
+      "BlueGrace"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bluegrace-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://mybluegrace.com/track/",
+    "trackingUrlTemplate": "https://mybluegrace.com/track/?id={trackingNumber}&docType=BOL",
+    "trackingSearchUrl": "https://mybluegrace.com/track/",
+    "helpUrl": "https://mybluegrace.com/get-in-touch/",
+    "linkRules": [
+      {
+        "domains": [
+          "mybluegrace.com",
+          "www.mybluegrace.com"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "id"
         ]
       }
     ],
@@ -14449,6 +14528,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "bvc-logistics": {
+    "displayName": "BVC Logistics",
+    "color": "#2b3775",
+    "aliases": [
+      "BVC Logistics Pvt. Ltd."
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bvc-logistics"
+    },
+    "canaryUrl": "https://track2.bvclogistics.com/",
+    "trackingSearchUrl": "https://track2.bvclogistics.com/",
+    "helpUrl": "https://bvclogistics.com/contact",
+    "linkRules": [],
+    "detectionRules": []
   },
   "byhd": {
     "displayName": "BYHD",
@@ -34362,6 +34462,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "hjwl": {
+    "displayName": "HJWL",
+    "color": "#05233B",
+    "aliases": [
+      "汇捷物流"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hjwl",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.hjwl.ltd/",
+    "trackingSearchUrl": "https://www.hjwl.ltd/#/kuaidi100",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^HJWL\\d{14}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "hjyt": {
     "displayName": "Hengjie Yutong",
     "color": "#0084de",
@@ -34776,6 +34902,25 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "hotwms": {
+    "displayName": "HOTWMS",
+    "color": "#00BFD8",
+    "aliases": [
+      "皇家云仓"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hotwms"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
     "detectionRules": []
   },
   "hound-express": {
@@ -74080,6 +74225,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "yjs-china": {
+    "displayName": "YJS Express",
+    "color": "#F4B251",
+    "aliases": [
+      "益加盛快递",
+      "益加盛物流",
+      "益加盛国际快递",
+      "赤峰益加盛物流有限公司",
+      "YJS-EXPRESS"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "yjs-china",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^CHNYJS\\d{8}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "ylexp": {
     "displayName": "Yi Long Express",
     "color": "#F24701",
@@ -75485,6 +75659,7 @@ export const CARRIER_IDS = [
   "ab-courier",
   "abc-cargo-express",
   "abf-freight",
+  "abx-express",
   "ace-ee",
   "ace-lt",
   "ace-lv",
@@ -75662,11 +75837,13 @@ export const CARRIER_IDS = [
   "bir-gunde-kargo",
   "biz-courier",
   "bjs-home-delivery",
+  "bjytsywl",
   "bla-kurer",
   "blackhaul",
   "blitznow",
   "blue-express",
   "blueex",
+  "bluegrace-logistics",
   "bluesky-parcel",
   "bluestreak-couriers",
   "bm-cargo",
@@ -75707,6 +75884,7 @@ export const CARRIER_IDS = [
   "burundi-post",
   "buslog",
   "bussgods",
+  "bvc-logistics",
   "byhd",
   "bypost",
   "byt",
@@ -76276,6 +76454,7 @@ export const CARRIER_IDS = [
   "hit-cargo-nicaragua",
   "hitch",
   "hiyes",
+  "hjwl",
   "hjyt",
   "hkd-express",
   "hlog-transportes",
@@ -76291,6 +76470,7 @@ export const CARRIER_IDS = [
   "hop-envios",
   "hopexpress",
   "horoz",
+  "hotwms",
   "hound-express",
   "houng-ah-loun",
   "hovership",
@@ -77448,6 +77628,7 @@ export const CARRIER_IDS = [
   "yingtu",
   "yitu",
   "yji",
+  "yjs-china",
   "ylexp",
   "yol-kargo",
   "yongma-logis",
@@ -77626,6 +77807,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ab-courier": [],
   "abc-cargo-express": [],
   "abf-freight": [],
+  "abx-express": [],
   "ace-ee": [],
   "ace-lt": [],
   "ace-lv": [],
@@ -77803,11 +77985,13 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bir-gunde-kargo": [],
   "biz-courier": ["biz-courier-1"],
   "bjs-home-delivery": ["bjs-home-delivery-1"],
+  "bjytsywl": [],
   "bla-kurer": [],
   "blackhaul": [],
   "blitznow": [],
   "blue-express": [],
   "blueex": [],
+  "bluegrace-logistics": [],
   "bluesky-parcel": [],
   "bluestreak-couriers": [],
   "bm-cargo": [],
@@ -77848,6 +78032,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "burundi-post": [],
   "buslog": [],
   "bussgods": ["bussgods-1"],
+  "bvc-logistics": [],
   "byhd": ["byhd-1"],
   "bypost": [],
   "byt": ["byt-1"],
@@ -78417,6 +78602,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hit-cargo-nicaragua": [],
   "hitch": ["hitch-1"],
   "hiyes": [],
+  "hjwl": ["hjwl-1"],
   "hjyt": [],
   "hkd-express": [],
   "hlog-transportes": ["hlog-transportes-1"],
@@ -78432,6 +78618,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hop-envios": [],
   "hopexpress": [],
   "horoz": [],
+  "hotwms": [],
   "hound-express": [],
   "houng-ah-loun": [],
   "hovership": [],
@@ -79589,6 +79776,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yingtu": [],
   "yitu": [],
   "yji": [],
+  "yjs-china": ["yjs-china-1"],
   "ylexp": [],
   "yol-kargo": [],
   "yongma-logis": [],

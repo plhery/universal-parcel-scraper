@@ -17,6 +17,7 @@ import { adapter as a1Post } from '../carriers/a1-post/adapter.js';
 import { adapter as aaaCooper } from '../carriers/aaa-cooper/adapter.js';
 import { adapter as abCourier } from '../carriers/ab-courier/adapter.js';
 import { adapter as abfFreight } from '../carriers/abf-freight/adapter.js';
+import { adapter as abxExpress } from '../carriers/abx-express/adapter.js';
 import { adapter as aciExpressKr } from '../carriers/aci-express-kr/adapter.js';
 import { adapter as acplCargo } from '../carriers/acpl-cargo/adapter.js';
 import { adapter as acsCourier } from '../carriers/acs-courier/adapter.js';
@@ -117,11 +118,13 @@ import { adapter as bimanBangladesh } from '../carriers/biman-bangladesh/adapter
 import { adapter as birGundeKargo } from '../carriers/bir-gunde-kargo/adapter.js';
 import { adapter as bizCourier } from '../carriers/biz-courier/adapter.js';
 import { adapter as bjsHomeDelivery } from '../carriers/bjs-home-delivery/adapter.js';
+import { adapter as bjytsywl } from '../carriers/bjytsywl/adapter.js';
 import { adapter as blackhaul } from '../carriers/blackhaul/adapter.js';
 import { adapter as blitznow } from '../carriers/blitznow/adapter.js';
 import { adapter as blueDart } from '../carriers/blue-dart/adapter.js';
 import { adapter as blueExpress } from '../carriers/blue-express/adapter.js';
 import { adapter as blueex } from '../carriers/blueex/adapter.js';
+import { adapter as bluegraceLogistics } from '../carriers/bluegrace-logistics/adapter.js';
 import { adapter as bmCargo } from '../carriers/bm-cargo/adapter.js';
 import { adapter as bobGo } from '../carriers/bob-go/adapter.js';
 import { adapter as bombino } from '../carriers/bombino/adapter.js';
@@ -140,6 +143,7 @@ import { adapter as bulgarianPosts } from '../carriers/bulgarian-posts/adapter.j
 import { adapter as bulongguoji } from '../carriers/bulongguoji/adapter.js';
 import { adapter as burdDelivery } from '../carriers/burd-delivery/adapter.js';
 import { adapter as bussgods } from '../carriers/bussgods/adapter.js';
+import { adapter as bvcLogistics } from '../carriers/bvc-logistics/adapter.js';
 import { adapter as byhd } from '../carriers/byhd/adapter.js';
 import { adapter as bypost } from '../carriers/bypost/adapter.js';
 import { adapter as byt } from '../carriers/byt/adapter.js';
@@ -514,6 +518,7 @@ import { adapter as highEnergyTransport } from '../carriers/high-energy-transpor
 import { adapter as hispapost } from '../carriers/hispapost/adapter.js';
 import { adapter as hitCargoNicaragua } from '../carriers/hit-cargo-nicaragua/adapter.js';
 import { adapter as hitch } from '../carriers/hitch/adapter.js';
+import { adapter as hjwl } from '../carriers/hjwl/adapter.js';
 import { adapter as hjyt } from '../carriers/hjyt/adapter.js';
 import { adapter as hmm } from '../carriers/hmm/adapter.js';
 import { adapter as hoeghAutoliners } from '../carriers/hoegh-autoliners/adapter.js';
@@ -525,6 +530,7 @@ import { adapter as hongtaiLogistics } from '../carriers/hongtai-logistics/adapt
 import { adapter as honourLaneShipping } from '../carriers/honour-lane-shipping/adapter.js';
 import { adapter as hopEnvios } from '../carriers/hop-envios/adapter.js';
 import { adapter as horoz } from '../carriers/horoz/adapter.js';
+import { adapter as hotwms } from '../carriers/hotwms/adapter.js';
 import { adapter as houndExpress } from '../carriers/hound-express/adapter.js';
 import { adapter as houngAhLoun } from '../carriers/houng-ah-loun/adapter.js';
 import { adapter as hovership } from '../carriers/hovership/adapter.js';
@@ -1239,6 +1245,7 @@ import { adapter as ydh } from '../carriers/ydh/adapter.js';
 import { adapter as yilongLogistics } from '../carriers/yilong-logistics/adapter.js';
 import { adapter as yitu } from '../carriers/yitu/adapter.js';
 import { adapter as yji } from '../carriers/yji/adapter.js';
+import { adapter as yjsChina } from '../carriers/yjs-china/adapter.js';
 import { adapter as ylexp } from '../carriers/ylexp/adapter.js';
 import { adapter as yolKargo } from '../carriers/yol-kargo/adapter.js';
 import { adapter as youbangExpress } from '../carriers/youbang-express/adapter.js';
@@ -1289,6 +1296,7 @@ export const REGISTRY: RegistryDefinition = {
     "aaa-cooper": aaaCooper,
     "ab-courier": abCourier,
     "abf-freight": abfFreight,
+    "abx-express": abxExpress,
     "aci-express-kr": aciExpressKr,
     "acpl-cargo": acplCargo,
     "acs-courier": acsCourier,
@@ -1389,11 +1397,13 @@ export const REGISTRY: RegistryDefinition = {
     "bir-gunde-kargo": birGundeKargo,
     "biz-courier": bizCourier,
     "bjs-home-delivery": bjsHomeDelivery,
+    "bjytsywl": bjytsywl,
     "blackhaul": blackhaul,
     "blitznow": blitznow,
     "blue-dart": blueDart,
     "blue-express": blueExpress,
     "blueex": blueex,
+    "bluegrace-logistics": bluegraceLogistics,
     "bm-cargo": bmCargo,
     "bob-go": bobGo,
     "bombino": bombino,
@@ -1412,6 +1422,7 @@ export const REGISTRY: RegistryDefinition = {
     "bulongguoji": bulongguoji,
     "burd-delivery": burdDelivery,
     "bussgods": bussgods,
+    "bvc-logistics": bvcLogistics,
     "byhd": byhd,
     "bypost": bypost,
     "byt": byt,
@@ -1786,6 +1797,7 @@ export const REGISTRY: RegistryDefinition = {
     "hispapost": hispapost,
     "hit-cargo-nicaragua": hitCargoNicaragua,
     "hitch": hitch,
+    "hjwl": hjwl,
     "hjyt": hjyt,
     "hmm": hmm,
     "hoegh-autoliners": hoeghAutoliners,
@@ -1797,6 +1809,7 @@ export const REGISTRY: RegistryDefinition = {
     "honour-lane-shipping": honourLaneShipping,
     "hop-envios": hopEnvios,
     "horoz": horoz,
+    "hotwms": hotwms,
     "hound-express": houndExpress,
     "houng-ah-loun": houngAhLoun,
     "hovership": hovership,
@@ -2511,6 +2524,7 @@ export const REGISTRY: RegistryDefinition = {
     "yilong-logistics": yilongLogistics,
     "yitu": yitu,
     "yji": yji,
+    "yjs-china": yjsChina,
     "ylexp": ylexp,
     "yol-kargo": yolKargo,
     "youbang-express": youbangExpress,
@@ -2572,6 +2586,7 @@ export const REGISTRY: RegistryDefinition = {
     "ab-courier": "ab-courier",
     "abc-cargo-express": "universal",
     "abf-freight": "abf-freight",
+    "abx-express": "abx-express",
     "ace-ee": "universal",
     "ace-lt": "universal",
     "ace-lv": "universal",
@@ -2757,12 +2772,14 @@ export const REGISTRY: RegistryDefinition = {
     "bir-gunde-kargo": "bir-gunde-kargo",
     "biz-courier": "biz-courier",
     "bjs-home-delivery": "bjs-home-delivery",
+    "bjytsywl": "bjytsywl",
     "bla-kurer": "universal",
     "blackhaul": "blackhaul",
     "blitznow": "blitznow",
     "blue-dart": "blue-dart",
     "blue-express": "blue-express",
     "blueex": "blueex",
+    "bluegrace-logistics": "bluegrace-logistics",
     "bluesky-parcel": "universal",
     "bluestreak-couriers": "universal",
     "bm-cargo": "bm-cargo",
@@ -2806,6 +2823,7 @@ export const REGISTRY: RegistryDefinition = {
     "burundi-post": "universal",
     "buslog": "universal",
     "bussgods": "bussgods",
+    "bvc-logistics": "bvc-logistics",
     "byhd": "byhd",
     "bypost": "bypost",
     "byt": "byt",
@@ -3411,6 +3429,7 @@ export const REGISTRY: RegistryDefinition = {
     "hit-cargo-nicaragua": "hit-cargo-nicaragua",
     "hitch": "hitch",
     "hiyes": "universal",
+    "hjwl": "hjwl",
     "hjyt": "hjyt",
     "hkd-express": "universal",
     "hlog-transportes": "universal",
@@ -3427,6 +3446,7 @@ export const REGISTRY: RegistryDefinition = {
     "hop-envios": "hop-envios",
     "hopexpress": "universal",
     "horoz": "horoz",
+    "hotwms": "hotwms",
     "hound-express": "hound-express",
     "houng-ah-loun": "houng-ah-loun",
     "hovership": "hovership",
@@ -4636,6 +4656,7 @@ export const REGISTRY: RegistryDefinition = {
     "yingtu": "universal",
     "yitu": "yitu",
     "yji": "yji",
+    "yjs-china": "yjs-china",
     "ylexp": "ylexp",
     "yol-kargo": "yol-kargo",
     "yongma-logis": "universal",
