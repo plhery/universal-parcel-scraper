@@ -106,6 +106,10 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['CC_IM_FAILURE', 'exception'],
   ['CC_IM_EXCEPTION', 'exception'],
   ['GTMS_ACCEPT', 'in_transit'],
+  // The local delivery company turning the hand-over down because the parcel has not reached the destination yet:
+  // "Package not accepted by local delivery company.Package not yet arrived in local destination/destination
+  // country". Its receipt follows hours later, so the parcel is still on its way.
+  ['GTMS_ACCEPT_FAILURE', 'in_transit'],
   // The partner relabelling the parcel with its own number at its facility.
   ['GTMS_RELABEL', 'in_transit'],
   // A partner accepting the parcel after the hand-off: Cainiao accepted it long before.

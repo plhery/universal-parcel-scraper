@@ -222,6 +222,8 @@ describe('bpost direct history', () => {
     expect(parseBpost(returned, NUMBER)).not.toHaveProperty('pickup_point');
     expect(parseBpost(returned, NUMBER).events?.[0]).toMatchObject({ provider_leg: 'return', stage: 'returned' });
     expect(classifyBpostStatus('Item available at Pick-up point')?.stage).toBe('ready_for_pickup');
+    // The clerk keying the item in at a post office counter is the sender's drop-off there.
+    expect(classifyBpostStatus('Item information registered manually at the counter')).toEqual({ status: 'in_transit', stage: 'accepted' });
     // A parcel posted abroad passes these before and after bpost's own scans.
     for (const wording of ['Arrival at facilities', 'Item has passed a checkpoint']) expect(classifyBpostStatus(wording)?.stage).toBe('in_transit');
     // A return label's parcel on its way to the shop that issued it, which bpost calls the sender.

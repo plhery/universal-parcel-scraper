@@ -214,6 +214,14 @@
       "firstSeen": "2026-10-22"
     },
     {
+      "wording": "Item information registered manually at the counter",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "At a post office, a minute after the sender's preparation of the shipment, with the item's sorting the next day: the clerk keyed the item in as the sender handed it over."
+    },
+    {
       "wording": "The return item has been sorted and will be made available for the sender",
       "language": "en",
       "stage": "in_transit",

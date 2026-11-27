@@ -63,6 +63,8 @@ const WORDINGS: Record<string, ClassifiedStatus> = {
   // The sender's drop-off, then bpost's acceptance of it a day later.
   'Drop off item by the customer': { status: 'in_transit', stage: 'accepted' },
   'Item accepted after deposit by sender': { status: 'in_transit', stage: 'accepted' },
+  // A post office clerk keying the item in at the counter: the sender's drop-off there, before its sorting.
+  'Item information registered manually at the counter': { status: 'in_transit', stage: 'accepted' },
   'Confirmation of preparation of the shipment received': { status: 'pending', stage: 'registered' },
   'Item is announced / Landmark Global (bpost) received the information': { status: 'pending', stage: 'registered' },
 };

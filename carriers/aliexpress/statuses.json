@@ -388,6 +388,15 @@
       "note": "The local delivery company accepting the parcel after the hand-off, not the parcel's acceptance."
     },
     {
+      "code": "GTMS_ACCEPT_FAILURE",
+      "wording": "Package not accepted by local delivery company.Package not yet arrived in local destination/destination country",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "The local delivery company turning the hand-over down before the parcel reached the destination, hours before its receipt (GTMS_ACCEPT): the parcel is still on its way, not held."
+    },
+    {
       "code": "GTMS_RELABEL",
       "wording": "Tracking number changed",
       "language": "en",
