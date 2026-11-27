@@ -1,0 +1,12 @@
+{
+  "carrier": "bvc-logistics",
+  "entries": [
+    {"wording": "Picked Up", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Collected from the sender, in the sender's town; the public sample has two such rows minutes apart."},
+    {"wording": "Origin Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "At the hub of the sender's town, which the row names."},
+    {"wording": "In Transit", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "On the road between hubs; the row names no town or hub."},
+    {"wording": "Transit Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "At a hub on the way, which the row names."},
+    {"wording": "Destination Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "At the hub that serves the recipient's town."},
+    {"wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "With the courier in the recipient's town."},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Delivered in the recipient's town."}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "carrier": "bvc-logistics",
+  "records": [
+    {
+      "number": "DS1808568",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/bvc-logistics/",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
+      },
+      "note": "TrackShip's BVC Logistics page gives it as a tracking code example. BVC's tracker answers it with a shipment picked up in Jaipur, through hubs in Mumbai and Goa, and delivered in Mapusa."
+    }
+  ]
+}

@@ -7327,5 +7327,11 @@
     "pattern": "^EZP\\d{12}$",
     "kind": "by_design",
     "reason": "EZP and twelve digits is an open-source library's sample for ABX Express that ABX's tracker no longer knows, and nothing in the number ties it to ABX rather than to the platform that booked it."
+  },
+  {
+    "carrier": "bvc-logistics",
+    "pattern": "^DS\\d{7}$",
+    "kind": "collision",
+    "reason": "DS and seven digits is BVC Logistics' one public sample, and two letters and seven digits is the shape of R+L Carriers' PRO numbers, so one sample cannot give BVC the shape."
   }
 ]

@@ -1,0 +1,62 @@
+{
+  "id": "bvc-logistics",
+  "displayName": "BVC Logistics",
+  "aliases": [
+    "BVC Logistics Pvt. Ltd."
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#2b3775"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "bvc-logistics",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "delivered_at"
+  ],
+  "portal": {
+    "searchUrl": "https://track2.bvclogistics.com/",
+    "helpUrl": "https://bvclogistics.com/contact",
+    "canaryUrl": "https://track2.bvclogistics.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "offset_timestamps",
+      "delivered_at"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}
