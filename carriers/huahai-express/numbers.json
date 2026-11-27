@@ -1,0 +1,85 @@
+{
+  "carrier": "huahai-express",
+  "records": [
+    {
+      "number": "TRF0116800919270",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260521202254id_/https://www.parcelpanel.com/couriers/huahai/",
+        "date": "2026-05-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's HuaHai Express page showed in this capture. Huahai's tracker answers it with a parcel from Yiwu delivered by USPS in San Diego, whose scans the record copies under Huahai's number."
+    },
+    {
+      "number": "TRF0116800602129",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260208234036id_/https://www.parcelpanel.com/couriers/huahai/",
+        "date": "2026-02-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "evri",
+          "evri-uk"
+        ]
+      },
+      "note": "The example tracking number a tracking directory's HuaHai Express page showed in this capture. Huahai's tracker answers it with a parcel from Hangzhou delivered by USPS in Kentucky."
+    },
+    {
+      "number": "TRF0116800428704",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251117101016id_/https://www.parcelpanel.com/couriers/huahai/",
+        "date": "2025-11-17",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's HuaHai Express page showed in this capture. Huahai's tracker answers it with a parcel from Hangzhou delivered by UniUni in Tennessee."
+    },
+    {
+      "number": "TRF0116800030358",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250807224143id_/https://www.parcelpanel.com/couriers/huahai/",
+        "date": "2025-08-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's HuaHai Express page showed in this capture. Huahai's tracker answers it with a parcel flown through Incheon whose last rows wait for customs clearance."
+    }
+  ]
+}

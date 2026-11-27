@@ -1160,6 +1160,7 @@ import { statusMap as ylexp } from '../../carriers/ylexp/status.js';
 import { statusMap as uniconExpressUs } from '../../carriers/unicon-express-us/status.js';
 import { statusMap as z1Express } from '../../carriers/z1-express/status.js';
 import { statusMap as topest } from '../../carriers/topest/status.js';
+import { statusMap as huahaiExpress } from '../../carriers/huahai-express/status.js';
 import { statusMap as austway } from '../../carriers/austway/status.js';
 import { statusMap as jomkirim } from '../../carriers/jomkirim/status.js';
 import { statusMap as expeditors } from '../../carriers/expeditors/status.js';
@@ -1398,7 +1399,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'spc-worldwide-express': spcWorldwideExpress, xendnow,
   srj, ylexp,
   'unicon-express-us': uniconExpressUs,
-  'z1-express': z1Express, topest, austway,
+  'z1-express': z1Express, topest, austway, 'huahai-express': huahaiExpress,
   jomkirim,
   expeditors,
   'next-smart-ship': nextSmartShip,

@@ -1,0 +1,83 @@
+{
+  "id": "huahai-express",
+  "displayName": "Huahai Express",
+  "aliases": [
+    "Huahai",
+    "Huahai Supply Chain",
+    "Huahai International Logistics",
+    "Hangzhou Huahai Supply Chain Management",
+    "花海供应链",
+    "杭州花海供应链管理有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#2F6E96"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "huahai-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "service_name",
+    "destination_country"
+  ],
+  "portal": {
+    "searchUrl": "https://www.huahaiexpress.com/track.html",
+    "canaryUrl": "https://www.huahaiexpress.com/track.html",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country",
+      "customer_reference",
+      "recipient_name",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country"
+    ],
+    "discarded": [
+      "customer_reference",
+      "recipient_name",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "delivered_at",
+      "offset_timestamps",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "119.45.241.73"
+      ],
+      "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+      "params": [
+        "documentCode"
+      ]
+    }
+  ],
+  "detection": []
+}

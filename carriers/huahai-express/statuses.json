@@ -1,0 +1,31 @@
+{
+  "carrier": "huahai-express",
+  "entries": [
+    {"wording": "The electronic information of the goods has been received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order's data, its first row, weeks before the warehouse's first scan."},
+    {"wording": "Shipping Label Created", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "GOFO's label, copied into the record days after it was made."},
+    {"code": "ARRIVAL", "wording": "parcel arrived at exchange office", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The first scan in Huahai's hands, at its Hangzhou warehouse."},
+    {"wording": "International flight is currently in the process of cargo loading. Please wait patiently.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Written daily while the parcel waits for its flight."},
+    {"code": "SHIPMENT", "wording": "Goods leaving the operation center", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "CO_C_CR", "wording": "The shipment is being transshipped via the hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "A row of the platform's custom track product, which the adapter holds back as written ahead."},
+    {"wording": "Shipment is in transit to next facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Arrived at the origin international airport", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "International flight has departed", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "International flight has arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The goods arrived at the airport in South Korea", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line through Incheon: the flight's landing in Korea."},
+    {"wording": "Clearance processing completed - Import", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance in the United States, done."},
+    {"wording": "Warehouse pickup", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel collected from the airport's warehouse after clearance."},
+    {"wording": "Arrived at facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The local carrier is delivering urgently", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel handed to the delivering carrier, GOFO, hours before GOFO's first hub scan."},
+    {"wording": "Arrived at GOFO Regional Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Departed GOFO Regional Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "In Transit to Next Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Arrived at GOFO Delivery Station", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Departed GOFO Delivery Station", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Delivered to local carrier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel handed to the delivering carrier, UniUni."},
+    {"wording": "Order received", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "UniUni's first row, its record of the order, written after the line handed the parcel over."},
+    {"wording": "Accepted at USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's first scan, copied: USPS takes the parcel over from the line, which accepted it in China."},
+    {"wording": "Arrived at USPS Regional Origin Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live"},
+    {"wording": "No Access to Delivery Location", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "note": "USPS's round could not reach the address; it delivered the next day."}
+  ]
+}

@@ -2324,6 +2324,12 @@
     "reason": "Some senders' parcels carry a twenty-digit SSCC, which no carrier rule claims."
   },
   {
+    "carrier": "huahai-express",
+    "pattern": "^TRF\\d{13}$",
+    "kind": "open",
+    "reason": "Huahai's public waybills have this layout, TRF and thirteen digits, from a tracking directory's courier page; one directory's samples do not establish the family."
+  },
+  {
     "carrier": "hunter-express",
     "pattern": "^[A-Z]{3}\\d{6}$",
     "kind": "by_design",
