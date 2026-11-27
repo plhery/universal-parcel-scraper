@@ -906,6 +906,7 @@ import { statusMap as tipsa } from '../../carriers/tipsa/status.js';
 import { statusMap as tirupatiCourier } from '../../carriers/tirupati-courier/status.js';
 import { statusMap as tmmExpress } from '../../carriers/tmm-express/status.js';
 import { statusMap as tmwExpress } from '../../carriers/tmw-express/status.js';
+import { statusMap as iflow } from '../../carriers/iflow/status.js';
 import { statusMap as tnt } from '../../carriers/tnt/status.js';
 import { statusMap as tntAu } from '../../carriers/tnt-au/status.js';
 import { statusMap as tntIt } from '../../carriers/tnt-it/status.js';
@@ -1356,7 +1357,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'grand-slam-express': grandSlamExpress, 'gruber-logistics': gruberLogistics, 'gs-postbox': gsPostbox, 'gsi-express': gsiExpress, 'gta-airskip': gtaAirskip, 'gtl-goto': gtlGoto, guatex, gzyl,
   hanjin, 'happy-post': happyPost, haypost, hcrd, 'hct-logistics': hctLogistics, hdgj, helthjem, heppner, hepsijet, hermes, 'hermes-at': hermesAt, 'hermes-de': hermesDe, hhh, hitch, hispapost, hjyt, 'home-delivery-team': homeDeliveryTeam, homexpress, 'hongkong-post': hongkongPost, 'hongtai-logistics': hongtaiLogistics,
   horoz, 'hound-express': houndExpress, 'houng-ah-loun': houngAhLoun, hovership, 'hr-parcel': hrParcel, 'hrvatska-posta': hrvatskaPosta, huahan, 'huaqi-express': huaqiExpress, 'huaya-express': huayaExpress, huiyu, 'hunter-express': hunterExpress, hytd, hywl,
-  'icc-worldwide': iccWorldwide, 'ics-courier': icsCourier, 'ids-logistik': idsLogistik, 'ilyang-logis': ilyangLogis, imile,
+  'icc-worldwide': iccWorldwide, 'ics-courier': icsCourier, 'ids-logistik': idsLogistik, iflow, 'ilyang-logis': ilyangLogis, imile,
   'indah-logistik': indahLogistik, 'india-post': indiaPost, inpost, instabox, instapack, 'integral-pack': integralPack, 'intel-valley': intelValley, intelcom, 'internet-express': internetExpress, interrapidisimo,
   'intex-paketdienst': intexPaketdienst, 'israel-post': israelPost, 'j-and-t': jAndT, 'j-and-t-au': jAndTAu, 'j-and-t-de': jAndTDe, 'j-and-t-uk': jAndTUk, 'j-and-t-cargo': jntCargo,
   'j-and-t-middle-east': jAndTMiddleEast, 'j-and-t-mx': jAndTMx, 'j-and-t-cn': jAndTCn, jadlog, janio, 'japan-post': japanPost, jcex, jch, 'jd-logistics': jdLogistics, jeebly, 'jersey-post': jerseyPost, 'jet-logistic': jetLogistic, 'jetline-couriers': jetlineCouriers, jetizz, jetspeed,

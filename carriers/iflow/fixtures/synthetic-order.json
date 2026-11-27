@@ -1,0 +1,114 @@
+{
+  "tracking_id": "123456",
+  "order_id": "654321",
+  "shippings": [
+    {
+      "shipment_id": "ABC0000001234567",
+      "steps": [
+        {
+          "title": "En preparación",
+          "showNps": false,
+          "states": [
+            {
+              "state": "En preparación",
+              "ifowState": "Registrado",
+              "dateSort": "2026-11-07T23:29:00.000Z",
+              "date": "07/11/2026 20:29",
+              "details": "Tu pedido está siendo preparado por el vendedor",
+              "reason": null,
+              "showDate": false
+            },
+            {
+              "state": "En preparación",
+              "ifowState": "Retirado",
+              "dateSort": "2026-11-10T21:36:00.000Z",
+              "date": "10/11/2026 18:36",
+              "details": "Ya retiramos tu pedido y se encuentra camino a nuestro centro de distribución",
+              "reason": null,
+              "showDate": false
+            }
+          ]
+        },
+        {
+          "title": "En camino",
+          "showNps": false,
+          "states": [
+            {
+              "state": "En camino",
+              "ifowState": "Descargado",
+              "dateSort": "2026-11-10T23:41:00.000Z",
+              "date": "10/11/2026 20:41",
+              "details": "Tu pedido llegó a nuestro centro de distribución",
+              "reason": null,
+              "showDate": true
+            },
+            {
+              "state": "En camino",
+              "ifowState": "Recibido en CD",
+              "dateSort": "2026-11-12T13:21:00.000Z",
+              "date": "12/11/2026 10:21",
+              "details": "Tu pedido comenzó el circuito de distribución",
+              "reason": null,
+              "showDate": true
+            },
+            {
+              "state": "En camino",
+              "ifowState": "Despachado a Nodo Interno",
+              "dateSort": "2026-11-12T15:13:00.000Z",
+              "date": "12/11/2026 12:13",
+              "details": "Tu pedido se encuentra en camino a la sucursal más cercana a tu domicilio",
+              "reason": null,
+              "showDate": true
+            }
+          ]
+        },
+        {
+          "title": "Paso sintético",
+          "showNps": false,
+          "states": []
+        }
+      ],
+      "estimatedDeliveryDate": {
+        "min": "18/11",
+        "max": "20/11"
+      },
+      "printPngUrl": "",
+      "printUrl": "https://example.com/synthetic-label.pdf"
+    },
+    {
+      "shipment_id": "ABC0000007654321",
+      "steps": [
+        {
+          "title": "En preparación",
+          "showNps": false,
+          "states": [
+            {
+              "state": "En preparación",
+              "ifowState": "Registrado",
+              "dateSort": "2026-11-08T12:00:00.000Z",
+              "date": "08/11/2026 09:00",
+              "details": "Tu pedido está siendo preparado por el vendedor",
+              "reason": null,
+              "showDate": false
+            }
+          ]
+        }
+      ],
+      "estimatedDeliveryDate": {
+        "min": "19/11",
+        "max": "19/11"
+      },
+      "printPngUrl": "",
+      "printUrl": ""
+    }
+  ],
+  "delivery_mode": "Normal",
+  "nps_saved": false,
+  "sender": {
+    "name": "Tienda Sintética"
+  },
+  "receiver": {
+    "name": "Persona Inventada Prueba"
+  },
+  "faq": []
+}

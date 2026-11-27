@@ -405,6 +405,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'ttk-europe', number: 'TE900000005GB',
     route: /^https:\/\/ttkeu\.com\/tracking\/tracking-detail\/\?id=TE900000005GB$/,
     marker: /追踪详情[\s\S]*查询另一个包裹|查询另一个包裹[\s\S]*追踪详情/ },
+  // The page looks the code up as it opens and moves to the order's page for one it finds; for another it shows its form.
+  { carrier: 'iflow', number: 'TRI0000000000000',
+    route: /^https:\/\/tracking\.iflow21\.com\/#\/tracking\/(?:code\/TRI0000000000000|\d+)$/,
+    marker: /Seguí tu envío|Número de seguimiento/ },
   { carrier: 'masspack', number: '0000000000',
     route: /^https:\/\/mp\.masspack-express\.com\/#\/public-tracking\?orderNum=0000000000$/,
     marker: /Shipment Tracking|运单查询/i },

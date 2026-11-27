@@ -23,7 +23,22 @@
           "iflow"
         ]
       },
-      "note": "The saved iFLOW tracking result shows this exact number with dated collection and transit events. A fresh lookup could not reach the public tracking endpoint."
+      "note": "The saved iFLOW tracking result shows this exact number with dated collection and transit events. The tracker's search now answers it with the server error it gives codes it holds no record of."
+    },
+    {
+      "number": "TRF0000009876543",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-27",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "iflow"
+        ]
+      },
+      "note": "Made-up number in the shape of an iFLOW shipment that the app tracked for Argentina: three letters, six zeros and seven digits, as on the public TRI sample, which iFLOW's tracker answered with its states. Its serial sits beyond the range in use."
     }
   ]
 }

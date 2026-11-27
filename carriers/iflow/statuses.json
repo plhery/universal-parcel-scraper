@@ -1,4 +1,44 @@
 {
   "carrier": "iflow",
-  "entries": []
+  "entries": [
+    {
+      "code": "Registrado",
+      "wording": "Tu pedido está siendo preparado por el vendedor",
+      "stage": "registered",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "Under the step En preparación: the seller is preparing the order, which iFLOW has not collected yet."
+    },
+    {
+      "code": "Retirado",
+      "wording": "Ya retiramos tu pedido y se encuentra camino a nuestro centro de distribución",
+      "stage": "accepted",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "iFLOW collected the order from the seller and is taking it to its distribution centre."
+    },
+    {
+      "code": "Descargado",
+      "wording": "Tu pedido llegó a nuestro centro de distribución",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "Recibido en CD",
+      "wording": "Tu pedido comenzó el circuito de distribución",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "Received at the distribution centre (CD) into the delivery circuit."
+    },
+    {
+      "code": "Despachado a Nodo Interno",
+      "wording": "Tu pedido se encuentra en camino a la sucursal más cercana a tu domicilio",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "Sent on to the branch nearest the recipient's address."
+    }
+  ]
 }
