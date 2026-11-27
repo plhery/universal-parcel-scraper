@@ -12,13 +12,13 @@ One bounded JSON request supplies the number and a fresh request identifier. No 
 
 Null or empty history is inconclusive: unavailable history does not prove shipment absence. Error rows and malformed scans cannot silently expose an older scan as current.
 
-The delivered summary is authoritative. If the latest scan does not establish delivery, an undated summary snapshot preserves that evidence without borrowing an older scan's time. Unknown scan summaries remain visible without an inferred stage. An office reading "In Transit" is a status, not a place, and is dropped.
+The delivered summary is authoritative. If the latest scan does not establish delivery, an undated summary snapshot preserves that evidence without borrowing an older scan's time. The return scan of an item sent back to its sender reads as returned. Unknown scan summaries remain visible without an inferred stage. An office reading "In Transit" is a status, not a place, and is dropped.
 
-Offsetless clocks receive Malaysian time only when both route countries explicitly identify a domestic Malaysian journey. International or unlocated clocks and invalid dates remain provider text with no instant. The source supplies current scans first; that order is preserved whenever any clock is unresolved.
+Offsetless clocks receive Malaysian time only when both route countries explicitly identify a domestic Malaysian journey. International or unlocated scans keep their clock as a wall clock (`local_time`), since a relayed scan can be on another country's clock; invalid dates remain provider text. The source supplies current scans first; that order is preserved whenever any clock is unresolved.
 
 ## Limitations
 
-The adapter retains a bounded history and coarse facility names. It excludes personal contact blocks, addresses and proof-of-delivery material. It returns no ETA. Undated scans are archived as direct evidence; displaying them in a dated timeline requires another source with resolved clocks.
+The adapter retains a bounded history and coarse facility names. It excludes personal contact blocks, addresses and proof-of-delivery material. It returns no ETA. An international scan names no zone, so a consumer dates it on a deduced clock (`dateLocalClocks`).
 
 ## Testing
 

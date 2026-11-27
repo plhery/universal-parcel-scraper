@@ -211,7 +211,7 @@ describe('Pos Malaysia response parsing', () => {
     if (clock) expect(result.events?.[0]?.provider_time_text).toBe(clock);
   });
 
-  it('does not apply Malaysian time to international or unlocated scans', () => {
+  it('keeps the wall clocks of international or unlocated scans without applying Malaysian time', () => {
     for (const route of [
       { sender_data: { sender_country: 'MY' }, recipient_data: { receipient_country: 'BD' } },
       { sender_data: { sender_country: 'GB' }, recipient_data: { receipient_country: 'MY' } },
@@ -221,9 +221,10 @@ describe('Pos Malaysia response parsing', () => {
         detail('Item arrived at delivery office', 'Arrived at destination office', '23 Feb 2026, 01:40:28 PM', 'EMG', ''),
         detail('On the way', 'Earlier international scan', '22 Feb 2026, 05:34:58 PM', 'TN035', ''),
       ] })]), TRACKING_NUMBER);
-      expect(result).toMatchObject({ status: 'in_transit', last_update: null });
+      expect(result).toMatchObject({ status: 'in_transit', last_update: null, last_update_local: '2026-02-23T13:40:28' });
       expect(result).not.toHaveProperty('timezone');
-      expect(result.events?.every(event => !event.time && typeof event.provider_time_text === 'string')).toBe(true);
+      expect(result.events?.map(event => event.local_time)).toEqual(['2026-02-23T13:40:28', '2026-02-22T17:34:58']);
+      expect(result.events?.some(event => event.time || event.provider_time_text)).toBe(false);
     }
   });
 
@@ -233,7 +234,21 @@ describe('Pos Malaysia response parsing', () => {
       last_status_text: 'Item arrived at delivery office' });
     expect(result.events).toHaveLength(5);
     expect(result.events?.map(event => event.provider_code)).toEqual(['EMG', 'TN035', 'TN030', 'TN008', 'TN001']);
-    expect(result.events?.every(event => !event.time && event.provider_time_text)).toBe(true);
+    expect(result.events?.every(event => !event.time && event.local_time)).toBe(true);
+    expect(result.events?.[0]?.local_time).toBe('2026-02-23T09:20:00');
+  });
+
+  it('reads an item sent back to its sender as returned', () => {
+    const result = parsePosMalaysiaTrackingResponse(payload([item({ connote_id: 'RR000000005MY',
+      sender_data: { sender_country: 'MY' }, recipient_data: { receipient_country: 'SV' }, process_status: 'RETURNED', tracking_data: [
+        detail('We have returned the parcel to the sender Thank you!', 'Return completed', '23 Jul 2026, 11:04:10 AM', '34', ''),
+        detail('Your parcel has been presented to the Customs Authority for inspection', 'Customs inspection', '03 Jul 2026, 09:13:00 AM', 'EDB', ''),
+        detail('Your parcel is being transported to destination country', 'Transfer in progress', '27 Jun 2026, 06:03:00 PM', 'TN008', ''),
+      ] })]), 'RR000000005MY');
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Return completed',
+      last_update: null, last_update_local: '2026-07-23T11:04:10' });
+    expect(result.events?.map(event => event.stage)).toEqual(['returned', 'customs', 'in_transit']);
+    expect(classifyPosMalaysiaStatus('We have returned the parcel to the sender Thank you!')).toEqual({ status: 'exception', stage: 'returned' });
   });
 
   it('reads an inbound item through customs to its delivery scan without a summary snapshot', () => {

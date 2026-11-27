@@ -42,7 +42,7 @@ const cases = [
   { carrier: 'spring-gds', number: 'LX123456799NL', fixtureNumber: 'LX999999987NL', fixture: 'delivered.json', unresolved: true },
   { carrier: 'uniuni', number: 'UUS0000000000000001', fixture: 'delivered.json', unresolved: true },
   { carrier: 'ctt-express', number: '0000000000000000000001', fixture: 'pickup.json', unresolved: true },
-  { carrier: 'pos-malaysia', number: 'RR000000014MY', fixtureNumber: 'RR000000005MY', fixture: 'international.json', unresolved: true },
+  { carrier: 'pos-malaysia', number: 'RR000000014MY', fixtureNumber: 'RR000000005MY', fixture: 'international.json' },
   { carrier: 'canpar', number: 'C000000000000000000001', fixture: 'delivered.json', unresolved: true },
   { carrier: 'ninja-van', number: 'NLMYA00000001', fixtureNumber: 'NLMYA00000000', fixture: 'returned.json', unresolved: true },
   { carrier: 'correos-chile', number: 'SX000000014CL', fixtureNumber: 'SX000000005CL', fixture: 'customs.json', unresolved: true },

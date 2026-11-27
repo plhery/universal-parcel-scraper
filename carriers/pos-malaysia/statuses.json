@@ -18,6 +18,7 @@
     { "wording": "Your parcel has been cleared by the Customs Authority", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "Customs released the item; transit resumes." },
     { "wording": "Your item is being sorted in destination facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10" },
     { "wording": "Your parcel is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-10-10" },
-    { "wording": "Destination station has delivered your parcel. Thank you!", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-10" }
+    { "wording": "Destination station has delivered your parcel. Thank you!", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-10" },
+    { "wording": "We have returned the parcel to the sender Thank you!", "language": "en", "stage": "returned", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Return scan of an item sent back, with the process \"Return completed\"." }
   ]
 }

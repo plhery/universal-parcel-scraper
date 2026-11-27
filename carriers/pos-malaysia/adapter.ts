@@ -30,10 +30,17 @@ const DEFAULT_TIMEOUT_MS = 15_000;
 const MAX_RESPONSE_BYTES = 1_000_000;
 const MAX_EVENTS_TO_RETURN = 20;
 
+const CLOCK_FORMAT = 'dd MMM yyyy, hh:mm:ss a';
+
 function parsedTime(value: unknown): { iso: string; timestamp: number } | null {
   // English 12-hour wall clocks. Only a confirmed domestic route establishes
   // this zone; relayed international scans can name another country's time.
-  return zonedTime(value, 'dd MMM yyyy, hh:mm:ss a', 'Asia/Kuala_Lumpur', { locale: 'en-US' });
+  return zonedTime(value, CLOCK_FORMAT, 'Asia/Kuala_Lumpur', { locale: 'en-US' });
+}
+
+/** The scan's wall clock, for a route that does not establish its zone. */
+function wallClock(value: string): string | null {
+  return zonedTime(value, CLOCK_FORMAT, 'UTC', { locale: 'en-US' })?.iso.slice(0, 19) ?? null;
 }
 
 // Pos Laju prints domestic consignments with a three-letter prefix; inbound
@@ -87,6 +94,7 @@ export function parsePosMalaysiaTrackingResponse(payload: unknown, trackingNumbe
     if (rawEvent.date != null && typeof rawEvent.date !== 'string') throw new SchemaError('Pos Malaysia', 'Pos Malaysia returned an invalid scan clock');
     const clock = clean(rawEvent.date, 100);
     const time = domestic ? parsedTime(clock) : null;
+    const local = time || !clock ? null : wallClock(clock);
     const eventType = clean(rawEvent.event_type, 32);
     const office = clean(rawEvent.office, 160);
     const location = isPosMalaysiaStatusOffice(office) ? '' : office;
@@ -96,7 +104,7 @@ export function parsePosMalaysiaTrackingResponse(payload: unknown, trackingNumbe
     const classified = classifyPosMalaysiaStatus(summary);
     parsed.push({
       event: {
-        ...(time ? { time: time.iso } : clock ? { provider_time_text: clock } : {}),
+        ...(time ? { time: time.iso } : local ? { local_time: local } : clock ? { provider_time_text: clock } : {}),
         // Offices are Pos Malaysia facility names (hubs, kiosks), kept coarse.
         // Sender/recipient blocks travel alongside the item but are deliberately
         // never retained; proof-of-delivery links and image fields are dropped.
@@ -129,6 +137,7 @@ export function parsePosMalaysiaTrackingResponse(payload: unknown, trackingNumbe
       // The overall summary carries no clock. An older movement scan cannot
       // date delivery; only a matching delivered row provides that timestamp.
       last_update: latestIsDelivered ? events[0]?.time ?? null : null,
+      ...(latestIsDelivered && events[0]?.local_time ? { last_update_local: events[0].local_time } : {}),
       expected_delivery: null,
       ...(domestic ? { timezone: 'Asia/Kuala_Lumpur' } : {}),
       events,
@@ -141,6 +150,7 @@ export function parsePosMalaysiaTrackingResponse(payload: unknown, trackingNumbe
     ...(latest.classified ? { current_stage: latest.classified.stage } : {}),
     last_status_text: latest.event.description ?? 'Tracking information received',
     last_update: latest.event.time ?? null,
+    ...(latest.event.local_time ? { last_update_local: latest.event.local_time } : {}),
     expected_delivery: null,
     ...(domestic ? { timezone: 'Asia/Kuala_Lumpur' } : {}),
     events,

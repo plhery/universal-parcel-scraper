@@ -32,6 +32,8 @@ const SUMMARY_STATUS: Record<string, ClassifiedStatus> = {
   'Your item is being sorted in destination facility': { status: 'in_transit', stage: 'in_transit' },
   'Your parcel is out for delivery': { status: 'out_for_delivery', stage: 'out_for_delivery' },
   'Destination station has delivered your parcel. Thank you!': { status: 'delivered', stage: 'delivered' },
+  // The return scan of an item sent back, under the process "Return completed".
+  'We have returned the parcel to the sender Thank you!': { status: 'exception', stage: 'returned' },
 };
 
 /** Only explicit summaries establish a stage. */

@@ -1454,35 +1454,51 @@
       "status": "in_transit",
       "current_stage": "in_transit",
       "last_status_text": "Item arrived at delivery office",
-      "last_update": null,
+      "last_update": "2026-02-23T09:20:00+08:00",
+      "last_update_local": "2026-02-23T09:20:00",
       "expected_delivery": null,
       "events": [
         {
-          "provider_time_text": "23 Feb 2026, 09:20:00 AM",
+          "local_time": "2026-02-23T09:20:00",
+          "time": "2026-02-23T09:20:00+08:00",
+          "time_zone": "Asia/Kuala_Lumpur",
+          "time_zone_basis": "carrier",
           "description": "Item arrived at delivery office",
           "stage": "in_transit",
           "provider_code": "EMG"
         },
         {
-          "provider_time_text": "22 Feb 2026, 03:46:00 PM",
+          "local_time": "2026-02-22T15:46:00",
+          "time": "2026-02-22T15:46:00+08:00",
+          "time_zone": "Asia/Kuala_Lumpur",
+          "time_zone_basis": "carrier",
           "description": "Your parcel is being transported to the next facility",
           "stage": "in_transit",
           "provider_code": "TN035"
         },
         {
-          "provider_time_text": "22 Feb 2026, 10:43:00 AM",
+          "local_time": "2026-02-22T10:43:00",
+          "time": "2026-02-22T10:43:00+08:00",
+          "time_zone": "Asia/Kuala_Lumpur",
+          "time_zone_basis": "carrier",
           "description": "Your parcel has arrived at destination facility for Processing",
           "stage": "in_transit",
           "provider_code": "TN030"
         },
         {
-          "provider_time_text": "21 Feb 2026, 12:04:38 PM",
+          "local_time": "2026-02-21T12:04:38",
+          "time": "2026-02-21T12:04:38+08:00",
+          "time_zone": "Asia/Kuala_Lumpur",
+          "time_zone_basis": "carrier",
           "description": "Your parcel is being transported to destination country",
           "stage": "in_transit",
           "provider_code": "TN008"
         },
         {
-          "provider_time_text": "21 Feb 2026, 10:37:37 AM",
+          "local_time": "2026-02-21T10:37:37",
+          "time": "2026-02-21T10:37:37+08:00",
+          "time_zone": "Asia/Kuala_Lumpur",
+          "time_zone_basis": "carrier",
           "description": "Your parcel has arrived at our facility for sorting",
           "stage": "in_transit",
           "provider_code": "TN001"
