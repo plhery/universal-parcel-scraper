@@ -357,6 +357,7 @@
       "scanTemplate",
       "scopedWordingStage",
       "statusMapAnswer",
+      "trackingLocationCountries",
       "trackingLocationCountry",
       "trackingPlace",
       "universalCarrierHints",
@@ -365,6 +366,7 @@
     "types": [
       "ObservedStatus",
       "ParcelTrackingLink",
+      "PlaceContext",
       "SameInstantIdentityPolicy",
       "SameInstantScan",
       "ScanTemplate",
@@ -372,6 +374,8 @@
       "TemplatedScan",
       "TrackedParcel",
       "TrackingPlace",
+      "TrackingScan",
+      "TrackingScanCountry",
       "WordingScope"
     ]
   },

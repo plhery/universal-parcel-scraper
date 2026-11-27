@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { countryFlag, countryName, trackingLocationCountry, trackingPlace } from './trackingLocation.js';
+import { countryFlag, countryName, trackingLocationCountries, trackingLocationCountry, trackingPlace } from './trackingLocation.js';
 
 describe('tracking places', () => {
   it.each([
@@ -61,6 +61,72 @@ describe('tracking places', () => {
     expect(trackingPlace('Poznań (PL)')).toEqual({ country: 'PL', place: 'Poznań' });
     expect(trackingPlace('BO')).toEqual({ country: 'BO', place: '' });
     expect(trackingPlace('Santa Cruz, BO')).toEqual({ country: 'BO', place: 'Santa Cruz' });
+  });
+
+  it("reads a region's code as its country where the parcel may be", () => {
+    // Synthetic towns. Bologna's code is Bolivia's, Paraná's Puerto Rico's, Kentucky's the Cayman Islands', Aargau's
+    // Antigua's.
+    expect(trackingLocationCountry('EXAMPLE TOWN (BO)', { countries: ['IT'] })).toBe('IT');
+    expect(trackingPlace('EXAMPLE TOWN (BO)', { countries: ['IT'] })).toEqual({ country: 'IT', place: 'EXAMPLE TOWN (BO)' });
+    expect(trackingLocationCountry('EXAMPLE TOWN - PR', { countries: ['BR'] })).toBe('BR');
+    expect(trackingPlace('EXAMPLE TOWN/PR', { countries: ['BR'] })).toEqual({ country: 'BR', place: 'EXAMPLE TOWN/PR' });
+    expect(trackingLocationCountry('EXAMPLE TOWN, KY', { countries: ['US'] })).toBe('US');
+    expect(trackingPlace('Hebron, KY, US', { countries: ['US'] })).toEqual({ country: 'US', place: 'Hebron, KY' });
+    expect(trackingLocationCountry('EXAMPLE TOWN AG', { countries: ['CH'] })).toBe('CH');
+    expect(trackingLocationCountry('EXAMPLE TOWN AG', { placed: 'CH' })).toBe('CH');
+    // The town's own country settles any form, and its own code goes from the place.
+    expect(trackingLocationCountry('EXAMPLE TOWN BO', { placed: 'IT' })).toBe('IT');
+    expect(trackingPlace('MILANO IT', { placed: 'IT' })).toEqual({ country: 'IT', place: 'MILANO' });
+    // A real stop in Bolivia stays there.
+    expect(trackingLocationCountry('Santa Cruz (BO)', { countries: ['BO'] })).toBe('BO');
+    expect(trackingLocationCountry('Santa Cruz, BO', { countries: ['IT'] })).toBe('BO');
+    expect(trackingLocationCountry('Santa Cruz (BO)', { placed: 'BO', countries: ['IT'] })).toBe('BO');
+    // A code either the parcel's country or a region of another of its countries names none.
+    expect(trackingLocationCountry('EXAMPLE TOWN (BO)', { countries: ['IT', 'BO'] })).toBeNull();
+    expect(trackingLocationCountry('EXAMPLE TOWN, DE', { countries: ['DE', 'US'] })).toBeNull();
+    // Countries whose addresses write no region's code keep their neighbours' codes: the Canaries' and Cuneo's code
+    // is China's, Berlin's is Belgium's.
+    expect(trackingLocationCountry('Shenzhen, CN', { countries: ['ES'] })).toBe('CN');
+    expect(trackingLocationCountry('Shenzhen, CN', { countries: ['IT'] })).toBe('CN');
+    expect(trackingLocationCountry('Bruxelles, BE', { countries: ['DE'] })).toBe('BE');
+    // With nothing known of the parcel, a code a state or canton shares names no country.
+    expect(trackingLocationCountry('EXAMPLE TOWN, DE', { countries: ['GB'] })).toBe('DE');
+    expect(trackingLocationCountry('EXAMPLE TOWN, DE')).toBeNull();
+    expect(trackingLocationCountry('EXAMPLE TOWN - PR')).toBeNull();
+    expect(trackingPlace('EXAMPLE TOWN AG')).toEqual({ country: null, place: 'EXAMPLE TOWN AG' });
+  });
+
+  it('drops a region-like code its neighbours could not have left for', () => {
+    const scans = (gap: number) => [
+      { location: 'Milano, IT', time: '2026-01-05T08:00:00Z' },
+      { location: 'EXAMPLE TOWN, BO', time: new Date(Date.parse('2026-01-05T08:00:00Z') + gap * 3_600_000).toISOString() },
+      { location: 'Bologna, IT', time: new Date(Date.parse('2026-01-05T08:00:00Z') + 2 * gap * 3_600_000).toISOString() },
+    ];
+    expect(trackingLocationCountries(scans(2))).toEqual([{ country: 'IT' }, { country: null, implausible: 'BO' }, { country: 'IT' }]);
+    // Days apart, the trip could be real.
+    expect(trackingLocationCountries(scans(48)).map(({ country }) => country)).toEqual(['IT', 'BO', 'IT']);
+    // Scans around it in Italy make a code in brackets Italy's province.
+    expect(trackingLocationCountries([
+      { location: 'Milano, IT', time: '2026-01-05T08:00:00Z' },
+      { location: 'EXAMPLE TOWN (BO)', time: '2026-01-06T08:00:00Z' },
+    ]).map(({ country }) => country)).toEqual(['IT', 'IT']);
+    // A real stop in Bolivia, with stops in Bolivia around it, and a country the carrier gave in a field of its own.
+    expect(trackingLocationCountries([
+      { location: 'La Paz, BO', time: '2026-01-05T08:00:00Z' },
+      { location: 'EXAMPLE TOWN (BO)', time: '2026-01-05T09:00:00Z' },
+      { location: 'Cochabamba, BO', time: '2026-01-05T10:00:00Z' },
+    ], ['IT']).map(({ country }) => country)).toEqual(['BO', 'BO', 'BO']);
+    expect(trackingLocationCountries([
+      { location: 'Milano, IT', time: '2026-01-05T08:00:00Z' },
+      { location: 'EXAMPLE TOWN, BO', time: '2026-01-05T09:00:00Z', country: 'BO' },
+      { location: 'Bologna, IT', time: '2026-01-05T10:00:00Z' },
+    ]).map(({ country }) => country)).toEqual(['IT', 'BO', 'IT']);
+    // A country written in words is not a region's code.
+    expect(trackingLocationCountries([
+      { location: 'Milano, IT', time: '2026-01-05T08:00:00Z' },
+      { location: 'EXAMPLE TOWN, BOLIVIA', time: '2026-01-05T09:00:00Z' },
+      { location: 'Bologna, IT', time: '2026-01-05T10:00:00Z' },
+    ]).map(({ country }) => country)).toEqual(['IT', 'BO', 'IT']);
   });
 
   it('reads a US military post office as no country', () => {

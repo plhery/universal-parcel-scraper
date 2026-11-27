@@ -1,19 +1,70 @@
 import { townName } from '../core/time/townNames.js';
+import countryData from './countries.json' with { type: 'json' };
+import subdivisionData from './subdivisions.json' with { type: 'json' };
 
 const regionCodes = new Set('AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW'.split(' '));
-/** Country codes that are also states or cantons ("Hebron, KY", "Buchs AG"), so a bare one is not a country. */
-export const ambiguousAddressCodes: ReadonlySet<string> = new Set('AL AZ AR CA CO DE GA ID IL IN KY LA ME MD MA MN MS MO MT NE NC PA SC SD TN VA AG AI BE BL BS FR GE GL GR LU SG SH SO SZ TG NL NU PE SK YT SA'.split(' '));
-// Italy's province codes, which Italian addresses put in brackets after the town: "BENTIVOGLIO (BO)" is near
-// Bologna, not in Bolivia, and "TORINO (TO)" is Turin, not in Tonga. Sardinia's former codes are still written.
-const ITALIAN_PROVINCES = new Set(('AG AL AN AO AP AQ AR AT AV BA BG BI BL BN BO BR BS BT BZ CA CB CE CH CI CL CN CO CR CS CT CZ EN '
-  + 'FC FE FG FI FM FR GE GO GR IM IS KR LC LE LI LO LT LU MB MC ME MI MN MO MS MT NA NO NU OG OR OT PA PC PD PE PG PI PN PO PR '
-  + 'PT PU PV PZ RA RC RE RG RI RM RN RO SA SI SO SP SR SS SU SV TA TE TN TO TP TR TS TV UD VA VB VC VE VI VR VS VT VV').split(' '));
-const BRACKETED_CODE = /\S\s*\(\s*([A-Z]{2})\s*\)$/;
-/** Whether a location closes with an Italian province's code in brackets after its town, which names no country on its own. */
-const provinceInBrackets = (location: string, code: string): boolean =>
-  ITALIAN_PROVINCES.has(code) && BRACKETED_CODE.exec(location)?.[1] === code;
+/** Each country's ISO 3166-2 codes of two letters, former ones included (`scripts/generate-subdivisions.mjs`). */
+const subdivisions = new Map(Object.entries(subdivisionData.regions).map(([country, codes]) => [country, new Set(codes.split(' '))]));
+const subdivisionOf = (country: string, code: string): boolean => subdivisions.get(country)?.has(code) ?? false;
+/** How a code follows the town: "TOWN (XX)", "TOWN, XX", "TOWN - XX" or "TOWN/XX", "TOWN XX". */
+type CodeForm = 'bracket' | 'comma' | 'dash' | 'space';
+// The forms in which a country's addresses write a region's code after the town: US, Canadian and Australian states
+// after a comma, a dash or in brackets ("Hebron, KY"), Swiss cantons after a comma, a space or in brackets ("Buchs AG"),
+// Italian provinces in brackets ("BENTIVOGLIO (BO)") and Brazilian states after a dash, a slash or a comma
+// ("CURITIBA - PR"). Other countries' addresses write no region's code, so theirs keep naming countries: "Shenzhen, CN"
+// on a parcel to Spain is not in the Canaries, nor "Bruxelles, BE" on a parcel to Germany in Berlin.
+const REGION_FORMS: Readonly<Record<string, readonly CodeForm[]>> = {
+  US: ['comma', 'dash', 'bracket'], CA: ['comma', 'dash', 'bracket'], AU: ['comma', 'dash', 'bracket'],
+  CH: ['comma', 'bracket', 'space'], IT: ['bracket'], BR: ['comma', 'dash'],
+};
+// With nothing known of the parcel, a code these countries' regions share names no country after a comma or in
+// brackets ("Wilmington, DE", "Basel, BS", "TORINO (TO)"): the region is as likely.
+const UNKNOWN_PARCEL_FORMS: Readonly<Record<string, readonly CodeForm[]>> = {
+  US: ['comma', 'bracket'], CA: ['comma', 'bracket'], AU: ['comma', 'bracket'], CH: ['comma', 'bracket'], IT: ['bracket'],
+};
+const unknownParcelRegion = (code: string, form: CodeForm): boolean =>
+  Object.entries(UNKNOWN_PARCEL_FORMS).some(([country, forms]) => forms.includes(form) && subdivisionOf(country, code));
+/** Country codes that are also US, Canadian or Australian states or Swiss cantons ("Hebron, KY", "Buchs AG"). */
+export const ambiguousAddressCodes: ReadonlySet<string> = new Set([...regionCodes].filter((code) => unknownParcelRegion(code, 'comma')));
+
+/** What a scan's closing code is read against. */
+export interface PlaceContext {
+  /** The country a gazetteer placed the scan's town in: a code of one of its regions names it, however it follows the town. */
+  placed?: string | null;
+  /** The countries the parcel may be in: its origin and destination, its carriers' home countries, its other scans'. */
+  countries?: readonly (string | null | undefined)[];
+}
+
+interface ClosingCode { code: string; form: CodeForm }
+/** The two capital letters a location closes with, and how they follow the town. */
+function closingCode(text: string): ClosingCode | null {
+  const match = /\S(?:\s*\(\s*([A-Z]{2})\s*\)|\s*[,;|]\s*([A-Z]{2})|(?:\s+-\s*|\s*\/\s*)([A-Z]{2})|\s+([A-Z]{2}))$/.exec(text);
+  if (!match) return null;
+  const [, bracket, comma, dash, space] = match;
+  return bracket ? { code: bracket, form: 'bracket' } : comma ? { code: comma, form: 'comma' }
+    : dash ? { code: dash, form: 'dash' } : { code: space!, form: 'space' };
+}
+
+/**
+ * The country a code after a town names, or null for none. A region's code of the country the town was placed in names
+ * that country. Else a region's code of one of the parcel's countries, written as that country's addresses write it,
+ * names that country ("BENTIVOGLIO (BO)" on a parcel in Italy, "CURITIBA - PR" in Brazil), and a country's code after a
+ * comma or in brackets names that country; a code that can be either, or a region of two of them, names none. With
+ * nothing known of the parcel, a code a US, Canadian or Australian state, a Swiss canton or an Italian province in
+ * brackets shares names none. A code after a space or a dash names a country only as a region's.
+ */
+function codeCountry({ code, form }: ClosingCode, { placed, countries = [] }: PlaceContext): string | null {
+  if (placed && (code === placed || subdivisionOf(placed, code))) return placed;
+  const known = [...new Set(countries.filter((country): country is string => Boolean(country)))];
+  const owners = known.filter((country) => REGION_FORMS[country]?.includes(form) && subdivisionOf(country, code));
+  const written = (form === 'comma' || form === 'bracket') && regionCodes.has(code);
+  if (written && known.includes(code)) return owners.length ? null : code;
+  if (owners.length) return owners.length === 1 ? owners[0]! : null;
+  return written && (known.length > 0 || Boolean(placed) || !unknownParcelRegion(code, form)) ? code : null;
+}
+
 // Carrier spellings no region name matches. Display only: Passport evidence
-// stays in step with private.passport_country, which Friends stamps use.
+// takes a country's code, or a name the runtime gives it.
 const carrierSpellings = new Map([
   ['united states of america', 'US'], ['great britain', 'GB'], ['great britain and northern ireland', 'GB'],
   ['united kingdom of great britain and northern ireland', 'GB'], ['czech republic', 'CZ'], ['holland', 'NL'],
@@ -88,18 +139,30 @@ export function militaryPostOffice(location: string): boolean {
   return MILITARY_POST_OFFICE.test(location.trim());
 }
 
-function fieldCountry(field: string, location: string, display: boolean): string | null {
-  if (regionCodes.has(field)) {
-    return location === field || (!ambiguousAddressCodes.has(field) && !provinceInBrackets(location, field)) ? field : null;
+/**
+ * The country a field names: a code by `codeCountry`, a country's code written alone by itself, else a country's name
+ * ("UK" is no country's code).
+ */
+function fieldCountry(field: string, location: string, display: boolean, context: PlaceContext, form: CodeForm): string | null {
+  if (/^[A-Z]{2}$/.test(field) && location !== field) {
+    const country = codeCountry({ code: field, form }, context);
+    if (country || regionCodes.has(field)) return country;
   }
-  return namedCountry(field, display);
+  return regionCodes.has(field) ? field : namedCountry(field, display);
 }
 
-/** Passport evidence: only an explicit final country field; never a country inferred from a city. */
-export function trackingLocationCountry(location?: string): string | null {
+/**
+ * Passport evidence: only an explicit final country field, or a region's code where `context` says whose; never a
+ * country inferred from a city. See `codeCountry` for codes.
+ */
+export function trackingLocationCountry(location?: string | null, context: PlaceContext = {}): string | null {
   const text = location?.trim();
   const field = text?.split(/[,;|()]/).map((value) => value.trim()).filter(Boolean).at(-1);
-  return field && !militaryPostOffice(text!) ? fieldCountry(field, text!, false) : null;
+  if (!field || militaryPostOffice(text!)) return null;
+  const closing = closingCode(text!);
+  // A region's code after a dash or a space ("CURITIBA - PR", "Buchs AG").
+  const region = closing && (closing.form === 'dash' || closing.form === 'space') ? codeCountry(closing, context) : null;
+  return region ?? fieldCountry(field, text!, false, context, closing?.form === 'bracket' ? 'bracket' : 'comma');
 }
 
 export interface TrackingPlace {
@@ -120,9 +183,10 @@ function dashCountry(part: string): string | null {
 /**
  * For display, take an explicit country off a location: the final field ("Zürich, CH",
  * repeated in "Hebron, KY, US, US"), the name after the last dash ("SCARBOROUGH - ON -
- * CANADA") or a leading name ("Switzerland Haerkingen").
+ * CANADA") or a leading name ("Switzerland Haerkingen"). A region's code read against
+ * `context` gives its country and stays in the place ("BENTIVOGLIO (BO)" on a parcel in Italy).
  */
-export function trackingPlace(location: string): TrackingPlace {
+export function trackingPlace(location: string, context: PlaceContext = {}): TrackingPlace {
   const text = location.trim();
   if (militaryPostOffice(text)) return { country: null, place: text };
   const dashed = /^(.*\S)\s+-\s+(.+)$/.exec(text);
@@ -144,15 +208,25 @@ export function trackingPlace(location: string): TrackingPlace {
   let country: string | null = null;
   let kept = fields.length;
   while (kept > 0) {
-    const field = fields[kept - 1]![0].trim();
-    const own = fieldCountry(field, alone, true);
+    const { 0: written, index } = fields[kept - 1]!;
+    const field = written.trim();
+    const own = fieldCountry(field, alone, true, context, text[index - 1] === '(' ? 'bracket' : 'comma');
     const code = own ?? (regionCodes.has(field) && named.has(field) ? field : null);
     if (!code || (country && code !== country)) break;
     country = code;
+    // A region's code stays with its town: "BENTIVOGLIO (BO)" is in Italy.
+    if (own && own !== field && subdivisionOf(own, field)) break;
     kept -= 1;
     if (!own) break;
   }
-  if (country) return { country, place: kept ? text.slice(0, fields[kept]!.index).replace(/[\s,;|(]+$/u, '') : '' };
+  if (country) {
+    const place = kept === fields.length ? text : kept ? text.slice(0, fields[kept]!.index).replace(/[\s,;|(]+$/u, '') : '';
+    return { country, place };
+  }
+  // A code after a dash or a space: a region's stays with its town ("CURITIBA - PR"), the country's own goes ("MILANO IT").
+  const closing = closingCode(text);
+  const region = closing && (closing.form === 'dash' || closing.form === 'space') ? codeCountry(closing, context) : null;
+  if (region) return { country: region, place: region === closing!.code ? text.slice(0, -2).replace(/[\s/-]+$/u, '') : text };
   // A partner's depot abroad, by its country and number, as BRT writes one: "SPAIN (12)".
   const depot = /^([^,;|()]+?)\s*\(\d+\)$/u.exec(text);
   const depotCountry = depot ? namedCountry(depot[1]!, true) : null;
@@ -172,6 +246,83 @@ export function trackingPlace(location: string): TrackingPlace {
     }
   }
   return { country: null, place: text };
+}
+
+/** A parcel's scan, as `trackingLocationCountries` reads it. */
+export interface TrackingScan {
+  location?: string | null;
+  /** When it happened, as an ISO 8601 time or milliseconds. */
+  time?: string | number | null;
+  /** The country a gazetteer placed its town in. */
+  placed?: string | null;
+  /** A country the carrier gave in a field of its own: it stands, whatever the text says. */
+  country?: string | null;
+}
+
+export interface TrackingScanCountry {
+  /** Passport evidence of the scan's country, as `trackingLocationCountry` reads it. */
+  country: string | null;
+  /** The country the text names that the parcel could not have reached and left in the time between its neighbours. */
+  implausible?: string;
+}
+
+const labelPoints = new Map(countryData.countries.map(({ code, label }) => [code, label]));
+/** Great-circle kilometres between two countries' label points (Natural Earth), or null without one. */
+function countryDistance(from: string, to: string): number | null {
+  const [a, b] = [labelPoints.get(from), labelPoints.get(to)];
+  if (!a || !b) return null;
+  const radians = Math.PI / 180;
+  const [longitude, latitude] = [(b[0]! - a[0]!) * radians, (b[1]! - a[1]!) * radians];
+  const h = Math.sin(latitude / 2) ** 2 + Math.cos(a[1]! * radians) * Math.cos(b[1]! * radians) * Math.sin(longitude / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.sqrt(h));
+}
+// Between scans in two countries, a parcel needs an hour's handling and flies no faster than an airliner; a label point
+// can lie this far inside its country, so neighbours' scans are never too far apart.
+const HANDLING_HOURS = 1;
+const AIRLINER_KMH = 900;
+const LABEL_SLACK_KM = 1_000;
+const reachable = (kilometres: number, hours: number) => hours >= HANDLING_HOURS + Math.max(0, kilometres - LABEL_SLACK_KM) / AIRLINER_KMH;
+
+/**
+ * Passport evidence for a parcel's scans, oldest first. Each scan's text is read by `trackingLocationCountry` against
+ * the town's country, the parcel's `countries` (origin, destination, carriers' home countries) and the countries of
+ * the scans around it, so "EXAMPLE TOWN (BO)" between scans in Italy is in Italy. A country's code after a comma or
+ * in brackets that is also a region's code of the country the scans on either side agree on ("EXAMPLE TOWN, BO" between
+ * scans in Italy) is dropped when the parcel could not have flown there and back in the time between them
+ * (`implausible` holds it); the town keeps its place. A country the carrier gave in a field of its own stands.
+ */
+export function trackingLocationCountries(scans: readonly TrackingScan[], countries: readonly (string | null | undefined)[] = []): TrackingScanCountry[] {
+  const nearest = (read: readonly (string | null)[], index: number, step: -1 | 1): number => {
+    for (let at = index + step; at >= 0 && at < read.length; at += step) if (read[at]) return at;
+    return -1;
+  };
+  const alone = scans.map((scan) => scan.country || trackingLocationCountry(scan.location, { placed: scan.placed, countries }) || scan.placed || null);
+  const read = scans.map((scan, index) => {
+    const around = [nearest(alone, index, -1), nearest(alone, index, 1)].map((at) => alone[at] ?? null);
+    const read = scan.country || trackingLocationCountry(scan.location, { placed: scan.placed, countries: [...countries, ...around] });
+    // Scans on either side that agree settle a code that could be either: "EXAMPLE TOWN (BO)" between stops in
+    // Bolivia is there, on a parcel from Italy.
+    const agreed = !read && around[0] && around[0] === around[1] ? around[0] : null;
+    return agreed && trackingLocationCountry(scan.location, { placed: scan.placed, countries: [agreed] }) === agreed ? agreed : read;
+  });
+  const located = read.map((country, index) => country ?? scans[index]!.placed ?? null);
+  const times = scans.map(({ time }) => typeof time === 'number' ? time : time ? Date.parse(time) : Number.NaN);
+  return read.map((country, index) => {
+    const scan = scans[index]!;
+    if (!country || scan.country || country === scan.placed) return { country };
+    const [before, after] = [nearest(located, index, -1), nearest(located, index, 1)];
+    const neighbour = before >= 0 ? located[before]! : null;
+    // Only a code that is also a region of the neighbours' country: the reading that could be wrong.
+    const closing = closingCode(scan.location?.trim() ?? '');
+    if (!neighbour || after < 0 || located[after] !== neighbour || neighbour === country || closing?.code !== country
+      || (closing.form !== 'comma' && closing.form !== 'bracket') || !subdivisionOf(neighbour, country)) return { country };
+    const kilometres = countryDistance(neighbour, country);
+    const hours = [times[index]! - times[before]!, times[after]! - times[index]!].map((ms) => ms / 3_600_000);
+    if (kilometres === null || hours.some((value) => !Number.isFinite(value)) || hours.every((value) => reachable(kilometres, value))) {
+      return { country };
+    }
+    return { country: null, implausible: country };
+  });
 }
 
 export function countryFlag(code: string): string {

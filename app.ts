@@ -20,4 +20,7 @@ export { scanTemplate, type ScanTemplate, type TemplatedScan } from './core/stat
 export { scopedWordingStage, type WordingScope } from './core/status/scoped.js';
 export { withoutMinuteCopies } from './core/result/repeats.js';
 export { SWISS_POST_GLOBAL_STATUSES } from './carriers/swiss-post/status.js';
-export { countryFlag, countryName, trackingLocationCountry, trackingPlace, type TrackingPlace } from './places/trackingLocation.js';
+export {
+  countryFlag, countryName, trackingLocationCountries, trackingLocationCountry, trackingPlace,
+  type PlaceContext, type TrackingPlace, type TrackingScan, type TrackingScanCountry,
+} from './places/trackingLocation.js';

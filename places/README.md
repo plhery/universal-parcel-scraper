@@ -142,10 +142,24 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   forces, not a country: AE there is not the Emirates, and the base can be anywhere in the
   region. The scan gets no place, and `trackingPlace` and `trackingLocationCountry` give it
   no country.
-- An Italian province's code in brackets after the town ("BENTIVOGLIO (BO)", "TORINO (TO)") is
-  the province, not Bolivia or Tonga: `trackingPlace` and `trackingLocationCountry` read it as
-  no country, as they read a code a state or canton shares. A country written after it still
-  counts ("BENTIVOGLIO (BO), IT").
+- `trackingPlace` and `trackingLocationCountry` read two capital letters after a town against
+  what is known of the scan: the country a gazetteer placed its town in, and the countries the
+  parcel may be in (origin, destination, carriers' home countries, the scans around it). A code
+  of one of their ISO 3166-2 regions is that region's country ("BENTIVOGLIO (BO)" on a parcel in
+  Italy, "CURITIBA - PR" in Brazil, "Hebron, KY" in the US), written as that country's
+  addresses write it: Italian provinces in brackets, Brazilian states after a dash, slash or
+  comma, US, Canadian and Australian states after a comma, dash or in brackets, Swiss cantons
+  also after a space. The town's own country settles any form. Other countries' regions do not
+  count: "Shenzhen, CN" on a parcel to Spain is not in the Canaries. A code that is one of the
+  parcel's countries and a region of another names neither, unless the scans on either side
+  agree. Only when nothing known fits is a code after a comma or in brackets the country. With
+  nothing known, a code a US, Canadian or Australian state, a Swiss canton or an Italian
+  province in brackets shares names no country ("Wilmington, DE", "TORINO (TO)").
+- `trackingLocationCountries` reads a parcel's scans that way. A country's code after a comma
+  or in brackets that is also a region's code of the country the scans on either side agree on
+  is dropped, the town kept, when the parcel could not have flown there and back in the time
+  between them (an hour's handling, 900 km/h, label points 1,000 km inside their countries).
+  A country the carrier gives in a field of its own stands.
 - A field that only names a region is that region: it places a town of that name only if
   the town lies in it, and otherwise places the region's country ("Guangdong Province").
   The words of a region's name are not towns elsewhere: "Cabo Delgado" is in Mozambique,
@@ -364,6 +378,8 @@ Decisions about what to include are commented in the script.
 CSV: each PIN goes to the GeoNames town of 50,000 people or more nearest its head office or
 delivery offices, within 25 km, a tenfold population counting for 5 km. PINs with no such
 town are left out.
+`node scripts/generate-subdivisions.mjs` builds `subdivisions.json`, each country's ISO 3166-2
+codes of two letters, from Unicode CLDR's subdivision validity data, former codes included.
 `node scripts/generate-zipcodes.mjs` builds `zipcodes.json` from the GeoNames US postal
 codes: a ZIP Code prefix goes to the town that holds most of its codes, three or more.
 Then run `node scripts/generate-region-towns.mjs`: the carrier catalog keeps
@@ -373,7 +389,8 @@ checks this projection.
 GeoNames data is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 ([geonames.org](https://www.geonames.org)) and facility points come from
 [OpenStreetMap](https://www.openstreetmap.org/copyright) (ODbL). Natural Earth and
-[OurAirports](https://ourairports.com/data/) are public domain. The pincode directory is
+[OurAirports](https://ourairports.com/data/) are public domain. Unicode CLDR data is licensed
+under the [Unicode License v3](https://www.unicode.org/license.txt). The pincode directory is
 published by the Department of Posts under the
 [Government Open Data License - India](https://www.data.gov.in/Godl). Credits are included
 in [NOTICE](../NOTICE).
