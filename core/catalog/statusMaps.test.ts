@@ -250,6 +250,18 @@ describe('status map answers', () => {
     expect(answer('ups', 'DB', 'UPS is preparing your package for clearance. We will notify you if additional information is needed.')).toEqual(gap);
   });
 
+  it("answers GEODIS Poland's partner abroad, SXW's partner hubs, Hermes's note at WanbExpress and DPD France's Pickup reminder", () => {
+    expect(answer('geodis-pl', '52', 'International partner scheduled / issued for delivery')).toEqual(mapped('in_transit'));
+    expect(answer('sxw-express', null, 'Arrived at Origin Hub')).toEqual(mapped('in_transit'));
+    expect(answer('sxw-express', null, 'Departed Destination Hub')).toEqual(mapped('in_transit'));
+    expect(answer('wanbexpress', null, 'Die Sendung wird an Hermes weitergeleitet. Weitere Informationen folgen, sobald uns die Sendung erreicht hat.'))
+      .toEqual(mapped('in_transit'));
+    for (const channel of ['SMS', 'e-mail']) {
+      expect(answer('dpd-fr', null, `Le destinataire est relancé par ${channel} quant à la disponibilité de son colis dans le relais Pickup`))
+        .toEqual(mapped('ready_for_pickup'));
+    }
+  });
+
   it("reads Ukrposhta's Ukrainian wording as providers relay it without a code", () => {
     for (const carrier of ['ukrposhta', 'unknown']) {
       expect(answer(carrier, null, 'Прийнято')).toEqual(mapped('accepted'));

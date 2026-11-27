@@ -41,6 +41,9 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['30', 'in_transit'],
   ['40', 'in_transit'],
   ['50', 'out_for_delivery'],
+  // The partner abroad that delivers the shipment has it "scheduled / issued for delivery": one code for a delivery
+  // planned and one under way, so it claims no round.
+  ['52', 'in_transit'],
   // Held at a terminal or a hub ("zatrzymana"), and a breakdown ("awaria").
   ['60', 'exception'],
   ['61', 'exception'],

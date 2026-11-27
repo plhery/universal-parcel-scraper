@@ -493,6 +493,14 @@
       "note": "The handover to DPD for the last mile, without a code, the day after the destination's customs clearance: in transit, not DPD's acceptance of a new parcel."
     },
     {
+      "wording": "Die Sendung wird an Hermes weitergeleitet. Weitere Informationen folgen, sobald uns die Sendung erreicht hat.",
+      "language": "de",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-26",
+      "note": "Hermes's note that the parcel is on its way to it, relayed without a code between the sorting centre's processing and departure, as hermes-de reads it."
+    },
+    {
       "wording": "arrive at processing center",
       "language": "en",
       "stage": "in_transit",

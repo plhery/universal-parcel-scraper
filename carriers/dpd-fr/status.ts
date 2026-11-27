@@ -145,6 +145,9 @@ export function classifyStatus(description: string): ClassifiedStatus {
     // failed: either way it waits there. One of them spells it "disponibilté".
     'de la disponibilite de son colis',
     'de la disponibilte de son colis',
+    // "Le destinataire est relancé par SMS (or par e-mail) quant à la disponibilité de son colis dans le relais Pickup":
+    // a reminder, days later, that it still waits there.
+    'quant a la disponibilite de son colis',
   ])) return { status: 'out_for_delivery', stage: 'ready_for_pickup' };
 
   // The same-day notices ("le destinataire est informé par SMS de la livraison

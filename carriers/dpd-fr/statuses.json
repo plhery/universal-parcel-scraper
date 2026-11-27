@@ -512,6 +512,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-19",
       "note": "\"Le destinataire est avisé par SMS de la disponibilté de son colis dans le relais Pickup\", spelled so by DPD: the parcel waits in the Pickup point. The result status becomes out_for_delivery."
+    },
+    {
+      "wording": "quant a la disponibilite de son colis",
+      "language": "fr",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "\"Le destinataire est relancé par SMS (or par e-mail) quant à la disponibilité de son colis dans le relais Pickup\", days after the Pickup point's own row: a reminder that the parcel still waits there. The result status becomes out_for_delivery."
     }
   ]
 }

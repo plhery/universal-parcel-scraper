@@ -74,6 +74,9 @@ const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['your shipment has been accepted by delivery carrier', 'in_transit'],
   // The handover to DPD for the last mile, after the destination's customs clearance.
   ['parcel handed to dpd', 'in_transit'],
+  // Hermes's note that the parcel is on its way to it, relayed between the sorting centre's processing and departure,
+  // as Hermes Germany's own tracker reads it.
+  ['die sendung wird an hermes weitergeleitet. weitere informationen folgen, sobald uns die sendung erreicht hat.', 'in_transit'],
   ['consignee contacted', null],
   // The origin's processing centre taking the parcel in, collecting it and sending it on, after the sorting
   // centre's departure and before the line's.
