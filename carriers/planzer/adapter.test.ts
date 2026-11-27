@@ -2,8 +2,13 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { recognitionCandidates } from '../../core/catalog/recognition.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { outsideCountryLast } from '../../core/testing/recognition.js';
 import {
+  adapter,
   fetchPlanzer,
   parsePlanzerTrackingResponse,
   PlanzerTracker,
@@ -25,6 +30,14 @@ const QUICKPAC_NUMBER = '440000000000000001';
 function jsonResponse(payload: unknown): Response {
   return new Response(JSON.stringify(payload), {
     headers: { 'Content-Type': 'application/json' },
+  });
+}
+
+/** The tracking app's own answer for a number it holds no shipment under: an empty 404 with its correlation cookie. */
+function planzerNotFound(): Response {
+  return new Response(null, {
+    status: 404,
+    headers: { 'Set-Cookie': 'TnT-Correlation-Id=00000000-0000-0000-0000-000000000000; domain=.tracking.app.planzer.ch; path=/; secure; samesite=lax; httponly' },
   });
 }
 
@@ -65,9 +78,8 @@ describe('Planzer rate limits', () => {
 });
 
 describe('Planzer and Quickpac no-data responses', () => {
-  it('keeps both direct tracking number formats and surfaces the API 404', async () => {
-    const fetcher = vi.spyOn(globalThis, 'fetch')
-      .mockResolvedValue(new Response('', { status: 404 }));
+  it('keeps both direct tracking number formats and reads the API\'s own 404 as not found', async () => {
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(async () => planzerNotFound());
     const cases = [
       ['12345678901234567890', '12345678901234567890'],
       ['440000000000000000', '440000000000000000'],
@@ -76,9 +88,9 @@ describe('Planzer and Quickpac no-data responses', () => {
     for (const [trackingNumber, shipmentNumber] of cases) {
       expect(planzerShipmentNumber(trackingNumber)).toBe(shipmentNumber);
       await expect(fetchPlanzer(trackingNumber)).rejects.toMatchObject({
-        name: 'UpstreamHttpError',
+        name: 'NotFoundError',
+        kind: 'not_found',
         status: 404,
-        message: 'Planzer tracking returned HTTP 404',
       });
     }
 
@@ -197,6 +209,80 @@ describe('Planzer and Quickpac no-data responses', () => {
       .resolves.toMatchObject({ status: 'pending' });
     expect(fetcher).toHaveBeenCalledTimes(1);
     expect(global).not.toHaveBeenCalled();
+  });
+});
+
+describe('Planzer 91 parcel numbers', () => {
+  // Synthetic: 91, a zero-filled customer number and a serial, in each length senders build.
+  const SHAPES = ['91000000000000000001', '910000000000000000001', '9100000000000000000001'];
+  const PARCEL = SHAPES[2]!;
+  const carrier = (fetcher: typeof fetch) => adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
+  const found = () => {
+    const payload = fixture('delivered.json') as { transportPositions: Array<{ positionNumber: string }> };
+    payload.transportPositions[0]!.positionNumber = PARCEL;
+    return jsonResponse(payload);
+  };
+
+  it('offers Planzer for 20 to 22 digits from 91, and only those', () => {
+    for (const number of SHAPES) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+      expect(detectCarrierMatch(number).candidates, number).toContain('planzer');
+    }
+    for (const number of ['9100000000000000001', '91000000000000000000001', '9200000000000000000001']) {
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('planzer');
+    }
+    // The 91346097 block stays Planzer's own.
+    expect(detectCarrierMatch('91346097999999999980')).toMatchObject({ carrier: 'planzer', confidence: 'high' });
+  });
+
+  it('keeps USPS PICs from 91 as USPS', () => {
+    for (const number of ['9101999999999999999989', '9114999999999999999983']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'usps', confidence: 'high', candidates: ['usps'] });
+      expect(recognitionCandidates(number, { countryHint: 'CH' }), number).toEqual([]);
+    }
+  });
+
+  it('asks Planzer first from Switzerland, and elsewhere only once the others have missed the number', () => {
+    for (const number of SHAPES) {
+      expect(recognitionCandidates(number, { countryHint: 'CH' })[0], number)
+        .toMatchObject({ carrier: 'planzer', countryMatch: 'home' });
+      for (const countryHint of ['US', 'DE', undefined]) {
+        expect(outsideCountryLast(number, 'planzer', { countryHint }), `${number} ${countryHint}`).toBe(true);
+      }
+    }
+    // A shared shipment's number needs its link, so it is never asked.
+    expect(recognitionCandidates('9999000000017', { countryHint: 'CH' }).map(({ carrier }) => carrier)).not.toContain('planzer');
+  });
+
+  it('recognizes a parcel the API lists, and the API\'s own not-found as unknown', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(found()).mockResolvedValueOnce(planzerNotFound());
+    await expect(carrier(fetcher).recognize!(PARCEL)).resolves
+      .toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-09-01T14:07:10', finished: true });
+    await expect(carrier(fetcher).recognize!(PARCEL)).resolves.toEqual({ known: false });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(String(fetcher.mock.calls[0]?.[0])).toBe(`https://api.tracking.app.planzer.ch/api/v1/shipments/${PARCEL}/Pak`);
+  });
+
+  it('fails on any other 404, a refusal, a rate limit, a malformed reply or another parcel', async () => {
+    const replies: Array<[() => Response, object]> = [
+      [() => new Response('<html><body>Not Found</body></html>', { status: 404, headers: { 'Content-Type': 'text/html' } }), { kind: 'indeterminate' }],
+      [() => new Response(null, { status: 404 }), { kind: 'indeterminate' }],
+      [() => new Response(null, { status: 403 }), { kind: 'challenge' }],
+      [() => new Response(null, { status: 429, headers: { 'Retry-After': '120' } }), { kind: 'rate_limited' }],
+      [() => new Response('<html>Maintenance</html>', { headers: { 'Content-Type': 'text/html' } }), { message: 'Planzer tracking returned an invalid tracking response' }],
+      [() => jsonResponse({ overallStatus: { text: { english: 'Recorded' } }, transportPositions: [{ positionNumber: SHAPES[0], positionEvents: [] }] }), { kind: 'schema' }],
+    ];
+    for (const [reply, failure] of replies) {
+      const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply());
+      await expect(carrier(fetcher).recognize!(PARCEL), JSON.stringify(failure)).rejects.toMatchObject(failure);
+      await expect(carrier(fetcher).track({ number: PARCEL }), JSON.stringify(failure)).rejects.toMatchObject(failure);
+    }
+  });
+
+  it('fails for a shared shipment\'s number without a request', async () => {
+    const fetcher = vi.fn<typeof fetch>();
+    await expect(carrier(fetcher).recognize!('9999000000017')).rejects.toMatchObject({ kind: 'input_required' });
+    expect(fetcher).not.toHaveBeenCalled();
   });
 });
 

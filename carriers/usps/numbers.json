@@ -81,6 +81,7 @@
         "confidence": "low",
         "candidates": [
           "usps",
+          "planzer",
           "austrian-post",
           "estafeta"
         ]
@@ -228,6 +229,7 @@
         "confidence": "low",
         "candidates": [
           "usps",
+          "planzer",
           "austrian-post",
           "estafeta"
         ]

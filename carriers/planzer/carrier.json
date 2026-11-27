@@ -32,7 +32,12 @@
     ],
     "steps": [
       "direct"
-    ]
+    ],
+    "recognition": {
+      "rank": 255,
+      "pattern": "^91\\d{18,20}$",
+      "servedCountriesOnly": true
+    }
   },
   "capabilities": [
     "history",
@@ -97,6 +102,12 @@
       "id": "planzer-2",
       "pattern": "^91346097\\d{12}$",
       "confidence": "high"
+    },
+    {
+      "id": "planzer-91",
+      "pattern": "^91\\d{18,20}$",
+      "confidence": "low",
+      "servedCountriesOnly": true
     }
   ]
 }

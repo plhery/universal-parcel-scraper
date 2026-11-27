@@ -15,13 +15,32 @@ decides the route; it is not a fallback tier.
 1. API: `GET https://api.tracking.app.planzer.ch/api/v1/shipments/{shipment}/Pak`,
    10 s timeout. One replay after a transport failure or HTTP 502/503/504, or
    after a 429 with a `Retry-After` of at most 60 s, when the pause ends before
-   the lookup does. An unknown number is an HTTP 404.
+   the lookup does. Planzer answers an unknown number with an empty HTTP 404
+   that sets the tracking app's `TnT-Correlation-Id` cookie, which is not
+   found. Any other 404, such as a proxy's error page, is inconclusive: paths
+   the app does not serve get HTTP 401.
 2. Shared link: `GET https://trackandtrace.planzergroup.com/shared/sendungen/{number}?accessKey=…`,
    15 s timeout. The page has no status code; its five route steps are read from
    the markup (tooltip label names the stage, `text-primary` marks reached
    steps, `<time datetime>` gives the timestamp). A short page is not-found only
    when it shows Planzer's "no shipments found" notice; otherwise it is a
    schema error (maintenance, partial render).
+
+## Numbers
+
+A parcel number is `91`, the sender's six-digit Planzer customer number and a
+serial the sender's software builds, without a check digit: 20 digits from
+Planzer's [WooCommerce plugin](https://github.com/Webwirkung/Planzer-Shipping-for-WooCommerce/blob/1c34663c185197c25480a8e4d6e512e0dafeb28b/src/Package/Package.php),
+21 from [erpnextswiss](https://github.com/libracore/erpnextswiss/blob/cda93389d281114060a63636da44e261e4490fea/erpnextswiss/erpnextswiss/planzer.py),
+22 on some shops' labels. Customer 346097's block is Planzer's alone
+(`planzer-2`). Other carriers print runs of 20 to 22 digits too, so
+`planzer-91` only suggests Planzer, and keeps it to Switzerland
+(`servedCountriesOnly`). A USPS PIC that passes its check stays USPS's.
+
+Recognition asks the API about these 91 numbers only. A reply listing the
+whole number as a parcel is known, Planzer's own 404 is unknown, and anything
+else fails. A Swiss lookup asks Planzer beside the other carriers; any other
+country, or none, only once they have all missed the number.
 
 ## Notes
 

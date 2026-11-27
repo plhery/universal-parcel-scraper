@@ -61,13 +61,13 @@
     "reason": "These carriers accept the same numeric length without a DHL Express checksum. Packeta's packet ID never starts with 0. Direct tracking must confirm the carrier."
   },
   {
-    "shape": "Twenty digits in Planzer's 91346097 range",
+    "shape": "Twenty digits from 91",
     "carriers": [
       "nz-post",
       "planzer",
       "usps"
     ],
-    "reason": "Planzer's high-confidence range sits inside the broad NZ Post and USPS 20-digit candidates; the Planzer rule decides."
+    "reason": "Planzer's parcel numbers, 91, the sender's Planzer customer number and a serial, sit inside the broad NZ Post and USPS 20-digit candidates. In the 91346097 range the high-confidence Planzer rule decides; any other number stays a low-confidence suggestion, and recognition asks Planzer beside the others only for a lookup from Switzerland."
   },
   {
     "shape": "Twenty digits from 6129 or 7489 that pass the USPS check with 92 in front",
@@ -172,6 +172,16 @@
       "usps"
     ],
     "reason": "22-digit numbers are shared by Austrian Post, Estafeta full guides and USPS. A PIC with a USPS channel, a conforming Mailer ID and a passing check digit selects USPS; any other number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twenty-two digits from 91",
+    "carriers": [
+      "austrian-post",
+      "estafeta",
+      "usps",
+      "planzer"
+    ],
+    "reason": "Planzer's parcel numbers are 91, the sender's Planzer customer number and a serial the sender builds, without a check digit, so Planzer joins the carriers that accept any 22 digits. A PIC with a USPS channel, a conforming Mailer ID and a passing check digit still selects USPS; any other number stays a low-confidence suggestion. Recognition asks Planzer beside the others only for a lookup from Switzerland."
   },
   {
     "shape": "A 22-digit 96 barcode whose last fifteen digits pass the GS1 check",

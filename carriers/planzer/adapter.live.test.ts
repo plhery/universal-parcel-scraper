@@ -24,11 +24,11 @@ describe('Planzer live anonymous tracking', () => {
   it.each([
     ['Planzer', '12345678901234567890'],
     ['Quickpac', '440000000000000000'],
-  ])('maps the %s API response for a wrong number to a clean 404', async (_carrier, number) => {
+  ])('reads the %s API\'s own 404 for a wrong number as not found', async (_carrier, number) => {
     await expect(fetchPlanzer(number)).rejects.toMatchObject({
-      name: 'UpstreamHttpError',
+      name: 'NotFoundError',
+      kind: 'not_found',
       status: 404,
-      message: 'Planzer tracking returned HTTP 404',
     });
   });
 

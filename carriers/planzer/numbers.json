@@ -87,6 +87,85 @@
       "note": "Publicly reported shipment number, printed as reference.shipment. Planzer's tracker returns its history, for two parcels. No rule claims Planzer's shapes."
     },
     {
+      "number": "9100000000000000000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "planzer",
+          "austrian-post",
+          "usps",
+          "estafeta"
+        ]
+      },
+      "note": "Made-up 22-digit parcel number, 91, a zero-filled customer number and a serial, as some senders print them. A shape check, not a real parcel."
+    },
+    {
+      "number": "91130114058900103873",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260519063528/https://api.tracking.app.planzer.ch/api/v1/shipments/58948179/Pak",
+        "date": "2026-05-19",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "planzer",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "An archived reply of Planzer's tracking API lists it as the shipment's parcel: 91, customer 130114 and a serial."
+    },
+    {
+      "number": "91346097020035185115",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260320100636/https://api.tracking.app.planzer.ch/api/v1/shipments/55506190/Pak",
+        "date": "2026-03-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "planzer",
+        "confidence": "high"
+      },
+      "note": "An archived reply of Planzer's tracking API lists it as the shipment's parcel, in customer 346097's block."
+    },
+    {
+      "number": "91346097020035613580",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260408125205/https://api.tracking.app.planzer.ch/api/v1/shipments/56536930/1",
+        "date": "2026-04-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "planzer",
+        "confidence": "high"
+      },
+      "note": "An archived reply of Planzer's tracking API lists it as the shipment's parcel, in customer 346097's block."
+    },
+    {
       "number": "91346097999999999980",
       "role": "shipment",
       "evidence": "synthetic",
@@ -96,7 +175,7 @@
         "carrier": "planzer",
         "confidence": "high"
       },
-      "note": "Made-up number that follows the published format. Its serial sits far beyond the range in use. Its serial sits far beyond the range in use."
+      "note": "Made-up number that follows the published format. Its serial sits far beyond the range in use."
     },
     {
       "number": "98765.0012345678",

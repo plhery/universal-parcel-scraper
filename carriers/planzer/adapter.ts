@@ -15,15 +15,18 @@
  * Shipments shared through a capability link are not in this API: they are
  * served by `./shared`, chosen by the factory when the parcel has a tracking
  * URL.
+ *
+ * Recognition makes the API lookup. Only Planzer's own not-found answers
+ * unknown; a shared shipment's number, which only its link shows, fails.
  */
-import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { SchemaError } from '../../core/errors/index.js';
+import { lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { IndeterminateError, InputRequiredError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
 import { countryCode } from '../../core/time/index.js';
 import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { PlanzerSharedTracker } from './shared.js';
+import { isPlanzerSharedTrackingNumber, PlanzerSharedTracker } from './shared.js';
 import { PLANZER_STATUS, planzerDescription, planzerEventStage } from './status.js';
 
 const PROVIDER = 'Planzer';
@@ -36,6 +39,20 @@ const BASE_HEADERS = {
   Accept: 'application/json, text/plain, */*',
   'Accept-Language': 'en-US,en;q=0.9',
 };
+/** The tracking app sets this cookie on its shipments route's replies; a path it does not serve gets HTTP 401 without it. */
+const OWN_REPLY_COOKIE = /(?:^|[\s,;])TnT-Correlation-Id=/i;
+
+/**
+ * Planzer's answer for a number it holds no shipment under: HTTP 404 with an
+ * empty body from the tracking app, which sets its correlation cookie. Any other
+ * 404, such as a proxy's error page, says nothing about the number.
+ */
+function notFoundAnswer(response: Response, bytes: Uint8Array): Error {
+  const own = new TextDecoder().decode(bytes).trim() === ''
+    && OWN_REPLY_COOKIE.test(response.headers.get('set-cookie') ?? '');
+  return own ? new NotFoundError(PROVIDER)
+    : new IndeterminateError(PROVIDER, 'Planzer returned an unrecognized not-found response');
+}
 
 function record(value: unknown): JsonObject {
   return isRecord(value) ? value : {};
@@ -211,7 +228,7 @@ export class PlanzerTracker {
     const shipmentNumber = planzerShipmentNumber(trackingNumber);
     // The default budget covers the request, the longest retry pause and the one replay.
     const budget = lookupBudget(context, 2 * this.timeoutMs + MAX_RETRY_PAUSE_MS);
-    const { bytes } = await fetchBounded(
+    const { response, bytes } = await fetchBounded(
       `${SHIPMENTS_URL}/${encodeURIComponent(shipmentNumber)}/Pak`,
       { signal: budget.signal, headers: { ...BASE_HEADERS, 'User-Agent': this.userAgent } },
       {
@@ -221,9 +238,11 @@ export class PlanzerTracker {
         // with a short Retry-After; parsing and validation are never retried.
         retryTransient: true,
         deadline: budget.deadline,
+        allowHttpStatuses: [404],
         fetcher: this.fetcher,
       },
     );
+    if (response.status === 404) throw notFoundAnswer(response, bytes);
     return parsePlanzerTrackingResponse(parseJsonBytes(bytes, UPSTREAM), shipmentNumber);
   }
 }
@@ -244,5 +263,12 @@ export const adapter: AdapterFactory = (environment) => {
     track: (input, context) => (input.trackingUrl
       ? shared.fetch(input.number, input.trackingUrl, context)
       : tracker.fetch(input.number, context)),
+    recognize: async (number, context) => {
+      // The API never holds a shared shipment, so its not-found would say nothing.
+      if (isPlanzerSharedTrackingNumber(number)) {
+        throw new InputRequiredError(PROVIDER, 'trackingUrl', 'Planzer shows a shared shipment only through its link');
+      }
+      return recognizeFromLookup(() => tracker.fetch(number, context));
+    },
   };
 };
