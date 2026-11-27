@@ -1,0 +1,84 @@
+{
+  "carrier": "torbon",
+  "entries": [
+    {
+      "code": "IR",
+      "wording": "Shipment information received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Chinese wording 快件电子信息已经收到. The waybill's information reached Torbon, before it has the goods."
+    },
+    {
+      "code": "AF",
+      "wording": "Shipment Arrived at Facility",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Chinese wording 快件到达作业中心. The goods reached Torbon's warehouse in Yiwu."
+    },
+    {
+      "wording": "已装柜 , 预计…号的船期 , 具体离港时间以实际为准",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Loaded into the container, sailing expected on the day named, the actual departure decides.\" The day varies."
+    },
+    {
+      "wording": "官网更新开船时间 , 预计…号离港 , 请知悉",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"The shipping line's site updated the sailing date: departure expected on the day named.\" The container waits at the port."
+    },
+    {
+      "wording": "已开船 , 预计美国时间…号到达洛杉矶港",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"The ship has sailed, due at the port of Los Angeles on the US day named.\""
+    },
+    {
+      "wording": "货物到达港口 , 正在排队卸船中",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"The goods reached the port and wait their turn to be unloaded.\""
+    },
+    {
+      "wording": "预计美国时间…号提柜",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"The container is expected to be collected from the port on the US day named.\""
+    },
+    {
+      "wording": "已提柜 , 拆柜中",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Container collected, being unpacked.\""
+    },
+    {
+      "wording": "预约送仓中",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Booking a delivery slot at the warehouse.\" The destination is an Amazon warehouse."
+    },
+    {
+      "wording": "预约美国时间…号递送入仓",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Delivery into the warehouse booked for the US day named.\""
+    },
+    {
+      "wording": "…号已送仓,POD已回传。后续如有疑问,请在15个工作日内及时联系我司。",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Delivered to the warehouse on the day named, proof of delivery returned; contact us within 15 working days with any question.\" The reply's summary status is CC, 派送妥投, at the same time."
+    }
+  ]
+}
