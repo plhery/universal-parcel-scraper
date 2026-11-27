@@ -253,6 +253,7 @@ import { adapter as daiPost } from '../carriers/dai-post/adapter.js';
 import { adapter as danskeFragtmaend } from '../carriers/danske-fragtmaend/adapter.js';
 import { adapter as danx } from '../carriers/danx/adapter.js';
 import { adapter as dao } from '../carriers/dao/adapter.js';
+import { adapter as daraii } from '../carriers/daraii/adapter.js';
 import { adapter as datianLogistics } from '../carriers/datian-logistics/adapter.js';
 import { adapter as dayRoss } from '../carriers/day-ross/adapter.js';
 import { adapter as daylightTransport } from '../carriers/daylight-transport/adapter.js';
@@ -691,6 +692,7 @@ import { adapter as maritimeOntario } from '../carriers/maritime-ontario/adapter
 import { adapter as markExpress } from '../carriers/mark-express/adapter.js';
 import { adapter as marken } from '../carriers/marken/adapter.js';
 import { adapter as marutiAir } from '../carriers/maruti-air/adapter.js';
+import { adapter as masspack } from '../carriers/masspack/adapter.js';
 import { adapter as matkahuolto } from '../carriers/matkahuolto/adapter.js';
 import { adapter as matson } from '../carriers/matson/adapter.js';
 import { adapter as mauritiusPost } from '../carriers/mauritius-post/adapter.js';
@@ -1495,6 +1497,7 @@ export const REGISTRY: RegistryDefinition = {
     "danske-fragtmaend": danskeFragtmaend,
     "danx": danx,
     "dao": dao,
+    "daraii": daraii,
     "datian-logistics": datianLogistics,
     "day-ross": dayRoss,
     "daylight-transport": daylightTransport,
@@ -1933,6 +1936,7 @@ export const REGISTRY: RegistryDefinition = {
     "mark-express": markExpress,
     "marken": marken,
     "maruti-air": marutiAir,
+    "masspack": masspack,
     "matkahuolto": matkahuolto,
     "matson": matson,
     "mauritius-post": mauritiusPost,
@@ -2933,6 +2937,7 @@ export const REGISTRY: RegistryDefinition = {
     "danske-fragtmaend": "danske-fragtmaend",
     "danx": "danx",
     "dao": "dao",
+    "daraii": "daraii",
     "datian-logistics": "datian-logistics",
     "day-ross": "day-ross",
     "daylight-transport": "daylight-transport",
@@ -3666,6 +3671,7 @@ export const REGISTRY: RegistryDefinition = {
     "marken": "marken",
     "maruti-air": "maruti-air",
     "marvisur": "universal",
+    "masspack": "masspack",
     "matkahuolto": "matkahuolto",
     "matson": "matson",
     "maty-express": "universal",

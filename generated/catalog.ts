@@ -20168,6 +20168,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "daraii": {
+    "displayName": "Daraii",
+    "color": "#0d3157",
+    "aliases": [
+      "香港全速易物流",
+      "全速易",
+      "全速易物流",
+      "香港全速易物流有限公司"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Hong_Kong",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "daraii"
+    },
+    "canaryUrl": "https://www.kynitha.com/track",
+    "trackingSearchUrl": "https://www.kynitha.com/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "datian-logistics": {
     "displayName": "DTW Logistics",
     "color": "#f39626",
@@ -44586,6 +44609,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingSearchUrl": "https://www.expresomarvisur.com/seccion/consulta-gret",
     "helpUrl": "https://www.expresomarvisur.com/contacto",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "masspack": {
+    "displayName": "Masspack Express",
+    "color": "#881575",
+    "aliases": [
+      "Masspack",
+      "千百包",
+      "金迈仕",
+      "金迈仕科技"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "masspack"
+    },
+    "canaryUrl": "https://mp.masspack-express.com/",
+    "trackingUrlTemplate": "https://mp.masspack-express.com/#/public-tracking?orderNum={trackingNumber}",
+    "trackingSearchUrl": "https://mp.masspack-express.com/#/public-tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "mp.masspack-express.com"
+        ],
+        "pathPattern": "^/(?:index\\.html)?$",
+        "fragment": "^/public-tracking\\?(?:[^#]*&)?orderNum=([^&,]+)"
+      }
+    ],
     "detectionRules": []
   },
   "matkahuolto": {
@@ -75123,6 +75178,7 @@ export const CARRIER_IDS = [
   "danske-fragtmaend",
   "danx",
   "dao",
+  "daraii",
   "datian-logistics",
   "day-ross",
   "daylight-transport",
@@ -75825,6 +75881,7 @@ export const CARRIER_IDS = [
   "marken",
   "maruti-air",
   "marvisur",
+  "masspack",
   "matkahuolto",
   "matson",
   "maty-express",
@@ -77245,6 +77302,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "danske-fragtmaend": ["danske-fragtmaend-1"],
   "danx": [],
   "dao": ["dao-1"],
+  "daraii": [],
   "datian-logistics": ["datian-logistics-1"],
   "day-ross": ["day-ross-1"],
   "daylight-transport": [],
@@ -77947,6 +78005,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "marken": [],
   "maruti-air": [],
   "marvisur": [],
+  "masspack": [],
   "matkahuolto": ["matkahuolto-1","matkahuolto-2","matkahuolto-3","matkahuolto-4"],
   "matson": [],
   "maty-express": [],
