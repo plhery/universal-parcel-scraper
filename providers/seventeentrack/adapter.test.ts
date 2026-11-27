@@ -618,6 +618,22 @@ describe('17TRACK result parsing', () => {
     expect(parse17TrackResponse(reply(100999, [row('13:20:24', 'Canada/ON/Example Town')]), number).events?.[0]?.time).toBe('2026-11-22T13:20:24.000Z');
   });
 
+  it('dates DPD China\'s rows by their place, as its adapter does, not under the +08:00 17TRACK adds', () => {
+    const row = (day: string, time: string, description: string, location: string) => ({
+      time_iso: `2026-11-${day}T${time}+08:00`, time_utc: null, time_raw: { date: `2026-11-${day}`, time, timezone: null },
+      description, location, stage: null, sub_status: 'InTransit_Other' });
+    const reply = (key: number, events: unknown[]) => ({ meta: { code: 200 }, shipments: [{ number, code: 200,
+      shipment: { latest_status: { status: 'InTransit' }, shipping_info: { shipper_address: { country: 'CN' }, recipient_address: { country: 'ES' } },
+        tracking: { providers: [{ provider: { key, name: 'DPD (CN)', country: 'CN' }, events }] } } }] });
+    const rows = [row('20', '08:07:30', 'Out for Delivery Scan', 'Spain'), row('18', '15:55:45', 'Hub scan', 'Germany'),
+      row('09', '19:10:30', 'Order Created', 'ShenZhen')];
+    const parsed = parse17TrackResponse(reply(101032, rows), number);
+    expect(parsed.events?.map((event) => [event.time, event.time_zone])).toEqual([
+      ['2026-11-20T07:07:30.000Z', 'Europe/Madrid'], ['2026-11-18T14:55:45.000Z', 'Europe/Berlin'], ['2026-11-09T11:10:30.000Z', 'Asia/Shanghai']]);
+    // Another feed keeps 17TRACK's reading.
+    expect(parse17TrackResponse(reply(100999, rows), number).events?.[0]?.time).toBe('2026-11-20T00:07:30.000Z');
+  });
+
   it('reads Quick Rabbit\'s rows on Madrid\'s clock, not under the -04:00 17TRACK adds', () => {
     const row = (date: string, time: string, timezone: string | null = null) => ({
       time_iso: `${date}T${time}${timezone ?? '-04:00'}`, time_utc: null, time_raw: { date, time, timezone },

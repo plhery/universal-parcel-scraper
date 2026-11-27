@@ -20,7 +20,7 @@ import type { StepRecorder } from '../../core/telemetry/index.js';
 import { canadaProvinceTimeZone, countryCode, countryTimeZone, explicitOffsetTime, firstOccurrence } from '../../core/time/index.js';
 import type { TrawlClient } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { locatePlace, placeTimeZone, type ZoneBasis } from '../../places/index.js';
+import { dateLocalClocks, locatePlace, placeTimeZone, type ZoneBasis } from '../../places/index.js';
 import { trackingPlace } from '../../places/trackingLocation.js';
 import { mainZone } from '../../places/zones.js';
 import { chinaPostDestinationRows, chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
@@ -695,6 +695,29 @@ function indiaPostInbound(events: unknown[], destination: string | null): Map<nu
     ? [[index, placed] as const] : [])));
 }
 
+/**
+ * 17TRACK's carrier 101032, DPD China, shows DPD China's wall clocks (`time_raw` has no zone), each the
+ * scanning facility's, and labels them all with China's offset: a delivery in Spain came seven hours
+ * before DPD China's own row of it, an out-for-delivery round at one in the morning. Its rows are dated
+ * by their place as DPD China's adapter dates its own scans (carriers/dpd-cn): China's towns on
+ * Shanghai's clock and a destination country on its own. Returns that zone, or null for a wall time, by
+ * the row's index in the leg.
+ */
+const DPD_CHINA = 101032;
+function dpdChinaClocks(events: unknown[], destination: string | null, readAt: number): Map<number, Placed | null> {
+  const rows = events.map((raw) => (isRecord(raw) ? { wall: facilityWall(raw), wording: text(raw.description), location: text(raw.location).trim() } : null));
+  const indexes = rows.flatMap((row, index) => (row?.wall ? [index] : []));
+  const dated = dateLocalClocks('dpd-cn', { ...(destination ? { destination_country: destination } : {}),
+    events: indexes.map((index): CarrierEvent => {
+      const { wall, wording, location } = rows[index]!;
+      return { local_time: wall!, description: wording, ...(location ? { location } : {}) };
+    }) }, readAt).events ?? [];
+  return new Map(indexes.map((index, at) => {
+    const scan = dated[at];
+    return [index, scan?.time && scan.time_zone && scan.time_zone_basis ? { zone: scan.time_zone, basis: scan.time_zone_basis as ZoneBasis } : null] as const;
+  }));
+}
+
 /** The day an estimate's bound names, as written: 17TRACK can put its own offset on a carrier's clock. */
 const ESTIMATE_DAY = /^(\d{4}-\d{2}-\d{2})(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}(?::?\d{2})?)?)?$/;
 
@@ -807,7 +830,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const india = typeof name === 'string' && carrierIdFromName(name) === 'india-post';
     const abroad = provider.events.length > MAX_EVENTS ? new Map<number, Placed | null>()
       : nz ? nzPostAbroad(provider.events, number, nzPostDestination(shipment, tracking.providers))
-        : india ? indiaPostInbound(provider.events, recipientCountry(shipment)) : new Map<number, Placed | null>();
+        : india ? indiaPostInbound(provider.events, recipientCountry(shipment))
+          : reported.key === DPD_CHINA ? dpdChinaClocks(provider.events, recipientCountry(shipment), now.toMillis()) : new Map<number, Placed | null>();
     const relay = ORIGIN_RELAYS.get(reported.key);
     const origin = reported.key === CHINA_POST ? originZone(number) : relay ? relayedOriginZone(number, relay) : null;
     // China Post's copies of the destination post's own scans keep that post's wall clock, as China Post's adapter
@@ -954,7 +978,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       }
       if (wall && (abroad.has(index) || shiprocket || anjunExpress || neighbourExpress || hywl || firstLineAbroad || posted || sent !== undefined || sending !== undefined || located !== undefined
         || juxiAbroad !== undefined || mexican !== undefined) && !zone) {
-        // A scan NZ Post dated abroad or India Post relays from the destination's post, or an origin post's that Correos, Correios, USPS or La Poste relays, or a
+        // A scan NZ Post dated abroad or India Post relays from the destination's post, a DPD China row its place does not date, or an origin post's that Correos, Correios, USPS or La Poste relays, or a
         // local carrier's that Juxi Express relays, in a country on several clocks, a Shiprocket row outside India, an Anjun Express row at a place
         // not found, a Neighbour Express row whose place names no province, a Huiyi Logistics or FIRST LINE row outside China or a Correos de México office off central time, keeps its description as a wall time.
         const local: CarrierEvent = { ...parsed, local_time: wall };

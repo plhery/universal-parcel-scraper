@@ -172,6 +172,10 @@ carrier.
   labels them `+00:00`: hours early against the offset Neighbour Express's own service states. A
   row is read on the clock of the province its place names (`Canada/ON/Town`); one that names none
   keeps its wall clock in `local_time`.
+- DPD China's leg (carrier key 101032) shows DPD China's wall clocks, each the scanning
+  facility's, and 17TRACK labels them all with China's offset: its scans at the destination came
+  hours early. Its rows are dated by their place as [DPD China's adapter](../../carriers/dpd-cn/README.md)
+  dates its own scans; one its place does not date keeps its wall clock in `local_time`.
 - Mexico Post's leg (carrier key 13141) reads the digits Correos de México's tracker shows as
   UTC: `time_utc` keeps them, and `time_raw` and `time_iso` show them six hours earlier under
   `-06:00`, the tracker's own rows six hours later. A row is read from `time_utc`'s digits as the
