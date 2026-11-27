@@ -3076,6 +3076,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'anjiexin56', number: '70318294',
     route: /^https:\/\/wx\.lqfast\.com\/Pub\/UnitListDetail\?companyid=JNCqnZaL7Kz%2Bbo2dhhXzyQ%3D%3D&unit=70318294$/,
     marker: /未找到运单|校验手机后四位|运单跟踪/ },
+  // The same page under Annengyuntong's company id.
+  { carrier: 'annengyuntong', number: 'ANYT1901010317',
+    route: /^https:\/\/wx\.lqfast\.com\/Pub\/UnitListDetail\?companyid=9d3suZLQaTTCLeYx7PsD8w%3D%3D&unit=ANYT1901010317$/,
+    marker: /未找到运单|校验手机后四位|运单跟踪/ },
 ];
 
 /**

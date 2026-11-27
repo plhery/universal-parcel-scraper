@@ -1,0 +1,48 @@
+{
+  "carrier": "annengyuntong",
+  "records": [
+    {
+      "number": "ANYT2025070290",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "annengyuntong",
+        "confidence": "high"
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 安能运通物流. It is the cargo number (货号) of a waybill the firm's Lanqiao portal answers, from Shenzhen to Beijing, signed for."
+    },
+    {
+      "number": "66602451",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/annengyuntong.shtml",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "Kuaidi100's 安能运通物流 page gives it as the example number. It is the waybill number (运单号) of a waybill the firm's Lanqiao portal answers, from Cixi to Luzhou, signed for; its cargo number is the same digits after ANYT."
+    }
+  ]
+}

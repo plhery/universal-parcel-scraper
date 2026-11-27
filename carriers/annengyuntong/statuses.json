@@ -1,0 +1,117 @@
+{
+  "carrier": "annengyuntong",
+  "entries": [
+    {
+      "wording": "开单入库",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The waybill opened and the freight taken into the origin depot: the first row in the firm's hands."
+    },
+    {
+      "wording": "分流出库",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Sorted out of the origin depot onto its line."
+    },
+    {
+      "wording": "快件配载发车",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Loaded onto a line truck that left the depot the row names."
+    },
+    {
+      "wording": "在途 预计…到达",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "On the road, with the day and month the firm expects the freight at the destination."
+    },
+    {
+      "wording": "快件到达派送营业点",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Arrived at the branch that delivers it, in the city the row names."
+    },
+    {
+      "wording": "货物正在派送途中",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Out for delivery from that branch."
+    },
+    {
+      "wording": "办理提货",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The pickup or delivery done and signed for; the reader drops the signer the row names."
+    },
+    {
+      "wording": "短驳至【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal",
+      "note": "A short haul to the branch named, as the firm's row template in the portal's reply words it."
+    },
+    {
+      "wording": "第…次配载发车；件数:…",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal",
+      "note": "Loaded onto a line truck that left, with the count of pieces; the reader drops the plate the template adds."
+    },
+    {
+      "wording": "到达卸货",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal",
+      "note": "Arrived at the branch the row names and unloaded."
+    },
+    {
+      "wording": "第…次送货；件数:…",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "portal",
+      "note": "A delivery round with the count of pieces; the reader drops the plate the template adds."
+    },
+    {
+      "wording": "转送至【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal",
+      "note": "Passed on to the branch or partner named for the rest of the way; the reader drops the plate the template adds."
+    },
+    {
+      "wording": "签收回单",
+      "unmapped": true,
+      "language": "zh",
+      "confirmedBy": "portal",
+      "note": "The return receipt signed: paperwork about the waybill, so the row keeps the stage of the one before it."
+    },
+    {
+      "wording": "寄出回单",
+      "unmapped": true,
+      "language": "zh",
+      "confirmedBy": "portal",
+      "note": "The signed return receipt sent back to the origin: paperwork, so the row keeps the stage of the one before it."
+    },
+    {
+      "wording": "收到回单",
+      "unmapped": true,
+      "language": "zh",
+      "confirmedBy": "portal",
+      "note": "The origin received the signed return receipt: paperwork, so the row keeps the stage of the one before it."
+    },
+    {
+      "wording": "返厂回单",
+      "unmapped": true,
+      "language": "zh",
+      "confirmedBy": "portal",
+      "note": "The signed return receipt handed back to the shipper: paperwork, so the row keeps the stage of the one before it."
+    }
+  ]
+}

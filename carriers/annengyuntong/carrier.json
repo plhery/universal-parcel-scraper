@@ -1,0 +1,90 @@
+{
+  "id": "annengyuntong",
+  "displayName": "Annengyuntong Logistics",
+  "aliases": [
+    "安能运通物流",
+    "安能运通",
+    "深圳市安能运通物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#F48805"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "annengyuntong",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://wx.lqfast.com/Pub/UnitListDetail?companyid=9d3suZLQaTTCLeYx7PsD8w%3D%3D&unit={trackingNumber}",
+    "searchUrl": "https://wx.lqfast.com/wx/waybillquery/#/?companyid=9d3suZLQaTTCLeYx7PsD8w%3D%3D",
+    "canaryUrl": "https://wx.lqfast.com/wx/waybillquery/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "eta",
+      "order_contents",
+      "parcel_count",
+      "office_contact_details",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "eta",
+      "order_contents",
+      "parcel_count",
+      "office_contact_details",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "weight",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "wx.lqfast.com"
+      ],
+      "pathPattern": "^/Pub/UnitListDetail$",
+      "query": "^(?=(?:.*&)?companyid=9d3suZLQaTTCLeYx7PsD8w==(?:&|$))(?:.*&)?unit=([^&]+)(?=&|$)"
+    },
+    {
+      "domains": [
+        "wx.lqfast.com"
+      ],
+      "pathPattern": "^/wx/waybillquery/?$",
+      "fragment": "^/(?:waybillquery/orderDetail)?\\?(?=(?:.*&)?companyid=9d3suZLQaTTCLeYx7PsD8w==(?:&|$))(?:.*&)?(?:unit|seek)=([^&]+)(?=&|$)"
+    }
+  ],
+  "detection": [
+    {
+      "id": "annengyuntong-anyt",
+      "pattern": "^ANYT\\d{8,10}$",
+      "confidence": "high"
+    }
+  ]
+}
