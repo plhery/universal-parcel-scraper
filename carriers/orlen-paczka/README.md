@@ -46,7 +46,11 @@ Each scan has a numeric code, a short category and a sentence. The sentence is k
 scan's wording and the code sets its stage; parcels of some services carry an older sentence
 for the same code. A parcel handed to another country's carrier arrives under the code and
 category of a parcel waiting at its point, so that wording, or a shorter one saying the parcel
-is in another country, keeps it in transit. The town a
+is in another country, keeps it in transit. Code 1200, a collected return parcel, ends a
+customer's return at the merchant's warehouse: ORLEN's
+[API documentation](https://www.orlenpaczka.pl/wp-content/uploads/2026/08/API_ORLENPaczka_v_1_26_004_ENG.pdf)
+gives it only to returns to the sender's warehouse, so it reads as returned under the same short
+category as a recipient's collection. The town a
 sorting-centre scan names becomes its location. A code the map does not know keeps its
 wording without a stage. When the reply says its history is not `full`, the official page
 shows the newest scan alone and the result is marked partial.

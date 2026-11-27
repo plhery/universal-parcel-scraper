@@ -58,6 +58,15 @@ describe('ORLEN Paczka parser', () => {
       .toMatchObject({ current_stage: 'ready_for_pickup' });
   });
 
+  it('reads a customer\'s return collected at the merchant\'s warehouse as returned, not delivered', () => {
+    const result = parseOrlenPaczka(envelope([scan('03-03-2026, 18:55', '210', 'Paczka nadana w punkcie'),
+      scan('04-03-2026, 09:00', '300', 'Zwracana paczka została przyjęta do sortowni centralnej'),
+      scan('05-03-2026, 11:20', '1200', 'Paczka odebrana')], { return: true }), NUMBER);
+    expect(result).toMatchObject({ current_stage: 'returned', current_stage_source: 'carrier_map', last_status_text: 'Paczka odebrana' });
+    expect(result.delivered_at).toBeUndefined();
+    expect(result.events?.map(event => [event.provider_code, event.stage])).toEqual([['1200', 'returned'], ['300', 'in_transit'], ['210', 'accepted']]);
+  });
+
   it('keeps an unknown code visible without a stage, and a newest unknown scan leaves the status unknown', () => {
     const result = parseOrlenPaczka(envelope([scan('03-03-2026, 18:55', '200', 'Twoja paczka jest w trakcie przygotowania przez nadawcę'),
       scan('04-03-2026, 09:00', '777', 'Synthetic unfamiliar wording')]), NUMBER);

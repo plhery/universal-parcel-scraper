@@ -24,6 +24,9 @@ const CODES: Readonly<Record<string, Stage>> = {
   690: 'ready_for_pickup',
   // Paczka odebrana: the recipient collected it.
   1000: 'delivered',
+  // Paczka odebrana on a customer's return: ORLEN's API lists 1200 as a collected return
+  // parcel, only for returns to the sender's warehouse (ZWROT), apart from 1000.
+  1200: 'returned',
 };
 
 /**

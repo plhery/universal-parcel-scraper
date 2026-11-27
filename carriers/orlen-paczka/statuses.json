@@ -126,6 +126,15 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-11",
       "note": "The older wording of the same code."
+    },
+    {
+      "code": "1200",
+      "wording": "Paczka odebrana",
+      "stage": "returned",
+      "language": "pl",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-27",
+      "note": "Collected return parcel: ORLEN's API documentation (https://www.orlenpaczka.pl/wp-content/uploads/2026/08/API_ORLENPaczka_v_1_26_004_ENG.pdf, section 7) gives code 1200 only to a return parcel to the sender's warehouse (attribute ZWROT), while a recipient's collection is 1000. It ends a customer's return at the merchant."
     }
   ]
 }
