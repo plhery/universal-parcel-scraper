@@ -1,0 +1,185 @@
+{
+  "carrier": "hubologistics",
+  "entries": [
+    {
+      "code": "1001",
+      "wording": "货品已送达义乌深国际仓，仓库已收货",
+      "language": "zh",
+      "english": "The goods reached the Yiwu warehouse, which received them",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The shipper's goods are received at one of HUBO's warehouses in China, the first scan after the order."
+    },
+    {
+      "code": "1110",
+      "wording": "货品已送达广州江高仓，仓库已收货",
+      "language": "zh",
+      "english": "The goods reached the Guangzhou Jianggao warehouse, which received them",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The warehouse receipt under the newer codes, written by HUBO's system."
+    },
+    {
+      "code": "1210",
+      "wording": "货物已装柜",
+      "language": "zh",
+      "english": "Loaded into the container",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The goods are loaded into the sea container in China."
+    },
+    {
+      "code": "1250",
+      "wording": "国内报关已放行，ETD: 11.17，ETA: 12.04，船名船次：CSCL AUTUMN 076E",
+      "language": "zh",
+      "english": "Export customs released; departure, arrival and vessel",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "China's customs released the export declaration; the text names the planned departure and arrival and the vessel."
+    },
+    {
+      "code": "1310",
+      "wording": "已开船，ETA：12月03号",
+      "language": "zh",
+      "english": "Sailed; arrival expected",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The vessel left China; the text gives the expected arrival."
+    },
+    {
+      "code": "1009",
+      "wording": "货物已签收",
+      "language": "zh",
+      "english": "Signed for",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The destination warehouse signed for the goods. The reply links pictures of the receipt, which the adapter leaves out."
+    },
+    {
+      "code": "1990",
+      "wording": "此柜更新ETA：12.05，实际到港以船司官网显示为准",
+      "language": "zh",
+      "english": "The container's arrival is now expected on another day",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "A notice of a new departure or arrival date, such as a delay before sailing; it keeps the stage of the scan before it."
+    },
+    {
+      "code": null,
+      "wording": "已签收",
+      "language": "zh",
+      "english": "Signed for",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Rows without a code are free text by HUBO's staff, often with dates, so the map reads the first of these phrases a text contains, in this order. A planned signature (预约…签收) does not contain it."
+    },
+    {
+      "code": null,
+      "wording": "已拆柜",
+      "language": "zh",
+      "english": "Container unpacked",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The container is unpacked at the destination, before delivery to the warehouse: \"已提柜，已拆柜完成，预约当地4.24号签收\"."
+    },
+    {
+      "code": null,
+      "wording": "已提柜",
+      "language": "zh",
+      "english": "Container collected",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The container is collected from the port of arrival."
+    },
+    {
+      "code": null,
+      "wording": "已卸船",
+      "language": "zh",
+      "english": "Unloaded from the vessel",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The container is unloaded at the port of arrival: \"货物已卸船，待确认提柜时间\"."
+    },
+    {
+      "code": null,
+      "wording": "已到港",
+      "language": "zh",
+      "english": "Arrived at the port",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The vessel reached the port of arrival and customs released the goods: \"货物已到港，清关已放行，还未卸船\"."
+    },
+    {
+      "code": null,
+      "wording": "已开船",
+      "language": "zh",
+      "english": "Sailed",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The vessel left China: \"已开船；ETA：4.19。\"."
+    },
+    {
+      "code": null,
+      "wording": "报关已放行",
+      "language": "zh",
+      "english": "Export customs released",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "China's customs released the export declaration: \"国内报关已放行，ETD：4.04  ETA：4.19。\", with the vessel."
+    },
+    {
+      "code": null,
+      "wording": "已装柜",
+      "language": "zh",
+      "english": "Loaded into the container",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The goods are loaded into the sea container in China."
+    },
+    {
+      "code": null,
+      "wording": "仓库已收货",
+      "language": "zh",
+      "english": "Received at the warehouse",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "One of HUBO's warehouses in China received the goods: \"货品已送达义乌深国际仓，仓库已收货\"."
+    },
+    {
+      "code": null,
+      "wording": "已生成订单",
+      "language": "zh",
+      "english": "Order created",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "HUBO's order is created, with its number, before the goods reach a warehouse."
+    },
+    {
+      "code": null,
+      "wording": "延误",
+      "language": "zh",
+      "english": "Delayed",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "A delay before sailing, with a new departure date: \"因船晚靠，开船时间有延误，预计ETD：4.06，待确认开船后更新\". It moves nothing."
+    },
+    {
+      "code": null,
+      "wording": "预约",
+      "language": "zh",
+      "english": "Appointment booked",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "A booked collection of the container or delivery to the warehouse, still to come: \"预约当地4.23号提柜\"."
+    },
+    {
+      "code": null,
+      "wording": "label created",
+      "language": "en",
+      "english": "Label Created",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "A row copied from the delivery partner abroad, in English: \"United States,Label Created, Order Processed: In Transit to UPS\". The label for the last leg is made while the goods are at sea, so it moves nothing."
+    }
+  ]
+}

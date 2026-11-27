@@ -45,6 +45,7 @@ export const carriersWithoutSearchPage: Partial<Record<CarrierId, string>> = {
   blueex: 'blue-ex.com hides its tracking forms on phone-sized screens; its own links open the tracking page with the number',
   ciblex: 'Ciblex shows parcels only in its customer extranet, behind a sign-in',
   'honour-lane-shipping': 'CargoLane opens shipment details from the container number in its address. The corporate tracking page shows an empty tracking frame on phones.',
+  hubologistics: 'hubologistics.com has no number field, only its quote and sign-in forms; its enquiry page opens an order only from the number in its address',
   'iran-post': 'post.ir and tracking.post.ir refuse many networks outside Iran; its tracker opens a parcel from the number in its address',
   kargoist: 'kargoist.com\'s tracking page asks for a code sent by text message, and its home page, whose form opened a parcel from the number, shows a maintenance notice',
   'last-one-mile-coop': 'the co-op\'s only tracking form is on y-track.jp and opens only with the co-op\'s form codes in its address; a waybill opens at that address',

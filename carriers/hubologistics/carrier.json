@@ -1,0 +1,84 @@
+{
+  "id": "hubologistics",
+  "displayName": "HUBO Logistics",
+  "aliases": [
+    "巨宝物流",
+    "巨宝国际物流",
+    "HUBO"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#D01820"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hubologistics",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "provider_code",
+    "destination_country",
+    "receiver_address",
+    "service_name",
+    "weight"
+  ],
+  "portal": {
+    "canaryUrl": "https://www.hubologistics.com/",
+    "url":"https://www.hubologistics.com/#/home/enquiry2?code={trackingNumber}",
+    "shows": [
+      "status",
+      "history",
+      "service_name",
+      "weight",
+      "volume",
+      "parcel_count",
+      "recipient_address",
+      "postcodes",
+      "customer_reference"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "weight",
+      "recipient_address",
+      "destination_country"
+    ],
+    "discarded": [
+      "volume",
+      "parcel_count",
+      "postcodes",
+      "customer_reference"
+    ],
+    "unavailable": [
+      "eta",
+      "sender_name",
+      "recipient_name"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "hubologistics.com",
+        "www.hubologistics.com"
+      ],
+      "pathPattern": "^/$",
+      "fragment": "^/home/enquiry2\\?(?:.*&)?code=([A-Za-z0-9]{6,40})(?:&.*)?$"
+    }
+  ],
+  "detection": []
+}

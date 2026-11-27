@@ -1,0 +1,48 @@
+{
+  "carrier": "hubologistics",
+  "records": [
+    {
+      "number": "OZ2024031834",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for HUBO Logistics (巨宝物流). HUBO's tracker answers it with twelve rows, from the order in March 2024 to the signature at an Amazon warehouse in California."
+    },
+    {
+      "number": "ZD202611001024",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/hubologistics.shtml",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Kuaidi100's HUBO page gives it as the example number. HUBO's tracker answers it with a sea shipment from Guangzhou to California, its newer rows with a country and a city."
+    }
+  ]
+}

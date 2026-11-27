@@ -7378,5 +7378,17 @@
     "pattern": "^\\d{10}$",
     "kind": "collision",
     "reason": "Huaxin Supply Chain's tracker also finds a waybill by the shipper's own order number, ten bare digits on the public example, a shape many carriers print, so the adapter answers explicit selection for it."
+  },
+  {
+    "carrier": "hubologistics",
+    "pattern": "^OZ\\d{10}$",
+    "kind": "collision",
+    "reason": "OZ and ten digits is HUBO Logistics' order number for Kuaidi100's test number, and two letters and ten digits is a shape Colis Privé and Aramex print, so one sample cannot give HUBO the shape. The adapter answers explicit selection for it."
+  },
+  {
+    "carrier": "hubologistics",
+    "pattern": "^ZD\\d{12}$",
+    "kind": "open",
+    "reason": "ZD, the year, the month and six digits is HUBO Logistics' order number on Kuaidi100's example. One sample of a forwarder's own reference does not establish the shape, so the adapter answers explicit selection for it."
   }
 ]
