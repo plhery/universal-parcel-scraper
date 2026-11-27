@@ -32,6 +32,7 @@ import { daiPostRelayZone } from '../../carriers/dai-post/clock.js';
 import { IMPORT, LA_POSTE_COUNTRIES, partnerWall } from '../../carriers/la-poste/clock.js';
 import { HYWL_CHINA_ZONE, hywlInChina } from '../../carriers/hywl/clock.js';
 import { firstLineInChina } from '../../carriers/first-line/clock.js';
+import { quickFortRow } from '../../carriers/quick-fort/row.js';
 import { juxiExpressAbroadZone } from '../../carriers/juxi-express/clock.js';
 import { huahanAbroadZone } from '../../carriers/huahan/clock.js';
 import { placedInIndia } from '../../carriers/shiprocket/clock.js';
@@ -578,6 +579,16 @@ function xdpRelayedWording(description: string): string {
   if (!scan) return description;
   return scan[1]!.trim() === '--' ? description.trim().slice(0, -scan[1]!.length - 2) : scan[1]!.trim();
 }
+/** 17TRACK's carrier 192084, Quick Fort. */
+const QUICK_FORT = 192084;
+/**
+ * A Quick Fort row as Quick Fort's own result gives it (`quickFortRow`): 17TRACK copies the
+ * tracker's sentence whole, with the place written in it and a delivery's recipient street.
+ */
+function quickFortRelayed(raw: JsonObject): JsonObject {
+  const row = quickFortRow(text(raw.description));
+  return { ...raw, description: row.description, ...(row.location && !text(raw.location) ? { location: row.location } : {}) };
+}
 /** 17TRACK's carrier 100273, Chronopost. */
 const CHRONOPOST = 100273;
 /** A Chronopost scan as Chronopost's own result gives it, its label at its office (`chronopostOfficeLabel`). */
@@ -950,7 +961,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       // YTO's wording without the courier's name and phone and its hotline, as YTO's own result keeps neither.
       const scan = reported.key === YTO ? { ...raw, description: ytoRelayedWording(text(raw.description)) }
         : reported.key === XDP ? { ...raw, description: xdpRelayedWording(text(raw.description)) }
-          : reported.key === CHRONOPOST ? chronopostRelayed(raw) : raw;
+          : reported.key === CHRONOPOST ? chronopostRelayed(raw) : reported.key === QUICK_FORT ? quickFortRelayed(raw) : raw;
       try { parsed = seventeenTrackEvent(scan, operator, placed?.isValid ? placed.toUTC().toISO() ?? undefined : undefined); }
       catch (cause) { throw new SchemaError(SOURCE, '17TRACK returned an invalid tracking event', { cause }); }
       if (!parsed || (reported.key === DHL_ECOMMERCE_US && !parsed.location && DHL_ECOMMERCE_EN_ROUTE.test(parsed.description ?? ''))) continue;

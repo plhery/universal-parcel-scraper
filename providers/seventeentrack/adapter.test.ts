@@ -271,6 +271,26 @@ describe('17TRACK result parsing', () => {
     expect(JSON.stringify(result)).not.toMatch(/GEO\/|Example Shop|Comment/);
   });
 
+  it("reads Quick Fort's rows as Quick Fort does, without a delivery's recipient street", () => {
+    const scan = (time: string, subStatus: string, description: string) => ({
+      time_iso: `2026-11-17T${time}+08:00`, time_utc: `2026-11-17T${time}+08:00`, time_raw: { date: '2026-11-17', time, timezone: '+08:00' },
+      description, stage: null, sub_status: subStatus });
+    const payload = postalHistory([
+      scan('20:31:00', 'Delivered_Other', 'Sampleton,Example,ES,00000,Delivered Example Street 8'),
+      scan('17:36:00', 'OutForDelivery_Other', 'Out for delivery in Springfield,00000 Sampleton,ES'),
+      scan('08:00:00', 'InTransit_Other', 'The shipment has left the airport.'),
+    ], 'Delivered');
+    const providers = (payload.shipments[0]!.shipment as { tracking: { providers: { provider: unknown }[] } }).tracking.providers;
+    providers[0]!.provider = { key: 192084, name: 'Quick Fort' };
+    const result = parse17TrackResponse(payload, number);
+    expect(result.events?.map((event) => [event.description, event.location ?? ''])).toEqual([
+      ['Delivered', 'Sampleton, Example, ES'],
+      ['Out for delivery', 'Springfield, Sampleton, ES'],
+      ['The shipment has left the airport.', ''],
+    ]);
+    expect(JSON.stringify(result)).not.toMatch(/Example Street|00000/);
+  });
+
   it('reads an exact voided label as a problem despite the generic transit code', () => {
     const label = { ...postalScan('InfoReceived', 'Shipping Label Created'),
       time_iso: '2026-09-19T12:22:00+08:00', time_utc: '2026-09-19T04:22:00Z' };
