@@ -9,6 +9,7 @@
     { "wording": "Presa in carico a seguito di acquisto da poste.it", "language": "it", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-10-25", "note": "Exact match: an online purchase, the box 2 fragment after the page's label; it names no intake." },
     { "wording": "a seguito di acquisto da poste.it", "language": "it", "stage": "registered", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "Exact match." },
     { "wording": "la spedizione è in transito…", "language": "it", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-10", "note": "Prefix match." },
+    { "wording": "da verifiche presso il centro di lavorazione internazionale la documentazione per lo svincolo risulta incompleta…", "language": "it", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Held at customs for incomplete clearance papers, with the recipient to be contacted for them; prefix match." },
     { "wording": "completata la fase di verifica per lo svincolo…", "language": "it", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "Customs release; prefix match." },
     { "wording": "all’estero", "language": "it", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "Exact match; the ASCII apostrophe variant is accepted too." },
     { "wording": "presso il paese estero in data", "language": "it", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "Exact match." },

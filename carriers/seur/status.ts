@@ -11,6 +11,8 @@ const accepted: ClassifiedStatus = { status: 'in_transit', stage: 'accepted' };
 const observed: Record<string, { group: string; wording: string; mapped: ClassifiedStatus | null }> = {
   LL001: { group: 'ENTREGADO', wording: 'EL ENVÍO ESTÁ ENTREGADO.', mapped: delivered },
   LL003: { group: 'ENTREGADO', wording: 'EL ENVÍO ESTÁ ENTREGADO.', mapped: delivered },
+  // The same delivery, under the ENTREGADO group, minutes after the round (LC006) started.
+  LM999: { group: 'ENTREGADO', wording: 'EL ENVÍO ESTÁ ENTREGADO.', mapped: delivered },
   LL010: { group: 'ENTREGADO', wording: 'EL DESTINATARIO HA RETIRADO EL ENVÍO DE LA TIENDA SEUR PICKUP SELECCIONADA.', mapped: delivered },
   LL020: { group: 'ENTREGADO', wording: 'EL ENVÍO HA SIDO ENTREGADO A UN VECINO.', mapped: delivered },
   LC001: { group: 'EN REPARTO', wording: 'EL ENVÍO ESTÁ EN REPARTO.', mapped: { status: 'out_for_delivery', stage: 'out_for_delivery' } },

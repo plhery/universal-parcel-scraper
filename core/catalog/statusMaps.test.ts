@@ -262,6 +262,14 @@ describe('status map answers', () => {
     }
   });
 
+  it("answers Poste Italiane's customs hold for papers, SEUR's LM999 delivery and QLGJ's import customs", () => {
+    expect(answer('poste-italiane', null, 'Da verifiche presso il Centro di Lavorazione Internazionale la documentazione per lo svincolo risulta incompleta. '
+      + 'Sarà contattato il destinatario')).toEqual(mapped('customs'));
+    expect(answer('seur', 'LM999', 'EL ENVÍO ESTÁ ENTREGADO.')).toEqual(mapped('delivered'));
+    expect(answer('qlgj', null, 'Arrived at customs clearance warehouse')).toEqual(mapped('customs'));
+    expect(answer('qlgj', null, 'Customs clearance completed')).toEqual(mapped('in_transit'));
+  });
+
   it("reads Ukrposhta's Ukrainian wording as providers relay it without a code", () => {
     for (const carrier of ['ukrposhta', 'unknown']) {
       expect(answer(carrier, null, 'Прийнято')).toEqual(mapped('accepted'));

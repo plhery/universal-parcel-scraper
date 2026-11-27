@@ -87,6 +87,22 @@
       "note": "The flight's landing, naming the airport, read as an ellipsis, after the take-off."
     },
     {
+      "wording": "Arrived at customs clearance warehouse",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "Import customs at the destination, a day after the flight landed."
+    },
+    {
+      "wording": "Customs clearance completed",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The import clearance done, after the customs warehouse."
+    },
+    {
       "wording": "航班已抵达",
       "language": "zh",
       "english": "Flight arrived",

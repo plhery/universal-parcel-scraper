@@ -76,6 +76,10 @@ export function classifyPosteItalianeStatus(rawWording: unknown): ClassifiedStat
       ? { status: 'exception', stage: 'failed_attempt' }
       : { status: 'in_transit', stage: 'in_transit' };
   }
+  // Held at customs: the papers for the clearance are incomplete, and the recipient is to be contacted for them.
+  if (value.startsWith('da verifiche presso il centro di lavorazione internazionale la documentazione per lo svincolo risulta incompleta')) {
+    return { status: 'exception', stage: 'customs' };
+  }
   // A round that failed, with the working day the next one starts from: not that coming round.
   if (value.startsWith('non è stato possibile effettuare la consegna')) return { status: 'exception', stage: 'failed_attempt' };
   if (value.startsWith('in restituzione al mittente')) return { status: 'exception', stage: 'returned' };

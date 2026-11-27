@@ -361,6 +361,15 @@
       "confirmedBy": "live"
     },
     {
+      "code": "LM999",
+      "wording": "EL ENVÍO ESTÁ ENTREGADO.",
+      "language": "es",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "Under the ENTREGADO group, minutes after the round (LC006) started."
+    },
+    {
       "code": "LL001",
       "wording": "EL ENVÍO ESTÁ ENTREGADO.",
       "language": "es",
