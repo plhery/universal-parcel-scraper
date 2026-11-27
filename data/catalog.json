@@ -7186,13 +7186,30 @@
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "act-logistics",
+      "localClocks": true
     },
     "canaryUrl": "https://actlogistics.pperfect.com/",
+    "trackingUrlTemplate": "https://actlogistics.pperfect.com/?w={trackingNumber}",
     "trackingSearchUrl": "https://actlogistics.pperfect.com/",
     "helpUrl": "https://act-logistics.co.za/contact/",
-    "linkRules": [],
-    "detectionRules": []
+    "linkRules": [
+      {
+        "domains": [
+          "actlogistics.pperfect.com"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "w"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{7}ACT$",
+        "confidence": "high"
+      }
+    ]
   },
   "activos24": {
     "displayName": "Activos24",
@@ -20442,11 +20459,11 @@
     "timezone": "Asia/Kuala_Lumpur",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "dd-express"
     },
-    "canaryUrl": "https://tracking.dd.express/",
-    "trackingUrlTemplate": "https://tracking.dd.express/?tracking_ids={trackingNumber}",
-    "trackingSearchUrl": "https://tracking.dd.express/",
+    "canaryUrl": "https://tracking.dd.express/v2/",
+    "trackingUrlTemplate": "https://tracking.dd.express/v2/",
+    "trackingSearchUrl": "https://tracking.dd.express/v2/",
     "helpUrl": "https://dd.express/contact/",
     "linkRules": [
       {
@@ -24361,7 +24378,7 @@
     "timezone": "Australia/Melbourne",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ecparcel"
     },
     "canaryUrl": "https://track.ec-parcel.com/",
     "trackingUrlTemplate": "https://track.ec-parcel.com/track?trackingNumber={trackingNumber}",
@@ -24378,7 +24395,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^YOTN20\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{9}$",
+        "confidence": "high"
+      }
+    ]
   },
   "ed-post": {
     "displayName": "ED POST",
@@ -63493,7 +63515,8 @@
     "timezone": "Europe/Madrid",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "szendex",
+      "localClocks": true
     },
     "canaryUrl": "https://erp.szendex.com/DlWebTrackingVWE/",
     "trackingUrlTemplate": "https://erp.szendex.com/DlWebTrackingVWE/?seg={trackingNumber}",
@@ -67641,7 +67664,8 @@
     "timezone": "Europe/London",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ttk-europe",
+      "localClocks": true
     },
     "canaryUrl": "https://ttkeu.com/",
     "trackingUrlTemplate": "https://ttkeu.com/tracking/tracking-detail/?id={trackingNumber}",
@@ -69263,13 +69287,29 @@
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "valueway",
+      "recognitionRank": 133,
+      "localClocks": true
     },
     "canaryUrl": "https://www.valueway.net/main.html",
+    "trackingUrlTemplate": "https://member.valueway.net/cgi-bin/GInfo.dll?MfcISAPICommand=EmmisTrack&w=valueway&ntype=1000&cmodel=new:tracking&cno={trackingNumber}",
     "trackingSearchUrl": "https://www.valueway.net/main.html",
     "helpUrl": "https://www.valueway.net/Contact/index.html#office",
-    "linkRules": [],
-    "detectionRules": []
+    "linkRules": [
+      {
+        "domains": [
+          "member.valueway.net"
+        ],
+        "pathPattern": "^/cgi-bin/ginfo\\.dll$",
+        "query": "^(?=(?:.*&)?MfcISAPICommand=(?:emmistrack|EmsApiTrack)(?:&|$))(?:.*&)?cno=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^VE\\d{9}CA$",
+        "confidence": "low"
+      }
+    ]
   },
   "varubud": {
     "displayName": "Varubud",
@@ -73641,10 +73681,10 @@
       "CN"
     ],
     "selectable": true,
-    "timezone": "America/Los_Angeles",
+    "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "yuema-express"
     },
     "canaryUrl": "https://www.yue777.com/",
     "trackingSearchUrl": "https://www.yue777.com/genzong.php",
@@ -74395,10 +74435,12 @@
     "timezone": "Asia/Baghdad",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "zmc-express",
+      "localClocks": true
     },
     "canaryUrl": "https://apps.zmc-iraq.com/tracking.php",
     "trackingSearchUrl": "https://apps.zmc-iraq.com/tracking.php",
+    "helpUrl": "https://zmcexpress.com/get-in-touch/",
     "linkRules": [],
     "detectionRules": []
   },

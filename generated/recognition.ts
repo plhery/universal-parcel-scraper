@@ -526,6 +526,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "upaya": 562,
   "urvaam": 848,
   "uzbekistan-post": 906,
+  "valueway": 133,
   "vasp-expresso": 885,
   "venipak": 240,
   "via-cargo": 936,

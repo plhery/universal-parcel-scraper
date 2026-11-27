@@ -20,6 +20,7 @@ import { adapter as abfFreight } from '../carriers/abf-freight/adapter.js';
 import { adapter as aciExpressKr } from '../carriers/aci-express-kr/adapter.js';
 import { adapter as acplCargo } from '../carriers/acpl-cargo/adapter.js';
 import { adapter as acsCourier } from '../carriers/acs-courier/adapter.js';
+import { adapter as actLogistics } from '../carriers/act-logistics/adapter.js';
 import { adapter as activos24 } from '../carriers/activos24/adapter.js';
 import { adapter as aerolineasArgentinasCargo } from '../carriers/aerolineas-argentinas-cargo/adapter.js';
 import { adapter as aeropost } from '../carriers/aeropost/adapter.js';
@@ -260,6 +261,7 @@ import { adapter as daylightTransport } from '../carriers/daylight-transport/ada
 import { adapter as dayone } from '../carriers/dayone/adapter.js';
 import { adapter as daytonFreight } from '../carriers/dayton-freight/adapter.js';
 import { adapter as daytonaExpress } from '../carriers/daytona-express/adapter.js';
+import { adapter as ddExpress } from '../carriers/dd-express/adapter.js';
 import { adapter as dealersend } from '../carriers/dealersend/adapter.js';
 import { adapter as delhivery } from '../carriers/delhivery/adapter.js';
 import { adapter as delibox } from '../carriers/delibox/adapter.js';
@@ -326,6 +328,7 @@ import { adapter as ecomLogistics } from '../carriers/ecom-logistics/adapter.js'
 import { adapter as econt } from '../carriers/econt/adapter.js';
 import { adapter as ecoscooting } from '../carriers/ecoscooting/adapter.js';
 import { adapter as ecourier } from '../carriers/ecourier/adapter.js';
+import { adapter as ecparcel } from '../carriers/ecparcel/adapter.js';
 import { adapter as edPost } from '../carriers/ed-post/adapter.js';
 import { adapter as ediExpress } from '../carriers/edi-express/adapter.js';
 import { adapter as egxpress } from '../carriers/egxpress/adapter.js';
@@ -1036,6 +1039,7 @@ import { adapter as swissUniversalExpress } from '../carriers/swiss-universal-ex
 import { adapter as swissconnect } from '../carriers/swissconnect/adapter.js';
 import { adapter as sxwExpress } from '../carriers/sxw-express/adapter.js';
 import { adapter as szctc } from '../carriers/szctc/adapter.js';
+import { adapter as szendex } from '../carriers/szendex/adapter.js';
 import { adapter as tCat } from '../carriers/t-cat/adapter.js';
 import { adapter as tGroup } from '../carriers/t-group/adapter.js';
 import { adapter as tailwindShippingLines } from '../carriers/tailwind-shipping-lines/adapter.js';
@@ -1110,6 +1114,7 @@ import { adapter as tsLines } from '../carriers/ts-lines/adapter.js';
 import { adapter as tsbEs } from '../carriers/tsb-es/adapter.js';
 import { adapter as tsjy } from '../carriers/tsjy/adapter.js';
 import { adapter as tstCfExpress } from '../carriers/tst-cf-express/adapter.js';
+import { adapter as ttkEurope } from '../carriers/ttk-europe/adapter.js';
 import { adapter as tufesa } from '../carriers/tufesa/adapter.js';
 import { adapter as tuomeida } from '../carriers/tuomeida/adapter.js';
 import { adapter as turkonLine } from '../carriers/turkon-line/adapter.js';
@@ -1137,6 +1142,7 @@ import { adapter as usps } from '../carriers/usps/adapter.js';
 import { adapter as uzbekistanPost } from '../carriers/uzbekistan-post/adapter.js';
 import { adapter as vXpress } from '../carriers/v-xpress/adapter.js';
 import { adapter as valmo } from '../carriers/valmo/adapter.js';
+import { adapter as valueway } from '../carriers/valueway/adapter.js';
 import { adapter as vascoMaritime } from '../carriers/vasco-maritime/adapter.js';
 import { adapter as vaspExpresso } from '../carriers/vasp-expresso/adapter.js';
 import { adapter as veho } from '../carriers/veho/adapter.js';
@@ -1218,6 +1224,7 @@ import { adapter as yolKargo } from '../carriers/yol-kargo/adapter.js';
 import { adapter as youbangExpress } from '../carriers/youbang-express/adapter.js';
 import { adapter as yto } from '../carriers/yto/adapter.js';
 import { adapter as yuanpeng } from '../carriers/yuanpeng/adapter.js';
+import { adapter as yuemaExpress } from '../carriers/yuema-express/adapter.js';
 import { adapter as yunda } from '../carriers/yunda/adapter.js';
 import { adapter as yunexpress } from '../carriers/yunexpress/adapter.js';
 import { adapter as yurticiKargo } from '../carriers/yurtici-kargo/adapter.js';
@@ -1235,6 +1242,7 @@ import { adapter as zesExpress } from '../carriers/zes-express/adapter.js';
 import { adapter as zheldor } from '../carriers/zheldor/adapter.js';
 import { adapter as zhongzhouLogistics } from '../carriers/zhongzhou-logistics/adapter.js';
 import { adapter as zim } from '../carriers/zim/adapter.js';
+import { adapter as zmcExpress } from '../carriers/zmc-express/adapter.js';
 import { adapter as znlogic } from '../carriers/znlogic/adapter.js';
 import { adapter as zoomVe } from '../carriers/zoom-ve/adapter.js';
 import { adapter as zrExpress } from '../carriers/zr-express/adapter.js';
@@ -1264,6 +1272,7 @@ export const REGISTRY: RegistryDefinition = {
     "aci-express-kr": aciExpressKr,
     "acpl-cargo": acplCargo,
     "acs-courier": acsCourier,
+    "act-logistics": actLogistics,
     "activos24": activos24,
     "aerolineas-argentinas-cargo": aerolineasArgentinasCargo,
     "aeropost": aeropost,
@@ -1504,6 +1513,7 @@ export const REGISTRY: RegistryDefinition = {
     "dayone": dayone,
     "dayton-freight": daytonFreight,
     "daytona-express": daytonaExpress,
+    "dd-express": ddExpress,
     "dealersend": dealersend,
     "delhivery": delhivery,
     "delibox": delibox,
@@ -1570,6 +1580,7 @@ export const REGISTRY: RegistryDefinition = {
     "econt": econt,
     "ecoscooting": ecoscooting,
     "ecourier": ecourier,
+    "ecparcel": ecparcel,
     "ed-post": edPost,
     "edi-express": ediExpress,
     "egxpress": egxpress,
@@ -2280,6 +2291,7 @@ export const REGISTRY: RegistryDefinition = {
     "swissconnect": swissconnect,
     "sxw-express": sxwExpress,
     "szctc": szctc,
+    "szendex": szendex,
     "t-cat": tCat,
     "t-group": tGroup,
     "tailwind-shipping-lines": tailwindShippingLines,
@@ -2354,6 +2366,7 @@ export const REGISTRY: RegistryDefinition = {
     "tsb-es": tsbEs,
     "tsjy": tsjy,
     "tst-cf-express": tstCfExpress,
+    "ttk-europe": ttkEurope,
     "tufesa": tufesa,
     "tuomeida": tuomeida,
     "turkon-line": turkonLine,
@@ -2381,6 +2394,7 @@ export const REGISTRY: RegistryDefinition = {
     "uzbekistan-post": uzbekistanPost,
     "v-xpress": vXpress,
     "valmo": valmo,
+    "valueway": valueway,
     "vasco-maritime": vascoMaritime,
     "vasp-expresso": vaspExpresso,
     "veho": veho,
@@ -2462,6 +2476,7 @@ export const REGISTRY: RegistryDefinition = {
     "youbang-express": youbangExpress,
     "yto": yto,
     "yuanpeng": yuanpeng,
+    "yuema-express": yuemaExpress,
     "yunda": yunda,
     "yunexpress": yunexpress,
     "yurtici-kargo": yurticiKargo,
@@ -2479,6 +2494,7 @@ export const REGISTRY: RegistryDefinition = {
     "zheldor": zheldor,
     "zhongzhou-logistics": zhongzhouLogistics,
     "zim": zim,
+    "zmc-express": zmcExpress,
     "znlogic": znlogic,
     "zoom-ve": zoomVe,
     "zr-express": zrExpress,
@@ -2524,7 +2540,7 @@ export const REGISTRY: RegistryDefinition = {
     "acpl-cargo": "acpl-cargo",
     "acs-courier": "acs-courier",
     "act-argos": "universal",
-    "act-logistics": "universal",
+    "act-logistics": "act-logistics",
     "activos24": "activos24",
     "ader": "universal",
     "adex-al": "universal",
@@ -2944,7 +2960,7 @@ export const REGISTRY: RegistryDefinition = {
     "dayone": "dayone",
     "dayton-freight": "dayton-freight",
     "daytona-express": "daytona-express",
-    "dd-express": "universal",
+    "dd-express": "dd-express",
     "ddu-express": "universal",
     "dealersend": "dealersend",
     "deleo": "universal",
@@ -3054,7 +3070,7 @@ export const REGISTRY: RegistryDefinition = {
     "ecoscooting": "ecoscooting",
     "ecourier": "ecourier",
     "ecourier-uk": "universal",
-    "ecparcel": "universal",
+    "ecparcel": "ecparcel",
     "ed-post": "ed-post",
     "edi-express": "edi-express",
     "eek-logistikk": "universal",
@@ -4250,7 +4266,7 @@ export const REGISTRY: RegistryDefinition = {
     "syd": "universal",
     "szami-group": "universal",
     "szctc": "szctc",
-    "szendex": "universal",
+    "szendex": "szendex",
     "t-cat": "t-cat",
     "t-group": "t-group",
     "tailwind-shipping-lines": "tailwind-shipping-lines",
@@ -4379,7 +4395,7 @@ export const REGISTRY: RegistryDefinition = {
     "tsjy": "tsjy",
     "tsn-groen": "universal",
     "tst-cf-express": "tst-cf-express",
-    "ttk-europe": "universal",
+    "ttk-europe": "ttk-europe",
     "tufesa": "tufesa",
     "tuffnells": "universal",
     "tuodatong": "universal",
@@ -4433,7 +4449,7 @@ export const REGISTRY: RegistryDefinition = {
     "v-xpress": "v-xpress",
     "valmo": "valmo",
     "value-logistics": "universal",
-    "valueway": "universal",
+    "valueway": "valueway",
     "varubud": "universal",
     "vasco-maritime": "vasco-maritime",
     "vasp-expresso": "vasp-expresso",
@@ -4572,7 +4588,7 @@ export const REGISTRY: RegistryDefinition = {
     "yto": "yto",
     "yto-ph": "universal",
     "yuanpeng": "yuanpeng",
-    "yuema-express": "universal",
+    "yuema-express": "yuema-express",
     "yuexi-logistics": "universal",
     "yunda": "yunda",
     "yunexpress": "yunexpress",
@@ -4598,7 +4614,7 @@ export const REGISTRY: RegistryDefinition = {
     "zipasgo": "universal",
     "zippd": "universal",
     "zippee": "universal",
-    "zmc-express": "universal",
+    "zmc-express": "zmc-express",
     "znlogic": "znlogic",
     "zoom-ve": "zoom-ve",
     "zr-express": "zr-express",
