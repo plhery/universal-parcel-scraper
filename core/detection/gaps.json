@@ -4463,6 +4463,12 @@
     "reason": "The shipment number goes with a company number; eight digits alone are generic."
   },
   {
+    "carrier": "szendex",
+    "pattern": "^\\d{18}$",
+    "kind": "collision",
+    "reason": "Szendex shipment numbers seen are eighteen digits, a service order and a six-digit package count, a bare digit run that other carriers' numbers share; one public sample is too few to claim a prefix, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
     "carrier": "t-cat",
     "pattern": "^\\d{10}$",
     "kind": "by_design",

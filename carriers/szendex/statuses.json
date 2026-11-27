@@ -1,4 +1,15 @@
 {
   "carrier": "szendex",
-  "entries": []
+  "entries": [
+    { "wording": "Solicitada", "stage": "registered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The service order is requested: the sender has booked the pickup." },
+    { "wording": "Documentado", "stage": "registered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The shipment's waybill is entered, at the same minute as the service order." },
+    { "wording": "Asignada", "stage": "registered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The pickup is given to a courier; the parcel is still with the sender." },
+    { "wording": "Recogida", "stage": "accepted", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The courier has picked the parcel up. The last state of a service order." },
+    { "wording": "Traza Salida", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The parcel leaves the origin branch, a minute after its pickup in the sample; the rail calls this step Salida Delegacion." },
+    { "wording": "Salida Delegacion", "stage": "in_transit", "language": "es", "confirmedBy": "portal", "note": "The rail's second step, between the pickup and the delivery round." },
+    { "wording": "En Agencia de destino", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The parcel reached the destination agency, before its delivery round." },
+    { "wording": "En Reparto", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27" },
+    { "wording": "Entregado", "stage": "delivered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27" },
+    { "wording": "No se ha encontrado el envío solicitado.", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The tracker's answer for a number it does not know, not a state." }
+  ]
 }

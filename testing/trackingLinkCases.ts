@@ -2280,6 +2280,12 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'seko', number: 'ZZ0000000000',
     route: /^https:\/\/www\.sekologistics\.com\/en\/track\/\?trackingNumbers=ZZ0000000000$/,
     marker: /No results found for tracking number|Enter up to 30 tracking numbers/i },
+  // The tracker looks the number in its address up and answers an unknown one with a notice that
+  // does not name it.
+  { carrier: 'szendex', number: '999999999999999999',
+    route: /^https:\/\/erp\.szendex\.com\/DlWebTrackingVWE\/\?seg=999999999999999999$/,
+    marker: /No se ha encontrado el envío solicitado/,
+    forwarding: { notFound: /No se ha encontrado el envío solicitado/ } },
   // The page on tdn.es forwards the number to the tracker on plain HTTP a moment after it loads,
   // so the route takes both. The tracker's heading names the number over its notice for an
   // unregistered one.

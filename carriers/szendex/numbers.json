@@ -1,5 +1,28 @@
 {
   "carrier": "szendex",
-  "gap": "No public page shows a Szendex number.",
-  "records": []
+  "gap": "Only an aggregator's example shows a Szendex number.",
+  "records": [
+    {
+      "number": "009000298400000001",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/szendex/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bpost",
+          "ecoscooting",
+          "gls-es"
+        ]
+      },
+      "note": "TrackShip's Szendex page gives it as a tracking number example. The tracker answers it with a delivered shipment whose page names its service order, the number's first twelve digits."
+    }
+  ]
 }

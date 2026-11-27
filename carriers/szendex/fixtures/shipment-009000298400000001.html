@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+
+<head><title>
+	Szendex :: Seguimiento de Envíos
+</title><link rel="stylesheet" type="text/css" href="Content/base.css" /><link rel="stylesheet" type="text/css" href="Content/custom/custom.css" /><link rel="stylesheet" type="text/css" href="Content/all.min.css" />    
+    <script type="text/javascript" src="Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            attachProgressModal();
+
+            $("#form1").submit(function() {
+                showProgressModal();
+            });
+        });
+
+        /*
+            De DlWebVWE gui.js
+        */
+        function attachProgressModal() {
+            /// <summary>Agrega al DOM un panel modal con un texto y una imagen "loader". Se usa en paginas en las que el progress modal se muestra al
+            /// hacer postback. Si lo creamos "on the fly" (llamando a showProgressModal directamente) la imagen del gif a veces no se muestra.</summary>
+
+            var $modal;  //Elemento de fondo que hace que el progress sea modal 
+            var $loading; //Elemento que muestra la imagen y el texto
+            var nTop = 0;
+            var nLeft = 0;
+
+            $modal = $('<div />');
+            $modal.attr('id', 'jqProgressModalModal');
+            $modal.addClass('modal');
+            $('body').append($modal);
+            $modal.hide();
+
+            $loading = $('<div />');
+            $loading.attr('id', 'jqProgressModalLoader');
+            $loading.html('<br /><span></span><br /><br /><img width="48px" height="48px" src="Content/images/loader_48x48.gif" alt="" />');
+            $loading.addClass('loading');
+            $('body').append($loading);
+
+            /*nTop = Math.max($(window).height() / 2 - $loading.height() / 2, 0);
+            nLeft = Math.max($(window).width() / 2 - $loading.width() / 2, 0);
+            $loading.css({ top: nTop, left: nLeft });*/
+            centerElementInWindow($loading);
+
+            $loading.hide();
+        }
+
+        function showProgressModal() {
+            /// <summary>Muestra un panel modal con un texto y una imagen "loader". Lo usamos para informar al usuario
+            /// cuando se están realizando tareas y que no pueda intractuar con la pantalla.</summary>
+            /// <param name="sText" type="[Opcional] String">El texto a mostrar en el panel.Por defecto muestra "Procesando....".</param>
+            /// <param name="nTimeout" type="[Opcional] Number">Tiempo antes de mostrar el panel. Por defecto 0ms.</param>
+            /// <remarks>Inyecta el codigo necesario (un DIV para hacer la ventana modal, otro DIV para mostrar el texto y la
+            /// imagen). Cuando se quiera establecer uno de los argumentos pero el otro se quiere dejar por defecto se ha de pasar "null".</remarks>
+
+            //Params opcionales
+            var sText = (arguments[0]) ? arguments[0] : 'Procesando...';
+            /*var nTimeout = (arguments[1]) ? arguments[1] : 0;
+
+            setTimeout(function () {*/
+            if (($('#jqProgressModalModal').length) && ($('#jqProgressModalLoader').length)) {
+                //Ya esta creado, actualizamos la posicion (por si acaso se ha redimensionado el dialog o la pantalla)
+                centerElementInWindow('jqProgressModalLoader');
+            }
+            else {
+                attachProgressModal();
+            }
+
+            updateProgressModal(sText);
+
+            if ($('#jqProgressModalModal').is(':visible')) {
+                //Ya es visible no hacemos nada
+                //IMPORTANTE: si hacemos show() cuando se esta mostrando, se ocultara (para que jQuery lo hace internamente);
+            }
+            else {
+                $('#jqProgressModalModal').show();
+                $('#jqProgressModalLoader').show();
+            }
+
+            //}, nTimeout);
+        }
+
+        function updateProgressModal(sText) {
+            /// <summary>Actualiza el texto del panel modal.</summary>
+
+            $('#jqProgressModalLoader > span').text(sText);
+        }
+
+        function centerElementInWindow(control) {
+            /// <summary>Centra un elemento vertical y horizontalmente en la ventana. Tener en cuenta que si el elemento ya tiene estilos aplicados puede que no
+            /// se posicione correctamente (si tiene "display: XXXXX).</summary>
+            /// <param name="control" type="Object|String">Objeto jQ o id del control.</param>
+
+            var $ctl = (control instanceof jQuery) ? control : $('#' + control);
+
+            var nTop = Math.max($(window).height() / 2 - $ctl.height() / 2, 0);
+            var nLeft = Math.max($(window).width() / 2 - $ctl.width() / 2, 0);
+            $ctl.css({ top: nTop, left: nLeft });
+        }
+    </script>
+</head>
+
+<body>
+    <form method="post" action="./?seg=009000298400000001" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="63E3C5B3" />
+</div>
+        <div class="masterHeaderContainer">
+             <div id="masterHeader">
+               <div>
+                   <div id="masterCompanyLogo"></div>
+               </div>
+               <div id="masterCompany">
+                   <span id="masterCompanySlogan">Seguimiento de Env&#237;os</span>
+               </div>
+         </div>
+        </div>
+        <div class="MainContentWrapper">
+
+            <div id="content">                
+
+                
+                
+                
+                
+                                                   
+
+                
+                
+                
+
+                
+                <div id="datosEnvioRes" class="section">
+                    <div class="sectionContent">                       
+                        <table class="tblDatosResumidos">                            
+                            <tr>
+                                <td>
+                                    <div class="iconoEstadoActual">
+                                        <p class="iconos">
+                                            <i id="iconoEstadoActual" class="fas fa-check-circle"></i>                                                
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <table id="tblDatosResumidosEnvio" class="tblDatosResumidosEnvio">
+	<tr>
+		<td id="lblNumSeguimientoRes">Núm. de Seguimiento:</td><td><span id="lblNumSeguimientoDataRes">009000298400000001</span></td>
+	</tr><tr>
+		<td id="lblEstadoRes">Estado:</td><td><span id="lblEstadoDataRes">Entregado</span></td>
+	</tr><tr id="rowFechaEntregaRes">
+		<td id="lblFechaEntregaRes">Fecha de Entrega:</td><td><span id="lblFechaEntregaDataRes">27/01/2023&nbsp;&nbsp;&nbsp;&nbsp;13:44</span></td>
+	</tr>
+</table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="sectionContent">
+                                        <div id="divIconosSeguimientoExpedicion" class="iconosSeguimiento">
+                                            <p id="recogido" class="iconos iconoTrazado">
+                                                <i class="fas fa-box"></i>
+                                                <span id="estadoRecogido">Recogida</span>
+                                            </p>                            
+                                            <p id="transito" class="iconos iconoTrazado">
+                                                <i class="fas fa-road"></i>
+                                                <span id="estadoTransito">Salida Delegacion</span>
+                                            </p>
+                                            <p id="reparto" class="iconos iconoTrazado">
+                                                
+                                                <i id="repartoIcono" class="fas fa-truck"></i>
+                                                <span id="estadoReparto">En Reparto</span>
+                                            </p>
+                                            <p id="entregado" class="iconos iconoTrazado">
+                                                <i class="fas fa-check-circle"></i>
+                                                <span id="estadoEntregado">Entregado</span>
+                                            </p>
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                
+                <div id="pnlTrazabilidad" class="section">
+	
+                    <div class="sectionHeader">
+                        <div class="sectionHeaderTitle">
+                            Seguimiento de la Expedición
+                        </div>
+                    </div>
+
+                    <div class="sectionContent sectionGrid">
+                        
+                        
+                        
+                        
+
+                        <div>
+		<table class="grid noMargin noPadding" cellspacing="0" align="Center" rules="all" border="1" id="gvTrazabilidad" style="border-collapse:collapse;">
+			<tr>
+				<th scope="col">Fecha</th><th scope="col">Estado</th><th scope="col">Descripción</th>
+			</tr><tr class="gridItem">
+				<td>26/01/2023&nbsp;&nbsp;&nbsp;&nbsp;16:17</td><td>Solicitada</td><td>&nbsp;</td>
+			</tr><tr class="gridItemAlt">
+				<td>26/01/2023&nbsp;&nbsp;&nbsp;&nbsp;16:17</td><td>Documentado</td><td>&nbsp;</td>
+			</tr><tr class="gridItem">
+				<td>26/01/2023&nbsp;&nbsp;&nbsp;&nbsp;17:35</td><td>Asignada</td><td>&nbsp;</td>
+			</tr><tr class="gridItemAlt">
+				<td>26/01/2023&nbsp;&nbsp;&nbsp;&nbsp;17:51</td><td>Recogida</td><td>&nbsp;</td>
+			</tr><tr class="gridItem">
+				<td>26/01/2023&nbsp;&nbsp;&nbsp;&nbsp;17:52</td><td>Traza Salida</td><td>&nbsp;</td>
+			</tr><tr class="gridItemAlt">
+				<td>27/01/2023&nbsp;&nbsp;&nbsp;&nbsp;8:38</td><td>En Agencia de destino</td><td>&nbsp;</td>
+			</tr><tr class="gridItem">
+				<td>27/01/2023&nbsp;&nbsp;&nbsp;&nbsp;9:58</td><td>En Reparto</td><td>&nbsp;</td>
+			</tr><tr class="gridItemAlt">
+				<td>27/01/2023&nbsp;&nbsp;&nbsp;&nbsp;13:44</td><td>Entregado</td><td>&nbsp;</td>
+			</tr>
+		</table>
+	</div>
+                    </div>
+                
+</div>
+                                               
+                
+                <div id="pnlDatosEnvio" class="section">
+	
+                    <div class="sectionHeader">
+                        <div class="sectionHeaderTitle">
+                            Datos de la Expedición
+                        </div>
+                    </div>
+                                        
+                    <div class="sectionContent">
+                        
+                    
+                        <table id="tblDatosEnvio">
+		<tr>
+			<td class="alineaTop"><table class="tblDatosEnvio">
+				<tr>
+					<td id="lblNumSeguimiento">Núm. de Seguimiento:</td><td><span id="lblNumSeguimientoData">009000298400000001</span></td>
+				</tr><tr id="rowReferenciaOS">
+					<td id="lblReferenciaOS">Orden de Servicio:</td><td><span id="lblReferenciaOSData">009000298400</span></td>
+				</tr><tr>
+					<td id="lblFechaEnvio">Fecha:</td><td><span id="lblFechaEnvioData">26/01/2023</span></td>
+				</tr><tr id="rowPoblacionOrigen">
+					<td id="lblPoblacionOrigen">Ciudad de Origen:</td><td><span id="lblPoblacionOrigenData">MANRESA</span></td>
+				</tr><tr>
+					<td id="lblTipoServicio">Tipo de Servicio:</td><td><span id="lblTipoServicioData">ENTREGAS 24 HORAS</span></td>
+				</tr><tr id="rowReferencia">
+					<td id="lblReferencia">Referencia:</td><td><span id="lblReferenciaData">W-5012</span></td>
+				</tr><tr>
+					<td class="noborder">&nbsp;</td><td class="noborder">&nbsp;</td>
+				</tr><tr id="rowTelefonoAgencia">
+					<td id="lblTelefonoAgencia">Teléfono de Agencia:</td><td><span id="lblTelefonoData"></span></td>
+				</tr>
+			</table></td><td>&nbsp;</td><td class="alineaTop"><table class="tblDatosEnvio">
+				<tr id="rowDestinatario">
+					<td id="lblDestinatario">Destinatario:</td><td><span id="lblDestinatarioData"></span></td>
+				</tr><tr id="rowPoblacionDestino">
+					<td id="lblPoblacionDestino">Ciudad de Destino:</td><td><span id="lblPoblacionDestinoData">ALCAIDESA, LA (LA LINEA DE LA CONCEPCION)</span></td>
+				</tr><tr id="rowBultos">
+					<td id="lblBultos">Núm. de Bultos:</td><td><span id="lblBultosData">1</span></td>
+				</tr><tr id="rowPeso">
+					<td id="lblPeso">Peso:</td><td><span id="lblPesoData">1</span></td>
+				</tr><tr id="rowObservaciones">
+					<td id="lblObservaciones">Observaciones:</td><td><span id="lblObservacionesData"></span></td>
+				</tr><tr>
+					<td id="lblEstado">Estado:</td><td><span id="lblEstadoData">Entregado</span></td>
+				</tr><tr>
+					<td id="lblFechaEntrega">Fecha de Entrega:</td><td><span id="lblFechaEntregaData">27/01/2023&nbsp;&nbsp;&nbsp;&nbsp;13:44</span></td>
+				</tr><tr id="rowTipoIncidencia">
+					<td id="lblIncidencia">Tipo de Incidencia:</td><td><span id="lblIncidenciaData"></span></td>
+				</tr>
+			</table></td>
+		</tr>
+	</table>
+                    </div>
+                
+</div>
+                
+
+                
+                <div id="pnlAlbaranDigitalizado" class="section">
+	
+                    <div class="sectionHeader">
+                        <div class="sectionHeaderTitle">
+                            Documentación de Entrega
+                        </div>
+                    </div>
+
+                    <div class="sectionContent">
+                        
+
+                        <!-- Tabla de imagenes -->
+                        <table id="tblImagenes" class="maxWidth centered">
+		<tr>
+			<td class="celdaImagenes"></td>
+		</tr>
+	</table>
+                    </div>
+                
+</div>
+               
+            </div> <!-- content -->
+            
+            
+        </div> <!-- MainContentWrapper -->
+        <div class="versionNumber"><span id="lblVersionNumber">v.1.7.1</span></div>
+    </form>
+    
+</body>
+
+</html>

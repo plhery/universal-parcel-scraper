@@ -1,0 +1,173 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+
+<head><title>
+	Szendex :: Seguimiento de Envíos
+</title><link rel="stylesheet" type="text/css" href="Content/base.css" /><link rel="stylesheet" type="text/css" href="Content/custom/custom.css" /><link rel="stylesheet" type="text/css" href="Content/all.min.css" />    
+    <script type="text/javascript" src="Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            attachProgressModal();
+
+            $("#form1").submit(function() {
+                showProgressModal();
+            });
+        });
+
+        /*
+            De DlWebVWE gui.js
+        */
+        function attachProgressModal() {
+            /// <summary>Agrega al DOM un panel modal con un texto y una imagen "loader". Se usa en paginas en las que el progress modal se muestra al
+            /// hacer postback. Si lo creamos "on the fly" (llamando a showProgressModal directamente) la imagen del gif a veces no se muestra.</summary>
+
+            var $modal;  //Elemento de fondo que hace que el progress sea modal 
+            var $loading; //Elemento que muestra la imagen y el texto
+            var nTop = 0;
+            var nLeft = 0;
+
+            $modal = $('<div />');
+            $modal.attr('id', 'jqProgressModalModal');
+            $modal.addClass('modal');
+            $('body').append($modal);
+            $modal.hide();
+
+            $loading = $('<div />');
+            $loading.attr('id', 'jqProgressModalLoader');
+            $loading.html('<br /><span></span><br /><br /><img width="48px" height="48px" src="Content/images/loader_48x48.gif" alt="" />');
+            $loading.addClass('loading');
+            $('body').append($loading);
+
+            /*nTop = Math.max($(window).height() / 2 - $loading.height() / 2, 0);
+            nLeft = Math.max($(window).width() / 2 - $loading.width() / 2, 0);
+            $loading.css({ top: nTop, left: nLeft });*/
+            centerElementInWindow($loading);
+
+            $loading.hide();
+        }
+
+        function showProgressModal() {
+            /// <summary>Muestra un panel modal con un texto y una imagen "loader". Lo usamos para informar al usuario
+            /// cuando se están realizando tareas y que no pueda intractuar con la pantalla.</summary>
+            /// <param name="sText" type="[Opcional] String">El texto a mostrar en el panel.Por defecto muestra "Procesando....".</param>
+            /// <param name="nTimeout" type="[Opcional] Number">Tiempo antes de mostrar el panel. Por defecto 0ms.</param>
+            /// <remarks>Inyecta el codigo necesario (un DIV para hacer la ventana modal, otro DIV para mostrar el texto y la
+            /// imagen). Cuando se quiera establecer uno de los argumentos pero el otro se quiere dejar por defecto se ha de pasar "null".</remarks>
+
+            //Params opcionales
+            var sText = (arguments[0]) ? arguments[0] : 'Procesando...';
+            /*var nTimeout = (arguments[1]) ? arguments[1] : 0;
+
+            setTimeout(function () {*/
+            if (($('#jqProgressModalModal').length) && ($('#jqProgressModalLoader').length)) {
+                //Ya esta creado, actualizamos la posicion (por si acaso se ha redimensionado el dialog o la pantalla)
+                centerElementInWindow('jqProgressModalLoader');
+            }
+            else {
+                attachProgressModal();
+            }
+
+            updateProgressModal(sText);
+
+            if ($('#jqProgressModalModal').is(':visible')) {
+                //Ya es visible no hacemos nada
+                //IMPORTANTE: si hacemos show() cuando se esta mostrando, se ocultara (para que jQuery lo hace internamente);
+            }
+            else {
+                $('#jqProgressModalModal').show();
+                $('#jqProgressModalLoader').show();
+            }
+
+            //}, nTimeout);
+        }
+
+        function updateProgressModal(sText) {
+            /// <summary>Actualiza el texto del panel modal.</summary>
+
+            $('#jqProgressModalLoader > span').text(sText);
+        }
+
+        function centerElementInWindow(control) {
+            /// <summary>Centra un elemento vertical y horizontalmente en la ventana. Tener en cuenta que si el elemento ya tiene estilos aplicados puede que no
+            /// se posicione correctamente (si tiene "display: XXXXX).</summary>
+            /// <param name="control" type="Object|String">Objeto jQ o id del control.</param>
+
+            var $ctl = (control instanceof jQuery) ? control : $('#' + control);
+
+            var nTop = Math.max($(window).height() / 2 - $ctl.height() / 2, 0);
+            var nLeft = Math.max($(window).width() / 2 - $ctl.width() / 2, 0);
+            $ctl.css({ top: nTop, left: nLeft });
+        }
+    </script>
+</head>
+
+<body>
+    <form method="post" action="./?seg=999999999999999999" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="63E3C5B3" />
+</div>
+        <div class="masterHeaderContainer">
+             <div id="masterHeader">
+               <div>
+                   <div id="masterCompanyLogo"></div>
+               </div>
+               <div id="masterCompany">
+                   <span id="masterCompanySlogan">Seguimiento de Env&#237;os</span>
+               </div>
+         </div>
+        </div>
+        <div class="MainContentWrapper">
+
+            <div id="content">                
+
+                
+                
+                
+                
+                <div id="pnlError" class="errorContainer">
+	
+                    <div id="divHeaderError">
+                        
+                    </div>
+                    <div id="divStackTrace">
+                        <span id="lblStackTrace">No se ha encontrado el envío solicitado.</span>
+                    </div>
+                
+</div>                                   
+
+                
+                
+                
+
+                
+                
+
+                
+                
+                                               
+                
+                
+                
+
+                
+                
+               
+            </div> <!-- content -->
+            
+            
+        </div> <!-- MainContentWrapper -->
+        <div class="versionNumber"><span id="lblVersionNumber">v.1.7.1</span></div>
+    </form>
+    
+</body>
+
+</html>

@@ -16,19 +16,68 @@
   "timezone": "Europe/Madrid",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "szendex",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "delivered_at",
+    "service_name",
+    "eta"
+  ],
   "portal": {
     "url": "https://erp.szendex.com/DlWebTrackingVWE/?seg={trackingNumber}",
     "searchUrl": "https://erp.szendex.com/DlWebTrackingVWE/",
     "helpUrl": "https://www.szendex.com/contacto",
     "canaryUrl": "https://erp.szendex.com/DlWebTrackingVWE/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "progress_rail",
+      "history",
+      "eta",
+      "delivered_at",
+      "service_name",
+      "origin",
+      "destination",
+      "recipient_name",
+      "customer_reference",
+      "parcel_count",
+      "weight",
+      "remarks",
+      "failed_delivery_reason",
+      "office_contact_details",
+      "coordinates",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "eta",
+      "delivered_at",
+      "service_name"
+    ],
+    "discarded": [
+      "progress_rail",
+      "origin",
+      "destination",
+      "recipient_name",
+      "customer_reference",
+      "parcel_count",
+      "weight",
+      "remarks",
+      "failed_delivery_reason",
+      "office_contact_details",
+      "coordinates",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "location",
+      "offset_timestamps"
+    ]
   },
   "links": [
     {

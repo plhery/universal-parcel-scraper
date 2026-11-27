@@ -875,6 +875,7 @@ import { statusMap as swiftx } from '../../carriers/swiftx/status.js';
 import { statusMap as swissPost } from '../../carriers/swiss-post/status.js';
 import { statusMap as swissPostCargo } from '../../carriers/swiss-post-cargo/status.js';
 import { statusMap as sxwExpress } from '../../carriers/sxw-express/status.js';
+import { statusMap as szendex } from '../../carriers/szendex/status.js';
 import { statusMap as tCat } from '../../carriers/t-cat/status.js';
 import { statusMap as tGroup } from '../../carriers/t-group/status.js';
 import { statusMap as takesend } from '../../carriers/takesend/status.js';
@@ -1392,7 +1393,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'slovenska-posta': slovenskaPosta, 'smsa-express': smsaExpress, 'south-african-post-office': southAfricanPost,
   'southeastern-freight-lines': southeasternFreightLines,
   'southwestern-motor-transport': southwesternMotorTransport, 'sp-express': spExpress, 'spark-kz': sparkKz, 'spee-dee': speeDee, 'speed-and-safe': speedAndSafe, speedaf, speedex, speedpak, speedx, speedy, 'spring-gds': springGds, sptexp, 'spx-br': spxBr, 'spx-id': spxId, 'spx-my': spxMy, 'spx-sg': spxSg,
-  'spx-ph': spxPh, 'spx-th': spxTh, 'spx-tw': spxTw, 'spx-vn': spxVn, 'st-courier': stCourier, 'stallion-express': stallionExpress, 'starex-az': starexAz, starken, 'starlinks-global': starlinksGlobal, sto, stone3pl, straightship, 'sundarban-courier': sundarbanCourier, suhu, sunyou, suocang, 'suteng-express': sutengExpress, swiftx, 'swiss-post': swissPost, 'swiss-post-cargo': swissPostCargo, 'sxw-express': sxwExpress,
+  'spx-ph': spxPh, 'spx-th': spxTh, 'spx-tw': spxTw, 'spx-vn': spxVn, 'st-courier': stCourier, 'stallion-express': stallionExpress, 'starex-az': starexAz, starken, 'starlinks-global': starlinksGlobal, sto, stone3pl, straightship, 'sundarban-courier': sundarbanCourier, suhu, sunyou, suocang, 'suteng-express': sutengExpress, swiftx, 'swiss-post': swissPost, 'swiss-post-cargo': swissPostCargo, 'sxw-express': sxwExpress, szendex,
   't-cat': tCat, 't-group': tGroup, takesend, 'tanzania-posts': tanzaniaPosts, 'tas-courier': tasCourier, taxydema, 'taqbin-hk': taqbinHk, 'tcc-co': tccCo, 'tci-express': tciExpress, 'tcs-pakistan': tcsPakistan, tdn, tealca,
   'team-express-ae': teamExpressAe, 'team-global-express': teamGlobalExpress, 'team-worldwide': teamWorldwide, techlink, teleship, 'tfm-express': tfmExpress, 'tforce-freight': tforceFreight, 'tforce-logistics': tforceLogistics,
   'thailand-post': thailandPost, 'the-courier-guy': theCourierGuy, thhy, tiki, 'timely-titan': timelyTitan, tiui, tipsa, 'tirupati-courier': tirupatiCourier, 'tmm-express': tmmExpress, 'tmw-express': tmwExpress, tnt, 'tnt-au': tntAu, 'tnt-it': tntIt, 'today-kr': todayKr, tonami, 'top-logistics-au': topLogisticsAu, toptrans, topyou, 'tp-logistics-th': tpLogisticsTh, torrestir, 'total-express': totalExpress, toyou,
