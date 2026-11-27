@@ -11,7 +11,9 @@
  */
 import { DateTime } from 'luxon';
 import type { AdapterFactory } from '../../core/adapter/index.js';
+import { carrierDefinition } from '../../core/catalog/definitions.js';
 import { carrierIdFromName } from '../../core/catalog/hints.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { ChallengeError, IndeterminateError, InputRequiredError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -39,11 +41,11 @@ import { placedInIndia } from '../../carriers/shiprocket/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
 import { uspsRowZone, uspsScanZone } from '../../carriers/usps/clock.js';
 import { ytoRelayedWording } from '../../carriers/yto/wording.js';
-import { universalCarrierHints } from '../shared/hints.js';
+import { brandCarrierForNumber, universalCarrierHints } from '../shared/hints.js';
 import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture.js';
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
 import { numberOf, place, result, text, trailingPlace, type UniversalSource } from '../shared/result.js';
-import { seventeenTrackCarrierKeys, seventeenTrackLegName } from './carriers.js';
+import { seventeenTrackCarrierKeys, seventeenTrackKeyCarrier, seventeenTrackLegName } from './carriers.js';
 import { returnLegsInTransit, seventeenTrackEvent, undatedScan } from './events.js';
 
 const SOURCE: UniversalSource = '17TRACK';
@@ -792,6 +794,33 @@ function offersPostcode(payload: unknown, number: string): boolean {
   return matches.length === 1 && isRecord(matches[0]) && formFields(matches[0]).some(field => field.postcode);
 }
 
+/**
+ * The last mile's carrier and number 17TRACK lists for the parcel (`misc_info.local_number`),
+ * as Poste Italiane's 5P code for a line Huaya Express hands to it. The carrier is the one
+ * 17TRACK names (`local_key`, `local_provider`) when its own rule claims the number. The site's
+ * reply can name none: the number then names the one carrier whose high-confidence rule alone
+ * claims it, unless the recipient's country 17TRACK states is not among that carrier's. The number
+ * asked, or one no carrier claims so, names none.
+ */
+function localPartner(shipment: Record<string, unknown>, number: string): Pick<CarrierResult, 'delivery_carrier' | 'delivery_tracking_number'> {
+  const misc = isRecord(shipment.misc_info) ? shipment.misc_info : null;
+  if (!misc || typeof misc.local_number !== 'string') return {};
+  const id = misc.local_number.toUpperCase().replace(/[\s.-]/g, '');
+  if (id === number || !/^[A-Z0-9]{4,40}$/.test(id)) return {};
+  const detected = detectCarrierMatch(id);
+  const provider = isRecord(misc.local_provider) ? misc.local_provider : null;
+  const name = typeof misc.local_provider === 'string' ? text(misc.local_provider) : typeof provider?.name === 'string' ? text(provider.name) : '';
+  const key = misc.local_key || provider?.key;
+  if (name || key) {
+    const carrier = seventeenTrackKeyCarrier(key) ?? (name ? carrierIdFromName(name) ?? brandCarrierForNumber(name, id) : undefined);
+    return carrier && (detected.candidates as readonly string[]).includes(carrier) ? { delivery_carrier: carrier, delivery_tracking_number: id } : {};
+  }
+  if (detected.confidence !== 'high' || detected.candidates.length !== 1) return {};
+  const country = recipientCountry(shipment);
+  const countries = carrierDefinition(detected.carrier).countries;
+  return country && countries && !countries.includes(country) ? {} : { delivery_carrier: detected.carrier, delivery_tracking_number: id };
+}
+
 export function parse17TrackResponse(payload: unknown, trackingNumber: string, postcode: string | null = null): CarrierResult {
   const number = numberOf(trackingNumber);
   if (!isRecord(payload) || !isRecord(payload.meta) || !Number.isInteger(payload.meta.code)) {
@@ -1014,7 +1043,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
   const answer = result(returnLegsInTransit(events), SOURCE);
   return { ...answer, ...carrierEstimate(shipment, answer.current_stage), ...(undated ? { undated_event_count: undated } : {}),
     ...universalCarrierHints(tracking.providers.map((provider) =>
-    isRecord(provider) && isRecord(provider.provider) ? seventeenTrackLegName(provider.provider) : undefined), number) };
+    isRecord(provider) && isRecord(provider.provider) ? seventeenTrackLegName(provider.provider) : undefined), number),
+    ...localPartner(shipment, number) };
 }
 
 export interface SeventeenTrackOptions {

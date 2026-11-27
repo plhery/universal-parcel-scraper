@@ -361,9 +361,15 @@ carrier.
   names an earlier day. Only the days are kept, since 17TRACK can put its own offset on a
   carrier's clock. 17TRACK's own forecast (source `17TRACK`) is not kept, nor any estimate
   once the parcel is delivered or returned.
+- The last mile's number 17TRACK lists for the parcel, `misc_info.local_number`, becomes
+  `delivery_tracking_number`, with as `delivery_carrier` the carrier 17TRACK names when that
+  carrier's own rule claims the number. The site's reply can name none (`local_provider` null,
+  `local_key` 0): the number then names the one carrier whose high-confidence rule alone claims
+  it, as a Poste Italiane 5P code does, unless the recipient's country 17TRACK states is not among
+  that carrier's. The number asked, or one no carrier claims so, is left out.
 - At most 20 carrier legs and 1000 events. Per-event `address` is never read, and of
-  `shipping_info` only the recipient's country, for an NZ Post, Poland Post or Swiss Post leg: the
-  address can be the recipient's street.
+  `shipping_info` only the recipient's country, for an NZ Post, Poland Post or Swiss Post leg and
+  for the last mile's carrier: the address can be the recipient's street.
 
 ## Rejected approaches
 

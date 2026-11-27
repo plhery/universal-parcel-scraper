@@ -88,6 +88,29 @@ describe('17TRACK result parsing', () => {
       expect(parse17TrackResponse(reply(official, [done, moving]), number)).not.toHaveProperty('expected_delivery_from');
     }
   });
+  it("keeps the last mile's number 17TRACK lists, with the carrier it names or whose high rule alone claims it", () => {
+    const local = (misc: Record<string, unknown>, recipient?: string): Payload => {
+      const base = history().shipments[0]!;
+      const shipment = base.shipment as Record<string, unknown>;
+      return { meta: { code: 200 }, shipments: [{ ...base, shipment: { ...shipment, misc_info: misc,
+        ...(recipient ? { shipping_info: { recipient_address: { country: recipient } } } : {}) } }] };
+    };
+    const code = '5PZZ0000000A1';
+    expect(parse17TrackResponse(local({ local_number: code, local_provider: null, local_key: 0 }), number))
+      .toMatchObject({ delivery_carrier: 'poste-italiane', delivery_tracking_number: code });
+    expect(parse17TrackResponse(local({ local_number: '5pzz 0000000a1', local_key: 9071 }, 'IT'), number))
+      .toMatchObject({ delivery_carrier: 'poste-italiane', delivery_tracking_number: code });
+    // A carrier named whose rule does not claim the number, a recipient outside the only carrier's
+    // countries, the number asked and a number several carriers' rules fit name none.
+    const none: [Record<string, unknown>, string?][] = [[{ local_number: code, local_key: 100072 }],
+      [{ local_number: code, local_provider: 'Colissimo' }], [{ local_number: code }, 'FR'], [{ local_number: number }],
+      [{ local_number: `ZZ${'12345'.repeat(2)}` }], [{ local_number: null }]];
+    for (const [misc, recipient] of none) {
+      const result = parse17TrackResponse(local(misc, recipient), number);
+      expect([result.delivery_carrier, result.delivery_tracking_number]).toEqual([undefined, undefined]);
+    }
+  });
+
   it("gives China Post's notice of a longer delivery time no stage, though 17TRACK files it under generic transit", () => {
     const notice = '受台风天气影响，邮件时限可能有所延长，我们正全力协调资源加快处理，请您耐心等待，由此给您带来的不便敬请谅解';
     const result = parse17TrackResponse(postalHistory([postalScan('InTransit_Other', notice)]), number);

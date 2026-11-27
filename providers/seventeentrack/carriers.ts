@@ -57,6 +57,13 @@ export function seventeenTrackCarrierKeys(carrier: string | null | undefined): r
   return [key, ...(SAME_CARRIER_KEYS[carrier] ?? [])];
 }
 
+/** The catalog carrier one of the keys listed here stands for. */
+export function seventeenTrackKeyCarrier(key: unknown): string | undefined {
+  if (typeof key !== 'number') return undefined;
+  if (Object.hasOwn(LEG_CARRIERS, key)) return LEG_CARRIERS[key];
+  return Object.keys(CARRIER_KEYS).find((carrier) => CARRIER_KEYS[carrier] === key || SAME_CARRIER_KEYS[carrier]?.includes(key));
+}
+
 /**
  * Catalog carriers whose leg 17TRACK names too briefly for the name alone to
  * tell, by the key of the leg, with the name it shows. Such a leg takes the
