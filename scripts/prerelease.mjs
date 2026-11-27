@@ -18,6 +18,9 @@ import { parseArgs } from 'node:util';
 // The plan is printed, and written to GITHUB_OUTPUT and GITHUB_STEP_SUMMARY
 // when they are set. Nothing is published here.
 //
+// With `--after` it says, once a push's run has published, what the run left out: a prerelease it
+// skipped, and commits main gained meanwhile (`releaseNotices`).
+//
 // With `--await <version>` it waits until npm lists that version. npm accepts
 // a publish before it serves the version, and until then neither the next
 // plan nor a consumer can see it.
@@ -232,6 +235,26 @@ export function report({ version, publish, published, notify, reason }, env = pr
   console.log(`${summary}\n${outputs}`);
 }
 
+/**
+ * What a push's run says once it has planned and published: a prerelease it did not publish, as a
+ * warning, and commits main gained while the run waited for its checks. Those publish from the
+ * newest one's own run once its checks pass, so a run that ends green has published only `head`.
+ * @param {{ version: string, publish: boolean, reason: string }} plan
+ * @param {string} head The commit this run released.
+ * @param {string | undefined} tip The commit main is at now, when it could be read.
+ * @returns {string[]} Workflow commands.
+ */
+export function releaseNotices({ version, publish, reason }, head, tip) {
+  const notices = [];
+  const short = (commit) => commit.slice(0, 9);
+  if (!publish) notices.push(`::warning title=Nothing published::${version} was not published: ${reason.replace(/\s+/g, ' ').trim()}.`);
+  if (tip && tip !== head) {
+    notices.push(`::notice title=main moved on::This run ${publish ? `published ${version} from` : 'was for'} ${short(head)}, and main is now at ${short(tip)}: `
+      + 'the newer commits publish from their own Release run once their checks pass.');
+  }
+  return notices;
+}
+
 // npm's JSON answers list every packed file and every published version, past
 // the default 1 MiB buffer.
 function run(command, args) {
@@ -337,8 +360,27 @@ export async function awaitVersion(version, listed, { attempts = 360, pauseMs = 
 
 async function main() {
   const { values } = parseArgs({
-    options: { stable: { type: 'boolean', default: false }, weekly: { type: 'boolean', default: false }, await: { type: 'string' } },
+    options: {
+      stable: { type: 'boolean', default: false }, weekly: { type: 'boolean', default: false }, await: { type: 'string' },
+      after: { type: 'boolean', default: false },
+    },
   });
+  if (values.after) {
+    // The plan's outputs, as the workflow passes them on.
+    const plan = { version: process.env.PLAN_VERSION ?? '', publish: process.env.PLAN_PUBLISH === 'true', reason: process.env.PLAN_REASON ?? '' };
+    const head = process.env.GITHUB_SHA || run('git', ['rev-parse', 'HEAD']).trim();
+    let tip;
+    try {
+      tip = run('git', ['ls-remote', 'origin', 'refs/heads/main']).split(/\s/)[0] || undefined;
+    } catch (error) {
+      console.error(`Could not read main's tip: ${error.message.split('\n')[0]}`);
+    }
+    for (const notice of releaseNotices(plan, head, tip)) {
+      console.log(notice);
+      if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${notice.replace(/^::\w+ title=([^:]+)::/, '**$1:** ')}\n`);
+    }
+    return undefined;
+  }
   const manifest = JSON.parse(readFileSync(path.join(root, 'package.json'), 'utf8'));
   if (values.await !== undefined) {
     if (!parseVersion(values.await)) throw new Error(`--await needs a version, not ${JSON.stringify(values.await)}`);

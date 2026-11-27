@@ -157,7 +157,10 @@ trusted publisher.
 
 - A push to `main` that changes the files a consumer installs is published as `X.Y.Z-main.N`
   under the `next` tag, where `N` is the commit count. A push that only touches Markdown, or
-  leaves those files unchanged, publishes nothing.
+  leaves those files unchanged, publishes nothing. Pushes publish one at a time, and a push still
+  waiting gives way to a newer one, which contains it. A run that ends green has published its
+  own commit only: when main moved on while it waited for its checks, or when it published
+  nothing, its summary says so, and the newer commits publish from their own run.
 - Dispatching the workflow with the version in `package.json` builds the package and the
   container images, tags the commit and creates a GitHub release. Publishing that version to
   npm under `latest` is opt-in.

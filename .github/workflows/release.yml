@@ -131,6 +131,15 @@ jobs:
             exit 1
           fi
           cat publish.log >&2
+      # A green run has published its own commit only. It says when it published nothing, and when
+      # main moved on while it waited for its checks: the newer commits publish from their own run.
+      - name: Say what the run left out
+        if: ${{ steps.plan.outcome == 'success' }}
+        env:
+          PLAN_VERSION: ${{ steps.plan.outputs.version }}
+          PLAN_PUBLISH: ${{ steps.plan.outputs.publish }}
+          PLAN_REASON: ${{ steps.plan.outputs.reason }}
+        run: node scripts/prerelease.mjs --after
   publish:
     needs: checks
     if: ${{ github.event_name == 'workflow_dispatch' }}

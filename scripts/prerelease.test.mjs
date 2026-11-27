@@ -5,7 +5,7 @@ import path from 'node:path';
 import test from 'node:test';
 import {
   assertPublishedFrom, awaitVersion, baseVersion, compareTrees, compareVersions, entryPoints, laterPrerelease, newestVersion,
-  parseVersion, planPrerelease, planStable, planWeekly, prereleaseVersion, readTree, report, settlePlan,
+  parseVersion, planPrerelease, planStable, planWeekly, prereleaseVersion, readTree, releaseNotices, report, settlePlan,
 } from './prerelease.mjs';
 
 const tree = (files) => new Map(Object.entries(files).map(([file, text]) => [file, Buffer.from(text)]));
@@ -233,4 +233,22 @@ test('writes the plan as step outputs and one summary line', (t) => {
   assert.equal(fs.readFileSync(env.GITHUB_STEP_SUMMARY, 'utf8'), 'Publish `0.2.1-main.284`: 2 files (a, b) differ from 0.2.0.\n');
   report({ version: '0.2.1-main.285', publish: false, published: false, notify: false, reason: 'the package is identical to 0.2.1-main.284' }, {});
   assert.equal(console.log.mock.calls.at(-1).arguments[0].split('\n')[0], 'Skip `0.2.1-main.285`: the package is identical to 0.2.1-main.284.');
+});
+
+test('says when a run published nothing, and when main moved on while it waited', () => {
+  const head = 'a'.repeat(40);
+  const tip = 'b'.repeat(40);
+  const published = { version: '0.2.1-main.284', publish: true, reason: '2 files differ from 0.2.0' };
+  assert.deepEqual(releaseNotices(published, head, head), []);
+  assert.deepEqual(releaseNotices(published, head, undefined), []);
+  assert.deepEqual(releaseNotices(published, head, tip), [
+    '::notice title=main moved on::This run published 0.2.1-main.284 from aaaaaaaaa, and main is now at bbbbbbbbb: '
+      + 'the newer commits publish from their own Release run once their checks pass.',
+  ]);
+  const skipped = { version: '0.2.1-main.285', publish: false, reason: '0.2.1-main.286 is newer' };
+  assert.deepEqual(releaseNotices(skipped, head, tip), [
+    '::warning title=Nothing published::0.2.1-main.285 was not published: 0.2.1-main.286 is newer.',
+    '::notice title=main moved on::This run was for aaaaaaaaa, and main is now at bbbbbbbbb: '
+      + 'the newer commits publish from their own Release run once their checks pass.',
+  ]);
 });
