@@ -1,0 +1,75 @@
+{
+  "id": "ztcce",
+  "displayName": "ZTCCE",
+  "aliases": [
+    "中途速递",
+    "美国中途速递"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#192988"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ztcce",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "provider_code",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.ztcce.com/waybill.html?order={trackingNumber}",
+    "searchUrl": "https://www.ztcce.com/index.html",
+    "canaryUrl": "https://www.ztcce.com/index.html",
+    "shows": [
+      "status",
+      "history",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "location",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "ztcce.com"
+      ],
+      "pathPattern": "^/waybill\\.html$",
+      "params": [
+        "order"
+      ]
+    }
+  ],
+  "detection": []
+}

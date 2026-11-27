@@ -7408,5 +7408,17 @@
     "pattern": "^HP\\d{9}$",
     "kind": "collision",
     "reason": "HP and nine digits, 888 first on every public sample, is HP Express's order number, and two letters and nine digits is a shape GLS Italy's rule takes, so detection does not name HP Express. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "ztcce",
+    "pattern": "^SYS\\d{9}$",
+    "kind": "collision",
+    "reason": "SYS and nine digits is ZTCCE's waybill on Kuaidi100's test number, and three letters and nine digits is a shape Purolator's and TNT Australia's rules take, so detection does not name ZTCCE. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "ztcce",
+    "pattern": "^T\\d{8}$",
+    "kind": "open",
+    "reason": "T and eight digits is ZTCCE's waybill on Kuaidi100's example. One sample of a forwarder's own number does not establish the shape, so the adapter answers explicit selection for it."
   }
 ]

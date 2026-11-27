@@ -1,0 +1,55 @@
+{
+  "state": 1,
+  "pkval": "T20261221",
+  "startcity": "拉斯维加斯",
+  "endcity": "*",
+  "p_airwaybill": "",
+  "expresscom": "西安顺丰",
+  "expresscode": "",
+  "expressid": "SF3193813959112",
+  "phone": "",
+  "list": [
+    {
+      "context": "包裹清关完成,进入国内物流环节，请耐心等待派送",
+      "createtime": "2025-08-07 05:00:12",
+      "state": "清关放行",
+      "expresscode": ""
+    },
+    {
+      "context": "包裹到达中国口岸，正在办理清关手续",
+      "createtime": "2025-08-06 05:00:02",
+      "state": "到达国内",
+      "expresscode": ""
+    },
+    {
+      "context": "国际运输环节中",
+      "createtime": "2025-07-31 07:43:40",
+      "state": "发往中国途中",
+      "expresscode": ""
+    },
+    {
+      "context": "已装载完成，发往机场",
+      "createtime": "2025-07-30 07:43:17",
+      "state": "运往机场",
+      "expresscode": ""
+    },
+    {
+      "context": "仓库已出库",
+      "createtime": "2025-07-28 17:23:44",
+      "state": "仓库已出库",
+      "expresscode": ""
+    },
+    {
+      "context": "仓库已入库",
+      "createtime": "2025-07-27 17:22:42",
+      "state": "仓库已入库",
+      "expresscode": ""
+    },
+    {
+      "context": "拉斯维加斯仓库已揽收",
+      "createtime": "2025-07-27 15:21:19",
+      "state": "已揽收",
+      "expresscode": ""
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "carrier": "ztcce",
+  "records": [
+    {
+      "number": "T20261221",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/ztcce.shtml",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Kuaidi100's page for 中途速递 gives it as the example. ZTCCE's tracker answers it with a parcel collected in Las Vegas, flown to China and cleared, then handed to SF Express."
+    },
+    {
+      "number": "SYS000000287",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "purolator",
+          "tnt-au"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 中途速递. ZTCCE's tracker answers it with a parcel from its Austin warehouse, cleared in China and handed to SF Express."
+    }
+  ]
+}
