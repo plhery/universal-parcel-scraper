@@ -153,8 +153,13 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "ontrac",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac",
+          "gls-it",
+          "tnt-it"
+        ]
       },
       "note": "A courier ticket looked up on New Zealand Couriers' own tracker, as an archived address shows; the capture was not opened."
     },

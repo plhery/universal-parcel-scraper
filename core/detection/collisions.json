@@ -3480,7 +3480,7 @@
       "tnt-it",
       "gls-it"
     ],
-    "reason": "DHL's Iberian alias for an inbound parcel fits OnTrac's letter-prefixed shape and TNT Italy's national waybills. OnTrac's high-confidence rule decides; direct tracking must confirm the carrier."
+    "reason": "DHL's Iberian alias for an inbound parcel fits OnTrac's letter-prefixed shape and TNT Italy's national waybills. All stay low-confidence suggestions; direct tracking must confirm the carrier."
   },
   {
     "shape": "Twelve digits that pass the FedEx and mod 7 checks",
@@ -7460,7 +7460,7 @@
       "tnt-it",
       "gls-it"
     ],
-    "reason": "OnTrac's letter-prefixed numbers have the shape of TNT Italy waybills from branches whose letters match; OnTrac's high-confidence rule decides."
+    "reason": "OnTrac's letter-prefixed numbers have the shape of TNT Italy waybills from branches whose letters match, and of shops' own references; all stay low-confidence suggestions and carrier recognition asks each."
   },
   {
     "shape": "MC, NC or RP followed by eight digits",

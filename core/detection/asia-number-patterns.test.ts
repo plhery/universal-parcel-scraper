@@ -3,6 +3,7 @@ import { carrierIdFromName } from '../catalog/hints.js';
 import { recognitionAskedCarriers, recognitionCandidates } from '../catalog/recognition.js';
 import { settleRecognition, type RecognitionOutcome } from '../recognition/index.js';
 import { CHECKSUMS } from './checksums.js';
+import { keywordNumberInText, recognizedNumberInText } from './candidates.js';
 import { checksumRejections, detectCarrierMatch, parseTrackingInput } from './index.js';
 
 describe('prefixed Asian shipment references and shared numeric formats', () => {
@@ -116,6 +117,17 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     }
     for (const number of ['C10000000000001', 'C00000000000001']) expect(detectCarrierMatch(number).candidates).not.toContain('ontrac');
     expect(detectCarrierMatch('1LS0000000000001')).toMatchObject({ carrier: 'ontrac', confidence: 'high' });
+  });
+
+  it("offers OnTrac for LaserShip's L numbers without naming it, and reads one in a message only after a tracking label", () => {
+    // A shop's delivery-note references print the same shape: two letters and eight digits beside a carrier's number.
+    expect(detectCarrierMatch('LX12345678')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch('LX12345678').candidates).toContain('ontrac');
+    expect(recognitionAskedCarriers('LX12345678')).toContain('ontrac');
+    const table = 'Your order\nLE-nummer\n\n1234567\nIN12345678 / LE12345678\nDPD\n01234567890128\n';
+    expect(recognizedNumberInText(table)).toBeUndefined();
+    expect(keywordNumberInText(table)).toBeUndefined();
+    expect(keywordNumberInText('Tracking number: LX12345678')).toBe('LX12345678');
   });
 
   it('keeps other national SPX networks outside the Philippines adapter', () => {

@@ -102315,10 +102315,17 @@
   },
   {
     "input": "LA28376237",
-    "carrier": "ontrac",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
-      "ontrac"
+      "ontrac",
+      "gls-it",
+      "tnt-it"
+    ],
+    "asked": [
+      "gls-it",
+      "ontrac",
+      "tnt-it"
     ]
   },
   {
@@ -102559,10 +102566,17 @@
   },
   {
     "input": "LE10917377",
-    "carrier": "ontrac",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
-      "ontrac"
+      "ontrac",
+      "gls-it",
+      "tnt-it"
+    ],
+    "asked": [
+      "gls-it",
+      "ontrac",
+      "tnt-it"
     ]
   },
   {
@@ -102780,10 +102794,17 @@
   },
   {
     "input": "LH 38304147",
-    "carrier": "ontrac",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
-      "ontrac"
+      "ontrac",
+      "gls-it",
+      "tnt-it"
+    ],
+    "asked": [
+      "gls-it",
+      "ontrac",
+      "tnt-it"
     ]
   },
   {
@@ -102804,10 +102825,19 @@
   },
   {
     "input": "LH13830790",
-    "carrier": "ontrac",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
-      "ontrac"
+      "ontrac",
+      "dhl-ecommerce-es",
+      "gls-it",
+      "tnt-it"
+    ],
+    "asked": [
+      "gls-it",
+      "ontrac",
+      "tnt-it",
+      "dhl-ecommerce-es"
     ]
   },
   {
@@ -102878,10 +102908,17 @@
   },
   {
     "input": "LI12976442",
-    "carrier": "ontrac",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
-      "ontrac"
+      "ontrac",
+      "gls-it",
+      "tnt-it"
+    ],
+    "asked": [
+      "gls-it",
+      "ontrac",
+      "tnt-it"
     ]
   },
   {
@@ -103236,10 +103273,17 @@
   },
   {
     "input": "LN30083672",
-    "carrier": "ontrac",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
-      "ontrac"
+      "ontrac",
+      "gls-it",
+      "tnt-it"
+    ],
+    "asked": [
+      "gls-it",
+      "ontrac",
+      "tnt-it"
     ]
   },
   {
@@ -104130,10 +104174,17 @@
   },
   {
     "input": "LX17635036",
-    "carrier": "ontrac",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
-      "ontrac"
+      "ontrac",
+      "gls-it",
+      "tnt-it"
+    ],
+    "asked": [
+      "gls-it",
+      "ontrac",
+      "tnt-it"
     ]
   },
   {

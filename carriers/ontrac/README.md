@@ -21,7 +21,9 @@ check, with C counted as 4 and D as 5. Numbers starting `C1` or `D10`, the range
 own tracker shows, select OnTrac. Other senders print `C` numbers of the same length, and
 about one in ten of any such numbers passes the check, so the rest stay suggestions. SHEIN's
 package numbers, `C`, the order date and eight digits, are left out: the shop prints them, and
-OnTrac's tracker shows no number starting `C2`. HTTP
+OnTrac's tracker shows no number starting `C2`. LaserShip's `L` numbers, a second letter and
+eight digits, are suggestions too: TNT Italy's waybills and shops' own references print the same
+shape, and in a message only a tracking label introduces one. HTTP
 recognition requires matching shipment scans; an unavailable tracking resource remains a
 failed probe.
 

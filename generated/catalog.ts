@@ -3852,7 +3852,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       },
       {
         "pattern": "^L[AIEHNX]\\d{8}$",
-        "confidence": "high"
+        "confidence": "low"
       },
       {
         "pattern": "^1LS\\d{12,14}$",

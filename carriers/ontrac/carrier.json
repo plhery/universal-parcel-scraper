@@ -82,7 +82,7 @@
     {
       "id": "ontrac-2",
       "pattern": "^L[AIEHNX]\\d{8}$",
-      "confidence": "high"
+      "confidence": "low"
     },
     {
       "id": "ontrac-3",

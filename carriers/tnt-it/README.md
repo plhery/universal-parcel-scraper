@@ -43,9 +43,6 @@ consignments belong to [TNT](../tnt/README.md). Tracked through the lookup its t
 - A parcel released from storage under a new waybill is not followed to that waybill.
 - The tracker also takes a parcel's 15-digit reference (NCOL), which the adapter does not: the
   reply names only the waybill, so it cannot show that the parcel is the one asked.
-- OnTrac's high-confidence rule claims numbers starting `LA`, `LE`, `LH`, `LI`, `LN` or `LX`, so
-  waybills from TNT Italy branches with those letters reach this adapter only when filed under
-  TNT Italy.
 - Older shipments drop out of the tracker, which then answers `00015` as for an unknown waybill.
 - While the tracker is down, as in its night maintenance, the lookup answers HTTP 200 with an empty
   body for every waybill, the official page included; that is an indeterminate failure, not a

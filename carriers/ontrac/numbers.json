@@ -140,8 +140,13 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/lasership.json"
       },
       "expect": {
-        "carrier": "ontrac",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac",
+          "gls-it",
+          "tnt-it"
+        ]
       },
       "note": "Open-source project example, not a real shipment."
     },
@@ -153,8 +158,13 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/lasership.json"
       },
       "expect": {
-        "carrier": "ontrac",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac",
+          "gls-it",
+          "tnt-it"
+        ]
       },
       "note": "Open-source project example, not a real shipment."
     },
@@ -166,8 +176,14 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/lasership.json"
       },
       "expect": {
-        "carrier": "ontrac",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac",
+          "dhl-ecommerce-es",
+          "gls-it",
+          "tnt-it"
+        ]
       },
       "note": "Open-source project example, not a real shipment."
     },
@@ -179,8 +195,13 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/lasership.json"
       },
       "expect": {
-        "carrier": "ontrac",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac",
+          "gls-it",
+          "tnt-it"
+        ]
       },
       "note": "Open-source project example, not a real shipment."
     },
@@ -192,8 +213,13 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/lasership.json"
       },
       "expect": {
-        "carrier": "ontrac",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac",
+          "gls-it",
+          "tnt-it"
+        ]
       },
       "note": "Open-source project example, not a real shipment."
     },
@@ -205,8 +231,13 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/lasership.json"
       },
       "expect": {
-        "carrier": "ontrac",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ontrac",
+          "gls-it",
+          "tnt-it"
+        ]
       },
       "note": "Open-source project example, not a real shipment."
     },
