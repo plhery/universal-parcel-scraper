@@ -64,8 +64,8 @@ describe('carrier.json', () => {
   it('flags local clocks wherever an adapter writes a scan without an instant', () => {
     // These normally give instants, retaining an occasional day or offset-less clock. The flag
     // would hold their answers back for a provider's dated copy, as it did Hualei trackers in gzyl.
-    // APD, Neighbour and TFMXpress retain the printed clock alongside an instant on every scan.
-    const unflagged = ['apd-parcel', 'bfe-express', 'dpd', 'fan-courier-international', 'fedex', 'fst-express', 'guatex', 'gzyl', 'kec-ecommerce', 'la-poste', 'max-pakket', 'neighbour-express', 'shipter', 'tfmxpress', 'ups', 'usps', 'yanwen'];
+    // APD, Neighbour, TFMXpress and Yuema Express retain the printed clock alongside an instant on every scan.
+    const unflagged = ['apd-parcel', 'bfe-express', 'dpd', 'fan-courier-international', 'fedex', 'fst-express', 'guatex', 'gzyl', 'kec-ecommerce', 'la-poste', 'max-pakket', 'neighbour-express', 'shipter', 'tfmxpress', 'ups', 'usps', 'yanwen', 'yuema-express'];
     const writes = (folder: string) => readdirSync(path.join(carriersDirectory, folder))
       .filter((file) => file.endsWith('.ts') && !file.endsWith('.test.ts'))
       .some((file) => /[{ ,]local_time:/.test(readFileSync(path.join(carriersDirectory, folder, file), 'utf8')));

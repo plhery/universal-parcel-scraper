@@ -1,4 +1,23 @@
 {
   "carrier": "yuema-express",
-  "entries": []
+  "entries": [
+    { "code": "LD", "wording": "订单已受理", "stage": "registered", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The store takes the order, in the minute it takes the parcel in." },
+    { "code": "LJ", "wording": "【San Diego】门店已收货", "stage": "accepted", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The store the row names takes the parcel in. The code stages it, whatever the store." },
+    { "code": "ZY", "wording": "已发往下一站【LAX】仓库", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Sent on to the warehouse the row names." },
+    { "code": "RK", "wording": "到达【Los Angele】仓库", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Arrived at the warehouse the row names, Los Angeles spelled without its last letter." },
+    { "code": "PZ", "wording": "已预定Atlas航班飞往中国", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The flight to China is booked; the parcel waits at the Los Angeles warehouse." },
+    { "code": "CK", "wording": "从Los Angeles扫描出库去机场，发往中国", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Scanned out of the warehouse to the airport." },
+    { "code": "QF", "wording": "航班已起飞", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27" },
+    { "code": "DD", "wording": "航班已到达清关口岸", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The flight has landed at the port of clearance; clearance has not started." },
+    { "code": "QG", "wording": "清关中", "stage": "customs", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27" },
+    { "code": "CG", "wording": "货物已出关，交由顺丰（青岛）派送，单号：194912213745", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Cleared, and handed to the courier that delivers in China, which the row names with its number." },
+    { "code": "ZT", "wording": "顺丰速运 已收取快件", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "ZT rows are the delivering courier's own, SF Express's here, which the map reads by their wording. SF takes the parcel from Yuema, mid-journey for the parcel." },
+    { "code": "ZT", "wording": "快件运输中", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27" },
+    { "code": "ZT", "wording": "快件在【青岛大客户项目营业部】完成分拣，准备发往 【青岛天河中转场】", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "SF's depots fill the 【】: any depots." },
+    { "code": "ZT", "wording": "快件已发车", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27" },
+    { "code": "ZT", "wording": "快件到达 【青岛天河中转场】", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "Any depot." },
+    { "code": "ZT", "wording": "预计【02月23日】到达【桂林市】，我们将在【22日下午】为您更新快件状态，请您放心", "stage": null, "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "SF's forecast of the day the parcel reaches the destination city, any day and city; the parcel keeps the stage of the row before." },
+    { "code": "ZT", "wording": "快件正在派送途中（主单总件数：1件）", "stage": "out_for_delivery", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "SF's round, after the adapter takes out the courier it is handed to and their phone number." },
+    { "code": "QS", "wording": "您的快件已签收，感谢您使用顺丰，期待再次为您服务。（主单总件数：1件）", "stage": "delivered", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The courier's delivery, after the adapter takes out the line asking to call the courier, with their name and phone number. The code stages it, whatever the wording." }
+  ]
 }

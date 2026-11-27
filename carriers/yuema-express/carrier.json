@@ -18,21 +18,59 @@
     "color": "#a81d30"
   },
   "selectable": true,
-  "timezone": "America/Los_Angeles",
+  "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "yuema-express",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "searchUrl": "https://www.yue777.com/genzong.php",
     "helpUrl": "https://www.yue777.com/contact.php",
     "canaryUrl": "https://www.yue777.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "courier_name",
+      "driver_phone"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "destination",
+      "courier_name",
+      "driver_phone"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "signatory",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
   },
   "links": [],
   "detection": []

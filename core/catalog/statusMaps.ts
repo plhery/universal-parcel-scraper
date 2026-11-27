@@ -1182,6 +1182,7 @@ import { statusMap as kingDelivery } from '../../carriers/king-delivery/status.j
 import { statusMap as latamYou } from '../../carriers/latam-you/status.js';
 import { statusMap as valueway } from '../../carriers/valueway/status.js';
 import { statusMap as ddExpress } from '../../carriers/dd-express/status.js';
+import { statusMap as yuemaExpress } from '../../carriers/yuema-express/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1423,6 +1424,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'latam-you': latamYou,
   valueway,
   'dd-express': ddExpress,
+  'yuema-express': yuemaExpress,
 };
 
 /** The carrier the app files the universal providers' scans under. */

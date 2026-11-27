@@ -5224,6 +5224,12 @@
     "reason": "The customer attributes a numeric reference to YunExpress, but the dedicated adapter accepts YT identifiers and the report does not establish YunExpress issuance."
   },
   {
+    "carrier": "yuema-express",
+    "pattern": "^\\d{12}$",
+    "kind": "open",
+    "reason": "The one public Yuema Express waybill is twelve bare digits, the shape SF Express, Japanese carriers and others print; one sample does not establish a prefix of Yuema's own, so select Yuema Express explicitly."
+  },
+  {
     "carrier": "yurtici-kargo",
     "pattern": "^\\d{12}$",
     "kind": "by_design",
