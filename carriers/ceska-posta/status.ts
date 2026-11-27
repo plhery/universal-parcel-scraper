@@ -13,6 +13,14 @@ const CODES: Readonly<Record<string, Stage>> = {
   '-I': 'in_transit',
   '-B': 'in_transit',
   '75': 'in_transit',
+  // Abroad, as the destination post reports the item: sent there, taken in or held by its office
+  // of exchange, cleared by its customs, then on to its delivery. None is an acceptance from the sender.
+  'C1': 'in_transit',
+  '-C': 'in_transit',
+  'EZ': 'in_transit',
+  'FB': 'in_transit',
+  'F1': 'in_transit',
+  'G1': 'in_transit',
   // Reached the delivery office or depot, where it is prepared for delivery.
   '51': 'in_transit',
   '8D': 'in_transit',

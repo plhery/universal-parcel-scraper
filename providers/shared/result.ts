@@ -319,9 +319,11 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   // An item from abroad is first "sent to the destination country", the day the sending post dispatches it.
   if (/^receipt of data about consignment[.!]?$/i.test(description)) return 'registered';
   if (/^the consignment was sent for transportation[.!]?$/i.test(description)) return 'accepted';
-  // The office of exchange taking in an item on its way abroad or from abroad, after its posting: in transit.
-  if (/^the consignment was accepted by (?:the )?post office of exchange[.!]?$/i.test(description)) return 'in_transit';
-  if (/^the consignment (?:left the logistics hub|is being prepared for delivery|was sent to the destination country)[.!]?$/i.test(description)) return 'in_transit';
+  // The office of exchange taking in an item on its way abroad or from abroad, after its posting, and the destination
+  // country's holding it, as an inward office holds an item for customs: in transit.
+  if (/^the consignment was accepted by (?:the )?post office of exchange(?: in the country of destination)?[.!]?$/i.test(description)
+    || /^the consignment has been detained at the post office of exchange at the destination country[.!]?$/i.test(description)) return 'in_transit';
+  if (/^the consignment (?:left the logistics hub|is being prepared for delivery(?: in the destination country)?|was sent to the destination country)[.!]?$/i.test(description)) return 'in_transit';
   if (/^the consignment was deposited(?: - addressee not at home| to balíkovna)[.!]?$/iu.test(description)) return 'ready_for_pickup';
   if (/^the consignment was sent back(?: to the sender)? - the consignment was not picked up by the addressee\b/i.test(description)) return 'exception';
   // DobroPost's record of a parcel its customer announced, as 17TRACK relays it without a code: it comes before

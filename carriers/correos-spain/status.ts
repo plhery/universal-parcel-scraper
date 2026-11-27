@@ -31,6 +31,8 @@ const EVENT_STATUS: Record<string, ClassifiedStatus> = {
   'P090000V': { status: 'in_transit', stage: 'in_transit' },
   // An arrival at a processing centre, here days after customs on a parcel from abroad.
   'P260000V': { status: 'in_transit', stage: 'in_transit' },
+  // "Envío no informado": an item from abroad that came without the sending post's electronic data, then processed on.
+  'Z130000R': { status: 'in_transit', stage: 'in_transit' },
   'G01L010V': { status: 'in_transit', stage: 'in_transit' },
   'H01I360V': { status: 'in_transit', stage: 'in_transit' },
   'X020000V': { status: 'in_transit', stage: 'in_transit' },

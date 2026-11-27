@@ -68,6 +68,7 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   // A European last mile's hub after customs, and its depot before the round.
   ['Arrived at HUB', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at Last Mile Depot', { status: 'in_transit', stage: 'in_transit' }],
+  ['Parcel processed at the hub', { status: 'in_transit', stage: 'in_transit' }],
   // GOFO's own scans in the US, read as its codes are: the vehicle is the line haul between its facilities.
   ['Arrived at GOFO Regional Hub', { status: 'in_transit', stage: 'in_transit' }],
   ['Departed GOFO Regional Hub', { status: 'in_transit', stage: 'in_transit' }],
@@ -205,8 +206,8 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
  * `normalizeStatusWording` form: GOFO's missed delivery with its type,
  * Ecoscooting's with its reason in brackets, and CouriersPlease's acceptance
  * at a town's depot, its transfer to a depot after it left a card and its
- * transfer to the depot's collection run, and J&T Express Australia's pickup
- * and its delivery round.
+ * transfer to the depot's collection run, J&T Express Australia's pickup
+ * and its delivery round, and a last mile's hub sorting the parcel to the depot it names.
  */
 const PATTERNS: ReadonlyArray<readonly [RegExp, ClassifiedStatus]> = [
   // In transit with a count or a partner's reference in brackets, such as four letters and fourteen digits.
@@ -216,6 +217,8 @@ const PATTERNS: ReadonlyArray<readonly [RegExp, ClassifiedStatus]> = [
   [/^delivery failed, type: ?recipient absent or delivery location inaccessible\b/, FAILED_ATTEMPT],
   [/^your shipment delivery attempt failed(?: \[[^\]]{1,200}\])?$/, FAILED_ATTEMPT],
   [/^your item has been accepted in \S.* depot$/, { status: 'in_transit', stage: 'in_transit' }],
+  // A last mile's hub receiving the parcel for the depot that delivers it, named in the wording.
+  [/^we['’]ve received this parcel at the hub and will be sorted to the [^.]{1,60} delivery depot\.?$/, { status: 'in_transit', stage: 'in_transit' }],
   [/^\d+ items? (?:has|have) been transferred to \S.* card left$/, FAILED_ATTEMPT],
   [/^\d+ items? (?:has|have) been transferred to run \S+ depot collection$/, { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
   // J&T Express Australia's pickup, with its customer service line or without: like a courier partner's

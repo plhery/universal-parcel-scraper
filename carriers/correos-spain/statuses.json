@@ -7,6 +7,7 @@
     { "code": "A010AA0V", "wording": "Accepted", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-10-22", "note": "Worded like A010000V: Correos took the parcel in." },
     { "code": "A050010V", "wording": "Remesa admitida en centro logístico", "language": "es", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-23", "note": "The sender's consignment admitted at a Correos logistics centre, the parcel's first scan, days before its delivery unit's." },
     { "code": "P040000V", "wording": "Classified", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-08-24", "note": "Seen on the real ES parcel checked by the prior-art client." },
+    { "code": "Z130000R", "wording": "Envío no informado", "language": "es", "stage": "in_transit", "confirmedBy": "live", "note": "An item from abroad that reached Correos without the sending post's electronic data; it is processed on, as the classification after it shows." },
     { "code": "P260000V", "wording": "Arrival at the processing centre", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "An arrival at a processing centre, days after customs on a parcel from abroad." },
     { "code": "P090000V", "language": "es", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "" },
     { "code": "P100000V", "language": "es", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "" },

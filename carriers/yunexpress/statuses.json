@@ -223,6 +223,20 @@
       "note": "That last mile's depot receiving the parcel, before its round."
     },
     {
+      "wording": "Parcel processed at the hub",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A last mile's hub sorting the parcel, before its delivery depot."
+    },
+    {
+      "wording": "We've received this parcel at the hub and will be sorted to the <place> delivery depot",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A last mile's hub receiving the parcel for the depot that delivers it. Matched on its fixed words."
+    },
+    {
       "wording": "Driver enroute",
       "stage": "out_for_delivery",
       "language": "en",
