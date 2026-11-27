@@ -17,6 +17,10 @@ adapter, and sync marks these parcels unsupported without calling any tracker.
   service. Detection resolves them here first. A parcel moves to `amazon-shipping` only
   after Amazon's public tracker returns a structured `SWA` or `MCF` reply for it; guessing
   the other way would show an account-only parcel as trackable.
+- Belgium's, Poland's and Slovakia's VAT numbers, and some of Czechia's and Romania's, have
+  the European shape too, and businesses print theirs in every email's signature. Text readers
+  skip a number after a tax label ("BTW: BE…", "NIP", "IČ DPH"); a number typed alone keeps
+  its detection.
 - This folder's detection rule is the single Amazon number pattern: `core/detection/amazon`,
   `amazon-shipping` and the native clients all read it from the generated catalog.
 - Pasted `track.amazon.*` links are recognised and the number is read from them, but the

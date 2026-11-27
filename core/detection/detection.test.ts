@@ -7,6 +7,7 @@ import {
   checksumRejections,
   detectCarrier,
   detectCarrierMatch,
+  followsTaxLabel,
   formatTrackingNumber,
   isValidDpdParcelNumber,
   isValidGlsParcelNumber,
@@ -16,6 +17,7 @@ import {
   keywordNumberInText,
   normalizeTrackingNumber,
   parseTrackingInput,
+  recognizedNumberInText,
   supportsSwissPostHandoff,
   validTrackingNumber,
 } from './index.js';
@@ -767,6 +769,23 @@ describe('the detection engine', () => {
       'DPD: 0800 123 456', 'DPD: 0800123456', 'UPS: 1-800-742-5877', 'Order: 01234567890128', 'Sent by DPD\n01234567890128',
       'DPD: 01234567890128 or 01234567890135', 'DPD: LX12345678',
     ]) expect(keywordNumberInText(text), text).toBeUndefined();
+  });
+
+  it("reads no tax number after its label, though it has a tracking number's shape", () => {
+    // Synthetic numbers in the shape of Amazon's, a country's code and ten digits, as Belgium's, Poland's and Slovakia's VAT numbers are written.
+    expect(detectCarrierMatch('BE0123456789')).toMatchObject({ carrier: 'amazon-logistics', confidence: 'high' });
+    for (const text of [
+      'Acme BV\nBTW: BE0123456789', 'BTW BE0123456789', 'VAT No.: BE0123456789', 'N° TVA intracommunautaire : BE0123456789',
+      'BTW-nummer: BE0123456789', 'USt-IdNr.: BE0123456789', 'NIP: PL1234567890', 'IČ DPH: SK1234567890', 'DIČ: CZ1234567890', 'CUI: RO1234567890',
+    ]) {
+      expect(recognizedNumberInText(text), text).toBeUndefined();
+      expect(parseTrackingInput(text), text).toMatchObject({ carrier: 'unknown', candidates: [] });
+    }
+    // The same number printed elsewhere, and another number after it, are read; a label on another line labels nothing here.
+    expect(recognizedNumberInText('BTW: BE0123456789\nTracking: BE0123456789')).toBe('BE0123456789');
+    expect(recognizedNumberInText('BTW: BE0123456789, your parcel PL9999999999')).toBe('PL9999999999');
+    expect(followsTaxLabel('Prices incl. VAT\nBE0123456789', 17)).toBe(false);
+    expect(followsTaxLabel('VAT reg. no. BE0123456789', 13)).toBe(true);
   });
 
   it('reads the number after a Russian or Chinese label', () => {

@@ -45,6 +45,8 @@ export function recognizedNumberInScan(raw: string, scan: CandidateScan): string
     for (const match of raw.matchAll(pattern)) {
       const candidate = match[0].trim();
       if (!/\d/.test(candidate) && candidate !== raw.trim()) continue;
+      // A tax number is skipped where its label stands, not asked about: the same number printed elsewhere is read there.
+      if (followsTaxLabel(raw, match.index + match[0].indexOf(candidate))) continue;
       const key = candidate.toUpperCase();
       if (scan.asked.has(key)) continue;
       if (scan.asked.size >= MOST_TEXT_CANDIDATES) return undefined;
@@ -53,6 +55,26 @@ export function recognizedNumberInScan(raw: string, scan: CandidateScan): string
     }
   }
   return undefined;
+}
+
+// A tax or company number's label: "BTW: BE0123456789", "VAT No.", "USt-IdNr.:", "NIP", "DIČ", "IČ DPH", "CUI". Belgium's,
+// Poland's and Slovakia's VAT numbers and some of Czechia's and Romania's are a country's code and ten digits, the shape
+// of Amazon's tracking numbers, and a business prints its own in the signature of every email it sends.
+const TAX_WORDS = String.raw`vat|btw|tva|ust|mwst|uid|nip|di[cč]|i[cč]\s*dph|cui|cif|nif|iva|moms|mva|alv|[aá]fa|pvm|pvn|ddv|oib|kmkr|tax|tin`;
+const TAX_QUALIFIERS = String.raw`id|idnr|nr|no|n[°º]|number|nummer|num[eé]ro|n[uú]mero|reg|registration|intracom(?:munautaire)?|code`;
+const TAX_LABEL = new RegExp(
+  String.raw`(?<![\p{L}0-9])(?:${TAX_WORDS})(?:[\s.\-/]*(?:${TAX_QUALIFIERS})(?!\p{L}))*[\s.]*[:#]?\s*$`,
+  'iu',
+);
+
+/**
+ * Whether the number starting at `index` of a text follows a tax or company number's label on its line, as a
+ * business's VAT number does in its signature: "BTW: BE0123456789". Such a number is no tracking number, whatever
+ * carrier its shape fits.
+ */
+export function followsTaxLabel(text: string, index: number): boolean {
+  const lineStart = text.lastIndexOf('\n', index - 1) + 1;
+  return TAX_LABEL.test(text.slice(Math.max(lineStart, index - 48), index));
 }
 
 /** The first candidate in the text that one carrier claims confidently. */

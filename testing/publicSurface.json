@@ -69,6 +69,7 @@
       "failureKind",
       "fillPartialAnswer",
       "firstOccurrence",
+      "followsTaxLabel",
       "formatTrackingNumber",
       "hasDirectHandoffAdapter",
       "hasPrivateDeliveryDetails",
