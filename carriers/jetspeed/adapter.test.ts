@@ -21,8 +21,11 @@ const reply = (body: string, status = 200) => new Response(body, { status, heade
 const environment = (fetcher: typeof fetch) => ({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 
 describe('JETSPEED tracking adapter', () => {
-  it('offers its JSD numbers to recognition', () => {
-    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['jetspeed'] });
+  it('names JETSPEED for JSD and twelve digits, and for no other length', () => {
+    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'jetspeed', confidence: 'high', candidates: ['jetspeed'] });
+    for (const other of [NUMBER.slice(0, -1), `${NUMBER}0`, `JSA${NUMBER.slice(3)}`]) {
+      expect(detectCarrierMatch(other).candidates).not.toContain('jetspeed');
+    }
   });
 
   it('reads the tracker’s page for the whole number, every row on the tracker’s clock', async () => {

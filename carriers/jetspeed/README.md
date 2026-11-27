@@ -30,8 +30,8 @@ Recognition asks the same lookup.
 ## Numbers
 
 JETSPEED's numbers have JSD and twelve digits, the shape of the example in the tracker's search
-box. A low rule offers JETSPEED for it, and recognition confirms the number. No public sample is
-known; the sample is made up in the shape of parcels the app tracked.
+box. A high rule names JETSPEED: no other carrier writes JSD, and the parcels the app tracked in
+this shape were all JETSPEED's. No public sample is known; the sample is made up in their shape.
 
 ## Links
 

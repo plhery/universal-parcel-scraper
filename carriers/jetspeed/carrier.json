@@ -69,7 +69,7 @@
     {
       "id": "jetspeed-1",
       "pattern": "^JSD\\d{12}$",
-      "confidence": "low"
+      "confidence": "high"
     }
   ]
 }
