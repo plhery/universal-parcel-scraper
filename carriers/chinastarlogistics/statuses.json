@@ -1,0 +1,95 @@
+{
+  "carrier": "chinastarlogistics",
+  "entries": [
+    {
+      "code": "09",
+      "wording": "已受理",
+      "language": "zh",
+      "english": "Order accepted",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "Huaxin takes the shipper's order; its text asks to wait. The goods are not with Huaxin yet."
+    },
+    {
+      "code": "10",
+      "wording": "已派车",
+      "language": "zh",
+      "english": "Vehicle dispatched",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "A dispatcher sends a vehicle to collect the goods, which are not with Huaxin yet. The text names the dispatcher and gives no status, so the node's name is shown."
+    },
+    {
+      "code": "20",
+      "wording": "已提货",
+      "language": "zh",
+      "english": "Collected",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The goods are collected from the shipper."
+    },
+    {
+      "code": "25",
+      "wording": "离场",
+      "language": "zh",
+      "english": "Left the collection warehouse",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The status reads 已从提货仓库离场: the vehicle leaves the shipper's warehouse with the goods."
+    },
+    {
+      "code": "30",
+      "wording": "已入库",
+      "language": "zh",
+      "english": "Received at the warehouse",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Taken into Huaxin's warehouse minutes after leaving the shipper's, so the goods are already on their way."
+    },
+    {
+      "code": "50",
+      "wording": "已发运",
+      "language": "zh",
+      "english": "Dispatched",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Sent on from Huaxin's warehouse towards the destination."
+    },
+    {
+      "code": "60",
+      "wording": "在途",
+      "language": "zh",
+      "english": "In transit",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The status names the Huaxin warehouses the goods pass: sent from one to another, then arrived at a transfer point."
+    },
+    {
+      "code": "70",
+      "wording": "派送中",
+      "language": "zh",
+      "english": "Out for delivery",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "Given half an hour before 运抵 and the signature on the same day in the destination district."
+    },
+    {
+      "code": "100",
+      "wording": "运抵",
+      "language": "zh",
+      "english": "Arrived at the consignee, awaiting signature",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The status reads 已运抵收货单位待签收: the goods have reached the receiving business and wait for its signature, the next node."
+    },
+    {
+      "code": "110",
+      "wording": "签收",
+      "language": "zh",
+      "english": "Signed for",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The consignee signs for the goods. The node names the operator and the signer, which the adapter leaves out."
+    }
+  ]
+}

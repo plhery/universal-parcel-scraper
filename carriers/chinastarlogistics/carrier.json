@@ -1,0 +1,71 @@
+{
+  "id": "chinastarlogistics",
+  "displayName": "Huaxin Supply Chain",
+  "aliases": [
+    "华欣供应链",
+    "华欣物流",
+    "HSC"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#003C8C"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "chinastarlogistics",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "provider_code",
+    "canonical_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "customer_reference",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "canonical_tracking_number"
+    ],
+    "discarded": [
+      "customer_reference",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "chinastarlogistics-1",
+      "pattern": "^Y(?:BJ|GZ)S20\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{5}$",
+      "confidence": "high"
+    }
+  ]
+}

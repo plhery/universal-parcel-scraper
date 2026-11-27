@@ -7372,5 +7372,11 @@
     "pattern": "^\\d{8,10}$",
     "kind": "by_design",
     "reason": "Annengyuntong's waybill number without the ANYT of its cargo number is a bare digit run many carriers' numbers share, so nothing in it points to Annengyuntong."
+  },
+  {
+    "carrier": "chinastarlogistics",
+    "pattern": "^\\d{10}$",
+    "kind": "collision",
+    "reason": "Huaxin Supply Chain's tracker also finds a waybill by the shipper's own order number, ten bare digits on the public example, a shape many carriers print, so the adapter answers explicit selection for it."
   }
 ]

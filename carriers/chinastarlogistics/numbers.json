@@ -1,0 +1,73 @@
+{
+  "carrier": "chinastarlogistics",
+  "records": [
+    {
+      "number": "YGZS2023041000460",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "chinastarlogistics",
+        "confidence": "high"
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for Huaxin Supply Chain (华欣供应链). Huaxin's tracker answers it with eight nodes, from the order in Guangzhou to the signature in Inner Mongolia."
+    },
+    {
+      "number": "8201650677",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/chinastarlogistics.shtml",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie"
+        ]
+      },
+      "note": "Kuaidi100's Huaxin page gives it as the example number. Huaxin's tracker finds it as the shipper's order of one waybill, delivered in Beijing."
+    },
+    {
+      "number": "YBJS2024100900628",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/chinastarlogistics.shtml",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "chinastarlogistics",
+        "confidence": "high"
+      },
+      "note": "The waybill Huaxin's tracker gives for the example order on Kuaidi100's Huaxin page, from Shijiazhuang to Beijing."
+    }
+  ]
+}
