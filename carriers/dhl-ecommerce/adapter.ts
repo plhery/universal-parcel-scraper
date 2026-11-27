@@ -35,10 +35,15 @@ const WEBTRACK_PARTNERS: Readonly<Record<string, string>> = { USPS: 'usps', DAI_
 /** Statuses DHL answers with while its challenge is unsolved. */
 const CHALLENGE_STATUSES = [401, 403, 419, 428];
 
+/**
+ * Webtrack's failures the global page can stand in for: its challenge, a network or server
+ * failure, any other refusal but a rate limit, and its misses. A rate limit stops the lookup.
+ */
 function browserRecoveryAllowed(error: unknown): boolean {
   return error instanceof ChallengeError || error instanceof UpstreamNetworkError
-    || error instanceof UpstreamHttpError && error.status >= 500
-    || error instanceof IndeterminateError && ['webtrack_not_found', 'webtrack_no_history'].includes(error.reason ?? '');
+    || error instanceof UpstreamHttpError && error.status >= 400 && error.status !== 429
+    || error instanceof IndeterminateError
+      && ['webtrack_not_found', 'webtrack_no_history', 'webtrack_unavailable'].includes(error.reason ?? '');
 }
 
 /**
@@ -506,7 +511,9 @@ export class DHLEcommerceTracker {
         headers: { Accept: 'application/json', 'Content-Type': 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) },
         body: JSON.stringify({ trackedValue: number, offset: 0, locale: 'en-US' }),
       }, { provider: PROVIDER, timeoutMs, maxBytes: 1_000_000, fetcher: this.options.fetcher, allowHttpStatuses: [404, 410] });
-      if (!response.ok) throw new IndeterminateError(PROVIDER, 'DHL eCommerce Webtrack endpoint is unavailable');
+      if (!response.ok) {
+        throw new IndeterminateError(PROVIDER, 'DHL eCommerce Webtrack endpoint is unavailable', { reason: 'webtrack_unavailable' });
+      }
       return parseDHLEcommerceWebtrackResponse(parseJsonBytes(bytes, PROVIDER), number);
     } catch (error) {
       if (error instanceof UpstreamHttpError && CHALLENGE_STATUSES.includes(error.status)) {

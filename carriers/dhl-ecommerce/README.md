@@ -14,9 +14,10 @@ uses only this HTTP lookup so ambiguous numbers can reach DHL eCommerce early.
 
 The `browser` step retains the global tracking page's `www.dhl.com/utapi` lookup
 for shipments missing from Webtrack, histories Webtrack has not published,
-interactive challenges, and regional network or server failures. Webtrack misses
-do not establish that DHL's global network has no shipment. Rate limits,
-malformed replies, cancellation and spent budgets stop the lookup. Browser
+interactive challenges, regional network or server failures, and Webtrack's other
+refusals, such as a 404 from a moved endpoint. Webtrack misses do not establish that
+DHL's global network has no shipment. Rate limits, malformed replies, cancellation
+and spent budgets stop the lookup. Browser
 lookups are serialized per instance.
 
 Opt-in browser recognition goes straight to the global page after an inconclusive

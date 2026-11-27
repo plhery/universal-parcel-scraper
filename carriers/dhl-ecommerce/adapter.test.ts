@@ -17,14 +17,17 @@ it('uses browser recognition only for recoverable HTTP failures and retains the 
   const result: CarrierResult = { status: 'in_transit', events: [{ time: '2026-09-09T08:00:00Z', description: 'Sorted' }] };
   const page = vi.spyOn(trackingBrowser, 'scrapeUniversalPage').mockResolvedValue(result);
   const tracker = new DHLEcommerceTracker();
-  for (const error of [new RateLimitedError('DHL eCommerce'), new SchemaError('DHL eCommerce')]) {
+  for (const error of [new RateLimitedError('DHL eCommerce'), new UpstreamHttpError('DHL eCommerce', 429), new SchemaError('DHL eCommerce')]) {
     await expect(tracker.recognizeWithBrowser(NUMBER, {}, error)).rejects.toBe(error);
   }
   expect(page).not.toHaveBeenCalled();
   await expect(tracker.recognizeWithBrowser(NUMBER, { budgetMs: 1_000 },
     new IndeterminateError('DHL eCommerce', 'Regional miss', { reason: 'webtrack_not_found' })))
     .resolves.toMatchObject({ known: true, lastActivityAt: '2026-09-09T08:00:00.000Z', result });
-  expect(page).toHaveBeenCalledOnce();
+  await expect(tracker.recognizeWithBrowser(NUMBER, { budgetMs: 1_000 },
+    new IndeterminateError('DHL eCommerce', 'Webtrack refused the lookup', { reason: 'webtrack_unavailable' })))
+    .resolves.toMatchObject({ known: true, result });
+  expect(page).toHaveBeenCalledTimes(2);
   page.mockRestore();
 });
 function webtrack() {
@@ -606,12 +609,16 @@ describe('DHL eCommerce Webtrack', () => {
     const cases = [
       vi.fn(async () => reply({}, 503)),
       vi.fn(async () => { throw new Error('Network unavailable'); }),
+      // A refusal that is neither a challenge nor a rate limit, as for a moved or retired endpoint.
+      vi.fn(async () => reply({}, 404)),
+      vi.fn(async () => reply({}, 410)),
+      vi.fn(async () => reply({}, 400)),
     ];
     for (const fetcher of cases) {
       await expect(new DHLEcommerceTracker({ fetcher }).fetch(NUMBER)).resolves.toMatchObject({ status: 'in_transit', events: expect.any(Array) });
       expect(fetcher).toHaveBeenCalledOnce();
     }
-    expect(browser).toHaveBeenCalledTimes(2);
+    expect(browser).toHaveBeenCalledTimes(5);
   });
 
   it('does not spend a browser attempt on a regional rate limit', async () => {
