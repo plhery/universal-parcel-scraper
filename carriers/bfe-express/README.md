@@ -24,7 +24,9 @@ destination"; in Argentina they are in Spanish and start with the country. The a
 without that place, with it as the location and the whole row as `original_description`. A last
 mile's rows, in Spanish in Uruguay, are kept as written, with the place as the location where the
 wording says the parcel is there ("en"). The map reads both forms whole, the place included, so a
-provider's copy reads the same.
+provider's copy reads the same. A row the map did not know is kept whole, place included; once its
+wording is mapped, [identity.ts](identity.ts) lets the row stored that way keep its place in the
+history.
 
 Each scan states its offset, as "(GMT-03:00)", and keeps it. Scans follow the page's order
 numbers, newest first. BFE's status `Delivered` decides the stage when the last scan's wording

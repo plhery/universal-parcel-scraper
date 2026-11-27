@@ -37,6 +37,12 @@ it('maps the processing and unloading it copies from DHL in Germany as onward tr
   }
 });
 
+it('keeps a parcel in transit when the delivering partner\'s warehouse takes it in', () => {
+  for (const wording of ['Arrived At Warehouse', 'Arrived at warehouse']) {
+    expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe('in_transit');
+  }
+});
+
 it('reads the last-mile carrier\'s locker token as the parcel waiting for collection, not delivered', () => {
   expect(statusMapAnswer({ carrier: 'sxw-express', providerCode: null, description: 'DELIVERED_TO_LOCKER' }))
     .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });

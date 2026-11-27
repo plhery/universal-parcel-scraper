@@ -6,6 +6,7 @@ import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, BfeExpressTracker, bfeRequestBody } from './adapter.js';
 import { parseBfe } from './parser.js';
+import { sameInstantIdentityPolicy } from './identity.js';
 import { bfeWording, statusMap } from './status.js';
 
 const NUMBER = 'CK598000000000001';
@@ -121,6 +122,7 @@ describe('BFE Express tracking', () => {
       ['ar, en transporte', 'in_transit'],
       ['ar, el paquete ha sido recibido.', 'in_transit'],
       ['ar, en tránsito', 'in_transit'],
+      ['ar, en camino', 'in_transit'],
       ['ar, en reparto', 'out_for_delivery'],
       ['ar, reparto en curso', 'out_for_delivery'],
       ['ar, no entregado', 'failed_attempt'],
@@ -137,6 +139,15 @@ describe('BFE Express tracking', () => {
     expect(bfeWording('AR, Reparto en curso')).toEqual({ description: 'Reparto en curso', location: 'AR', original_description: 'AR, Reparto en curso' });
     // The delivery names the place of the round before it first, by its code.
     expect(bfeWording('ABC01, Entregado')).toEqual({ description: 'Entregado', location: 'ABC01', original_description: 'ABC01, Entregado' });
+  });
+
+  it('lets a row stored whole, its place at its head, keep its row once the map reads its wording', () => {
+    const scan = (description: string, location = '') => ({ stage: 'in_transit', description, location, providerCode: '' });
+    const { matches } = sameInstantIdentityPolicy;
+    expect(matches!(scan('En camino', 'AR'), scan('AR, En camino'))).toBe(true);
+    expect(matches!(scan('En camino', 'AR'), scan('UY, En camino'))).toBe(false);
+    expect(matches!(scan('En tránsito', 'AR'), scan('AR, En camino'))).toBe(false);
+    expect(matches!(scan('En camino', 'AR'), scan('AR, En camino', 'AR'))).toBe(false);
   });
 
   it('posts the signed number and signs again once on the service clock when ours is off', async () => {
