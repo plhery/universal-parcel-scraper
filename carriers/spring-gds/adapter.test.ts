@@ -860,6 +860,10 @@ describe('PostNL domestic tracker', () => {
     expect(parsePostNLDomesticResponse(reply(collo({ eta: { type: 'Synthetic', start: '2026-05-12T14:30:00+02:00', minutesOverdue: 25 } })), barcode)
       .unread_estimates).toEqual(['eta', 'eta.minutesOverdue']);
     expect(parsePostNLDomesticResponse(reply(collo()), barcode)).toMatchObject({ expected_delivery: null });
+    // PostNL's `Unknown` has no start or end: there is no estimate to read.
+    const unknown = parsePostNLDomesticResponse(reply(collo({ eta: { type: 'Unknown', start: null, end: null, minutesOverdue: null } })), barcode);
+    expect(unknown.expected_delivery).toBeNull();
+    expect(unknown.unread_estimates).toBeUndefined();
   });
 
   it('keeps an announced parcel as a summary, and a parcel without scans as no history', () => {

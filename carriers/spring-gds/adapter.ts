@@ -259,10 +259,11 @@ function domesticText(value: unknown): string {
 /**
  * The delivery estimate in the domestic reply's `eta`: a slot (`Specific`, start and end with
  * offsets), a day (`WholeDay`) or days (`MultipleDaySpan`, from the first day's midnight to the
- * last day's 23:59:59), read by their days as PostNL's calendar writes them. Other types go to
- * `unread_estimates`. `minutesOverdue` is the time since the slot's end when PostNL answers (34 at
- * 14:09Z for a slot that ended at 13:35Z, the driver still on the way), so it says nothing the slot
- * does not; beside another type it is unread.
+ * last day's 23:59:59), read by their days as PostNL's calendar writes them. Other types with a
+ * start or an end go to `unread_estimates`; `Unknown` comes without either. `minutesOverdue` is
+ * the time since the slot's end when PostNL answers (34 at 14:09Z for a slot that ended at 13:35Z,
+ * the driver still on the way), so it says nothing the slot does not; beside another type it is
+ * unread.
  */
 function domesticEstimate(collo: JsonObject): { estimate: WindowEstimate; unread: Pick<CarrierResult, 'unread_estimates'> } {
   const eta = record(collo.eta);
@@ -271,7 +272,9 @@ function domesticEstimate(collo: JsonObject): { estimate: WindowEstimate; unread
   const estimate = kind === 'Specific' ? windowEstimate(eta.start, eta.end)
     : kind === 'WholeDay' ? windowEstimate(null, eta.start)
       : kind === 'MultipleDaySpan' ? windowEstimate(day(eta.start), day(eta.end)) : { expected_delivery: null };
-  return { estimate, unread: unreadEstimates({ eta: estimate.expected_delivery ? null : collo.eta,
+  // `Unknown` without a start or an end holds no estimate.
+  const dated = [eta.start, eta.end].some((value) => text(value).trim());
+  return { estimate, unread: unreadEstimates({ eta: estimate.expected_delivery || !dated ? null : collo.eta,
     'eta.minutesOverdue': estimate.expected_delivery ? null : eta.minutesOverdue }) };
 }
 

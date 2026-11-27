@@ -27,7 +27,8 @@ it; everything user-facing says PostNL.
    - `eta` is the delivery slot from PostNL's page. `Specific` has a start and an end with
      offsets, `WholeDay` gives the day only, and `MultipleDaySpan` runs from one day's midnight
      to a later day's 23:59:59, read as those days. PostNL keeps it after delivery and at a pick-up
-     point, so the adapter drops it then. Other types go to `unread_estimates`. Its
+     point, so the adapter drops it then. Other types go to `unread_estimates` when they carry a
+     start or an end; `Unknown`, without either, is no estimate. Its
      `minutesOverdue` is the time since the slot's end when PostNL answers, which the slot
      already says.
    - The reply names the recipient, the sender and their addresses; none of that is read.
