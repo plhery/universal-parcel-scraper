@@ -1,5 +1,37 @@
 {
   "carrier": "dd-express",
-  "gap": "No public page shows a DD Express tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "55536223691",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/dd-express/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      },
+      "note": "TrackShip's DD Express page gives it as a tracking code example; DD Express's tracking lookup returns its delivered history."
+    }
+  ]
 }

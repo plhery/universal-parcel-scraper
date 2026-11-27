@@ -394,6 +394,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'tsb-es', number: 'TSB0000199',
     route: /^https:\/\/www\.tsbconnect\.net\/app\/tracking\/public\/tracking\/TSB0000199$/,
     marker: /Seguimiento de expedición|Tracking expedition|Seguiment d'expedició|Nueva búsqueda|New search/i },
+  // The tracker asks for a number its link carries but lists only the numbers typed in its box.
+  { carrier: 'dd-express', number: '90000000199',
+    route: /^https:\/\/tracking\.dd\.express\/v2\/$/,
+    marker: /Tracking No \/ Ref No[\s\S]*Current Status/, forwarding: 'none' },
   { carrier: 'tmw-express', number: 'TMW0000199',
     route: /^https:\/\/www\.tmw-express\.com\.au\/#\/my\/checkLogistics\?doccode=TMW0000199$/,
     marker: /查件[\s\S]*物流信息/ },

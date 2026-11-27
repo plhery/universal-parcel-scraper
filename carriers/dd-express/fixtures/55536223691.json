@@ -1,0 +1,36 @@
+{
+  "status": 200,
+  "message": "SUCCESS",
+  "data": [
+    {
+      "tracking_id": "55536223691",
+      "reference_id": "325969",
+      "info": [
+        {
+          "tracking_id": "55536223691",
+          "status": "Shipment info received.",
+          "created_at": "2023-01-16T07:02:54.575Z",
+          "images": []
+        },
+        {
+          "tracking_id": "55536223691",
+          "status": "Parcel has been collected",
+          "created_at": "2023-01-17T10:23:43.916Z",
+          "images": []
+        },
+        {
+          "tracking_id": "55536223691",
+          "status": "[Shipment Scheduled Out For Delivery ",
+          "created_at": "2023-01-17T10:44:50.160Z",
+          "images": []
+        },
+        {
+          "tracking_id": "55536223691",
+          "status": "Parcel has been delivered",
+          "created_at": "2023-01-30T07:13:35.142Z",
+          "images": []
+        }
+      ]
+    }
+  ]
+}

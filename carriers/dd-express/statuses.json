@@ -1,4 +1,36 @@
 {
   "carrier": "dd-express",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Shipment info received.",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The shipper's booking, before DD Express collects the parcel."
+    },
+    {
+      "wording": "Parcel has been collected",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "Collected from the shipper."
+    },
+    {
+      "wording": "Shipment Scheduled Out For Delivery",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27",
+      "note": "The tracker writes it with a stray opening bracket, which the adapter drops. A delivery booked for a later run, not a courier on the way: on the public sample it came 21 minutes after the collection and 13 days before the delivery."
+    },
+    {
+      "wording": "Parcel has been delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-27"
+    }
+  ]
 }

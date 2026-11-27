@@ -19,19 +19,45 @@
   "timezone": "Asia/Kuala_Lumpur",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "dd-express",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "offset_timestamps",
+    "delivered_at"
+  ],
   "portal": {
-    "url": "https://tracking.dd.express/?tracking_ids={trackingNumber}",
-    "searchUrl": "https://tracking.dd.express/",
+    "url": "https://tracking.dd.express/v2/",
+    "searchUrl": "https://tracking.dd.express/v2/",
     "helpUrl": "https://dd.express/contact/",
-    "canaryUrl": "https://tracking.dd.express/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "canaryUrl": "https://tracking.dd.express/v2/",
+    "shows": [
+      "status",
+      "history",
+      "offset_timestamps",
+      "delivered_at",
+      "customer_reference"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "offset_timestamps",
+      "delivered_at"
+    ],
+    "discarded": [
+      "customer_reference",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "provider_code",
+      "signatory"
+    ]
   },
   "links": [
     {

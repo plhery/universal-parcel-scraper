@@ -7203,5 +7203,11 @@
     "pattern": "^FST\\d{10}$",
     "kind": "open",
     "reason": "FST and ten digits appears only as a commented-out example in the tracker page's script, under which the tracker holds no job."
+  },
+  {
+    "carrier": "dd-express",
+    "pattern": "^\\d{11}$",
+    "kind": "collision",
+    "reason": "Eleven-digit DD Express tracking ids share their shape with many carriers' numeric numbers, and one aggregator's example does not establish a family, so the shape cannot name DD Express."
   }
 ]
