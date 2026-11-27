@@ -21257,6 +21257,19 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "dhlparcel.be"
         ],
         "path": "^/home/tracktrace/([^/?#]+)/?$"
+      },
+      {
+        "domains": [
+          "dhlecommerce.nl",
+          "dhlparcel.nl",
+          "dhlecommerce.be",
+          "dhlparcel.be"
+        ],
+        "pathPattern": "^/go-track-trace/?$",
+        "params": [
+          "tc",
+          "pid"
+        ]
       }
     ],
     "detectionRules": [

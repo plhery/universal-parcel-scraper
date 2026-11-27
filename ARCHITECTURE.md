@@ -455,7 +455,8 @@ no name or address. Links that carry their number also go through `parseTracking
 the carrier left to the number.
 A shipping email's tracking button often opens a mailing tool's click redirect instead (Emarsys'
 `nrd.php`, SendGrid's `ls/click` and `ss/c`, Mailchimp's `list-manage.com`, Klaviyo's
-`klclick`, Salesforce Marketing Cloud's `?qs=`, Amazon SES' `awstrack.me`, Shopify's `/_t/c/`).
+`klclick`, Salesforce Marketing Cloud's `?qs=`, Amazon SES' `awstrack.me`, Shopify's `/_t/c/`,
+the `/lnk/` links that end with their address in base64, as DHL eCommerce's notifications do).
 Every link of such an email, unsubscribing included, goes through it, so `shopTrackingLink`
 takes one only with the link's words, its text or the words written before it, when they read
 like tracking and neither they nor the address read like unsubscribing; words that also follow
@@ -463,7 +464,7 @@ a shop on social networks or offer free shipping don't count. The resolver follo
 redirects with no cookie, referrer or body read, for at most four requests, and stops at the
 first address that is no mailing tool's without loading it: a carrier's link names its parcel by
 the link rules, a shop platform's link is resolved as above, any other page is unsupported.
-Amazon SES writes the address into its link, which is read with no request. Following a
+Amazon SES and the `/lnk/` links write the address into the link, which is read with no request. Following a
 redirect counts as the reader's click in the shop's mailing statistics. A browser's fetch
 hides where a redirect leads, so these links stay unresolved there.
 Consumers bound concurrency, cache answers and

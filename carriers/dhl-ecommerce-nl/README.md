@@ -14,6 +14,10 @@ Benelux, through the gateway behind its tracking page. German DHL Paket is
 
 ## Notes
 
+- DHL's notification emails link to `my.dhlecommerce.nl/go-track-trace` or its
+  `.be` twin with the number as `tc`, or as `pid` in
+  [earlier emails](https://web.archive.org/cdx/search/cdx?url=my.dhlecommerce.nl/go-track-trace&matchType=prefix&limit=5);
+  the page redirects to `/home/tracktrace/<number>`, and both links name this carrier.
 - The key is sent without a postcode. The gateway then leaves out the
   recipient, the address, the signature and the ServicePoint, so there is
   nothing personal to discard and no place on a scan.

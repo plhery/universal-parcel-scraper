@@ -91,6 +91,20 @@ describe('mailing tools\' click redirects', () => {
     expect(urls()).toEqual([]);
   });
 
+  it('reads the address a `/lnk/` link writes in base64 with no request', async () => {
+    const number = 'JVGL01234567890123456789';
+    const page = `https://my.dhlecommerce.nl/go-track-trace?role=consumer-receive&src=dhl-notification&tc=${number}&utm_medium=email`;
+    const lnk = `https://secure.dhlecommerce.nl/lnk/AUkAAAbcDEF/1/ox7LabcDEF/${btoa(page).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}`;
+    expect(shopTrackingLink(lnk, 'Volg je pakket')).toEqual({ platform: 'redirect', url: lnk });
+    const { urls, fetcher } = recording({});
+    await expect(resolveShopTrackingLink({ platform: 'redirect', url: lnk }, { fetcher })).resolves.toMatchObject({
+      platform: 'redirect', status: 'resolved', parcels: [{ trackingNumber: number, carrier: 'dhl-ecommerce-nl' }],
+    });
+    expect(urls()).toEqual([]);
+    // A last segment that is no address is no link of this kind.
+    expect(shopTrackingLink('https://secure.dhlecommerce.nl/lnk/AUkAAAbcDEF/1/ox7LabcDEF/abcDEF', 'Volg je pakket')).toBeUndefined();
+  });
+
   it('says why a redirect names no parcel, and never loads a page that is no carrier\'s or platform\'s', async () => {
     const outcome = async (answer: () => Response) =>
       resolveShopTrackingLink({ platform: 'redirect', url: EMARSYS }, { fetcher: recording({ [EMARSYS]: answer }).fetcher });

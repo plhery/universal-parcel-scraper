@@ -2,10 +2,12 @@
  * Mailing tools' click redirects. A shipping email's "Track your parcel" button often opens the mailing tool's own
  * address, which counts the click and redirects to the carrier's or the shop platform's page: Emarsys' `nrd.php`,
  * SendGrid's `ls/click` and `ss/c`, Mailchimp's `list-manage.com/track/click`, Klaviyo's `klclick`, Salesforce
- * Marketing Cloud's `?qs=` on its `click.` hosts and `exct.net`, Amazon SES' `awstrack.me` and Shopify's `/_t/c/`.
+ * Marketing Cloud's `?qs=` on its `click.` hosts and `exct.net`, Amazon SES' `awstrack.me`, Shopify's `/_t/c/`, and
+ * the `/lnk/` links of DHL eCommerce's notification emails, on `secure.dhlecommerce.nl`.
  * Such a link is taken only with its words, and only when they read like tracking and nothing in it reads like
  * unsubscribing. Its redirects are followed with no cookie and no body read, up to the first address that is no
- * mailing tool's: that page is never loaded. Amazon SES writes the address into its link, which is read with no request.
+ * mailing tool's: that page is never loaded. Amazon SES and the `/lnk/` links write the address into the link, which
+ * is read with no request.
  */
 import type { ShopLinkFailure, ShopLinkResolveOptions, ShopTrackingLink } from './types.js';
 
@@ -27,13 +29,23 @@ function clickRedirect(url: URL): boolean {
     || /^\/_t\/c\/./.test(path); // Shopify
 }
 
-/** The address Amazon SES writes into its link, `…awstrack.me/L0/<the address, escaped>/1/…`. */
+// A `/lnk/` link ends with its address in URL-safe base64, which starts `aHR0` for "http":
+// `secure.dhlecommerce.nl/lnk/<token>/1/<token>/aHR0cHM6Ly9teS5kaGxlY29tbWVyY2UubmwvZ28tdHJhY2stdHJhY2U_…`.
+const BASE64_CARRIED = /^\/lnk\/[\w-]+\/\d+\/[\w-]+\/(aHR0[\w-]+)=*\/?$/;
+
+/**
+ * The address a link writes into itself: Amazon SES' `…awstrack.me/L0/<the address, escaped>/1/…`, and a `/lnk/`
+ * link's, in base64 as its last segment.
+ */
 function carriedDestination(url: URL): URL | undefined {
-  if (!under(url.hostname.toLowerCase(), 'awstrack.me')) return undefined;
-  const escaped = /^\/L0\/([^/]+)\//.exec(url.pathname)?.[1];
-  if (!escaped) return undefined;
+  const escaped = under(url.hostname.toLowerCase(), 'awstrack.me') ? /^\/L0\/([^/]+)\//.exec(url.pathname)?.[1] : undefined;
+  const encoded = escaped ? undefined : BASE64_CARRIED.exec(url.pathname)?.[1];
+  if (!escaped && !encoded) return undefined;
   try {
-    const destination = new URL(decodeURIComponent(escaped));
+    const address = escaped
+      ? decodeURIComponent(escaped)
+      : new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(atob(encoded!.replace(/-/g, '+').replace(/_/g, '/')), (char) => char.charCodeAt(0)));
+    const destination = new URL(address);
     return destination.protocol === 'https:' || destination.protocol === 'http:' ? destination : undefined;
   } catch {
     return undefined;

@@ -67,6 +67,14 @@ describe('evidence-backed tracking formats', () => {
       .toMatchObject({ carrier: 'dhl-ecommerce-nl', confidence: 'high', source: 'link' });
     expect(parseTrackingInput('https://my.dhlecommerce.nl/home/tracktrace/JVGL01234567890123456789?lang=nl-NL'))
       .toMatchObject({ carrier: 'dhl-ecommerce-nl', trackingNumber: 'JVGL01234567890123456789', source: 'link' });
+    // The notification emails' link, which redirects to the tracking page: `tc` now, `pid` in earlier emails.
+    for (const link of [
+      'https://my.dhlecommerce.be/go-track-trace?role=consumer-receive&src=dhl-notification&tc=JVGL01234567890123456789&utm_medium=email',
+      'https://my.dhlecommerce.nl/go-track-trace?pid=JVGL01234567890123456789&src=dhl-notification-email&lang=nl-NL',
+    ]) {
+      expect(parseTrackingInput(link), link)
+        .toMatchObject({ carrier: 'dhl-ecommerce-nl', trackingNumber: 'JVGL01234567890123456789', source: 'link' });
+    }
     expect(parseTrackingInput('https://www.dhl.de/en/privatkunden/dhl-sendungsverfolgung.html?piececode=JVGL01234567890123456789'))
       .toMatchObject({ carrier: 'dhl', confidence: 'high', source: 'link' });
     expect(detectCarrierMatch('GM9999999999999980')).toMatchObject({ carrier: 'dhl-ecommerce', confidence: 'high' });
