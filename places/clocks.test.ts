@@ -400,6 +400,9 @@ describe('dateLocalClocks', () => {
     // A catalog zone of UTC says the feed mixes clocks: the home is the carrier's first country.
     expect(dated(dateLocalClocks('china-post', { events: [scan] }).events![0]))
       .toEqual(['2026-03-02T11:00:00+08:00', 'Asia/Shanghai', 'carrier']);
+    // An office named after the carrier is in a country it serves, not in a town of that name abroad.
+    expect(dated(dateLocalClocks('estafeta', { events: [{ ...scan, location: 'Estafeta Valencia( Sucursal Centro )' }] }).events![0]))
+      .toEqual(['2026-03-02T11:00:00-06:00', 'America/Mexico_City', 'carrier']);
   });
 
   it('keeps a carrier’s own clock in a country of several where nothing names a state', () => {

@@ -397,6 +397,18 @@ describe('locatePlace', () => {
     expect(locatePlace('MR Pays Bas', { carriers: ['dpd'] })).toBeNull();
   });
 
+  it("puts an office named after the parcel's carrier in a country it serves or the parcel is in", () => {
+    // Estafeta's offices in Mexico, by the colonia or town after its name: no Valencia, Toledo or Córdoba abroad.
+    const estafeta = { carriers: ['estafeta'], destinationCountry: 'MX' };
+    expect(placesForEvents(['Estafeta Valencia( Sucursal Centro )', 'Estafeta Toledo', 'Estafeta Cordoba( Estafeta Cordoba )'], estafeta)
+      .map((found) => found && `${found.country} ${found.name}`)).toEqual([null, null, 'MX Cordoba']);
+    // Without the carrier, the words are a town's, wherever its name is best known.
+    expect(placesForEvents(['Estafeta Valencia', 'Estafeta Cordoba( Estafeta Cordoba )'], { destinationCountry: 'MX' })
+      .map((found) => found?.country)).toEqual(['VE', 'AR']);
+    // A town in a country the parcel is in stays: a carrier's own warehouse at its destination.
+    expect(locatePlace('Estafeta Valencia', { carriers: ['estafeta'], countries: ['MX', 'VE'] })).toMatchObject({ country: 'VE' });
+  });
+
   it('reads Chinese, Japanese and Korean names', () => {
     const shenzhen = { country: 'CN', name: 'Shenzhen', latitude: 22.55, longitude: 114.07 };
     expectPlace('深圳市', shenzhen);

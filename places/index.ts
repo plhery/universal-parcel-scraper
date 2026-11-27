@@ -782,6 +782,8 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
   let rest = explicit.country ? explicit.place : text;
   const context = hints.countries ?? [];
   const carriers = hints.carriers ?? [];
+  // Its office, when the parcel's carrier opens the text with its own name, is in a country it serves.
+  const served = country ? [] : officeCountries(text, carriers);
   // A carrier's site named after the country it serves ("MR Pays Bas", Mondial Relay's Dutch network): that country.
   const site = HUBS.get(nameKey(text))?.find((hub) => !hub.town && hub.carriers?.some((carrier) => carriers.includes(carrier)));
   if (site) return countryPlace(data, site.country, true);
@@ -962,6 +964,7 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
         if (!adminMatch && (stateOf(place.country) || hinted.some((other) => other !== place.country && stateOf(other)))) continue;
         const inCountry = place.country === country;
         if (country && !inCountry && !((looseCountry || coded) && adminMatch)) continue;
+        if (served.length && !served.includes(place.country) && !hinted.includes(place.country)) continue;
         const hint = hinted.indexOf(place.country);
         const postcodeMatch = postcode !== null && postcode.country === place.country
           && distanceKm(postcode.latitude, postcode.longitude, place.latitude, place.longitude) < 30;
@@ -1504,6 +1507,21 @@ function cachedPlace(location: string | null | undefined, countries: readonly st
 function deliversOnlyIn(carrier: string, country: string): boolean {
   const countries = (CARRIER_DEFINITIONS as Record<string, { countries?: readonly string[] } | undefined>)[carrier]?.countries;
   return countries?.length === 1 && countries[0] === country;
+}
+
+/**
+ * The countries of a carrier of few whose name opens a scan's place, as it names its offices: Estafeta's
+ * "Estafeta Valencia" is an office in a town of Mexico, not Valencia in Spain or Venezuela. Empty otherwise.
+ */
+function officeCountries(text: string, carriers: readonly string[]): readonly string[] {
+  const key = nameKey(text);
+  for (const carrier of carriers) {
+    const definition = (CARRIER_DEFINITIONS as Record<string, { displayName?: string; countries?: readonly string[] } | undefined>)[carrier];
+    const name = definition?.displayName ? nameKey(definition.displayName) : '';
+    const countries = definition?.countries ?? [];
+    if (name && countries.length && countries.length <= HOME_COUNTRIES_MAX && key.startsWith(`${name} `)) return countries;
+  }
+  return [];
 }
 
 /** The countries a carrier delivers in under its own name, home first, and its clock's. */

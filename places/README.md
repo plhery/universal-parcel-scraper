@@ -160,6 +160,9 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   scans stop, more than 3,000 km from them and from the parcel's countries. It gets no
   place, and tells the scans around it nothing. Where the scans stop, a name no other town
   has and a city of a million people stay: nothing says the parcel did not go there.
+- A place the parcel's carrier opens with its own name is its office, in a country it
+  serves or the parcel is in, when it serves six countries or fewer: Estafeta's "Estafeta
+  Valencia" is no town in Spain or Venezuela. Without such a town, the scan gets no place.
 - India Post ends an office's name with its PIN code, and abbreviates some names past
   reading ("KOL AP TMO 700052"). Text that names no town, not even one nothing confirms, is
   placed in the PIN's town from `pincodes.json` when the scan or the parcel is in India. A
