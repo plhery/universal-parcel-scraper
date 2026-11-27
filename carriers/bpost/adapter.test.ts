@@ -117,9 +117,21 @@ describe('bpost direct history', () => {
     exported.items[0].events[2].location = { locationName: 'Example town, 11', countryCode: 'PT' };
     exported.items[0].events[3].location = { locationName: 'Example hub', countryCode: 'NL' };
     const abroad = parseBpost(exported, NUMBER).events ?? [];
-    expect(abroad[0]).toMatchObject({ local_time: '2026-01-04T12:00:00', location: 'PTLISL Portugal PT, PT' });
+    expect(abroad[0]).toMatchObject({ local_time: '2026-01-04T12:00:00', location: 'PTLISL, Portugal' });
     expect(abroad.slice(1, 3).map((event) => event.time)).toEqual(['2026-01-03T12:00:00+01:00', '2026-01-03T10:00:00+01:00']);
     expect(abroad[3]).toMatchObject({ local_time: '2026-01-02T12:00:00', location: 'Example hub, NL' });
+    // The office's name already gives its country twice, padded in columns. An office of exchange keeps its code;
+    // another code, a number or another country's office, does not. A name that is not the country's keeps the code after it.
+    const offices = payload();
+    offices.items[0].countryOfDepurture = 'BE';
+    offices.items[0].receiver = { countryCode: 'FR' };
+    offices.items[0].events[0].location = { locationName: 'FRXXXA  France              FR', countryCode: 'FR' };
+    offices.items[0].events[1].location = { locationName: '000000  France              FR', countryCode: 'FR' };
+    offices.items[0].events[2].location = { locationName: 'FRXXXA  Example             FR', countryCode: 'FR' };
+    offices.items[0].events[3].location = { locationName: 'PTLISL  Portugal            PT', countryCode: 'FR' };
+    offices.items[0].events[4].location = { locationName: 'PTLISL  France              FR', countryCode: 'FR' };
+    expect((parseBpost(offices, NUMBER).events ?? []).slice(0, 5).map((event) => event.location))
+      .toEqual(['FRXXXA, France', 'France', 'FRXXXA Example FR, FR', 'PTLISL Portugal PT, FR', 'France']);
     // The hour the change to summer time skips has no instant; the repeated one takes its first.
     const changes = payload();
     changes.items[0].events[0] = { ...changes.items[0].events[0], date: '2026-03-29', time: '02:30' };
@@ -164,6 +176,17 @@ describe('bpost direct history', () => {
     expect(takenOver).toEqual([null, null, null, 'PSM IN PARCELS', 'LCI']);
     // A row stored at a readable place is not taken over by a scan that names none.
     expect(policy.matches!(incoming[3]!, { ...stored[3]!, location: 'Example sorting centre' })).toBe(false);
+  });
+
+  it("lets a scan stored at a partner's office with its country code added keep its row", () => {
+    const policy = sameInstantIdentityPolicy('bpost', { supportsScanMatching: true })!;
+    const scan = { time: '2026-01-04T12:00:00', stage: 'in_transit', description: 'Arrival at international depot', location: 'FRXXXA, France', providerCode: '' };
+    expect(policy.matches!(scan, { ...scan, location: 'FRXXXA France FR, FR' })).toBe(true);
+    expect(policy.matches!({ ...scan, location: 'France' }, { ...scan, location: '000000 France FR, FR' })).toBe(true);
+    expect(policy.matches!(scan, { ...scan, location: '000000 France FR, FR' })).toBe(false);
+    expect(policy.matches!(scan, { ...scan, location: 'FRXXXA France FR, FR', description: 'Departure to distribution network' })).toBe(false);
+    expect(policy.matches!(scan, { ...scan, location: 'PTLISL Portugal PT, PT' })).toBe(false);
+    expect(policy.matches!({ ...scan, location: 'Example hub, FR' }, { ...scan, location: 'Example hub, FR' })).toBe(false);
   });
 
   it("keeps arrivals written at the minute of Landmark Global's announcement as notices without a place", () => {

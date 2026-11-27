@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { firstOccurrence, zonedTime } from '../../core/time/index.js';
+import { countryCode as countryOfName, firstOccurrence, zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
 import { classifyBpostStatus } from './status.js';
@@ -95,6 +95,32 @@ const ANNOUNCEMENT = /^item is announced\b/i;
 /** A location name bpost's feed gives, or nothing when it is no place. */
 export const bpostPlaceName = (name: string): string => (NOT_PLACES.has(name.replace(/\s+/g, ' ').trim().toUpperCase()) ? '' : name);
 
+// A postal partner's scan that bpost relays names the partner's office: its code, then its country's name and
+// code, in fixed-width columns ("PTLISL  Portugal  PT").
+const RELAYED_OFFICE = /^(\S+) (\S.*) ([A-Z]{2})$/;
+// A UPU office of exchange's code: its country's, three letters for the airport or place, and one more.
+const EXCHANGE_OFFICE = /^[A-Z]{5}[A-Z0-9]$/;
+
+/**
+ * A scan's place from the location name and country code bpost gives: the name with the code, or, for a
+ * partner's office, whose name already gives its country twice, the country's name once. An office of
+ * exchange keeps its code before it ("PTLISL, Portugal"), which places the office in its airport's town;
+ * another code names nothing a reader can use.
+ */
+export function bpostPlace(name: string, country: string): string {
+  const [, code, countryName, named] = RELAYED_OFFICE.exec(name.replace(/\s+/g, ' ').trim()) ?? [];
+  if (!code || !countryName || named !== country || countryOfName(countryName) !== country) {
+    return [name, country].filter(Boolean).join(', ');
+  }
+  return EXCHANGE_OFFICE.test(code) && code.startsWith(country) ? `${code}, ${countryName}` : countryName;
+}
+
+/** A place an earlier release stored with a partner's office and its code ("PTLISL Portugal PT, PT"), as written now. */
+export function bpostStoredPlace(location: string): string {
+  const stored = /^(\S.*), ([A-Z]{2})$/.exec(location.trim());
+  return stored ? bpostPlace(stored[1]!, stored[2]!) : location;
+}
+
 export function parseBpost(payload: unknown, number: string): CarrierResult {
   const requested = normalizeBpostNumber(number);
   if (!isRecord(payload)) throw new SchemaError('bpost');
@@ -133,7 +159,7 @@ export function parseBpost(payload: unknown, number: string): CarrierResult {
     if (!local) throw new SchemaError('bpost', 'bpost returned an invalid scan date');
     const country = isRecord(raw.location) ? countryCode(raw.location.countryCode) : '';
     const name = isRecord(raw.location) ? bpostPlaceName(clean(raw.location.locationName, 160)) : '';
-    const location = isRecord(raw.location) ? [name, clean(raw.location.countryCode, 2)].filter(Boolean).join(', ') : '';
+    const location = isRecord(raw.location) ? bpostPlace(name, clean(raw.location.countryCode, 2)) : '';
     // A scan that names no place at all, or a country alone, is bpost's own record, on Brussels time
     // wherever the parcel is. So is one of a parcel sent abroad in the destination country, unless
     // it is the partner's scan relayed under its office ("PTLISL Portugal PT"), on the partner's clock.

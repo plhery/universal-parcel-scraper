@@ -61,8 +61,12 @@ none.
 ## Limitations
 
 bpost's tracker shows no place for a scan. The feed's location names are kept,
-except `LCI` on the receipt of the shipper's data and `PSM IN PARCELS` on a sort,
-which name no place and are left out. Landmark Global's announcement of a parcel
+with the scan's country code after them, except `LCI` on the receipt of the
+shipper's data and `PSM IN PARCELS` on a sort, which name no place and are left
+out. A partner's office is named by its code and its country's name and code,
+`PTLISL Portugal PT`; its place gives the country once, after the code of an
+office of exchange, which names the office's airport (`PTLISL, Portugal`), and
+alone after any other code. A scan stored the earlier way keeps its row. Landmark Global's announcement of a parcel
 from abroad can come with arrivals at the same minute, written with its data while
 the parcel is still at the sender's end: they are notices on the announcement's
 stage, without a place.
