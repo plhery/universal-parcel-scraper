@@ -107,6 +107,13 @@
       "note": "Scan code (operationCode). 离开境外经转局 (left a foreign transit office)."
     },
     {
+      "code": "491",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Scan code (operationCode). 到达境外自提点 (arrived at a pickup point abroad), on the destination post's clock: the minute of the destination post's own ready-for-pickup scan."
+    },
+    {
       "code": "459",
       "stage": "in_transit",
       "confirmedBy": "live",

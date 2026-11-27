@@ -309,6 +309,7 @@ describe('China Post trace projection', () => {
       [{ operationCode: '711', operation: '已退回', stateDesc: '已退回' }, 'exception', 'returned'],
       [{ operationCode: '542', operation: '已试投/投递失败', stateDesc: '运送中' }, 'exception', 'failed_attempt'],
       [{ operationCode: '462', operation: '【哥伦比亚】安排投递', stateDesc: '派送中' }, 'out_for_delivery', 'out_for_delivery'],
+      [{ operationCode: '491', operation: '到达境外自提点', stateDesc: '运送中' }, 'in_transit', 'ready_for_pickup'],
       [{ operationCode: '954', operation: '邮件到达【示例市国际互换局】', stateDesc: '运送中', orgCode: '00000001', orgName: '示例市国际互换局' }, 'in_transit', 'in_transit'],
       [{ orgCode: 'USJFKA' }, 'in_transit', 'in_transit'],
       [{ operationCode: 'EXA', operation: '送交出口海关', stateDesc: '清关中' }, 'in_transit', 'customs'],
@@ -325,7 +326,7 @@ describe('China Post trace projection', () => {
     const result = dateLocalClocks('china-post', parseChinaPostTraces(edit('delivered', (mail) => {
       mail.receiverCountryName = '日本';
       mail.mailInfoCount = 5;
-      // Oldest first: the landing, the arrival at the destination, a transit office there, its processing centre, its office of exchange's hold, its import customs, its round and its delivery.
+      // Oldest first: the landing, the arrival at the destination, a transit office there, its processing centre, its office of exchange's hold, its import customs, a pickup point, its round and its delivery.
       const base = scan(mail, 0);
       mail.mailInfos = [
         { ...base, operationCode: '505', operation: '飞机进港', stateDesc: '运送中', orgCode: '', orgName: '', time: '2026-09-01 05:00:00' },
@@ -337,6 +338,7 @@ describe('China Post trace projection', () => {
         { ...base, operationCode: '493', operation: '境外进口海关留存待验(等待提交给边境机构/安全部门)', stateDesc: '清关中', orgCode: 'JP', orgName: '日本', time: '2026-09-02 09:00:00' },
         { ...base, operationCode: '487', operation: '寄达地海关允许进口', stateDesc: '运送中', orgCode: 'JP', orgName: '日本', time: '2026-09-02 17:03:00' },
         { ...base, operationCode: '460', operation: '离开【日本】处理中心', stateDesc: '运送中', orgCode: 'JP', orgName: '日本', time: '2026-09-02 17:04:00' },
+        { ...base, operationCode: '491', operation: '到达境外自提点', stateDesc: '运送中', orgCode: 'JP', orgName: '日本', time: '2026-09-02 20:15:00' },
         { ...base, operationCode: '462', operation: '【日本】安排投递', stateDesc: '派送中', orgCode: 'JP', orgName: '日本', time: '2026-09-03 08:30:00' },
         { ...base, operationCode: '463', operation: '【日本】已妥投', stateDesc: '已签收', orgCode: 'JP', orgName: '日本', time: '2026-09-03 13:10:00' },
       ];
@@ -345,6 +347,7 @@ describe('China Post trace projection', () => {
     expect(result.events?.map((event) => [event.provider_code, event.time, event.time_zone_basis])).toEqual([
       ['463', '2026-09-03T13:10:00+09:00', 'place'],
       ['462', '2026-09-03T08:30:00+09:00', 'place'],
+      ['491', '2026-09-02T20:15:00+09:00', 'place'],
       ['460', '2026-09-02T17:04:00+09:00', 'place'],
       ['487', '2026-09-02T17:03:00+09:00', 'place'],
       ['493', '2026-09-02T09:00:00+09:00', 'place'],

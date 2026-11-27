@@ -41,6 +41,8 @@ const CODES: Readonly<Record<string, ClassifiedStatus>> = {
   // Arrived at and left a transit office abroad (到达境外经转局, 离开境外经转局).
   '488': IN_TRANSIT,
   '489': IN_TRANSIT,
+  // Arrived at a pickup point abroad (到达境外自提点): the destination post's own ready-for-pickup scan.
+  '491': { status: 'in_transit', stage: 'ready_for_pickup' },
   // Domestic flight legs: departed (已起飞) and landed (已落地).
   '911': IN_TRANSIT,
   '912': IN_TRANSIT,
@@ -157,6 +159,7 @@ const LABELS: ReadonlyArray<readonly [label: string, english: string]> = [
   ['离开…处理中心', 'Departure from processing center'],
   ['到达境外经转局', 'Arrived at a transit office abroad'],
   ['离开境外经转局', 'Departed from a transit office abroad'],
+  ['到达境外自提点', 'Arrived at a pickup point abroad'],
   // The origin post's own exchange scans, which China Post mirrors on an item from abroad.
   ['到达境外出口互换局', "Arrival at the origin post's office of exchange"],
   ['离开境外出口互换局', "Departure from the origin post's office of exchange"],
@@ -309,6 +312,7 @@ const DESTINATION_STAGES: ReadonlyMap<string, Stage> = new Map([
   ['寄达地海关允许进口', 'in_transit'],
   ['离开…处理中心', 'in_transit'],
   ['到达境外经转局', 'in_transit'],
+  ['到达境外自提点', 'ready_for_pickup'],
   ['已到达…投递局', 'in_transit'],
   ['…安排投递', 'out_for_delivery'],
   ['…已妥投', 'delivered'],
