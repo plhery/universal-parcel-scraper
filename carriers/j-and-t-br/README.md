@@ -10,8 +10,8 @@ The drag is one cursor move: the service's browser takes most of a second over e
 however short.
 An ambiguous image abstains. It permits at most two drags and two bound tracking requests,
 within the caller's deadline, and closes its fresh context. The helper abstains often, within
-seconds and before any drag, so the adapter asks it once more when the budget left still holds
-another solved run: the new context draws another image. No provider
+seconds and before any drag, so the adapter asks it up to twice more while the budget left still
+holds another solved run: each new context draws another image. No provider
 is asked about a J&T Brazil parcel ([COVERAGE.md](../../providers/COVERAGE.md)). Every answer
 costs a solved puzzle, so the catalog asks for a refresh
 at most every half hour, and an hour after a failed one, out for delivery included.

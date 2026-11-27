@@ -17,6 +17,8 @@ function lastReason(page: TrawlScrapeResponse): string {
 // the gap in. A new browser context draws another image, and a solved run takes about half a minute.
 const ABSTAINED = 'jt-br-ambiguous_image';
 const RETRY_MIN_MS = 40_000;
+// It gives up on about one image in six, so two runs in a row gave up on about one lookup in 25.
+const ABSTENTION_RETRIES = 2;
 const VERIFICATION_REASONS = new Map([
   [ABSTAINED, 'ambiguous_image'],
   ['jt-br-stale_generation', 'stale_generation'],
@@ -47,12 +49,11 @@ export class JAndTBrTracker {
       if (timeoutMs < 12000) throw new BudgetExceededError(PROVIDER, remainingMs);
       let page = await scrape(timeoutMs);
       signal.throwIfAborted();
-      if (!page.capturedResponses.length && lastReason(page) === ABSTAINED) {
+      for (let retry = 0; retry < ABSTENTION_RETRIES && !page.capturedResponses.length && lastReason(page) === ABSTAINED; retry++) {
         const again = Math.floor(Math.min(90_000, remainingMs - (Date.now() - started) - TRAWL_TRANSPORT_ALLOWANCE_MS));
-        if (again >= RETRY_MIN_MS) {
-          page = await scrape(again);
-          signal.throwIfAborted();
-        }
+        if (again < RETRY_MIN_MS) break;
+        page = await scrape(again);
+        signal.throwIfAborted();
       }
       if (page.url !== url) throw new SchemaError(PROVIDER, 'J&T Brazil left its tracking page');
       const matching = page.capturedResponses.filter(row => row.url === JT_BR_API);

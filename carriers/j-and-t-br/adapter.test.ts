@@ -108,7 +108,7 @@ describe('J&T Brazil guest history', () => {
     });
     expect(h.fetcher).toHaveBeenCalledTimes(1);
   });
-  it('asks once more after the helper gives up on a puzzle image, while the budget holds another solved run', async () => {
+  it('asks up to twice more after the helper gives up on a puzzle image, while the budget holds another solved run', async () => {
     const reply = (rows: unknown[], reason: string) => new Response(JSON.stringify({ url: `${JT_BR_PAGE}?waybillNo=${NUMBER}`,
       html: '', tier: 3, statusCode: 200, cookies: [], capturedResponses: rows, timings: [{ reason }] }), { headers: { 'Content-Type': 'application/json' } });
     const tracker = (fetcher: ReturnType<typeof vi.fn<typeof fetch>>) =>
@@ -118,10 +118,14 @@ describe('J&T Brazil guest history', () => {
     await expect(tracker(fetcher).fetch(NUMBER)).resolves.toMatchObject({ status: 'delivered' });
     expect(fetcher).toHaveBeenCalledTimes(2);
     expect(JSON.parse(String(fetcher.mock.calls[1]![1]!.body)).maxTimeout).toBeGreaterThanOrEqual(40000);
-    // A second refusal of the image ends the lookup as before.
-    const twice = vi.fn<typeof fetch>().mockImplementation(async () => reply([], 'jt-br-ambiguous_image'));
-    await expect(tracker(twice).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge', reason: 'ambiguous_image' });
-    expect(twice).toHaveBeenCalledTimes(2);
+    const third = vi.fn<typeof fetch>().mockResolvedValueOnce(reply([], 'jt-br-ambiguous_image'))
+      .mockResolvedValueOnce(reply([], 'jt-br-ambiguous_image')).mockResolvedValueOnce(reply([capture()], 'jt-br-reply'));
+    await expect(tracker(third).fetch(NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+    expect(third).toHaveBeenCalledTimes(3);
+    // A third refusal of the image ends the lookup.
+    const thrice = vi.fn<typeof fetch>().mockImplementation(async () => reply([], 'jt-br-ambiguous_image'));
+    await expect(tracker(thrice).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge', reason: 'ambiguous_image' });
+    expect(thrice).toHaveBeenCalledTimes(3);
     // Without room for a solved run, or after a drag the puzzle refused, it asks once.
     for (const [reason, budgetMs] of [['jt-br-ambiguous_image', 50000], ['jt-br-verification_unfinished', undefined]] as const) {
       const once = vi.fn<typeof fetch>().mockImplementation(async () => reply([], reason));
