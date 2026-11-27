@@ -1,0 +1,55 @@
+{
+  "id": "xun-tian-international",
+  "displayName": "Xun Tian International",
+  "aliases": [
+    "迅田国际",
+    "广东阿信物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#0a5191"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "xun-tian-international",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country"
+  ],
+  "portal": {
+    "searchUrl": "https://xtl.itdida.com/itdida-flash/website/landing",
+    "canaryUrl": "https://xtl.itdida.com/itdida-flash/website/landing",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,15 @@
+{
+  "carrier": "xun-tian-international",
+  "entries": [
+    {"wording": "已预报", "stage": "registered", "language": "zh", "confirmedBy": "live", "note": "Pre-advised: the shipper sent the waybill's data before handing the parcel over."},
+    {"wording": "货物到达网点", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "The goods reached a site: the gateway in Guangzhou, then the delivery depot in Japan."},
+    {"wording": "分运单录入", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "The house waybill was entered for the air shipment, after the parcel reached the gateway."},
+    {"wording": "向目的地国家发送数据", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "The parcel's data was sent to the destination country ahead of its arrival."},
+    {"wording": "进口清关", "stage": "customs", "language": "zh", "confirmedBy": "live", "note": "Import clearance in the destination country."},
+    {"wording": "进口清关放行", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Released by import customs."},
+    {"wording": "准备派送货物派送员扫描", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "A courier scanned the parcel to prepare its delivery, the minute it went to the delivering carrier; the delivery came a day later, so it is not read as out for delivery."},
+    {"wording": "货物交第三方派送 返回派送信息（POD）", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Handed to a third party for delivery, whose delivery information comes back on later rows. The reply names neither that carrier nor a number for it."},
+    {"wording": "目的地派送状态更新", "stage": null, "language": "zh", "confirmedBy": "live", "note": "The delivering carrier's status changed, without saying what it is: the parcel keeps the stage it had."},
+    {"wording": "签收记录", "stage": "delivered", "language": "zh", "confirmedBy": "live", "note": "The record of the recipient's signature."}
+  ]
+}

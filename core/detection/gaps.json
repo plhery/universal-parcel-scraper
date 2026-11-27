@@ -7286,5 +7286,11 @@
     "pattern": "^RUN\\d{14}$",
     "kind": "open",
     "reason": "The one public U-Speed Express number is the transfer number its tracker shows for a parcel its Israeli partner delivered, RUN and fourteen digits. One sample does not show whether U-Speed or the partner issues the series, so no rule claims it."
+  },
+  {
+    "carrier": "xun-tian-international",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "The one public Xun Tian International waybill is twelve bare digits, a shape Japanese and many other carriers' numbers share, on a line delivered in Japan, so the shape cannot name Xun Tian."
   }
 ]
