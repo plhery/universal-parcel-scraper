@@ -141,6 +141,7 @@ const UNSAMPLED: Readonly<Record<string, readonly string[]>> = {
   'logistics-solution': ['LSX000000001'],
   'wangjing-3cq': ['888002000000001'],
   'zhongzhou-logistics': ['ZZ0000000001CN'],
+  blackhaul: ['ZZZ0000001'],
 };
 
 function credential(validator: string, number: string, carrier: string): string {

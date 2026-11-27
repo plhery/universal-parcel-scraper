@@ -20,6 +20,7 @@ sends six to thirty letters and digits. The samples and their sources are in [`n
 2. `retry`: the request once more when it fails to reach the site or hangs. The first try gets half of the
    budget, so the retry fits in the rest.
 
+- The reader is in [`transvirtual.ts`](transvirtual.ts); [Blackhaul](../blackhaul/README.md)'s portal uses it too.
 - The details must name the whole number asked, and the page must be the VTFE portal's.
 - A number the tracker has no consignment for gets its empty search form with "Missing or incorrect tracking
   number", under an id built from the address asked, so the answer counts only when that id repeats the

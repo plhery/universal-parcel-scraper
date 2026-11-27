@@ -2337,6 +2337,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/portal\.hunterexpress\.com\.au\/Track\/55010\/ZZZ000000$/,
     marker: /Missing or incorrect tracking number|Consignment Details/,
     forwarding: { notFound: /Missing or incorrect tracking number/ } },
+  // Blackhaul's portal on Transvirtual's tracker looks up the number in its address as it is served; an unknown one gets the empty form and a notice.
+  { carrier: 'blackhaul', number: 'ZQX0000000017',
+    route: /^https:\/\/portal\.transvirtual\.com\/Track\/654472\/ZQX0000000017$/,
+    marker: /Missing or incorrect tracking number|Consignment Details/,
+    forwarding: { notFound: /Missing or incorrect tracking number/ } },
   // Quick Track puts the number from its address in its field and looks it up on load.
   { carrier: 'border-express', number: '00000000',
     route: /^https:\/\/bexonline\.borderexpress\.com\.au\/bxo\/track\?consignmentNumber=00000000$/,

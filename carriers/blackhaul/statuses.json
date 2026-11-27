@@ -1,0 +1,87 @@
+{
+  "carrier": "blackhaul",
+  "entries": [
+    {
+      "wording": "Pickup Completed",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "prior-art",
+      "note": "A timed history row on Hunter Express's tracker, another portal of Transvirtual, the consignment software behind Blackhaul's tracker."
+    },
+    {
+      "wording": "Depot In",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "prior-art",
+      "note": "A grouped arrival scan at a depot on VT Freight Express's and Hunter Express's trackers, other portals of Transvirtual."
+    },
+    {
+      "wording": "In Depot",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "official-doc",
+      "sourceUrl": "https://support.transvirtual.com/portal/en/kb/articles/scan-types",
+      "note": "Transvirtual's help gives it as the status a Depot In scan sets."
+    },
+    {
+      "wording": "Held For Processing",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "prior-art",
+      "note": "A grouped scan on Hunter Express's Transvirtual tracker: kept at the depot for the next run."
+    },
+    {
+      "wording": "Linehaul Out",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "official-doc",
+      "sourceUrl": "https://support.transvirtual.com/portal/en/kb/articles/scan-types",
+      "note": "A scan type in Transvirtual's help: freight leaving a depot on a linehaul."
+    },
+    {
+      "wording": "On Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "prior-art",
+      "note": "The delivery run's grouped scan on Hunter Express's Transvirtual tracker."
+    },
+    {
+      "wording": "OnDelivery, Left Depot",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "prior-art",
+      "note": "The dated status above the history on Hunter Express's Transvirtual tracker once the van has left the depot."
+    },
+    {
+      "wording": "Mobile - Card Left",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "official-doc",
+      "sourceUrl": "https://support.transvirtual.com/portal/en/kb/articles/consignment-status",
+      "note": "A consignment status in Transvirtual's help: the driver left a card at the delivery."
+    },
+    {
+      "wording": "Mobile - Location Closed",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "official-doc",
+      "sourceUrl": "https://support.transvirtual.com/portal/en/kb/articles/consignment-status",
+      "note": "A consignment status in Transvirtual's help: the driver found the delivery place closed."
+    },
+    {
+      "wording": "Returning Depot - Location Closed",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "official-doc",
+      "sourceUrl": "https://support.transvirtual.com/portal/en/kb/articles/consignment-status",
+      "note": "The status Transvirtual's help gives after Mobile - Location Closed: back to the depot after the failed attempt."
+    },
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "prior-art",
+      "note": "The delivery's timed row and the depot's grouped delivery scan on VT Freight Express's and Hunter Express's Transvirtual trackers."
+    }
+  ]
+}

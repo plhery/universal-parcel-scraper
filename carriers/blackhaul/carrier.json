@@ -1,0 +1,103 @@
+{
+  "id": "blackhaul",
+  "displayName": "Blackhaul",
+  "aliases": [
+    "Blackhaul Australia",
+    "Blackhaul Intermodal Logistics"
+  ],
+  "region": {
+    "countries": [
+      "AU"
+    ]
+  },
+  "brand": {
+    "color": "#000000"
+  },
+  "selectable": true,
+  "timezone": "Australia/Perth",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "blackhaul",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "delivered_at",
+    "eta",
+    "weight"
+  ],
+  "portal": {
+    "url": "https://portal.transvirtual.com/Track/654472/{trackingNumber}",
+    "searchUrl": "https://blackhaul.com.au/track/",
+    "helpUrl": "https://blackhaul.com.au/contact-us/",
+    "canaryUrl": "https://portal.transvirtual.com/Track/654472",
+    "shows": [
+      "status",
+      "progress_rail",
+      "history",
+      "location",
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "parcel_count",
+      "parcel_scans",
+      "destination",
+      "postcodes",
+      "signatory",
+      "delivered_at"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "delivered_at"
+    ],
+    "discarded": [
+      "progress_rail",
+      "parcel_count",
+      "parcel_scans",
+      "destination",
+      "postcodes",
+      "signatory"
+    ],
+    "unavailable": [
+      "provider_code",
+      "service_name",
+      "sender_name",
+      "pickup_point",
+      "proof_of_delivery",
+      "delivery_partner"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "portal.transvirtual.com",
+        "portal.transvirtual.co",
+        "portal.transvirtual.com.au",
+        "mydel.info"
+      ],
+      "path": "^/[Tt]rack/654472/([^/?#]+)/?$"
+    },
+    {
+      "domains": [
+        "blackhaul.com.au",
+        "www.blackhaul.com.au"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "cn"
+      ]
+    }
+  ],
+  "detection": []
+}
