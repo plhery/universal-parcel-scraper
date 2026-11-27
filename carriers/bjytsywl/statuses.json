@@ -1,0 +1,10 @@
+{
+  "carrier": "bjytsywl",
+  "entries": [
+    {"wording": "快件已收", "stage": "accepted", "language": "zh", "confirmedBy": "live", "note": "The firm takes the parcel in. The page writes 收件员, the collector, after it, with their name when it gives one; the adapter takes both out."},
+    {"wording": "快件从【北京分拨中心】正在装车，准备飞往【广州分拨中心】", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Loaded at one sorting centre to be flown to the next. Any centres."},
+    {"wording": "快件已到达【广州分拨中心】准备发往【珠海市保税区】", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "At a sorting centre, to be sent on. Any centres."},
+    {"wording": "快件已到达【保税区】，准备派件", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "At the centre that delivers it, before the round starts. Any centre."},
+    {"wording": "已签收", "stage": "delivered", "language": "zh", "confirmedBy": "live"}
+  ]
+}

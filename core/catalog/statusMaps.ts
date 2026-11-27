@@ -1204,6 +1204,7 @@ import { statusMap as hdExpress } from '../../carriers/hd-express/status.js';
 import { statusMap as eudore } from '../../carriers/eudore/status.js';
 import { statusMap as hotwms } from '../../carriers/hotwms/status.js';
 import { statusMap as hjwl } from '../../carriers/hjwl/status.js';
+import { statusMap as bjytsywl } from '../../carriers/bjytsywl/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1461,6 +1462,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   eudore,
   hotwms,
   hjwl,
+  bjytsywl,
 };
 
 /** The carrier the app files the universal providers' scans under. */

@@ -1,0 +1,38 @@
+{
+  "carrier": "bjytsywl",
+  "records": [
+    {
+      "number": "010056590722",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/bjytsywl.shtml",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "Kuaidi100's example in its Yuantongshengyuan search box, also the test number its company list gives the firm. The firm's tracker answers it with a parcel flown from Beijing to Guangzhou and delivered in Zhuhai's bonded zone."
+    }
+  ]
+}

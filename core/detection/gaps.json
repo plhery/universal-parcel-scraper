@@ -7309,5 +7309,11 @@
     "pattern": "^\\d{19}$",
     "kind": "by_design",
     "reason": "HOTWMS's waybills are nineteen bare digits, which no prefix or check digit ties to it, so no rule claims them and the adapter answers explicit selection."
+  },
+  {
+    "carrier": "bjytsywl",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "Yuantongshengyuan Logistics's only public waybill is twelve bare digits, a shape many carriers print, and nothing in the number points to the firm, so the adapter answers explicit selection."
   }
 ]

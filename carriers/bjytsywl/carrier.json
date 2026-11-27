@@ -1,0 +1,55 @@
+{
+  "id": "bjytsywl",
+  "displayName": "Yuantongshengyuan Logistics",
+  "aliases": [
+    "远通盛源物流",
+    "远通盛源",
+    "北京远通盛源物流有限公司",
+    "YTSY"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#0180C7"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "bjytsywl",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "history"
+    ],
+    "scraped": [
+      "history"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "status",
+      "eta",
+      "location",
+      "weight",
+      "service_name",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

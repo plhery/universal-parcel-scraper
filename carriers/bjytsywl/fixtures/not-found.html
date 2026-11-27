@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>北京远通盛源物流有限公司</title>
+    <meta name="keywords" content="北京远通盛源物流有限公司" />
+    <meta name="description" content="北京远通盛源物流有限公司" />
+    <link rel="stylesheet" type="text/css" href="/static/index/css/base.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/index/css/page.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="/static/index/css/swiper.min.css"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="/static/index/css/animate.min.css"/>-->
+    <script src="/static/index/js/jquery-1.11.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/index/js/jquery.SuperSlide.js" type="text/javascript" charset="utf-8"></script>
+    <!--<script src="/static/index/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/index/js/swiper.animate.min.js" type="text/javascript" charset="utf-8"></script>-->
+</head>
+<body>
+<div class="kjzz_wrp">
+    <div class="idx_tit tac mt30">
+        <h3><i></i>
+            <span>物流跟踪</span>
+            <i></i></h3>
+        <p>Our advantage</p>
+    </div>
+    <div class="kjzz_box1">
+        <div class="w1180">
+            <form action="/wuliuinfo.html" method="post">
+                <input type="hidden" value="1" name="g"/>
+                <div class="txtar">
+                    <textarea  placeholder="请输入您要查询的运单号，可同时查询两个单号，中间用英文符号;隔开" name="cnum"  id="txtar">XT73915048226</textarea><b>
+                        <img src="/static/index/images/close.png" class="pa close"/></b>
+                </div>
+                <div class="btn clearfix mt20">
+                    <input type="submit" value="查询" class="fl"/>
+                </div>
+
+            </form>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $(".close").click(function () {
+                    $("#txtar").val("");
+                })
+            })
+            function showinfo(cnum){
+                //   alert(cnum);
+                $(".ulinfo").hide();
+                $("#ul_"+cnum).show();
+                $(".liinfo").css("background","none");
+                $("#cnum_"+cnum).css("background","#FFFFFF");
+            }
+        </script>
+    </div>
+    <div class="slideTxtBox">
+        <div class="hd">
+            <div class="w685">
+                <ul class="clearfix">
+                                        <li  style="background:#FFFFFF;color:#6aa6f2;" id="cnum_1" onclick="showinfo(1)" class="liinfo">XT73915048226</li>
+                                    </ul>
+            </div>
+        </div>
+        <div class="bd">
+                        <ul  id="ul_1" class="ulinfo">
+                <li>
+                    查询的单号不存在，请重新输入                </li>
+            </ul>
+                    </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(".slideTxtBox").slide({mainCell: ".bd ul"});
+    </script>
+</div>
+</body>
+</html>
