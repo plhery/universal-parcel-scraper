@@ -2139,7 +2139,7 @@ describe('declared status maps', () => {
     'airways-courier-in', 'akis-express', 'ambro-express', 'apg-ecommerce', 'bigfoot-express', 'biz-courier', 'cvc', 'diakinisis',
     'delivery-auto', 'faster-shipe', 'fastway-za', 'first-flight-me', 'gbs-broker', 'gls-ca', 'gollog', 'herona-express', 'hop-envios',
     'interlogistica', 'intertown-transport', 'intras-jp', 'jas-worldwide', 'king-kong-express', 'lafasta', 'lex-th', 'm24-logistics',
-    'moran-transportation', 'primetime-express', 'pxc-pacific', 'rayspeed', 'relay-express', 'rhenus-it', 'sentral-cargo', 'shipgce', 'sway', 'tamex',
+    'masspack', 'moran-transportation', 'primetime-express', 'pxc-pacific', 'rayspeed', 'relay-express', 'rhenus-it', 'sentral-cargo', 'shipgce', 'sway', 'tamex',
     'tig-freight', 'tiui', 'uof-express', 'usea-express', 'velocity-express-in', 'wangjing-3cq', 'xindus',
   ])('answers %s by the code and wording its statuses.json records', (carrier) => {
     // A key the adapter stages by more than the scan keeps: GOLLOG's OND by the waybill's delivery type, Sentral Cargo's badges.

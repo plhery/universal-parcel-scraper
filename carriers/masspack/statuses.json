@@ -1,0 +1,680 @@
+{
+  "carrier": "masspack",
+  "entries": [
+    {
+      "code": "deliveryGuide",
+      "wording": "Order Submit",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "deliveryGuide",
+      "wording": "业务单提交",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "confirm",
+      "wording": "Confirmed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "confirm",
+      "wording": "订单确认",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "plConfirmed",
+      "wording": "PL Confirmed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "plConfirmed",
+      "wording": "货量已确认",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "Booked",
+      "wording": "Space Booked",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "Booked",
+      "wording": "已订舱",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "SoReleased",
+      "wording": "So Released",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "SoReleased",
+      "wording": "已放舱",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "TruckArranged",
+      "wording": "Truck Arranged",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "TruckArranged",
+      "wording": "已派车/自托",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "docment",
+      "wording": "Get Label",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "docment",
+      "wording": "制单",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "emsPickup",
+      "wording": "Pick up(Express)",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "emsPickup",
+      "wording": "取件/上网",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "pickup",
+      "wording": "Pre-carriage",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "pickup",
+      "wording": "已提货",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "wmsIn",
+      "wording": "Cargo In",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "wmsIn",
+      "wording": "已入仓/签入",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "checkIn",
+      "wording": "Check in",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "checkIn",
+      "wording": "签入",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "offShelf",
+      "wording": "Off shelf",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Picked from the shelves of the warehouse that received it, before it leaves."
+    },
+    {
+      "code": "offShelf",
+      "wording": "下架/拣货",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "checkOut",
+      "wording": "Check Out",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "checkOut",
+      "wording": "签出",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "wmsOut",
+      "wording": "Cargo Out",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "wmsOut",
+      "wording": "已出仓/签出",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "CustomArranged",
+      "wording": "Doing Custom Declaration",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The export declaration is under way."
+    },
+    {
+      "code": "CustomArranged",
+      "wording": "已安排报关",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customsInspectionExp",
+      "wording": "Export Inspection",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customsInspectionExp",
+      "wording": "出口查验",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "CustomReleased",
+      "wording": "Custom Released",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Export declaration released: the shipment moves on."
+    },
+    {
+      "code": "CustomReleased",
+      "wording": "报关已放行",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "CtnStuffed",
+      "wording": "Ctns Stuffed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "CtnStuffed",
+      "wording": "已装柜/提货",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "vgmSent",
+      "wording": "VGM Sent",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "vgmSent",
+      "wording": "VGM已提交",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "atd",
+      "wording": "Departure Confirmed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "atd",
+      "wording": "已离港",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "arrivedPod",
+      "wording": "Arrival Confirmed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "arrivedPod",
+      "wording": "已到港",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "ctnAvailable",
+      "wording": "CTNR Available",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "ctnAvailable",
+      "wording": "货柜可提取",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customClearArranged",
+      "wording": "Customs Clearance Arranged",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customClearArranged",
+      "wording": "已安排清关",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customsInspection",
+      "wording": "Import Inspection",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customsInspection",
+      "wording": "进口查验",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customCleared",
+      "wording": "Import Cleared",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Import clearance done: the shipment moves on."
+    },
+    {
+      "code": "customCleared",
+      "wording": "海关放行(进口)",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customRls",
+      "wording": "Release",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Released: the shipment moves on."
+    },
+    {
+      "code": "customRls",
+      "wording": "放行",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "transferOut",
+      "wording": "On-carriage",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Moved on from the port to a warehouse or the delivery carrier."
+    },
+    {
+      "code": "transferOut",
+      "wording": "已转运(提柜/入仓)",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "ctnReturned",
+      "wording": "Empty Ctnr Returned",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The empty container went back after unloading; the goods move on."
+    },
+    {
+      "code": "ctnReturned",
+      "wording": "已还柜",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "overseasWarehouseOut",
+      "wording": "Overseas Warehouse Out",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "overseasWarehouseOut",
+      "wording": "海外仓已出仓",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "deliveryAppointed",
+      "wording": "Delivery Appointed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A delivery slot is booked; the round has not started."
+    },
+    {
+      "code": "deliveryAppointed",
+      "wording": "已预约派送",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "Delivering",
+      "wording": "Delivering",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "Delivering",
+      "wording": "派送中",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "Deliveried",
+      "wording": "Deliveried",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "\"已派送\" in Chinese; the platform words it as a completed delivery in English."
+    },
+    {
+      "code": "Deliveried",
+      "wording": "已派送",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "deliveried",
+      "wording": "Deliveried",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "deliveried",
+      "wording": "派送完成",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "delivery",
+      "wording": "Deliveried",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "delivery",
+      "wording": "派送完成",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "podConfirm",
+      "wording": "POD Uploaded",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The proof of delivery was uploaded."
+    },
+    {
+      "code": "podConfirm",
+      "wording": "POD上传",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "problem",
+      "wording": "Problem Shipment",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "problem",
+      "wording": "问题件",
+      "stage": "exception",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "Cancelled",
+      "wording": "Cancel/Take Back",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The order was cancelled or taken back."
+    },
+    {
+      "code": "Cancelled",
+      "wording": "取消/退载",
+      "stage": "exception",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "waiting",
+      "wording": "To be updated",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The order waits for an update: the row moves nothing, and the stage before it stands."
+    },
+    {
+      "code": "waiting",
+      "wording": "待更新",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "0",
+      "wording": "On The Way",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Order state: also the state of a number the service does not have, so a row with a stage outranks it."
+    },
+    {
+      "code": "0",
+      "wording": "在途中",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "1",
+      "wording": "Express taked",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Order state: collected, as a courier feed words its first scan."
+    },
+    {
+      "code": "1",
+      "wording": "已收货",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "2",
+      "wording": "Difficult",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Order state: a problem shipment."
+    },
+    {
+      "code": "2",
+      "wording": "疑难",
+      "stage": "exception",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "3",
+      "wording": "Deliveried",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "3",
+      "wording": "已送达",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "4",
+      "wording": "Back To Sign",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Order state: refused or returned, and signed for by the sender."
+    },
+    {
+      "code": "4",
+      "wording": "退签",
+      "stage": "returned",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "5",
+      "wording": "Dispatching",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "5",
+      "wording": "派送中",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "6",
+      "wording": "Send Back",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Order state: on its way back to the sender."
+    },
+    {
+      "code": "6",
+      "wording": "退回",
+      "stage": "returned",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "7",
+      "wording": "Transfer",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Order state: handed over to another carrier under a new number."
+    },
+    {
+      "code": "7",
+      "wording": "转单",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "8",
+      "wording": "Partly delivered",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Order state: some cartons of the shipment delivered, the rest still on the way."
+    },
+    {
+      "code": "8",
+      "wording": "部分送达",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "bundle"
+    }
+  ]
+}

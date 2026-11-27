@@ -625,6 +625,7 @@ import { statusMap as maltapost } from '../../carriers/maltapost/status.js';
 import { statusMap as mandae } from '../../carriers/mandae/status.js';
 import { statusMap as maritimeOntario } from '../../carriers/maritime-ontario/status.js';
 import { statusMap as marutiAir } from '../../carriers/maruti-air/status.js';
+import { statusMap as masspack } from '../../carriers/masspack/status.js';
 import { statusMap as matkahuolto } from '../../carriers/matkahuolto/status.js';
 import { statusMap as mauritiusPost } from '../../carriers/mauritius-post/status.js';
 import { statusMap as maxPakket } from '../../carriers/max-pakket/status.js';
@@ -1358,7 +1359,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'lietuvos-pastas': lietuvosPastas, 'lightning-express': lightningExpress,
   'lindao-express': lindaoExpress, 'line-clear': lineClear, lingdong, linhan, liuchen, 'lion-parcel': lionParcel, logen, loggi, logisimple, logistiq, logoix, 'loomis-express': loomisExpress,
   'lotte-global': lotteGlobal, 'lx-pantos': lxPantos, 'm-and-p': mAndP, 'm-one': mOne, 'madhur-courier': madhurCourier, 'magic-trans': magicTrans, 'magyar-posta': magyarPosta, mailamericas, 'mailplus-au': mailplusAu, mainfreight,
-  'maersk-ecommerce': maerskEcommerce, 'makati-express': makatiExpress, maltapost, mandae, 'maritime-ontario': maritimeOntario, 'mark-express': markExpress, 'maruti-air': marutiAir, matkahuolto, 'mauritius-post': mauritiusPost, 'max-pakket': maxPakket, mayiyinfu,
+  'maersk-ecommerce': maerskEcommerce, 'makati-express': makatiExpress, maltapost, mandae, 'maritime-ontario': maritimeOntario, 'mark-express': markExpress, 'maruti-air': marutiAir, masspack, matkahuolto, 'mauritius-post': mauritiusPost, 'max-pakket': maxPakket, mayiyinfu,
   'mbe-es': mbeEs, 'mds-collivery': mdsCollivery, meest, 'meihoo-pegasus': meihooPegasus, 'meso-global': mesoGlobal, 'messenger-cz': messengerCz, 'metropolitan-warehouse': metropolitanWarehouse, mhi, 'micro-express': microExpress,
   'midland-transport': midlandTransport, 'mng-kargo': mngKargo, 'mondial-relay': mondialRelay, 'mongol-infinity-post': mongolInfinityPost, 'morning-global': morningGlobal, 'mrl-global': mrlGlobal, mrw, mtscn, muser, mylerz, nacex, naqel, nationex,
   'next-level-delivery': nextLevelDelivery, 'nhat-tin': nhatTin, 'nim-express': nimExpress, 'ninja-van': ninjaVan, nipost, 'nippon-express': nipponExpress, 'no-limit': noLimit, noest, 'norsk-global': norskGlobal,

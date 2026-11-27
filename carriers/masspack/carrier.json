@@ -1,0 +1,91 @@
+{
+  "id": "masspack",
+  "displayName": "Masspack Express",
+  "aliases": [
+    "Masspack",
+    "千百包",
+    "金迈仕",
+    "金迈仕科技"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#881575"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "masspack",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivered_at",
+    "offset_timestamps",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://mp.masspack-express.com/#/public-tracking?orderNum={trackingNumber}",
+    "searchUrl": "https://mp.masspack-express.com/#/public-tracking",
+    "canaryUrl": "https://mp.masspack-express.com/",
+    "shows": [
+      "status",
+      "history",
+      "progress_rail",
+      "origin_country",
+      "destination_country",
+      "parcel_count",
+      "customer_reference",
+      "order_reference",
+      "delivery_tracking_number",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "delivered_at",
+      "offset_timestamps",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "progress_rail",
+      "origin_country",
+      "parcel_count",
+      "customer_reference",
+      "order_reference",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "location",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "signatory"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "mp.masspack-express.com"
+      ],
+      "pathPattern": "^/(?:index\\.html)?$",
+      "fragment": "^/public-tracking\\?(?:[^#]*&)?orderNum=([^&,]+)"
+    }
+  ],
+  "detection": []
+}

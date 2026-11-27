@@ -1,0 +1,36 @@
+[
+  {
+    "state": "5",
+    "depCountry": "CN",
+    "destCountry": "US",
+    "pkgNum": 3,
+    "carrier": "UPS",
+    "carrierCode": "ups",
+    "jobNum": "SYNJOB000001",
+    "poNum": "SYNTHETICPO",
+    "trackingNum": "MP0000000001",
+    "shipmentType": "EXPRESS",
+    "actTime": "2026-03-11T03:00:00Z",
+    "guideId": 9000001,
+    "notFound": false,
+    "trackings": [
+      { "id": 9100001, "node": "confirm", "context": "订单已确认", "time": "2026-03-02 09:05", "eventTime": "2026-03-02T01:05:00Z", "recordingTime": "2026-03-02T01:06:12Z" },
+      { "id": 9100002, "node": "wmsIn", "context": "Cargo received at the Shenzhen warehouse", "time": "2026-03-02 17:30", "eventTime": "2026-03-02T09:30:00Z", "recordingTime": "2026-03-02T09:41:03Z" },
+      { "id": 9100003, "node": "atd", "context": "Departed Shenzhen<br>Flight SYN001", "time": "2026-03-04 23:20", "eventTime": "2026-03-04T15:20:00Z", "recordingTime": "2026-03-05T01:02:44Z" },
+      { "id": 9100004, "node": "eta", "context": "Estimated arrival at Los Angeles", "time": "2026-03-12 08:00", "eventTime": "2026-03-12T00:00:00Z", "recordingTime": "2026-03-05T01:03:10Z" },
+      { "id": 9100005, "node": "arrivedPod", "context": "Arrived at Los Angeles", "time": "2026-03-10 16:00", "eventTime": "2026-03-10T08:00:00.000Z", "recordingTime": "2026-03-10T09:12:00Z" },
+      { "id": 9100006, "node": "customCleared", "context": null, "time": "2026-03-10 20:00", "eventTime": "2026-03-10T20:00:00+08:00", "recordingTime": "2026-03-10T12:30:00Z" },
+      { "id": 9100007, "node": "transferOut", "context": "Handed to UPS for delivery", "time": "2026-03-11 11:00", "eventTime": "2026-03-11T03:00:00Z", "recordingTime": "2026-03-11T03:10:00Z" }
+    ],
+    "subTrackings": [
+      { "trackingNum": "1Z999AA10123456784", "carrier": "UPS", "carrierCode": "ups", "context": null, "state": null, "time": null }
+    ],
+    "headNodes": [
+      { "node": "wmsIn", "time": "2026-03-02", "context": null },
+      { "node": "atd", "time": "2026-03-04", "context": null },
+      { "node": "arrivedPod", "time": "2026-03-10", "context": null },
+      { "node": "transferOut", "time": "2026-03-11", "context": null },
+      { "node": "delivery", "time": null, "context": "doing" }
+    ]
+  }
+]

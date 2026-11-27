@@ -133,6 +133,7 @@ const UNSAMPLED: Readonly<Record<string, readonly string[]>> = {
   'tsb-es': ['TSB0000001'],
   daraii: ['DAR000000001'],
   'tmw-express': ['TMW0000001'],
+  masspack: ['MP0000000001'],
   'xpress-logistics-lu': ['000000001'],
   'dpd-hu': ['16400000000001'],
   homexpress: ['TMS00000000000'],
