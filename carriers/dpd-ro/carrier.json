@@ -25,7 +25,11 @@
       "direct",
       "trawl"
     ],
-    "browser": true
+    "browser": true,
+    "browserRecognition": {
+      "rank": 270,
+      "pattern": "^8\\d{10}$"
+    }
   },
   "capabilities": [
     "history",
@@ -113,7 +117,8 @@
     {
       "id": "dpd-ro-1",
       "pattern": "^8\\d{10}$",
-      "confidence": "low"
+      "confidence": "low",
+      "servedCountriesOnly": true
     }
   ]
 }

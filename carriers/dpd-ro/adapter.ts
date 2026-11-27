@@ -1,6 +1,6 @@
-import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { recognizeFromBrowserLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import {
-  BudgetExceededError, carrierErrorKind, ChallengeError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError,
+  BudgetExceededError, carrierErrorKind, ChallengeError, NoHistoryError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError,
 } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps, type StepSpec } from '../../core/runner/index.js';
@@ -79,6 +79,13 @@ export class DpdRoTracker {
 export const adapter: AdapterFactory = environment => {
   const tracker = new DpdRoTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent,
     trawl: environment.trawl });
-  // No recognition: without the tracker page's Turnstile token a plain request can only be refused.
-  return { id: 'dpd-ro', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context) };
+  // No HTTP recognition: without the tracker page's Turnstile token a plain request can only be refused. Browser
+  // recognition makes the lookup with its page.
+  return { id: 'dpd-ro', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context),
+    recognizeWithBrowser: (number, context) => recognizeFromBrowserLookup(async () => {
+      const result = await tracker.fetch(number, context);
+      // A reply for the whole waybill without a scan is DPD Romania's record of it, with no history to reuse.
+      if (!result.events?.length) throw new NoHistoryError(PROVIDER, 'DPD Romania holds the waybill without a scan', { reason: 'listed' });
+      return result;
+    }) };
 };

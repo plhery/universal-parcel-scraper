@@ -4,6 +4,7 @@ import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { outsideCountryLast } from '../../core/testing/recognition.js';
 import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport/trawl.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, DPD_RO_ENDPOINT, dpdRoPageRequest, DpdRoTracker } from './adapter.js';
@@ -163,10 +164,9 @@ describe('DPD Romania HTTP adapter', () => {
     expect(parseDpdRoReply(200, `\uFEFF${text('delivered.json')}`, DELIVERED)).toMatchObject({ current_stage: 'delivered' });
   });
 
-  it('reads MyDPD\'s not-found page as not found, and offers no recognition', async () => {
+  it('reads MyDPD\'s not-found page as not found, and offers no HTTP recognition', async () => {
     const instance = carrier(vi.fn<typeof fetch>().mockResolvedValue(missing()));
     expect(instance.recognize).toBeUndefined();
-    expect(instance.recognizeWithBrowser).toBeUndefined();
     await expect(instance.track({ number: DELIVERED })).rejects.toMatchObject({ kind: 'not_found' });
   });
 
@@ -264,6 +264,43 @@ describe('DPD Romania through MyDPD\'s tracker page', () => {
     expect(scrape.mock.calls[0]![0].maxTimeout).toBeGreaterThanOrEqual(10_000);
   });
 
+  it('recognizes a waybill through the page only on its dated scans or its record, and unknown only on MyDPD\'s not-found page', async () => {
+    const found = browser(page([{}]));
+    await expect(found.instance.recognizeWithBrowser!(DELIVERED)).resolves.toMatchObject({ known: true,
+      lastActivityAt: '2026-03-04T09:20:30.000Z', finished: true, result: { current_stage: 'delivered' } });
+    expect(found.fetcher).toHaveBeenCalledTimes(1);
+    expect(found.scrape).toHaveBeenCalledTimes(1);
+    await expect(browser(page([{ status: 404, body: text('not-found.html') }])).instance.recognizeWithBrowser!(DELIVERED))
+      .resolves.toEqual({ known: false, lastActivityAt: null });
+    // A reply for the whole waybill with its phase and no scan is DPD Romania's record of it, with no history to reuse.
+    const scanless = fixture('abroad');
+    scanless.events = [];
+    await expect(browser(page([{ url: dpdRoPageRequest(ABROAD), body: JSON.stringify(scanless) }])).instance.recognizeWithBrowser!(ABROAD))
+      .resolves.toEqual({ known: true, lastActivityAt: null });
+    // A number DPD Romania does not issue is unknown without a request.
+    const other = browser(page([{}]));
+    await expect(other.instance.recognizeWithBrowser!('8000000001')).resolves.toEqual({ known: false, lastActivityAt: null });
+    expect(other.fetcher).not.toHaveBeenCalled();
+    expect(other.scrape).not.toHaveBeenCalled();
+  });
+
+  it('fails browser recognition on a challenge, a throttle, a malformed reply, a short budget or no browser service', async () => {
+    for (const [answer, kind] of [
+      [page([]), 'challenge'],
+      [page([{ status: 406, body: null }]), 'challenge'],
+      [page([{ status: 429, body: null }]), 'rate_limited'],
+      [page([{ status: 404, body: '<html>Not Found</html>' }]), 'transport'],
+      [page([{ body: '{"items":[]}' }]), 'schema'],
+    ] as const) {
+      await expect(browser(answer).instance.recognizeWithBrowser!(DELIVERED)).rejects.toMatchObject({ kind });
+    }
+    const { scrape, instance } = browser(page([{}]));
+    await expect(instance.recognizeWithBrowser!(DELIVERED, { budgetMs: 20_000 })).rejects.toMatchObject({ kind: 'budget' });
+    expect(scrape).not.toHaveBeenCalled();
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response('{}'));
+    await expect(carrier(fetcher).recognizeWithBrowser!(DELIVERED)).rejects.toMatchObject({ kind: 'challenge' });
+  });
+
   it('answers a found waybill over HTTP without the browser', async () => {
     const { scrape, fetcher, instance } = browser(page([{}]));
     fetcher.mockResolvedValue(reply('delivered'));
@@ -273,16 +310,26 @@ describe('DPD Romania through MyDPD\'s tracker page', () => {
 });
 
 describe('DPD Romania numbers', () => {
-  it('suggests eleven digits starting with 8, which recognition does not ask it about', () => {
-    expect(detectCarrierMatch(DELIVERED)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
-    expect(detectCarrierMatch(DELIVERED).candidates).toContain('dpd-ro');
-    for (const countryHint of [undefined, 'RO', 'BG', 'DE']) {
-      for (const phase of [undefined, 'browser'] as const) {
-        expect(recognitionCandidates(DELIVERED, { countryHint, phase }).map(({ carrier }) => carrier), `${countryHint} ${phase}`).not.toContain('dpd-ro');
+  it('suggests eleven digits starting with 8, which only browser recognition asks it about, last outside Romania', () => {
+    for (const number of [DELIVERED, ABROAD]) {
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+      expect(detectCarrierMatch(number).candidates).toContain('dpd-ro');
+      for (const countryHint of [undefined, 'RO', 'BG', 'FR', 'DE']) {
+        expect(recognitionCandidates(number, { countryHint }).map(({ carrier }) => carrier), `${number} ${countryHint}`).not.toContain('dpd-ro');
       }
+      expect(recognitionCandidates(number, { countryHint: 'RO', phase: 'browser' }).find(({ carrier }) => carrier === 'dpd-ro'), number)
+        .toMatchObject({ countryMatch: 'home' });
+      expect(outsideCountryLast(number, 'dpd-ro', { countryHint: 'RO', phase: 'browser' }), number).toBe(false);
+      // Other carriers print eleven digits from 8 elsewhere: from another country DPD Romania comes once they have all missed it.
+      for (const countryHint of ['FR', 'DE', 'BG']) {
+        expect(outsideCountryLast(number, 'dpd-ro', { countryHint, phase: 'browser' }), `${number} ${countryHint}`).toBe(true);
+      }
+      expect(recognitionCandidates(number, { phase: 'browser' }).find(({ carrier }) => carrier === 'dpd-ro'), number)
+        .toEqual({ carrier: 'dpd-ro', needsInput: null, preferred: false });
     }
     for (const other of ['70000000001', '8000000001', '800000000012']) {
       expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('dpd-ro');
+      expect(recognitionCandidates(other, { countryHint: 'RO', phase: 'browser' }).map(({ carrier }) => carrier), other).not.toContain('dpd-ro');
     }
   });
 });
