@@ -170,7 +170,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "placeholder": "https://trackandtrace.planzergroup.com/shared/…",
           "help": "Paste the complete shared link, including its accessKey."
         }
-      ]
+      ],
+      "recognitionRank": 255,
+      "recognitionPattern": "^91\\d{18,20}$",
+      "recognitionServedCountriesOnly": true
     },
     "canaryUrl": "https://tracking.app.planzer.ch/",
     "trackingUrlTemplate": "https://tracking.app.planzer.ch/delivery/info?deliveryNumber={trackingNumber}",
@@ -201,6 +204,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^91346097\\d{12}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^91\\d{18,20}$",
+        "confidence": "low",
+        "servedCountriesOnly": true
       }
     ]
   },
@@ -2674,6 +2682,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "an-post",
+      "recognitionRank": 343,
+      "recognitionPattern": "^AIE\\d{8}$",
       "localClocks": true
     },
     "canaryUrl": "https://www.anpost.com/Post-Parcels/Track/Search",
@@ -2697,6 +2707,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pattern": "^[A-Z]{2}\\d{9}IE$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^AIE\\d{8}$",
+        "confidence": "low"
       }
     ]
   },
@@ -22974,6 +22988,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "dpd-ro",
+      "browserRecognitionRank": 270,
+      "browserRecognitionPattern": "^8\\d{10}$",
       "browser": true
     },
     "canaryUrl": "https://www.dpd.com/ro/ro/",
@@ -23014,7 +23030,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^8\\d{10}$",
-        "confidence": "low"
+        "confidence": "low",
+        "servedCountriesOnly": true
       }
     ]
   },
@@ -76905,7 +76922,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "swiss-post": ["swiss-post-1","swiss-post-2"],
   "swiss-post-cargo": ["swiss-post-cargo-sscc","swiss-post-cargo-pl-reference"],
   "quickpac": ["quickpac-1"],
-  "planzer": ["planzer-1","planzer-2"],
+  "planzer": ["planzer-1","planzer-2","planzer-91"],
   "aliexpress": ["aliexpress-1","aliexpress-cnfr","aliexpress-hd-other-series","aliexpress-2","aliexpress-maersk","aliexpress-lp-reference","aliexpress-lp-17","aliexpress-ap-reference","aliexpress-aeca","aliexpress-cnbr","aliexpress-cnmex","aliexpress-cnusup","aliexpress-cacainiao","aliexpress-rl","aliexpress-jncn","aliexpress-ecoscooting-las-palmas","aliexpress-cn-dated","aliexpress-gfus","aliexpress-uusc","aliexpress-cgd","aliexpress-hrbc","aliexpress-ecsc-aaro","aliexpress-sk0sczd","aliexpress-rn-rs-y","aliexpress-694788","aliexpress-pa","aliexpress-f","aliexpress-9c-i","aliexpress-9c-j","aliexpress-rtz","aliexpress-fmp","aliexpress-sda-waybill","aliexpress-ty","aliexpress-mi","aliexpress-xx","aliexpress-go"],
   "sunyou": ["sunyou-1","sunyou-2","sunyou-3"],
   "hermes": ["hermes-delivery-note"],
@@ -76945,7 +76962,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "parcelforce": ["parcelforce-1","parcelforce-2"],
   "evri": ["evri-international","evri-1"],
   "inpost": ["inpost-answered-prefix","inpost-1","inpost-2","inpost-3","inpost-4","inpost-5"],
-  "an-post": ["an-post-1"],
+  "an-post": ["an-post-1","an-post-reference-aie"],
   "bpost": ["bpost-numeric-prefix","bpost-1","bpost-2","bpost-3","bpost-jjbe"],
   "austrian-post": ["austrian-post-4","austrian-post-1","austrian-post-3","austrian-post-5","austrian-post-2"],
   "postnord": ["postnord-1","postnord-2","postnord-5","postnord-3"],

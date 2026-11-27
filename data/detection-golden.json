@@ -76814,11 +76814,26 @@
     ]
   },
   {
+    "input": "9100000000000000000001",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "planzer",
+      "austrian-post",
+      "usps",
+      "estafeta"
+    ],
+    "asked": [
+      "austrian-post"
+    ]
+  },
+  {
     "input": "9101026837331000039521",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
       "usps",
+      "planzer",
       "austrian-post",
       "estafeta"
     ],
@@ -76835,6 +76850,7 @@
     "confidence": "low",
     "candidates": [
       "usps",
+      "planzer",
       "austrian-post",
       "estafeta"
     ],
@@ -76926,6 +76942,19 @@
     ]
   },
   {
+    "input": "91130114058900103873",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "planzer",
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "nz-post"
+    ]
+  },
+  {
     "input": "9114901159818491962055",
     "carrier": "usps",
     "confidence": "high",
@@ -77011,6 +77040,22 @@
       "mondial-relay",
       "colisweb",
       "heppner"
+    ]
+  },
+  {
+    "input": "91346097020035185115",
+    "carrier": "planzer",
+    "confidence": "high",
+    "candidates": [
+      "planzer"
+    ]
+  },
+  {
+    "input": "91346097020035613580",
+    "carrier": "planzer",
+    "confidence": "high",
+    "candidates": [
+      "planzer"
     ]
   },
   {
@@ -83390,6 +83435,17 @@
     "confidence": "high",
     "candidates": [
       "asendia"
+    ]
+  },
+  {
+    "input": "AIE00000000",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "an-post"
+    ],
+    "asked": [
+      "an-post"
     ]
   },
   {

@@ -165,7 +165,10 @@
           "placeholder": "https://trackandtrace.planzergroup.com/shared/…",
           "help": "Paste the complete shared link, including its accessKey."
         }
-      ]
+      ],
+      "recognitionRank": 255,
+      "recognitionPattern": "^91\\d{18,20}$",
+      "recognitionServedCountriesOnly": true
     },
     "canaryUrl": "https://tracking.app.planzer.ch/",
     "trackingUrlTemplate": "https://tracking.app.planzer.ch/delivery/info?deliveryNumber={trackingNumber}",
@@ -196,6 +199,11 @@
       {
         "pattern": "^91346097\\d{12}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^91\\d{18,20}$",
+        "confidence": "low",
+        "servedCountriesOnly": true
       }
     ]
   },
@@ -2669,6 +2677,8 @@
     "tracking": {
       "mode": "automatic",
       "adapter": "an-post",
+      "recognitionRank": 343,
+      "recognitionPattern": "^AIE\\d{8}$",
       "localClocks": true
     },
     "canaryUrl": "https://www.anpost.com/Post-Parcels/Track/Search",
@@ -2692,6 +2702,10 @@
         "pattern": "^[A-Z]{2}\\d{9}IE$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^AIE\\d{8}$",
+        "confidence": "low"
       }
     ]
   },
@@ -22969,6 +22983,8 @@
     "tracking": {
       "mode": "automatic",
       "adapter": "dpd-ro",
+      "browserRecognitionRank": 270,
+      "browserRecognitionPattern": "^8\\d{10}$",
       "browser": true
     },
     "canaryUrl": "https://www.dpd.com/ro/ro/",
@@ -23009,7 +23025,8 @@
     "detectionRules": [
       {
         "pattern": "^8\\d{10}$",
-        "confidence": "low"
+        "confidence": "low",
+        "servedCountriesOnly": true
       }
     ]
   },
