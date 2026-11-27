@@ -18,19 +18,73 @@
   "timezone": "America/New_York",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "ryder-last-mile",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "provider_code",
+    "delivered_at",
+    "eta",
+    "eta_window"
+  ],
   "portal": {
+    "url": "https://mxd.dispatchtrack.com/track_order/6b8db72/{trackingNumber}",
+    "siteName": "DispatchTrack",
     "searchUrl": "https://www.ryder.com/en-us/logistics/last-mile-delivery/tracking",
     "helpUrl": "https://www.ryder.com/en-us/contact-us",
-    "canaryUrl": "https://www.ryder.com/en-us/logistics/last-mile-delivery/tracking",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "canaryUrl": "https://mxd.dispatchtrack.com/track_order/6b8db72",
+    "shows": [
+      "status",
+      "progress_rail",
+      "history",
+      "location",
+      "offset_timestamps",
+      "eta",
+      "eta_window",
+      "order_contents",
+      "recipient_name",
+      "recipient_address",
+      "recipient_contact",
+      "coordinates",
+      "driver_name",
+      "vehicle"
+    ],
+    "scraped": [
+      "status",
+      "progress_rail",
+      "history",
+      "location",
+      "offset_timestamps",
+      "eta",
+      "eta_window"
+    ],
+    "discarded": [
+      "order_contents",
+      "recipient_name",
+      "recipient_address",
+      "recipient_contact",
+      "coordinates",
+      "driver_name",
+      "vehicle"
+    ],
+    "unavailable": [
+      "signatory",
+      "proof_of_delivery"
+    ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "mxd.dispatchtrack.com"
+      ],
+      "path": "^/(?:a22/)?track_order/6b8db72/([^/?#]+)(?:/[^/?#]+)?/?$"
+    }
+  ],
   "detection": []
 }

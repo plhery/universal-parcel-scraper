@@ -1090,6 +1090,8 @@ import { statusMap as jtlExpressId } from '../../carriers/jtl-express-id/status.
 import { statusMap as twentyOneExpress } from '../../carriers/21-express-id/status.js';
 import { statusMap as spedire } from '../../carriers/spedire/status.js';
 import { statusMap as danx } from '../../carriers/danx/status.js';
+import { statusMap as highEnergyTransport } from '../../carriers/high-energy-transport/status.js';
+import { statusMap as ryderLastMile } from '../../carriers/ryder-last-mile/status.js';
 import { statusMap as kargolife } from '../../carriers/kargolife/status.js';
 import { statusMap as topparcel } from '../../carriers/topparcel/status.js';
 import { statusMap as usendChile } from '../../carriers/usend-chile/status.js';
@@ -1213,6 +1215,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'pasha-hawaii': pashaHawaii,
   'gold-star-line': goldStarLine,
   'sarjak-container-lines': sarjakContainerLines, 'ck-line': ckLine, 'vasco-maritime': vascoMaritime, romocean, amass,
+  'high-energy-transport': highEnergyTransport, 'ryder-last-mile': ryderLastMile,
   danx, kargolife, 'emo-trans': emoTrans, topparcel, 'usend-chile': usendChile, 'phantom-couriers': phantomCouriers, 'gaint-logistic': gaintLogistic, milaha,
   'wan-hai': wanHai, 'cu-lines': cuLines, 'wanjia-logistics': wanjiaLogistics, kmtc, 'swire-shipping': swireShipping, 'air-inuit': airInuit, 'acpl-cargo': acplCargo, 'jtl-express-id': jtlExpressId, '21-express-id': twentyOneExpress, spedire,
   'ocean-network-express': oceanNetworkExpress, 'cosco-shipping-lines': coscoShippingLines, oocl, maersk, msc, hmm, zim, 'yang-ming': yangMing,

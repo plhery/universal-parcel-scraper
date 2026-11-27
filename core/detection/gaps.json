@@ -2231,6 +2231,11 @@
     "reason": "The e-service confirms the full bill of lading. Select Heung-A Line explicitly."
   },
   {
+    "carrier": "high-energy-transport",
+    "kind": "by_design",
+    "reason": "High Energy Transport tracks orders by its own or its retailers' references, digits with or without letters, and nothing in them points to High Energy Transport. Select it explicitly or open its DispatchTrack link."
+  },
+  {
     "carrier": "hi-trans",
     "pattern": "^[A-Z]{3}\\d{3,12}$",
     "kind": "by_design",
@@ -3945,6 +3950,11 @@
     "pattern": "^ZYIL\\d{13}$",
     "kind": "open",
     "reason": "Runner Express waybills seen are ZYIL and thirteen digits; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "ryder-last-mile",
+    "kind": "by_design",
+    "reason": "Ryder Last Mile tracks orders by its retailers' references, digits with or without letters, and prints no tracking number of its own. Select it explicitly or open its DispatchTrack link."
   },
   {
     "carrier": "rxo",

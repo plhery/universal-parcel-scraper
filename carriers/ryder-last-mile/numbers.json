@@ -1,5 +1,62 @@
 {
   "carrier": "ryder-last-mile",
-  "gap": "No public page shows an order number Ryder Last Mile tracks.",
-  "records": []
+  "records": [
+    {
+      "number": "1000672514",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221218184730/https://mxd.dispatchtrack.com/track_order/6b8db72/1000672514/98074",
+        "date": "2022-12-18",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "acs-courier",
+          "box-now",
+          "cargus",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie",
+          "geniki-taxydromiki",
+          "gls-es"
+        ]
+      },
+      "note": "An archived link to Ryder Last Mile's DispatchTrack tracker, with the delivery ZIP code after the order. The tracker answers the order without the ZIP code: a delivered order whose widget gives this number as its reference and DispatchTrack's own order number beside it."
+    },
+    {
+      "number": "R581002737",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230104144751/https://mxd.dispatchtrack.com/track_order/6b8db72/R581002737/98074",
+        "date": "2023-01-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "Another archived link to the same tracker, with its ZIP code; the tracker answers it with a delivered order whose widget gives this number as its reference."
+    }
+  ]
 }

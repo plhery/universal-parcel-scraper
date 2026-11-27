@@ -1,0 +1,9 @@
+{
+  "error": "Order not found",
+  "noOrder": {},
+  "branding": {
+    "logoUrl": "https://s3-external-1.amazonaws.com/dispatchtrackmedia%2Fmxd%2Flogo%2F28%2Frydersystemlogo_thumb.png",
+    "logoAlt": "Ryder Last Mile"
+  },
+  "poweredBy": true
+}

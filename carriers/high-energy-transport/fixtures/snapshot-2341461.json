@@ -1,0 +1,112 @@
+{
+  "type": "order.snapshot",
+  "version": 1,
+  "tenantId": "highenergytransport",
+  "orderId": "f7ea831",
+  "revision": 1717590187,
+  "stage": "completed",
+  "branding": {
+    "logoUrl": "https://s3-external-1.amazonaws.com/dispatchtrackmedia%2Fdc4dt4%2Flogo%2F316%2Fhet_logo_thumb.jpg",
+    "logoAlt": "High Energy Transport"
+  },
+  "eta": {
+    "etaLabel": "12:30 PM - 03:30 PM",
+    "timeZone": "America/New_York",
+    "dateLabel": "Wednesday 5th, June 2024"
+  },
+  "details": {
+    "delivery": {
+      "promisedWindow": {
+        "startAtMs": 1795775400000,
+        "endAtMs": 1795792500000
+      }
+    },
+    "items": [
+      {
+        "id": "9556175",
+        "title": "CS",
+        "qty": 1,
+        "variantLabel": "00004000000024158235",
+        "deliveredQty": 1
+      },
+      {
+        "id": "9556176",
+        "title": "CS",
+        "qty": 1,
+        "variantLabel": "00004000000024158259",
+        "deliveredQty": 1
+      },
+      {
+        "id": "9556177",
+        "title": "CS",
+        "qty": 1,
+        "variantLabel": "00004000000024158280",
+        "deliveredQty": 1
+      },
+      {
+        "id": "9556178",
+        "title": "CS",
+        "qty": 1,
+        "variantLabel": "00004000000024158297",
+        "deliveredQty": 1
+      },
+      {
+        "id": "9556179",
+        "title": "CS",
+        "qty": 1,
+        "variantLabel": "00004000000024158303",
+        "deliveredQty": 1
+      }
+    ]
+  },
+  "redaction": {
+    "guest": true,
+    "hidePayment": true,
+    "maskRecipient": false
+  },
+  "poweredBy": true,
+  "shortLabel": "2341461",
+  "statusLabel": "Finished",
+  "displayStatus": "Delivered",
+  "widget": {
+    "driverInfoEnabled": false,
+    "driverNoteEnabled": false,
+    "commentsEnabled": false,
+    "notifyDriverPath": "/track_order/notify_driver",
+    "notifyOrderId": 2535276,
+    "language": "en"
+  },
+  "panel": {
+    "blocks": [
+      {
+        "id": "header",
+        "kind": "header"
+      },
+      {
+        "id": "hero",
+        "kind": "hero"
+      },
+      {
+        "id": "driver",
+        "kind": "driver"
+      },
+      {
+        "id": "status",
+        "kind": "status"
+      },
+      {
+        "id": "items",
+        "kind": "items"
+      },
+      {
+        "id": "dropoff",
+        "kind": "dropoff"
+      },
+      {
+        "id": "siblings",
+        "kind": "siblings"
+      }
+    ]
+  },
+  "routeStarted": true
+}

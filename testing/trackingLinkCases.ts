@@ -1628,6 +1628,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/4301600\.extforms\.netsuite\.com\/app\/site\/hosting\/scriptlet\.nl\?(?:[^#]*&)?number=99999999(?:&|$)/,
     marker: /Please Enter a Valid BOL Number|Tracking Details/,
     forwarding: { notFound: /Please Enter a Valid BOL Number/ } },
+  // The older DispatchTrack page asks its order widget for the number, names it in its not-found notice and drops it from the address.
+  { carrier: 'ryder-last-mile', number: 'ZZ99887766',
+    route: /^https:\/\/mxd\.dispatchtrack\.com\/track_order\/?$/,
+    marker: /could not be found\. Please check the order number and try again/ },
   // Team Trac's answer page looks up the bill in its address and names one it has no status for.
   { carrier: 'team-worldwide', number: 'ZZZ000000',
     route: /^https:\/\/www\.teamww\.com\/wp-content\/tracking\/teamTrac\.php\?hbl=ZZZ000000$/,
@@ -2970,6 +2974,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'high-energy-transport': 'The DispatchTrack page draws its answer inside a frame, so the page\'s own text holds none of the tracker\'s wording; native retrieval asks the lookup the frame makes',
   marken: 'The carrier accepts overlapping numeric shipment references. A published job verifies the rendered link separately.',
   'citilink-cargo': 'The public iCMS form posts the Citilink prefix and serial separately and embeds the result.',
   'garuda-indonesia-cargo': 'Garuda’s public form posts the airline prefix and serial separately and embeds the iCMS result.',

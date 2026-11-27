@@ -1,0 +1,65 @@
+{
+  "carrier": "high-energy-transport",
+  "records": [
+    {
+      "number": "2330523MF",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/high-energy-transport/",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's High Energy Transport page lists it as a tracking number; High Energy Transport's DispatchTrack tracker answers it with a delivered order under the same label."
+    },
+    {
+      "number": "2341461",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/high-energy-transport/",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "Listed on the same TrackShip page; the tracker answers it with a delivered order under the same label."
+    },
+    {
+      "number": "R3947",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/high-energy-transport/",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed on the same TrackShip page; the tracker answers it with a delivered order under the same label."
+    }
+  ]
+}

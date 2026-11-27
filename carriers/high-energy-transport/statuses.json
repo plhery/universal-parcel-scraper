@@ -1,0 +1,14 @@
+{
+  "carrier": "high-energy-transport",
+  "entries": [
+    { "code": "assigned", "wording": "Delivery Scheduled", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "DispatchTrack's snapshot stage code before the driver's route starts; the tracker's rail titles its first step so, or Order Received when the firm has not set a day." },
+    { "code": "en_route_pickup", "wording": "Out for Delivery", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "The driver's route has started with a pickup before the drop; the tracker shows the order as out for delivery." },
+    { "code": "at_pickup", "wording": "Out for Delivery", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "The driver is at the pickup before the drop; the tracker shows the order as out for delivery." },
+    { "code": "en_route_drop", "wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "bundle", "note": "The driver is on the way to the drop." },
+    { "code": "arrived", "wording": "Arrived", "stage": "out_for_delivery", "language": "en", "confirmedBy": "bundle", "note": "The driver is at the drop; the tracker's rail leaves its delivery step open." },
+    { "code": "completed", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A finished stop; the snapshot's status label reads Finished." },
+    { "code": "partial", "wording": "Partial Delivery", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "The stop ended with part of the order delivered; the tracker's rail leaves its delivery step open." },
+    { "code": "failed", "wording": "Delivery Failed", "stage": "failed_attempt", "language": "en", "confirmedBy": "bundle", "note": "The driver attempted the delivery and could not complete it." },
+    { "code": "cancelled", "wording": "Cancelled", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "The stop was cancelled." }
+  ]
+}

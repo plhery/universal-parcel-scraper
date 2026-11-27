@@ -1,0 +1,16 @@
+{
+  "success": false,
+  "template_language": "en",
+  "text_direction": "ltr",
+  "business": {
+    "track_widget_link_alive": true,
+    "enable_socketio": false,
+    "track_code": "6b8db72",
+    "enable_new_track_widget": true,
+    "name": "Ryder Last Mile"
+  },
+  "error": {
+    "message": "No orders found",
+    "status": 404
+  }
+}

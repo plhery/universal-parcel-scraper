@@ -1,0 +1,77 @@
+{
+  "id": "high-energy-transport",
+  "displayName": "High Energy Transport",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#5e229c"
+  },
+  "selectable": true,
+  "timezone": "America/Toronto",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "high-energy-transport",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "status",
+    "provider_code",
+    "eta",
+    "eta_window"
+  ],
+  "portal": {
+    "url": "https://highenergytransport.dispatchtrack.com/track_order/f7ea831/{trackingNumber}",
+    "searchUrl": "https://highenergytransport.dispatchtrack.com/track_order/f7ea831",
+    "siteName": "DispatchTrack",
+    "canaryUrl": "https://highenergytransport.dispatchtrack.com/track_order/f7ea831",
+    "shows": [
+      "status",
+      "progress_rail",
+      "eta",
+      "eta_window",
+      "order_contents",
+      "recipient_name",
+      "recipient_address",
+      "coordinates",
+      "driver_name",
+      "vehicle"
+    ],
+    "scraped": [
+      "status",
+      "progress_rail",
+      "eta",
+      "eta_window"
+    ],
+    "discarded": [
+      "order_contents",
+      "recipient_name",
+      "recipient_address",
+      "coordinates",
+      "driver_name",
+      "vehicle"
+    ],
+    "unavailable": [
+      "history",
+      "location",
+      "delivered_at",
+      "signatory",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "highenergytransport.dispatchtrack.com"
+      ],
+      "path": "^/(?:a22/)?track_order/f7ea831/([^/?#]+)(?:/[^/?#]+)?/?$"
+    }
+  ],
+  "detection": []
+}

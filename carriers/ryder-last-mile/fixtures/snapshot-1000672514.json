@@ -1,0 +1,74 @@
+{
+  "type": "order.snapshot",
+  "version": 1,
+  "tenantId": "mxd",
+  "orderId": "6b8db72",
+  "revision": 1672445501,
+  "stage": "completed",
+  "branding": {
+    "logoUrl": "https://s3-external-1.amazonaws.com/dispatchtrackmedia%2Fmxd%2Flogo%2F28%2Frydersystemlogo_thumb.png",
+    "logoAlt": "Ryder Last Mile"
+  },
+  "eta": {
+    "etaLabel": "04:00 PM - 06:00 PM",
+    "timeZone": "America/Los_Angeles",
+    "dateLabel": "Friday 30th, December 2022"
+  },
+  "details": {
+    "items": [
+      {
+        "id": "26535831",
+        "title": "TONAL TRAINER",
+        "qty": 1,
+        "variantLabel": "100-0002",
+        "deliveredQty": 1
+      },
+      {
+        "id": "26535854",
+        "title": "Bar",
+        "qty": 1,
+        "variantLabel": "120-0003",
+        "deliveredQty": 1
+      },
+      {
+        "id": "26535855",
+        "title": "BENCH",
+        "qty": 1,
+        "variantLabel": "121-0007",
+        "deliveredQty": 1
+      },
+      {
+        "id": "26535856",
+        "title": "INSTALLATION KIT",
+        "qty": 1,
+        "variantLabel": "150-0024",
+        "deliveredQty": 1
+      },
+      {
+        "id": "26535857",
+        "title": "Accessories Combo Kit",
+        "qty": 1,
+        "variantLabel": "160-0003",
+        "deliveredQty": 1
+      }
+    ]
+  },
+  "redaction": {
+    "guest": true,
+    "hidePayment": true,
+    "maskRecipient": false
+  },
+  "poweredBy": true,
+  "shortLabel": "2470087001",
+  "statusLabel": "Finished",
+  "displayStatus": "Delivered",
+  "widget": {
+    "driverInfoEnabled": false,
+    "driverNoteEnabled": false,
+    "commentsEnabled": false,
+    "notifyDriverPath": "/track_order/notify_driver",
+    "notifyOrderId": 12259636,
+    "language": "en"
+  },
+  "routeStarted": true
+}

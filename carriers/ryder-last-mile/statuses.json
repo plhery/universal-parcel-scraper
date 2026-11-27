@@ -1,4 +1,22 @@
 {
   "carrier": "ryder-last-mile",
-  "entries": []
+  "entries": [
+    { "code": "assigned", "wording": "Delivery Scheduled", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "DispatchTrack's snapshot stage code before the driver's route starts; the tracker's rail titles its first step so, or Order Received when no day is set." },
+    { "code": "en_route_pickup", "wording": "Out for Delivery", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "The driver's route has started with a pickup before the drop; the tracker shows the order as out for delivery." },
+    { "code": "at_pickup", "wording": "Out for Delivery", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "The driver is at the pickup before the drop; the tracker shows the order as out for delivery." },
+    { "code": "en_route_drop", "wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "bundle", "note": "The driver is on the way to the drop." },
+    { "code": "arrived", "wording": "Arrived", "stage": "out_for_delivery", "language": "en", "confirmedBy": "bundle", "note": "The driver is at the drop; the tracker's rail leaves its delivery step open." },
+    { "code": "completed", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A finished stop; the snapshot's status label reads Finished." },
+    { "code": "partial", "wording": "Partial Delivery", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "The stop ended with part of the order delivered; the tracker's rail leaves its delivery step open." },
+    { "code": "failed", "wording": "Delivery Failed", "stage": "failed_attempt", "language": "en", "confirmedBy": "bundle", "note": "The driver attempted the delivery and could not complete it." },
+    { "code": "cancelled", "wording": "Cancelled", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "The stop was cancelled." },
+    { "wording": "Order departed-ETA set for SEA on 12/30/22 17:00 (PST) on VT3807175", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The order left the origin hub for the delivery hub, which the details name with its expected arrival." },
+    { "wording": "Order received at delivery location-Received at Ryder on 12/27/22 at 00:00 (PST) on VT3807175", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The delivery hub took the order in." },
+    { "wording": "Scheduling Call - Attempt 1", "stage": null, "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "A call to the customer to book the delivery appointment; the order stays where it was." },
+    { "wording": "Delivery Scheduled-Scheduled for 12/30/22 - updated via EDI", "stage": null, "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The delivery day was booked; the order stays where it was." },
+    { "wording": "Time Window set-Appt set between 16:00 & 18:00 on 12/30/22- Dispatch Track", "stage": null, "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The appointment's window was set; the order stays where it was." },
+    { "wording": "Time Window notification attempted", "stage": null, "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The customer was told the window; the order stays where it was." },
+    { "wording": "Order enroute to customer-Shipped from SEA on 12/30/22 07:00 (PST) on 0003816402", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27", "note": "The order left the delivery hub on the driver's route." },
+    { "wording": "Order Delivered-Shipment Delivered on 12/30/22 between 16:08 and 16:11", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-27" }
+  ]
 }

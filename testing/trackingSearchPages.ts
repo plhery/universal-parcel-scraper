@@ -120,6 +120,7 @@ export const uncheckedSearchPages: Partial<Record<CarrierId, string>> = {
   'grand-slam-express': 'the AWB field on www.grandslamexpress.in/Web/Track is hidden on phone-sized screens, which the check uses; the desktop page shows it',
   'hecny-shipping': 'the tracker names its number box keyword, which the check reads as a site search',
   'hi-trans': 'www.hi-trans.com.au challenges automated browsers; in a regular browser its home page has the consignment number field',
+  'high-energy-transport': 'the DispatchTrack page draws its order number field inside a frame, so the page itself holds no field',
   'hr-parcel': 'the tracker names its field q, which the check reads as a site search',
   inntralog: 'the tracking page shows its number field only after its Sendungsnummer or Belegnummer option is chosen',
   'inter-global-kargo': 'the Takip No field on www.globalkargo.com shows only on desktop-size screens, which the phone-size check does not use',
