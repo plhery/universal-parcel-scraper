@@ -105,8 +105,8 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
   const start = Date.now(), abort = new AbortController();
   const combined = signal ? AbortSignal.any([signal, abort.signal]) : abort.signal;
   let context, page, onRequest, onResponse, timer, terminal = false, accepting = true, statusCode = 0, bytesRead = 0;
-  let reply = null, firstCode = null, firstPuzzleMs = null, replacements = 0, stop = null;
-  const entries = [], attempted = new Set(), puzzles = [];
+  let reply = null, firstCode = null, firstPuzzleMs = null, replacements = 0, refreshes = 0, stop = null;
+  const entries = [], attempted = new Set(), puzzles = [], shown = new Map(), refreshed = new WeakSet();
   const verifications = new WeakMap();
   const remaining = () => Math.max(1, Math.floor(maxTimeout - (Date.now() - start)));
   // Fixed labels for why the page did or did not verify. The adapter reads the same outcome.
@@ -202,13 +202,20 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
         if (terminal) { stop = 'reply'; break; }
         if (combined.aborted || remaining() <= 1500) { stop = 'deadline'; break; }
         const state = await page.evaluate(widgetState);
+        // Dingxiang puts a refused puzzle back unchanged ("retry"), the same picture the answer missed:
+        // ask its refresh control once for another rather than wait out the deadline.
+        const back = state && shown.get(state.key);
+        if (back?.verdict === 'refused' && !refreshed.has(back) && remaining() >= 5000) {
+          refreshed.add(back);
+          if (await page.evaluate(requestReplacement)) refreshes++;
+        }
         if (!state || attempted.has(state.key)) { await delay(200, undefined, { signal: combined }); continue; }
         if (puzzles.length - replacements >= MAX_ANSWERS) { stop = 'puzzle_limit'; break; }
         attempted.add(state.key);
         firstPuzzleMs ??= Date.now() - start;
         const puzzle = { type: state.type, verdict: 'unanswered', readyMs: Date.now() - start };
         const solving = Date.now();
-        puzzles.push(puzzle);
+        puzzles.push(puzzle); shown.set(state.key, puzzle);
         // A puzzle the solver cannot read is swapped for another while time allows.
         const replaced = async failure => {
           puzzle.failure = failure;
@@ -303,7 +310,7 @@ export async function runZtoBrowser({ url, handle, tier, maxTimeout, capture, in
     // Fixed labels, scores and counts only: no number, image, answer, token or reply text.
     try {
       report({ host: 'www.zto.com', outcome: outcome(), stop, durationMs: Date.now() - start, replies: entries.length,
-        firstCode, firstPuzzleMs, replacements, puzzles });
+        firstCode, firstPuzzleMs, replacements, refreshes, puzzles });
     } catch { /* Diagnostics cannot affect cleanup or tracking. */ }
   }
 }

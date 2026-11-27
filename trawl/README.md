@@ -234,6 +234,8 @@ concurrent offline OCR workers; a request waits for a free worker within its dea
 worker reads a picture's characters in parallel, with the scores a serial read gives. Each
 worker ends with its request and retains no images. A puzzle the helper cannot read is
 swapped for another through Dingxiang's refresh control, at most twice per lookup.
+Dingxiang shows a refused puzzle again unchanged, so the same control asks once for
+another picture after each refusal; the warning counts these refreshes.
 The `zto.verification` warning records how each run ended. For each puzzle it gives the
 kind, the slider's match score or the OCR's confidence, boxes and time, and whether
 Dingxiang accepted, refused or escalated the answer to secondary verification.

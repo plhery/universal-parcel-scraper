@@ -9,7 +9,8 @@ The adapter first posts to `hdgateway.zto.com/batchGetTrace`. A verification res
 can fall back to the bundled TRAWL image. The page obtains a Dingxiang challenge
 from `mapi.zto.com/captcha/image2`, solves a slider and, when requested, clicks
 Chinese characters in order using local OCR. It asks for another puzzle when it cannot
-read one, at most twice. The page submits its own verification
+read one, at most twice, and once for each refused answer, since Dingxiang shows the
+same picture again after a refusal. The page submits its own verification
 token and repeats tracking in the same context. Tokens and recipient details stay
 inside that context.
 

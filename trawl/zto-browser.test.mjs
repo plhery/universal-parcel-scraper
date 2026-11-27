@@ -205,6 +205,33 @@ test('an earlier refusal does not hide a later unfinished verification', async (
   assert.deepEqual(f.state.reports[0].puzzles.map(p => p.verdict), ['refused', 'answered']);
 });
 
+test('a refused slider Dingxiang shows again is swapped once for another picture', async () => {
+  const f = fixture();
+  puzzlePage(f, [slider('a'), slider('b')], state => {
+    if (state.key === 'slider:a') verification(f, false, '/api/v1', 'retry');
+    else { verification(f, true); f.handlers.response(response()); }
+  });
+  const result = await runZtoBrowser({ ...f.options, maxTimeout: 12000 });
+  assert.equal(result.reason, undefined);
+  const [event] = f.state.reports;
+  assert.equal(event.refreshes, 1); assert.equal(event.replacements, 0);
+  assert.deepEqual(event.puzzles.map(p => p.verdict), ['refused', 'accepted']);
+  assert.equal(JSON.stringify(event).includes('retry'), false);
+
+  // A refresh that brings the same picture back is not asked again.
+  const same = fixture();
+  let refreshes = 0;
+  puzzlePage(same, [slider('a'), slider('a')], () => {
+    verification(same, false, '/api/v1', 'retry');
+    setTimeout(() => same.handlers.response?.(response()), 1500);
+  });
+  const evaluate = same.page.evaluate;
+  same.page.evaluate = async fn => { if (fn.name === 'requestReplacement') refreshes++; return evaluate(fn); };
+  await runZtoBrowser({ ...same.options, maxTimeout: 12000 });
+  assert.equal(refreshes, 1);
+  assert.deepEqual(same.state.reports[0].puzzles.map(p => p.verdict), ['refused']);
+});
+
 test('does not drag coordinates from a replaced slider or after cancellation', async () => {
   for (const cancelled of [false, true]) {
     const f = fixture(), controller = new AbortController();
