@@ -1,0 +1,437 @@
+{
+  "carrier": "skynet-in",
+  "entries": [
+    {
+      "code": "booked",
+      "wording": "Booked",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "booked",
+      "wording": "बुक हुआ",
+      "stage": "registered",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "booked",
+      "wording": "Shipment Created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The scan's wording on the tracker's own cancelled test booking under the all-zero air waybill."
+    },
+    {
+      "code": "pendingPickup",
+      "wording": "Pending pickup",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The sender's pickup is still to come; the Hindi label reads pickup outstanding."
+    },
+    {
+      "code": "pendingPickup",
+      "wording": "पिकअप बाकी",
+      "stage": "registered",
+      "language": "hi",
+      "confirmedBy": "bundle",
+      "note": "The sender's pickup is still to come; the Hindi label reads pickup outstanding."
+    },
+    {
+      "code": "collection",
+      "wording": "Collection",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Picked up from the sender; the Hindi label reads pickup."
+    },
+    {
+      "code": "collection",
+      "wording": "पिकअप",
+      "stage": "accepted",
+      "language": "hi",
+      "confirmedBy": "bundle",
+      "note": "Picked up from the sender; the Hindi label reads pickup."
+    },
+    {
+      "code": "inscanned",
+      "wording": "Inscanned",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "inscanned",
+      "wording": "इनस्कैन हुआ",
+      "stage": "in_transit",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "processed",
+      "wording": "Processed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "processed",
+      "wording": "प्रोसेस हुआ",
+      "stage": "in_transit",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "sorted",
+      "wording": "Sorted",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "sorted",
+      "wording": "सॉर्ट हुआ",
+      "stage": "in_transit",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "reweight",
+      "wording": "Reweight",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "reweight",
+      "wording": "दोबारा वज़न",
+      "stage": "in_transit",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "hubArrival",
+      "wording": "Hub arrival",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "hubArrival",
+      "wording": "हब पर पहुँचा",
+      "stage": "in_transit",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "handover",
+      "wording": "Handover",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "handover",
+      "wording": "हैंडओवर",
+      "stage": "in_transit",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "flightDeparture",
+      "wording": "Flight departure",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "flightDeparture",
+      "wording": "फ़्लाइट रवाना",
+      "stage": "in_transit",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "flightArrival",
+      "wording": "Flight arrival",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "flightArrival",
+      "wording": "फ़्लाइट पहुँची",
+      "stage": "in_transit",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "inTransit",
+      "wording": "In transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "inTransit",
+      "wording": "ट्रांज़िट में",
+      "stage": "in_transit",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customs",
+      "wording": "Customs",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customs",
+      "wording": "कस्टम्स",
+      "stage": "customs",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customsPending",
+      "wording": "Customs pending",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customsPending",
+      "wording": "कस्टम्स लंबित",
+      "stage": "customs",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customsDocs",
+      "wording": "Customs docs",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customsDocs",
+      "wording": "कस्टम्स दस्तावेज़",
+      "stage": "customs",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customsHold",
+      "wording": "Customs hold",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customsHold",
+      "wording": "कस्टम्स होल्ड",
+      "stage": "customs",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "customsCleared",
+      "wording": "Customs cleared",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Cleared, the shipment moves on."
+    },
+    {
+      "code": "customsCleared",
+      "wording": "कस्टम्स क्लीयर",
+      "stage": "in_transit",
+      "language": "hi",
+      "confirmedBy": "bundle",
+      "note": "Cleared, the shipment moves on."
+    },
+    {
+      "code": "documentHold",
+      "wording": "Document hold",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "documentHold",
+      "wording": "दस्तावेज़ होल्ड",
+      "stage": "exception",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "paymentHold",
+      "wording": "Payment hold",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "paymentHold",
+      "wording": "भुगतान होल्ड",
+      "stage": "exception",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "addressHold",
+      "wording": "Address hold",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "addressHold",
+      "wording": "पता होल्ड",
+      "stage": "exception",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "onHold",
+      "wording": "On hold",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "onHold",
+      "wording": "होल्ड पर",
+      "stage": "exception",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "outForDelivery",
+      "wording": "Out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "outForDelivery",
+      "wording": "डिलीवरी के लिए निकला",
+      "stage": "out_for_delivery",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "attempted",
+      "wording": "Attempted",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The Hindi label reads delivery attempt."
+    },
+    {
+      "code": "attempted",
+      "wording": "डिलीवरी का प्रयास",
+      "stage": "failed_attempt",
+      "language": "hi",
+      "confirmedBy": "bundle",
+      "note": "The Hindi label reads delivery attempt."
+    },
+    {
+      "code": "undelivered",
+      "wording": "Undelivered",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "undelivered",
+      "wording": "डिलीवर नहीं हुआ",
+      "stage": "failed_attempt",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "delivered",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "delivered",
+      "wording": "डिलीवर हुआ",
+      "stage": "delivered",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "return",
+      "wording": "Return",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "return",
+      "wording": "वापसी",
+      "stage": "returned",
+      "language": "hi",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "cancelled",
+      "wording": "Cancelled",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A cancelled booking, which the page files under its exception badge."
+    },
+    {
+      "code": "cancelled",
+      "wording": "रद्द",
+      "stage": "exception",
+      "language": "hi",
+      "confirmedBy": "bundle",
+      "note": "A cancelled booking, which the page files under its exception badge."
+    },
+    {
+      "code": "cancelled",
+      "wording": "Shipment Canceled",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The scan's wording on the tracker's own cancelled test booking under the all-zero air waybill."
+    },
+    {
+      "code": "information",
+      "wording": "Information",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A message about the shipment; it moves nothing."
+    },
+    {
+      "code": "information",
+      "wording": "जानकारी",
+      "language": "hi",
+      "confirmedBy": "bundle",
+      "note": "A message about the shipment; it moves nothing."
+    },
+    {
+      "code": "documentation",
+      "wording": "Documentation",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Paperwork for the shipment; it moves nothing."
+    },
+    {
+      "code": "documentation",
+      "wording": "दस्तावेज़",
+      "language": "hi",
+      "confirmedBy": "bundle",
+      "note": "Paperwork for the shipment; it moves nothing."
+    }
+  ]
+}

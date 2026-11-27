@@ -1,0 +1,129 @@
+{
+  "results": [
+    {
+      "awb": "SKY000000001",
+      "found": true,
+      "provider": "skynetapi",
+      "category": "delivered",
+      "status": "DELIVERED",
+      "statusLabelKey": "delivered",
+      "progressStep": 4,
+      "errorState": false,
+      "airwayBillNo": "SKY000000001",
+      "route": {
+        "from": "INDIA",
+        "fromCode": "IND",
+        "to": "UNITED KINGDOM",
+        "toCode": "GBR"
+      },
+      "bookedOn": "March 2, 2026",
+      "deliveredOn": "March 9, 2026",
+      "forwarderNo": "1Z999AA10123456784",
+      "pieces": "1",
+      "carrierUrl": "https://www.ups.com/track?tracknum=1Z999AA10123456784",
+      "podImage": "https://example.com/pod/synthetic.jpg",
+      "detailRows": [
+        { "label": "service", "value": "SYNTHETIC EXPRESS" },
+        { "label": "pieces", "value": "1" },
+        { "label": "originHub", "value": "EXAMPLE HUB" },
+        { "label": "reference", "value": "REF-0001" },
+        { "label": "destination", "value": "UNITED KINGDOM" },
+        { "label": "forwarder", "value": "EXAMPLE PARTNER" },
+        { "label": "receiver", "value": "Alex Example" },
+        { "label": "remarks", "value": "Synthetic remark" }
+      ],
+      "events": [
+        {
+          "status": "DELIVERED",
+          "labelKey": "delivered",
+          "icon": "package-check",
+          "details": "Shipment delivered to Alex Example, phone 07700 900000",
+          "location": "EXAMPLETON",
+          "dateLabel": "March 9, 2026",
+          "time": "14:05:00",
+          "completed": true
+        },
+        {
+          "status": "INFO",
+          "labelKey": "information",
+          "icon": "clock",
+          "details": "Recipient informed of delivery",
+          "location": "EXAMPLETON",
+          "dateLabel": "March 9, 2026",
+          "time": "08:12:30",
+          "completed": true
+        },
+        {
+          "status": "OUT FOR DELIVERY",
+          "labelKey": "outForDelivery",
+          "icon": "map-pin",
+          "details": "Out for delivery",
+          "location": "EXAMPLETON",
+          "dateLabel": "March 9, 2026",
+          "time": "08:10:00",
+          "completed": true
+        },
+        {
+          "status": "CUSTOMS CLEARED",
+          "labelKey": "customsCleared",
+          "icon": "shield",
+          "details": "Customs cleared",
+          "location": "EXAMPLE AIRPORT",
+          "dateLabel": "March 6, 2026",
+          "time": "17:45:00",
+          "completed": true
+        },
+        {
+          "status": "ARRIVED",
+          "labelKey": "flightArrival",
+          "icon": "plane",
+          "details": "",
+          "location": "EXAMPLE AIRPORT",
+          "dateLabel": "March 5, 2026",
+          "time": "06:20:00",
+          "completed": true
+        },
+        {
+          "status": "DEPARTED",
+          "labelKey": "flightDeparture",
+          "icon": "plane",
+          "details": "Departed on flight",
+          "location": "NEW DELHI",
+          "dateLabel": "March 4, 2026",
+          "time": "02:30:00",
+          "completed": true
+        },
+        {
+          "status": "INSCAN",
+          "labelKey": "inscanned",
+          "icon": "package-search",
+          "details": "Shipment inscanned at hub",
+          "location": "NEW DELHI",
+          "dateLabel": "March 3, 2026",
+          "time": "19:00:00",
+          "completed": true
+        },
+        {
+          "status": "PICKED UP",
+          "labelKey": "collection",
+          "icon": "package",
+          "details": "Shipment picked up",
+          "location": "NEW DELHI",
+          "dateLabel": "March 3, 2026",
+          "time": "",
+          "completed": true
+        },
+        {
+          "status": "BOOKED",
+          "labelKey": "booked",
+          "icon": "file",
+          "details": "Shipment Created",
+          "location": "NEW DELHI",
+          "dateLabel": "March 2, 2026",
+          "time": "11:00:00",
+          "completed": true
+        }
+      ]
+    }
+  ]
+}

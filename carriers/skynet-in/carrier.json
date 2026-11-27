@@ -1,0 +1,102 @@
+{
+  "id": "skynet-in",
+  "displayName": "Skynet Express India",
+  "aliases": [
+    "Skynet India",
+    "Skynet (India)",
+    "Skynet Express India Private Limited",
+    "Skynet Worldwide Express India"
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#d9261c"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "skynet-in",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.skynetww.com/in-en/tracking?awb={trackingNumber}",
+    "searchUrl": "https://www.skynetww.com/in-en/tracking",
+    "helpUrl": "https://www.skynetww.com/in-en/contact",
+    "canaryUrl": "https://www.skynetww.com/in-en/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "progress_rail",
+      "origin",
+      "destination",
+      "destination_country",
+      "awb_date",
+      "delivered_at",
+      "parcel_count",
+      "service_name",
+      "customer_reference",
+      "recipient_name",
+      "remarks",
+      "proof_of_delivery",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "progress_rail",
+      "origin",
+      "awb_date",
+      "delivered_at",
+      "parcel_count",
+      "service_name",
+      "customer_reference",
+      "recipient_name",
+      "remarks",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.skynetww.com",
+        "skynetww.com"
+      ],
+      "pathPattern": "^/in-(?:en|hi)/tracking/?$",
+      "params": [
+        "awb",
+        "id"
+      ]
+    }
+  ],
+  "detection": []
+}
