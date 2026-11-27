@@ -1,0 +1,14 @@
+{
+  "carrier": "u-speed-express",
+  "entries": [
+    {"wording": "ORDER RECEIVED BY TRUCKER", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The Israeli import partner's first row, the same minute as its system opens the order: the order's data, a day before the import record and customs."},
+    {"wording": "The system has accepted the order（101）", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The Israeli partner's system opens the order, with its code 101 and its status name חדש, \"new\", where the place goes. The shared rules would read it as an acceptance."},
+    {"wording": "Import of Record Received", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "The import record for Israeli customs, before the pre-clearance rows."},
+    {"wording": "Pre-Clearance process", "stage": "customs", "language": "en", "confirmedBy": "live"},
+    {"wording": "Customs cleared", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Arrived to Sorting Center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live"},
+    {"wording": "Delivered（999）", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The Israeli partner's delivery with its code 999 and its status name סגור, \"closed\", where the place goes."}
+  ]
+}

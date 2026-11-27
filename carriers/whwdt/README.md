@@ -20,7 +20,8 @@ of its portal on the ITDIDA platform.
   is a rate limit. A 503 without it is maintenance.
 - The entry's `no` must be the number asked.
 - The request and reply are the same on every ITDIDA tenant, so [`itdida.ts`](itdida.ts) holds
-  the request, the reply's checks and the scans for any of them.
+  the lookup, the reply's checks and the scans for any of them; each tenant gives its host, its
+  numbers and its status map.
 
 ## Notes
 

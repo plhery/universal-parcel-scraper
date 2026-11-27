@@ -1,0 +1,24 @@
+{
+  "carrier": "u-speed-express",
+  "records": [
+    {
+      "number": "RUN10001202229377",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/u-speed-express/",
+        "date": "2026-11-27",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's U-Speed Express page gives it as a tracking code example. U-Speed's tracker shows it as the transfer number of a parcel delivered in Israel, with the Israeli import partner's rows from the order to the delivery."
+    }
+  ]
+}

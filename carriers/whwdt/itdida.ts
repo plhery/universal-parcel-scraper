@@ -1,15 +1,23 @@
 import { DateTime } from 'luxon';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { ChallengeError, IndeterminateError, MaintenanceError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
-import type { CarrierEvent } from '../../core/result/index.js';
-import type { ClassifiedWording } from '../../core/status/index.js';
+import {
+  ChallengeError, IndeterminateError, InvalidInputError, MaintenanceError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError, TransportError,
+} from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { leadingScan } from '../../core/result/unstaged.js';
+import { runSteps } from '../../core/runner/index.js';
+import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
+import { languageStageStatus, type ClassifiedWording, type Stage } from '../../core/status/index.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { countryCode, explicitOffsetTime } from '../../core/time/index.js';
-import { clean } from '../../core/transport/index.js';
+import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 
 // The ITDIDA platform Chinese forwarders run their portals on. Each forwarder
-// has its own host, `<tenant>.itdida.com`; the guest lookup and its reply are
-// the same on every one.
+// has its own host, `<tenant>.itdida.com`, which some serve on their own
+// domain too; the guest lookup and its reply are the same on every one.
 
 // One parcel's reply is a few kilobytes.
 export const ITDIDA_MAX_BYTES = 512 * 1024;
@@ -24,6 +32,8 @@ const CLOCK = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})$/;
 const OFFSET = /^[+-](?:0\d|1[0-4]):[0-5]\d$/;
 const CODE = /^[A-Za-z0-9_-]{1,16}$/;
 const ONWARD = /^[A-Z0-9]{6,40}$/;
+// What a tenant's lookup takes when it issues several kinds of number: letters and digits, at least one a digit.
+const NUMBER = /^(?=[A-Z]*\d)[A-Z0-9]{6,40}$/;
 const MAX_ROWS = 500;
 // Four to six digits standing alone in a place are a postcode.
 const POSTCODE_RUN = /(^|[^\p{L}\p{N}])\d{4,6}(?![\p{L}\p{N}])/gu;
@@ -185,4 +195,95 @@ export function itdidaScans(rows: unknown[], provider: string, stage: (wording: 
   }
   if (!events.length) throw new NoHistoryError(provider);
   return events;
+}
+
+/** A number of a tenant whose lookup takes its waybills, references and onward numbers alike. */
+export function itdidaNumber(raw: string, provider: string): string {
+  const number = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
+  if (!NUMBER.test(number)) throw new InvalidInputError(provider, `${provider} looks parcels up by 6 to 40 letters and digits`);
+  return number;
+}
+
+/** A forwarder's tenant: where its lookup is, and how its numbers and scans read. */
+export interface ItdidaTenant {
+  readonly carrier: string;
+  readonly provider: string;
+  /** `<tenant>.itdida.com`, or the forwarder's own domain where it serves the platform's lookup. */
+  readonly host: string;
+  /** The whole number asked; a number the tenant does not issue is invalid input. */
+  readonly normalize: (raw: string) => string;
+  /** A scan's stage by its wording and code, or null. */
+  readonly stage: (wording: string, code: string) => ClassifiedWording | null;
+  readonly statusMap: CarrierStatusMap;
+  /** The rows the scans are read from, for a tenant whose reply lists rows that are no scan or fills a place with something else. */
+  readonly rows?: (rows: unknown[]) => unknown[];
+}
+
+/**
+ * A tenant's reply to its `queryTracks` lookup. The waybill names its
+ * destination and, once handed on, the onward carrier's number.
+ */
+export function parseItdida(tenant: ItdidaTenant, payload: unknown, raw: string): CarrierResult {
+  const number = tenant.normalize(raw);
+  const parcel = itdidaEntry(payload, number, tenant.provider);
+  const events = itdidaScans(tenant.rows ? tenant.rows(parcel.rows) : parcel.rows, tenant.provider, tenant.stage);
+  const latest = events[0]!;
+  const staged = leadingScan(events, tenant.statusMap);
+  const stage = staged?.stage as Stage | undefined;
+  const country = itdidaDestination(parcel, tenant.provider);
+  const onward = itdidaOnward(parcel, number, tenant.provider);
+  return {
+    status: stage ? languageStageStatus(stage) : 'unknown',
+    ...(stage ? { current_stage: stage, current_stage_source: staged!.stage_source } : {}),
+    last_status_text: latest.description!,
+    last_update: latest.time ?? null,
+    ...(latest.local_time ? { last_update_local: latest.local_time } : {}),
+    expected_delivery: null,
+    ...(country ? { destination_country: country } : {}),
+    ...(onward ? { delivery_tracking_number: onward } : {}),
+    events,
+  };
+}
+
+export interface ItdidaOptions { readonly fetcher?: typeof fetch; readonly recorder?: StepRecorder; readonly userAgent?: string }
+
+/** A tenant's guest lookup: the number alone, with no session, token or key. */
+export class ItdidaTracker {
+  constructor(private readonly tenant: ItdidaTenant, private readonly options: ItdidaOptions = {}) {}
+
+  async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
+    context.signal?.throwIfAborted();
+    const { tenant } = this;
+    const number = tenant.normalize(raw);
+    const read = async (signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> => {
+      const { response, bytes } = await fetchBounded(itdidaLookupUrl(tenant.host, number), { method: 'GET', signal, headers: {
+        Accept: 'application/json, text/plain, */*', 'User-Agent': userAgentOf(this.options.userAgent),
+      } }, { provider: tenant.provider, fetcher: this.options.fetcher, maxBytes: ITDIDA_MAX_BYTES,
+        timeoutMs: Math.max(1, Math.floor(timeoutMs)), redirect: 'manual', allowHttpStatuses: [...ITDIDA_REDIRECTS, 404, 410, ITDIDA_BUSY] });
+      // A busy tenant answers 503 in JSON, read as a rate limit; a 503 without it is maintenance.
+      if (response.status === ITDIDA_BUSY) itdidaUnavailable(decodeText(bytes), tenant.provider);
+      // An unknown number is HTTP 200 too; anything else is a moved route.
+      if (response.status !== 200) throw new TransportError(tenant.provider, `${tenant.provider} tracking lookup is unavailable`, { status: response.status });
+      return parseItdida(tenant, itdidaJson(decodeText(bytes), tenant.provider), number);
+    };
+    // A request that fails to reach the site, or hangs, gets one more try: the
+    // first gets half of the budget, so the retry fits in the rest.
+    return runSteps({ carrier: tenant.carrier, budgetMs: context.budgetMs ?? 15_000, signal: context.signal,
+      recorder: this.options.recorder ?? NOOP_RECORDER }, [
+      { id: 'direct', run: ({ signal, remainingMs }) => read(signal, firstAttemptMs(remainingMs)) },
+      networkRetryStep(({ signal, remainingMs }) => read(signal, remainingMs)),
+    ]);
+  }
+}
+
+/** A tenant's adapter: the lookup, which recognition asks too. */
+export function itdidaAdapter(tenant: ItdidaTenant): AdapterFactory {
+  return (environment) => {
+    const tracker = new ItdidaTracker(tenant, { fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
+    return {
+      id: tenant.carrier, recordsSteps: true, steps: ['direct', 'retry'],
+      track: (input, context) => tracker.fetch(input.number, context),
+      recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => tenant.normalize(number))),
+    };
+  };
 }

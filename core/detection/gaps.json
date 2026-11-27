@@ -7280,5 +7280,11 @@
     "carrier": "anhua-international",
     "kind": "open",
     "reason": "Anhua International's tracker answers by Australia Post's article id, which its line hands the parcel to, and the only public samples, from one tracking directory page, are Australia Post's, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "u-speed-express",
+    "pattern": "^RUN\\d{14}$",
+    "kind": "open",
+    "reason": "The one public U-Speed Express number is the transfer number its tracker shows for a parcel its Israeli partner delivered, RUN and fourteen digits. One sample does not show whether U-Speed or the partner issues the series, so no rule claims it."
   }
 ]

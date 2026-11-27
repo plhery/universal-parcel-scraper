@@ -1,0 +1,82 @@
+{
+  "id": "u-speed-express",
+  "displayName": "U-Speed Express",
+  "aliases": [
+    "U-Speed",
+    "优时派",
+    "优时派跨境物流供应链（深圳）有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN",
+      "IL"
+    ]
+  },
+  "brand": {
+    "color": "#cf2024"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "u-speed-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "destination_country"
+  ],
+  "portal": {
+    "url": "https://www.u-speedex.com/queryTracks?no={trackingNumber}",
+    "searchUrl": "https://www.u-speedex.com/order_query",
+    "canaryUrl": "https://www.u-speedex.com/",
+    "shows": [
+      "status",
+      "history",
+      "destination_country",
+      "related_tracking_numbers",
+      "customer_reference",
+      "parcel_count",
+      "recipient_address",
+      "customer_messages",
+      "recipient_name",
+      "driver_name",
+      "driver_phone"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "destination_country"
+    ],
+    "discarded": [
+      "related_tracking_numbers",
+      "customer_reference",
+      "parcel_count",
+      "recipient_address",
+      "customer_messages",
+      "recipient_name",
+      "driver_name",
+      "driver_phone"
+    ],
+    "unavailable": [
+      "eta",
+      "weight"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "u-speedex.com"
+      ],
+      "pathPattern": "^/queryTracks/?$",
+      "params": [
+        "no"
+      ]
+    }
+  ],
+  "detection": []
+}

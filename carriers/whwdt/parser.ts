@@ -1,14 +1,14 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { leadingScan } from '../../core/result/unstaged.js';
-import { languageStageStatus, type Stage } from '../../core/status/index.js';
-import { itdidaDestination, itdidaEntry, itdidaOnward, itdidaScans, ITDIDA_MAX_BYTES } from './itdida.js';
+import { ITDIDA_MAX_BYTES, parseItdida, type ItdidaTenant } from './itdida.js';
 import { statusMap, whwdtStage } from './status.js';
 
 export const PROVIDER = 'Wuhan Wodetong';
 export const CARRIER = 'whwdt';
 export const WHWDT_MAX_BYTES = ITDIDA_MAX_BYTES;
+/** The ITDIDA tenant the forwarder's site links to for order lookups. */
+export const WHWDT_HOST = 'hyd.itdida.com';
 // The forwarder's waybills seen so far: a letter, twelve digits and a letter.
 const NUMBER = /^[A-Z]\d{12}[A-Z]$/;
 
@@ -20,29 +20,16 @@ export function normalizeWhwdtNumber(raw: string): string {
 }
 
 /**
- * The reply of the tenant's `queryTracks` lookup. The waybill names its
- * destination and, once handed on, the onward carrier's number. Its scans
- * come from the warehouse in Shenzhen, the line haul and the delivering
- * carrier, each in its own place's wall clock.
+ * The forwarder's ITDIDA tenant. Its scans come from the warehouse in
+ * Shenzhen, the line haul and the delivering carrier, each in its own place's
+ * wall clock.
  */
+export const WHWDT: ItdidaTenant = {
+  carrier: CARRIER, provider: PROVIDER, host: WHWDT_HOST, normalize: normalizeWhwdtNumber,
+  stage: (wording) => whwdtStage(wording), statusMap,
+};
+
+/** The reply of the tenant's `queryTracks` lookup. */
 export function parseWhwdt(payload: unknown, raw: string): CarrierResult {
-  const number = normalizeWhwdtNumber(raw);
-  const parcel = itdidaEntry(payload, number, PROVIDER);
-  const events = itdidaScans(parcel.rows, PROVIDER, (wording) => whwdtStage(wording));
-  const latest = events[0]!;
-  const staged = leadingScan(events, statusMap);
-  const stage = staged?.stage as Stage | undefined;
-  const country = itdidaDestination(parcel, PROVIDER);
-  const onward = itdidaOnward(parcel, number, PROVIDER);
-  return {
-    status: stage ? languageStageStatus(stage) : 'unknown',
-    ...(stage ? { current_stage: stage, current_stage_source: staged!.stage_source } : {}),
-    last_status_text: latest.description!,
-    last_update: latest.time ?? null,
-    ...(latest.local_time ? { last_update_local: latest.local_time } : {}),
-    expected_delivery: null,
-    ...(country ? { destination_country: country } : {}),
-    ...(onward ? { delivery_tracking_number: onward } : {}),
-    events,
-  };
+  return parseItdida(WHWDT, payload, raw);
 }
