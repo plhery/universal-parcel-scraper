@@ -20,6 +20,16 @@ GB). Tracked through the keyless `inposteasy.com` hub API; no postcode or link n
    It returns a status-only answer, marked `summary_only`, so a fuller provider history
    remains eligible. Unknown statuses and ShipX absence leave the hub failure inconclusive;
    generic outages, rate limits and definite hub negatives never start this step.
+3. `trawl`: a number in Yodel's layouts that the hub knows by its creation alone, or doesn't know,
+   is asked of InPost UK's own tracker through the browser service. Its result page runs a
+   Cloudflare Turnstile check and posts the number with the widget's token to
+   `POST https://inpost.co.uk/tracking/api`. The [InPost UK helper](../../trawl/inpost-uk-browser.mjs)
+   lets the page do both and returns the one reply bound to the whole number.
+   - Its scans carry the hub's codes, so the same map stages them.
+   - The tracker's answer replaces the hub's when it holds more than the creation. A tracker that
+     can't be read, or adds nothing, leaves the hub's answer as it was: the partial one, still
+     open to a provider, or its not-found. Both must say not-found for the lookup to say so.
+   - Recognition and lookups without the browser service stay on the hub.
 
 ## Notes
 
@@ -68,8 +78,8 @@ GB). Tracked through the keyless `inposteasy.com` hub API; no postcode or link n
 - For days the hub can know a parcel in Yodel's layouts only by its creation, while InPost UK's
   own tracker, which the providers relay, has it on its way and received. Such an answer is
   marked `history_truncated`, so a fuller provider history naming InPost replaces it instead of
-  sending the parcel back to registered. The hub's first warehouse scan ends this. InPost UK's
-  tracker (`POST https://inpost.co.uk/tracking/api`) needs a Cloudflare Turnstile token.
+  sending the parcel back to registered. The hub's first warehouse scan ends this. The `trawl` step
+  asks InPost UK's tracker for such a parcel when the browser service is configured.
 - Each event keeps its place, a town or hub with its country. A delivered parcel keeps
   its delivery time, and the destination country is kept; the origin country is not.
 - The hub's recipient name and address are read, and on a delivered parcel the name given as its

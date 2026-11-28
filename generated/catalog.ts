@@ -2632,7 +2632,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "inpost",
-      "recognitionRank": 820
+      "recognitionRank": 820,
+      "browser": true
     },
     "canaryUrl": "https://inposteasy.com/",
     "trackingUrlTemplate": "https://inpost.pl/sledzenie-przesylek?number={trackingNumber}",

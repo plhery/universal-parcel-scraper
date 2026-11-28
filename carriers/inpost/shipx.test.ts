@@ -134,7 +134,7 @@ describe('InPost ShipX recovery', () => {
     const instance = adapter({ fetcher, recorder: NOOP_RECORDER, trawl: null, browserExecutablePath: null, env: {} });
     await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ status: 500, kind: 'indeterminate' });
     expect(fetcher).toHaveBeenCalledOnce();
-    expect(instance.steps).toEqual(['direct', 'shipx']);
+    expect(instance.steps).toEqual(['direct', 'shipx', 'trawl']);
     expect(instance.recordsSteps).toBe(true);
   });
 

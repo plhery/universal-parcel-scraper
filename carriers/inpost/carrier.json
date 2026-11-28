@@ -26,11 +26,13 @@
     "adapter": "inpost",
     "steps": [
       "direct",
-      "shipx"
+      "shipx",
+      "trawl"
     ],
     "recognition": {
       "rank": 820
-    }
+    },
+    "browser": true
   },
   "capabilities": [
     "history",
