@@ -1,0 +1,40 @@
+{
+  "carrier": "huaxintai",
+  "entries": [
+    {
+      "wording": "系统已开单,进入…仓库,准备发往下一站",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The waybill opened and the freight taken into the branch's warehouse the row names, for the next stop."
+    },
+    {
+      "wording": "已装车",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Loaded on the line truck in the city the row starts with."
+    },
+    {
+      "wording": "在途中",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "On the road, without a place."
+    },
+    {
+      "wording": "…省 …",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The freight's position on the way, a province and a city after the city the row starts with."
+    },
+    {
+      "wording": "已签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for at delivery; the page names the signer after it, which the reader drops."
+    }
+  ]
+}

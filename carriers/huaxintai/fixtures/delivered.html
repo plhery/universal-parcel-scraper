@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1"><title>
+	在线跟踪平台
+</title>
+    <script src="js/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="js/jquery.jBox-2.3.min.js" type="text/javascript"></script>
+    <link href="js/jbox/jbox.css" rel="stylesheet" type="text/css" /><link href="css/ydselect.css" rel="stylesheet" type="text/css" /><link href="css/aio_css.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .searchtable
+        {
+            border-color: Red;
+            height: 40px;
+            border: 0px;
+            margin: 0px;
+            padding: 0px;
+        }
+        .searchtable tr
+        {
+            height: 40px;
+        }
+        .searchtable td
+        {
+            border-collapse: collapse;
+        }
+        #btn_tj
+        {
+            height: 37px;
+            border: 0 none;
+            width: 124px;
+            cursor: pointer;
+        }
+        .text
+        {
+            overflow: auto;
+            border: 1px solid #ccc;
+            height: 32px;
+            width: 700px;
+            color: Gray;
+            cursor: pointer;
+            border-width: 2px;
+            border-color: Red;
+        }
+        .data_img
+        {
+            width: 99.6%;
+            height: 19px;
+            background-color: Gray;
+            color: #FFF;
+            text-align: left;
+            padding-left: 10px;
+            padding-top: 3px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="mf_content">
+        <table width="900" border="0" align="center" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    <img src="img/LOGO.jpg" width="900" height="66" />
+                </td>
+            </tr>
+        </table>
+        <table width="900" border="0" align="center" cellpadding="0" cellspacing="0">
+            <tr>
+                <td background="img/line.jpg" height="5">
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" background="img/bg01.jpg">
+                    <table width="824" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td height="10">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="100" background="img/banner1.jpg">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="24">
+                                <table width="824" style="border-color: #FD9A40; border-style: double;" class="searchtable">
+                                    <tr>
+                                        <td class="td2">
+                                            <input type="text" class="text" value="最多同时输入5个运单号,每个运单号以逗号分隔.例如:10536621455,107846545" />
+                                        </td>
+                                        <td align="right" class="td3">
+                                            <img src="img/ss.png" id="btn_tj" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="26" style="line-height: 24px; background-color: #999; font-size: 12px;
+                                font-family: '宋体'; color: #FFF; text-align: left; padding-left: 10px;">
+                                <strong>运单状态</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="5">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="840" border="0" cellspacing="0" cellpadding="0" class="table_head"><tr class="tbtxt1"><td>运单编号</td><td>开单时间</td><td>开单网点</td><td>当前地点</td><td>运单状态</td></tr><tr class="tbtxt2"><td>273727</td><td>2026/5/7 8:44:36</td><td>沈阳营业部</td><td>沈阳营业部</td><td>外发签收</td></tr></table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="3">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="10">
+                                <table width="824" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td width="90" height="72" class="tbtxt3">
+                                        </td>
+                                        <td width="3">
+                                        </td>
+                                        <td align="center" style="font-size: 12px; color: #C00; font-family: 宋体; text-align: center;
+                                            font-family: '宋体';">
+                                            <p class="p_click"><strong style="text-align: left;">273727</strong><table class="tabr1" width="95%" align="center" border="0" cellpadding="0" cellspacing="3"><tr class="tabr1_head"><td>处理时间</td><td>跟踪情况</td></tr><tr class="tabr1_sj"><td>2026/5/7 8:44:39</td><td>系统已开单,进入【沈阳营业部】仓库,准备发往下一站</td></tr><tr class="tabr1_sj"><td>2026/5/8 16:01:00</td><td>【沈阳市】,已装车</td></tr><tr class="tabr1_sj"><td>2026/5/9 10:03:06</td><td>【】,在途中</td></tr><tr class="tabr1_sj"><td>2026/5/11 8:03:22</td><td>【长沙市】,湖南省  长沙市</td></tr><tr class="tabr1_sj"><td>2026/5/11 16:05:11</td><td>已签收,签收人【某某】</td></tr></table></p>
+                                            <div class="data_img">
+                                                运单追踪查询结果
+                                            </div>
+                                            <div class="flowstep">
+                                                <ol class="flowstep-5 flowrem3 flowrem4" id="flowstepid">
+                                                    <li class="step-first" width="243px"><div class="step-done"> <div class="step-name">开单入库</div><div class="step-no"></div><div class="step-time"><div class="step-time-wraper">2026/5/7 8:44:36</div></div></div></li><li  width="243px"><div class="step-done"> <div class="step-name">中转外发</div><div class="step-no"></div><div class="step-time"><div class="step-time-wraper">2026/5/7 15:24:53</div></div></div></li><li class="step-last" width="243px"><div class="step-cur"><div class="step-name">外发签收完毕</div><div class="step-no">3</div><div class="step-time"><div class="step-time-wraper">2026/5/11 16:05:11</div></div></div></li>
+                                                </ol>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="20">
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="20">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td background="img/bg02.gif" height="100">
+                    <table width="900" border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td width="400" height="100" class="downtxt">
+                                <p>
+                                    <br />
+                                </p>
+                            </td>
+                            <td class="downtxtright">
+                                &copy; <a href="" target="_blank"></a>
+                                <br />
+                                Copyright &copy; <span style="color: #F93; font-size: 12px;">科邦在线查询平台</span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript">
+        //运单输入框
+        $(".text").mousemove(function () {
+            if ($(this).val() == "最多同时输入5个运单号,每个运单号以逗号分隔.例如:10536621455,107846545") {
+                $(this).val("");
+                $(this).attr("style", "font-size:16px;color:black;");
+            }
+        }).mouseleave(function () {
+            if ($.trim($(this).val()).length == 0) {
+                $(this).val("最多同时输入5个运单号,每个运单号以逗号分隔.例如:10536621455,107846545");
+                $(this).removeAttr("style");
+            }
+            else {
+                $(this).attr("style", "font-size:16px;color:black;");
+            }
+        });
+        //提交按钮
+        $("#btn_tj").click(function () {
+            var ydlist = $.trim($(".text").val());
+
+            if (ydlist.length == 0) {
+                $.jBox.error("运单号不能为空！", "提示!");
+                return false;
+            }
+            if (ydlist.split(",").length > 5) {
+                $.jBox.error("运单号最多只能为5个！", "提示!");
+                return false;
+            }
+            if (ydlist == "最多同时输入5个运单号,每个运单号以逗号分隔.例如:10536621455,107846545") {
+                $.jBox.error("请输入运单号！", "提示!");
+                return false;
+            }
+
+            var name, value, i;
+            var str = location.href;
+            var num = str.indexOf("?");
+            str = str.substr(num + 1);
+            var arrtmp = str.split("&");
+            num = arrtmp[0].indexOf("=");
+            if (num > 0) 
+            {
+                name = arrtmp[0].substring(0, num);
+                value = arrtmp[0].substr(num + 1);
+                this[name] = value;
+            }
+
+            var url = "OnlineTrack.aspx?cid=" + value + "&yid=" + ydlist;
+            window.location = url;
+        });
+        var length = $("#flowstepid li").length;
+        if (length == 3) {
+            var str = "<style>#flowstepid li{width:24%;}</style>";
+            $("body").append(str);
+        }
+        else if (length == 4) {
+            var str = "<style>#flowstepid li{width:19%;}</style>";
+            $("body").append(str);
+        }
+        else if (length == 5) {
+            var str = "<style>#flowstepid li{width:15%;}</style>";
+            $("body").append(str);
+        }
+        else if (length == 6) {
+            var str = "<style>#flowstepid li{width:12%;}</style>";
+            $("body").append(str);
+        }
+    </script>
+</body>
+</html>

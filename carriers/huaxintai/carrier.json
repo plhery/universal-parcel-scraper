@@ -1,0 +1,58 @@
+{
+  "id": "huaxintai",
+  "displayName": "Huaxintai Logistics",
+  "aliases": [
+    "华鑫泰物流"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#fd9a40"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "huaxintai",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "canaryUrl": "https://www.kuaidi100.com/all/huatai.shtml",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "milestones",
+      "recipient_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "milestones",
+      "recipient_name"
+    ],
+    "unavailable": [
+      "destination",
+      "weight",
+      "offset_timestamps"
+    ]
+  },
+  "links": [],
+  "detection": []
+}
