@@ -1,0 +1,38 @@
+{
+  "shipFromCountry": "HR",
+  "shipFromCity": "Rijeka",
+  "shipToCountry": "HR",
+  "shipToCity": "Matulji",
+  "events": [
+    {
+      "eventDate": "2026-06-30T10:03:19.087",
+      "statusCode": "ST01",
+      "statusLabel": "Nalog Kreiran (Shipment information sent to InTime)",
+      "location": "RIJEKA"
+    },
+    {
+      "eventDate": "2026-06-30T11:04:23.577",
+      "statusCode": "ST02",
+      "statusLabel": "Preuzeto (Picked Up)",
+      "location": "RIJEKA"
+    },
+    {
+      "eventDate": "2026-06-30T15:04:56",
+      "statusCode": "ST04",
+      "statusLabel": "U IN TIME depou (At local IN TIME facility)",
+      "location": "RIJEKA"
+    },
+    {
+      "eventDate": "2026-07-01T09:06:23.567",
+      "statusCode": "ST05",
+      "statusLabel": "Utovareno u IN TIME dostavno vozilo (On IN TIME vehicle for delivery)",
+      "location": "RIJEKA"
+    },
+    {
+      "eventDate": "2026-07-01T11:09:23.793",
+      "statusCode": "ST07",
+      "statusLabel": "Isporučeno (Delivered)",
+      "location": "RIJEKA"
+    }
+  ]
+}

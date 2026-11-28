@@ -53,6 +53,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'airwings-india', number: 'AW0000000199',
     route: /^https:\/\/airwingsindia\.com\/tracking\.html\?awbno=AW0000000199$/,
     marker: /No Record Found For AWBNo|Enter AWB Number Seperated by/ },
+  // The page reads the number from its address, shows it and answers an unknown one in Croatian.
+  { carrier: 'intime-hr', number: 'HR990000000017',
+    route: /^https:\/\/www\.in-time\.hr\/pracenje\?id=HR990000000017$/,
+    marker: /Nije pronađena pošiljka za uneseni broj/ },
   { carrier: 'spedition-moeller', number: '00000000000000000000',
     route: /^https:\/\/portal\.spedition-moeller\.com\/tracking\.html$/,
     marker: /NVE \/ Packstücknummer/i, forwarding: 'none' },

@@ -1,4 +1,45 @@
 {
   "carrier": "intime-hr",
-  "entries": []
+  "entries": [
+    {
+      "code": "ST01",
+      "wording": "Shipment information sent to InTime",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "Nalog Kreiran: the sender's order reached In Time before the courier has the parcel."
+    },
+    {
+      "code": "ST02",
+      "wording": "Picked Up",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Preuzeto: the courier collected the parcel from the sender."
+    },
+    {
+      "code": "ST04",
+      "wording": "At local IN TIME facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "U IN TIME depou: the parcel is at the In Time depot the row names."
+    },
+    {
+      "code": "ST05",
+      "wording": "On IN TIME vehicle for delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "Utovareno u IN TIME dostavno vozilo: loaded on the delivery van."
+    },
+    {
+      "code": "ST07",
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Isporučeno: delivered to the recipient."
+    }
+  ]
 }

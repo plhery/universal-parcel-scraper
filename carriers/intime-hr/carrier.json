@@ -2,7 +2,8 @@
   "id": "intime-hr",
   "displayName": "In Time Croatia",
   "aliases": [
-    "IN TIME d.o.o."
+    "IN TIME d.o.o.",
+    "Intime Express"
   ],
   "region": {
     "countries": [
@@ -16,19 +17,45 @@
   "timezone": "Europe/Zagreb",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "intime-hr",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://www.in-time.hr/pracenje?id={trackingNumber}",
     "searchUrl": "https://www.in-time.hr/pracenje",
     "helpUrl": "https://www.in-time.hr/podrska",
     "canaryUrl": "https://www.in-time.hr/pracenje",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country"
+    ],
+    "discarded": [
+      "origin",
+      "destination"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "signatory"
+    ]
   },
   "links": [
     {

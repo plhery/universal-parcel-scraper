@@ -1,5 +1,22 @@
 {
   "carrier": "intime-hr",
-  "gap": "No public page shows a real In Time Croatia number.",
-  "records": []
+  "records": [
+    {
+      "number": "HR200026347135",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/intime-express/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's Intime Express page gives it as a tracking number example. In Time's tracking API answers it as a domestic parcel picked up in Rijeka and delivered the next day."
+    }
+  ]
 }

@@ -2531,6 +2531,12 @@
     "reason": "INTEX shipment numbers are seven digits, a hyphen and one digit, eight digits once the hyphen is removed, a length several carriers share, so no rule claims them."
   },
   {
+    "carrier": "intime-hr",
+    "pattern": "^HR\\d{12}$",
+    "kind": "open",
+    "reason": "In Time's tracking form gives HR and twelve digits as its example, and one public shipment has that shape; no rule claims it yet, so the adapter tracks a number when the user picks In Time."
+  },
+  {
     "carrier": "iqfulfillment",
     "pattern": "^(?:IQF[A-Z]{3}\\d{6}|ECO\\d{10}|AYE\\d{5}|\\d{12})$",
     "kind": "by_design",
