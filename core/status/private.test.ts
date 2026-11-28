@@ -19,6 +19,8 @@ describe('private delivery details', () => {
     'Signed for by A. EXAMPLE',
     'Door number 12',
     'Abholcode 123456',
+    'Delivered Example Residence, Esc 1 porte 2',
+    'Livré escalier 3, porte 12',
   ])('finds them in "%s"', (text) => {
     expect(hasPrivateDeliveryDetails(text)).toBe(true);
   });
@@ -29,6 +31,7 @@ describe('private delivery details', () => {
     'Arrived at the hub, PIN code area 110001',
     'Firma Example GmbH',
     'Shipping label created',
+    'Arrived at Porte de Example hub',
   ])('finds none in "%s"', (text) => {
     expect(hasPrivateDeliveryDetails(text)).toBe(false);
   });

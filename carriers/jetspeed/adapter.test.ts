@@ -12,7 +12,7 @@ import { trackingPlace } from '../../places/trackingLocation.js';
 import type { UniversalTracker } from '../../providers/universal.js';
 import { adapter, JetspeedTracker } from './adapter.js';
 import { jetspeedPlace, jetspeedUrl, parseJetspeedPage } from './parser.js';
-import { statusMap } from './status.js';
+import { jetspeedStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 // The synthetic sample in numbers.json, which `track.html` answers.
@@ -112,6 +112,22 @@ describe('JETSPEED tracking adapter', () => {
       ['in_transit', 'carrier_map', undefined], ['in_transit', 'carrier_map', undefined], ['customs', 'carrier_map', undefined], ['in_transit', 'carrier_map', 'Example'],
       ['in_transit', 'carrier_map', 'Example'], ['accepted', 'carrier_map', 'Example Hub'], ['registered', 'carrier_map', 'Example Hub'],
     ]);
+  });
+
+  it('reads the last mile\'s round and delivery after their town, area and postcode', () => {
+    // Synthetic rows in the shape of a French last mile's: the delivery names its country before the postcode, and the address after.
+    const result = parseJetspeedPage(rowsPage([
+      ['2026-05-10 16:46:00', 'Example Town,Example Area,France,00000,Delivered Example Residence, Esc 1 porte 2'],
+      ['2026-05-10 14:45:25', 'Example Town,Example Area,00000 Out for Delivery'],
+      ['2026-05-10 12:07:06', 'Arrived at the delivery station Example Town,Example Area,00000'],
+    ]), NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map' });
+    expect(result.events?.map((event) => [event.stage, event.stage_source, event.location])).toEqual([
+      ['delivered', 'carrier_map', 'Example Town, Example Area'], ['out_for_delivery', 'carrier_map', 'Example Town, Example Area'],
+      ['in_transit', 'carrier_map', 'Example Town, Example Area'],
+    ]);
+    expect(jetspeedPlace('Example Town,Example Area,France,00000,Not delivered')).toBeUndefined();
+    expect(jetspeedStage('example town,example area,france,00000,delivery attempted')).toBeUndefined();
   });
 
   it('reads the brackets among the words too, and a country there gives the row its country', () => {
