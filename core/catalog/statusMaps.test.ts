@@ -1888,6 +1888,10 @@ describe("universal providers' answers", () => {
       ['Order has been placed successfully.', 'registered'], ['已成功下单', 'registered'], ['We have your parcel', 'accepted'],
       ['Pickup requested', 'registered'], ['Booked', 'registered'], ['Waiting for Parcel', 'registered'],
       ['Item inbound scanning', 'in_transit'], ['Item outbound scanning', 'in_transit'], ['Collected at Cargo Terminal', 'in_transit'],
+      // A buying agent's warehouse steps, from the goods signed for to the flight.
+      ['Package signed by warehouse', 'accepted'], ['Warehouse inbound complete', 'accepted'],
+      ['Package has been examined and confirmed, waiting payment', 'accepted'], ['Payment success, pending outbound release', 'accepted'],
+      ['Package has been released from warehouse, international tracking number: EX0000AB,', 'in_transit'], ['Cargo is on scheduled flight', 'in_transit'],
       ['Packing the operating point', 'registered'], ['Empacando el punto de operación', 'registered'],
       ['In FedEx possession - Package received after final location pickup has occurred. Scheduled for pickup next business day', 'accepted'],
       ['In FedEx possession — At FedEx location', 'accepted'],
@@ -2063,6 +2067,7 @@ describe("universal providers' answers", () => {
       'Received. Your order has been received by the store', 'Package finished at the store',
       'Package is ready for shipping from the warehouse to the store', 'Package shipped from the warehouse to Example',
       'Package shipped out from warehouse to the store',
+      'Package signed by warehouse staff for return', 'Payment success, pending refund', 'Delivery scheduled',
       'Package received at processing center', 'Processing center has received it', 'The shipment leaves the return processing center [Example]', '未出库', '已出库待取件', '未排航班', 'Pendiente de recoger en Example', 'Dirección entrega incompleta y teléfono', 'Leave the return processing center', 'Cause of problem',
       'Rescheduled delivery', 'Parcel handed to the recipient', 'Parcel handed over to the recipient', 'Handed over to your neighbour', 'Pickup completed', 'Pickup scheduled',
       'Order registered by the recipient', 'We will come back with details about the delivery', 'The package is in the local warehouse for collection',

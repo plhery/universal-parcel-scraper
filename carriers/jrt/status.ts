@@ -50,6 +50,8 @@ const RELEASED_HANDOVER_DAY = /^已清关放行[，,] ?预计(?:\d{4}\/)?\d{1,2}
 const HANDED_TO_COURIER = /^(your package has been handed over to the courier )\S.*$/;
 // DHL's record of the recipient's choice of another address names it: "The recipient has selected a new one-time delivery address: …".
 const NEW_ADDRESS = /^(the recipient has selected a new one-time delivery address: )\S.*$/;
+// USPS's round on the line into the United States names its delivery window: "Out for Delivery, Expected Delivery by 9:00pm".
+const DELIVERY_WINDOW = /^(out for delivery, expected delivery )(?:by \d{1,2}:\d{2} ?[ap]m|between \d{1,2}:\d{2} ?[ap]m and \d{1,2}:\d{2} ?[ap]m)$/;
 
 // On the line into Mexico the booked flight is in Spanish, naming the destination and the day:
 // "Se espera que el vuelo salga hacia México el 3 de noviembre". The flight then names the destination.
@@ -70,16 +72,16 @@ export const jrtScanKey = (wording: string): string => jtMexicoKey(wording).repl
   .replace(CLEARED_FLIGHT_DAY, '$1…$2…').replace(TAKE_OFF_DAY, '$1…')
   .replace(FLIGHT_DATES, '$1…$2…').replace(DEPARTURE_DATE, '$1…').replace(LANDING_DATE, '$1…$2').replace(BOOKED_FLIGHT, '…$1').replace(ESTIMATED_DAY, '$1…')
   .replace(PORT_FLIGHT_DAY, '货物到达口岸，预计…号航班起飞').replace(EXPECTED_FLIGHT_DAY, '$1…$2')
-  .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(LOADED_FLIGHT, '$1…月…日,$2…').replace(EXPECTED_FLIGHT, '$1…').replace(HANDED_TO_COURIER, '$1…').replace(NEW_ADDRESS, '$1…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
+  .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(LOADED_FLIGHT, '$1…月…日,$2…').replace(EXPECTED_FLIGHT, '$1…').replace(HANDED_TO_COURIER, '$1…').replace(NEW_ADDRESS, '$1…').replace(DELIVERY_WINDOW, '$1…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
   .replace(TRANSPORTED_TO, '$1…').replace(DELAYED_FLIGHT, '$1…$2…')
   .replace(ETD_FLIGHT, '预计配载…航班（estimated flight departure time (etd:…)').replace(RELEASED_HANDOVER_DAY, '已清关放行，预计…号交仓');
 
 // USPS's status followed by its sentence, which names the time, day and town: "Departed Shipping Partner Facility -> Your
-// item departed a shipping partner facility at … in …". The status before the arrow takes its own entry.
+// item departed a shipping partner facility at … in …". The status before the arrow takes its own entry, keyed as it is alone.
 const USPS_SENTENCE = /^([^>]{1,80}?) -> your item\b/;
 const uspsSentenceStage = (key: string): Stage | undefined => {
   const status = USPS_SENTENCE.exec(key)?.[1];
-  return status ? WORDINGS.stage(status) : undefined;
+  return status ? WORDINGS.stage(jrtScanKey(status)) : undefined;
 };
 
 /**

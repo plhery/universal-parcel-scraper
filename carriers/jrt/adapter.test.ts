@@ -631,6 +631,16 @@ describe('JRT tracking adapter', () => {
     // USPS's status with its sentence, whatever time, day and town it names.
     expect(answer('Departed Shipping Partner Facility -> Your item departed a shipping partner facility at 3:14 am on November 9, 2026 in EXAMPLE, IL. A delivery date will be available when USPS receives the package.'))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // USPS's own scans once it has the parcel, alone or with the sentence, and its round with a delivery window.
+    expect(answer('Accepted at USPS Facility')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('Arrived at USPS Facility -> Your item arrived at our USPS facility in EXAMPLE IL DISTRIBUTION CENTER on November 4, 2026 at 6:18 pm.'))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('Arrived at Post Office')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('Out for Delivery, Expected Delivery by 9:00pm')).toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
+    expect(answer('Out for Delivery, Expected Delivery Between 10:00am and 2:00pm -> Your item is out for delivery on November 7, 2026 at 10:10 am in EXAMPLE, NH.'))
+      .toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
+    expect(answer('Delivered, In/At Mailbox -> Your item was delivered in or at the mailbox at 12:09 pm on November 7, 2026 in EXAMPLE, NH.'))
+      .toEqual({ kind: 'mapped', stage: 'delivered' });
     // On the line into Europe: the order data sent to DPD, the landing with the clearance under way, the cargo
     // collected at the airport, worded as a delivery, the completed clearance and the hand-over to the delivering carrier.
     expect(answer('Order information has been transmitted to DPD.')).toEqual({ kind: 'mapped', stage: 'registered' });

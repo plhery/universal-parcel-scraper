@@ -1286,6 +1286,13 @@
       "firstSeen": "2026-10-08",
       "note": "Category on the identity field, labelled by the page's status filter."
     },
-    {"wording": "Arrived at Post Office", "stage": "in_transit", "language": "en", "confirmedBy": "live"}
+    {"wording": "Arrived at Post Office", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {
+      "wording": "OUTBOUND SCANNED",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The delivering carrier's station scanning the parcel out, minutes before its out-for-delivery row."
+    }
   ]
 }

@@ -59,7 +59,9 @@ browser is needed, and no portal link is published.
   row without a place. The flight row names its month and day, read as an ellipsis.
 - USPS's rows for the partner that carries the parcel before USPS has it ("Departed Shipping Partner
   Facility, USPS Awaiting Item") can also come as the status and, after an arrow, USPS's sentence
-  naming the time, day and town. The status before the arrow decides the stage. The tracker dates
+  naming the time, day and town. The status before the arrow decides the stage, a round's delivery
+  window read as an ellipsis. USPS's acceptance after the partner's rows carries the parcel on, since
+  JRT accepted it in China. The tracker dates
   that row an hour early, as if on Eastern time, beside the partner's own row at the same minute, so
   it is dated at the time and day the sentence names, on its state's clock.
 - The line into the United States can end with GOFO instead. The tracker copies GOFO's scans in

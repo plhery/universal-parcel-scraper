@@ -1410,6 +1410,58 @@
       "note": "USPS's status before its sentence (\"Departed Shipping Partner Facility -> Your item departed a shipping partner facility at … in …\"), which the tracker copies beside the short row; the row takes this entry whatever time, day and town the sentence names."
     },
     {
+      "wording": "Accepted at USPS Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "USPS taking the parcel over from the partner that carried it into the United States. JRT accepted it in China, so USPS's acceptance carries it on."
+    },
+    {
+      "wording": "Arrived at USPS Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "USPS's scans on the line into the United States, also copied with USPS's sentence after an arrow (\"Arrived at USPS Facility -> Your item arrived at our USPS facility in …\"), which takes the status's entry."
+    },
+    {
+      "wording": "Departed USPS Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "In Transit to Next Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrived at Post Office",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "USPS's delivery office, before the round."
+    },
+    {
+      "wording": "Out for Delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Out for Delivery, Expected Delivery …",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "USPS's round with its delivery window (\"by 9:00pm\", \"Between 10:00am and 2:00pm\"), which the map reads as an ellipsis."
+    },
+    {
+      "wording": "Delivered, In/At Mailbox",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
       "wording": "航班已到达,清关拆板中 The flight has arrived, customs clearance and unpacking are underway",
       "language": "zh",
       "stage": "customs",

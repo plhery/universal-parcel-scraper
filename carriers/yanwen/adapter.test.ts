@@ -534,8 +534,8 @@ describe('Yanwen result projection', () => {
     expect(yanwenStatus('Dispatch task assigned to DA.')).toBeUndefined();
   });
 
-  it("reads a destination courier's hub, task and sorting, and Poste Italiane's first scan, after the import release as transit", () => {
-    for (const wording of ['ARRIVE TRANSITHUB', 'TASK ASSIGNED', 'ORDER SORTED', 'First parcel scan along Poste Italiane’s logistic network']) {
+  it("reads a destination courier's hub, task, sorting and outbound scan, and Poste Italiane's first scan, after the import release as transit", () => {
+    for (const wording of ['ARRIVE TRANSITHUB', 'TASK ASSIGNED', 'ORDER SORTED', 'OUTBOUND SCANNED', 'First parcel scan along Poste Italiane’s logistic network']) {
       expect(yanwenStatus(wording), wording).toEqual({ status: 'in_transit', stage: 'in_transit' });
       expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe('in_transit');
     }

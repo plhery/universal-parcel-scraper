@@ -425,6 +425,11 @@ function providerWordingStage(description: string): Stage | undefined {
   // sending it on to KTD's warehouse, the parcel leaving that, its export declared and its flight taking off.
   if (/^package received and scanned at the carrier['’]s local warehouse[.!]?$/i.test(value)) return 'accepted';
   if (/^package leaves the carrier['’]s local warehouse[.!]?$|^your item has left the [a-z ]{1,40} warehouse[.!]?$|^export declaration (?:in progress|completed)[.!]?$|^take ?off[.!]?$/i.test(value)) return 'in_transit';
+  // A buying agent's warehouse in China, as the providers relay its steps: the goods signed for and booked in, the
+  // parcel packed and confirmed while the buyer pays for its shipping, then released with its international number
+  // and flown. The warehouse has the parcel from its first step, as a "Warehouse receipt" reads.
+  if (/^package signed by warehouse[.!]?$|^warehouse inbound complete[.!]?$|^package has been [a-z]{3,14} and confirmed, waiting (?:for )?payment[.!]?$|^payment success(?:ful)?, pending outbound release[.!]?$/i.test(value)) return 'accepted';
+  if (/^package has been released from warehouse, international tracking number: [a-z0-9-]{6,40},?$|^cargo is on scheduled flight[.!]?$/i.test(value)) return 'in_transit';
   // MRW's own wording for a parcel left at one of its pickup points, relayed by a provider,
   // and for its pickup from the sender still to come, as MRW's own map reads them.
   if (/^depositado en punto mrw[.!]?$/i.test(value)) return 'ready_for_pickup';
