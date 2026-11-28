@@ -1,0 +1,85 @@
+{
+  "carrier": "omg-express",
+  "entries": [
+    {
+      "code": "CREATED",
+      "wording": "已创建运单",
+      "language": "zh",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The waybill was created at the US warehouse, with the goods being sorted and packed."
+    },
+    {
+      "code": "IN_TRANSIT",
+      "wording": "送机场",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Taken to the airport to wait for the flight to China."
+    },
+    {
+      "code": "IN_TRANSIT",
+      "wording": "飞行中",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "On the flight to the Chinese port of clearance."
+    },
+    {
+      "code": "IN_TRANSIT",
+      "wording": "运输中",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A scan of the Chinese courier that delivers the parcel, copied into OMG's timeline."
+    },
+    {
+      "code": "CUSTOMS_CLEARANCE",
+      "wording": "等待清关",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Arrived at the Chinese port, waiting for customs clearance."
+    },
+    {
+      "code": "CUSTOMS_CLEARANCE",
+      "wording": "清关中",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Customs clearance in progress."
+    },
+    {
+      "code": "CUSTOMS_CLEARANCE",
+      "wording": "清关完毕",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Clearance finished, about to be handed to the Chinese courier. OMG gives it the customs code, so the map keeps it under customs."
+    },
+    {
+      "code": "PICKED_UP",
+      "wording": "转国内快递",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The Chinese courier collected the parcel at the port after clearance: a hand-over on the way, not the shipper's acceptance."
+    },
+    {
+      "code": "OUT_FOR_DELIVERY",
+      "wording": "派送中",
+      "language": "zh",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The Chinese courier's delivery round, or its drop at a parcel station, which OMG labels the same way."
+    },
+    {
+      "code": "DELIVERED",
+      "wording": "已签收",
+      "language": "zh",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Signed for or collected."
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": "omg-express",
+  "displayName": "OMG Express",
+  "aliases": [
+    "OMG国际速运",
+    "OMG International Express"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#0F766E"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "omg-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "delivery_partner"
+  ],
+  "portal": {
+    "url": "https://omg-exp.com/tracking/{trackingNumber}",
+    "searchUrl": "https://omg-exp.com/tracking",
+    "canaryUrl": "https://omg-exp.com/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "phone_numbers"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_partner"
+    ],
+    "discarded": [
+      "phone_numbers"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "signatory"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "omg-exp.com",
+        "www.omg-exp.com"
+      ],
+      "path": "^/tracking/(OMG\\d{8,12})/?$"
+    }
+  ],
+  "detection": []
+}

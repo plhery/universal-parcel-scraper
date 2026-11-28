@@ -7580,5 +7580,11 @@
     "pattern": "^\\d{12}$",
     "kind": "by_design",
     "reason": "Twelve digits is the test number Kuaidi100 lists for Hailian Express, a bare digit run many carriers' numbers share, so nothing in it points to Hailian. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "omg-express",
+    "pattern": "^OMG\\d{10}$",
+    "kind": "open",
+    "reason": "OMG and ten digits is the one public waybill, from Kuaidi100's carrier list; one sample does not establish the family, so no rule claims it."
   }
 ]

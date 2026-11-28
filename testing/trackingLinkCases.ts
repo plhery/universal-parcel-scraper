@@ -57,6 +57,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'intime-hr', number: 'HR990000000017',
     route: /^https:\/\/www\.in-time\.hr\/pracenje\?id=HR990000000017$/,
     marker: /Nije pronađena pošiljka za uneseni broj/ },
+  // The page renders the waybill at its address on the server and answers an unknown one in Chinese.
+  { carrier: 'omg-express', number: 'OMG0000000000',
+    route: /^https:\/\/omg-exp\.com\/tracking\/OMG0000000000$/,
+    marker: /没有查询到这个运单/ },
   { carrier: 'spedition-moeller', number: '00000000000000000000',
     route: /^https:\/\/portal\.spedition-moeller\.com\/tracking\.html$/,
     marker: /NVE \/ Packstücknummer/i, forwarding: 'none' },
