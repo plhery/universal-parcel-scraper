@@ -284,7 +284,7 @@
       "stage": "accepted",
       "confirmedBy": "source",
       "firstSeen": "2026-10-24",
-      "note": "A label of PostNL's domestic tracker; the shared wording rules read it as in transit."
+      "note": "A label of PostNL's domestic tracker; the shared wording rules read it as in transit. A receipt after an earlier acceptance reads in transit in the adapter: PostNL received the parcel again."
     },
     {
       "wording": "Scanned at PostNL self-service point",

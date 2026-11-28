@@ -24,6 +24,9 @@ it; everything user-facing says PostNL.
      `isDelivered` says it happened and `deliveryDate`, when present, dates it. The status
      phase alone is not read as delivered, because it already reads so while a parcel waits
      at a pick-up point. An announced parcel without observations is kept as a summary.
+   - An acceptance after an earlier one, such as a second `Shipment received by PostNL` a day
+     later or the receipt after a parcel machine drop-off, reads in transit: PostNL received the
+     parcel again in its network, so the parcel does not step back after a notice read in transit.
    - `eta` is the delivery slot from PostNL's page. `Specific` has a start and an end with
      offsets, `WholeDay` gives the day only, and `MultipleDaySpan` runs from one day's midnight
      to a later day's 23:59:59, read as those days. PostNL keeps it after delivery and at a pick-up

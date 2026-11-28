@@ -312,6 +312,15 @@ export function parsePostNLDomesticResponse(value: unknown, trackingNumber: stri
     return { observation, description, time: explicitOffsetTime(observation.observationDate),
       classified: classified?.source === 'none' ? null : classified };
   });
+  // PostNL can receive the parcel again a day later, after its first receipt or a self-service drop-off and a notice
+  // that reads in transit: a later receipt is a movement in its network, not a step back.
+  for (const scan of scans) {
+    const at = scan.time?.timestamp;
+    if (scan.classified?.stage !== 'accepted' || at === undefined) continue;
+    if (scans.some((other) => other.classified?.stage === 'accepted' && other.time !== null && other.time.timestamp < at)) {
+      scan.classified = { stage: 'in_transit', source: 'carrier_map' };
+    }
+  }
   const delivered = collo.isDelivered === true;
   const deliveredAt = delivered ? explicitOffsetTime(collo.deliveryDate) : null;
   const { estimate, unread } = domesticEstimate(collo);

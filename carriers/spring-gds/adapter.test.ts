@@ -798,6 +798,26 @@ describe('PostNL domestic tracker', () => {
     for (const missed of ['We missed you; we’ll try again', "We missed you; we'll try again"]) expect(statusMap.stage('Y10', missed)).toBe('failed_attempt');
   });
 
+  it('reads a receipt after PostNL already received the parcel as in transit, so a busy notice before it is not undone', () => {
+    const result = parsePostNLDomesticResponse(reply(collo({ statusPhase: { index: 2, message: 'Synthetic phase' }, observations: [
+      { observationDate: '2026-05-12T20:10:00+02:00', observationCode: 'B01', description: 'Shipment received by PostNL' },
+      { observationDate: '2026-05-12T05:00:00+02:00', observationCode: 'G03',
+        description: 'It’s very busy. Please allow for slightly slower delivery times. We’ll deliver your parcel as soon as we can.' },
+      { observationDate: '2026-05-11T18:05:00+02:00', observationCode: 'B01', description: 'Shipment received by PostNL' },
+      { observationDate: '2026-05-11T15:30:00+02:00', observationCode: 'A01', description: 'Shipment expected, but not yet arrived or processed at PostNL' },
+    ] })), barcode);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map' });
+    expect(result.events?.map((event) => [event.provider_code, event.stage])).toEqual([
+      ['B01', 'in_transit'], ['G03', 'in_transit'], ['B01', 'accepted'], ['A01', 'registered'],
+    ]);
+    // A receipt after the sender's drop-off at a parcel machine moves on from that acceptance too.
+    const dropped = parsePostNLDomesticResponse(reply(collo({ statusPhase: { index: 2, message: 'Synthetic phase' }, observations: [
+      { observationDate: '2026-05-11T22:00:00+02:00', observationCode: 'B01', description: 'Shipment received by PostNL' },
+      { observationDate: '2026-05-11T16:00:00+02:00', observationCode: 'C02', description: 'Scanned at PostNL self-service point' },
+    ] })), barcode);
+    expect(dropped.events?.map((event) => event.stage)).toEqual(['in_transit', 'accepted']);
+  });
+
   it('reads PostNL acceptance by its status number, as a universal provider rewords it', () => {
     expect(statusMap.stage('3116/transit', 'Arrive at transit country or district')).toBe('accepted');
     expect(statusMap.stage('173/transit', 'Synthetic relayed wording')).toBe('accepted');
