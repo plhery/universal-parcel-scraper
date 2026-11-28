@@ -1,7 +1,7 @@
 /**
  * The Neoman GInfo tracking server, `GInfo.dll` on IIS, which HGD, SRJ, Yi Long Express, King
- * Delivery, Valueway Express and Qinhang Transportation each run on a host of their own, HGD, SRJ,
- * Yi Long and Qinhang over plain HTTP.
+ * Delivery, Valueway Express, Qinhang Transportation, Ronghui Supply Chain and ESOWAY each run on a
+ * host of their own, all but King Delivery and Valueway over plain HTTP.
  * Their sites' tracking forms post to the server's `EmmisTrack` page; the adapters read
  * `EmsApiTrack`, the record that page renders. Each carrier keeps its host, number shape and status
  * map; this module holds the request and the parser they share.
@@ -32,8 +32,11 @@ export interface GinfoRowText {
 /** The zone a row's wall clock is on, and how it was chosen, as `time_zone_basis` says it. */
 export interface GinfoRowZone {
   readonly zone: string;
-  readonly basis: 'place' | 'carrier';
+  readonly basis: 'place' | 'destination' | 'carrier';
 }
+
+/** The carrier that delivers a parcel and its number there. */
+export type GinfoOnward = Pick<CarrierResult, 'delivery_carrier' | 'delivery_tracking_number'>;
 
 /** One carrier's tenant of the server. */
 export interface GinfoTenant {
@@ -51,8 +54,11 @@ export interface GinfoTenant {
   readonly stage: (wording: string, code: string) => ClassifiedWording | null;
   /** The carrier's map, which tells a scan that moves nothing from one that moves the parcel. */
   readonly statusMap: CarrierStatusMap;
-  /** A row's wording, place and code, for a tenant that writes them all in `INFO`. Without it, `INFO` is the wording. */
-  readonly row?: (info: string) => GinfoRowText;
+  /**
+   * A row's wording, place and code, from its `INFO` and its `PLACE` as written, for a tenant that writes
+   * them all in `INFO` or labels a row in `PLACE`. Without it, `INFO` is the wording.
+   */
+  readonly row?: (info: string, place: string) => GinfoRowText;
   /** The place a row's `PLACE` names, given its `INFO`, or '' when it holds something else. Without it, `PLACE` as written. */
   readonly place?: (place: string, info: string) => string;
   /**
@@ -66,6 +72,12 @@ export interface GinfoTenant {
    * carrier's number in `TRANS_NBR`. Without it, only `REFER_NBR` can name a delivery carrier.
    */
   readonly transfers?: Readonly<Record<string, string>>;
+  /**
+   * The delivery carrier and its number, from `REFER_NBR` and the scans, for a tenant whose rows
+   * name the carrier it hands parcels to. Without it, a number in `REFER_NBR` that another carrier's
+   * rules claim at high confidence.
+   */
+  readonly onward?: (reference: string, events: readonly CarrierEvent[], number: string) => GinfoOnward;
   /**
    * The tenant's page was seen to show `STATE` 3 as delivered (送达！) with `ADATE` as the delivery
    * time: the record then reads as delivered whatever its rows say.
@@ -149,10 +161,10 @@ function scans(tenant: GinfoTenant, rows: string, readAt: number): CarrierEvent[
     if (![clock, place, info].some((part) => textFromHtml(part, 40))) continue;
     const local = wallClock(provider, textFromHtml(clock, 40));
     if (firstOccurrence(DateTime.fromISO(local, { zone: ZONE })).toMillis() > readAt) continue;
-    const text = tenant.row ? tenant.row(textFromHtml(info, 1000)) : { description: textFromHtml(info, 300) };
+    const written = textFromHtml(place, 120);
+    const text = tenant.row ? tenant.row(textFromHtml(info, 1000), written) : { description: textFromHtml(info, 300) };
     const description = clean(text.description, 300);
     if (!description) continue;
-    const written = textFromHtml(place, 120);
     const location = (written && tenant.place ? clean(tenant.place(written, textFromHtml(info, 1000)), 120) : written)
       || clean(text.location, 120);
     const code = text.code ?? '';
@@ -184,7 +196,7 @@ function scans(tenant: GinfoTenant, rows: string, readAt: number): CarrierEvent[
  * another carrier's own rules claim at high confidence. HGD's records repeat
  * the waybill there, SRJ's give USPS's package number, Yi Long's a note.
  */
-function handoff(tenant: GinfoTenant, reference: string, number: string): Pick<CarrierResult, 'delivery_carrier' | 'delivery_tracking_number'> {
+function handoff(tenant: GinfoTenant, reference: string, number: string): GinfoOnward {
   const onward = reference.toUpperCase();
   if (!REFERENCE.test(onward) || onward === number) return {};
   const match = detectCarrierMatch(onward);
@@ -197,7 +209,7 @@ function handoff(tenant: GinfoTenant, reference: string, number: string): Pick<C
  * carrier's own rules claim the whole number at high confidence: King Delivery's
  * records name JD Logistics and its waybill there. Undefined otherwise.
  */
-function transfer(tenant: GinfoTenant, info: string, number: string): Pick<CarrierResult, 'delivery_carrier' | 'delivery_tracking_number'> | undefined {
+function transfer(tenant: GinfoTenant, info: string, number: string): GinfoOnward | undefined {
   const kind = field(tenant.provider, info, 'TRANSKIND', 60);
   const carrier = tenant.transfers && Object.hasOwn(tenant.transfers, kind) ? tenant.transfers[kind] : undefined;
   if (!carrier) return undefined;
@@ -238,6 +250,7 @@ export function parseGinfo(tenant: GinfoTenant, body: string, raw: string, readA
   const country = itdidaCountry(field(provider, info, 'DES', 60));
   const weight = field(provider, info, 'WEIGHT', 16);
   const kilograms = WEIGHT.test(weight) && Number(weight) > 0 ? Number(weight) : null;
+  const reference = field(provider, info, 'REFER_NBR', 64);
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: source } : {}),
@@ -247,7 +260,8 @@ export function parseGinfo(tenant: GinfoTenant, body: string, raw: string, readA
     expected_delivery: null,
     ...(country ? { destination_country: country } : {}),
     ...(kilograms !== null ? { weight_kg: kilograms } : {}),
-    ...(transfer(tenant, info, number) ?? handoff(tenant, field(provider, info, 'REFER_NBR', 64), number)),
+    ...(transfer(tenant, info, number)
+      ?? (tenant.onward ? tenant.onward(reference, events, number) : handoff(tenant, reference, number))),
     events,
   };
 }

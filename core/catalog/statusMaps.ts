@@ -1224,6 +1224,7 @@ import { statusMap as ztcce } from '../../carriers/ztcce/status.js';
 import { statusMap as global99 } from '../../carriers/global99/status.js';
 import { statusMap as cloudlogistics365 } from '../../carriers/cloudlogistics365/status.js';
 import { statusMap as roh56 } from '../../carriers/roh56/status.js';
+import { statusMap as esoway } from '../../carriers/esoway/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1499,6 +1500,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   global99,
   cloudlogistics365,
   roh56,
+  esoway,
 };
 
 /** The carrier the app files the universal providers' scans under. */

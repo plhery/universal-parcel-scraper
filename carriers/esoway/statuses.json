@@ -1,0 +1,112 @@
+{
+  "carrier": "esoway",
+  "entries": [
+    {
+      "wording": "货物到达温哥华机场，准备发往中国，计划24小时内起飞",
+      "language": "zh",
+      "english": "The goods reached Vancouver airport for China; the flight should leave within 24 hours",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "ESOWAY's first row, written in Vancouver."
+    },
+    {
+      "wording": "航班已配载，飞往中国途中",
+      "language": "zh",
+      "english": "Loaded on the flight, on its way to China",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "抵达中国处理中心",
+      "language": "zh",
+      "english": "Arrived at the processing centre in China",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "货物交送海关，清关中",
+      "language": "zh",
+      "english": "Handed to customs; clearance under way",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "中通转单号：…",
+      "language": "zh",
+      "english": "ZTO waybill: …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The row's place says 中通转单号 and its text is ZTO's waybill; the adapter joins them. ZTO's scans follow."
+    },
+    {
+      "wording": "… 已揽收",
+      "language": "zh",
+      "english": "Collected by the ZTO branch named",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "ZTO's first scan. The adapter leaves out the courier and the phones ZTO names."
+    },
+    {
+      "wording": "快件已揽收",
+      "language": "zh",
+      "english": "Collected by ZTO",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "ZTO's first scan, once the adapter leaves out the branch's courier."
+    },
+    {
+      "wording": "快件已发往 …",
+      "language": "zh",
+      "english": "Sent to the ZTO centre or branch named",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件已到达 …",
+      "language": "zh",
+      "english": "Arrived at the ZTO centre or branch named",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "… 的业务员正在为您派件",
+      "language": "zh",
+      "english": "Out for delivery from the ZTO branch named",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The adapter leaves out the courier and the phones."
+    },
+    {
+      "wording": "… 快递员正在为您派件",
+      "language": "zh",
+      "english": "Out for delivery from the ZTO branch named",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The adapter leaves out the courier and the phones."
+    },
+    {
+      "wording": "快件已在 …暂放，请及时取件",
+      "language": "zh",
+      "english": "Left at the pickup locker; please collect it",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "note": "The adapter leaves out the locker, which names the recipient's address, and the phones."
+    },
+    {
+      "wording": "您的快递已签收",
+      "language": "zh",
+      "english": "Your parcel was signed for",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The adapter leaves out where it was collected and the phones."
+    },
+    {
+      "wording": "您的快件已送达",
+      "language": "zh",
+      "english": "Your parcel was delivered",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The adapter leaves out the courier, who signed and the phones."
+    }
+  ]
+}

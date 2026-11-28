@@ -1,0 +1,86 @@
+{
+  "id": "esoway",
+  "displayName": "ESOWAY",
+  "aliases": [
+    "易速递",
+    "加拿大易速递",
+    "ESOWAY.COM"
+  ],
+  "region": {
+    "countries": [
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#FF7200"
+  },
+  "selectable": true,
+  "timezone": "America/Vancouver",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "esoway",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 87
+    }
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "weight",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "parcel_count",
+      "delivered_at",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "staff_details",
+      "contact_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "delivered_at",
+      "staff_details",
+      "contact_details"
+    ],
+    "unavailable": [
+      "eta",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "esoway-1",
+      "pattern": "^ES\\d{10}CA$",
+      "confidence": "low"
+    }
+  ]
+}

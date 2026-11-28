@@ -38,6 +38,11 @@ and phone verification belong to that account flow; they are separate from the
 public PC tracker. The unauthenticated ZTO International route does not establish
 domestic shipment ownership.
 
+Forwarders that hand parcels to ZTO, such as [ESOWAY](../esoway/README.md), copy ZTO's
+sentences into their own trackers, with the courier's name and mobile, the branch's
+phones and the pickup point. [`relayed.ts`](relayed.ts) keeps such a sentence without
+them, and the city its brackets open with as the place.
+
 ## Testing
 
 Set `ZTO_TRACKING_NUMBER` and `FLARESOLVERR_URL` privately, then run

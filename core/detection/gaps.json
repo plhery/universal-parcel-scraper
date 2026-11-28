@@ -7432,5 +7432,11 @@
     "pattern": "^\\d{8}$",
     "kind": "by_design",
     "reason": "Ronghui Supply Chain's waybills seen are eight bare digits, a counter many carriers' numbers share, so nothing in the number points to Ronghui. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "esoway",
+    "pattern": "^DD\\d{8}$",
+    "kind": "collision",
+    "reason": "ESOWAY's tracker also holds waybills of DD and eight digits, a shape GLS Italy's and TNT Italy's low rules also suggest, and one tracking directory example does not establish the series, so the adapter answers explicit selection."
   }
 ]
