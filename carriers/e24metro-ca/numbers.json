@@ -1,5 +1,43 @@
 {
   "carrier": "e24metro-ca",
-  "gap": "No public page shows an E24 number.",
-  "records": []
+  "records": [
+    {
+      "number": "363C38-8B1AA496",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260805134010/https://tracking-ca.fareye.co/tracking?+1OugwIG6afj3SYjktGthZEeIoSEhq57IOR6ECCg4UVFYqE+5M6WUkH5OrQrsMqDvfvuoCfVXNo2UBW0+pxGEx2+5aJ8exbAm3Y=",
+        "date": "2026-08-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived FarEye Canada tracking link; the capture's reference fields name this parcel. E24's public search finds it, and the tracker answers with E24's statuses from the order to the delivery."
+    },
+    {
+      "number": "9336E1-D96ECADC",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260509071358/https://tracking-ca.fareye.co/universal-search?encodedString=Qg8NNI2PxmSa3TWy2asu6u3MzTI0ThS54ELjfozEWy2Wvg%3D%3D&lang=en&param1=9336E1-D96ECADC",
+        "date": "2026-05-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived capture of E24's public search page with this number; the capture's statuses are E24's. The tracker has since dropped the parcel and its search no longer finds it."
+    }
+  ]
 }

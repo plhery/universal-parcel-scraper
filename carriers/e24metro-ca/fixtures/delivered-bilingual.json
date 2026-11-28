@@ -1,0 +1,73 @@
+{
+  "processStatusLogDomainList": [
+    {
+      "referenceNumber": [
+        "363C38-8B1AA496"
+      ],
+      "processStatusLogDto": [
+        {
+          "processMasterId": 530,
+          "referenceNumber": "363C38-8B1AA496",
+          "companyId": 14,
+          "status": "Order Confirmed/ Commande confirmée",
+          "statusCategory": "pending",
+          "statusTime": "2026-08-04 14:28:57",
+          "statusIcon": "fa-check",
+          "statusClientTime": "2026-08-04 18:28:57"
+        },
+        {
+          "processMasterId": 530,
+          "referenceNumber": "363C38-8B1AA496",
+          "companyId": 14,
+          "status": "Shipment Received at Facility /Envoi reçu à l'installation",
+          "statusCategory": "pending",
+          "statusTime": "2026-08-04 19:07:53",
+          "statusIcon": "fa-info",
+          "statusClientTime": "2026-08-04 23:07:53"
+        },
+        {
+          "processMasterId": 530,
+          "referenceNumber": "363C38-8B1AA496",
+          "companyId": 14,
+          "status": "Assigned to Last mile Driver for Delivery/Attribué au chauffeur du dernier kilomètre pour la livraison",
+          "statusCategory": "pending",
+          "statusTime": "2026-08-04 23:57:05",
+          "statusIcon": "fa-info",
+          "statusClientTime": "2026-08-05 03:57:05"
+        },
+        {
+          "processMasterId": 530,
+          "referenceNumber": "363C38-8B1AA496",
+          "companyId": 14,
+          "status": "Driver Out For Delivery/Chauffeur pour la livraison",
+          "statusCategory": "pending",
+          "statusTime": "2026-08-05 09:15:17",
+          "statusIcon": "fa-info",
+          "statusClientTime": "2026-08-05 13:15:17"
+        },
+        {
+          "processMasterId": 530,
+          "referenceNumber": "363C38-8B1AA496",
+          "companyId": 14,
+          "status": "You are Next/Vous êtes le suivant",
+          "statusCategory": "pending",
+          "statusTime": "2026-08-05 10:20:55",
+          "statusIcon": "fa-info",
+          "statusClientTime": "2026-08-05 14:20:55"
+        },
+        {
+          "processMasterId": 530,
+          "referenceNumber": "363C38-8B1AA496",
+          "companyId": 14,
+          "status": "Delivered/Livré",
+          "statusCategory": "success",
+          "statusTime": "2026-08-05 10:21:13",
+          "statusIcon": "fa-check",
+          "statusClientTime": "2026-08-05 14:21:13"
+        }
+      ]
+    }
+  ],
+  "eventProcessMasterId": 530,
+  "status": "Delivery Success"
+}

@@ -20,16 +20,42 @@
   "timezone": "America/Toronto",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "e24metro-ca",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "offset_timestamps"
+  ],
   "portal": {
-    "canaryUrl": "https://www.metroscg.com/contact-us/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "url": "https://tracking-ca.fareye.co/universal-search?encodedString=Qg8NNI2PxmSa3TWy2asu6u3MzTI0ThS54ELjfozEWy2Wvg%3D%3D&lang=en&param1={trackingNumber}",
+    "searchUrl": "https://tracking-ca.fareye.co/universal-search?encodedString=Qg8NNI2PxmSa3TWy2asu6u3MzTI0ThS54ELjfozEWy2Wvg%3D%3D&lang=en",
+    "helpUrl": "https://www.metroscg.com/contact-us/",
+    "canaryUrl": "https://tracking-ca.fareye.co/universal-search",
+    "shows": [
+      "status",
+      "history",
+      "offset_timestamps",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "offset_timestamps"
+    ],
+    "discarded": [
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "weight",
+      "sender_name",
+      "recipient_name"
+    ]
   },
   "links": [],
   "detection": []

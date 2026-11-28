@@ -1483,6 +1483,12 @@
     "reason": "Two letters and nine digits are shared with other carriers, and DYPAQ's API documentation shows a single real guía."
   },
   {
+    "carrier": "e24metro-ca",
+    "pattern": "^[0-9A-F]{14}$",
+    "kind": "by_design",
+    "reason": "E24's numbers are six and eight hexadecimal digits, a shape other systems' ids share; without its dash an all-digit one is any fourteen-digit number, so no rule names E24."
+  },
+  {
     "carrier": "early-bird",
     "pattern": "^00\\d{18}$",
     "kind": "by_design",

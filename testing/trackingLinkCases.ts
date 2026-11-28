@@ -317,6 +317,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'airmee', number: 'ZZ000000000',
     route: /^https:\/\/tracking\.airmee\.com\/#\/shipment-track\/ZZ000000000\?startDate=2018-01-01&endDate=2099-12-31$/,
     marker: /No parcel history available|Parcel history/ },
+  // E24's public FarEye search page looks the number in its query up and shows a notice for an unknown one.
+  { carrier: 'e24metro-ca', number: '000000-00000000',
+    route: /^https:\/\/tracking-ca\.fareye\.co\/universal-search\?encodedString=Qg8NNI2PxmSa3TWy2asu6u3MzTI0ThS54ELjfozEWy2Wvg%3D%3D&lang=en&param1=000000-00000000$/,
+    marker: /No order found!/ },
   { carrier: 'parcel-one', number: '4002109876543',
     route: /^https:\/\/parcel\.one\/(?:de|en)\/tracking\/\?trackno=4002109876543$/,
     marker: /Sendung verfolgen|Track (?:a |your )?shipment/i },

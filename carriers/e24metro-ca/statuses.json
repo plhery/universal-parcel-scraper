@@ -1,4 +1,152 @@
 {
   "carrier": "e24metro-ca",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Order Confirmed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The retailer sent the order to E24; E24 does not have the parcel yet."
+    },
+    {
+      "wording": "Commande confirmée",
+      "stage": "registered",
+      "language": "fr",
+      "confirmedBy": "live",
+      "note": "The French wording of the order sent to E24."
+    },
+    {
+      "wording": "Order Confirmed/ Commande confirmée",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The bilingual wording of the order sent to E24, in the tracker's English and French link."
+    },
+    {
+      "wording": "Shipment received at Facility after pickup",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "E24 collected the parcel from the retailer and scanned it in at its facility."
+    },
+    {
+      "wording": "Envoi reçu à l'installation",
+      "stage": "accepted",
+      "language": "fr",
+      "confirmedBy": "live",
+      "note": "The French wording of the parcel scanned in at E24's facility."
+    },
+    {
+      "wording": "Shipment Received at Facility /Envoi reçu à l'installation",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The bilingual wording of the parcel scanned in at E24's facility."
+    },
+    {
+      "wording": "Commande reçue à l’installation pour le ramassage",
+      "stage": "accepted",
+      "language": "fr",
+      "confirmedBy": "portal",
+      "note": "Seen in an archived reply of FarEye Canada's tracker for an E24 parcel: the parcel reached the facility from its pickup."
+    },
+    {
+      "wording": "Pickup",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "Seen in an archived reply of FarEye Canada's tracker for an E24 parcel: the parcel was collected."
+    },
+    {
+      "wording": "Assigned to Last mile Driver for Delivery",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The parcel is on a driver's route for its delivery; the driver has not left yet."
+    },
+    {
+      "wording": "Assignée au chauffeur pour la livraison",
+      "stage": "in_transit",
+      "language": "fr",
+      "confirmedBy": "live",
+      "note": "The French wording of the parcel put on a driver's route."
+    },
+    {
+      "wording": "Assigned to Last mile Driver for Delivery/Attribué au chauffeur du dernier kilomètre pour la livraison",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The bilingual wording of the parcel put on a driver's route."
+    },
+    {
+      "wording": "Driver Out For Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The driver left with the parcel."
+    },
+    {
+      "wording": "Chauffeur pour la livraison",
+      "stage": "out_for_delivery",
+      "language": "fr",
+      "confirmedBy": "live",
+      "note": "The French wording the tracker gives the driver leaving with the parcel."
+    },
+    {
+      "wording": "Driver Out For Delivery/Chauffeur pour la livraison",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The bilingual wording of the driver leaving with the parcel."
+    },
+    {
+      "wording": "Sorti en route pour la livraison",
+      "stage": "out_for_delivery",
+      "language": "fr",
+      "confirmedBy": "portal",
+      "note": "Seen in an archived reply of FarEye Canada's tracker for an E24 parcel: the driver left with the parcel."
+    },
+    {
+      "wording": "You are Next",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The recipient's address is the driver's next stop."
+    },
+    {
+      "wording": "Vous êtes le suivant",
+      "stage": "out_for_delivery",
+      "language": "fr",
+      "confirmedBy": "live",
+      "note": "The French wording of the driver's next stop."
+    },
+    {
+      "wording": "You are Next/Vous êtes le suivant",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The bilingual wording of the driver's next stop."
+    },
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The driver delivered the parcel."
+    },
+    {
+      "wording": "Livré",
+      "stage": "delivered",
+      "language": "fr",
+      "confirmedBy": "live",
+      "note": "The French wording of the delivery."
+    },
+    {
+      "wording": "Delivered/Livré",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The bilingual wording of the delivery."
+    }
+  ]
 }

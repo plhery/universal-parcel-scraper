@@ -1,0 +1,111 @@
+{
+  "referenceNumber": "8b1aa496-7e3b-4f92-b3f2-0909214369eb",
+  "feedback": "{\"processMasterCode\":\"shipment_tracking\",\"tagMappingKey\":\"feedback_option\",\"ratingMappingKey\":\"feedback_rating\",\"feedbackSubmissionTimestampKey\":null,\"deliverTo\":\"\",\"failedReason\":\"\",\"captureReason\":\"notAllowed\",\"attemptedDate\":\"2026-08-05 14:21:13\",\"podImage\":\"final_photo_array\",\"podImageArrayChild\":[\"final_photos\"],\"pudoShop\":\"\",\"pudoContactNumber\":null,\"pudoTiming\":null,\"pudoLocation\":null,\"pudoAddressLine1\":null,\"pudoAddressLine2\":null,\"pudoLandMark\":null,\"pudoPincode\":null,\"referenceNumber\":\"363C38-8B1AA496\",\"disableFeedbackRating\":true,\"feedbackHeading\":null,\"orderDroppingPoint\":null,\"successDeliveryDescription\":\"We have delivered your order/Nous avons livré votre commande. .\",\"failDeliveryDescription\":\"We were not able to deliver your order, sorry for inconvenience.\",\"captureFeedbackV3\":\"allowed\",\"dataStoreMasterId\":null,\"configurePudoFeedback\":null,\"dataStoreMasterCode\":null,\"uniqueProcessAttribute\":null,\"feedbackCommentLimit\":null,\"podImageArrayList\":[],\"multipleFeedbackSubmissionKey\":null,\"reason\":[{\"values\":[\"Bad overall delivery experience\",\"Delivery not on time\",\"Delivery Driver Behaviour not good\",\"Would you like to recommend us?\"],\"rating\":\"Four\"}],\"reasonv3\":[{\"values\":[\"Did you have a positive delivery experience?\",\"Did you take advantage of the customer alert and n\",\"Did you need to speak with our customer care suppo\",\"Are you likely to recommend this delivery service \"],\"rating\":\"4\",\"ratingHeading\":\"\"}],\"enablePodImageNew\":false,\"showStatusFromTrackerTimeLine\":false,\"commentMappingKey\":null}",
+  "screen": "feedbackScreen",
+  "showTracking": false,
+  "callToFE": false,
+  "messageToFE": false,
+  "showFE": true,
+  "processStatusLogDomainList": [
+    {
+      "referenceNumber": [
+        "363C38-8B1AA496"
+      ],
+      "processStatusLogDto": [
+        {
+          "processMasterId": 530,
+          "referenceNumber": "363C38-8B1AA496",
+          "companyId": 14,
+          "status": "Order Confirmed",
+          "statusCategory": "pending",
+          "statusTime": "2026-08-04 14:28:57",
+          "statusIcon": "fa-check",
+          "statusClientTime": "2026-08-04 18:28:57"
+        },
+        {
+          "processMasterId": 530,
+          "referenceNumber": "363C38-8B1AA496",
+          "companyId": 14,
+          "status": "Shipment received at Facility after pickup",
+          "statusCategory": "pending",
+          "statusTime": "2026-08-04 19:07:53",
+          "statusIcon": "fa-info",
+          "statusClientTime": "2026-08-04 23:07:53"
+        },
+        {
+          "processMasterId": 530,
+          "referenceNumber": "363C38-8B1AA496",
+          "companyId": 14,
+          "status": "Assigned to Last mile Driver for Delivery",
+          "statusCategory": "pending",
+          "statusTime": "2026-08-04 23:57:05",
+          "statusIcon": "fa-info",
+          "statusClientTime": "2026-08-05 03:57:05"
+        },
+        {
+          "processMasterId": 530,
+          "referenceNumber": "363C38-8B1AA496",
+          "companyId": 14,
+          "status": "Driver Out For Delivery",
+          "statusCategory": "pending",
+          "statusTime": "2026-08-05 09:15:17",
+          "statusIcon": "fa-info",
+          "statusClientTime": "2026-08-05 13:15:17"
+        },
+        {
+          "processMasterId": 530,
+          "referenceNumber": "363C38-8B1AA496",
+          "companyId": 14,
+          "status": "You are Next",
+          "statusCategory": "pending",
+          "statusTime": "2026-08-05 10:20:55",
+          "statusIcon": "fa-info",
+          "statusClientTime": "2026-08-05 14:20:55"
+        },
+        {
+          "processMasterId": 530,
+          "referenceNumber": "363C38-8B1AA496",
+          "companyId": 14,
+          "status": "Delivered",
+          "statusCategory": "success",
+          "statusTime": "2026-08-05 10:21:13",
+          "statusIcon": "fa-check",
+          "statusClientTime": "2026-08-05 14:21:13"
+        }
+      ]
+    }
+  ],
+  "showPickupMarker": false,
+  "userId": 15028,
+  "jobId": 56634166,
+  "orderId": 36070249,
+  "eventProcessMasterId": 530,
+  "orderStatus": 3,
+  "status": "Delivery Success",
+  "language": "eng",
+  "showEta": false,
+  "preventGoogleLiveTrackingETA": false,
+  "lmvId": 39960,
+  "enableLayoutScreen": false,
+  "browserTimeZone": true,
+  "feedbackJobStatusInfoList": [
+    {
+      "jobStatusList": [
+        7,
+        256
+      ],
+      "jobMasterName": "delivery"
+    }
+  ],
+  "disableMEta": false,
+  "calledFromDiy": false,
+  "newLayout": false,
+  "msp": false,
+  "hidePOD": false,
+  "hideRating": false,
+  "showInAccuracyMessage": false,
+  "enablePredictiveTracking": false,
+  "jobRemoved": false,
+  "herePoweredAccount": false,
+  "tId": 1
+}
