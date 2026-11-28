@@ -7692,5 +7692,11 @@
     "pattern": "^\\d{10}$",
     "kind": "by_design",
     "reason": "Shengtai Logistics' order numbers seen are ten bare digits, a shape many carriers' numbers share, so nothing in the number points to Shengtai. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "xhongda56",
+    "pattern": "^\\d{7}$",
+    "kind": "by_design",
+    "reason": "Xinhongda Logistics' waybills seen are seven bare digits, a counter other carriers' numbers share, so nothing in the number points to Xinhongda. The adapter answers explicit selection."
   }
 ]

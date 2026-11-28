@@ -1,0 +1,68 @@
+{
+  "carrier": "xhongda56",
+  "entries": [
+    {
+      "wording": "快件已在【…】被揽件",
+      "language": "zh",
+      "english": "Collected at the station in brackets",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The first row of the newer sentences. The adapter leaves out the collector named after it."
+    },
+    {
+      "wording": "发往…",
+      "language": "zh",
+      "english": "Sent to the hub or station named",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The older sentences' dispatch, the first row at the origin station too: its PLACE is where it left from."
+    },
+    {
+      "wording": "扫描裝车发往…",
+      "language": "zh",
+      "english": "Scanned and loaded for the hub named",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Written with the traditional 裝."
+    },
+    {
+      "wording": "…缷车扫描",
+      "language": "zh",
+      "english": "Unloading scan at the hub named",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Written with the variant 缷 for 卸."
+    },
+    {
+      "wording": "快件已到达【…】,会尽快安排中转,请耐心等待",
+      "language": "zh",
+      "english": "Arrived at the facility in brackets, to be sent on",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Also the arrival at the delivery station."
+    },
+    {
+      "wording": "快件已从【…】出发,下一站是【…】,货物正在运输中",
+      "language": "zh",
+      "english": "Left the facility in brackets for the next one",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "签收录入",
+      "language": "zh",
+      "english": "Signature recorded",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The older sentences' delivery at the station named in PLACE. The adapter leaves out who signed."
+    },
+    {
+      "wording": "快件已被签收",
+      "language": "zh",
+      "english": "Signed for",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The adapter leaves out who signed."
+    }
+  ]
+}

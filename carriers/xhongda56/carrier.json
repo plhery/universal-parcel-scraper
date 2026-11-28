@@ -1,0 +1,70 @@
+{
+  "id": "xhongda56",
+  "displayName": "Xinhongda Logistics",
+  "aliases": [
+    "新宏达物流",
+    "乐清市新宏达物流有限公司",
+    "Yueqing Xinhongda Logistics"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#FBA84A"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "xhongda56",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "weight"
+  ],
+  "portal": {
+    "canaryUrl": "https://www.kuaidi100.com/all/xhongda56.shtml",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "delivered_at",
+      "staff_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "weight"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "delivered_at",
+      "staff_details"
+    ],
+    "unavailable": [
+      "eta",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

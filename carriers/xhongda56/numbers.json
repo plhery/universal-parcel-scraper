@@ -1,0 +1,49 @@
+{
+  "carrier": "xhongda56",
+  "records": [
+    {
+      "number": "1682648",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for Xinhongda. Xinhongda's tracking server answers it with a consignment trucked from Yueqing through Wenzhou to Hubei and signed for there."
+    },
+    {
+      "number": "1669933",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/xhongda56.shtml",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "Kuaidi100's Xinhongda page gives it as the example number. Xinhongda's tracking server answers it with a parcel collected near Wenzhou and signed for in Wuxi."
+    }
+  ]
+}
