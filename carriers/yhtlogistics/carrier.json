@@ -1,0 +1,80 @@
+{
+  "id": "yhtlogistics",
+  "displayName": "Shanghai Aerospace Logistics",
+  "aliases": [
+    "宇航通物流",
+    "宇航通",
+    "宇航通快递",
+    "上海宇航通",
+    "宇航通国际"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#008040"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "yhtlogistics",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "weight",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination_country",
+      "parcel_count",
+      "weight",
+      "service_name",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "delivered_at",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "weight",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "origin",
+      "parcel_count",
+      "service_name",
+      "delivered_at",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

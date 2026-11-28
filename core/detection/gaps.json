@@ -7492,5 +7492,11 @@
     "pattern": "^[A-Z]{2}\\d{9}US$",
     "kind": "collision",
     "reason": "Two letters, nine digits and US is the UPU S10 layout postal operators print. Kuaidi100's Hongyuan Express sample takes that layout without a valid check digit, so the shape cannot name Hongyuan Express. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "yhtlogistics",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "Twelve-digit Shanghai Aerospace Logistics waybills share their shape with many carriers' numeric waybills, so the shape cannot name the firm. The adapter answers explicit selection."
   }
 ]

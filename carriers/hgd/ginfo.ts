@@ -69,7 +69,8 @@ export interface GinfoTenant {
   readonly zone?: (place: string, info: string) => GinfoRowZone | null;
   /**
    * The catalog carrier each service `TRANSKIND` can name, for a tenant whose record gives that
-   * carrier's number in `TRANS_NBR`. Without it, only `REFER_NBR` can name a delivery carrier.
+   * carrier's number in `TRANS_NBR`; the carrier is named when its rules take that number. Without
+   * it, only `REFER_NBR` can name a delivery carrier.
    */
   readonly transfers?: Readonly<Record<string, string>>;
   /**
@@ -207,8 +208,11 @@ function handoff(tenant: GinfoTenant, reference: string, number: string): GinfoO
 
 /**
  * The carrier a tenant's `TRANSKIND` names and its number in `TRANS_NBR`, when that
- * carrier's own rules claim the whole number at high confidence: King Delivery's
- * records name JD Logistics and its waybill there. Undefined otherwise.
+ * carrier's own rules take the whole number and no other carrier's claim it at high
+ * confidence: King Delivery's records name JD Logistics and its waybill there, and
+ * Shanghai Aerospace Logistics' DHL Express and a ten-digit waybill that DHL's rules
+ * share with other carriers'. The record naming the service is what the shared shape
+ * lacks. Undefined otherwise.
  */
 function transfer(tenant: GinfoTenant, info: string, number: string): GinfoOnward | undefined {
   const kind = field(tenant.provider, info, 'TRANSKIND', 60);
@@ -216,7 +220,8 @@ function transfer(tenant: GinfoTenant, info: string, number: string): GinfoOnwar
   if (!carrier) return undefined;
   const onward = normalizeTrackingNumber(field(tenant.provider, info, 'TRANS_NBR', 64));
   const match = REFERENCE.test(onward) && onward !== number ? detectCarrierMatch(onward) : undefined;
-  return match?.confidence === 'high' && match.carrier === carrier
+  // Detection lists only the high-confidence carriers when there are some, else every carrier whose rules fit.
+  return match?.candidates.some((candidate) => candidate === carrier)
     ? { delivery_carrier: carrier, delivery_tracking_number: onward } : undefined;
 }
 

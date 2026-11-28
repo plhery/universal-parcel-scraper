@@ -1,0 +1,92 @@
+{
+  "carrier": "yhtlogistics",
+  "entries": [
+    {
+      "wording": "已取件",
+      "language": "zh",
+      "english": "Picked up",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The firm's own row, at its office in China."
+    },
+    {
+      "wording": "DHL已取件",
+      "language": "zh",
+      "english": "Picked up by DHL",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "海关状态更新",
+      "language": "zh",
+      "english": "Customs status updated",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "DHL's clearance step without its outcome, at the export or the destination country's customs."
+    },
+    {
+      "wording": "清关中",
+      "language": "zh",
+      "english": "Clearance processing",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "海关已放行",
+      "language": "zh",
+      "english": "Clearance processing complete",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "正在安排下一站转运",
+      "language": "zh",
+      "english": "Processed for onward transport",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "离开转运中心",
+      "language": "zh",
+      "english": "Departed facility",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "到达转运中心",
+      "language": "zh",
+      "english": "Arrived at sort facility",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件处于操作过程中",
+      "language": "zh",
+      "english": "Shipment being processed",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "已经到达营业地点，即将安排派送",
+      "language": "zh",
+      "english": "Arrived at the delivery facility; delivery being arranged",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件正在派送中",
+      "language": "zh",
+      "english": "Out for delivery",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "已派送",
+      "language": "zh",
+      "english": "Delivered",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "DHL's delivery, followed by who signed, whom the adapter leaves out."
+    }
+  ]
+}
