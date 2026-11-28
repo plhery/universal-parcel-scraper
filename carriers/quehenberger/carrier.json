@@ -1,0 +1,45 @@
+{
+  "id": "quehenberger",
+  "displayName": "Quehenberger Logistics",
+  "aliases": [
+    "Quehenberger",
+    "Augustin Quehenberger Group"
+  ],
+  "region": {
+    "countries": [
+      "AT"
+    ]
+  },
+  "brand": {
+    "color": "#a2232b"
+  },
+  "selectable": true,
+  "timezone": "Europe/Vienna",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://ccp.quehenberger.com/dw/request/QTrack/getShipmentInformation?id=51&GENERIC={trackingNumber}",
+    "searchUrl": "https://www.quehenberger.com/de",
+    "canaryUrl": "https://ccp.quehenberger.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "ccp.quehenberger.com"
+      ],
+      "pathPattern": "^/dw/request/QTrack/getShipmentInformation$",
+      "params": [
+        "GENERIC"
+      ]
+    }
+  ],
+  "detection": []
+}

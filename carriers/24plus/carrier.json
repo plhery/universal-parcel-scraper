@@ -1,0 +1,42 @@
+{
+  "id": "24plus",
+  "displayName": "24plus",
+  "aliases": [
+    "24plus Systemverkehre",
+    "24plus logistics network"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#035094"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://portal.cubit24.de/Track/{trackingNumber}",
+    "searchUrl": "https://portal.cubit24.de/Track",
+    "canaryUrl": "https://portal.cubit24.de/Track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "portal.cubit24.de"
+      ],
+      "path": "^/Track/([^/?#]+)(?:/\\d{5})?/?$"
+    }
+  ],
+  "detection": []
+}

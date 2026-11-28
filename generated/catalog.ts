@@ -666,7 +666,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "DHL Paket",
       "Deutsche Post DHL",
-      "Deutsche Post"
+      "Deutsche Post",
+      "DHL 2-Mann-Handling"
     ],
     "countries": [
       "DE"
@@ -6018,6 +6019,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ],
         "pathPattern": "^/cscourier/Main$",
         "query": "^(?=(?:.*&)?appcont=13(?:&|$))(?:.*&)?awbno=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
+  "24plus": {
+    "displayName": "24plus",
+    "color": "#035094",
+    "aliases": [
+      "24plus Systemverkehre",
+      "24plus logistics network"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://portal.cubit24.de/Track",
+    "trackingUrlTemplate": "https://portal.cubit24.de/Track/{trackingNumber}",
+    "trackingSearchUrl": "https://portal.cubit24.de/Track",
+    "linkRules": [
+      {
+        "domains": [
+          "portal.cubit24.de"
+        ],
+        "path": "^/Track/([^/?#]+)(?:/\\d{5})?/?$"
       }
     ],
     "detectionRules": []
@@ -15277,6 +15307,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/versandrechner/tracking/([^/?#]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "cargo-partner": {
+    "displayName": "cargo-partner",
+    "color": "#95c11f",
+    "aliases": [
+      "cargo-partner GmbH",
+      "Cargo Partner"
+    ],
+    "countries": [
+      "AT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Vienna",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://public-tracking.cargo-partner.com/",
+    "trackingSearchUrl": "https://public-tracking.cargo-partner.com/",
+    "linkRules": [],
     "detectionRules": []
   },
   "cargo-trans-logistik": {
@@ -45600,6 +45651,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "mail-alliance": {
+    "displayName": "mail alliance",
+    "color": "#c9252b",
+    "aliases": [
+      "mailalliance",
+      "mailworXs GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://sendungsverfolgung.tomatotools.de/",
+    "trackingSearchUrl": "https://sendungsverfolgung.tomatotools.de/",
+    "linkRules": [
+      {
+        "domains": [
+          "sendungsverfolgung.tomatotools.de"
+        ],
+        "path": "^/([A-Za-z0-9]+)/\\d{5}/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "mail-express-it": {
     "displayName": "Mail Express",
     "color": "#00549c",
@@ -47078,6 +47157,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "messenger-de": {
+    "displayName": "messenger Transport + Logistik",
+    "color": "#e30613",
+    "aliases": [
+      "messenger Berlin",
+      "messenger Transport + Logistik GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://messenger.de/mtl/sendungsverfolgung/sendungsverfolgung-berlin/",
+    "trackingSearchUrl": "https://messenger.de/mtl/sendungsverfolgung/sendungsverfolgung-berlin/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "method": {
     "displayName": "Method",
     "color": "#1f3432",
@@ -48441,7 +48541,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "MZZ Briefdienst",
       "MZZ Briefdienst GmbH",
       "biber post",
-      "biberpost"
+      "biberpost",
+      "sent24"
     ],
     "countries": [
       "DE"
@@ -49062,6 +49163,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "high"
       }
     ]
+  },
+  "ng-network": {
+    "displayName": "NG.network",
+    "color": "#10ab49",
+    "aliases": [
+      "NG network",
+      "NG.network GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://trackandtrace.innovation365.ng.network/Track/",
+    "trackingUrlTemplate": "https://trackandtrace.innovation365.ng.network/Track/{trackingNumber}",
+    "trackingSearchUrl": "https://trackandtrace.innovation365.ng.network/Track/",
+    "linkRules": [
+      {
+        "domains": [
+          "trackandtrace.innovation365.ng.network"
+        ],
+        "path": "^/Track/([^/?#]+)(?:/\\d{5})?/?$"
+      }
+    ],
+    "detectionRules": []
   },
   "nhat-tin": {
     "displayName": "Nhat Tin Logistics",
@@ -50650,6 +50780,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingSearchUrl": "https://onex.am/en/onextrack",
     "helpUrl": "https://onex.am/en/user/contact",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "online-systemlogistik": {
+    "displayName": "ONLINE Systemlogistik",
+    "color": "#dd0b2f",
+    "aliases": [
+      "ONLINE Systemlogistik GmbH & Co. KG"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.oslnet.de/de/sendungsverfolgung/",
+    "trackingSearchUrl": "https://www.oslnet.de/de/sendungsverfolgung/",
+    "linkRules": [
+      {
+        "domains": [
+          "oslnet.de"
+        ],
+        "pathPattern": "^/(?:de/|en/)?sendungsverfolgung/?$",
+        "params": [
+          "id"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "online-worldwide-logistics": {
@@ -56888,6 +57048,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "quehenberger": {
+    "displayName": "Quehenberger Logistics",
+    "color": "#a2232b",
+    "aliases": [
+      "Quehenberger",
+      "Augustin Quehenberger Group"
+    ],
+    "countries": [
+      "AT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Vienna",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ccp.quehenberger.com/",
+    "trackingUrlTemplate": "https://ccp.quehenberger.com/dw/request/QTrack/getShipmentInformation?id=51&GENERIC={trackingNumber}",
+    "trackingSearchUrl": "https://www.quehenberger.com/de",
+    "linkRules": [
+      {
+        "domains": [
+          "ccp.quehenberger.com"
+        ],
+        "pathPattern": "^/dw/request/QTrack/getShipmentInformation$",
+        "params": [
+          "GENERIC"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "quick-couriers-pk": {
     "displayName": "Quick Couriers Service",
     "color": "#006cbc",
@@ -60103,6 +60295,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingSearchUrl": "https://schneider.com/track",
     "helpUrl": "https://schneider.com/contact-us",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "schoeni": {
+    "displayName": "Schöni Transport",
+    "color": "#a6192e",
+    "aliases": [
+      "Schöni",
+      "Schoeni",
+      "Schöni Transport AG"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://my.schoeni.ch/public/de-ch/track-and-trace",
+    "trackingUrlTemplate": "https://my.schoeni.ch/public/de-ch/track-and-trace/{trackingNumber}",
+    "trackingSearchUrl": "https://my.schoeni.ch/public/de-ch/track-and-trace",
+    "linkRules": [
+      {
+        "domains": [
+          "my.schoeni.ch"
+        ],
+        "path": "^/public/[a-z]{2}-[a-z]{2}/track-and-trace/([^/?#]+)/?$"
+      }
+    ],
     "detectionRules": []
   },
   "sdh-express": {
@@ -64881,6 +65103,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "streck": {
+    "displayName": "Streck Transport",
+    "color": "#00203e",
+    "aliases": [
+      "Streck",
+      "Streck Transportgesellschaft mbH",
+      "myStreck"
+    ],
+    "countries": [
+      "DE",
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://mystreck.streck.de/",
+    "trackingSearchUrl": "https://mystreck.streck.de/?loginToken=myStreck&locale=de",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "suhu": {
     "displayName": "Suhu Express",
     "color": "#e8501a",
@@ -69279,6 +69524,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "transportami": {
+    "displayName": "transportami",
+    "color": "#203343",
+    "aliases": [
+      "transportami AG"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://transportami.com/sendung-verfolgen",
+    "trackingSearchUrl": "https://transportami.com/sendung-verfolgen",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "transportes-bertolini": {
     "displayName": "Transportes Bertolini",
     "color": "#009fe2",
@@ -71272,6 +71537,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "urbify": {
+    "displayName": "Urbify",
+    "color": "#1d1e1c",
+    "aliases": [
+      "Urbify Technologies",
+      "Urbify Technologies GmbH"
+    ],
+    "countries": [
+      "DE",
+      "AT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.urbify.com/",
+    "trackingUrlTemplate": "https://tracking.urbify.com/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.urbify.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "urvaam": {
     "displayName": "Urvaam",
     "color": "#e84417",
@@ -71932,6 +72220,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "www.velexp.com"
         ],
         "path": "^/home-tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "vemo-logistik": {
+    "displayName": "VEMO Logistik",
+    "color": "#0b6ea7",
+    "aliases": [
+      "VEMO",
+      "VEMO Logistik GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://vemo-logistik.de/sendungsverfolgung",
+    "trackingSearchUrl": "https://vemo-logistik.de/sendungsverfolgung",
+    "linkRules": [
+      {
+        "domains": [
+          "vemo-logistik.de"
+        ],
+        "pathPattern": "^/(?:en/)?sendungsverfolgung/?$",
+        "params": [
+          "nummer"
+        ]
       }
     ],
     "detectionRules": []
@@ -72697,6 +73016,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/Track/VTFE/([^/?#]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "vtl": {
+    "displayName": "VTL",
+    "color": "#0a4481",
+    "aliases": [
+      "VTL Vernetzte-Transport-Logistik",
+      "Vernetzte-Transport-Logistik GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://my.vtl.de/portal/aor/sendungsauskunft.aspx",
+    "trackingSearchUrl": "https://my.vtl.de/portal/aor/sendungsauskunft.aspx",
+    "linkRules": [],
     "detectionRules": []
   },
   "vyang": {
@@ -77443,6 +77783,7 @@ export const CARRIER_IDS = [
   "21-express-id",
   "247express",
   "24curier",
+  "24plus",
   "2ebox",
   "2go",
   "360lion",
@@ -77717,6 +78058,7 @@ export const CARRIER_IDS = [
   "cargo-expreso",
   "cargo-express-mk",
   "cargo-international",
+  "cargo-partner",
   "cargo-trans-logistik",
   "cargoboard",
   "cargobus",
@@ -78597,6 +78939,7 @@ export const CARRIER_IDS = [
   "magnum-transportation",
   "magyar-posta",
   "mahex",
+  "mail-alliance",
   "mail-express-it",
   "mail-runner",
   "mailamericas",
@@ -78642,6 +78985,7 @@ export const CARRIER_IDS = [
   "mensajeros-urbanos",
   "meso-global",
   "messenger-cz",
+  "messenger-de",
   "method",
   "metropolitan-warehouse",
   "meyer-jumbo",
@@ -78708,6 +79052,7 @@ export const CARRIER_IDS = [
   "neway-transport",
   "next-level-delivery",
   "next-smart-ship",
+  "ng-network",
   "nhat-tin",
   "night-star-express",
   "nim-express",
@@ -78750,6 +79095,7 @@ export const CARRIER_IDS = [
   "ondot-courier",
   "one-world-express",
   "onex",
+  "online-systemlogistik",
   "online-worldwide-logistics",
   "onlog-express",
   "ontask-express",
@@ -78928,6 +79274,7 @@ export const CARRIER_IDS = [
   "qt-express",
   "quality-post",
   "quantium-solutions",
+  "quehenberger",
   "quick-couriers-pk",
   "quick-fort",
   "quick-rabbit",
@@ -79026,6 +79373,7 @@ export const CARRIER_IDS = [
   "scg-express",
   "schaeflein",
   "schneider",
+  "schoeni",
   "sdh-express",
   "sdk-express",
   "sea-legend-line",
@@ -79160,6 +79508,7 @@ export const CARRIER_IDS = [
   "stone3pl",
   "stop-start",
   "straightship",
+  "streck",
   "suhu",
   "sumxpress",
   "sundarban-courier",
@@ -79291,6 +79640,7 @@ export const CARRIER_IDS = [
   "transnatur",
   "transnet-couriers",
   "transport-rdl",
+  "transportami",
   "transportes-bertolini",
   "transportes-chevalier",
   "transportes-condesa",
@@ -79354,6 +79704,7 @@ export const CARRIER_IDS = [
   "ural-express",
   "urbano",
   "urbano-ar",
+  "urbify",
   "urvaam",
   "us-cargo",
   "usasd",
@@ -79374,6 +79725,7 @@ export const CARRIER_IDS = [
   "veloblitz",
   "veloces",
   "velocity-express-in",
+  "vemo-logistik",
   "venipak",
   "veoy",
   "vert-chez-vous",
@@ -79397,6 +79749,7 @@ export const CARRIER_IDS = [
   "vozovoz",
   "vrl-logistics",
   "vt-freight-express",
+  "vtl",
   "vyang",
   "w-express-ph",
   "wahana",
@@ -79657,6 +80010,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "21-express-id": [],
   "247express": [],
   "24curier": [],
+  "24plus": [],
   "2ebox": [],
   "2go": ["2go-1"],
   "360lion": ["360lion-1","360lion-2","360lion-3"],
@@ -79931,6 +80285,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cargo-expreso": [],
   "cargo-express-mk": [],
   "cargo-international": [],
+  "cargo-partner": [],
   "cargo-trans-logistik": [],
   "cargoboard": [],
   "cargobus": [],
@@ -80811,6 +81166,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "magnum-transportation": [],
   "magyar-posta": ["magyar-posta-s10","magyar-posta-domestic","magyar-posta-package","magyar-posta-letter","magyar-posta-europe-standard"],
   "mahex": [],
+  "mail-alliance": [],
   "mail-express-it": [],
   "mail-runner": [],
   "mailamericas": ["mailamericas-ml","mailamericas-ml-7","mailamericas-mmxqp","mailamericas-domc","mailamericas-s10"],
@@ -80856,6 +81212,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mensajeros-urbanos": [],
   "meso-global": ["meso-global-1"],
   "messenger-cz": [],
+  "messenger-de": [],
   "method": [],
   "metropolitan-warehouse": ["metropolitan-warehouse-1"],
   "meyer-jumbo": [],
@@ -80922,6 +81279,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "neway-transport": [],
   "next-level-delivery": [],
   "next-smart-ship": ["next-smart-ship-1"],
+  "ng-network": [],
   "nhat-tin": ["nhat-tin-1"],
   "night-star-express": [],
   "nim-express": [],
@@ -80964,6 +81322,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ondot-courier": [],
   "one-world-express": ["one-world-express-1"],
   "onex": [],
+  "online-systemlogistik": [],
   "online-worldwide-logistics": [],
   "onlog-express": ["onlog-express-aa"],
   "ontask-express": [],
@@ -81142,6 +81501,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "qt-express": [],
   "quality-post": [],
   "quantium-solutions": [],
+  "quehenberger": [],
   "quick-couriers-pk": [],
   "quick-fort": ["quick-fort-1"],
   "quick-rabbit": ["quick-rabbit-1","quick-rabbit-2","quick-rabbit-3"],
@@ -81240,6 +81600,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "scg-express": ["scg-express-1"],
   "schaeflein": [],
   "schneider": [],
+  "schoeni": [],
   "sdh-express": [],
   "sdk-express": [],
   "sea-legend-line": [],
@@ -81374,6 +81735,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "stone3pl": ["stone3pl-s18"],
   "stop-start": [],
   "straightship": ["straightship-1","straightship-ca","straightship-2"],
+  "streck": [],
   "suhu": ["suhu-1"],
   "sumxpress": [],
   "sundarban-courier": [],
@@ -81505,6 +81867,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "transnatur": [],
   "transnet-couriers": [],
   "transport-rdl": [],
+  "transportami": [],
   "transportes-bertolini": [],
   "transportes-chevalier": [],
   "transportes-condesa": [],
@@ -81568,6 +81931,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ural-express": [],
   "urbano": ["urbano-1"],
   "urbano-ar": [],
+  "urbify": [],
   "urvaam": [],
   "us-cargo": [],
   "usasd": [],
@@ -81588,6 +81952,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "veloblitz": [],
   "veloces": [],
   "velocity-express-in": [],
+  "vemo-logistik": [],
   "venipak": ["venipak-1"],
   "veoy": [],
   "vert-chez-vous": [],
@@ -81611,6 +81976,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "vozovoz": [],
   "vrl-logistics": [],
   "vt-freight-express": [],
+  "vtl": [],
   "vyang": [],
   "w-express-ph": [],
   "wahana": [],

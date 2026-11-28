@@ -1,0 +1,34 @@
+{
+  "id": "messenger-de",
+  "displayName": "messenger Transport + Logistik",
+  "aliases": [
+    "messenger Berlin",
+    "messenger Transport + Logistik GmbH"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#e30613"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://messenger.de/mtl/sendungsverfolgung/sendungsverfolgung-berlin/",
+    "canaryUrl": "https://messenger.de/mtl/sendungsverfolgung/sendungsverfolgung-berlin/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

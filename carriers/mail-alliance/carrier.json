@@ -1,0 +1,41 @@
+{
+  "id": "mail-alliance",
+  "displayName": "mail alliance",
+  "aliases": [
+    "mailalliance",
+    "mailworXs GmbH"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#c9252b"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://sendungsverfolgung.tomatotools.de/",
+    "canaryUrl": "https://sendungsverfolgung.tomatotools.de/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "sendungsverfolgung.tomatotools.de"
+      ],
+      "path": "^/([A-Za-z0-9]+)/\\d{5}/?$"
+    }
+  ],
+  "detection": []
+}

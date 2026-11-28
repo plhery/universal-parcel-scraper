@@ -1,0 +1,34 @@
+{
+  "id": "vtl",
+  "displayName": "VTL",
+  "aliases": [
+    "VTL Vernetzte-Transport-Logistik",
+    "Vernetzte-Transport-Logistik GmbH"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#0a4481"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://my.vtl.de/portal/aor/sendungsauskunft.aspx",
+    "canaryUrl": "https://my.vtl.de/portal/aor/sendungsauskunft.aspx",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

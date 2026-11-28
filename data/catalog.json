@@ -661,7 +661,8 @@
     "aliases": [
       "DHL Paket",
       "Deutsche Post DHL",
-      "Deutsche Post"
+      "Deutsche Post",
+      "DHL 2-Mann-Handling"
     ],
     "countries": [
       "DE"
@@ -6013,6 +6014,35 @@
         ],
         "pathPattern": "^/cscourier/Main$",
         "query": "^(?=(?:.*&)?appcont=13(?:&|$))(?:.*&)?awbno=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
+  "24plus": {
+    "displayName": "24plus",
+    "color": "#035094",
+    "aliases": [
+      "24plus Systemverkehre",
+      "24plus logistics network"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://portal.cubit24.de/Track",
+    "trackingUrlTemplate": "https://portal.cubit24.de/Track/{trackingNumber}",
+    "trackingSearchUrl": "https://portal.cubit24.de/Track",
+    "linkRules": [
+      {
+        "domains": [
+          "portal.cubit24.de"
+        ],
+        "path": "^/Track/([^/?#]+)(?:/\\d{5})?/?$"
       }
     ],
     "detectionRules": []
@@ -15272,6 +15302,27 @@
         "path": "^/versandrechner/tracking/([^/?#]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "cargo-partner": {
+    "displayName": "cargo-partner",
+    "color": "#95c11f",
+    "aliases": [
+      "cargo-partner GmbH",
+      "Cargo Partner"
+    ],
+    "countries": [
+      "AT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Vienna",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://public-tracking.cargo-partner.com/",
+    "trackingSearchUrl": "https://public-tracking.cargo-partner.com/",
+    "linkRules": [],
     "detectionRules": []
   },
   "cargo-trans-logistik": {
@@ -45595,6 +45646,34 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "mail-alliance": {
+    "displayName": "mail alliance",
+    "color": "#c9252b",
+    "aliases": [
+      "mailalliance",
+      "mailworXs GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://sendungsverfolgung.tomatotools.de/",
+    "trackingSearchUrl": "https://sendungsverfolgung.tomatotools.de/",
+    "linkRules": [
+      {
+        "domains": [
+          "sendungsverfolgung.tomatotools.de"
+        ],
+        "path": "^/([A-Za-z0-9]+)/\\d{5}/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "mail-express-it": {
     "displayName": "Mail Express",
     "color": "#00549c",
@@ -47073,6 +47152,27 @@
     ],
     "detectionRules": []
   },
+  "messenger-de": {
+    "displayName": "messenger Transport + Logistik",
+    "color": "#e30613",
+    "aliases": [
+      "messenger Berlin",
+      "messenger Transport + Logistik GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://messenger.de/mtl/sendungsverfolgung/sendungsverfolgung-berlin/",
+    "trackingSearchUrl": "https://messenger.de/mtl/sendungsverfolgung/sendungsverfolgung-berlin/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "method": {
     "displayName": "Method",
     "color": "#1f3432",
@@ -48436,7 +48536,8 @@
       "MZZ Briefdienst",
       "MZZ Briefdienst GmbH",
       "biber post",
-      "biberpost"
+      "biberpost",
+      "sent24"
     ],
     "countries": [
       "DE"
@@ -49057,6 +49158,35 @@
         "confidence": "high"
       }
     ]
+  },
+  "ng-network": {
+    "displayName": "NG.network",
+    "color": "#10ab49",
+    "aliases": [
+      "NG network",
+      "NG.network GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://trackandtrace.innovation365.ng.network/Track/",
+    "trackingUrlTemplate": "https://trackandtrace.innovation365.ng.network/Track/{trackingNumber}",
+    "trackingSearchUrl": "https://trackandtrace.innovation365.ng.network/Track/",
+    "linkRules": [
+      {
+        "domains": [
+          "trackandtrace.innovation365.ng.network"
+        ],
+        "path": "^/Track/([^/?#]+)(?:/\\d{5})?/?$"
+      }
+    ],
+    "detectionRules": []
   },
   "nhat-tin": {
     "displayName": "Nhat Tin Logistics",
@@ -50645,6 +50775,36 @@
     "trackingSearchUrl": "https://onex.am/en/onextrack",
     "helpUrl": "https://onex.am/en/user/contact",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "online-systemlogistik": {
+    "displayName": "ONLINE Systemlogistik",
+    "color": "#dd0b2f",
+    "aliases": [
+      "ONLINE Systemlogistik GmbH & Co. KG"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.oslnet.de/de/sendungsverfolgung/",
+    "trackingSearchUrl": "https://www.oslnet.de/de/sendungsverfolgung/",
+    "linkRules": [
+      {
+        "domains": [
+          "oslnet.de"
+        ],
+        "pathPattern": "^/(?:de/|en/)?sendungsverfolgung/?$",
+        "params": [
+          "id"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "online-worldwide-logistics": {
@@ -56883,6 +57043,38 @@
     ],
     "detectionRules": []
   },
+  "quehenberger": {
+    "displayName": "Quehenberger Logistics",
+    "color": "#a2232b",
+    "aliases": [
+      "Quehenberger",
+      "Augustin Quehenberger Group"
+    ],
+    "countries": [
+      "AT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Vienna",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ccp.quehenberger.com/",
+    "trackingUrlTemplate": "https://ccp.quehenberger.com/dw/request/QTrack/getShipmentInformation?id=51&GENERIC={trackingNumber}",
+    "trackingSearchUrl": "https://www.quehenberger.com/de",
+    "linkRules": [
+      {
+        "domains": [
+          "ccp.quehenberger.com"
+        ],
+        "pathPattern": "^/dw/request/QTrack/getShipmentInformation$",
+        "params": [
+          "GENERIC"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "quick-couriers-pk": {
     "displayName": "Quick Couriers Service",
     "color": "#006cbc",
@@ -60098,6 +60290,36 @@
     "trackingSearchUrl": "https://schneider.com/track",
     "helpUrl": "https://schneider.com/contact-us",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "schoeni": {
+    "displayName": "Schöni Transport",
+    "color": "#a6192e",
+    "aliases": [
+      "Schöni",
+      "Schoeni",
+      "Schöni Transport AG"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://my.schoeni.ch/public/de-ch/track-and-trace",
+    "trackingUrlTemplate": "https://my.schoeni.ch/public/de-ch/track-and-trace/{trackingNumber}",
+    "trackingSearchUrl": "https://my.schoeni.ch/public/de-ch/track-and-trace",
+    "linkRules": [
+      {
+        "domains": [
+          "my.schoeni.ch"
+        ],
+        "path": "^/public/[a-z]{2}-[a-z]{2}/track-and-trace/([^/?#]+)/?$"
+      }
+    ],
     "detectionRules": []
   },
   "sdh-express": {
@@ -64876,6 +65098,29 @@
       }
     ]
   },
+  "streck": {
+    "displayName": "Streck Transport",
+    "color": "#00203e",
+    "aliases": [
+      "Streck",
+      "Streck Transportgesellschaft mbH",
+      "myStreck"
+    ],
+    "countries": [
+      "DE",
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://mystreck.streck.de/",
+    "trackingSearchUrl": "https://mystreck.streck.de/?loginToken=myStreck&locale=de",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "suhu": {
     "displayName": "Suhu Express",
     "color": "#e8501a",
@@ -69274,6 +69519,26 @@
     ],
     "detectionRules": []
   },
+  "transportami": {
+    "displayName": "transportami",
+    "color": "#203343",
+    "aliases": [
+      "transportami AG"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://transportami.com/sendung-verfolgen",
+    "trackingSearchUrl": "https://transportami.com/sendung-verfolgen",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "transportes-bertolini": {
     "displayName": "Transportes Bertolini",
     "color": "#009fe2",
@@ -71267,6 +71532,29 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "urbify": {
+    "displayName": "Urbify",
+    "color": "#1d1e1c",
+    "aliases": [
+      "Urbify Technologies",
+      "Urbify Technologies GmbH"
+    ],
+    "countries": [
+      "DE",
+      "AT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.urbify.com/",
+    "trackingUrlTemplate": "https://tracking.urbify.com/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.urbify.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "urvaam": {
     "displayName": "Urvaam",
     "color": "#e84417",
@@ -71927,6 +72215,37 @@
           "www.velexp.com"
         ],
         "path": "^/home-tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "vemo-logistik": {
+    "displayName": "VEMO Logistik",
+    "color": "#0b6ea7",
+    "aliases": [
+      "VEMO",
+      "VEMO Logistik GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://vemo-logistik.de/sendungsverfolgung",
+    "trackingSearchUrl": "https://vemo-logistik.de/sendungsverfolgung",
+    "linkRules": [
+      {
+        "domains": [
+          "vemo-logistik.de"
+        ],
+        "pathPattern": "^/(?:en/)?sendungsverfolgung/?$",
+        "params": [
+          "nummer"
+        ]
       }
     ],
     "detectionRules": []
@@ -72692,6 +73011,27 @@
         "path": "^/Track/VTFE/([^/?#]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "vtl": {
+    "displayName": "VTL",
+    "color": "#0a4481",
+    "aliases": [
+      "VTL Vernetzte-Transport-Logistik",
+      "Vernetzte-Transport-Logistik GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://my.vtl.de/portal/aor/sendungsauskunft.aspx",
+    "trackingSearchUrl": "https://my.vtl.de/portal/aor/sendungsauskunft.aspx",
+    "linkRules": [],
     "detectionRules": []
   },
   "vyang": {

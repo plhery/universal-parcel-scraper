@@ -1,0 +1,33 @@
+{
+  "id": "transportami",
+  "displayName": "transportami",
+  "aliases": [
+    "transportami AG"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#203343"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://transportami.com/sendung-verfolgen",
+    "canaryUrl": "https://transportami.com/sendung-verfolgen",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

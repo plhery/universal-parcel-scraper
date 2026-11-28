@@ -1,0 +1,42 @@
+{
+  "id": "ng-network",
+  "displayName": "NG.network",
+  "aliases": [
+    "NG network",
+    "NG.network GmbH"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#10ab49"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://trackandtrace.innovation365.ng.network/Track/{trackingNumber}",
+    "searchUrl": "https://trackandtrace.innovation365.ng.network/Track/",
+    "canaryUrl": "https://trackandtrace.innovation365.ng.network/Track/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "trackandtrace.innovation365.ng.network"
+      ],
+      "path": "^/Track/([^/?#]+)(?:/\\d{5})?/?$"
+    }
+  ],
+  "detection": []
+}

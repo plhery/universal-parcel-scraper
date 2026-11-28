@@ -1,0 +1,43 @@
+{
+  "id": "schoeni",
+  "displayName": "Schöni Transport",
+  "aliases": [
+    "Schöni",
+    "Schoeni",
+    "Schöni Transport AG"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#a6192e"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://my.schoeni.ch/public/de-ch/track-and-trace/{trackingNumber}",
+    "searchUrl": "https://my.schoeni.ch/public/de-ch/track-and-trace",
+    "canaryUrl": "https://my.schoeni.ch/public/de-ch/track-and-trace",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "my.schoeni.ch"
+      ],
+      "path": "^/public/[a-z]{2}-[a-z]{2}/track-and-trace/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,44 @@
+{
+  "id": "vemo-logistik",
+  "displayName": "VEMO Logistik",
+  "aliases": [
+    "VEMO",
+    "VEMO Logistik GmbH"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#0b6ea7"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://vemo-logistik.de/sendungsverfolgung",
+    "canaryUrl": "https://vemo-logistik.de/sendungsverfolgung",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "vemo-logistik.de"
+      ],
+      "pathPattern": "^/(?:en/)?sendungsverfolgung/?$",
+      "params": [
+        "nummer"
+      ]
+    }
+  ],
+  "detection": []
+}

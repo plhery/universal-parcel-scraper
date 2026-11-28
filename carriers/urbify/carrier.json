@@ -1,0 +1,36 @@
+{
+  "id": "urbify",
+  "displayName": "Urbify",
+  "aliases": [
+    "Urbify Technologies",
+    "Urbify Technologies GmbH"
+  ],
+  "region": {
+    "countries": [
+      "DE",
+      "AT"
+    ]
+  },
+  "brand": {
+    "color": "#1d1e1c"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.urbify.com/{trackingNumber}",
+    "searchUrl": "https://tracking.urbify.com/",
+    "canaryUrl": "https://tracking.urbify.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

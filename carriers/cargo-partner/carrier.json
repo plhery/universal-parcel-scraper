@@ -1,0 +1,34 @@
+{
+  "id": "cargo-partner",
+  "displayName": "cargo-partner",
+  "aliases": [
+    "cargo-partner GmbH",
+    "Cargo Partner"
+  ],
+  "region": {
+    "countries": [
+      "AT"
+    ]
+  },
+  "brand": {
+    "color": "#95c11f"
+  },
+  "selectable": true,
+  "timezone": "Europe/Vienna",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://public-tracking.cargo-partner.com/",
+    "canaryUrl": "https://public-tracking.cargo-partner.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

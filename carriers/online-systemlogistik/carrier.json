@@ -1,0 +1,43 @@
+{
+  "id": "online-systemlogistik",
+  "displayName": "ONLINE Systemlogistik",
+  "aliases": [
+    "ONLINE Systemlogistik GmbH & Co. KG"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#dd0b2f"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.oslnet.de/de/sendungsverfolgung/",
+    "canaryUrl": "https://www.oslnet.de/de/sendungsverfolgung/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "oslnet.de"
+      ],
+      "pathPattern": "^/(?:de/|en/)?sendungsverfolgung/?$",
+      "params": [
+        "id"
+      ]
+    }
+  ],
+  "detection": []
+}

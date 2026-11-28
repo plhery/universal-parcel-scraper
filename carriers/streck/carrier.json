@@ -1,0 +1,36 @@
+{
+  "id": "streck",
+  "displayName": "Streck Transport",
+  "aliases": [
+    "Streck",
+    "Streck Transportgesellschaft mbH",
+    "myStreck"
+  ],
+  "region": {
+    "countries": [
+      "DE",
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#00203e"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://mystreck.streck.de/?loginToken=myStreck&locale=de",
+    "canaryUrl": "https://mystreck.streck.de/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
