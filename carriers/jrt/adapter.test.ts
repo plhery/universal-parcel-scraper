@@ -717,6 +717,12 @@ describe('JRT tracking adapter', () => {
     expect(answer('货物发往机场')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('货物到达机场')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(jrtEnglish(null, normalizeStatusWording('货物到达机场'))).toBe('Goods arrived at the airport');
+    expect(jrtEnglish(null, normalizeStatusWording('货物发往机场'))).toBe('Goods sent to the airport');
+    // The goods sent on to another place it names: a movement, so a flight forecast after it keeps the parcel in transit.
+    for (const description of ['货物发往示例港', '货物发往样例']) {
+      expect(answer(description), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
+    expect(answer('货物发往')).not.toEqual({ kind: 'mapped', stage: 'in_transit' });
     // The destination's customs release reads alike whatever day it expects the hand-over to the warehouse.
     for (const description of ['已清关放行，预计11/27号交仓', '已清关放行,预计12/3号交仓']) {
       expect(answer(description), description).toEqual({ kind: 'mapped', stage: 'in_transit' });

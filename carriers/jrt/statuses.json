@@ -688,6 +688,14 @@
       "note": "On its way to the airport of departure, before the airport's own rows."
     },
     {
+      "wording": "货物发往…",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-28",
+      "note": "Goods sent on to the place it names, as a port, after JRT's centre and before the flight: a movement."
+    },
+    {
       "wording": "货物到达机场",
       "language": "zh",
       "english": "Goods arrived at the airport",

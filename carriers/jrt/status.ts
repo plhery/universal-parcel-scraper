@@ -59,6 +59,8 @@ const SPANISH_FLIGHT = /^(se espera que el vuelo salga hacia )[^\d…]{1,40}?( e
 const FLIGHT_EN_ROUTE = /^(the flight is en route to the airport in )[^\d…]{1,40}$/;
 // The parcel on its way to the destination: "During transportation to Spain".
 const TRANSPORTED_TO = /^(during transportation to )[^\d…]{1,40}$/;
+// JRT's own row of the goods sent on to a place it names in Chinese, "货物发往示例港", besides the airport's row it lists whole.
+const SENT_TO = /^(货物发往)(?!机场$)[\u3400-\u9fff]{1,8}$/;
 
 // A delayed flight names its new day in both halves: "航班延误，预计11/1号飞出 Flight delayed, estimated departure on Nov 1.",
 // sometimes with the month's full stop for the space ("Oct.24.").
@@ -73,7 +75,7 @@ export const jrtScanKey = (wording: string): string => jtMexicoKey(wording).repl
   .replace(FLIGHT_DATES, '$1…$2…').replace(DEPARTURE_DATE, '$1…').replace(LANDING_DATE, '$1…$2').replace(BOOKED_FLIGHT, '…$1').replace(ESTIMATED_DAY, '$1…')
   .replace(PORT_FLIGHT_DAY, '货物到达口岸，预计…号航班起飞').replace(EXPECTED_FLIGHT_DAY, '$1…$2')
   .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(LOADED_FLIGHT, '$1…月…日,$2…').replace(EXPECTED_FLIGHT, '$1…').replace(HANDED_TO_COURIER, '$1…').replace(NEW_ADDRESS, '$1…').replace(DELIVERY_WINDOW, '$1…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
-  .replace(TRANSPORTED_TO, '$1…').replace(DELAYED_FLIGHT, '$1…$2…')
+  .replace(TRANSPORTED_TO, '$1…').replace(SENT_TO, '$1…').replace(DELAYED_FLIGHT, '$1…$2…')
   .replace(ETD_FLIGHT, '预计配载…航班（estimated flight departure time (etd:…)').replace(RELEASED_HANDOVER_DAY, '已清关放行，预计…号交仓');
 
 // USPS's status followed by its sentence, which names the time, day and town: "Departed Shipping Partner Facility -> Your
