@@ -7758,5 +7758,11 @@
     "pattern": "^\\d{7}$",
     "kind": "by_design",
     "reason": "Hongshuntong's waybills seen are seven bare digits, a counter many carriers' numbers share, so nothing in the number points to Hongshuntong. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "xydwl",
+    "pattern": "^\\d{7}$",
+    "kind": "by_design",
+    "reason": "Xinyuda's waybills seen are seven bare digits, a counter many carriers' numbers share, so nothing in the number points to Xinyuda. The adapter answers explicit selection."
   }
 ]

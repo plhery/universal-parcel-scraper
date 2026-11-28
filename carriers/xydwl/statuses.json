@@ -1,0 +1,21 @@
+{
+  "carrier": "xydwl",
+  "entries": [
+    {
+      "code": "TRACK_LJ",
+      "wording": "运单已生成，等待配载",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The waybill opened with the freight at the depot, waiting to be loaded onto a line truck."
+    },
+    {
+      "code": "TRACK_DD_QS",
+      "wording": "货物已被签收，感谢您使用鑫宇达物流",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for. The tracker names the signer in brackets after 已被, which the reader drops."
+    }
+  ]
+}

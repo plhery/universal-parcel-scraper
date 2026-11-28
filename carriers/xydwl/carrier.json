@@ -1,0 +1,54 @@
+{
+  "id": "xydwl",
+  "displayName": "Xinyuda Logistics",
+  "aliases": [
+    "鑫宇达物流",
+    "深圳市鑫宇达物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#ffa626"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "xydwl",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "canaryUrl": "https://www.kuaidi100.com/all/xinyuda.shtml",
+    "shows": [
+      "status",
+      "history",
+      "signed_by"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "signed_by",
+      "staff_details"
+    ],
+    "unavailable": [
+      "location",
+      "destination",
+      "weight",
+      "offset_timestamps"
+    ]
+  },
+  "links": [],
+  "detection": []
+}
