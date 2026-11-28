@@ -47,6 +47,7 @@ COPY freight-aero-browser.mjs /app/packages/tiers/src/utils/freight-aero-browser
 COPY kuwait-post-browser.mjs /app/packages/tiers/src/utils/kuwait-post-browser.mjs
 COPY correios-browser.mjs /app/packages/tiers/src/utils/correios-browser.mjs
 COPY dao-browser.mjs /app/packages/tiers/src/utils/dao-browser.mjs
+COPY inpost-uk-browser.mjs /app/packages/tiers/src/utils/inpost-uk-browser.mjs
 COPY peddler-browser.mjs /app/packages/tiers/src/utils/peddler-browser.mjs
 COPY rohlig-suus-browser.mjs /app/packages/tiers/src/utils/rohlig-suus-browser.mjs
 COPY apm-logistics-browser.mjs /app/packages/tiers/src/utils/apm-logistics-browser.mjs

@@ -74,6 +74,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
     solveNativeCaptcha: (page, timeout, report) => solveDhlPolandNative(page, timeout, budget.signal, report) })
   if (carrierPage && correiosBrowserNumber(url, capture)) return await runCorreiosBrowser(carrierRun)
   if (carrierPage && daoBrowserNumber(url, capture)) return await runDaoBrowser({ ...carrierRun, signal: budget.signal })
+  if (carrierPage && inpostUkBrowserNumber(url, capture)) return await runInpostUkBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && peddlerBrowserNumber(url, capture)) return await runPeddlerBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && rohligSuusBrowserNumber(url, capture)) return await runRohligSuusBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && apmLogisticsBrowserNumber(url, capture)) return await runApmLogisticsBrowser({ ...carrierRun, signal: budget.signal })
@@ -178,6 +179,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
     + 'import { kuwaitPostBrowserNumber, runKuwaitPostBrowser } from "../utils/kuwait-post-browser.mjs"\n'
     + 'import { correiosBrowserNumber, runCorreiosBrowser } from "../utils/correios-browser.mjs"\n'
     + 'import { daoBrowserNumber, runDaoBrowser } from "../utils/dao-browser.mjs"\n'
+    + 'import { inpostUkBrowserNumber, runInpostUkBrowser } from "../utils/inpost-uk-browser.mjs"\n'
     + 'import { peddlerBrowserNumber, runPeddlerBrowser } from "../utils/peddler-browser.mjs"\n'
     + 'import { rohligSuusBrowserNumber, runRohligSuusBrowser } from "../utils/rohlig-suus-browser.mjs"\n'
     + 'import { apmLogisticsBrowserNumber, runApmLogisticsBrowser } from "../utils/apm-logistics-browser.mjs"\n'

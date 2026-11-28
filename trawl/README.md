@@ -19,6 +19,13 @@ Turnstile frame before bounded checkbox clicks, then captures the exact whole-re
 The page owns its nonce, timing header and single-use token; only selected tracking fields leave
 the context. An unfinished widget remains a challenge.
 
+InPost UK opens its result page for one number in Yodel's layouts. The page runs its own Turnstile
+and posts the number with the token to `/tracking/api`; the helper clicks the widget's checkbox only
+when Turnstile asks, at most three times, and captures that one post for the whole number: 200 for a
+parcel, 404 with `not_found` for a number the tracker does not know. It passes on the parcel's statuses,
+destination type and country, delivery window and scans with their code, words, time and town, and the
+key names of the parcel and its first scan, without names, addresses, postcodes or the token.
+
 Peddler fills its tracker's form from the address, lets the page's own Turnstile give the form its
 token and submits it, at most twice when a token is refused. The tracker sets a cookie for that one
 number, and the page then asks for its data; the helper captures that request alone and passes on
