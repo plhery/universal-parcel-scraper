@@ -4386,6 +4386,10 @@
         "preferred": true
       },
       {
+        "pattern": "^CN\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{8}$",
+        "confidence": "low"
+      },
+      {
         "pattern": "^311\\d{9}$",
         "confidence": "low",
         "preferred": true
@@ -22504,7 +22508,7 @@
         "preferred": true
       },
       {
-        "pattern": "^JXC(?:YI|ZO|US|ZI)\\d{10}YQ$",
+        "pattern": "^JXC[A-Z]{2}\\d{10}YQ$",
         "confidence": "low",
         "preferred": true
       }

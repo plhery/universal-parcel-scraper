@@ -4391,6 +4391,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "preferred": true
       },
       {
+        "pattern": "^CN\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{8}$",
+        "confidence": "low"
+      },
+      {
         "pattern": "^311\\d{9}$",
         "confidence": "low",
         "preferred": true
@@ -22509,7 +22513,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "preferred": true
       },
       {
-        "pattern": "^JXC(?:YI|ZO|US|ZI)\\d{10}YQ$",
+        "pattern": "^JXC[A-Z]{2}\\d{10}YQ$",
         "confidence": "low",
         "preferred": true
       }
@@ -81894,7 +81898,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "correios-br": ["correios-br-1"],
   "correos-chile": ["correos-chile-1","correos-chile-2"],
   "yunexpress": ["yunexpress-1"],
-  "four-px": ["four-px-1","four-px-swapped","four-px-cainiao-reference","four-px-emile-reference","four-px-waybill"],
+  "four-px": ["four-px-1","four-px-swapped","four-px-cainiao-reference","four-px-emile-reference","four-px-dated","four-px-waybill"],
   "blue-dart": ["blue-dart-1"],
   "delhivery": ["delhivery-1"],
   "nz-post": ["nz-post-1","nz-post-2","nz-post-3"],
