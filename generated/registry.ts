@@ -161,6 +161,7 @@ import { adapter as cChezVous } from '../carriers/c-chez-vous/adapter.js';
 import { adapter as c3x } from '../carriers/c3x/adapter.js';
 import { adapter as cacesa } from '../carriers/cacesa/adapter.js';
 import { adapter as cadenaCourier } from '../carriers/cadena-courier/adapter.js';
+import { adapter as caifengwl } from '../carriers/caifengwl/adapter.js';
 import { adapter as calidexCourier } from '../carriers/calidex-courier/adapter.js';
 import { adapter as cambodiaPost } from '../carriers/cambodia-post/adapter.js';
 import { adapter as canadaPost } from '../carriers/canada-post/adapter.js';
@@ -478,6 +479,7 @@ import { adapter as geodisPl } from '../carriers/geodis-pl/adapter.js';
 import { adapter as gfsExpress } from '../carriers/gfs-express/adapter.js';
 import { adapter as gigLogistics } from '../carriers/gig-logistics/adapter.js';
 import { adapter as gintracom } from '../carriers/gintracom/adapter.js';
+import { adapter as gjsguoji } from '../carriers/gjsguoji/adapter.js';
 import { adapter as globalDeliveryNetwork } from '../carriers/global-delivery-network/adapter.js';
 import { adapter as global99 } from '../carriers/global99/adapter.js';
 import { adapter as globalexp } from '../carriers/globalexp/adapter.js';
@@ -578,6 +580,7 @@ import { adapter as huahaiExpress } from '../carriers/huahai-express/adapter.js'
 import { adapter as huahan } from '../carriers/huahan/adapter.js';
 import { adapter as huaqiExpress } from '../carriers/huaqi-express/adapter.js';
 import { adapter as huaxiaExpress } from '../carriers/huaxia-express/adapter.js';
+import { adapter as huaxintai } from '../carriers/huaxintai/adapter.js';
 import { adapter as huayaExpress } from '../carriers/huaya-express/adapter.js';
 import { adapter as huayutong } from '../carriers/huayutong/adapter.js';
 import { adapter as hubologistics } from '../carriers/hubologistics/adapter.js';
@@ -685,6 +688,8 @@ import { adapter as komonExpress } from '../carriers/komon-express/adapter.js';
 import { adapter as kongaKxpress } from '../carriers/konga-kxpress/adapter.js';
 import { adapter as koreaPost } from '../carriers/korea-post/adapter.js';
 import { adapter as koreanAirCargo } from '../carriers/korean-air-cargo/adapter.js';
+import { adapter as kqtwl } from '../carriers/kqtwl/adapter.js';
+import { adapter as ks2home } from '../carriers/ks2home/adapter.js';
 import { adapter as kuayuanExpress } from '../carriers/kuayuan-express/adapter.js';
 import { adapter as kuehneNagel } from '../carriers/kuehne-nagel/adapter.js';
 import { adapter as kunExpress } from '../carriers/kun-express/adapter.js';
@@ -776,6 +781,7 @@ import { adapter as meihooPegasus } from '../carriers/meihoo-pegasus/adapter.js'
 import { adapter as meitongda } from '../carriers/meitongda/adapter.js';
 import { adapter as meixi } from '../carriers/meixi/adapter.js';
 import { adapter as memphisCourier } from '../carriers/memphis-courier/adapter.js';
+import { adapter as mengxiangtong } from '../carriers/mengxiangtong/adapter.js';
 import { adapter as mesoGlobal } from '../carriers/meso-global/adapter.js';
 import { adapter as messengerCz } from '../carriers/messenger-cz/adapter.js';
 import { adapter as metropolitanWarehouse } from '../carriers/metropolitan-warehouse/adapter.js';
@@ -968,6 +974,7 @@ import { adapter as redx } from '../carriers/redx/adapter.js';
 import { adapter as relaisColis } from '../carriers/relais-colis/adapter.js';
 import { adapter as relayExpress } from '../carriers/relay-express/adapter.js';
 import { adapter as relaytech } from '../carriers/relaytech/adapter.js';
+import { adapter as renyuanwuliu } from '../carriers/renyuanwuliu/adapter.js';
 import { adapter as rexIndonesia } from '../carriers/rex-indonesia/adapter.js';
 import { adapter as rhenusDe } from '../carriers/rhenus-de/adapter.js';
 import { adapter as rhenusIt } from '../carriers/rhenus-it/adapter.js';
@@ -1122,6 +1129,7 @@ import { adapter as swissconnect } from '../carriers/swissconnect/adapter.js';
 import { adapter as sxwExpress } from '../carriers/sxw-express/adapter.js';
 import { adapter as szctc } from '../carriers/szctc/adapter.js';
 import { adapter as szendex } from '../carriers/szendex/adapter.js';
+import { adapter as szhst56 } from '../carriers/szhst56/adapter.js';
 import { adapter as tCat } from '../carriers/t-cat/adapter.js';
 import { adapter as tGroup } from '../carriers/t-group/adapter.js';
 import { adapter as tailwindShippingLines } from '../carriers/tailwind-shipping-lines/adapter.js';
@@ -1294,12 +1302,15 @@ import { adapter as xingyunyi } from '../carriers/xingyunyi/adapter.js';
 import { adapter as xiongda } from '../carriers/xiongda/adapter.js';
 import { adapter as xlcourier } from '../carriers/xlcourier/adapter.js';
 import { adapter as xlsFutar } from '../carriers/xls-futar/adapter.js';
+import { adapter as xmlxswl } from '../carriers/xmlxswl/adapter.js';
 import { adapter as xpoLtl } from '../carriers/xpo-ltl/adapter.js';
 import { adapter as xpressCourierLink } from '../carriers/xpress-courier-link/adapter.js';
 import { adapter as xpressLogisticsLu } from '../carriers/xpress-logistics-lu/adapter.js';
 import { adapter as xpressbees } from '../carriers/xpressbees/adapter.js';
 import { adapter as xsExpress } from '../carriers/xs-express/adapter.js';
+import { adapter as xsb56 } from '../carriers/xsb56/adapter.js';
 import { adapter as xunTianInternational } from '../carriers/xun-tian-international/adapter.js';
+import { adapter as xydwl } from '../carriers/xydwl/adapter.js';
 import { adapter as xylShips } from '../carriers/xyl-ships/adapter.js';
 import { adapter as xysLogistics } from '../carriers/xys-logistics/adapter.js';
 import { adapter as yadex } from '../carriers/yadex/adapter.js';
@@ -1516,6 +1527,7 @@ export const REGISTRY: RegistryDefinition = {
     "c3x": c3x,
     "cacesa": cacesa,
     "cadena-courier": cadenaCourier,
+    "caifengwl": caifengwl,
     "calidex-courier": calidexCourier,
     "cambodia-post": cambodiaPost,
     "canada-post": canadaPost,
@@ -1833,6 +1845,7 @@ export const REGISTRY: RegistryDefinition = {
     "gfs-express": gfsExpress,
     "gig-logistics": gigLogistics,
     "gintracom": gintracom,
+    "gjsguoji": gjsguoji,
     "global-delivery-network": globalDeliveryNetwork,
     "global99": global99,
     "globalexp": globalexp,
@@ -1933,6 +1946,7 @@ export const REGISTRY: RegistryDefinition = {
     "huahan": huahan,
     "huaqi-express": huaqiExpress,
     "huaxia-express": huaxiaExpress,
+    "huaxintai": huaxintai,
     "huaya-express": huayaExpress,
     "huayutong": huayutong,
     "hubologistics": hubologistics,
@@ -2040,6 +2054,8 @@ export const REGISTRY: RegistryDefinition = {
     "konga-kxpress": kongaKxpress,
     "korea-post": koreaPost,
     "korean-air-cargo": koreanAirCargo,
+    "kqtwl": kqtwl,
+    "ks2home": ks2home,
     "kuayuan-express": kuayuanExpress,
     "kuehne-nagel": kuehneNagel,
     "kun-express": kunExpress,
@@ -2131,6 +2147,7 @@ export const REGISTRY: RegistryDefinition = {
     "meitongda": meitongda,
     "meixi": meixi,
     "memphis-courier": memphisCourier,
+    "mengxiangtong": mengxiangtong,
     "meso-global": mesoGlobal,
     "messenger-cz": messengerCz,
     "metropolitan-warehouse": metropolitanWarehouse,
@@ -2323,6 +2340,7 @@ export const REGISTRY: RegistryDefinition = {
     "relais-colis": relaisColis,
     "relay-express": relayExpress,
     "relaytech": relaytech,
+    "renyuanwuliu": renyuanwuliu,
     "rex-indonesia": rexIndonesia,
     "rhenus-de": rhenusDe,
     "rhenus-it": rhenusIt,
@@ -2477,6 +2495,7 @@ export const REGISTRY: RegistryDefinition = {
     "sxw-express": sxwExpress,
     "szctc": szctc,
     "szendex": szendex,
+    "szhst56": szhst56,
     "t-cat": tCat,
     "t-group": tGroup,
     "tailwind-shipping-lines": tailwindShippingLines,
@@ -2649,12 +2668,15 @@ export const REGISTRY: RegistryDefinition = {
     "xiongda": xiongda,
     "xlcourier": xlcourier,
     "xls-futar": xlsFutar,
+    "xmlxswl": xmlxswl,
     "xpo-ltl": xpoLtl,
     "xpress-courier-link": xpressCourierLink,
     "xpress-logistics-lu": xpressLogisticsLu,
     "xpressbees": xpressbees,
     "xs-express": xsExpress,
+    "xsb56": xsb56,
     "xun-tian-international": xunTianInternational,
+    "xydwl": xydwl,
     "xyl-ships": xylShips,
     "xys-logistics": xysLogistics,
     "yadex": yadex,
@@ -3001,6 +3023,7 @@ export const REGISTRY: RegistryDefinition = {
     "c807-xpress": "universal",
     "cacesa": "cacesa",
     "cadena-courier": "cadena-courier",
+    "caifengwl": "caifengwl",
     "calidex-courier": "calidex-courier",
     "callcourier": "universal",
     "cambodia-post": "cambodia-post",
@@ -3533,6 +3556,7 @@ export const REGISTRY: RegistryDefinition = {
     "gig-logistics": "gig-logistics",
     "gintracom": "gintracom",
     "gio-express": "universal",
+    "gjsguoji": "gjsguoji",
     "gk-global-kr": "universal",
     "gle-colombia": "universal",
     "global-business-tw": "universal",
@@ -3676,6 +3700,7 @@ export const REGISTRY: RegistryDefinition = {
     "huahan": "huahan",
     "huaqi-express": "huaqi-express",
     "huaxia-express": "huaxia-express",
+    "huaxintai": "huaxintai",
     "huaya-express": "huaya-express",
     "huayutong": "huayutong",
     "hub-delivery": "universal",
@@ -3863,7 +3888,9 @@ export const REGISTRY: RegistryDefinition = {
     "korea-post": "korea-post",
     "korean-air-cargo": "korean-air-cargo",
     "korexgarant": "universal",
+    "kqtwl": "kqtwl",
     "kronos-express": "universal",
+    "ks2home": "ks2home",
     "ktd": "universal",
     "kuayuan-express": "kuayuan-express",
     "kuayue-express": "universal",
@@ -4019,6 +4046,7 @@ export const REGISTRY: RegistryDefinition = {
     "meitongda": "meitongda",
     "meixi": "meixi",
     "memphis-courier": "memphis-courier",
+    "mengxiangtong": "mengxiangtong",
     "mensajeros-urbanos": "universal",
     "meso-global": "meso-global",
     "messenger-cz": "messenger-cz",
@@ -4379,6 +4407,7 @@ export const REGISTRY: RegistryDefinition = {
     "relais-colis": "relais-colis",
     "relay-express": "relay-express",
     "relaytech": "relaytech",
+    "renyuanwuliu": "renyuanwuliu",
     "reunidas-cargas": "universal",
     "rex-indonesia": "rex-indonesia",
     "rgw-express": "universal",
@@ -4631,6 +4660,7 @@ export const REGISTRY: RegistryDefinition = {
     "szami-group": "universal",
     "szctc": "szctc",
     "szendex": "szendex",
+    "szhst56": "szhst56",
     "t-cat": "t-cat",
     "t-group": "t-group",
     "tailwind-shipping-lines": "tailwind-shipping-lines",
@@ -4928,6 +4958,7 @@ export const REGISTRY: RegistryDefinition = {
     "xlcourier": "xlcourier",
     "xlmiles": "universal",
     "xls-futar": "xls-futar",
+    "xmlxswl": "xmlxswl",
     "xp-courier": "universal",
     "xpect-same-day": "universal",
     "xpedist": "universal",
@@ -4939,9 +4970,11 @@ export const REGISTRY: RegistryDefinition = {
     "xpressbees": "xpressbees",
     "xpressen": "universal",
     "xs-express": "xs-express",
+    "xsb56": "xsb56",
     "xuchuan-logistics": "universal",
     "xun-tian-international": "xun-tian-international",
     "xwwt": "universal",
+    "xydwl": "xydwl",
     "xyl": "universal",
     "xyl-ships": "xyl-ships",
     "xys-logistics": "xys-logistics",

@@ -3416,6 +3416,19 @@
     ]
   },
   {
+    "input": "0062205239744",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "correos-chile",
+      "yunda",
+      "econt",
+      "ozon-logistics",
+      "paquetexpress"
+    ]
+  },
+  {
     "input": "006383632380",
     "carrier": "unknown",
     "confidence": "low",
@@ -29220,6 +29233,16 @@
     ]
   },
   {
+    "input": "20023847",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colisweb",
+      "heppner"
+    ]
+  },
+  {
     "input": "200252251046",
     "carrier": "unknown",
     "confidence": "low",
@@ -38223,6 +38246,12 @@
     "candidates": []
   },
   {
+    "input": "273727",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "27420131145",
     "carrier": "unknown",
     "confidence": "low",
@@ -41022,6 +41051,14 @@
     ]
   },
   {
+    "input": "3023709",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
+    ]
+  },
+  {
     "input": "3024338844",
     "carrier": "unknown",
     "confidence": "low",
@@ -41691,6 +41728,14 @@
       "purolator",
       "brt",
       "colis-prive"
+    ]
+  },
+  {
+    "input": "3101104",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
     ]
   },
   {
@@ -64783,6 +64828,14 @@
     ]
   },
   {
+    "input": "6613810",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
+    ]
+  },
+  {
     "input": "66252767486",
     "carrier": "unknown",
     "confidence": "low",
@@ -72536,6 +72589,14 @@
     ]
   },
   {
+    "input": "8008559",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
+    ]
+  },
+  {
     "input": "8010 8389 6838",
     "carrier": "unknown",
     "confidence": "low",
@@ -72639,6 +72700,14 @@
     "asked": [
       "brt",
       "colis-prive"
+    ]
+  },
+  {
+    "input": "8020131",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
     ]
   },
   {
@@ -78838,6 +78907,14 @@
     "asked": [
       "brt",
       "colis-prive"
+    ]
+  },
+  {
+    "input": "9201508",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
     ]
   },
   {
@@ -92945,6 +93022,14 @@
     "candidates": []
   },
   {
+    "input": "DE2602041059",
+    "carrier": "amazon-logistics",
+    "confidence": "high",
+    "candidates": [
+      "amazon-logistics"
+    ]
+  },
+  {
     "input": "DE30493380",
     "carrier": "unknown",
     "confidence": "low",
@@ -98271,6 +98356,12 @@
     "candidates": [
       "parcelforce"
     ]
+  },
+  {
+    "input": "GJS888260301983",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "GK241014834170",

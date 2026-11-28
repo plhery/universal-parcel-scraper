@@ -15273,6 +15273,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "caifengwl": {
+    "displayName": "Caifeng Logistics",
+    "color": "#FF3A3A",
+    "aliases": [
+      "彩丰物流",
+      "广东彩丰物流",
+      "彩丰物流集团"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "caifengwl",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.kuaidi100.com/all/caifengwl.shtml",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "calidex-courier": {
     "displayName": "Calidex Courier",
     "color": "#15235a",
@@ -32699,6 +32721,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "gjsguoji": {
+    "displayName": "GJS Express",
+    "color": "#ffd24d",
+    "aliases": [
+      "光捷速运",
+      "GJS"
+    ],
+    "countries": [
+      "JP",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Tokyo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gjsguoji",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.gjsguojisuyu.jp/",
+    "trackingUrlTemplate": "https://h5.guojisuyunjapan.cn/#/pages/public/trackDetail?expressNo={trackingNumber}",
+    "trackingSearchUrl": "https://www.gjsguojisuyu.jp/ctracking.html",
+    "linkRules": [
+      {
+        "domains": [
+          "h5.guojisuyunjapan.cn"
+        ],
+        "pathPattern": "^/?$",
+        "fragment": "^/pages/public/trackDetail\\?(?:.*&)?expressNo=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
   "gk-global-kr": {
     "displayName": "GK Global",
     "color": "#3cc4f3",
@@ -37192,6 +37246,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "query": "^(?=(?:.*&)?MfcISAPICommand=(?:emmistrack|EmsApiTrack)(?:&|$))(?:.*&)?cno=([^&]+)(?=&|$)"
       }
     ],
+    "detectionRules": []
+  },
+  "huaxintai": {
+    "displayName": "Huaxintai Logistics",
+    "color": "#fd9a40",
+    "aliases": [
+      "华鑫泰物流"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "huaxintai",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.kuaidi100.com/all/huatai.shtml",
+    "linkRules": [],
     "detectionRules": []
   },
   "huaya-express": {
@@ -43265,6 +43339,44 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "kqtwl": {
+    "displayName": "Kaiqitong Logistics",
+    "color": "#ff613e",
+    "aliases": [
+      "凯骐通物流",
+      "深圳市凯骐通物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "kqtwl",
+      "localClocks": true
+    },
+    "canaryUrl": "https://wx.lqfast.com/wx/waybillquery/",
+    "trackingUrlTemplate": "https://wx.lqfast.com/Pub/UnitListDetail?companyid=99HDajcB62Q8ilC47SAc0Q%3D%3D&unit={trackingNumber}",
+    "trackingSearchUrl": "https://wx.lqfast.com/Pub/UnitCheck?CompanyId=99HDajcB62Q8ilC47SAc0Q%3D%3D",
+    "linkRules": [
+      {
+        "domains": [
+          "wx.lqfast.com"
+        ],
+        "pathPattern": "^/Pub/UnitListDetail$",
+        "query": "^(?=(?:.*&)?companyid=99HDajcB62Q8ilC47SAc0Q==(?:&|$))(?:.*&)?unit=([^&]+)(?=&|$)"
+      },
+      {
+        "domains": [
+          "wx.lqfast.com"
+        ],
+        "pathPattern": "^/wx/waybillquery/?$",
+        "fragment": "^/(?:waybillquery/orderDetail)?\\?(?=(?:.*&)?companyid=99HDajcB62Q8ilC47SAc0Q==(?:&|$))(?:.*&)?(?:unit|seek)=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
   "kronos-express": {
     "displayName": "Kronos Express",
     "color": "#24297a",
@@ -43295,6 +43407,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "params": [
           "tracking_number"
         ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "ks2home": {
+    "displayName": "Ks2Home",
+    "color": "#ff5f13",
+    "countries": [
+      "DE",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ks2home",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.ks2home.de",
+          "ks2home.de"
+        ],
+        "pathPattern": "^/express/query/?$",
+        "query": "^(?:.*&)?code=([^&]+)(?=&|$)"
       }
     ],
     "detectionRules": []
@@ -48413,6 +48552,44 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "mengxiangtong": {
+    "displayName": "Mengxiangtong Logistics",
+    "color": "#1d3a5c",
+    "aliases": [
+      "盟翔通物流",
+      "深圳市盟翔通物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "mengxiangtong",
+      "localClocks": true
+    },
+    "canaryUrl": "https://wx.lqfast.com/wx/waybillquery/",
+    "trackingUrlTemplate": "https://wx.lqfast.com/Pub/UnitListDetail?companyid=shU7Eab0eKhHUXNJPh%2FoYg%3D%3D&unit={trackingNumber}",
+    "trackingSearchUrl": "https://wx.lqfast.com/Pub/UnitCheck?CompanyId=shU7Eab0eKhHUXNJPh%2FoYg%3D%3D",
+    "linkRules": [
+      {
+        "domains": [
+          "wx.lqfast.com"
+        ],
+        "pathPattern": "^/Pub/UnitListDetail$",
+        "query": "^(?=(?:.*&)?companyid=shU7Eab0eKhHUXNJPh/oYg==(?:&|$))(?:.*&)?unit=([^&]+)(?=&|$)"
+      },
+      {
+        "domains": [
+          "wx.lqfast.com"
+        ],
+        "pathPattern": "^/wx/waybillquery/?$",
+        "fragment": "^/(?:waybillquery/orderDetail)?\\?(?=(?:.*&)?companyid=shU7Eab0eKhHUXNJPh/oYg==(?:&|$))(?:.*&)?(?:unit|seek)=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
   },
   "mensajeros-urbanos": {
     "displayName": "Mensajeros Urbanos",
@@ -59810,6 +59987,44 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "renyuanwuliu": {
+    "displayName": "Renyuan Logistics",
+    "color": "#ff613e",
+    "aliases": [
+      "任远物流",
+      "深圳市任远物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "renyuanwuliu",
+      "localClocks": true
+    },
+    "canaryUrl": "https://wx.lqfast.com/wx/waybillquery/",
+    "trackingUrlTemplate": "https://wx.lqfast.com/Pub/UnitListDetail?companyid=AKVKpwhKcTmYqx3ELFLB2g%3D%3D&unit={trackingNumber}",
+    "trackingSearchUrl": "https://wx.lqfast.com/wx/waybillquery/#/?companyid=AKVKpwhKcTmYqx3ELFLB2g%3D%3D",
+    "linkRules": [
+      {
+        "domains": [
+          "wx.lqfast.com"
+        ],
+        "pathPattern": "^/Pub/UnitListDetail$",
+        "query": "^(?=(?:.*&)?companyid=AKVKpwhKcTmYqx3ELFLB2g==(?:&|$))(?:.*&)?unit=([^&]+)(?=&|$)"
+      },
+      {
+        "domains": [
+          "wx.lqfast.com"
+        ],
+        "pathPattern": "^/wx/waybillquery/?$",
+        "fragment": "^/(?:waybillquery/orderDetail)?\\?(?=(?:.*&)?companyid=AKVKpwhKcTmYqx3ELFLB2g==(?:&|$))(?:.*&)?(?:unit|seek)=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
   "reunidas-cargas": {
     "displayName": "Reunidas Cargas",
     "color": "#273e74",
@@ -68030,6 +68245,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "params": [
           "seg"
         ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "szhst56": {
+    "displayName": "Hongshuntong Logistics",
+    "color": "#1a82cb",
+    "aliases": [
+      "鸿顺通物流",
+      "深圳市鸿顺通物流服务有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "szhst56",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.szhst56.com/tracking.php",
+    "trackingUrlTemplate": "https://www.szhst56.com/tracking.php?s={trackingNumber}",
+    "trackingSearchUrl": "https://www.szhst56.com/tracking.php",
+    "linkRules": [
+      {
+        "domains": [
+          "www.szhst56.com",
+          "szhst56.com"
+        ],
+        "pathPattern": "^/tracking\\.php$",
+        "query": "^(?:.*&)?s=([A-Za-z0-9]{5,30})(?=&|$)"
       }
     ],
     "detectionRules": []
@@ -77464,6 +77711,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "xmlxswl": {
+    "displayName": "Longxinshun Logistics",
+    "color": "#0653B0",
+    "aliases": [
+      "隆新顺物流",
+      "厦门隆新顺物流",
+      "厦门隆新顺供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xmlxswl",
+      "localClocks": true,
+      "dateOnlyScans": true
+    },
+    "canaryUrl": "https://www.kuaidi100.com/all/xmlxswl.shtml",
+    "trackingUrlTemplate": "https://www.1008656.com/index.aspx?id=73320&keyword={trackingNumber}",
+    "trackingSearchUrl": "https://www.1008656.com/index.aspx?id=73320",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "xp-courier": {
     "displayName": "XP Courier",
     "color": "#073b62",
@@ -77812,6 +78084,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "xsb56": {
+    "displayName": "Xinshengbang Logistics",
+    "color": "#009961",
+    "aliases": [
+      "鑫圣邦物流",
+      "深圳鑫圣邦物流",
+      "深圳市鑫圣邦物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xsb56",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.kuaidi100.com/all/xsb56.shtml",
+    "linkRules": [
+      {
+        "domains": [
+          "xsb56.cn",
+          "www.xsb56.cn"
+        ],
+        "path": "^/Tracking_([A-Za-z0-9]{5,30})\\.shtml$"
+      }
+    ],
+    "detectionRules": []
+  },
   "xuchuan-logistics": {
     "displayName": "Xuchuan International Logistics",
     "color": "#0a2463",
@@ -77891,6 +78193,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "xydwl": {
+    "displayName": "Xinyuda Logistics",
+    "color": "#ffa626",
+    "aliases": [
+      "鑫宇达物流",
+      "深圳市鑫宇达物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xydwl",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.kuaidi100.com/all/xinyuda.shtml",
+    "linkRules": [],
     "detectionRules": []
   },
   "xyl": {
@@ -80413,6 +80736,7 @@ export const CARRIER_IDS = [
   "c807-xpress",
   "cacesa",
   "cadena-courier",
+  "caifengwl",
   "calidex-courier",
   "callcourier",
   "cambodia-post",
@@ -80917,6 +81241,7 @@ export const CARRIER_IDS = [
   "gig-logistics",
   "gintracom",
   "gio-express",
+  "gjsguoji",
   "gk-global-kr",
   "gle-colombia",
   "global-business-tw",
@@ -81052,6 +81377,7 @@ export const CARRIER_IDS = [
   "huahan",
   "huaqi-express",
   "huaxia-express",
+  "huaxintai",
   "huaya-express",
   "huayutong",
   "hub-delivery",
@@ -81232,7 +81558,9 @@ export const CARRIER_IDS = [
   "koombiyo",
   "korean-air-cargo",
   "korexgarant",
+  "kqtwl",
   "kronos-express",
+  "ks2home",
   "ktd",
   "kuayuan-express",
   "kuayue-express",
@@ -81386,6 +81714,7 @@ export const CARRIER_IDS = [
   "meitongda",
   "meixi",
   "memphis-courier",
+  "mengxiangtong",
   "mensajeros-urbanos",
   "meso-global",
   "messenger-cz",
@@ -81726,6 +82055,7 @@ export const CARRIER_IDS = [
   "redx",
   "relay-express",
   "relaytech",
+  "renyuanwuliu",
   "reunidas-cargas",
   "rex-indonesia",
   "rgw-express",
@@ -81966,6 +82296,7 @@ export const CARRIER_IDS = [
   "szami-group",
   "szctc",
   "szendex",
+  "szhst56",
   "t-cat",
   "t-group",
   "tailwind-shipping-lines",
@@ -82254,6 +82585,7 @@ export const CARRIER_IDS = [
   "xlcourier",
   "xlmiles",
   "xls-futar",
+  "xmlxswl",
   "xp-courier",
   "xpect-same-day",
   "xpedist",
@@ -82265,9 +82597,11 @@ export const CARRIER_IDS = [
   "xpressbees",
   "xpressen",
   "xs-express",
+  "xsb56",
   "xuchuan-logistics",
   "xun-tian-international",
   "xwwt",
+  "xydwl",
   "xyl",
   "xyl-ships",
   "xys-logistics",
@@ -82724,6 +83058,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "c807-xpress": [],
   "cacesa": [],
   "cadena-courier": [],
+  "caifengwl": [],
   "calidex-courier": [],
   "callcourier": [],
   "cambodia-post": [],
@@ -83228,6 +83563,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gig-logistics": [],
   "gintracom": [],
   "gio-express": [],
+  "gjsguoji": [],
   "gk-global-kr": [],
   "gle-colombia": [],
   "global-business-tw": [],
@@ -83363,6 +83699,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "huahan": ["huahan-1"],
   "huaqi-express": [],
   "huaxia-express": [],
+  "huaxintai": [],
   "huaya-express": ["huaya-express-1"],
   "huayutong": [],
   "hub-delivery": [],
@@ -83543,7 +83880,9 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "koombiyo": [],
   "korean-air-cargo": [],
   "korexgarant": [],
+  "kqtwl": [],
   "kronos-express": [],
+  "ks2home": [],
   "ktd": ["ktd-1"],
   "kuayuan-express": ["kuayuan-express-1"],
   "kuayue-express": ["kuayue-express-1"],
@@ -83697,6 +84036,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "meitongda": [],
   "meixi": [],
   "memphis-courier": ["memphis-courier-1"],
+  "mengxiangtong": [],
   "mensajeros-urbanos": [],
   "meso-global": ["meso-global-1"],
   "messenger-cz": [],
@@ -84037,6 +84377,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "redx": ["redx-1"],
   "relay-express": [],
   "relaytech": ["relaytech-1"],
+  "renyuanwuliu": [],
   "reunidas-cargas": [],
   "rex-indonesia": ["rex-indonesia-1"],
   "rgw-express": [],
@@ -84277,6 +84618,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "szami-group": [],
   "szctc": [],
   "szendex": [],
+  "szhst56": [],
   "t-cat": [],
   "t-group": ["t-group-1"],
   "tailwind-shipping-lines": [],
@@ -84565,6 +84907,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xlcourier": ["xlcourier-1"],
   "xlmiles": [],
   "xls-futar": [],
+  "xmlxswl": [],
   "xp-courier": [],
   "xpect-same-day": [],
   "xpedist": [],
@@ -84576,9 +84919,11 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xpressbees": ["xpressbees-awb"],
   "xpressen": [],
   "xs-express": [],
+  "xsb56": [],
   "xuchuan-logistics": ["xuchuan-logistics-1"],
   "xun-tian-international": [],
   "xwwt": [],
+  "xydwl": [],
   "xyl": [],
   "xyl-ships": ["xyl-ships-1","xyl-ships-2","xyl-ships-3"],
   "xys-logistics": [],
