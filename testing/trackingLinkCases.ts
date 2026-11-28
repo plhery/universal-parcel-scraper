@@ -3089,6 +3089,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'annengyuntong', number: 'ANYT1901010317',
     route: /^https:\/\/wx\.lqfast\.com\/Pub\/UnitListDetail\?companyid=9d3suZLQaTTCLeYx7PsD8w%3D%3D&unit=ANYT1901010317$/,
     marker: /未找到运单|校验手机后四位|运单跟踪/ },
+  // The routes page renders the waybill's timeline on the server under its number, or the line that it has none.
+  { carrier: 'zgtux', number: 'TX999000017',
+    route: /^https:\/\/vip\.zgtux\.com\/routes\?no=TX999000017$/,
+    marker: /运单号：\s*TX999000017/ },
 ];
 
 /**

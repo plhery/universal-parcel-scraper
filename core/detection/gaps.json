@@ -7456,5 +7456,11 @@
     "pattern": "^\\d{9}$",
     "kind": "by_design",
     "reason": "Nine digits is the test number Kuaidi100 lists for 1688 International Logistics, which the platform answers with no rows, and a bare counter many carriers' numbers share, so nothing in it points to the firm."
+  },
+  {
+    "carrier": "zgtux",
+    "pattern": "^TX\\d{9}$",
+    "kind": "collision",
+    "reason": "TX and nine digits is Tuxing Supply Chain's waybill on Kuaidi100's samples, and two letters and nine digits is a shape GLS Italy's rule takes, so detection does not name Tuxing. The adapter answers explicit selection."
   }
 ]

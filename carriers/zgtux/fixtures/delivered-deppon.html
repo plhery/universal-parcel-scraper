@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&#x8FD0;&#x5355;&#x67E5;&#x8BE2;</title>
+    <script src="/layui/dist/layui.js"></script>
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <link href="/layui/dist/css/layui.css" rel="stylesheet" />
+    <link href="/layui/admin.css?v=240318" rel="stylesheet" />
+    <link href="/layui/style.css?v=240318" rel="stylesheet" />
+    <script src="/layui/dist/tux.js"></script>
+</head>
+<body>
+    
+    <div style="margin:0 20px;max-width:600px;">
+    <div style="text-align:center;margin:0 auto;">
+        <img src="/layui/images/icon_01.png" />
+    </div>
+    <table>
+        <tr>
+            <td>
+                <input type="text" id="txtNo" style="width: 100%;" maxlength="12" value='TX100153998' placeholder="请输入运单号" autocomplete="off" class="layui-input" />
+            </td>
+            <td style="width:50px;white-space:nowrap;">
+                <button class="layui-btn" onclick="search()">查询</button>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <h3 style="color:#666;">运单号：TX100153998</h3><hr/><ul class="layui-timeline"><li class="layui-timeline-item"><i class="layui-icon layui-timeline-axis">&#xe63f;</i><div class="layui-timeline-content layui-text"><h3 class="layui-timeline-title">2023-05-18 18:49</h3><p>【H】株洲株洲县营业部，已签收，签收人类型：本人</p></div></li><li class="layui-timeline-item"><i class="layui-icon layui-timeline-axis">&#xe63f;</i><div class="layui-timeline-content layui-text"><h3 class="layui-timeline-title">2023-05-18 13:39</h3><p>【H】株洲株洲县营业部，派送中，德邦已开启”安全呼叫“，保护您的电话隐私，小哥今日体温正常，将佩戴口罩为您配送，也可联系小哥将包裹放置指定地点，祝您身体健康。,派送人：某某,电话:13800000000</p></div></li><li class="layui-timeline-item"><i class="layui-icon layui-timeline-axis">&#xe63f;</i><div class="layui-timeline-content layui-text"><h3 class="layui-timeline-title">2023-05-18 08:12</h3><p>【H】株洲株洲县营业部，运输中，到达【H】株洲株洲县营业部</p></div></li><li class="layui-timeline-item"><i class="layui-icon layui-timeline-axis">&#xe63f;</i><div class="layui-timeline-content layui-text"><h3 class="layui-timeline-title">2023-05-18 06:23</h3><p>长沙转运场，运输中，离开【长沙转运场】，下一部门【【H】株洲株洲县营业部】</p></div></li><li class="layui-timeline-item"><i class="layui-icon layui-timeline-axis">&#xe63f;</i><div class="layui-timeline-content layui-text"><h3 class="layui-timeline-title">2023-05-17 22:51</h3><p>长沙转运场，运输中，到达长沙转运场</p></div></li><li class="layui-timeline-item"><i class="layui-icon layui-timeline-axis">&#xe63f;</i><div class="layui-timeline-content layui-text"><h3 class="layui-timeline-title">2023-05-17 07:11</h3><p>重庆转运场，运输中，离开【重庆转运场】，下一部门【长沙转运场】</p></div></li><li class="layui-timeline-item"><i class="layui-icon layui-timeline-axis">&#xe63f;</i><div class="layui-timeline-content layui-text"><h3 class="layui-timeline-title">2023-05-16 22:53</h3><p>重庆转运场，运输中，到达重庆转运场</p></div></li><li class="layui-timeline-item"><i class="layui-icon layui-timeline-axis">&#xe63f;</i><div class="layui-timeline-content layui-text"><h3 class="layui-timeline-title">2023-05-16 18:25</h3><p>重庆万州区石峰支路营业部，运输中，离开【重庆万州区石峰支路营业部】，下一部门【重庆转运场】</p></div></li><li class="layui-timeline-item"><i class="layui-icon layui-timeline-axis">&#xe63f;</i><div class="layui-timeline-content layui-text"><h3 class="layui-timeline-title">2023-05-16 16:53</h3><p>重庆万州区石峰支路营业部，您的订单已被收件员揽收,【重庆万州区石峰支路营业部】库存中</p></div></li><li class="layui-timeline-item"><i class="layui-icon layui-timeline-axis">&#xe63f;</i><div class="layui-timeline-content layui-text"><h3 class="layui-timeline-title">2023-05-16 10:07</h3><p>运单录入</p></div></li></ul>
+</div>
+<script>
+    function search() {
+        var no = $.trim($("#txtNo").val());
+        if (no == "") {
+            return;
+        }
+        location.href = "routes?no=" + no;
+    }
+</script>
+
+</body>
+</html>

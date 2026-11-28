@@ -1,0 +1,122 @@
+{
+  "carrier": "zgtux",
+  "entries": [
+    {
+      "code": null,
+      "wording": "运单录入",
+      "language": "zh",
+      "english": "Waybill entered",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The firm's own first row, before a courier has the parcel."
+    },
+    {
+      "code": null,
+      "wording": "京东快递已取件",
+      "language": "zh",
+      "english": "Picked up by JD Express",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "JD Logistics' first row. Its courtesy line is cut."
+    },
+    {
+      "code": null,
+      "wording": "您的快件已到达【厦门莲坂站】，准备装车",
+      "language": "zh",
+      "english": "Your parcel has reached the station and is being loaded",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A JD Logistics row. The bracket names the station."
+    },
+    {
+      "code": null,
+      "wording": "您的快件已离开【厦门莲坂站】，正在发往下一站【厦门集散分拣中心】的路上",
+      "language": "zh",
+      "english": "Your parcel has left the station for the next one",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A JD Logistics row. The brackets name both stations; a courtesy sentence after it is cut."
+    },
+    {
+      "code": null,
+      "wording": "您的快件已到达【厦门集散分拣中心】",
+      "language": "zh",
+      "english": "Your parcel has reached the station",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A JD Logistics row at a sorting centre or a delivery station; the station's phone after it is cut."
+    },
+    {
+      "code": null,
+      "wording": "厦门集散分拣中心分拣中心已收箱，箱号BC1002261007241483523429",
+      "language": "zh",
+      "english": "Received in a box at the sorting centre",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A JD Logistics row naming the sorting centre and the box."
+    },
+    {
+      "code": null,
+      "wording": "您的快件正在派送中，请您准备签收",
+      "language": "zh",
+      "english": "Your parcel is out for delivery, please be ready to sign",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "A JD Logistics row; the courier, the phones and the privacy notice after it are cut."
+    },
+    {
+      "code": null,
+      "wording": "您的快件已送达至【店里】",
+      "language": "zh",
+      "english": "Your parcel has been delivered",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "JD Logistics' delivery row. The bracket names where it was left; the courier and the phones after it are cut."
+    },
+    {
+      "code": null,
+      "wording": "重庆万州区石峰支路营业部，您的订单已被收件员揽收,【重庆万州区石峰支路营业部】库存中",
+      "language": "zh",
+      "english": "Your order was collected and is in stock at the branch",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Deppon's first row. Its rows start with the station."
+    },
+    {
+      "code": null,
+      "wording": "重庆万州区石峰支路营业部，运输中，离开【重庆万州区石峰支路营业部】，下一部门【重庆转运场】",
+      "language": "zh",
+      "english": "In transit, left the station for the next",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A Deppon row naming both stations."
+    },
+    {
+      "code": null,
+      "wording": "重庆转运场，运输中，到达重庆转运场",
+      "language": "zh",
+      "english": "In transit, arrived at the station",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A Deppon row; the station after it may be bracketed."
+    },
+    {
+      "code": null,
+      "wording": "【H】株洲株洲县营业部，派送中",
+      "language": "zh",
+      "english": "Out for delivery",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "A Deppon row; the courtesy lines, the courier and the phone after it are cut."
+    },
+    {
+      "code": null,
+      "wording": "【H】株洲株洲县营业部，已签收，签收人类型：本人",
+      "language": "zh",
+      "english": "Signed for, by the addressee",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Deppon's delivery row. It says who signed by kind only."
+    }
+  ]
+}

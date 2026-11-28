@@ -1,0 +1,71 @@
+{
+  "id": "zgtux",
+  "displayName": "Tuxing Supply Chain",
+  "aliases": [
+    "途兴供应链",
+    "广东途兴供应链管理有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#C30D23"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "zgtux",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://vip.zgtux.com/routes?no={trackingNumber}",
+    "searchUrl": "https://vip.zgtux.com/routes",
+    "canaryUrl": "https://vip.zgtux.com/routes",
+    "shows": [
+      "history",
+      "courier_name",
+      "driver_phone"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "courier_name",
+      "driver_phone"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "location",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "delivery_tracking_number",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "vip.zgtux.com"
+      ],
+      "pathPattern": "^/routes$",
+      "params": [
+        "no"
+      ]
+    }
+  ],
+  "detection": []
+}
