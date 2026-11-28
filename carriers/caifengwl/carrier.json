@@ -1,0 +1,67 @@
+{
+  "id": "caifengwl",
+  "displayName": "Caifeng Logistics",
+  "aliases": [
+    "彩丰物流",
+    "广东彩丰物流",
+    "彩丰物流集团"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#FF3A3A"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "caifengwl",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "canaryUrl": "https://www.kuaidi100.com/all/caifengwl.shtml",
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "order_contents",
+      "parcel_count",
+      "staff_details",
+      "driver_name",
+      "vehicle",
+      "office_contact_details"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "signatory"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

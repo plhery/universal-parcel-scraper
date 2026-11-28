@@ -7722,5 +7722,11 @@
     "pattern": "^\\d{7}$",
     "kind": "by_design",
     "reason": "Xinhongda Logistics' waybills seen are seven bare digits, a counter other carriers' numbers share, so nothing in the number points to Xinhongda. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "caifengwl",
+    "pattern": "^\\d{13}$",
+    "kind": "by_design",
+    "reason": "Thirteen digits is the test number Kuaidi100 lists for Caifeng Logistics, a bare digit run many carriers' numbers share, so nothing in it points to Caifeng. The adapter answers explicit selection."
   }
 ]

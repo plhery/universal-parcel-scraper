@@ -1,0 +1,99 @@
+{
+  "weblink": "www.caifengwl.com",
+  "haoshi": "4天18小时43分",
+  "dbname": "彩丰物流",
+  "notestatus_int": "4",
+  "TOREGIONNAME_VCHR": "彩塘",
+  "bookingnoteno_vchr": "0062205239744",
+  "CREATE_DAT": "2022-05-23 18:43:20",
+  "CREATORNAME_VCHR": "开单员13800000000",
+  "createdeptname_vchr": "南昌分公司",
+  "FREIGHTNAME_VCHR": "不锈钢",
+  "amount_int": "2",
+  "CONSIGNCLIENTNAME_VCHR": "发货人",
+  "RECEIVECLIENTNAME_VCHR": "收货单位",
+  "FROMREGIONNAME_VCHR": "南昌",
+  "result": [
+    {
+      "bookingnoteno": "0062205239744",
+      "rownum": "9",
+      "operatetime": "2022-05-28 13:26:26",
+      "type": "客户自提-完成",
+      "operateman": "操作员0768-0000000",
+      "content": "客户已签收，订单完成",
+      "deptname": "彩塘分公司"
+    },
+    {
+      "bookingnoteno": "0062205239744",
+      "rownum": "8",
+      "operatetime": "2022-05-28 13:24:56",
+      "type": "客户自提-完成",
+      "operateman": "操作员0768-0000000",
+      "content": "客户在彩塘分公司提货，联系电话:0768-0000000",
+      "deptname": "彩塘分公司"
+    },
+    {
+      "bookingnoteno": "0062205239744",
+      "rownum": "7",
+      "operatetime": "2022-05-26 13:11:40",
+      "type": "短驳",
+      "operateman": "",
+      "content": "货物已由彩塘分公司卸货入库，联系电话:0768-0000000",
+      "deptname": "彩塘分公司"
+    },
+    {
+      "bookingnoteno": "0062205239744",
+      "rownum": "6",
+      "operatetime": "2022-05-26 13:11:40",
+      "type": "短驳",
+      "operateman": "",
+      "content": "车辆已到达彩塘分公司",
+      "deptname": "潮安庵埠总公司"
+    },
+    {
+      "bookingnoteno": "0062205239744",
+      "rownum": "5",
+      "operatetime": "2022-05-25 12:22:54",
+      "type": "短驳",
+      "operateman": "操作员0768-0000001",
+      "content": "运输中，离开潮安庵埠总公司，发往彩塘分公司，车牌号:，驾驶员:",
+      "deptname": "潮安庵埠总公司"
+    },
+    {
+      "bookingnoteno": "0062205239744",
+      "rownum": "4",
+      "operatetime": "2022-05-25 10:04:27",
+      "type": "长途配载-分部完成",
+      "operateman": "",
+      "content": "货物已由潮安庵埠总公司卸货入库，联系电话:0768-0000002",
+      "deptname": "潮安庵埠总公司"
+    },
+    {
+      "bookingnoteno": "0062205239744",
+      "rownum": "3",
+      "operatetime": "2022-05-25 10:04:27",
+      "type": "长途配载-分部完成",
+      "operateman": "开单员13800000000",
+      "content": "车辆已到达潮安庵埠总公司",
+      "deptname": "南昌分公司"
+    },
+    {
+      "bookingnoteno": "0062205239744",
+      "rownum": "2",
+      "operatetime": "2022-05-24 13:36:38",
+      "type": "长途配载-分部完成",
+      "operateman": "开单员13800000000",
+      "content": "在南昌分公司完成配载，发往潮安庵埠总公司，车牌号:粤A00000，驾驶员:测试司机",
+      "deptname": "南昌分公司"
+    },
+    {
+      "bookingnoteno": "0062205239744",
+      "rownum": "1",
+      "operatetime": "2022-05-23 18:43:20",
+      "type": "托运开单",
+      "operateman": "开单员13800000000",
+      "content": "货物已由南昌分公司揽收，联系电话:0791-00000000",
+      "deptname": "南昌分公司"
+    }
+  ]
+}

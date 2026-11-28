@@ -1,0 +1,37 @@
+{
+  "carrier": "caifengwl",
+  "entries": [
+    {
+      "code": "托运开单",
+      "wording": "货物已由…揽收",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The waybill written at the branch that collected the goods."
+    },
+    {
+      "code": "长途配载-分部完成",
+      "wording": "在…完成配载，发往…",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A line-haul truck loaded, left, reached the next branch and was unloaded there; each step is its own row under this operation."
+    },
+    {
+      "code": "短驳",
+      "wording": "运输中，离开…，发往…",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A local shuttle between two branches, with its departure, arrival and unloading rows."
+    },
+    {
+      "code": "客户自提-完成",
+      "wording": "客户已签收，订单完成",
+      "language": "zh",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The customer collected the goods at the branch and signed; the collection row and the signature row both carry this operation."
+    }
+  ]
+}
