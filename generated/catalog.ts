@@ -22623,7 +22623,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Boise",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "diamond-line",
+      "localClocks": true
     },
     "canaryUrl": "https://www.dlds.com/manage/track-shipment/",
     "trackingSearchUrl": "https://www.dlds.com/manage/track-shipment/",

@@ -297,6 +297,7 @@ import { adapter as dhlExpress } from '../carriers/dhl-express/adapter.js';
 import { adapter as dhlFreight } from '../carriers/dhl-freight/adapter.js';
 import { adapter as dhlink } from '../carriers/dhlink/adapter.js';
 import { adapter as diakinisis } from '../carriers/diakinisis/adapter.js';
+import { adapter as diamondLine } from '../carriers/diamond-line/adapter.js';
 import { adapter as directFreightExpress } from '../carriers/direct-freight-express/adapter.js';
 import { adapter as direx } from '../carriers/direx/adapter.js';
 import { adapter as disuLogistics } from '../carriers/disu-logistics/adapter.js';
@@ -1630,6 +1631,7 @@ export const REGISTRY: RegistryDefinition = {
     "dhl-freight": dhlFreight,
     "dhlink": dhlink,
     "diakinisis": diakinisis,
+    "diamond-line": diamondLine,
     "direct-freight-express": directFreightExpress,
     "direx": direx,
     "disu-logistics": disuLogistics,
@@ -3190,7 +3192,7 @@ export const REGISTRY: RegistryDefinition = {
     "diakinisis": "diakinisis",
     "diakon": "universal",
     "dialogo-logistica": "universal",
-    "diamond-line": "universal",
+    "diamond-line": "diamond-line",
     "dida-international": "universal",
     "diera": "universal",
     "dimex": "universal",
