@@ -357,6 +357,7 @@ import { adapter as elta } from '../carriers/elta/adapter.js';
 import { adapter as emile } from '../carriers/emile/adapter.js';
 import { adapter as emiratesCourierExpress } from '../carriers/emirates-courier-express/adapter.js';
 import { adapter as emiratesPost } from '../carriers/emirates-post/adapter.js';
+import { adapter as emiratesSkycargo } from '../carriers/emirates-skycargo/adapter.js';
 import { adapter as emoTrans } from '../carriers/emo-trans/adapter.js';
 import { adapter as ems } from '../carriers/ems/adapter.js';
 import { adapter as emsVietnam } from '../carriers/ems-vietnam/adapter.js';
@@ -662,6 +663,7 @@ import { adapter as kolayGelsin } from '../carriers/kolay-gelsin/adapter.js';
 import { adapter as komonExpress } from '../carriers/komon-express/adapter.js';
 import { adapter as kongaKxpress } from '../carriers/konga-kxpress/adapter.js';
 import { adapter as koreaPost } from '../carriers/korea-post/adapter.js';
+import { adapter as koreanAirCargo } from '../carriers/korean-air-cargo/adapter.js';
 import { adapter as kuayuanExpress } from '../carriers/kuayuan-express/adapter.js';
 import { adapter as kuehneNagel } from '../carriers/kuehne-nagel/adapter.js';
 import { adapter as kunExpress } from '../carriers/kun-express/adapter.js';
@@ -718,6 +720,7 @@ import { adapter as longtengus } from '../carriers/longtengus/adapter.js';
 import { adapter as loomisExpress } from '../carriers/loomis-express/adapter.js';
 import { adapter as lotCargo } from '../carriers/lot-cargo/adapter.js';
 import { adapter as lotteGlobal } from '../carriers/lotte-global/adapter.js';
+import { adapter as lufthansaCargo } from '../carriers/lufthansa-cargo/adapter.js';
 import { adapter as luluExpress } from '../carriers/lulu-express/adapter.js';
 import { adapter as lxPantos } from '../carriers/lx-pantos/adapter.js';
 import { adapter as mAndP } from '../carriers/m-and-p/adapter.js';
@@ -1677,6 +1680,7 @@ export const REGISTRY: RegistryDefinition = {
     "emile": emile,
     "emirates-courier-express": emiratesCourierExpress,
     "emirates-post": emiratesPost,
+    "emirates-skycargo": emiratesSkycargo,
     "emo-trans": emoTrans,
     "ems": ems,
     "ems-vietnam": emsVietnam,
@@ -1982,6 +1986,7 @@ export const REGISTRY: RegistryDefinition = {
     "komon-express": komonExpress,
     "konga-kxpress": kongaKxpress,
     "korea-post": koreaPost,
+    "korean-air-cargo": koreanAirCargo,
     "kuayuan-express": kuayuanExpress,
     "kuehne-nagel": kuehneNagel,
     "kun-express": kunExpress,
@@ -2038,6 +2043,7 @@ export const REGISTRY: RegistryDefinition = {
     "loomis-express": loomisExpress,
     "lot-cargo": lotCargo,
     "lotte-global": lotteGlobal,
+    "lufthansa-cargo": lufthansaCargo,
     "lulu-express": luluExpress,
     "lx-pantos": lxPantos,
     "m-and-p": mAndP,
@@ -3267,6 +3273,7 @@ export const REGISTRY: RegistryDefinition = {
     "emile": "emile",
     "emirates-courier-express": "emirates-courier-express",
     "emirates-post": "emirates-post",
+    "emirates-skycargo": "emirates-skycargo",
     "emiro": "universal",
     "emo-trans": "emo-trans",
     "emole-express": "universal",
@@ -3780,6 +3787,7 @@ export const REGISTRY: RegistryDefinition = {
     "konga-kxpress": "konga-kxpress",
     "koombiyo": "universal",
     "korea-post": "korea-post",
+    "korean-air-cargo": "korean-air-cargo",
     "korexgarant": "universal",
     "kronos-express": "universal",
     "ktd": "universal",
@@ -3872,6 +3880,7 @@ export const REGISTRY: RegistryDefinition = {
     "lso": "universal",
     "ltl-kr": "universal",
     "lucky-fast-express": "universal",
+    "lufthansa-cargo": "lufthansa-cargo",
     "lulu-express": "lulu-express",
     "lvz-post": "universal",
     "lx-pantos": "lx-pantos",

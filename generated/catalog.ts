@@ -26289,6 +26289,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "emirates-skycargo": {
+    "displayName": "Emirates SkyCargo",
+    "color": "#D71921",
+    "aliases": [
+      "Emirates Cargo",
+      "eSkyCargo"
+    ],
+    "countries": [
+      "AE"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Dubai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "emirates-skycargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://eskycargo.emirates.com/app/offerandorder/",
+    "trackingUrlTemplate": "https://eskycargo.emirates.com/app/offerandorder/#/home/find-offer",
+    "trackingSearchUrl": "https://eskycargo.emirates.com/app/offerandorder/#/home/find-offer",
+    "linkRules": [
+      {
+        "domains": [
+          "eskycargo.emirates.com"
+        ],
+        "pathPattern": "^/app/offerandorder/?$",
+        "fragment": "^/shipments/list\\?(?:[^#]*&)?values=(176\\d{8})(?:&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
   "emiro": {
     "displayName": "Emiro",
     "color": "#ea3d53",
@@ -42857,6 +42888,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "korean-air-cargo": {
+    "displayName": "Korean Air Cargo",
+    "color": "#00256C",
+    "aliases": [
+      "Korean Air",
+      "Korean Air Lines",
+      "대한항공 화물"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Seoul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "korean-air-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cargo.koreanair.com/en/tracking",
+    "trackingUrlTemplate": "https://cargo.koreanair.com/en/home",
+    "trackingSearchUrl": "https://cargo.koreanair.com/en/tracking",
+    "helpUrl": "https://cargo.koreanair.com/en/Branch-Information",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "korexgarant": {
     "displayName": "Korexgarant",
     "color": "#013550",
@@ -45908,6 +45964,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "params": [
           "num"
         ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "lufthansa-cargo": {
+    "displayName": "Lufthansa Cargo",
+    "color": "#05164D",
+    "aliases": [
+      "Lufthansa Cargo AG",
+      "LH Cargo"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "lufthansa-cargo"
+    },
+    "canaryUrl": "https://www.lufthansa-cargo.com/en/eservices/etracking",
+    "trackingUrlTemplate": "https://www.lufthansa-cargo.com/en/eservices/etracking",
+    "trackingSearchUrl": "https://www.lufthansa-cargo.com/en/eservices/etracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.lufthansa-cargo.com",
+          "lufthansa-cargo.com"
+        ],
+        "pathPattern": "^/(?:[a-z]{2}/)?eservices/etracking/tracking/-/awb/020/\\d{8}/?$",
+        "path": "^/(?:[a-z]{2}/)?eservices/etracking/tracking/-/awb/020/(\\d{8})/?$"
       }
     ],
     "detectionRules": []
@@ -80129,6 +80216,7 @@ export const CARRIER_IDS = [
   "emile",
   "emirates-courier-express",
   "emirates-post",
+  "emirates-skycargo",
   "emiro",
   "emo-trans",
   "emole-express",
@@ -80621,6 +80709,7 @@ export const CARRIER_IDS = [
   "komon-express",
   "konga-kxpress",
   "koombiyo",
+  "korean-air-cargo",
   "korexgarant",
   "kronos-express",
   "ktd",
@@ -80711,6 +80800,7 @@ export const CARRIER_IDS = [
   "lso",
   "ltl-kr",
   "lucky-fast-express",
+  "lufthansa-cargo",
   "lulu-express",
   "lvz-post",
   "lx-pantos",
@@ -82420,6 +82510,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "emile": ["emile-1","emile-2"],
   "emirates-courier-express": [],
   "emirates-post": ["emirates-post-own","emirates-post-s10"],
+  "emirates-skycargo": [],
   "emiro": [],
   "emo-trans": [],
   "emole-express": [],
@@ -82912,6 +83003,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "komon-express": ["komon-express-1"],
   "konga-kxpress": [],
   "koombiyo": [],
+  "korean-air-cargo": [],
   "korexgarant": [],
   "kronos-express": [],
   "ktd": ["ktd-1"],
@@ -83002,6 +83094,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lso": ["lso-1"],
   "ltl-kr": [],
   "lucky-fast-express": [],
+  "lufthansa-cargo": [],
   "lulu-express": [],
   "lvz-post": [],
   "lx-pantos": [],
