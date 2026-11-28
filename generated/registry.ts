@@ -36,6 +36,7 @@ import { adapter as airpakExpress } from '../carriers/airpak-express/adapter.js'
 import { adapter as airroad } from '../carriers/airroad/adapter.js';
 import { adapter as airspeed } from '../carriers/airspeed/adapter.js';
 import { adapter as airwaysCourierIn } from '../carriers/airways-courier-in/adapter.js';
+import { adapter as airwingsIndia } from '../carriers/airwings-india/adapter.js';
 import { adapter as aitWorldwide } from '../carriers/ait-worldwide/adapter.js';
 import { adapter as ajex } from '../carriers/ajex/adapter.js';
 import { adapter as akasaAirCargo } from '../carriers/akasa-air-cargo/adapter.js';
@@ -345,6 +346,7 @@ import { adapter as ecomLogistics } from '../carriers/ecom-logistics/adapter.js'
 import { adapter as econt } from '../carriers/econt/adapter.js';
 import { adapter as ecoscooting } from '../carriers/ecoscooting/adapter.js';
 import { adapter as ecourier } from '../carriers/ecourier/adapter.js';
+import { adapter as ecourierUk } from '../carriers/ecourier-uk/adapter.js';
 import { adapter as ecparcel } from '../carriers/ecparcel/adapter.js';
 import { adapter as edPost } from '../carriers/ed-post/adapter.js';
 import { adapter as ediExpress } from '../carriers/edi-express/adapter.js';
@@ -404,6 +406,7 @@ import { adapter as fastbox } from '../carriers/fastbox/adapter.js';
 import { adapter as fastdrop } from '../carriers/fastdrop/adapter.js';
 import { adapter as fasterShipe } from '../carriers/faster-shipe/adapter.js';
 import { adapter as fastfrate } from '../carriers/fastfrate/adapter.js';
+import { adapter as fastgo } from '../carriers/fastgo/adapter.js';
 import { adapter as fastwayZa } from '../carriers/fastway-za/adapter.js';
 import { adapter as fedex } from '../carriers/fedex/adapter.js';
 import { adapter as fedexFreight } from '../carriers/fedex-freight/adapter.js';
@@ -425,6 +428,7 @@ import { adapter as flechacarga } from '../carriers/flechacarga/adapter.js';
 import { adapter as fleetex } from '../carriers/fleetex/adapter.js';
 import { adapter as fleetoptics } from '../carriers/fleetoptics/adapter.js';
 import { adapter as flickpost } from '../carriers/flickpost/adapter.js';
+import { adapter as flightLogistics } from '../carriers/flight-logistics/adapter.js';
 import { adapter as flippost } from '../carriers/flippost/adapter.js';
 import { adapter as flipxpress } from '../carriers/flipxpress/adapter.js';
 import { adapter as fliway } from '../carriers/fliway/adapter.js';
@@ -499,6 +503,7 @@ import { adapter as golilla } from '../carriers/golilla/adapter.js';
 import { adapter as gollog } from '../carriers/gollog/adapter.js';
 import { adapter as goodExpressUs } from '../carriers/good-express-us/adapter.js';
 import { adapter as grandSlamExpress } from '../carriers/grand-slam-express/adapter.js';
+import { adapter as greenwayVn } from '../carriers/greenway-vn/adapter.js';
 import { adapter as gruberLogistics } from '../carriers/gruber-logistics/adapter.js';
 import { adapter as gsPostbox } from '../carriers/gs-postbox/adapter.js';
 import { adapter as gsiExpress } from '../carriers/gsi-express/adapter.js';
@@ -512,6 +517,7 @@ import { adapter as hainanAirlinesCargo } from '../carriers/hainan-airlines-carg
 import { adapter as hanjin } from '../carriers/hanjin/adapter.js';
 import { adapter as hapagLloyd } from '../carriers/hapag-lloyd/adapter.js';
 import { adapter as happyPost } from '../carriers/happy-post/adapter.js';
+import { adapter as hart2hartExpress } from '../carriers/hart2hart-express/adapter.js';
 import { adapter as haypost } from '../carriers/haypost/adapter.js';
 import { adapter as hcrd } from '../carriers/hcrd/adapter.js';
 import { adapter as hctLogistics } from '../carriers/hct-logistics/adapter.js';
@@ -1128,6 +1134,7 @@ import { adapter as thaiAirwaysCargo } from '../carriers/thai-airways-cargo/adap
 import { adapter as thailandPost } from '../carriers/thailand-post/adapter.js';
 import { adapter as theCourierGuy } from '../carriers/the-courier-guy/adapter.js';
 import { adapter as theDeliveryGroup } from '../carriers/the-delivery-group/adapter.js';
+import { adapter as theHumanExpress } from '../carriers/the-human-express/adapter.js';
 import { adapter as thhy } from '../carriers/thhy/adapter.js';
 import { adapter as tigFreight } from '../carriers/tig-freight/adapter.js';
 import { adapter as tiki } from '../carriers/tiki/adapter.js';
@@ -1182,6 +1189,7 @@ import { adapter as twsExpress } from '../carriers/tws-express/adapter.js';
 import { adapter as uSpeedExpress } from '../carriers/u-speed-express/adapter.js';
 import { adapter as ubiSmartParcel } from '../carriers/ubi-smart-parcel/adapter.js';
 import { adapter as ubuy } from '../carriers/ubuy/adapter.js';
+import { adapter as ubxUk } from '../carriers/ubx-uk/adapter.js';
 import { adapter as ukpWorldwide } from '../carriers/ukp-worldwide/adapter.js';
 import { adapter as ukrposhta } from '../carriers/ukrposhta/adapter.js';
 import { adapter as umacCargo } from '../carriers/umac-cargo/adapter.js';
@@ -1250,6 +1258,7 @@ import { adapter as wlkgo } from '../carriers/wlkgo/adapter.js';
 import { adapter as wokexp } from '../carriers/wokexp/adapter.js';
 import { adapter as wooliiporter } from '../carriers/wooliiporter/adapter.js';
 import { adapter as wooriTaekbae } from '../carriers/woori-taekbae/adapter.js';
+import { adapter as worldPackage } from '../carriers/world-package/adapter.js';
 import { adapter as wpGround } from '../carriers/wp-ground/adapter.js';
 import { adapter as xExpressRs } from '../carriers/x-express-rs/adapter.js';
 import { adapter as xcargo } from '../carriers/xcargo/adapter.js';
@@ -1311,6 +1320,7 @@ import { adapter as zgtux } from '../carriers/zgtux/adapter.js';
 import { adapter as zheldor } from '../carriers/zheldor/adapter.js';
 import { adapter as zhongzhouLogistics } from '../carriers/zhongzhou-logistics/adapter.js';
 import { adapter as zim } from '../carriers/zim/adapter.js';
+import { adapter as zimpost } from '../carriers/zimpost/adapter.js';
 import { adapter as zmcExpress } from '../carriers/zmc-express/adapter.js';
 import { adapter as znlogic } from '../carriers/znlogic/adapter.js';
 import { adapter as zoomVe } from '../carriers/zoom-ve/adapter.js';
@@ -1359,6 +1369,7 @@ export const REGISTRY: RegistryDefinition = {
     "airroad": airroad,
     "airspeed": airspeed,
     "airways-courier-in": airwaysCourierIn,
+    "airwings-india": airwingsIndia,
     "ait-worldwide": aitWorldwide,
     "ajex": ajex,
     "akasa-air-cargo": akasaAirCargo,
@@ -1668,6 +1679,7 @@ export const REGISTRY: RegistryDefinition = {
     "econt": econt,
     "ecoscooting": ecoscooting,
     "ecourier": ecourier,
+    "ecourier-uk": ecourierUk,
     "ecparcel": ecparcel,
     "ed-post": edPost,
     "edi-express": ediExpress,
@@ -1727,6 +1739,7 @@ export const REGISTRY: RegistryDefinition = {
     "fastdrop": fastdrop,
     "faster-shipe": fasterShipe,
     "fastfrate": fastfrate,
+    "fastgo": fastgo,
     "fastway-za": fastwayZa,
     "fedex": fedex,
     "fedex-freight": fedexFreight,
@@ -1748,6 +1761,7 @@ export const REGISTRY: RegistryDefinition = {
     "fleetex": fleetex,
     "fleetoptics": fleetoptics,
     "flickpost": flickpost,
+    "flight-logistics": flightLogistics,
     "flippost": flippost,
     "flipxpress": flipxpress,
     "fliway": fliway,
@@ -1822,6 +1836,7 @@ export const REGISTRY: RegistryDefinition = {
     "gollog": gollog,
     "good-express-us": goodExpressUs,
     "grand-slam-express": grandSlamExpress,
+    "greenway-vn": greenwayVn,
     "gruber-logistics": gruberLogistics,
     "gs-postbox": gsPostbox,
     "gsi-express": gsiExpress,
@@ -1835,6 +1850,7 @@ export const REGISTRY: RegistryDefinition = {
     "hanjin": hanjin,
     "hapag-lloyd": hapagLloyd,
     "happy-post": happyPost,
+    "hart2hart-express": hart2hartExpress,
     "haypost": haypost,
     "hcrd": hcrd,
     "hct-logistics": hctLogistics,
@@ -2451,6 +2467,7 @@ export const REGISTRY: RegistryDefinition = {
     "thailand-post": thailandPost,
     "the-courier-guy": theCourierGuy,
     "the-delivery-group": theDeliveryGroup,
+    "the-human-express": theHumanExpress,
     "thhy": thhy,
     "tig-freight": tigFreight,
     "tiki": tiki,
@@ -2505,6 +2522,7 @@ export const REGISTRY: RegistryDefinition = {
     "u-speed-express": uSpeedExpress,
     "ubi-smart-parcel": ubiSmartParcel,
     "ubuy": ubuy,
+    "ubx-uk": ubxUk,
     "ukp-worldwide": ukpWorldwide,
     "ukrposhta": ukrposhta,
     "umac-cargo": umacCargo,
@@ -2573,6 +2591,7 @@ export const REGISTRY: RegistryDefinition = {
     "wokexp": wokexp,
     "wooliiporter": wooliiporter,
     "woori-taekbae": wooriTaekbae,
+    "world-package": worldPackage,
     "wp-ground": wpGround,
     "x-express-rs": xExpressRs,
     "xcargo": xcargo,
@@ -2634,6 +2653,7 @@ export const REGISTRY: RegistryDefinition = {
     "zheldor": zheldor,
     "zhongzhou-logistics": zhongzhouLogistics,
     "zim": zim,
+    "zimpost": zimpost,
     "zmc-express": zmcExpress,
     "znlogic": znlogic,
     "zoom-ve": zoomVe,
@@ -2717,7 +2737,7 @@ export const REGISTRY: RegistryDefinition = {
     "airspeed": "airspeed",
     "airtrans": "universal",
     "airways-courier-in": "airways-courier-in",
-    "airwings-india": "universal",
+    "airwings-india": "airwings-india",
     "ait-home-delivery": "universal",
     "ait-worldwide": "ait-worldwide",
     "ajex": "ajex",
@@ -3250,7 +3270,7 @@ export const REGISTRY: RegistryDefinition = {
     "econt": "econt",
     "ecoscooting": "ecoscooting",
     "ecourier": "ecourier",
-    "ecourier-uk": "universal",
+    "ecourier-uk": "ecourier-uk",
     "ecparcel": "ecparcel",
     "ed-post": "ed-post",
     "edi-express": "edi-express",
@@ -3358,7 +3378,7 @@ export const REGISTRY: RegistryDefinition = {
     "faster-ae": "universal",
     "faster-shipe": "faster-shipe",
     "fastfrate": "fastfrate",
-    "fastgo": "universal",
+    "fastgo": "fastgo",
     "fastship-th": "universal",
     "fasttrack-ar": "universal",
     "fastway-za": "fastway-za",
@@ -3394,7 +3414,7 @@ export const REGISTRY: RegistryDefinition = {
     "fleetex": "fleetex",
     "fleetoptics": "fleetoptics",
     "flickpost": "flickpost",
-    "flight-logistics": "universal",
+    "flight-logistics": "flight-logistics",
     "flippost": "flippost",
     "flipxpress": "flipxpress",
     "fliway": "fliway",
@@ -3515,7 +3535,7 @@ export const REGISTRY: RegistryDefinition = {
     "gordom-logistika": "universal",
     "grand-slam-express": "grand-slam-express",
     "greenposta": "universal",
-    "greenway-vn": "universal",
+    "greenway-vn": "greenway-vn",
     "groupe-guilbault": "universal",
     "gruber-logistics": "gruber-logistics",
     "gs-postbox": "gs-postbox",
@@ -3538,7 +3558,7 @@ export const REGISTRY: RegistryDefinition = {
     "hapdong": "universal",
     "happy-courier-gr": "universal",
     "happy-post": "happy-post",
-    "hart2hart-express": "universal",
+    "hart2hart-express": "hart2hart-express",
     "hartmann-international": "universal",
     "haypost": "haypost",
     "hcrd": "hcrd",
@@ -4593,7 +4613,7 @@ export const REGISTRY: RegistryDefinition = {
     "thailand-post": "thailand-post",
     "the-courier-guy": "the-courier-guy",
     "the-delivery-group": "the-delivery-group",
-    "the-human-express": "universal",
+    "the-human-express": "the-human-express",
     "thelorry": "universal",
     "thhy": "thhy",
     "tig-freight": "tig-freight",
@@ -4707,7 +4727,7 @@ export const REGISTRY: RegistryDefinition = {
     "ubn-speed": "universal",
     "ubsend": "universal",
     "ubuy": "ubuy",
-    "ubx-uk": "universal",
+    "ubx-uk": "ubx-uk",
     "uello": "universal",
     "ues-uy": "universal",
     "ukp-worldwide": "ukp-worldwide",
@@ -4825,7 +4845,7 @@ export const REGISTRY: RegistryDefinition = {
     "wooliiporter": "wooliiporter",
     "woori-taekbae": "woori-taekbae",
     "world-courier": "universal",
-    "world-package": "universal",
+    "world-package": "world-package",
     "wp-ground": "wp-ground",
     "wpx": "universal",
     "wyngs": "universal",
@@ -4920,7 +4940,7 @@ export const REGISTRY: RegistryDefinition = {
     "zhongzhou-logistics": "zhongzhou-logistics",
     "ziegler": "universal",
     "zim": "zim",
-    "zimpost": "universal",
+    "zimpost": "zimpost",
     "zipasgo": "universal",
     "zippd": "universal",
     "zippee": "universal",

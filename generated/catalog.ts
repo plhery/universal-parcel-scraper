@@ -8218,7 +8218,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "airwings-india",
+      "localClocks": true
     },
     "canaryUrl": "https://airwingsindia.com/",
     "trackingUrlTemplate": "https://airwingsindia.com/tracking.html?awbno={trackingNumber}",
@@ -25483,7 +25484,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/London",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ecourier-uk",
+      "localClocks": true
     },
     "canaryUrl": "https://www.ecourier.co.uk/tracking/",
     "trackingUrlTemplate": "https://www.ecourier.co.uk/tracking/?consign_note={trackingNumber}",
@@ -29117,7 +29119,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Australia/Brisbane",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "fastgo",
+      "localClocks": true
     },
     "canaryUrl": "https://www.fastgo.com.au/",
     "trackingUrlTemplate": "https://www.fastgo.com.au/WaybillQuery/?from=bs&bill={trackingNumber}",
@@ -30292,7 +30295,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/London",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "flight-logistics",
+      "localClocks": true
     },
     "canaryUrl": "https://www.flightlg.com/myflight-shipment-tracking/",
     "trackingUrlTemplate": "https://www.flightlg.com/myflight-shipment-tracking/?method=tracking&consign_note={trackingNumber}",
@@ -34370,7 +34374,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Ho_Chi_Minh",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "greenway-vn"
     },
     "canaryUrl": "https://greenwayvn.com/tracking",
     "trackingUrlTemplate": "https://greenwayvn.com/tracking?code={trackingNumber}",
@@ -35101,7 +35105,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/London",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "hart2hart-express",
+      "localClocks": true
     },
     "canaryUrl": "https://hart2hartexpress.co.uk/",
     "trackingUrlTemplate": "https://harttohart.couriernavigator-secure.com/tracking?consign_note={trackingNumber}",
@@ -68969,7 +68974,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Ho_Chi_Minh",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "the-human-express"
     },
     "canaryUrl": "https://thehuman.express/trackings",
     "trackingUrlTemplate": "https://thehuman.express/trackings?trackings={trackingNumber}",
@@ -72581,7 +72586,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/London",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ubx-uk",
+      "localClocks": true
     },
     "canaryUrl": "https://www.ubx.uk.net/",
     "trackingUrlTemplate": "https://www.ubx.uk.net/tracking/?consign_note={trackingNumber}",
@@ -76222,7 +76228,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/London",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "world-package",
+      "localClocks": true
     },
     "canaryUrl": "https://www.worldpackage.co.uk/",
     "trackingUrlTemplate": "https://wpl-uk.couriernavigator-secure.com/tracking?consign_note={trackingNumber}",
@@ -79050,7 +79057,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Harare",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "zimpost"
     },
     "canaryUrl": "https://www.zimpost.co.zw/",
     "trackingSearchUrl": "https://www.zimpost.co.zw/",

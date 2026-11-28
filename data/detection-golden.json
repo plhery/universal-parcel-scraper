@@ -84986,6 +84986,17 @@
     ]
   },
   {
+    "input": "AO10101000000",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "la-poste"
+    ],
+    "asked": [
+      "la-poste"
+    ]
+  },
+  {
     "input": "AP00808868960945",
     "carrier": "aliexpress",
     "confidence": "high",
@@ -85590,6 +85601,21 @@
     "asked": [
       "gls-it",
       "asendia"
+    ]
+  },
+  {
+    "input": "AW2314163530",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive",
+      "aramex-au",
+      "aramex-nz"
+    ],
+    "asked": [
+      "colis-prive",
+      "aramex-au",
+      "aramex-nz"
     ]
   },
   {
@@ -94369,6 +94395,17 @@
     "confidence": "high",
     "candidates": [
       "parcelforce"
+    ]
+  },
+  {
+    "input": "EK493768244MO",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
