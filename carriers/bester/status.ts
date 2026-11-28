@@ -1,0 +1,25 @@
+/**
+ * Bester Express's rows: a text without a code, in traditional Chinese. An entry of `statuses.json` records a
+ * row's text without the hand-off line some rows carry; a text the map does not know goes through the shared
+ * wording rules.
+ */
+import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import statuses from './statuses.json' with { type: 'json' };
+
+const STAGES: ReadonlyMap<string, Stage> = new Map(statuses.entries
+  .map((entry) => [normalizeStatusWording(entry.wording), entry.stage as Stage]));
+
+export const statusMap: CarrierStatusMap = {
+  stage: (_code, wording) => STAGES.get(wording),
+  gaps: [],
+  wholeWording: true,
+};
+
+/** A row's stage, by its text in `statuses.json`, else by the shared wording rules, or none. */
+export function besterStage(description: string): ClassifiedWording | null {
+  const stage = STAGES.get(normalizeStatusWording(description));
+  if (stage) return { stage, source: 'carrier_map' };
+  const worded = classifyWording(description, 'in_transit');
+  return worded.source !== 'none' ? worded : null;
+}

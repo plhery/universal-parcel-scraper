@@ -1,0 +1,62 @@
+{
+  "carrier": "bester",
+  "records": [
+    {
+      "number": "SWE170000490",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "purolator",
+          "tnt-au",
+          "whiz-delivery"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 飛斯特 (code bester). The firm's tracker answers it with a parcel its Taoyuan branch collected and its transfer centre cleared, with an EMS waybill on the transfer centre's rows."
+    },
+    {
+      "number": "00005936265",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "old-dominion",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 飛斯特運通 (code exbtr), the same firm and tracker. The tracker answers it with a parcel the transfer centre took in, cleared and delivered."
+    }
+  ]
+}

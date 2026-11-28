@@ -9033,5 +9033,14 @@
       "usps"
     ],
     "reason": "Austrian Post, USPS and Estafeta take twenty-two digits at low confidence; spring-gds-78 adds PostNL for the series its international tracker answered for Spain. All stay suggestions; recognition asks PostNL about the series and Austrian Post about any twenty-two digits."
+  },
+  {
+    "shape": "SWE followed by nine digits",
+    "carriers": [
+      "purolator",
+      "tnt-au",
+      "whiz-delivery"
+    ],
+    "reason": "Bester Express's waybills print SWE and nine digits, which Purolator's lettered PINs and TNT Australia's domestic consignments share, and SW with ten hexadecimal characters is Whiz Delivery's shape, so no rule decides; recognition asks them in turn. Bester Express is not offered for it."
   }
 ]

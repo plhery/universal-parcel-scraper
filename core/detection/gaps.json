@@ -7504,5 +7504,17 @@
     "pattern": "^\\d{11}$",
     "kind": "collision",
     "reason": "Eleven-digit Meixi Express waybills share their shape with other carriers' numeric numbers, so the shape cannot name Meixi Express. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "bester",
+    "pattern": "^SWE\\d{9}$",
+    "kind": "collision",
+    "reason": "SWE and nine digits is Bester Express's waybill on Kuaidi100's test number, and three letters and nine digits is a shape Purolator's, TNT Australia's and Whiz Delivery's rules take, so detection does not name Bester Express. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "bester",
+    "pattern": "^\\d{11}$",
+    "kind": "by_design",
+    "reason": "Eleven digits with leading zeros is the test number Kuaidi100 lists for Bester Express under its other code, a bare digit run many carriers' numbers share, so nothing in it points to the firm. The adapter answers explicit selection."
   }
 ]

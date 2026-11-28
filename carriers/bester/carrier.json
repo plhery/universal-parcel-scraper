@@ -1,0 +1,84 @@
+{
+  "id": "bester",
+  "displayName": "Bester Express",
+  "aliases": [
+    "飛斯特運通",
+    "飞斯特运通",
+    "飛斯特",
+    "飛斯特運通股份有限公司",
+    "深圳市飞斯特运通供应链管理有限公司",
+    "BTR",
+    "Best International Transportation",
+    "exbtr"
+  ],
+  "region": {
+    "countries": [
+      "TW",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#23357F"
+  },
+  "selectable": true,
+  "timezone": "Asia/Taipei",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "bester",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "origin_country",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.exbtr.com/waybill.html?orderid={trackingNumber}",
+    "searchUrl": "https://www.exbtr.com/waybill.html",
+    "helpUrl": "https://www.exbtr.com/customer/contact.html",
+    "canaryUrl": "https://www.exbtr.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "exbtr.com"
+      ],
+      "pathPattern": "^/waybill\\.html$",
+      "params": [
+        "orderid"
+      ]
+    }
+  ],
+  "detection": []
+}

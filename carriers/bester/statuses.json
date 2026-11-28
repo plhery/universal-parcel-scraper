@@ -1,0 +1,73 @@
+{
+  "carrier": "bester",
+  "entries": [
+    {
+      "code": null,
+      "wording": "安排收取貨件",
+      "language": "zh",
+      "english": "Pickup arranged",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The first row of both samples: the firm arranges to collect the parcel, which it does not hold yet."
+    },
+    {
+      "code": null,
+      "wording": "到達轉運倉庫理貨中",
+      "language": "zh",
+      "english": "Arrived at the transfer warehouse, being sorted",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The firm's warehouse has the parcel: its first scan of it."
+    },
+    {
+      "code": null,
+      "wording": "貨物發往目的地運送中",
+      "language": "zh",
+      "english": "On its way to the destination",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "貨物抵達轉運倉庫",
+      "language": "zh",
+      "english": "Arrived at the transfer warehouse",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Written by the transfer centre, at times with the courier the parcel goes on with on the line after it."
+    },
+    {
+      "code": null,
+      "wording": "貨物抵達轉運倉庫辦理清關手續",
+      "language": "zh",
+      "english": "Arrived at the transfer warehouse for customs clearance",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "清關完成",
+      "language": "zh",
+      "english": "Customs clearance completed",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Cleared customs, so back in transit."
+    },
+    {
+      "code": null,
+      "wording": "貨物運務員遞送中",
+      "language": "zh",
+      "english": "Out for delivery with the courier",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "貨物已簽收,期盼有機會能再為你服務",
+      "language": "zh",
+      "english": "Delivered and signed for; we hope to serve you again",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    }
+  ]
+}

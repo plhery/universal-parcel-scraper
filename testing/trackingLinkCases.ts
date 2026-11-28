@@ -3109,6 +3109,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'usasd', number: 'SDL9901010417',
     route: /^https:\/\/www\.usasd\.com\/index\.php\?c=index&f=search&sn=SDL9901010417$/,
     marker: /运单信息不存在/, forwarding: { notFound: /运单信息不存在/ } },
+  // The waybill page puts the number from its address in its field and asks for the rows as it opens.
+  { carrier: 'bester', number: 'SWE990481726',
+    route: /^https:\/\/www\.exbtr\.com\/waybill\.html\?orderid=SWE990481726$/,
+    marker: /飞斯特运通|抱歉，没有找到符合条件的信息/ },
 ];
 
 /**
