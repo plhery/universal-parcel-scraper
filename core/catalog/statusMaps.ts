@@ -1276,6 +1276,7 @@ import { statusMap as aae } from '../../carriers/aae/status.js';
 import { statusMap as gdqwwl } from '../../carriers/gdqwwl/status.js';
 import { statusMap as cdxinchen56 } from '../../carriers/cdxinchen56/status.js';
 import { statusMap as parcel100 } from '../../carriers/parcel100/status.js';
+import { statusMap as dybExpress } from '../../carriers/dyb-express/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1600,6 +1601,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   gdqwwl,
   cdxinchen56,
   parcel100,
+  'dyb-express': dybExpress,
 };
 
 /** The carrier the app files the universal providers' scans under. */

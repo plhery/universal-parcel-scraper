@@ -7674,5 +7674,17 @@
     "pattern": "^PK\\d{8}$",
     "kind": "by_design",
     "reason": "PK and eight digits is Parcel100's own parcel number, a short counter behind a prefix other carriers' references share, so nothing in it points to Parcel100. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "dyb-express",
+    "pattern": "^S\\d{12}$",
+    "kind": "by_design",
+    "reason": "S and twelve digits is one of DYB Express's waybill series, a shape other carriers' references share, so nothing in it points to DYB. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "dyb-express",
+    "pattern": "^DYB\\d{13}$",
+    "kind": "open",
+    "reason": "DYB and thirteen digits carries DYB Express's name, but one public sample shows the series. A rule waits for more samples; the adapter answers explicit selection."
   }
 ]

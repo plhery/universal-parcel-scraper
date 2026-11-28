@@ -1,0 +1,166 @@
+{
+  "carrier": "dyb-express",
+  "entries": [
+    {
+      "wording": "创建电子订单",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The order created online: nothing handed over yet."
+    },
+    {
+      "wording": "站点已收货",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Received at a drop-off point in Canada."
+    },
+    {
+      "wording": "仓库已揽收",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Taken in at DYB's warehouse."
+    },
+    {
+      "wording": "【…】仓库已揽收",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Taken in at DYB's warehouse in the city named, Toronto on the samples."
+    },
+    {
+      "wording": "包裹已出库",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Left the warehouse for the airport."
+    },
+    {
+      "wording": "等待安排航班",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Waiting to be booked on a flight to China."
+    },
+    {
+      "wording": "航班起飞",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The flight took off."
+    },
+    {
+      "wording": "航班到达中转城市",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The flight reached the transit city."
+    },
+    {
+      "wording": "航班离开中转城市",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The flight left the transit city."
+    },
+    {
+      "wording": "航班降落",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The flight landed in China."
+    },
+    {
+      "wording": "等待清关",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Waiting for Chinese customs clearance."
+    },
+    {
+      "wording": "清关完成",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Cleared by customs; the courier in China's own rows follow."
+    },
+    {
+      "wording": "【…】 已揽收",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO's row as DYB relays it: ZTO's branch named collected the parcel after customs. The parser drops the collector and phones the row names."
+    },
+    {
+      "wording": "快件离开 【…】 已发往 【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO's row: left the hub named for the next one."
+    },
+    {
+      "wording": "快件已经到达 【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO's row: arrived at the hub or branch named."
+    },
+    {
+      "wording": "【…】 正在第…次派件,并耐心等待",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO's delivery round, with its count; the parser drops the courier, the phones and the request to keep a phone on."
+    },
+    {
+      "wording": "快件已在 【…】 签收, 您的快递已经妥投",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO's delivery at the branch named; the parser drops the signer and the phones."
+    },
+    {
+      "wording": "您的快件在【…】已揽收",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "YTO's row: its branch named collected the parcel after customs. The parser drops the collector and phone."
+    },
+    {
+      "wording": "您的快件离开【…】，已发往【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "YTO's row: left the hub named for the next one."
+    },
+    {
+      "wording": "您的快件已经到达【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "YTO's row: arrived at the hub named."
+    },
+    {
+      "wording": "【…】正在派件，请耐心等待！",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "YTO's delivery round; the parser drops the courier and the phones."
+    },
+    {
+      "wording": "【…】您好，快件已暂存至…，感谢使用圆通速递，期待再次为您服务！",
+      "stage": "ready_for_pickup",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "YTO left the parcel at the pickup point named; the parser drops the phones."
+    },
+    {
+      "wording": "【…】已签收，感谢使用圆通速递，期待再次为您服务！",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "YTO's delivery; the parser drops who signed and the phones."
+    }
+  ]
+}
