@@ -11,6 +11,7 @@
     {"wording": "In processing at transit facility.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-26"},
     {"wording": "In transit to next facility.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-26"},
     {"wording": "Parcel received by local  Facility.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-24", "note": "The delivery station; the tracker files it under Alert."},
+    {"wording": "Parcel received by Destination Facility.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The destination's facility receiving the parcel on its way, under the same scan code as the delivery station's receipt."},
     {"wording": "Parcel is out for delivery.", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-24"},
     {"wording": "Parcel has been delivered.(Front door)", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-24", "note": "The parenthesis names where the parcel was left. Other places take Front door's place."},
     {"wording": "Parcel delivery abnormal [Restricted Address].Parcel will be returned to the warehouse.", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-24", "note": "A failed delivery going back to YWE's warehouse, not to the sender: the parcel goes out for delivery again. Other reasons take the bracket's place, and a space can follow the full stop."},

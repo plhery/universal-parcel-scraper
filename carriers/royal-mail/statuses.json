@@ -427,6 +427,14 @@
       "note": "\"Item Coll… Failure- No … (System Generated)\": a booked collection marked as failed by the system, hours after EVNLC. No movement, so the item keeps the stage of the scan before it."
     },
     {
+      "code": "EVCNA",
+      "wording": "The parcel wasn't available when we called.",
+      "language": "en",
+      "unmapped": true,
+      "confirmedBy": "live",
+      "note": "A booked collection the courier could not make: the parcel was not ready when called for. No movement, so the item keeps the stage of the scan before it."
+    },
+    {
       "code": "EVNFS",
       "wording": "Delivery Scan Recorded at Customer Service Point",
       "language": "en",

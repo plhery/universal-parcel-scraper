@@ -246,7 +246,8 @@ describe('Royal Mail structured response', () => {
       [undefined, undefined], [undefined, undefined],
       ['ready_for_pickup', 'carrier_map'], ['failed_attempt', 'carrier_map'], ['in_transit', 'carrier_map'],
     ]);
-    expect(statusMap.gaps.map(gap => gap.code)).toEqual(['EVNSC', 'EVNCE', 'EVNRT', 'EVNLC', 'EVFNA']);
+    expect(statusMap.gaps.map(gap => gap.code)).toEqual(['EVNSC', 'EVNCE', 'EVNRT', 'EVNLC', 'EVFNA', 'EVCNA']);
+    expect(royalMailScanStage('EVCNA', "The parcel wasn't available when we called.")).toBeUndefined();
     // An item handed in at a Customer Service Point after a booked collection is not delivered.
     expect(royalMailScanStage('EVNLC', 'Delivered to Your Customer Service Point by Example')).toBeUndefined();
     expect(statusMap.stage('EVNCE', 'collected from your customer service point')).toBeUndefined();

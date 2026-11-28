@@ -46,6 +46,8 @@ const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
   ['we have not received the recipient’s phone number', "Posti's notification tool noting it has no phone number to notify the recipient by: not a scan."],
   ['we sent the recipient a letter about the item', "Posti's notification tool noting it wrote to the recipient: not a scan."],
   ['delivery cannot be changed', "PostNL's note, as ParcelsApp relays it, that the delivery can no longer be changed: not a scan."],
+  ['preferred day ordered.', "DHL's note of a delivery day the recipient booked, as Ship24 relays it: not a scan."],
+  ['the recipient has selected a retail outlet as the new delivery address.', "DHL's note of a retail outlet the recipient chose for the delivery, as Ship24 relays it: a choice, not a movement."],
   ['pios notice', "PostNL's notice, as ParcelsApp relays it beside its receipt of the shipment, without its content: no step of its own."],
   ['update on your parcel', 'A heading that names no step.'],
   ['carrier update', "Cainiao's placeholder wording, which ParcelsApp relays for its notices and its transit sorting centers' scans alike: it names no movement."],
@@ -172,6 +174,10 @@ export const statusMap: CarrierStatusMap = {
     // A delivery booked for a date, as ParcelsApp relays it with the date after "Info:".
     if (/^information - booking \(scheduled delivery date\)\. info: ?\S.{0,80}$/.test(wording)) {
       return 'A delivery booked for a date, as ParcelsApp relays it: a booking, not a scan, so it keeps the stage the parcel already had.';
+    }
+    // A delivery planned for a weekday, as ParcelsApp relays DPD's French "Livraison prévue lundi prochain".
+    if (/^livraison prévue (?:lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche) prochain$/.test(wording)) {
+      return 'A delivery planned for a weekday: a forecast, not a scan, so it keeps the stage the parcel already had.';
     }
     // Rows recorded before the providers left them out.
     return relayedRowLeftOut(wording)

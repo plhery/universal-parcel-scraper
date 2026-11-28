@@ -95,6 +95,7 @@ const UNSTAGED_EVENTS: ReadonlyMap<string, string> = new Map([
   // failed by the system: the item had not reached its recipient.
   ['EVNLC', 'Delivered to a Customer Service Point after a booked collection and before Royal Mail\'s first receipt: not the recipient\'s delivery, so the item keeps the stage of the scan before it.'],
   ['EVFNA', 'A booked collection marked as failed by the system: no movement, so the item keeps the stage of the scan before it.'],
+  ['EVCNA', 'A booked collection the courier could not make, the item not ready when called for: no movement, so the item keeps the stage of the scan before it.'],
 ]);
 
 /**

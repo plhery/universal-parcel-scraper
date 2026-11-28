@@ -228,6 +228,9 @@ const PATTERNS: ReadonlyArray<readonly [RegExp, ClassifiedStatus]> = [
   [/^your parcel is out for delivery\.?(?: if you have any questions, please call customer service: ?\d[\d -]*\d, thank you for your patience\.?)?$/, { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   // Import customs abroad holding the item for inspection, with what it waits for in brackets.
   [/^境外进口海关留存待验(?:[（(][^（）()]{1,60}[）)])?$/, { status: 'in_transit', stage: 'customs' }],
+  // The order's data received while the line waits for the parcel, naming itself or the sender: "Shipment information
+  // received，… is waiting for shipment".
+  [/^shipment information received ?[，,] ?[a-z][a-z' -]{0,30} is waiting for shipment\.?$/, { status: 'pending', stage: 'registered' }],
   // The departure from a processing centre abroad, its country in 【】.
   [/^离开【[^【】]+】处理中心$/, { status: 'in_transit', stage: 'in_transit' }],
 ];

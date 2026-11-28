@@ -485,6 +485,10 @@ describe('shared provider result', () => {
       expect(event('2026-11-11T01:45:00+01:00', wording), wording).toMatchObject({ stage_source: 'none' });
       expect(statusMapAnswer({ carrier: 'unknown', description: wording }), wording).toMatchObject({ kind: 'intentional_gap' });
     }
+    // A delivery day or a retail outlet the recipient chose, and a delivery planned for a weekday, are no steps either.
+    for (const wording of ['Preferred day ordered.', 'The recipient has selected a retail outlet as the new delivery address.', 'Livraison prévue lundi prochain']) {
+      expect(statusMapAnswer({ carrier: 'unknown', description: wording }), wording).toMatchObject({ kind: 'intentional_gap' });
+    }
     // A creation that names something else stays unread.
     expect(event('2026-11-11T01:45:00+01:00', 'Created return')).toMatchObject({ stage_source: 'none' });
   });

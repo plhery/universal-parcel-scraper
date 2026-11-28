@@ -278,7 +278,7 @@ describe('SXW Express tracking adapter', () => {
 it.each([
   'Item Flight departure', 'Initial landing', 'Connecting flights flight takeoff', 'Item Flight landing',
   'HKG-Notification of arrival from SZX', 'The goods have been picked up abroad', 'Released From Import Customs',
-  'Shipment in transit to DHL',
+  'Shipment in transit to DHL', '【iMile Sample DC Center】Received.', '【iMile Sample DC Center】Shipment dispatched.', '【SMP Z】Arrived.',
 ])('reads the flight, arrival, import and handover scan %s as transit', (wording) => {
   const payload = JSON.parse(own('track.json'));
   const shipment = payload[0].data[0];

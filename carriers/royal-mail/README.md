@@ -74,7 +74,8 @@ answers are not retried. An unavailable browser fails fast.
   is one of these scans when the summary calls the item collected on it.
 - After a booked collection, "Delivered to Your Customer Service Point" (`EVNLC`) and the
   collection the system marks as failed (`EVFNA`) get no stage: they came before Royal Mail's
-  first "Item Received", days before the recipient's delivery.
+  first "Item Received", days before the recipient's delivery. Nor does a collection the courier
+  could not make because the parcel was not ready (`EVCNA`).
 - A round that could not deliver to the address it was given (`EVKAI`) is a failed attempt,
   unless its wording sends the item back to its sender, as a post abroad's "Incorrectly
   addressed. Returned to sender." does: that scan is the return.

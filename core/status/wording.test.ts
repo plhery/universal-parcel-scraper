@@ -1271,6 +1271,12 @@ describe('classifyWording', () => {
       // Its delivery round, for fresh goods too, the courier's contact after it.
       ['您的快件正在派送中，请您准备签收（快递员示例，联系电话：***********）', 'out_for_delivery'], ['您的快件正在派送中', 'out_for_delivery'],
       ['【示例】您的生鲜快件正在派送中，请当面签收，签收后第一时间开箱验视并放入冰箱储存。', 'out_for_delivery'],
+      // A Chinese domestic courier's centres, round and delivery, with its note on whom to call after them.
+      ['快件在示例转运中心,开始发往样例转运中心（物流问题无需找商家，请联系官方电话（***********）为您解决）', 'in_transit'],
+      ['已到达示例转运中心（物流问题无需找商家，请联系官方电话（***********）为您解决）', 'in_transit'],
+      ['已到达示例营业部 电话号码：***********', 'in_transit'], ['已到达【示例驿站】', 'ready_for_pickup'],
+      ['送货途中,送货人员:示例,电话号码:***********', 'out_for_delivery'],
+      ['包裹已由派件员示例：示例（非商家，有事请联系），派件员电话:***********，客户签收。签收网点电话：***********。', 'delivered'],
       // Australia Post's lodgement and its landing in a country, as providers relay them without a carrier.
       ['Item lodged', 'accepted'], ['Landed in Sample Country', 'in_transit'], ['Landed in', 'in_transit'],
       // Its sender's lodgement, and its approval of the shipping information.
@@ -1287,6 +1293,10 @@ describe('classifyWording', () => {
       // A hub identifying a parcel as bulky, at the second it receives it.
       ['INFORMATION. PARCEL IDENTIFIED AS BULKY GOOD (ESI)', 'in_transit'], ['Information. Parcel identified as bulky good', 'in_transit'],
       ['Tracking number changed, Carrier note: Package relabeled', 'in_transit'],
+      // A US line's origin processing, with its place or without; DPD UK's drop-off and screening; a German depot.
+      ['Origin Processing', 'in_transit'], ['Origin Processing, EXAMPLE CITY, CA, US', 'in_transit'],
+      ['Your parcel has been dropped off at a DPD Pickup Shop', 'accepted'],
+      ['We have x-rayed your parcel as part of our normal security procedures', 'in_transit'], ['Paket im Paketzustellzentrum', 'in_transit'],
       ['The goods leave the operation center', 'in_transit'], ['Goods leaving the operation center', 'in_transit'],
       ['Goods leave the operations center', 'in_transit'],
       ['Parcel was handed over to Pickup parcel shop', 'ready_for_pickup'], ['Takeover by Pickup parcel shop', 'ready_for_pickup'],

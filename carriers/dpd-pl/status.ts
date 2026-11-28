@@ -22,6 +22,8 @@ export const DPD_PL_SCANS: Readonly<Record<string, Stage>> = {
   // A short hold at a depot, seen before a pickup point run.
   'Parcel stored in depot': 'in_transit',
   'Redirection to other depot': 'in_transit',
+  // The new address the recipient gave taken on: the parcel goes on to it.
+  'Parcel readdressed according to instructions': 'in_transit',
   'Parcel dispatched to be collected by pickup point': 'in_transit',
   'Parcel dispatched to be delivered': 'out_for_delivery',
   // The pickup point or locker received the parcel for the recipient.

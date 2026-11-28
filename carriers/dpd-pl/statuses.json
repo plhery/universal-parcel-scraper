@@ -11,6 +11,7 @@
     {"wording": "Sent outside Poland", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "The parcel leaves for another DPD country, which delivers it."},
     {"wording": "Parcel stored in depot", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "A short hold at a depot, seen before a pickup point run."},
     {"wording": "Redirection to other depot", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The parcel sent on to another depot."},
+    {"wording": "Parcel readdressed according to instructions", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The new address the recipient gave taken on: the parcel goes on to it."},
     {"wording": "Return to the sender", "stage": "exception", "language": "en", "confirmedBy": "live", "note": "The return starting: on its way back, not yet with the sender."},
     {"wording": "Parcel dispatched to be collected by pickup point", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "On its way to the pickup point that will hold it for the recipient."},
     {"wording": "Parcel dispatched to be delivered", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09"},

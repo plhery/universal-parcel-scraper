@@ -27,6 +27,7 @@ it.each([
   ["Shipment delivered to iMile RDC or Lastmile vendor", "in_transit"],
   ["【Sample DC】Received.", "in_transit"],
   ["【Sample DS】Arrived.", "in_transit"],
+  ["Shipment information received，Sample is waiting for shipment", "registered"],
   [`In Transit (ABCD${'1'.repeat(14)})`, "in_transit"], ] as const)('maps the YunExpress scan %s to %s', (wording, stage) => {
   const payload = fixture();
   const item = payload.ResultList[0];

@@ -781,6 +781,14 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // JD Express's delivery round (its state 11000), for fresh goods too, as providers relay it with no carrier and the
   // courier's contact after it: out for delivery, as JD's map reads it.
   if (/^(?:【[^【】]{1,80}】 ?)?(?:[您你]的)?(?:生鲜)?快件正在派送中(?:[，,。].*)?$/.test(text)) return 'out_for_delivery';
+  // A Chinese domestic courier's scans, as providers relay them with no carrier and its note on whom to call after
+  // them: a sorting centre sending the parcel on to the next ("快件在…转运中心,开始发往…"), an arrival at a site
+  // ("已到达…转运中心"), the round with its courier ("送货途中,送货人员:…") and the courier's delivery, signed for after the
+  // courier's name and phone ("包裹已由派件员…，派件员电话:…，…签收。"). A pickup point is read above.
+  if (/^快件在[^，,。（(]{1,40}[，,] ?(?:开始|正在|即将|准备|準備|已)?[发發]往[^，,。（(]{1,40}/.test(text)) return 'in_transit';
+  if (/^已到[达達][^，,。；;（(]{1,40}(?:$|[ ，,。；;（(])/.test(text)) return 'in_transit';
+  if (/^(?:送[货貨]|派送|派件)途中(?:$|[，,。（(:：])/.test(text)) return 'out_for_delivery';
+  if (/^(?:包裹|快件)已由派件[员員][^。]{0,200}?[，,] ?(?![^，,。；;]{0,6}?(?:未|拒|待|请|請)[签簽]收)[^，,。；;]{0,6}[签簽]收(?:$|[。，,])/.test(text)) return 'delivered';
   // Australia Post's lodgement and its landing in a country (INT-2144, INT-2164), as providers relay them
   // with no carrier: accepted and in transit, as Australia Post's map reads them.
   if (/^item lodged$/.test(text)) return 'accepted';
@@ -826,6 +834,14 @@ export function trackingLanguageStage(description: string): Stage | undefined {
     || /^during the panel removal process$|^about to be sent to the (?:\[[^[\]]{1,60}\] )?warehouse$/.test(text)
     || /^move to the next lower level branch office$/.test(text)) return 'in_transit';
   if (/^inspection documents are being submitted$/.test(text)) return 'customs';
+  // A US line's processing at its origin facility, with the place after it, as ParcelsApp relays it with no carrier.
+  if (/^origin processing(?:, [^,]{1,60}){0,3}$/.test(text)) return 'in_transit';
+  // DPD UK's whole sentences, as ParcelsApp relays them: the sender's drop-off at a Pickup shop, which a recipient's
+  // chosen shop ("your chosen pickup shop") is not, and its security screening on the way, as DPD UK's map reads them.
+  if (/^your parcel has been dropped off at a dpd pickup shop$/.test(text)) return 'accepted';
+  if (/^we have x ?rayed your parcel as part of our normal security procedures$/.test(text)) return 'in_transit';
+  // A German depot or parcel centre holding the parcel on its way, as Track123 relays DPD's "Paket im …zentrum".
+  if (/^paket im [a-z]*(?:zustell|verteil|paket)[a-z]*zentrum$/.test(text)) return 'in_transit';
   // Bring's hold at its terminal.
   if (/^(?:the )?shipment has been temporarily placed in (?:a |the )?warehouse$/.test(text)) return 'in_transit';
   // Take Send's first scan, its distribution centre taking the parcel in, as its own map reads it.

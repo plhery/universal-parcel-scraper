@@ -12,8 +12,13 @@ const WORDINGS = statusWordings(statuses.entries);
  * Express Mexico is found with its towns, sites, courier and phone as ellipses.
  */
 export function sxwStage(_code: string | null, wording: string): Stage | undefined {
-  return WORDINGS.stage(wording) ?? WORDINGS.stage(jtMexicoKey(wording)) ?? (ARRIVAL_NOTICE.test(wording) ? 'in_transit' : undefined);
+  return WORDINGS.stage(wording) ?? WORDINGS.stage(jtMexicoKey(wording)) ?? WORDINGS.stage(wording.replace(SITE_SCAN, '【…】'))
+    ?? (ARRIVAL_NOTICE.test(wording) ? 'in_transit' : undefined);
 }
+
+// A last-mile partner's scan at its site in brackets, as the platform copies iMile's: "【iMile … DC Center】Received.".
+// The map holds it with the site as an ellipsis.
+const SITE_SCAN = /^【[^【】]{1,80}】(?=(?:received|arrived|shipment dispatched)\.$)/;
 
 // The partner's notice that a flight brought the parcel, naming the airports or carriers by their codes:
 // "XXX-Notification of arrival from XXX". The map holds it as "…-Notification of arrival from …".
