@@ -7430,6 +7430,12 @@
     "reason": "Renyuan's waybills seen are seven bare digits, a counter many carriers' numbers share, so nothing in the number points to Renyuan."
   },
   {
+    "carrier": "gjsguoji",
+    "pattern": "^GJS\\d{12}$",
+    "kind": "open",
+    "reason": "GJS Express's parcel numbers seen are GJS and twelve digits. The prefix is the firm's initials and no other carrier's rule or sample has it, but the firm does not publish the format, so no rule claims it yet."
+  },
+  {
     "carrier": "annengyuntong",
     "pattern": "^\\d{8,10}$",
     "kind": "by_design",

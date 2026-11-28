@@ -3150,6 +3150,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'renyuanwuliu', number: '6613899001',
     route: /^https:\/\/wx\.lqfast\.com\/Pub\/UnitListDetail\?companyid=AKVKpwhKcTmYqx3ELFLB2g%3D%3D&unit=6613899001$/,
     marker: /未找到运单|校验手机后四位|运单跟踪/ },
+  // The page shows the number from its hash route and asks the service for its rows, which an unknown one has none of.
+  { carrier: 'gjsguoji', number: 'GJS888260399001',
+    route: /^https:\/\/h5\.guojisuyunjapan\.cn\/#\/pages\/public\/trackDetail\?expressNo=GJS888260399001$/,
+    marker: /运送详情/ },
   // The routes page renders the waybill's timeline on the server under its number, or the line that it has none.
   { carrier: 'zgtux', number: 'TX999000017',
     route: /^https:\/\/vip\.zgtux\.com\/routes\?no=TX999000017$/,

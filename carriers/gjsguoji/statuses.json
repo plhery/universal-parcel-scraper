@@ -1,0 +1,138 @@
+{
+  "carrier": "gjsguoji",
+  "entries": [
+    {
+      "wording": "快件等待揽收",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The order is placed and the parcel waits for one of the firm's shops in Japan to take it in."
+    },
+    {
+      "wording": "快件门店已经揽收",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "A shop in Japan took the parcel in: the first row in the firm's hands."
+    },
+    {
+      "wording": "快件等待仓库揽收",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The parcel waits at the shop for the firm's warehouse to collect it."
+    },
+    {
+      "wording": "快件仓库已经揽收",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The firm's warehouse in Japan took the parcel in."
+    },
+    {
+      "wording": "[…][中通国际]进行处理…订单已操作入库",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO International's row: the parcel entered its warehouse in the city in brackets. The colon is full-width or not."
+    },
+    {
+      "wording": "[…][中通国际]进行处理…订单已操作出库",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO International's row: the parcel left its warehouse for the airport."
+    },
+    {
+      "wording": "货物到达…保税仓库",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The parcel reached the bonded warehouse at the airport named, for export."
+    },
+    {
+      "wording": "清关完成等待航班装载",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Export clearance in Japan is done and the parcel waits to be loaded on a flight."
+    },
+    {
+      "wording": "[…]干线航班起飞[…]",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO International's row: the flight left the country and airport in brackets."
+    },
+    {
+      "wording": "[…]干线航班落地[…]",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO International's row: the flight landed in China."
+    },
+    {
+      "wording": "快件转运中，请耐心等候",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The parcel moves on from the airport in China to customs."
+    },
+    {
+      "wording": "[…]进行处理，快件已开始清关",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO International's row: import clearance in China has begun."
+    },
+    {
+      "wording": "[…]业务员已揽收",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO's branch named in brackets took the cleared parcel for the domestic leg; its courier and phone are left out. The firm had it long before, so it moves on rather than being accepted."
+    },
+    {
+      "wording": "快件离开[…]发往[…]，网点发件扫描",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO's row: the parcel left one site for the next."
+    },
+    {
+      "wording": "快件到达[…]，网点到件扫描",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO's row: the parcel reached the site in brackets."
+    },
+    {
+      "wording": "[…]的快递员正在派件",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO's courier from the branch in brackets is delivering; their name, phone and the rest of the sentence are left out."
+    },
+    {
+      "wording": "快件已被代收",
+      "stage": "ready_for_pickup",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO left the parcel at a pickup point or locker for the recipient; the point's name and its phone are left out."
+    },
+    {
+      "wording": "已签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO's row: signed for, here with the pickup code; the phones after it are left out."
+    },
+    {
+      "wording": "快件已在[…]，签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "ZTO's closing row from the branch in brackets; the signer and the courtesy after it are left out."
+    }
+  ]
+}

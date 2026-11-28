@@ -1,0 +1,78 @@
+{
+  "id": "gjsguoji",
+  "displayName": "GJS Express",
+  "aliases": [
+    "光捷速运",
+    "GJS"
+  ],
+  "region": {
+    "countries": [
+      "JP",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#ffd24d"
+  },
+  "selectable": true,
+  "timezone": "Asia/Tokyo",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "gjsguoji",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://h5.guojisuyunjapan.cn/#/pages/public/trackDetail?expressNo={trackingNumber}",
+    "searchUrl": "https://www.gjsguojisuyu.jp/ctracking.html",
+    "canaryUrl": "https://www.gjsguojisuyu.jp/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin_country",
+      "destination_city",
+      "delivery_tracking_number",
+      "courier_name",
+      "driver_phone",
+      "pickup_point",
+      "office_contact_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivery_tracking_number",
+      "delivery_partner"
+    ],
+    "discarded": [
+      "origin_country",
+      "destination_city",
+      "courier_name",
+      "driver_phone",
+      "pickup_point",
+      "office_contact_details"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "h5.guojisuyunjapan.cn"
+      ],
+      "pathPattern": "^/?$",
+      "fragment": "^/pages/public/trackDetail\\?(?:.*&)?expressNo=([^&]+)(?=&|$)"
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,220 @@
+{
+  "msg": "操作成功",
+  "code": 200,
+  "data": {
+    "packageNo": "888260301983",
+    "global": false,
+    "line": null,
+    "expressNo": "77122354037513",
+    "errInfo": null,
+    "trackInfoList": [
+      {
+        "packageNo": "888260301983",
+        "expressNo": null,
+        "nodeCode": null,
+        "trackingTime": "2026-03-28 16:03:27",
+        "trackingContent": "Tokyo, Japan 快件等待揽收",
+        "createTime": "2026-03-28 16:03:27",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": null,
+        "nodeCode": null,
+        "trackingTime": "2026-03-28 16:17:21",
+        "trackingContent": "Tokyo, Japan 快件门店已经揽收",
+        "createTime": "2026-03-28 16:17:21",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": null,
+        "trackingTime": "2026-03-30 11:42:36",
+        "trackingContent": "Tokyo, Japan 快件等待仓库揽收",
+        "createTime": "2026-03-30 11:42:36",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": null,
+        "trackingTime": "2026-03-30 13:19:55",
+        "trackingContent": "Tokyo, Japan 快件仓库已经揽收",
+        "createTime": "2026-03-30 13:19:54",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 150,
+        "trackingTime": "2026-03-30 13:20:53",
+        "trackingContent": "[东京][中通国际]进行处理：订单已操作入库",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 190,
+        "trackingTime": "2026-03-31 11:36:03",
+        "trackingContent": "[东京][中通国际]进行处理:订单已操作出库",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": null,
+        "trackingTime": "2026-03-31 13:35:05",
+        "trackingContent": "Tokyo, Japan  货物到达成田机场保税仓库",
+        "createTime": "2026-03-31 14:00:00",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": null,
+        "trackingTime": "2026-03-31 13:41:19",
+        "trackingContent": "Tokyo, Japan  清关完成等待航班装载",
+        "createTime": "2026-03-31 14:00:00",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 220,
+        "trackingTime": "2026-04-01 09:09:00",
+        "trackingContent": "[日本][东京]干线航班起飞[日本国际机场]",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 230,
+        "trackingTime": "2026-04-01 16:05:00",
+        "trackingContent": "[中国]干线航班落地[中国国际机场]",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": null,
+        "trackingTime": "2026-04-02 09:04:00",
+        "trackingContent": "【中国国际机场,CN】  快件转运中，请耐心等候",
+        "createTime": "2026-04-02 09:30:00",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 360,
+        "trackingTime": "2026-04-03 09:11:00",
+        "trackingContent": "[中国]进行处理，快件已开始清关",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 1,
+        "trackingTime": "2026-04-03 17:09:30",
+        "trackingContent": "[石家庄正定县]业务员[正定对接口][13800000000]已揽收",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 2,
+        "trackingTime": "2026-04-03 17:09:35",
+        "trackingContent": "快件离开[石家庄正定县]发往[石家庄]，网点发件扫描",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 3,
+        "trackingTime": "2026-04-03 20:56:59",
+        "trackingContent": "快件到达[石家庄]，网点到件扫描",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 2,
+        "trackingTime": "2026-04-03 21:00:39",
+        "trackingContent": "快件离开[石家庄]发往[南昌中转部]，网点发件扫描",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 3,
+        "trackingTime": "2026-04-04 20:38:20",
+        "trackingContent": "快件到达[南昌中转部]，网点到件扫描",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 2,
+        "trackingTime": "2026-04-04 23:18:27",
+        "trackingContent": "快件离开[南昌中转部]发往[南昌瑶湖]，网点发件扫描",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 3,
+        "trackingTime": "2026-04-05 08:05:43",
+        "trackingContent": "快件到达[南昌瑶湖]，网点到件扫描",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 4,
+        "trackingTime": "2026-04-05 08:05:50",
+        "trackingContent": "[南昌瑶湖]的快递员[张三]正在派件,联系电话[13800000001]请保持电话畅通,并耐心等待，",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 16,
+        "trackingTime": "2026-04-05 11:10:32",
+        "trackingContent": "【南昌市】快件已被【某某快递超市1号柜】代收，如有问题请电联 (13800000002)，感谢使用中通快递，期待再次为您服务！",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 15,
+        "trackingTime": "2026-04-05 11:24:34",
+        "trackingContent": "【南昌市】已签收，签收人凭取货码签收，如有疑问请电联：13800000001/ 13800000002。感谢使用中通快递，期待再次为您服务！",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": false
+      },
+      {
+        "packageNo": "888260301983",
+        "expressNo": "77122354037513",
+        "nodeCode": 5,
+        "trackingTime": "2026-04-05 11:24:35",
+        "trackingContent": "快件已在[南昌瑶湖]，签收，签收人[欢猫智柜]，感谢使用中通快递，期待再次为您服务！",
+        "createTime": "2026-04-07 14:06:20",
+        "complete": true
+      }
+    ]
+  }
+}
