@@ -1233,6 +1233,7 @@ import { statusMap as zgtux } from '../../carriers/zgtux/status.js';
 import { statusMap as chinaqingguan } from '../../carriers/chinaqingguan/status.js';
 import { statusMap as overseaex } from '../../carriers/overseaex/status.js';
 import { statusMap as shunjie } from '../../carriers/shunjie/status.js';
+import { statusMap as usasd } from '../../carriers/usasd/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1517,6 +1518,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   chinaqingguan,
   overseaex,
   shunjie,
+  usasd,
 };
 
 /** The carrier the app files the universal providers' scans under. */

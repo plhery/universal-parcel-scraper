@@ -21,19 +21,63 @@
   "timezone": "America/New_York",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "usasd",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 657,
+      "pattern": "^SDL\\d{10}$"
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "origin_country",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://www.usasd.com/index.php?c=index&f=search&sn={trackingNumber}",
     "searchUrl": "https://www.usasd.com/",
     "helpUrl": "https://www.usasd.com/index.php?id=contactus",
     "canaryUrl": "https://www.usasd.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "driver_name",
+      "driver_phone",
+      "office_contact_details",
+      "pickup_point_address"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "driver_name",
+      "driver_phone",
+      "office_contact_details",
+      "pickup_point_address"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
   },
   "links": [
     {
@@ -47,5 +91,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "usasd-1",
+      "pattern": "^SDL\\d{10}$",
+      "confidence": "low"
+    }
+  ]
 }

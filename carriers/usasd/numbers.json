@@ -1,5 +1,27 @@
 {
   "carrier": "usasd",
-  "gap": "No public page shows an SD Group number.",
-  "records": []
+  "records": [
+    {
+      "number": "SDL1809293135",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/sundarexpress.shtml",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usasd"
+        ]
+      },
+      "note": "Kuaidi100's page for 顺达快递, a New York firm whose page links usasd.com, gives it as the number to try. The firm's tracker answers it with a parcel booked at its New York warehouse, flown to Xi'an, cleared there and handed to Yunda under the number the reply's header gives, which left it in a parcel locker."
+    }
+  ]
 }

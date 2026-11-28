@@ -1,4 +1,204 @@
 {
   "carrier": "usasd",
-  "entries": []
+  "entries": [
+    {
+      "code": null,
+      "wording": "会员后台运单创建成功",
+      "language": "zh",
+      "english": "Waybill created in the customer's account",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The first row, written when the customer books the parcel."
+    },
+    {
+      "code": null,
+      "wording": "纽约1号仓已入库，待打包",
+      "language": "zh",
+      "english": "Taken into New York warehouse 1, waiting to be packed",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "纽约1号仓已揽收",
+      "language": "zh",
+      "english": "Collected at New York warehouse 1",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "纽约1号仓已审核",
+      "language": "zh",
+      "english": "Checked at New York warehouse 1",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "纽约1号仓已扣款",
+      "language": "zh",
+      "english": "Charged at New York warehouse 1",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "出库中",
+      "language": "zh",
+      "english": "Leaving the warehouse",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "美国纽约州纽约市顺达出库中 已扫描",
+      "language": "zh",
+      "english": "Scanned leaving SD Group's warehouse in New York",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "【美国 - 纽约】包裹已到达【纽约顺达转运仓】",
+      "language": "zh",
+      "english": "The parcel has reached <warehouse>",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The line-haul feed's first row, at the forwarding warehouse."
+    },
+    {
+      "code": null,
+      "wording": "【包裹已入库，正在操作，等待出库】",
+      "language": "zh",
+      "english": "The parcel is in the warehouse, being processed and waiting to leave",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "【美国 - 纽约】包裹已从【纽约顺达转运仓】出库，等待干线运输",
+      "language": "zh",
+      "english": "The parcel has left <warehouse>, waiting for the line haul",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "【包裹已到达航司仓库，等待起飞】",
+      "language": "zh",
+      "english": "The parcel is at the airline's warehouse, waiting to fly",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "到达：【美国 - 纽约】，国际干线运输已从【JFK纽约】启程，航（班）次号：****",
+      "language": "zh",
+      "english": "The international line haul has left <airport>, flight ****",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The feed masks the flight number."
+    },
+    {
+      "code": null,
+      "wording": "到达：【美国 - 纽约】，国际干线运输已从【国际干线运输中转中】启程",
+      "language": "zh",
+      "english": "The international line haul has left <place>",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "【包裹已落地国内，等待航司中转】",
+      "language": "zh",
+      "english": "The parcel has landed in China, waiting for the airline's connection",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "到达：【中国 - 西安】国际干线运输已到达【XIY西安】",
+      "language": "zh",
+      "english": "The international line haul has reached <airport>",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "到达：【西安口岸】包裹准备清关",
+      "language": "zh",
+      "english": "At <port>: the parcel is being prepared for customs clearance",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "到达：【西安口岸】包裹清关完成，进入国内运输环节",
+      "language": "zh",
+      "english": "At <port>: customs clearance done, the parcel goes on to domestic transport",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "【西安市】陕西西安未央草滩公司 已揽收",
+      "language": "zh",
+      "english": "Picked up by <branch>",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Yunda's first row after clearance: the courier in China takes the parcel on. The row names the courier with a mobile, which the reader leaves out."
+    },
+    {
+      "code": null,
+      "wording": "【运城市】已到达 山西河津市公司",
+      "language": "zh",
+      "english": "Arrived at <station>",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Yunda's rows end on a hotline in a parenthesis, which the reader leaves out."
+    },
+    {
+      "code": null,
+      "wording": "【西安市】已离开 陕西西安分拨交付中心；发往 上海分拨交付中心",
+      "language": "zh",
+      "english": "Left <station> for <station>",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "YD 2026-11-16 00:48:40 安检",
+      "language": "zh",
+      "english": "Yunda security scan",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "YD 61012201 SF2 2026-11-14 23:10:46 安检",
+      "language": "zh",
+      "english": "Yunda security scan at a sorting line",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "【上海市】上海青浦区新城公司 正在为您派送",
+      "language": "zh",
+      "english": "Out for delivery from <branch>",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The row names the courier with a mobile and the branch's landline, which the reader leaves out."
+    },
+    {
+      "code": null,
+      "wording": "【代收点】您的快件已暂存至丰巢柜，请及时领取签收",
+      "language": "zh",
+      "english": "Your parcel is in a Hive Box locker, please collect it",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "note": "The row gives the locker's place, the courier's mobile and the branch's numbers, which the reader leaves out."
+    }
+  ]
 }

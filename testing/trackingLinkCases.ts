@@ -3101,6 +3101,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'shunjie', number: '300158204736',
     route: /^https:\/\/www\.passerbyaexpress\.com\/index\.php\?c=index&f=search&sn=300158204736$/,
     marker: /运单信息不存在/, forwarding: { notFound: /运单信息不存在/ } },
+  // The same platform on SD Group's host.
+  { carrier: 'usasd', number: 'SDL9901010417',
+    route: /^https:\/\/www\.usasd\.com\/index\.php\?c=index&f=search&sn=SDL9901010417$/,
+    marker: /运单信息不存在/, forwarding: { notFound: /运单信息不存在/ } },
 ];
 
 /**
