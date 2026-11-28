@@ -716,6 +716,7 @@ import { adapter as logistiq } from '../carriers/logistiq/adapter.js';
 import { adapter as logoix } from '../carriers/logoix/adapter.js';
 import { adapter as longtengus } from '../carriers/longtengus/adapter.js';
 import { adapter as loomisExpress } from '../carriers/loomis-express/adapter.js';
+import { adapter as lotCargo } from '../carriers/lot-cargo/adapter.js';
 import { adapter as lotteGlobal } from '../carriers/lotte-global/adapter.js';
 import { adapter as luluExpress } from '../carriers/lulu-express/adapter.js';
 import { adapter as lxPantos } from '../carriers/lx-pantos/adapter.js';
@@ -2035,6 +2036,7 @@ export const REGISTRY: RegistryDefinition = {
     "logoix": logoix,
     "longtengus": longtengus,
     "loomis-express": loomisExpress,
+    "lot-cargo": lotCargo,
     "lotte-global": lotteGlobal,
     "lulu-express": luluExpress,
     "lx-pantos": lxPantos,
@@ -3865,6 +3867,7 @@ export const REGISTRY: RegistryDefinition = {
     "longcps": "universal",
     "longtengus": "longtengus",
     "loomis-express": "loomis-express",
+    "lot-cargo": "lot-cargo",
     "lotte-global": "lotte-global",
     "lso": "universal",
     "ltl-kr": "universal",

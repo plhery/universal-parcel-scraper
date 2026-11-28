@@ -45736,6 +45736,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "lot-cargo": {
+    "displayName": "LOT Cargo",
+    "color": "#252668",
+    "aliases": [
+      "LOT Polish Airlines Cargo",
+      "LOT Polish Airlines",
+      "Polskie Linie Lotnicze LOT"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "lot-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cargo-tracking.lot.com/",
+    "trackingUrlTemplate": "https://cargo-tracking.lot.com/",
+    "trackingSearchUrl": "https://cargo-tracking.lot.com/",
+    "helpUrl": "https://www.lot.com/pl/en/cargo/cargo-offices",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "lotte-global": {
     "displayName": "Lotte Global Logistics",
     "color": "#da291c",
@@ -80681,6 +80706,7 @@ export const CARRIER_IDS = [
   "longcps",
   "longtengus",
   "loomis-express",
+  "lot-cargo",
   "lotte-global",
   "lso",
   "ltl-kr",
@@ -82971,6 +82997,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "longcps": [],
   "longtengus": [],
   "loomis-express": ["loomis-express-1","loomis-express-2"],
+  "lot-cargo": [],
   "lotte-global": [],
   "lso": ["lso-1"],
   "ltl-kr": [],
