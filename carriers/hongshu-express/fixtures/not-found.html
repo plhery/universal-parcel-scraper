@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HongShu Express</title>
+
+    <link href="/Content/bootstrap.min.css?v002" rel="stylesheet" type="text/css" />
+    <script src="/Scripts/modernizr-2.8.3.js"></script>
+
+    <script src="/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <link href="/Content/Site.css?v003" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+    <div class="container body-content" style="width:100%; padding:0; margin:0;">
+        
+<script src="/Scripts/CrazyexpressPublic.js"></script>
+<style type="text/css">
+    table {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .titlebar {
+        background: -webkit-linear-gradient(#FFFFFF, #D4D4D4);
+        background: -o-linear-gradient(#FFFFFF, #D4D4D4);
+        background: -moz-linear-gradient(#FFFFFF, #D4D4D4);
+        background: linear-gradient(#FFFFFF, #D4D4D4);
+        border: 1px solid #F2F2F2;
+        min-height: 35px;
+    }
+
+    table tbody tr {
+        height: 36px;
+    }
+
+    table tbody td {
+        border: 1px solid #E2D2E2;
+    }
+
+    table tbody tr:nth-child(odd) {
+        background-color: #F2F2F2;
+    }
+
+    .titlename {
+        display: inline-block;
+        padding-top: 8px;
+    }
+
+    .titlecontent {
+        display: inline-block;
+        font-weight: bold;
+    }
+
+    .titleitem {
+        display: inline-block;
+    }
+</style>
+<div style="background-color:#F7CEA0; height:100%;min-height:68 0px">
+    <div style="padding:10px 20px;">
+        <div><a href="/Home/Index">首页</a> > 货单查询</div>
+    </div>
+    <div class="articletitle">
+        货单查询结果
+    </div>
+
+    <div style="padding: 20px;
+        overflow-y: scroll;
+        max-height: 770px;">
+            <span>货单不存在，请查准号码或咨询客服，谢谢！</span>
+    </div>
+
+    <div class="modal fade" id="getEMS" tabindex="-1" role="dialog" aria-labelledby="getEMSLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="getEMSLabel">获取EMS号</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div>
+                            <div>请输入收件人电话号码</div>
+                            <div>
+                                <input type="text" id="receiverPhone" name="receiverPhone" />
+                                <input type="hidden" id="guid" name="guid" />
+                            </div>
+                            <div id="emscode" style="padding:10px 20px; font-weight:bold;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button class="btn btn-success" id="submitFindEMSbtn">发送</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+    </div>
+
+</body>
+</html>

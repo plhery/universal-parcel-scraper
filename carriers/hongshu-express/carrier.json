@@ -1,0 +1,68 @@
+{
+  "id": "hongshu-express",
+  "displayName": "HongShu Express",
+  "aliases": [
+    "红树国际快递",
+    "红树快递",
+    "小红树集运",
+    "HongShu International Express"
+  ],
+  "region": {
+    "countries": [
+      "CA",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#f7cea0"
+  },
+  "selectable": true,
+  "timezone": "America/Toronto",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hongshu-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "delivery_partner"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "recipient_name",
+      "delivery_partner",
+      "courier_name",
+      "driver_phone"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner"
+    ],
+    "discarded": [
+      "recipient_name",
+      "courier_name",
+      "driver_phone"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "sender_name",
+      "recipient_address",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

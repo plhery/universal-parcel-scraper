@@ -7620,5 +7620,11 @@
     "pattern": "^HE\\d{10}$",
     "kind": "collision",
     "reason": "HE and ten digits is Huaxia Express's waybill on Kuaidi100's test number, a shape Colis Privé's and Aramex's rules also take, and no source documents it as Huaxia's alone. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "hongshu-express",
+    "pattern": "^H\\d{7}$",
+    "kind": "collision",
+    "reason": "H and seven digits is HongShu Express's waybill on Kuaidi100's test number, a short shape GLS's and other carriers' rules also take. The adapter answers explicit selection."
   }
 ]

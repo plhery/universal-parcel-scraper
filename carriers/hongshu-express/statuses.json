@@ -1,0 +1,101 @@
+{
+  "carrier": "hongshu-express",
+  "entries": [
+    {
+      "wording": "货单上传",
+      "language": "zh",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The waybill entered in HongShu's system, before the store has the parcel."
+    },
+    {
+      "wording": "红树国际快递门店已揽收",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The Mississauga store takes the parcel."
+    },
+    {
+      "wording": "【加拿大】货物到达加拿大中转仓库",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "【加拿大】货物送达加拿大国际机场，等待起飞",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "【飞行中】货物离开加拿大",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "【中国】货物到达中国大陆",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "【中国】货物到达海关，等待清关",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "【中国】货物进入清关中",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "顺丰速运 已收取快件",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "SF's first scan, after customs: the hand-over, not the parcel's acceptance."
+    },
+    {
+      "wording": "快件在【…】完成分拣，准备发往 【…】",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件离开 【…】，已在发往 【…】 的路上",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件到达 【…】",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "我们正在为您的快件分配最合适的快递员，请您稍等",
+      "language": "zh",
+      "unmapped": true,
+      "confirmedBy": "live",
+      "note": "A notice at the delivery station before a courier takes the parcel: not a movement."
+    },
+    {
+      "wording": "快件交给，正在派送途中",
+      "language": "zh",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The adapter drops the courier's name and phone that SF writes after 交给."
+    },
+    {
+      "wording": "经客户同意，快件已放",
+      "language": "zh",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Left where the recipient agreed; the adapter drops the place, the courier's contact and the thanks after it."
+    }
+  ]
+}
