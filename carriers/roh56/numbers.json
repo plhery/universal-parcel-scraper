@@ -1,0 +1,53 @@
+{
+  "carrier": "roh56",
+  "records": [
+    {
+      "number": "73489114",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 融辉供应链. Ronghui's tracker answers it with goods sent from Shenzhen and signed for in Lanzhou."
+    },
+    {
+      "number": "96110286",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/roh56.shtml",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "Kuaidi100's page for 融辉供应链 gives it as the example number. Ronghui's tracker answers it with a parcel collected in Guangzhou and delivered in Xi'an, scanned at each hub."
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "carrier": "roh56",
+  "entries": [
+    {
+      "wording": "您的货物已到达融辉物流网点",
+      "language": "zh",
+      "english": "Your goods reached a Ronghui depot",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The first row: the Shenzhen depot takes the goods in."
+    },
+    {
+      "wording": "快件在【…】已做收件扫描",
+      "language": "zh",
+      "english": "Collection scan at the station in brackets",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The first row of a parcel collected in Guangzhou. The adapter leaves out the clerk named after it."
+    },
+    {
+      "wording": "您的货物已装车发往…",
+      "language": "zh",
+      "english": "Your goods are loaded for the hub named",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Names the destination province's hub and the day the goods should reach it."
+    },
+    {
+      "wording": "快件到达【…】,上一站是【…】",
+      "language": "zh",
+      "english": "Arrived at the facility in brackets from the one before",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The adapter leaves out the scanning clerk named after it."
+    },
+    {
+      "wording": "快件在【…】完成装车,正发往【…】",
+      "language": "zh",
+      "english": "Loaded at the facility in brackets for the next one",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件在【…】,已装车,正发往【…】",
+      "language": "zh",
+      "english": "Loaded at the facility in brackets for the next one",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件在【…】完成卸车,上一站是【…】",
+      "language": "zh",
+      "english": "Unloaded at the facility in brackets",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "您的货物已到达派送网点 联系收货人送货中",
+      "language": "zh",
+      "english": "Your goods reached the delivering depot; arranging delivery with the recipient",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "【…】已做派件扫描",
+      "language": "zh",
+      "english": "Out-for-delivery scan at the station in brackets",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The adapter leaves out the clerk and the courier named after it."
+    },
+    {
+      "wording": "已签收",
+      "language": "zh",
+      "english": "Signed for",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件已【签收】,签收网点是【…】",
+      "language": "zh",
+      "english": "Signed for at the station in brackets",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The adapter leaves out who signed, a photo signature on the sample."
+    }
+  ]
+}
