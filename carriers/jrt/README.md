@@ -62,8 +62,14 @@ browser is needed, and no portal link is published.
   naming the time, day and town. The status before the arrow decides the stage, a round's delivery
   window read as an ellipsis. USPS's acceptance after the partner's rows carries the parcel on, since
   JRT accepted it in China. The tracker dates
-  that row an hour early, as if on Eastern time, beside the partner's own row at the same minute, so
-  it is dated at the time and day the sentence names, on its state's clock.
+  that row an hour early beside the partner's own row at the same minute, so it is dated at the time
+  and day the sentence names, on its state's clock.
+- USPS's own scans can come three times: under the place with the country's code after it, seconds
+  after the scan; under the place alone at the scan's second; and under the place alone an hour
+  early, as the status alone or with USPS's sentence. Each scan is kept once, on its clock, the copy
+  under the place alone when one comes at that clock. Where every copy under the place alone came an
+  hour early, as at the delivering post office, a row there with no other copy, the delivery
+  included, is moved on the hour too: its state's main zone would misdate a town on another clock.
 - The line into the United States can end with GOFO instead. The tracker copies GOFO's scans in
   GOFO's English under the town and its state's code ("EXAMPLE TOWN,IL"), and GOFO's label
   ("Shipping Label Created") without a place, at the digits GOFO's own reply gives: a station GOFO

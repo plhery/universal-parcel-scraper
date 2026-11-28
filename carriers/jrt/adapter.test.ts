@@ -8,7 +8,7 @@ import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter } from './adapter.js';
-import { dateJrtUspsSentences, JRT_ORIGIN, jrtCanadaZone, parseJrtPage, parseJrtTrack, stageJrtDhlRounds } from './parser.js';
+import { dateJrtRows, dateJrtUspsSentences, JRT_ORIGIN, jrtCanadaZone, parseJrtPage, parseJrtTrack, stageJrtDhlRounds } from './parser.js';
 import { isJrtDhlGermanRow, isJrtDhlRow, isJrtFlightNotice, isJrtJtMexicoRow, isJrtUpsRow, jrtEnglish, statusMap } from './status.js';
 import carrier from './carrier.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
@@ -329,6 +329,42 @@ describe('JRT tracking adapter', () => {
     const unplaced = { status: 'in_transit' as const, last_status_text: sentence, last_update: '2026-11-09T16:14:00+08:00', expected_delivery: null,
       events: [{ time: '2026-11-09T16:14:00+08:00', description: sentence.replace(', IL .', ', ZZ .') }] };
     expect(dateJrtUspsSentences(unplaced)).toBe(unplaced);
+  });
+
+  it('keeps each USPS scan the tracker copies once, on its clock, and moves the delivering office’s other rows on the hour', () => {
+    // Live shape: each scan comes under the place and the country's code seconds after it, under the place alone at
+    // it, and under the place alone an hour early; at the delivering office every copy under the place alone is early.
+    const office = 'EXAMPLE TOWN, KY 00000';
+    const hub = 'EXAMPLE HUB IN DISTRIBUTION CENTER';
+    const delivered = 'Delivered, In/At Mailbox -> Your item was delivered in or at the mailbox at 4:09 pm on November 5, 2026 in EXAMPLE TOWN, KY .';
+    const round = 'Out for Delivery, Expected Delivery by 5:50pm';
+    const result = dateJrtRows({ status: 'delivered', last_status_text: delivered, last_update: '2026-11-06T05:09:00+08:00', expected_delivery: null, events: [
+      { time: '2026-11-06T05:09:00+08:00', description: delivered, location: office },
+      { time: '2026-11-05T20:10:00+08:00', description: round, location: `${office} US` },
+      { time: '2026-11-05T19:10:00+08:00', description: 'Out for Delivery', location: office },
+      { time: '2026-11-05T19:10:00+08:00', description: `${round} -> Your item is out for delivery on November 5, 2026 at 6:10 am in EXAMPLE TOWN, KY .`, location: office },
+      { time: '2026-11-05T18:56:00+08:00', description: 'Arrived at Post Office', location: `${office} US` },
+      { time: '2026-11-05T17:56:00+08:00', description: 'Arrived at Post Office', location: office },
+      { time: '2026-11-05T10:11:40+08:00', description: 'Departed USPS Facility', location: `${hub} US` },
+      { time: '2026-11-05T10:11:00+08:00', description: 'Departed USPS Facility', location: hub },
+      { time: '2026-11-05T09:11:00+08:00', description: `Departed USPS Facility -> Your item departed our USPS facility in ${hub} on November 4, 2026 at 8:11 pm.`, location: hub },
+      { time: '2026-11-05T06:11:00+08:00', description: 'Arrived at USPS Regional Facility', location: `${hub} US` },
+    ] });
+    expect(result.events?.map(({ time, description, location, time_zone }) => [time, description, location, time_zone])).toEqual([
+      // The delivery is moved on the hour with its office's copies, not dated on its state's main zone.
+      ['2026-11-06T06:09:00+08:00', delivered, office, undefined],
+      ['2026-11-05T20:10:00+08:00', round, `${office} US`, undefined],
+      ['2026-11-05T20:10:00+08:00', 'Out for Delivery', office, undefined],
+      ['2026-11-05T18:56:00+08:00', 'Arrived at Post Office', `${office} US`, undefined],
+      ['2026-11-05T10:11:00+08:00', 'Departed USPS Facility', hub, undefined],
+      ['2026-11-05T06:11:00+08:00', 'Arrived at USPS Regional Facility', `${hub} US`, undefined],
+    ]);
+    expect(result.last_update).toBe('2026-11-06T06:09:00+08:00');
+    // A record without copies under the place and the country's code keeps every row.
+    const alone = { status: 'in_transit' as const, last_status_text: 'Arrived at Post Office', last_update: '2026-11-05T18:56:00+08:00', expected_delivery: null,
+      events: [{ time: '2026-11-05T18:56:00+08:00', description: 'Arrived at Post Office', location: office },
+        { time: '2026-11-05T17:56:00+08:00', description: 'Arrived at Post Office', location: office }] };
+    expect(dateJrtRows(alone).events).toEqual(alone.events);
   });
 
   it('reads UPS’s access point note on UPS’s wall clock, as its other rows', () => {
