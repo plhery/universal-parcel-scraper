@@ -184,6 +184,7 @@ import { adapter as chengchain } from '../carriers/chengchain/adapter.js';
 import { adapter as chilexpress } from '../carriers/chilexpress/adapter.js';
 import { adapter as chinaAirlinesCargo } from '../carriers/china-airlines-cargo/adapter.js';
 import { adapter as chinaPost } from '../carriers/china-post/adapter.js';
+import { adapter as chinaqingguan } from '../carriers/chinaqingguan/adapter.js';
 import { adapter as chinastarlogistics } from '../carriers/chinastarlogistics/adapter.js';
 import { adapter as chinzLogistics } from '../carriers/chinz-logistics/adapter.js';
 import { adapter as chitChats } from '../carriers/chit-chats/adapter.js';
@@ -389,6 +390,7 @@ import { adapter as expedico } from '../carriers/expedico/adapter.js';
 import { adapter as expeditors } from '../carriers/expeditors/adapter.js';
 import { adapter as expressOne } from '../carriers/express-one/adapter.js';
 import { adapter as expressOneBg } from '../carriers/express-one-bg/adapter.js';
+import { adapter as express2global } from '../carriers/express2global/adapter.js';
 import { adapter as fanCourier } from '../carriers/fan-courier/adapter.js';
 import { adapter as fanCourierInternational } from '../carriers/fan-courier-international/adapter.js';
 import { adapter as farInternational } from '../carriers/far-international/adapter.js';
@@ -809,6 +811,7 @@ import { adapter as optimaOvernight } from '../carriers/optima-overnight/adapter
 import { adapter as orlenPaczka } from '../carriers/orlen-paczka/adapter.js';
 import { adapter as osmWorldwide } from '../carriers/osm-worldwide/adapter.js';
 import { adapter as otsAstracon } from '../carriers/ots-astracon/adapter.js';
+import { adapter as overseaex } from '../carriers/overseaex/adapter.js';
 import { adapter as overseasExpress } from '../carriers/overseas-express/adapter.js';
 import { adapter as ozonExpressMa } from '../carriers/ozon-express-ma/adapter.js';
 import { adapter as ozonLogistics } from '../carriers/ozon-logistics/adapter.js';
@@ -1008,6 +1011,7 @@ import { adapter as shreeAnjani } from '../carriers/shree-anjani/adapter.js';
 import { adapter as shreeMahavir } from '../carriers/shree-mahavir/adapter.js';
 import { adapter as shreeMaruti } from '../carriers/shree-maruti/adapter.js';
 import { adapter as shreeNandan } from '../carriers/shree-nandan/adapter.js';
+import { adapter as shunjie } from '../carriers/shunjie/adapter.js';
 import { adapter as sicepat } from '../carriers/sicepat/adapter.js';
 import { adapter as singaporePost } from '../carriers/singapore-post/adapter.js';
 import { adapter as sinokorMerchantMarine } from '../carriers/sinokor-merchant-marine/adapter.js';
@@ -1178,6 +1182,7 @@ import { adapter as uralExpress } from '../carriers/ural-express/adapter.js';
 import { adapter as urbano } from '../carriers/urbano/adapter.js';
 import { adapter as urbanoAr } from '../carriers/urbano-ar/adapter.js';
 import { adapter as urvaam } from '../carriers/urvaam/adapter.js';
+import { adapter as usasd } from '../carriers/usasd/adapter.js';
 import { adapter as useaExpress } from '../carriers/usea-express/adapter.js';
 import { adapter as usendChile } from '../carriers/usend-chile/adapter.js';
 import { adapter as usps } from '../carriers/usps/adapter.js';
@@ -1485,6 +1490,7 @@ export const REGISTRY: RegistryDefinition = {
     "chilexpress": chilexpress,
     "china-airlines-cargo": chinaAirlinesCargo,
     "china-post": chinaPost,
+    "chinaqingguan": chinaqingguan,
     "chinastarlogistics": chinastarlogistics,
     "chinz-logistics": chinzLogistics,
     "chit-chats": chitChats,
@@ -1690,6 +1696,7 @@ export const REGISTRY: RegistryDefinition = {
     "expeditors": expeditors,
     "express-one": expressOne,
     "express-one-bg": expressOneBg,
+    "express2global": express2global,
     "fan-courier": fanCourier,
     "fan-courier-international": fanCourierInternational,
     "far-international": farInternational,
@@ -2110,6 +2117,7 @@ export const REGISTRY: RegistryDefinition = {
     "orlen-paczka": orlenPaczka,
     "osm-worldwide": osmWorldwide,
     "ots-astracon": otsAstracon,
+    "overseaex": overseaex,
     "overseas-express": overseasExpress,
     "ozon-express-ma": ozonExpressMa,
     "ozon-logistics": ozonLogistics,
@@ -2309,6 +2317,7 @@ export const REGISTRY: RegistryDefinition = {
     "shree-mahavir": shreeMahavir,
     "shree-maruti": shreeMaruti,
     "shree-nandan": shreeNandan,
+    "shunjie": shunjie,
     "sicepat": sicepat,
     "singapore-post": singaporePost,
     "sinokor-merchant-marine": sinokorMerchantMarine,
@@ -2479,6 +2488,7 @@ export const REGISTRY: RegistryDefinition = {
     "urbano": urbano,
     "urbano-ar": urbanoAr,
     "urvaam": urvaam,
+    "usasd": usasd,
     "usea-express": useaExpress,
     "usend-chile": usendChile,
     "usps": usps,
@@ -2941,6 +2951,7 @@ export const REGISTRY: RegistryDefinition = {
     "china-airlines-cargo": "china-airlines-cargo",
     "china-post": "china-post",
     "china-railway-express": "universal",
+    "chinaqingguan": "chinaqingguan",
     "chinastarlogistics": "chinastarlogistics",
     "chinz-logistics": "chinz-logistics",
     "chit-chats": "chit-chats",
@@ -3274,6 +3285,7 @@ export const REGISTRY: RegistryDefinition = {
     "express-one-bg": "express-one-bg",
     "express-one-me": "universal",
     "express-ru": "universal",
+    "express2global": "express2global",
     "expressgodo": "universal",
     "extrans": "universal",
     "ezship": "universal",
@@ -4008,6 +4020,7 @@ export const REGISTRY: RegistryDefinition = {
     "ots-astracon": "ots-astracon",
     "ots-chile": "universal",
     "overnite": "universal",
+    "overseaex": "overseaex",
     "overseas-express": "overseas-express",
     "oxperta-express": "universal",
     "ozon-express-ma": "ozon-express-ma",
@@ -4349,6 +4362,7 @@ export const REGISTRY: RegistryDefinition = {
     "shree-maruti": "shree-maruti",
     "shree-nandan": "shree-nandan",
     "shunbang-express": "universal",
+    "shunjie": "shunjie",
     "sicepat": "sicepat",
     "sicilposte": "universal",
     "silpo-pack": "universal",
@@ -4643,7 +4657,7 @@ export const REGISTRY: RegistryDefinition = {
     "urbify": "universal",
     "urvaam": "urvaam",
     "us-cargo": "universal",
-    "usasd": "universal",
+    "usasd": "usasd",
     "usea-express": "usea-express",
     "usend-chile": "usend-chile",
     "usps": "usps",

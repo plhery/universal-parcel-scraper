@@ -70063,6 +70063,23 @@
     ]
   },
   {
+    "input": "7790005375465",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "econt",
+      "fan-courier",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "fan-courier"
+    ]
+  },
+  {
     "input": "779017972697",
     "carrier": "unknown",
     "confidence": "low",
@@ -77371,6 +77388,28 @@
       "tnt",
       "tforce-freight",
       "xpo-ltl"
+    ]
+  },
+  {
+    "input": "911093069987",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express",
+      "paquetexpress",
+      "sending"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive"
     ]
   },
   {
@@ -92411,6 +92450,17 @@
     ]
   },
   {
+    "input": "E2G580184904US",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "express2global"
+    ],
+    "asked": [
+      "express2global"
+    ]
+  },
+  {
     "input": "E60 14099922",
     "carrier": "unknown",
     "confidence": "low",
@@ -106911,6 +106961,12 @@
     ]
   },
   {
+    "input": "NH719386212US",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "NI25 03728987",
     "carrier": "unknown",
     "confidence": "low",
@@ -107557,6 +107613,17 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "OE18042600062",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "la-poste"
+    ],
+    "asked": [
+      "la-poste"
+    ]
   },
   {
     "input": "OE29112537098",
@@ -114859,6 +114926,17 @@
     ],
     "asked": [
       "australia-post"
+    ]
+  },
+  {
+    "input": "SDL1809293135",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "usasd"
+    ],
+    "asked": [
+      "usasd"
     ]
   },
   {

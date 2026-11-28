@@ -16744,6 +16744,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "chinaqingguan": {
+    "displayName": "Rongtong International",
+    "color": "#ED1C24",
+    "aliases": [
+      "荣通国际",
+      "荣通清关",
+      "荣通国际货运",
+      "荣通国际货运有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "chinaqingguan",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "chinastarlogistics": {
     "displayName": "Huaxin Supply Chain",
     "color": "#003C8C",
@@ -27830,6 +27853,46 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^WEB(?:N\\d{7,10}|\\d{10})$",
+        "confidence": "low"
+      }
+    ]
+  },
+  "express2global": {
+    "displayName": "E2G Express",
+    "color": "#E72940",
+    "aliases": [
+      "E2G速递",
+      "E2G"
+    ],
+    "countries": [
+      "US",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "express2global",
+      "recognitionRank": 659,
+      "recognitionPattern": "^E2G\\d{9}US$",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "hainaexpress.com",
+          "www.hainaexpress.com"
+        ],
+        "pathPattern": "^/track$",
+        "params": [
+          "num"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^E2G\\d{9}US$",
         "confidence": "low"
       }
     ]
@@ -51545,6 +51608,41 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "overseaex": {
+    "displayName": "Oversea Express",
+    "color": "#00185A",
+    "aliases": [
+      "Overseaex",
+      "波音速递",
+      "Oversea Express Boston Corp"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "overseaex",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.overseaex.com/",
+    "trackingUrlTemplate": "https://www.overseaex.com/index.php?c=index&f=search&sn={trackingNumber}",
+    "trackingSearchUrl": "https://www.overseaex.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "overseaex.com",
+          "www.overseaex.com"
+        ],
+        "pathPattern": "^/index\\.php$",
+        "params": [
+          "sn"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "overseas-express": {
     "displayName": "Overseas Express",
     "color": "#f58220",
@@ -62617,6 +62715,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "shunjie": {
+    "displayName": "Passerby A Express",
+    "color": "#00B0E0",
+    "aliases": [
+      "顺捷美中速递",
+      "顺捷速递"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "shunjie",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.passerbyaexpress.com/",
+    "trackingUrlTemplate": "https://www.passerbyaexpress.com/index.php?c=index&f=search&sn={trackingNumber}",
+    "trackingSearchUrl": "https://www.passerbyaexpress.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "passerbyaexpress.com",
+          "www.passerbyaexpress.com"
+        ],
+        "pathPattern": "^/index\\.php$",
+        "params": [
+          "sn"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "sicepat": {
     "displayName": "SiCepat Ekspres",
     "color": "#af272c",
@@ -72059,7 +72191,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/New_York",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "usasd",
+      "recognitionRank": 657,
+      "recognitionPattern": "^SDL\\d{10}$",
+      "localClocks": true
     },
     "canaryUrl": "https://www.usasd.com/",
     "trackingUrlTemplate": "https://www.usasd.com/index.php?c=index&f=search&sn={trackingNumber}",
@@ -72077,7 +72212,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^SDL\\d{10}$",
+        "confidence": "low"
+      }
+    ]
   },
   "usea-express": {
     "displayName": "USEA EXPRESS",
@@ -78534,6 +78674,7 @@ export const CARRIER_IDS = [
   "chilexpress",
   "china-airlines-cargo",
   "china-railway-express",
+  "chinaqingguan",
   "chinastarlogistics",
   "chinz-logistics",
   "chit-chats",
@@ -78845,6 +78986,7 @@ export const CARRIER_IDS = [
   "express-one-bg",
   "express-one-me",
   "express-ru",
+  "express2global",
   "expressgodo",
   "extrans",
   "ezship",
@@ -79552,6 +79694,7 @@ export const CARRIER_IDS = [
   "ots-astracon",
   "ots-chile",
   "overnite",
+  "overseaex",
   "overseas-express",
   "oxperta-express",
   "ozon-express-ma",
@@ -79876,6 +80019,7 @@ export const CARRIER_IDS = [
   "shree-maruti",
   "shree-nandan",
   "shunbang-express",
+  "shunjie",
   "sicepat",
   "sicilposte",
   "silpo-pack",
@@ -80776,6 +80920,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "chilexpress": [],
   "china-airlines-cargo": [],
   "china-railway-express": [],
+  "chinaqingguan": [],
   "chinastarlogistics": ["chinastarlogistics-1"],
   "chinz-logistics": [],
   "chit-chats": ["chit-chats-1"],
@@ -81087,6 +81232,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "express-one-bg": [],
   "express-one-me": [],
   "express-ru": ["express-ru-1"],
+  "express2global": ["express2global-1"],
   "expressgodo": [],
   "extrans": [],
   "ezship": [],
@@ -81794,6 +81940,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ots-astracon": [],
   "ots-chile": [],
   "overnite": [],
+  "overseaex": [],
   "overseas-express": [],
   "oxperta-express": [],
   "ozon-express-ma": [],
@@ -82118,6 +82265,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "shree-maruti": [],
   "shree-nandan": [],
   "shunbang-express": [],
+  "shunjie": [],
   "sicepat": [],
   "sicilposte": [],
   "silpo-pack": [],
@@ -82396,7 +82544,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "urbify": [],
   "urvaam": [],
   "us-cargo": [],
-  "usasd": [],
+  "usasd": ["usasd-1"],
   "usea-express": [],
   "usend-chile": [],
   "utec-logistics": ["utec-logistics-1"],
