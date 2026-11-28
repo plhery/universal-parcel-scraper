@@ -1,0 +1,42 @@
+{
+  "id": "senpex",
+  "displayName": "Senpex",
+  "aliases": [
+    "Senpex Inc."
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#ff5100"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://web.senpex.com/t2/{trackingNumber}",
+    "searchUrl": "https://web.senpex.com/t2",
+    "canaryUrl": "https://web.senpex.com/t2",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "web.senpex.com"
+      ],
+      "path": "^/t2/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

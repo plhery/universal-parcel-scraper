@@ -1,0 +1,33 @@
+{
+  "id": "courier-connection",
+  "displayName": "The Courier Connection",
+  "aliases": [
+    "Courier Connection"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#ffcb08"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.tccdelivers.net/clientportal",
+    "canaryUrl": "https://www.tccdelivers.net/clientportal",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

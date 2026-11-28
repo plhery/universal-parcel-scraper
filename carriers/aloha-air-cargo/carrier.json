@@ -1,0 +1,33 @@
+{
+  "id": "aloha-air-cargo",
+  "displayName": "Aloha Air Cargo",
+  "aliases": [
+    "Aloha Air Cargo, LLC"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#f68f1e"
+  },
+  "selectable": true,
+  "timezone": "Pacific/Honolulu",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.alohaaircargo.com/shipment-tracking/",
+    "canaryUrl": "https://www.alohaaircargo.com/shipment-tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

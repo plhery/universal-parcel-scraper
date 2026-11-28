@@ -1,0 +1,34 @@
+{
+  "id": "accurate-courier",
+  "displayName": "Accurate Courier Express",
+  "aliases": [
+    "Accurate Courier",
+    "Accurate Logistics"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#eb2026"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://online.accuratecourierexpress.com/Xcelerator/ClientPortal",
+    "canaryUrl": "https://online.accuratecourierexpress.com/Xcelerator/ClientPortal",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

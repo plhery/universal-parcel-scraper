@@ -1,0 +1,33 @@
+{
+  "id": "now-courier-us",
+  "displayName": "NOW Courier",
+  "aliases": [
+    "NOW Courier Inc."
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#03aeda"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://xcelerator.nowcourier.com/Xcelerator/ClientPortal",
+    "canaryUrl": "https://xcelerator.nowcourier.com/Xcelerator/ClientPortal",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

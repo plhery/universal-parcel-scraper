@@ -6945,6 +6945,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "accurate-courier": {
+    "displayName": "Accurate Courier Express",
+    "color": "#eb2026",
+    "aliases": [
+      "Accurate Courier",
+      "Accurate Logistics"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://online.accuratecourierexpress.com/Xcelerator/ClientPortal",
+    "trackingSearchUrl": "https://online.accuratecourierexpress.com/Xcelerator/ClientPortal",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ace-ee": {
     "displayName": "ACE Logistics Estonia",
     "color": "#004f7c",
@@ -7494,7 +7515,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#0b3e9d",
     "aliases": [
       "Aeropost Costa Rica",
-      "Aerocasillas"
+      "Aerocasillas",
+      "Mailpac"
     ],
     "countries": [
       "CR",
@@ -8549,6 +8571,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "alaska-air-cargo": {
+    "displayName": "Alaska Air Cargo",
+    "color": "#01426a",
+    "aliases": [
+      "Alaska Airlines Cargo",
+      "Hawaiian Air Cargo"
+    ],
+    "countries": [
+      "US",
+      "CA",
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://alaska-icargo.ibsplc.aero/icargoportal/portal/loginFlow",
+    "trackingSearchUrl": "https://alaska-icargo.ibsplc.aero/icargoportal/portal/loginFlow",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "albatomi": {
     "displayName": "Albatomi",
     "color": "#10386c",
@@ -8931,6 +8976,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "aloha-air-cargo": {
+    "displayName": "Aloha Air Cargo",
+    "color": "#f68f1e",
+    "aliases": [
+      "Aloha Air Cargo, LLC"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Honolulu",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.alohaaircargo.com/shipment-tracking/",
+    "trackingSearchUrl": "https://www.alohaaircargo.com/shipment-tracking/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "aloha-freight": {
     "displayName": "Aloha Freight",
@@ -19344,6 +19409,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "courier-connection": {
+    "displayName": "The Courier Connection",
+    "color": "#ffcb08",
+    "aliases": [
+      "Courier Connection"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.tccdelivers.net/clientportal",
+    "trackingSearchUrl": "https://www.tccdelivers.net/clientportal",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "courier-express-malta": {
     "displayName": "Courier Express Malta",
     "color": "#b5e505",
@@ -19768,6 +19853,59 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "crowley": {
+    "displayName": "Crowley",
+    "color": "#000082",
+    "aliases": [
+      "Crowley Maritime",
+      "Crowley Logistics"
+    ],
+    "countries": [
+      "US",
+      "PR",
+      "VI"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://csight.crowley.com/crowley/s/shipment-tracking",
+    "trackingSearchUrl": "https://csight.crowley.com/crowley/s/shipment-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "crst": {
+    "displayName": "CRST",
+    "color": "#182838",
+    "aliases": [
+      "CRST The Transportation Solution",
+      "CRST Final Mile",
+      "CRST International"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Chicago",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.crst.com/",
+    "trackingUrlTemplate": "https://tracking.crst.com/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.crst.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.crst.com"
+        ],
+        "path": "^/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "cruz-del-sur": {
     "displayName": "Cruz del Sur",
     "color": "#2a367c",
@@ -19822,6 +19960,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://venta.cruzdelsurcargo.com.pe/home-filtro-busqueda",
     "trackingSearchUrl": "https://venta.cruzdelsurcargo.com.pe/home-filtro-busqueda",
     "helpUrl": "https://www.cruzdelsurcargo.com.pe/servicio-al-cliente/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "cs-logistics": {
+    "displayName": "CS Logistics",
+    "color": "#236040",
+    "aliases": [
+      "CS Logistics, Inc."
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.cslogisticsinc.com/xcelerator/clientportal",
+    "trackingSearchUrl": "https://www.cslogisticsinc.com/xcelerator/clientportal",
     "linkRules": [],
     "detectionRules": []
   },
@@ -22295,6 +22453,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "diakon": {
+    "displayName": "Diakon Logistics",
+    "color": "#304058",
+    "aliases": [
+      "Diakon"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://diakon.homedeliverycentral.com/Home/Login",
+    "trackingSearchUrl": "https://diakon.homedeliverycentral.com/Home/Login",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dialogo-logistica": {
     "displayName": "Diálogo Logística",
     "color": "#1a2441",
@@ -22309,6 +22487,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://bbmlogistica.com.br/",
     "trackingSearchUrl": "https://bbmlogistica.com.br/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "diamond-line": {
+    "displayName": "Diamond Line Delivery Systems",
+    "color": "#0a1628",
+    "aliases": [
+      "Diamond Line",
+      "Diamond Line Delivery",
+      "DLDS"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Boise",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.dlds.com/manage/track-shipment/",
+    "trackingSearchUrl": "https://www.dlds.com/manage/track-shipment/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -23096,6 +23296,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://oms.anserx.com/tracking",
     "trackingUrlTemplate": "https://oms.anserx.com/tracking?nos={trackingNumber}",
     "trackingSearchUrl": "https://oms.anserx.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "douglas-express": {
+    "displayName": "Douglas Express Delivery",
+    "color": "#85329a",
+    "aliases": [
+      "Douglas Express",
+      "Douglas Delivery"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.douglasdelivery.net/clientportal",
+    "trackingSearchUrl": "https://www.douglasdelivery.net/clientportal",
     "linkRules": [],
     "detectionRules": []
   },
@@ -27287,6 +27508,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingSiteName": "ShipmentLink",
     "helpUrl": "https://www.shipmentlink.com/tcc1/jsp/TCC1_Contact.jsp",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "everts-air-cargo": {
+    "displayName": "Everts Air Cargo",
+    "color": "#1a4886",
+    "aliases": [
+      "Everts Air",
+      "Everts Air Alaska"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Anchorage",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://apps1.tflite.com/Public/EVT/Freight/Tracking",
+    "trackingUrlTemplate": "https://apps1.tflite.com/Public/EVT/Freight/Tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://apps1.tflite.com/Public/EVT/Freight/Tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "apps1.tflite.com"
+        ],
+        "path": "^/Public/EVT/Freight/Tracking/([^/?#]+)/?$"
+      }
+    ],
     "detectionRules": []
   },
   "evri-uk": {
@@ -34400,6 +34650,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "hailify": {
+    "displayName": "Hailify",
+    "color": "#011931",
+    "aliases": [
+      "Drive Hailify"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.hailify.liota.ai/",
+    "trackingUrlTemplate": "https://tracking.hailify.liota.ai/track?{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.hailify.liota.ai/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hainan-airlines-cargo": {
     "displayName": "Hainan Airlines Cargo",
     "color": "#cf422f",
@@ -39890,6 +40161,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "preferred": true
       }
     ]
+  },
+  "jet-delivery": {
+    "displayName": "Jet Delivery",
+    "color": "#e11f26",
+    "aliases": [
+      "Jet Delivery, Inc."
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.jetdelivery.com/track/",
+    "trackingUrlTemplate": "https://www.jetdelivery.com/track/?idx={trackingNumber}",
+    "trackingSearchUrl": "https://www.jetdelivery.com/track/",
+    "linkRules": [
+      {
+        "domains": [
+          "jetdelivery.com"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "idx"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "jet-dp": {
     "displayName": "JET DP",
@@ -45427,6 +45729,41 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "lynden": {
+    "displayName": "Lynden",
+    "color": "#006e3d",
+    "aliases": [
+      "Lynden Transport",
+      "Alaska Marine Lines",
+      "Lynden Air Cargo",
+      "Lynden Inc."
+    ],
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.lynden.com/online-tools/tracking-center/",
+    "trackingUrlTemplate": "https://ezc.lynden.com/tracking/?webctl=read.traceio&everybody=ON&lnbr={trackingNumber}#/search",
+    "trackingSearchUrl": "https://www.lynden.com/online-tools/tracking-center/",
+    "linkRules": [
+      {
+        "domains": [
+          "ezc.lynden.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "lnbr"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "m-and-p": {
     "displayName": "M&P",
     "color": "#f26522",
@@ -49959,6 +50296,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "northern-air-cargo": {
+    "displayName": "Northern Air Cargo",
+    "color": "#ed2024",
+    "aliases": [
+      "NAC",
+      "Northern Air Cargo, LLC"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Anchorage",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.nac.aero/shipment-tracking/",
+    "trackingSearchUrl": "https://www.nac.aero/shipment-tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "northline": {
     "displayName": "Northline",
     "color": "#000000",
@@ -50133,6 +50491,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "now-courier-us": {
+    "displayName": "NOW Courier",
+    "color": "#03aeda",
+    "aliases": [
+      "NOW Courier Inc."
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://xcelerator.nowcourier.com/Xcelerator/ClientPortal",
+    "trackingSearchUrl": "https://xcelerator.nowcourier.com/Xcelerator/ClientPortal",
+    "linkRules": [],
+    "detectionRules": []
   },
   "now-couriers": {
     "displayName": "Now Couriers",
@@ -53778,6 +54156,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "high"
       }
     ]
+  },
+  "pegasus-logistics": {
+    "displayName": "Pegasus Logistics Group",
+    "color": "#002040",
+    "aliases": [
+      "Pegasus Logistics",
+      "Pegasus Logistics Group, Inc."
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Chicago",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://partners.pegasuslogistics.com/Tracking/TrackingWithoutLogin",
+    "trackingUrlTemplate": "https://partners.pegasuslogistics.com/Tracking/ShipmentTrackingWithoutLogin?ID={trackingNumber}",
+    "trackingSearchUrl": "https://partners.pegasuslogistics.com/Tracking/TrackingWithoutLogin",
+    "linkRules": [
+      {
+        "domains": [
+          "partners.pegasuslogistics.com"
+        ],
+        "pathPattern": "^/Tracking/ShipmentTrackingWithoutLogin/?$",
+        "params": [
+          "ID"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "pelican-express": {
     "displayName": "Taiwan Pelican Express",
@@ -57460,6 +57870,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "quick-courier-pa": {
+    "displayName": "Quick Courier Service",
+    "color": "#0e4475",
+    "aliases": [
+      "Quick Courier Services"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.goqcs.biz/clientportal",
+    "trackingSearchUrl": "https://www.goqcs.biz/clientportal",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "quick-couriers-pk": {
     "displayName": "Quick Couriers Service",
     "color": "#006cbc",
@@ -58153,6 +58583,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "rds-delivery": {
+    "displayName": "RDS Delivery Service",
+    "color": "#005c40",
+    "aliases": [
+      "RDS Delivery",
+      "Tri-State Messenger Service"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.tristatemessengerservice.com/ClientPortal",
+    "trackingSearchUrl": "https://www.tristatemessengerservice.com/ClientPortal",
+    "linkRules": [],
+    "detectionRules": []
   },
   "recibelo": {
     "displayName": "Recíbelo",
@@ -61281,6 +61732,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "senpex": {
+    "displayName": "Senpex",
+    "color": "#ff5100",
+    "aliases": [
+      "Senpex Inc."
+    ],
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://web.senpex.com/t2",
+    "trackingUrlTemplate": "https://web.senpex.com/t2/{trackingNumber}",
+    "trackingSearchUrl": "https://web.senpex.com/t2",
+    "linkRules": [
+      {
+        "domains": [
+          "web.senpex.com"
+        ],
+        "path": "^/t2/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "sentral-cargo": {
     "displayName": "Sentral Cargo",
     "color": "#e6212a",
@@ -64008,6 +64488,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "southwest-cargo": {
+    "displayName": "Southwest Airlines Cargo",
+    "color": "#304cb2",
+    "aliases": [
+      "Southwest Cargo",
+      "SWA Cargo"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Chicago",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.swacargo.com/swacargo_com_ui/tracking",
+    "trackingSearchUrl": "https://www.swacargo.com/swacargo_com_ui/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "swacargo.com"
+        ],
+        "pathPattern": "^/swacargo_com_ui/tracking-results/?$",
+        "params": [
+          "trackingInfo"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "southwestern-motor-transport": {
     "displayName": "Southwestern Motor Transport",
     "color": "#ff0045",
@@ -64082,6 +64593,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "span-alaska": {
+    "displayName": "Span Alaska",
+    "color": "#0033a0",
+    "aliases": [
+      "Span Alaska Transportation",
+      "Span Alaska Transportation, LLC"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://portal.spanalaska.com/",
+    "trackingUrlTemplate": "https://portal.spanalaska.com/tracker?pro={trackingNumber}",
+    "trackingSearchUrl": "https://portal.spanalaska.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "portal.spanalaska.com"
+        ],
+        "pathPattern": "^/tracker/?$",
+        "params": [
+          "pro",
+          "pronum",
+          "shipmentid"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "spark-kz": {
     "displayName": "Spark",
@@ -65491,7 +66036,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Frontline Freight",
       "Frontline Freight, Inc.",
       "Frontline Freight Inc",
-      "STG"
+      "STG",
+      "Clear Lane Freight Systems",
+      "Clear Lane Freight",
+      "Clear Lane"
     ],
     "countries": [
       "US"
@@ -69526,6 +70074,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "high"
       }
     ]
+  },
+  "trailer-bridge": {
+    "displayName": "Trailer Bridge",
+    "color": "#215e7e",
+    "aliases": [
+      "Trailer Bridge, Inc."
+    ],
+    "countries": [
+      "US",
+      "PR",
+      "VI"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://quicktrack.trailerbridge.com/",
+    "trackingSearchUrl": "https://quicktrack.trailerbridge.com/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "tramaco": {
     "displayName": "Tramaco Express",
@@ -78382,6 +78952,7 @@ export const CARRIER_IDS = [
   "abest-express",
   "abf-freight",
   "abx-express",
+  "accurate-courier",
   "ace-ee",
   "ace-lt",
   "ace-lv",
@@ -78432,6 +79003,7 @@ export const CARRIER_IDS = [
   "akropost",
   "aks-express",
   "aland-post",
+  "alaska-air-cargo",
   "albatomi",
   "alem-tat",
   "alfa-delivery-kz",
@@ -78444,6 +79016,7 @@ export const CARRIER_IDS = [
   "alliance-air-freight",
   "allied-express",
   "alljoy",
+  "aloha-air-cargo",
   "aloha-freight",
   "alpha-cargo-th",
   "alphastline",
@@ -78750,6 +79323,7 @@ export const CARRIER_IDS = [
   "cotaxi",
   "coupang-logistics",
   "courier-center",
+  "courier-connection",
   "courier-express-malta",
   "courier-it",
   "courier-plus-ng",
@@ -78763,8 +79337,11 @@ export const CARRIER_IDS = [
   "cristao-shipping",
   "crossflight",
   "crosswin",
+  "crowley",
+  "crst",
   "cruz-del-sur",
   "cruz-del-sur-pe",
+  "cs-logistics",
   "cse-russia",
   "csomagpiac",
   "cst-italia",
@@ -78832,7 +79409,9 @@ export const CARRIER_IDS = [
   "dhlink",
   "dhx",
   "diakinisis",
+  "diakon",
   "dialogo-logistica",
+  "diamond-line",
   "dida-international",
   "diera",
   "dimex",
@@ -78858,6 +79437,7 @@ export const CARRIER_IDS = [
   "doobalhero",
   "doora-logistics",
   "dora-gate",
+  "douglas-express",
   "dpd-at",
   "dpd-be",
   "dpd-by",
@@ -78971,6 +79551,7 @@ export const CARRIER_IDS = [
   "eushipments",
   "evdemo-lojistik",
   "evergreen-line",
+  "everts-air-cargo",
   "evri-uk",
   "evropat",
   "ewe",
@@ -79174,6 +79755,7 @@ export const CARRIER_IDS = [
   "gyujtoszallitas",
   "gzyl",
   "hadeland-bud",
+  "hailify",
   "hainan-airlines-cargo",
   "hanjin",
   "hapag-lloyd",
@@ -79340,6 +79922,7 @@ export const CARRIER_IDS = [
   "jdxexpress",
   "jeebly",
   "jersey-post",
+  "jet-delivery",
   "jet-dp",
   "jet-express-ee",
   "jet-global",
@@ -79506,6 +80089,7 @@ export const CARRIER_IDS = [
   "lulu-express",
   "lvz-post",
   "lx-pantos",
+  "lynden",
   "m-and-p",
   "m-one",
   "m-xpress",
@@ -79650,10 +80234,12 @@ export const CARRIER_IDS = [
   "nord-wheel",
   "nordbrief",
   "norsk-global",
+  "northern-air-cargo",
   "northline",
   "nova-global",
   "nova-kargo",
   "nova-poshta",
+  "now-courier-us",
   "now-couriers",
   "nox",
   "ntc-express",
@@ -79756,6 +80342,7 @@ export const CARRIER_IDS = [
   "pdu",
   "pecom",
   "peddler",
+  "pegasus-logistics",
   "pelican-express",
   "penguin-box",
   "pengyou",
@@ -79861,6 +80448,7 @@ export const CARRIER_IDS = [
   "quality-post",
   "quantium-solutions",
   "quehenberger",
+  "quick-courier-pa",
   "quick-couriers-pk",
   "quick-fort",
   "quick-rabbit",
@@ -79883,6 +80471,7 @@ export const CARRIER_IDS = [
   "rapid-courier-gr",
   "rapido-ochoa",
   "rayspeed",
+  "rds-delivery",
   "recibelo",
   "red-courier-gr",
   "red-express",
@@ -79977,6 +80566,7 @@ export const CARRIER_IDS = [
   "sendo-kg",
   "sendy-express",
   "sengi-express",
+  "senpex",
   "sentral-cargo",
   "senyu",
   "serpost",
@@ -80056,8 +80646,10 @@ export const CARRIER_IDS = [
   "south-african-post-office",
   "south-post",
   "southeastern-freight-lines",
+  "southwest-cargo",
   "southwestern-motor-transport",
   "sp-express",
+  "span-alaska",
   "spark-kz",
   "spc-worldwide-express",
   "sped-trans",
@@ -80214,6 +80806,7 @@ export const CARRIER_IDS = [
   "trackon",
   "tracopa",
   "tracx-logis",
+  "trailer-bridge",
   "tramaco",
   "trans-express-lk",
   "trans-o-flex",
@@ -80628,6 +81221,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "abest-express": [],
   "abf-freight": [],
   "abx-express": [],
+  "accurate-courier": [],
   "ace-ee": [],
   "ace-lt": [],
   "ace-lv": [],
@@ -80678,6 +81272,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "akropost": [],
   "aks-express": [],
   "aland-post": [],
+  "alaska-air-cargo": [],
   "albatomi": [],
   "alem-tat": [],
   "alfa-delivery-kz": [],
@@ -80690,6 +81285,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "alliance-air-freight": [],
   "allied-express": [],
   "alljoy": ["alljoy-1","alljoy-2"],
+  "aloha-air-cargo": [],
   "aloha-freight": [],
   "alpha-cargo-th": [],
   "alphastline": ["alphastline-1"],
@@ -80996,6 +81592,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cotaxi": [],
   "coupang-logistics": [],
   "courier-center": [],
+  "courier-connection": [],
   "courier-express-malta": [],
   "courier-it": [],
   "courier-plus-ng": [],
@@ -81009,8 +81606,11 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cristao-shipping": [],
   "crossflight": [],
   "crosswin": [],
+  "crowley": [],
+  "crst": [],
   "cruz-del-sur": [],
   "cruz-del-sur-pe": [],
+  "cs-logistics": [],
   "cse-russia": [],
   "csomagpiac": [],
   "cst-italia": ["cst-italia-1","cst-italia-2"],
@@ -81078,7 +81678,9 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dhlink": ["dhlink-1","dhlink-xzg","dhlink-ylus","dhlink-eyt","dhlink-qh","dhlink-yf","dhlink-ktdwe","dhlink-yhkj","dhlink-by","dhlink-tdt","dhlink-yle","dhlink-aus","dhlink-qye","dhlink-cys","dhlink-jas","dhlink-xyl","dhlink-lib","dhlink-yb","dhlink-jxc"],
   "dhx": [],
   "diakinisis": [],
+  "diakon": [],
   "dialogo-logistica": [],
+  "diamond-line": [],
   "dida-international": [],
   "diera": [],
   "dimex": [],
@@ -81104,6 +81706,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "doobalhero": [],
   "doora-logistics": [],
   "dora-gate": [],
+  "douglas-express": [],
   "dpd-at": ["dpd-at-1"],
   "dpd-be": ["dpd-be-1"],
   "dpd-by": [],
@@ -81217,6 +81820,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "eushipments": [],
   "evdemo-lojistik": [],
   "evergreen-line": [],
+  "everts-air-cargo": [],
   "evri-uk": ["evri-uk-domestic","evri-uk-1","evri-uk-2","evri-uk-3"],
   "evropat": [],
   "ewe": [],
@@ -81420,6 +82024,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gyujtoszallitas": [],
   "gzyl": ["gzyl-1","gzyl-2"],
   "hadeland-bud": [],
+  "hailify": [],
   "hainan-airlines-cargo": ["hainan-airlines-cargo-1","hainan-airlines-cargo-2"],
   "hanjin": [],
   "hapag-lloyd": [],
@@ -81586,6 +82191,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jdxexpress": ["jdxexpress-1"],
   "jeebly": ["jeebly-1"],
   "jersey-post": ["jersey-post-s10"],
+  "jet-delivery": [],
   "jet-dp": [],
   "jet-express-ee": [],
   "jet-global": [],
@@ -81752,6 +82358,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lulu-express": [],
   "lvz-post": [],
   "lx-pantos": [],
+  "lynden": [],
   "m-and-p": [],
   "m-one": ["m-one-rs","m-one-s10"],
   "m-xpress": [],
@@ -81896,10 +82503,12 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "nord-wheel": [],
   "nordbrief": [],
   "norsk-global": ["norsk-global-pkg"],
+  "northern-air-cargo": [],
   "northline": [],
   "nova-global": ["nova-global-1","nova-global-2","nova-global-3"],
   "nova-kargo": [],
   "nova-poshta": ["nova-poshta-export","nova-poshta-domestic","nova-poshta-international"],
+  "now-courier-us": [],
   "now-couriers": [],
   "nox": ["nox-1"],
   "ntc-express": [],
@@ -82002,6 +82611,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pdu": ["pdu-1"],
   "pecom": [],
   "peddler": ["peddler-1","peddler-2"],
+  "pegasus-logistics": [],
   "pelican-express": [],
   "penguin-box": [],
   "pengyou": ["pengyou-1","pengyou-2","pengyou-3"],
@@ -82107,6 +82717,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "quality-post": [],
   "quantium-solutions": [],
   "quehenberger": [],
+  "quick-courier-pa": [],
   "quick-couriers-pk": [],
   "quick-fort": ["quick-fort-1"],
   "quick-rabbit": ["quick-rabbit-1","quick-rabbit-2","quick-rabbit-3"],
@@ -82129,6 +82740,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "rapid-courier-gr": [],
   "rapido-ochoa": [],
   "rayspeed": ["rayspeed-1"],
+  "rds-delivery": [],
   "recibelo": [],
   "red-courier-gr": [],
   "red-express": [],
@@ -82223,6 +82835,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sendo-kg": [],
   "sendy-express": [],
   "sengi-express": ["sengi-express-1","sengi-express-2"],
+  "senpex": [],
   "sentral-cargo": [],
   "senyu": [],
   "serpost": ["serpost-s10"],
@@ -82302,8 +82915,10 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "south-african-post-office": ["south-african-post-office-s10"],
   "south-post": [],
   "southeastern-freight-lines": [],
+  "southwest-cargo": [],
   "southwestern-motor-transport": [],
   "sp-express": ["sp-express-1"],
+  "span-alaska": [],
   "spark-kz": [],
   "spc-worldwide-express": [],
   "sped-trans": [],
@@ -82460,6 +83075,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "trackon": [],
   "tracopa": [],
   "tracx-logis": ["tracx-logis-1"],
+  "trailer-bridge": [],
   "tramaco": [],
   "trans-express-lk": [],
   "trans-o-flex": [],

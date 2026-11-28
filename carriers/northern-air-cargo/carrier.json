@@ -1,0 +1,34 @@
+{
+  "id": "northern-air-cargo",
+  "displayName": "Northern Air Cargo",
+  "aliases": [
+    "NAC",
+    "Northern Air Cargo, LLC"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#ed2024"
+  },
+  "selectable": true,
+  "timezone": "America/Anchorage",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.nac.aero/shipment-tracking/",
+    "canaryUrl": "https://www.nac.aero/shipment-tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,48 @@
+{
+  "id": "lynden",
+  "displayName": "Lynden",
+  "aliases": [
+    "Lynden Transport",
+    "Alaska Marine Lines",
+    "Lynden Air Cargo",
+    "Lynden Inc."
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#006e3d"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://ezc.lynden.com/tracking/?webctl=read.traceio&everybody=ON&lnbr={trackingNumber}#/search",
+    "searchUrl": "https://www.lynden.com/online-tools/tracking-center/",
+    "canaryUrl": "https://www.lynden.com/online-tools/tracking-center/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "ezc.lynden.com"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "lnbr"
+      ]
+    }
+  ],
+  "detection": []
+}

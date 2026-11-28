@@ -1,0 +1,35 @@
+{
+  "id": "trailer-bridge",
+  "displayName": "Trailer Bridge",
+  "aliases": [
+    "Trailer Bridge, Inc."
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "PR",
+      "VI"
+    ]
+  },
+  "brand": {
+    "color": "#215e7e"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://quicktrack.trailerbridge.com/",
+    "canaryUrl": "https://quicktrack.trailerbridge.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

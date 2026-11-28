@@ -1,0 +1,45 @@
+{
+  "id": "pegasus-logistics",
+  "displayName": "Pegasus Logistics Group",
+  "aliases": [
+    "Pegasus Logistics",
+    "Pegasus Logistics Group, Inc."
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#002040"
+  },
+  "selectable": true,
+  "timezone": "America/Chicago",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://partners.pegasuslogistics.com/Tracking/ShipmentTrackingWithoutLogin?ID={trackingNumber}",
+    "searchUrl": "https://partners.pegasuslogistics.com/Tracking/TrackingWithoutLogin",
+    "canaryUrl": "https://partners.pegasuslogistics.com/Tracking/TrackingWithoutLogin",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "partners.pegasuslogistics.com"
+      ],
+      "pathPattern": "^/Tracking/ShipmentTrackingWithoutLogin/?$",
+      "params": [
+        "ID"
+      ]
+    }
+  ],
+  "detection": []
+}

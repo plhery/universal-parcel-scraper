@@ -1,0 +1,34 @@
+{
+  "id": "douglas-express",
+  "displayName": "Douglas Express Delivery",
+  "aliases": [
+    "Douglas Express",
+    "Douglas Delivery"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#85329a"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.douglasdelivery.net/clientportal",
+    "canaryUrl": "https://www.douglasdelivery.net/clientportal",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

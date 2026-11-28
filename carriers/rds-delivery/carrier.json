@@ -1,0 +1,34 @@
+{
+  "id": "rds-delivery",
+  "displayName": "RDS Delivery Service",
+  "aliases": [
+    "RDS Delivery",
+    "Tri-State Messenger Service"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#005c40"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.tristatemessengerservice.com/ClientPortal",
+    "canaryUrl": "https://www.tristatemessengerservice.com/ClientPortal",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,44 @@
+{
+  "id": "jet-delivery",
+  "displayName": "Jet Delivery",
+  "aliases": [
+    "Jet Delivery, Inc."
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#e11f26"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.jetdelivery.com/track/?idx={trackingNumber}",
+    "searchUrl": "https://www.jetdelivery.com/track/",
+    "canaryUrl": "https://www.jetdelivery.com/track/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "jetdelivery.com"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "idx"
+      ]
+    }
+  ],
+  "detection": []
+}

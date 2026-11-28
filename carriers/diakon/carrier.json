@@ -1,0 +1,33 @@
+{
+  "id": "diakon",
+  "displayName": "Diakon Logistics",
+  "aliases": [
+    "Diakon"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#304058"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://diakon.homedeliverycentral.com/Home/Login",
+    "canaryUrl": "https://diakon.homedeliverycentral.com/Home/Login",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

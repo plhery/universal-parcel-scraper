@@ -1,0 +1,33 @@
+{
+  "id": "quick-courier-pa",
+  "displayName": "Quick Courier Service",
+  "aliases": [
+    "Quick Courier Services"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#0e4475"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.goqcs.biz/clientportal",
+    "canaryUrl": "https://www.goqcs.biz/clientportal",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

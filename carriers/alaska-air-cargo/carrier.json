@@ -1,0 +1,36 @@
+{
+  "id": "alaska-air-cargo",
+  "displayName": "Alaska Air Cargo",
+  "aliases": [
+    "Alaska Airlines Cargo",
+    "Hawaiian Air Cargo"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "CA",
+      "MX"
+    ]
+  },
+  "brand": {
+    "color": "#01426a"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://alaska-icargo.ibsplc.aero/icargoportal/portal/loginFlow",
+    "canaryUrl": "https://alaska-icargo.ibsplc.aero/icargoportal/portal/loginFlow",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

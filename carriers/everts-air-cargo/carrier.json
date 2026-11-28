@@ -1,0 +1,42 @@
+{
+  "id": "everts-air-cargo",
+  "displayName": "Everts Air Cargo",
+  "aliases": [
+    "Everts Air",
+    "Everts Air Alaska"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#1a4886"
+  },
+  "selectable": true,
+  "timezone": "America/Anchorage",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://apps1.tflite.com/Public/EVT/Freight/Tracking/{trackingNumber}",
+    "searchUrl": "https://apps1.tflite.com/Public/EVT/Freight/Tracking",
+    "canaryUrl": "https://apps1.tflite.com/Public/EVT/Freight/Tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "apps1.tflite.com"
+      ],
+      "path": "^/Public/EVT/Freight/Tracking/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

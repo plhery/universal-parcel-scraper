@@ -1,0 +1,44 @@
+{
+  "id": "southwest-cargo",
+  "displayName": "Southwest Airlines Cargo",
+  "aliases": [
+    "Southwest Cargo",
+    "SWA Cargo"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#304cb2"
+  },
+  "selectable": true,
+  "timezone": "America/Chicago",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.swacargo.com/swacargo_com_ui/tracking",
+    "canaryUrl": "https://www.swacargo.com/swacargo_com_ui/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "swacargo.com"
+      ],
+      "pathPattern": "^/swacargo_com_ui/tracking-results/?$",
+      "params": [
+        "trackingInfo"
+      ]
+    }
+  ],
+  "detection": []
+}

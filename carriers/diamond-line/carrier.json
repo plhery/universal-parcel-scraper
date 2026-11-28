@@ -1,0 +1,35 @@
+{
+  "id": "diamond-line",
+  "displayName": "Diamond Line Delivery Systems",
+  "aliases": [
+    "Diamond Line",
+    "Diamond Line Delivery",
+    "DLDS"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#0a1628"
+  },
+  "selectable": true,
+  "timezone": "America/Boise",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.dlds.com/manage/track-shipment/",
+    "canaryUrl": "https://www.dlds.com/manage/track-shipment/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

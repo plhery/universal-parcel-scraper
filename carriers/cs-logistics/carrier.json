@@ -1,0 +1,33 @@
+{
+  "id": "cs-logistics",
+  "displayName": "CS Logistics",
+  "aliases": [
+    "CS Logistics, Inc."
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#236040"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.cslogisticsinc.com/xcelerator/clientportal",
+    "canaryUrl": "https://www.cslogisticsinc.com/xcelerator/clientportal",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,36 @@
+{
+  "id": "crowley",
+  "displayName": "Crowley",
+  "aliases": [
+    "Crowley Maritime",
+    "Crowley Logistics"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "PR",
+      "VI"
+    ]
+  },
+  "brand": {
+    "color": "#000082"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://csight.crowley.com/crowley/s/shipment-tracking",
+    "canaryUrl": "https://csight.crowley.com/crowley/s/shipment-tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

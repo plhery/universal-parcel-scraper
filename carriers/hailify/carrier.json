@@ -1,0 +1,34 @@
+{
+  "id": "hailify",
+  "displayName": "Hailify",
+  "aliases": [
+    "Drive Hailify"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#011931"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.hailify.liota.ai/track?{trackingNumber}",
+    "searchUrl": "https://tracking.hailify.liota.ai/",
+    "canaryUrl": "https://tracking.hailify.liota.ai/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

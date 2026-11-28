@@ -1,0 +1,43 @@
+{
+  "id": "crst",
+  "displayName": "CRST",
+  "aliases": [
+    "CRST The Transportation Solution",
+    "CRST Final Mile",
+    "CRST International"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#182838"
+  },
+  "selectable": true,
+  "timezone": "America/Chicago",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.crst.com/{trackingNumber}",
+    "searchUrl": "https://tracking.crst.com/",
+    "canaryUrl": "https://tracking.crst.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.crst.com"
+      ],
+      "path": "^/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

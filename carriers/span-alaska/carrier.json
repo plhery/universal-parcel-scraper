@@ -1,0 +1,47 @@
+{
+  "id": "span-alaska",
+  "displayName": "Span Alaska",
+  "aliases": [
+    "Span Alaska Transportation",
+    "Span Alaska Transportation, LLC"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#0033a0"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://portal.spanalaska.com/tracker?pro={trackingNumber}",
+    "searchUrl": "https://portal.spanalaska.com/",
+    "canaryUrl": "https://portal.spanalaska.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "portal.spanalaska.com"
+      ],
+      "pathPattern": "^/tracker/?$",
+      "params": [
+        "pro",
+        "pronum",
+        "shipmentid"
+      ]
+    }
+  ],
+  "detection": []
+}
