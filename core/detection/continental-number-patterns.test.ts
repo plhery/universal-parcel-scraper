@@ -121,13 +121,13 @@ describe('continental shipment candidates', () => {
   });
 
   it('lists Bring first for its GS1-checked parcel and consignment numbers and reads its tracking links', () => {
-    for (const number of ['370001000000000003', '373001000000000004', '00370000000000000004', '70000000000000003']) {
+    for (const number of ['370001000000000003', '373001000000000004', '00370000000000000004', '70000000000000003', '73400014000001233']) {
       const detected = detectCarrierMatch(number);
       expect(detected).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['bring-posten'] });
       expect(detected.candidates.length).toBeGreaterThan(1);
       expect(recognitionAskedCarriers(number)[0]).toBe('bring-posten');
     }
-    for (const number of ['370000000000000005', '371000000000000001', '70000000000000004', '71000000000000000']) {
+    for (const number of ['370000000000000005', '371000000000000001', '70000000000000004', '71000000000000000', '73400014000001235']) {
       expect(detectCarrierMatch(number).candidates).not.toContain('bring-posten');
     }
     expect(parseTrackingInput('https://tracking.bring.se/tracking/70000000000000003?packageNumber=370000000000000004&lang=en'))

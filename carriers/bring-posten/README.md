@@ -7,8 +7,9 @@ piece. Mail from abroad reaches Bring when a caller names it, a provider names
 it, or a result gives Norway as the destination of an S10 item.
 
 Norwegian S10 numbers select Bring. Parcel SSCCs starting 370 or 373, with or
-without their 00 identifier, and 17-digit consignment numbers starting 70 are
-suggested with Bring first when their GS1 check digit passes, except a 00 SSCC under Early Bird's
+without their 00 identifier, and 17-digit consignment numbers starting 70 or 73
+(the series [Bring's label specification](https://developer.bring.com/files/Appendix%20E%2020210601.pdf)
+prints beside its 373 parcel numbers) are suggested with Bring first when their GS1 check digit passes, except a 00 SSCC under Early Bird's
 GS1 company prefix, which is Early Bird's; other carriers
 share these lengths, so recognition asks Bring through the same lookup. Links
 from the Posten and Bring tracking sites resolve to Bring, and a link naming one
