@@ -41,6 +41,7 @@ import { adapter as aitWorldwide } from '../carriers/ait-worldwide/adapter.js';
 import { adapter as ajex } from '../carriers/ajex/adapter.js';
 import { adapter as akasaAirCargo } from '../carriers/akasa-air-cargo/adapter.js';
 import { adapter as akisExpress } from '../carriers/akis-express/adapter.js';
+import { adapter as alaskaAirCargo } from '../carriers/alaska-air-cargo/adapter.js';
 import { adapter as alfaMensajes } from '../carriers/alfa-mensajes/adapter.js';
 import { adapter as algeriePoste } from '../carriers/algerie-poste/adapter.js';
 import { adapter as aliexpress } from '../carriers/aliexpress/adapter.js';
@@ -577,6 +578,7 @@ import { adapter as huuneh } from '../carriers/huuneh/adapter.js';
 import { adapter as hyeship } from '../carriers/hyeship/adapter.js';
 import { adapter as hytd } from '../carriers/hytd/adapter.js';
 import { adapter as hywl } from '../carriers/hywl/adapter.js';
+import { adapter as iagCargo } from '../carriers/iag-cargo/adapter.js';
 import { adapter as iberomail } from '../carriers/iberomail/adapter.js';
 import { adapter as ibexExpressBo } from '../carriers/ibex-express-bo/adapter.js';
 import { adapter as icasaCargo } from '../carriers/icasa-cargo/adapter.js';
@@ -655,6 +657,7 @@ import { adapter as justShipSg } from '../carriers/just-ship-sg/adapter.js';
 import { adapter as jytd } from '../carriers/jytd/adapter.js';
 import { adapter as jytwl } from '../carriers/jytwl/adapter.js';
 import { adapter as kLineRoro } from '../carriers/k-line-roro/adapter.js';
+import { adapter as kalittaAir } from '../carriers/kalitta-air/adapter.js';
 import { adapter as kargolife } from '../carriers/kargolife/adapter.js';
 import { adapter as kargoturk } from '../carriers/kargoturk/adapter.js';
 import { adapter as kazpost } from '../carriers/kazpost/adapter.js';
@@ -1381,6 +1384,7 @@ export const REGISTRY: RegistryDefinition = {
     "ajex": ajex,
     "akasa-air-cargo": akasaAirCargo,
     "akis-express": akisExpress,
+    "alaska-air-cargo": alaskaAirCargo,
     "alfa-mensajes": alfaMensajes,
     "algerie-poste": algeriePoste,
     "aliexpress": aliexpress,
@@ -1917,6 +1921,7 @@ export const REGISTRY: RegistryDefinition = {
     "hyeship": hyeship,
     "hytd": hytd,
     "hywl": hywl,
+    "iag-cargo": iagCargo,
     "iberomail": iberomail,
     "ibex-express-bo": ibexExpressBo,
     "icasa-cargo": icasaCargo,
@@ -1995,6 +2000,7 @@ export const REGISTRY: RegistryDefinition = {
     "jytd": jytd,
     "jytwl": jytwl,
     "k-line-roro": kLineRoro,
+    "kalitta-air": kalittaAir,
     "kargolife": kargolife,
     "kargoturk": kargoturk,
     "kazpost": kazpost,
@@ -2762,7 +2768,7 @@ export const REGISTRY: RegistryDefinition = {
     "akropost": "universal",
     "aks-express": "universal",
     "aland-post": "universal",
-    "alaska-air-cargo": "universal",
+    "alaska-air-cargo": "alaska-air-cargo",
     "albatomi": "universal",
     "alem-tat": "universal",
     "alfa-delivery-kz": "universal",
@@ -3655,6 +3661,7 @@ export const REGISTRY: RegistryDefinition = {
     "hytd": "hytd",
     "hywl": "hywl",
     "hzt": "universal",
+    "iag-cargo": "iag-cargo",
     "iberomail": "iberomail",
     "ibex-express-bo": "ibex-express-bo",
     "icasa-cargo": "icasa-cargo",
@@ -3792,6 +3799,7 @@ export const REGISTRY: RegistryDefinition = {
     "k-line-roro": "k-line-roro",
     "kaizen-express": "universal",
     "kakao-t-same-day": "universal",
+    "kalitta-air": "kalitta-air",
     "kanga-services": "universal",
     "kargoist": "universal",
     "kargolife": "kargolife",

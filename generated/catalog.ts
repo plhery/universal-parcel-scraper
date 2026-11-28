@@ -8594,10 +8594,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Los_Angeles",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "alaska-air-cargo",
+      "localClocks": true
     },
     "canaryUrl": "https://alaska-icargo.ibsplc.aero/icargoportal/portal/loginFlow",
+    "trackingUrlTemplate": "https://www.alaskacargo.com/",
     "trackingSearchUrl": "https://alaska-icargo.ibsplc.aero/icargoportal/portal/loginFlow",
+    "helpUrl": "https://www.alaskacargo.com/faqs",
     "linkRules": [],
     "detectionRules": []
   },
@@ -37493,6 +37496,42 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "iag-cargo": {
+    "displayName": "IAG Cargo",
+    "color": "#40C1AC",
+    "aliases": [
+      "British Airways World Cargo",
+      "British Airways Cargo",
+      "BA Cargo",
+      "Iberia Cargo",
+      "Aer Lingus Cargo"
+    ],
+    "countries": [
+      "GB",
+      "ES",
+      "IE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "iag-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ui.tracking.iagcargo.com/en",
+    "trackingUrlTemplate": "https://www.iagcargo.com/en/track-landing/",
+    "trackingSearchUrl": "https://www.iagcargo.com/en/track-landing/",
+    "linkRules": [
+      {
+        "domains": [
+          "ui.tracking.iagcargo.com"
+        ],
+        "pathPattern": "^/(?:en|es)/(?:125|075|053)-\\d{8}(?:/details)?/?$",
+        "path": "^/(?:en|es)/((?:125|075|053)-\\d{8})(?:/details)?/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "iberomail": {
     "displayName": "Iberomail",
     "color": "#1273E6",
@@ -41984,6 +42023,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/front/delivery/list/([0-9]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "kalitta-air": {
+    "displayName": "Kalitta Air",
+    "color": "#b53835",
+    "aliases": [
+      "Kalitta Air LLC",
+      "Kalitta Airlines"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Detroit",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "kalitta-air",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.kalittaair.com/utilities/track-cargo",
+    "trackingUrlTemplate": "https://www.kalittaair.com/utilities/track-cargo",
+    "trackingSearchUrl": "https://www.kalittaair.com/utilities/track-cargo",
+    "helpUrl": "https://www.kalittaair.com/services/cargo-services/sales-contacts",
+    "linkRules": [],
     "detectionRules": []
   },
   "kanga-services": {
@@ -80747,6 +80810,7 @@ export const CARRIER_IDS = [
   "hytd",
   "hywl",
   "hzt",
+  "iag-cargo",
   "iberomail",
   "ibex-express-bo",
   "icasa-cargo",
@@ -80878,6 +80942,7 @@ export const CARRIER_IDS = [
   "k-line-roro",
   "kaizen-express",
   "kakao-t-same-day",
+  "kalitta-air",
   "kanga-services",
   "kargoist",
   "kargolife",
@@ -83047,6 +83112,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hytd": [],
   "hywl": ["hywl-1","hywl-2"],
   "hzt": [],
+  "iag-cargo": [],
   "iberomail": [],
   "ibex-express-bo": [],
   "icasa-cargo": [],
@@ -83178,6 +83244,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "k-line-roro": [],
   "kaizen-express": [],
   "kakao-t-same-day": [],
+  "kalitta-air": [],
   "kanga-services": [],
   "kargoist": ["kargoist-1"],
   "kargolife": [],
