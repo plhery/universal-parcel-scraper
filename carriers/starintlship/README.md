@@ -15,8 +15,9 @@ answer to the providers.
 
 The site's tracking page opens `trackIndex.htm?documentCode=` on a Hualei (华磊) tracker at
 `114.132.229.173:8082`, over plain HTTP, the platform [GZYL's adapter](../gzyl/hualei.ts) reads
-for other tenants. That tracker answered HTTP 502 from its nginx front to every path, so no found
-reply has been seen to build on.
+for other tenants. That tracker has answered HTTP 502 from its nginx front to every path, or taken
+no connection at all from Europe, the Americas or Asia outside mainland China, Hong Kong included,
+so no found reply has been seen to build on.
 
 ## Links
 
