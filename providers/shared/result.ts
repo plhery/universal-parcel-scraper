@@ -308,6 +308,12 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   // the way, after the courier's collection and again on each round trip, and its hand-over to the courier for delivery.
   if (/^accepted at the logistics cent(?:er|re)[.!]?$/i.test(description)) return 'in_transit';
   if (/^handed over for delivery[.!]?$/i.test(description)) return 'out_for_delivery';
+  // InPost's lines on a UK parcel, the parcel on its way to InPost and then in InPost's hands, which 17TRACK files under
+  // its generic transit code: the shared rules' reading outranks the code.
+  if (/^(?:your parcel is on its way to inpost\. please check back for updates|we have your parcel(?:\. please check back for updates)?)[.!]?$/i.test(description)) {
+    const inpost = trackingLanguageStage(description);
+    if (inpost) return inpost;
+  }
   // Deppon's handing to the courier who delivers it today, with the courier's contact, which 17TRACK files under its
   // generic transit code: out for delivery, as Deppon's own map reads its delivery scan (SENT_SCAN).
   if (/^快件交[给給][^，,。]{1,60}[，,] ?今日将?[为為]您派送(?:[，,。]|$)/.test(description)) return 'out_for_delivery';

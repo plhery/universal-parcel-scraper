@@ -53,7 +53,8 @@ out-for-delivery, and its "Registered", the sender's data before Swiss Post has 
 into registered. Other operators' "Registered" can be an acceptance, so it stays with the
 shared rules. China Post's exact final and import customs labels ("已试投/投递失败",
 "送交境外进口海关"), which 17TRACK files there on any leg that copies them, take the stage
-their wording gives. The reported provider code is preserved.
+their wording gives, and so do InPost's UK lines, the parcel on its way to InPost and then
+"We have your parcel", its acceptance. The reported provider code is preserved.
 
 Codes -11, -13 and -14 mean interactive verification. Shipment code 100 means polling.
 A matching code-400/null-shipment reply means no history, unless its parameter metadata

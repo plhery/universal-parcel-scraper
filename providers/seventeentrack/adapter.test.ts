@@ -174,6 +174,18 @@ describe('17TRACK result parsing', () => {
       current_stage: 'out_for_delivery', events: [{ stage: 'out_for_delivery', provider_code: 'InTransit_Other' }] });
   });
 
+  it("reads InPost's UK receipt, filed under generic transit, as the acceptance", () => {
+    for (const description of ['We have your parcel. Please check back for updates', 'We have your parcel']) {
+      for (const stage of [null, 'InTransit']) {
+        expect(parse17TrackResponse(postalHistory([{ ...postalScan('InTransit_Other', description), stage }]), number)).toMatchObject({
+          current_stage: 'accepted', events: [{ stage: 'accepted', provider_code: 'InTransit_Other' }] });
+      }
+    }
+    // DPD UK's longer sentence is its depot on the way.
+    expect(parse17TrackResponse(postalHistory([postalScan('InTransit_Other', "We have your parcel and it's on its way to our depot")]), number)
+      .current_stage).toBe('in_transit');
+  });
+
   it('refines Swiss Post vehicle loading without reclassifying other operators or future wording', () => {
     const payload = postalHistory([postalScan('InTransit_Other', 'Loading into delivery vehicle')]);
     const shipment = payload.shipments[0]!.shipment as { tracking: { providers: Array<{ provider: { name: string }; events: unknown[] }> } };
