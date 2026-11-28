@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>单号查询-泰熊物流</title>
+    <meta name='keywords' content="">
+    <meta name='description' content="">
+    <script src="/Public/jquery.js"></script>
+    <script src="/Public/admin/js/pintuer.js"></script>
+    <link rel="stylesheet" href="/Public/admin/css/pintuer.css">
+    <link rel="stylesheet" href="/Public/jquery-tag-editor/jquery.tag-editor.css">
+    <script src="/Public/jquery-tag-editor/jquery.tag-editor.min.js"></script>
+    <script src="/Public/jquery-tag-editor/jquery.caret.min.js"></script>
+    <link href="/Public/css/style.css?_t=2021020702" type="text/css" rel="stylesheet">
+    <script type="text/javascript">
+        $(function () {
+            $('[name=order_num]').tagEditor({
+                delimiter: ';',
+                maxTags: 10,
+                forceLowercase: false,
+                placeholder: '支持1-10个运单查询(多个单号请用;隔开)'
+            }).attr('readonly', true);
+        });
+    </script>
+    <link href="/Public/css/index.css" type="text/css" rel="stylesheet">
+    <style type="text/css">
+        .tag-editor { line-height:30px; padding:4px 0 0 0; border:none; border-radius:0; }
+        .drc p:first-child{ display:inline; }
+        .top_lang a { margin-left:10px; text-decoration:none; color:#333; font-size:14px; }
+        /* 顶部布局固定，不挤压中间内容 */
+        .top-bar { position: relative; width: 100%; height: 60px; }
+        .top-left { position: absolute; left: 20px; top: 20px; z-index: 9; }
+        .top-right { position: absolute; right: 20px; top: 10px; z-index: 9; }
+        
+        #translate{
+            display: none;
+        }
+        /* =====物流时间线样式===== */
+        .wuliu_list {padding-left:8px;}
+        .wuliu_list .vo_list{
+            display:flex;
+            margin:16px 0;
+        }
+        .wuliu_list .vo_left{
+            position:relative;
+            width:24px;
+            flex-shrink:0;
+        }
+        .wuliu_list .vo_left .circle{
+            width:14px;
+            height:14px;
+            border-radius:100%;
+            display:block;
+        }
+        /* 最新节点 active：蓝色实心圆 */
+        .wuliu_list .vo_list.active .vo_left .circle{
+            background:#409EFF;
+        }
+        /* 历史旧节点：灰色空心圆 */
+        .wuliu_list .vo_list .vo_left .circle{
+            border:1px solid #999;
+            background:#fff;
+        }
+        .wuliu_list .vo_left .line{
+            position:absolute;
+            left:6px;
+            top:14px;
+            bottom:-16px;
+            width:1px;
+            background:#cccccc;
+        }
+        .wuliu_list .vo_right{
+            line-height:1.5;
+        }
+        .wuliu_list .vo_right .red{
+            font-size:16px;
+            font-weight:bold;
+            margin-bottom:4px;
+        }
+    </style>
+    <!-- 必加：翻译核心JS -->
+    <script src="/static/translate.js"></script>
+    <script src="https://res.zvo.cn/msg/msg.js"></script>
+</head>
+<body>
+<!-- 顶部语言栏：绝对定位，完全不影响中间LOGO -->
+<div class="top-bar">
+    <!-- 左上角下拉：未查询显示，查询后隐藏 -->
+    <div class="top-left" style="display:none;">
+        <select id="select">
+            <option value="1">中文版</option>
+            <option value="2">English</option>
+            
+        </select>
+    </div>
+    <!-- 右上角三语：查询后显示，未查询隐藏 -->
+    <div class="top-right" >
+        <div class="top_lang">
+            <a href="javascript:translate.changeLanguage('chinese_simplified');">
+                <img style="width:20px;height:auto;margin-right:2px;" src="https://www.tobkk.cn/images/cn.png"> 中文
+            </a>
+            <a href="javascript:translate.changeLanguage('english');">
+                <img style="width:20px;height:auto;margin-right:2px;" src="https://www.tobkk.cn/images/en.png"> ENGLISH
+            </a>
+            <a href="javascript:translate.changeLanguage('thai');">
+                <img style="width:20px;height:auto;margin-right:2px;" src="https://www.tobkk.cn/images/th.png"> ภาษาไทย
+            </a>
+        </div>
+    </div>
+</div>
+<div>
+    <div align="center">
+        <img src="/Uploads/Logo/2021-02-18/602e64776b939.png"/>
+    </div>
+    <h2 class="tip-title">泰熊物流 中泰服务</h2>
+    <div class="form">
+        <form method="get" action="">
+            <p style="overflow: hidden;">
+                <input placeholder="支持1-10个运单查询(多个单号请用;隔开) " value="THATXW10000000ABC" class="input" type="text" name="order_num"/>
+                <input class="btn" type="submit" value="查询"/>
+            </p>
+        </form>
+                <div class="order-item">
+            <div class="order-head" onclick="showDetail(this);">
+                <div class="right">
+                    <div class="text" style="font-weight:bold;display:flex;justify-content:space-between;width:96%">
+                        <div>
+                            <span class="li_one">物流单号:</span>
+                            <span class="li_two">THATXW10000000ABC</span>
+                        </div>
+                        <div>
+                            <span class="li_two"><span style="color:red;">已完成</span></span>
+                        </div>
+                    </div>
+                                            <a onclick="showDetail(this);" class="active" style="color:#999;cursor:pointer;"><i class="icon-angle-up" style="font-size:1.5rem;"></i></a>                </div>
+                            </div>            <ul class="order_detail ">
+                                                                                <li>
+                    <span class="li_one">配送单号:</span>
+                    <span class="li_two wechat-copy">TH105569T28DEDW                        <span class="wechat-copy" data-clipboard-text="TH105569T28DEDW" style="color:red;cursor:pointer;">一键复制</span>
+                        </span>                </li>
+                                <li style="border-bottom:1px dashed #eee;">
+                    <img src="/Public/gg.png" width="25" style="vertical-align:-5px;">
+                    <span class="li_two drc">小程序已支持泰国主流快递轨迹显示和轨迹翻译功能！</span>
+                </li>
+                <p>
+                    <img src="/Public/gwyy.png" width="25" style="vertical-align:-5px;">
+                    <b style="color:#0084ff;">物流动态详情:</b>
+                </p>
+                <ul class="wuliu_list">
+                    <div class="vo_list active">
+                                <div class="vo_left">
+                                    <div class="line"></div>
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="vo_right">
+                                    <span class="red">已完成</span><br>
+                                    <div style="margin:6px 0;line-height:1.5;">
+                                            <div>货物已签收。感谢亲选择泰熊物流。期待下次为您服务。</div>
+                                            <div style="color:#666; font-size:14px;">2023-08-18 20:44:05</div>
+                                        </div><div style="margin:6px 0;line-height:1.5;">
+                                            <div>货物在【曼谷仓SE】安排【FLASH快递】配送，请注意查收</div>
+                                            <div style="color:#666; font-size:14px;">2023-08-18 20:44:01</div>
+                                        </div>                                </div>
+                            </div><div class="vo_list ">
+                                <div class="vo_left">
+                                    <div class="line"></div>
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="vo_right">
+                                    <span class="red">分拣</span><br>
+                                    <div style="margin:6px 0;line-height:1.5;">
+                                            <div>抵达【曼谷仓SE】，进行货物分拣，准备安排配送</div>
+                                            <div style="color:#666; font-size:14px;">2023-08-18 20:43:52</div>
+                                        </div>                                </div>
+                            </div><div class="vo_list ">
+                                <div class="vo_left">
+                                    <div class="line"></div>
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="vo_right">
+                                    <span class="red">运输中</span><br>
+                                    <div style="margin:6px 0;line-height:1.5;">
+                                            <div>货物已从【广州仓】启程，前往【曼谷仓SE】，国际线路运输中</div>
+                                            <div style="color:#666; font-size:14px;">2023-08-18 20:43:45</div>
+                                        </div>                                </div>
+                            </div><div class="vo_list ">
+                                <div class="vo_left">
+                                    <div class="line"></div>
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="vo_right">
+                                    <span class="red">待出库</span><br>
+                                    <div style="margin:6px 0;line-height:1.5;">
+                                            <div>【广州仓】已收货，等待信息确认（微信公众号：泰熊物流）</div>
+                                            <div style="color:#666; font-size:14px;">2023-08-18 20:43:39</div>
+                                        </div>                                </div>
+                            </div><div class="vo_list ">
+                                <div class="vo_left">
+                                    <div class="line"></div>
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="vo_right">
+                                    <span class="red">待验货</span><br>
+                                    <div style="margin:6px 0;line-height:1.5;">
+                                            <div>客户已下单，【广州仓】等待验货</div>
+                                            <div style="color:#666; font-size:14px;">2023-08-18 20:43:32</div>
+                                        </div>                                </div>
+                            </div>                                        </ul>
+            </ul>        </div>
+            </div>
+    <script src="/Public/clipboard.min.js"></script>
+    <script>new ClipboardJS('.wechat-copy').on('success',function(e){e.clearSelection();e.clearSelection();alert('复制成功');});</script>
+        <div align="center" class="footer">
+        <a href="https://www.tobkk.cn">返回首页</a>
+    </div>
+    <script src="/Public/js/wuliu.js"></script>
+    <script>
+        function showDetail(that){
+            var d = $(that).parents('.order-item').find('.order_detail');
+            if($(that).hasClass('active')){
+                d.hide(200); $(that).removeClass('active'); $(that).find('i').attr('class','icon-angle-left');
+            }else{
+                d.show(200); $(that).addClass('active'); $(that).find('i').attr('class','icon-angle-up');
+            }
+        }
+        // window.translate = new Translate();
+        // translate.init({ defaultLang:'chinese_simplified' });
+    </script>
+    <script>
+    $(function () {
+        $("#select").change(function () {
+            var t = $(this).val();
+            if (t == 1) {
+                window.location.href = "/track.php"
+            }
+            if (t == 2) {
+                window.location.href = "/track-int.php"
+            }
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+{
+  "id": "tobkk",
+  "displayName": "Thai Bear Logistics",
+  "aliases": [
+    "泰熊物流",
+    "Tobkk",
+    "Thai Bear"
+  ],
+  "region": {
+    "countries": [
+      "CN",
+      "TH"
+    ]
+  },
+  "brand": {
+    "color": "#0084FF"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "tobkk",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "delivery_partner"
+  ],
+  "portal": {
+    "url": "https://www.tobkk.cn/track.php?order_num={trackingNumber}",
+    "searchUrl": "https://www.tobkk.cn/track.php",
+    "canaryUrl": "https://www.tobkk.cn/track.php",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "signatory"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "tobkk.cn",
+        "www.tobkk.cn"
+      ],
+      "pathPattern": "^/track(?:-int)?\\.php$",
+      "params": [
+        "order_num"
+      ]
+    }
+  ],
+  "detection": []
+}

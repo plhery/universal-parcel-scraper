@@ -7586,5 +7586,11 @@
     "pattern": "^OMG\\d{10}$",
     "kind": "open",
     "reason": "OMG and ten digits is the one public waybill, from Kuaidi100's carrier list; one sample does not establish the family, so no rule claims it."
+  },
+  {
+    "carrier": "tobkk",
+    "pattern": "^THATXW\\d{8}[A-Z]{3}$",
+    "kind": "open",
+    "reason": "The one public waybill is Kuaidi100's test number for Thai Bear, a demonstration order; it does not establish the line's number family, so no rule claims it."
   }
 ]

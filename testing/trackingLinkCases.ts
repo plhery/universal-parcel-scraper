@@ -61,6 +61,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'omg-express', number: 'OMG0000000000',
     route: /^https:\/\/omg-exp\.com\/tracking\/OMG0000000000$/,
     marker: /没有查询到这个运单/ },
+  // The form's GET keeps the number in its field and answers an unknown one in Chinese.
+  { carrier: 'tobkk', number: 'THATXW00000000ABC',
+    route: /^https:\/\/www\.tobkk\.cn\/track\.php\?order_num=THATXW00000000ABC$/,
+    marker: /暂无此单号/ },
   { carrier: 'spedition-moeller', number: '00000000000000000000',
     route: /^https:\/\/portal\.spedition-moeller\.com\/tracking\.html$/,
     marker: /NVE \/ Packstücknummer/i, forwarding: 'none' },

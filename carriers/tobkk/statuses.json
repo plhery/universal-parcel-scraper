@@ -1,0 +1,53 @@
+{
+  "carrier": "tobkk",
+  "entries": [
+    {
+      "code": "待验货",
+      "wording": "客户已下单，【{station}】等待验货",
+      "language": "zh",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The customer booked the shipment; the warehouse in the brackets waits for the goods to check them."
+    },
+    {
+      "code": "待出库",
+      "wording": "【{station}】已收货，等待信息确认（微信公众号：泰熊物流）",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The warehouse received the goods and waits for the customer to confirm the details, which the line asks through its WeChat account."
+    },
+    {
+      "code": "运输中",
+      "wording": "货物已从【{station}】启程，前往【{station}】，国际线路运输中",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Left the Chinese warehouse for the Thai one on the international leg."
+    },
+    {
+      "code": "分拣",
+      "wording": "抵达【{station}】，进行货物分拣，准备安排配送",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Arrived at the Thai warehouse and sorted for delivery."
+    },
+    {
+      "code": "已完成",
+      "wording": "货物在【{station}】安排【{station}】配送，请注意查收",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Handed from the Thai warehouse to the Thai courier in the second brackets, whose number the page gives as the delivery number. The line files it under 已完成 (done) as its own part ends, but the parcel is still to be delivered."
+    },
+    {
+      "code": "已完成",
+      "wording": "货物已签收。感谢亲选择泰熊物流。期待下次为您服务。",
+      "language": "zh",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Signed for."
+    }
+  ]
+}
