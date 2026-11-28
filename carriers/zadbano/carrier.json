@@ -1,0 +1,34 @@
+{
+  "id": "zadbano",
+  "displayName": "Zadbano",
+  "aliases": [
+    "Allegro Zadbano",
+    "Zadbano SA"
+  ],
+  "region": {
+    "countries": [
+      "PL"
+    ]
+  },
+  "brand": {
+    "color": "#002245"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://zadbano.pl/pl/lp/sledz-przesylke",
+    "canaryUrl": "https://zadbano.pl/pl/lp/sledz-przesylke",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

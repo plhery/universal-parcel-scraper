@@ -1,0 +1,47 @@
+{
+  "id": "bejot",
+  "displayName": "Bejot",
+  "aliases": [
+    "Bejot Logistics",
+    "G.M.J Bejot"
+  ],
+  "region": {
+    "countries": [
+      "PL",
+      "DE",
+      "CZ",
+      "AT",
+      "NL",
+      "BE",
+      "LU"
+    ]
+  },
+  "brand": {
+    "color": "#34328c"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://bejotlogistics.com/",
+    "canaryUrl": "https://bejotlogistics.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "bejotlogistics.com"
+      ],
+      "path": "^/order/tracking/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

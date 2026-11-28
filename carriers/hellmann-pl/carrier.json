@@ -1,0 +1,45 @@
+{
+  "id": "hellmann-pl",
+  "displayName": "Hellmann Poland",
+  "aliases": [
+    "Hellmann Polska",
+    "Hellmann Worldwide Logistics Polska"
+  ],
+  "region": {
+    "countries": [
+      "PL"
+    ]
+  },
+  "brand": {
+    "color": "#004c99"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://info.hwl.pl/tt/?searchKey={trackingNumber}",
+    "searchUrl": "https://info.hwl.pl/tt/",
+    "canaryUrl": "https://info.hwl.pl/tt/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "info.hwl.pl"
+      ],
+      "pathPattern": "^/tt/?$",
+      "params": [
+        "searchKey"
+      ]
+    }
+  ],
+  "detection": []
+}

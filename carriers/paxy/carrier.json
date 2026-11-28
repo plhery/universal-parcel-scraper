@@ -1,0 +1,35 @@
+{
+  "id": "paxy",
+  "displayName": "Paxy",
+  "aliases": [
+    "Paxy Courier",
+    "Paxy Courier s.r.o."
+  ],
+  "region": {
+    "countries": [
+      "PL",
+      "CZ"
+    ]
+  },
+  "brand": {
+    "color": "#00005e"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://tracking.paxy.pl/",
+    "canaryUrl": "https://tracking.paxy.pl/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

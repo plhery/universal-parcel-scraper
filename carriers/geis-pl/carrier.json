@@ -1,0 +1,46 @@
+{
+  "id": "geis-pl",
+  "displayName": "Geis PL",
+  "aliases": [
+    "Geis Polska",
+    "Geis PL Sp. z o.o.",
+    "Geis Parcel Sp. z o.o."
+  ],
+  "region": {
+    "countries": [
+      "PL"
+    ]
+  },
+  "brand": {
+    "color": "#ffe501"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.geis.pl/pl/sledzenie-przesylki?packNumber={trackingNumber}",
+    "searchUrl": "https://www.geis.pl/pl/sledzenie-przesylki",
+    "canaryUrl": "https://www.geis.pl/pl/sledzenie-przesylki",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "geis.pl"
+      ],
+      "pathPattern": "^/[a-z]{2}/sledzenie-przesylki/?$",
+      "params": [
+        "packNumber"
+      ]
+    }
+  ],
+  "detection": []
+}

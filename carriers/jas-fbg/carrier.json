@@ -1,0 +1,34 @@
+{
+  "id": "jas-fbg",
+  "displayName": "JAS-FBG",
+  "aliases": [
+    "JAS-FBG S.A.",
+    "JAS FBG"
+  ],
+  "region": {
+    "countries": [
+      "PL"
+    ]
+  },
+  "brand": {
+    "color": "#5cbc14"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://parcel.jasfbg.com.pl/pubtracing.aspx",
+    "canaryUrl": "https://parcel.jasfbg.com.pl/pubtracing.aspx",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,34 @@
+{
+  "id": "epaka",
+  "displayName": "epaka.pl",
+  "aliases": [
+    "epaka",
+    "epaka.pl S.A."
+  ],
+  "region": {
+    "countries": [
+      "PL"
+    ]
+  },
+  "brand": {
+    "color": "#d90000"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.epaka.pl/sledzenie-przesylek",
+    "canaryUrl": "https://www.epaka.pl/sledzenie-przesylek",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

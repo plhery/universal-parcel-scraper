@@ -5329,7 +5329,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Zásilkovna",
       "Zasilkovna",
       "Packeta Slovakia",
-      "Z-BOX"
+      "Z-BOX",
+      "Przesyłkownia"
     ],
     "countries": [
       "CZ",
@@ -8791,7 +8792,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Allegro Delivery",
       "Allegro One Box",
       "Allegro One Kurier",
-      "Allegro One Punkt"
+      "Allegro One Punkt",
+      "X-press Couriers"
     ],
     "countries": [
       "PL"
@@ -12100,6 +12102,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://logistics.begad.ae/tracking/",
     "trackingSearchUrl": "https://logistics.begad.ae/tracking/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "bejot": {
+    "displayName": "Bejot",
+    "color": "#34328c",
+    "aliases": [
+      "Bejot Logistics",
+      "G.M.J Bejot"
+    ],
+    "countries": [
+      "PL",
+      "DE",
+      "CZ",
+      "AT",
+      "NL",
+      "BE",
+      "LU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://bejotlogistics.com/",
+    "trackingSearchUrl": "https://bejotlogistics.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "bejotlogistics.com"
+        ],
+        "path": "^/order/tracking/([^/?#]+)/?$"
+      }
+    ],
     "detectionRules": []
   },
   "bel": {
@@ -23497,7 +23533,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "DPD Poland",
     "color": "#dc0032",
     "aliases": [
-      "DPD Polska"
+      "DPD Polska",
+      "Masterlink Express"
     ],
     "countries": [
       "PL"
@@ -26361,6 +26398,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/([A-Za-z0-9]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "epaka": {
+    "displayName": "epaka.pl",
+    "color": "#d90000",
+    "aliases": [
+      "epaka",
+      "epaka.pl S.A."
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.epaka.pl/sledzenie-przesylek",
+    "trackingSearchUrl": "https://www.epaka.pl/sledzenie-przesylek",
+    "linkRules": [],
     "detectionRules": []
   },
   "eparcel-kr": {
@@ -31387,6 +31445,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "geis-pl": {
+    "displayName": "Geis PL",
+    "color": "#ffe501",
+    "aliases": [
+      "Geis Polska",
+      "Geis PL Sp. z o.o.",
+      "Geis Parcel Sp. z o.o."
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.geis.pl/pl/sledzenie-przesylki",
+    "trackingUrlTemplate": "https://www.geis.pl/pl/sledzenie-przesylki?packNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.geis.pl/pl/sledzenie-przesylki",
+    "linkRules": [
+      {
+        "domains": [
+          "geis.pl"
+        ],
+        "pathPattern": "^/[a-z]{2}/sledzenie-przesylki/?$",
+        "params": [
+          "packNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "gel-express": {
     "displayName": "GEL Express",
     "color": "#d9002b",
@@ -34770,6 +34861,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "public.tracking.hellmann.net"
         ],
         "path": "^/search/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "hellmann-pl": {
+    "displayName": "Hellmann Poland",
+    "color": "#004c99",
+    "aliases": [
+      "Hellmann Polska",
+      "Hellmann Worldwide Logistics Polska"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://info.hwl.pl/tt/",
+    "trackingUrlTemplate": "https://info.hwl.pl/tt/?searchKey={trackingNumber}",
+    "trackingSearchUrl": "https://info.hwl.pl/tt/",
+    "linkRules": [
+      {
+        "domains": [
+          "info.hwl.pl"
+        ],
+        "pathPattern": "^/tt/?$",
+        "params": [
+          "searchKey"
+        ]
       }
     ],
     "detectionRules": []
@@ -39342,6 +39465,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "jas-fbg": {
+    "displayName": "JAS-FBG",
+    "color": "#5cbc14",
+    "aliases": [
+      "JAS-FBG S.A.",
+      "JAS FBG"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://parcel.jasfbg.com.pl/pubtracing.aspx",
+    "trackingSearchUrl": "https://parcel.jasfbg.com.pl/pubtracing.aspx",
+    "linkRules": [],
+    "detectionRules": []
   },
   "jas-worldwide": {
     "displayName": "JAS Worldwide",
@@ -46961,7 +47105,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Міст Експрес",
       "Meest International",
       "Міст Інтернешнл",
-      "Росан"
+      "Росан",
+      "Meest Polska"
     ],
     "countries": [
       "UA",
@@ -49876,11 +50021,14 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Nova Post",
       "Nova Post Ukraine",
       "Нова Пошта",
-      "New Post International MLD"
+      "New Post International MLD",
+      "Nova Post Polska",
+      "Nova Post Poland"
     ],
     "countries": [
       "UA",
-      "MD"
+      "MD",
+      "PL"
     ],
     "selectable": true,
     "timezone": "Europe/Kyiv",
@@ -51250,7 +51398,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Paczka w RUCHu",
       "Paczka w Ruchu",
-      "Orlen Paczka"
+      "Orlen Paczka",
+      "Stacja z Paczką"
     ],
     "countries": [
       "PL"
@@ -53158,6 +53307,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "paxy": {
+    "displayName": "Paxy",
+    "color": "#00005e",
+    "aliases": [
+      "Paxy Courier",
+      "Paxy Courier s.r.o."
+    ],
+    "countries": [
+      "PL",
+      "CZ"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.paxy.pl/",
+    "trackingSearchUrl": "https://tracking.paxy.pl/",
+    "linkRules": [],
     "detectionRules": []
   },
   "pbt": {
@@ -57555,7 +57726,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Raben Logistics Polska",
       "DGO Express",
       "Sittam",
-      "Raben Sittam"
+      "Raben Sittam",
+      "Fresh Logistics"
     ],
     "countries": [
       "PL",
@@ -77105,6 +77277,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "zadbano": {
+    "displayName": "Zadbano",
+    "color": "#002245",
+    "aliases": [
+      "Allegro Zadbano",
+      "Zadbano SA"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://zadbano.pl/pl/lp/sledz-przesylke",
+    "trackingSearchUrl": "https://zadbano.pl/pl/lp/sledz-przesylke",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "zajel": {
     "displayName": "Zajel",
     "color": "#36b936",
@@ -78202,6 +78395,7 @@ export const CARRIER_IDS = [
   "bee-fast",
   "beexprss",
   "begad",
+  "bejot",
   "bel",
   "belpost",
   "benben",
@@ -78609,6 +78803,7 @@ export const CARRIER_IDS = [
   "enviamos-comunicaciones",
   "enviopack-ar",
   "enviopack-mx",
+  "epaka",
   "eparcel-kr",
   "epex-colombia",
   "epost-global",
@@ -78757,6 +78952,7 @@ export const CARRIER_IDS = [
   "gdex",
   "gebrueder-weiss",
   "geis",
+  "geis-pl",
   "gel-express",
   "genei",
   "geniki-taxydromiki",
@@ -78853,6 +79049,7 @@ export const CARRIER_IDS = [
   "hecny-shipping",
   "hede-shipping",
   "hellmann",
+  "hellmann-pl",
   "helthjem",
   "hepsijet",
   "hercules-freight",
@@ -78990,6 +79187,7 @@ export const CARRIER_IDS = [
   "janani-express",
   "janco-express",
   "janio",
+  "jas-fbg",
   "jas-worldwide",
   "jaskipin",
   "jb-hunt",
@@ -79405,6 +79603,7 @@ export const CARRIER_IDS = [
   "pavan-courier",
   "paxel",
   "paxi",
+  "paxy",
   "pbt",
   "pcp-express",
   "pcs-logistics-vn",
@@ -80119,6 +80318,7 @@ export const CARRIER_IDS = [
   "yypost",
   "z-leading",
   "z1-express",
+  "zadbano",
   "zajel",
   "zajil",
   "zecheng",
@@ -80437,6 +80637,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bee-fast": [],
   "beexprss": [],
   "begad": [],
+  "bejot": [],
   "bel": [],
   "belpost": ["belpost-s10"],
   "benben": [],
@@ -80844,6 +81045,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "enviamos-comunicaciones": [],
   "enviopack-ar": [],
   "enviopack-mx": [],
+  "epaka": [],
   "eparcel-kr": ["eparcel-kr-1"],
   "epex-colombia": [],
   "epost-global": ["epost-global-1"],
@@ -80992,6 +81194,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gdex": ["gdex-1"],
   "gebrueder-weiss": [],
   "geis": [],
+  "geis-pl": [],
   "gel-express": [],
   "genei": [],
   "geniki-taxydromiki": ["geniki-taxydromiki-1"],
@@ -81088,6 +81291,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hecny-shipping": [],
   "hede-shipping": [],
   "hellmann": [],
+  "hellmann-pl": [],
   "helthjem": ["helthjem-1","helthjem-2"],
   "hepsijet": [],
   "hercules-freight": [],
@@ -81225,6 +81429,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "janani-express": [],
   "janco-express": ["janco-express-1"],
   "janio": ["janio-1"],
+  "jas-fbg": [],
   "jas-worldwide": [],
   "jaskipin": [],
   "jb-hunt": [],
@@ -81640,6 +81845,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pavan-courier": [],
   "paxel": ["paxel-1"],
   "paxi": [],
+  "paxy": [],
   "pbt": [],
   "pcp-express": [],
   "pcs-logistics-vn": [],
@@ -82354,6 +82560,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yypost": ["yypost-1"],
   "z-leading": ["z-leading-1"],
   "z1-express": [],
+  "zadbano": [],
   "zajel": [],
   "zajil": [],
   "zecheng": ["zecheng-1"],

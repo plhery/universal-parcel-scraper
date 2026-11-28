@@ -5324,7 +5324,8 @@
       "Zásilkovna",
       "Zasilkovna",
       "Packeta Slovakia",
-      "Z-BOX"
+      "Z-BOX",
+      "Przesyłkownia"
     ],
     "countries": [
       "CZ",
@@ -8786,7 +8787,8 @@
       "Allegro Delivery",
       "Allegro One Box",
       "Allegro One Kurier",
-      "Allegro One Punkt"
+      "Allegro One Punkt",
+      "X-press Couriers"
     ],
     "countries": [
       "PL"
@@ -12095,6 +12097,40 @@
     "canaryUrl": "https://logistics.begad.ae/tracking/",
     "trackingSearchUrl": "https://logistics.begad.ae/tracking/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "bejot": {
+    "displayName": "Bejot",
+    "color": "#34328c",
+    "aliases": [
+      "Bejot Logistics",
+      "G.M.J Bejot"
+    ],
+    "countries": [
+      "PL",
+      "DE",
+      "CZ",
+      "AT",
+      "NL",
+      "BE",
+      "LU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://bejotlogistics.com/",
+    "trackingSearchUrl": "https://bejotlogistics.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "bejotlogistics.com"
+        ],
+        "path": "^/order/tracking/([^/?#]+)/?$"
+      }
+    ],
     "detectionRules": []
   },
   "bel": {
@@ -23492,7 +23528,8 @@
     "displayName": "DPD Poland",
     "color": "#dc0032",
     "aliases": [
-      "DPD Polska"
+      "DPD Polska",
+      "Masterlink Express"
     ],
     "countries": [
       "PL"
@@ -26356,6 +26393,27 @@
         "path": "^/([A-Za-z0-9]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "epaka": {
+    "displayName": "epaka.pl",
+    "color": "#d90000",
+    "aliases": [
+      "epaka",
+      "epaka.pl S.A."
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.epaka.pl/sledzenie-przesylek",
+    "trackingSearchUrl": "https://www.epaka.pl/sledzenie-przesylek",
+    "linkRules": [],
     "detectionRules": []
   },
   "eparcel-kr": {
@@ -31382,6 +31440,39 @@
     ],
     "detectionRules": []
   },
+  "geis-pl": {
+    "displayName": "Geis PL",
+    "color": "#ffe501",
+    "aliases": [
+      "Geis Polska",
+      "Geis PL Sp. z o.o.",
+      "Geis Parcel Sp. z o.o."
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.geis.pl/pl/sledzenie-przesylki",
+    "trackingUrlTemplate": "https://www.geis.pl/pl/sledzenie-przesylki?packNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.geis.pl/pl/sledzenie-przesylki",
+    "linkRules": [
+      {
+        "domains": [
+          "geis.pl"
+        ],
+        "pathPattern": "^/[a-z]{2}/sledzenie-przesylki/?$",
+        "params": [
+          "packNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "gel-express": {
     "displayName": "GEL Express",
     "color": "#d9002b",
@@ -34765,6 +34856,38 @@
           "public.tracking.hellmann.net"
         ],
         "path": "^/search/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "hellmann-pl": {
+    "displayName": "Hellmann Poland",
+    "color": "#004c99",
+    "aliases": [
+      "Hellmann Polska",
+      "Hellmann Worldwide Logistics Polska"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://info.hwl.pl/tt/",
+    "trackingUrlTemplate": "https://info.hwl.pl/tt/?searchKey={trackingNumber}",
+    "trackingSearchUrl": "https://info.hwl.pl/tt/",
+    "linkRules": [
+      {
+        "domains": [
+          "info.hwl.pl"
+        ],
+        "pathPattern": "^/tt/?$",
+        "params": [
+          "searchKey"
+        ]
       }
     ],
     "detectionRules": []
@@ -39337,6 +39460,27 @@
         "confidence": "low"
       }
     ]
+  },
+  "jas-fbg": {
+    "displayName": "JAS-FBG",
+    "color": "#5cbc14",
+    "aliases": [
+      "JAS-FBG S.A.",
+      "JAS FBG"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://parcel.jasfbg.com.pl/pubtracing.aspx",
+    "trackingSearchUrl": "https://parcel.jasfbg.com.pl/pubtracing.aspx",
+    "linkRules": [],
+    "detectionRules": []
   },
   "jas-worldwide": {
     "displayName": "JAS Worldwide",
@@ -46956,7 +47100,8 @@
       "Міст Експрес",
       "Meest International",
       "Міст Інтернешнл",
-      "Росан"
+      "Росан",
+      "Meest Polska"
     ],
     "countries": [
       "UA",
@@ -49871,11 +50016,14 @@
       "Nova Post",
       "Nova Post Ukraine",
       "Нова Пошта",
-      "New Post International MLD"
+      "New Post International MLD",
+      "Nova Post Polska",
+      "Nova Post Poland"
     ],
     "countries": [
       "UA",
-      "MD"
+      "MD",
+      "PL"
     ],
     "selectable": true,
     "timezone": "Europe/Kyiv",
@@ -51245,7 +51393,8 @@
     "aliases": [
       "Paczka w RUCHu",
       "Paczka w Ruchu",
-      "Orlen Paczka"
+      "Orlen Paczka",
+      "Stacja z Paczką"
     ],
     "countries": [
       "PL"
@@ -53153,6 +53302,28 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "paxy": {
+    "displayName": "Paxy",
+    "color": "#00005e",
+    "aliases": [
+      "Paxy Courier",
+      "Paxy Courier s.r.o."
+    ],
+    "countries": [
+      "PL",
+      "CZ"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.paxy.pl/",
+    "trackingSearchUrl": "https://tracking.paxy.pl/",
+    "linkRules": [],
     "detectionRules": []
   },
   "pbt": {
@@ -57550,7 +57721,8 @@
       "Raben Logistics Polska",
       "DGO Express",
       "Sittam",
-      "Raben Sittam"
+      "Raben Sittam",
+      "Fresh Logistics"
     ],
     "countries": [
       "PL",
@@ -77098,6 +77270,27 @@
         "query": "^(?=(?:.*&)?c=Search(?:&|$))(?=(?:.*&)?a=track(?:&|$))(?:.*&)?trackNumber=([^&]+)(?=&|$)"
       }
     ],
+    "detectionRules": []
+  },
+  "zadbano": {
+    "displayName": "Zadbano",
+    "color": "#002245",
+    "aliases": [
+      "Allegro Zadbano",
+      "Zadbano SA"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://zadbano.pl/pl/lp/sledz-przesylke",
+    "trackingSearchUrl": "https://zadbano.pl/pl/lp/sledz-przesylke",
+    "linkRules": [],
     "detectionRules": []
   },
   "zajel": {
