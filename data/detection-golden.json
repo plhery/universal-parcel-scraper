@@ -101838,6 +101838,14 @@
     ]
   },
   {
+    "input": "JT43326470943122",
+    "carrier": "j-and-t-sg",
+    "confidence": "high",
+    "candidates": [
+      "j-and-t-sg"
+    ]
+  },
+  {
     "input": "JT47095857164",
     "carrier": "jne",
     "confidence": "high",
@@ -101871,6 +101879,26 @@
     ],
     "asked": [
       "j-and-t-cn"
+    ]
+  },
+  {
+    "input": "JT9999999999901",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "j-and-t",
+      "j-and-t-cn"
+    ],
+    "asked": [
+      "j-and-t-cn"
+    ]
+  },
+  {
+    "input": "JT99999999999901",
+    "carrier": "j-and-t-sg",
+    "confidence": "high",
+    "candidates": [
+      "j-and-t-sg"
     ]
   },
   {

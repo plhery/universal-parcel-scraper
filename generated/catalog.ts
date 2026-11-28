@@ -5779,8 +5779,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "ID",
       "MY",
       "TH",
-      "VN",
-      "SG"
+      "VN"
     ],
     "selectable": true,
     "timezone": "UTC",
@@ -39751,6 +39750,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^JMX\\d{12}$",
+        "confidence": "high"
+      }
+    ]
+  },
+  "j-and-t-sg": {
+    "displayName": "J&T Express Singapore",
+    "color": "#ed1c24",
+    "aliases": [
+      "J&T Express (SG)",
+      "J&T Express SG",
+      "J&T Singapore"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Singapore",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.jtexpress.sg/trackmyparcel",
+    "trackingSearchUrl": "https://www.jtexpress.sg/trackmyparcel",
+    "helpUrl": "https://www.jtexpress.sg/contact-us",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^JT\\d{14}$",
         "confidence": "high"
       }
     ]
@@ -80624,6 +80651,7 @@ export const CARRIER_IDS = [
   "j-and-t-eg",
   "j-and-t-middle-east",
   "j-and-t-mx",
+  "j-and-t-sg",
   "j-and-t-uk",
   "jadlog",
   "jakeluyhtio-suomi",
@@ -82918,6 +82946,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "j-and-t-eg": ["j-and-t-eg-1"],
   "j-and-t-middle-east": ["j-and-t-middle-east-1"],
   "j-and-t-mx": ["j-and-t-mx-1"],
+  "j-and-t-sg": ["j-and-t-sg-1"],
   "j-and-t-uk": ["j-and-t-uk-1"],
   "jadlog": ["jadlog-1"],
   "jakeluyhtio-suomi": [],

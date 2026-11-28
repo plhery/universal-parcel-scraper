@@ -3708,6 +3708,7 @@ export const REGISTRY: RegistryDefinition = {
     "j-and-t-eg": "universal",
     "j-and-t-middle-east": "j-and-t-middle-east",
     "j-and-t-mx": "j-and-t-mx",
+    "j-and-t-sg": "universal",
     "j-and-t-uk": "j-and-t-uk",
     "jadlog": "jadlog",
     "jakeluyhtio-suomi": "universal",
