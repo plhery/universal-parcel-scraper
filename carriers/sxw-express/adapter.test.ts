@@ -31,6 +31,13 @@ it('maps the inward mail centre automation scan as onward transit', () => {
     .toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });
 });
 
+it('reads the declaration under way at customs as customs, in the English the platform gives it', () => {
+  const payload = JSON.parse(own('track.json'));
+  payload[0].data[0].trackDetails[0].track_content = '申报中';
+  expect(parseHualeiTrack(payload, NUMBER, SXW, READ_AT)?.events?.find((event) => event.description === 'Customs declaration in progress'))
+    .toMatchObject({ stage: 'customs', stage_source: 'carrier_map' });
+});
+
 it('maps the processing and unloading it copies from DHL in Germany as onward transit', () => {
   for (const wording of ['The shipment has been processed in the parcel center of origin', 'Unloaded from movement / tour vehicle']) {
     expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe('in_transit');

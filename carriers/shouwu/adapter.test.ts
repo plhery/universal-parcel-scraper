@@ -120,6 +120,24 @@ it('reads a milestone title repeated as its description, and a note that repeats
   }
 });
 
+it("reads DPD's Predict notice without the recipient's e-mail address, as a notice, and lets the row stored with it keep its identity", () => {
+  const named = 'Predict information sent to: recipient@example.com';
+  const at = Date.UTC(2026, 3, 12, 10, 41, 9) / 1000;
+  const read = parseShouwu(changed((rows) => rows.splice(0, rows.length, trace(at, named),
+    trace(at - 1380, 'Parcel on the way', 'SAMPLE TOWN,AT'))), DELIVERED);
+  expect(read.events!.map((event) => [event.description, event.stage, event.stage_source])).toEqual([
+    ['Predict information sent', undefined, undefined], ['Parcel on the way', 'in_transit', 'carrier_map']]);
+  expect(JSON.stringify(read)).not.toContain('@');
+  expect(statusMap.stage(null, 'predict information sent')).toBeUndefined();
+  expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null, description: 'Predict information sent' })).toMatchObject({ kind: 'intentional_gap' });
+  const policy = sameInstantIdentityPolicy('shouwu', { supportsScanMatching: true });
+  const scan = { stage: 'in_transit', description: 'Predict information sent', location: '', providerCode: '' };
+  expect(policy?.matches?.(scan, { ...scan, description: named })).toBe(true);
+  // Wording without an address stays as written.
+  expect(parseShouwu(changed((rows) => rows.splice(0, rows.length, trace(at, 'Notified to the recipient'))), DELIVERED)
+    .events?.[0]?.description).toBe('Notified to the recipient');
+});
+
 it('leaves a relayed sentence the map has not seen to the shared wording rules', () => {
   const wording = 'FR, Votre envoi est en attente de dédouanement.,运输中';
   const payload = changed((rows) => rows.splice(0, rows.length, trace(1775990469, wording)));

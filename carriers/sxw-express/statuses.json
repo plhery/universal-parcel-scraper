@@ -85,6 +85,7 @@
     {"wording": "Departed USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Copied from USPS."},
     {"wording": "In Transit, Arriving On Time", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Copied from USPS, between its facilities."},
     {"wording": "Incorrectly sorted and forwarded to correct location", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The delivering network sorted the parcel to the wrong place and sends it on to the right one: it is still on its way."},
-    {"wording": "Returned parcel has been recieved by shipper", "language": "en", "stage": "returned", "confirmedBy": "live", "note": "Spelled so. The seller took the parcel back at the origin; it can send it again under the same waybill, and the rows that follow then lead."}
+    {"wording": "Returned parcel has been recieved by shipper", "language": "en", "stage": "returned", "confirmedBy": "live", "note": "Spelled so. The seller took the parcel back at the origin; it can send it again under the same waybill, and the rows that follow then lead."},
+    {"wording": "申报中", "language": "zh", "english": "Customs declaration in progress", "stage": "customs", "confirmedBy": "live", "note": "Declaration in progress, at the customs the row's place names, hours after the international flight left and the export clearance was done: the destination's import declaration under way."}
   ]
 }

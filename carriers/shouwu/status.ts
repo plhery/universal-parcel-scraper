@@ -136,7 +136,10 @@ export const statusMap: CarrierStatusMap = {
     note: "The last mile's station keeping the parcel after a failed delivery: it says neither that the parcel waits for the recipient to collect nor that another round follows, so it names no stage." })),
   // The same station days later, the parcel to be taken out of its stock.
   { wording: 'pendiente de extracción',
-    note: "The last mile's station, days after it kept the parcel, to take it out of its stock: it says neither that another round follows nor that the parcel goes back, so it names no stage." }],
+    note: "The last mile's station, days after it kept the parcel, to take it out of its stock: it says neither that another round follows nor that the parcel goes back, so it names no stage." },
+  // DPD's Predict notice, which names the recipient's e-mail address the adapter leaves out.
+  { wording: 'predict information sent',
+    note: "DPD's Predict notice sent to the recipient: it moves nothing, so the parcel keeps the stage of the scan before it." }],
   gapNote: (_code, wording) => (FLIGHT_BOOKED.test(wording)
     ? 'The flight booked for the parcel, before it flies: a forecast, so the parcel keeps the stage of the scan before it.'
     : undefined),

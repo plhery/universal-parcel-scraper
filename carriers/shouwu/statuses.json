@@ -1456,6 +1456,8 @@
     {"wording": "Parcel has been delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "The last mile's delivery, as Shouwu relays it.", "template": "delivered"},
     {"wording": "Arrived at destination hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "A hub in the destination country, days after customs released the parcel and before its departure from it."},
     {"wording": "Departed destination hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The destination hub sending the parcel on, after its arrival there."},
-    {"wording": "Arrived at warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "A delivering partner's warehouse, as the lines that relay the same partners read it: after its destination hub, before the delivery round. Shouwu words its own intake otherwise (Arrival processing center, Shipment arrived at facility)."}
+    {"wording": "Arrived at warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "A delivering partner's warehouse, as the lines that relay the same partners read it: after its destination hub, before the delivery round. Shouwu words its own intake otherwise (Arrival processing center, Shipment arrived at facility)."},
+    {"wording": "Parcel on the way", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "DPD's transit at its hub in the destination, the evening before its Predict notice."},
+    {"wording": "Predict information sent", "language": "en", "stage": null, "confirmedBy": "live", "note": "DPD's Predict notice to the recipient, minutes after its hub's transit row. Shouwu relays it with the recipient's e-mail address after \"to:\", which the adapter leaves out. A notice that moves nothing, so the parcel keeps the stage of the scan before it."}
   ]
 }

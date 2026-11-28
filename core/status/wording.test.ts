@@ -1138,6 +1138,8 @@ describe('classifyWording', () => {
       ['Manifest received', 'registered'], ['Scanned to Container', 'in_transit'], ['Misroute', 'in_transit'], ['Mis-routed', 'in_transit'],
       // YunExpress's export declaration in China, as its own map reads it.
       ['The country of origin commences customs declaration.', 'in_transit'],
+      // The hub row many forwarders' tracking platform writes, as ParcelsApp relays one.
+      ['The shipment is being transshipped via the hub', 'in_transit'], ['Parcel is being transhipped through the hub.', 'in_transit'],
       // The destination's cargo terminal done with a post line's parcel after its clearance, as Ship24 relays TopYou's line.
       ['Cargo handling completed, awaiting final delivery', 'in_transit'], ['Cargo handling completed', 'in_transit'],
       // SEKO's order created but not dispatched, as SEKO's map reads it and as ParcelsApp relays it.

@@ -29,3 +29,13 @@ export function withoutRepeat(description: string): string {
   const note = REPEATING_NOTE.exec(words);
   return note && note[1] === note[2] ? note[1]! : description;
 }
+
+// An e-mail address a last mile's notice names, the recipient's, with the "to" before it: "Predict information sent
+// to: …" reads "Predict information sent".
+const EMAIL = /(?:\s+to)?\s*[:：]?\s*[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g;
+
+/** A scan's wording without an e-mail address it names. */
+export function withoutEmail(description: string): string {
+  const cut = description.replace(EMAIL, '');
+  return cut === description ? description : cut.replace(/\s+/g, ' ').trim();
+}

@@ -581,6 +581,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // YunExpress's export declaration in China, read as its own map reads it wherever a provider relays it: the
   // parcel goes on its way, held by no customs, as the release that follows reads.
   if (/^the country of origin commences customs declaration\.?$/.test(text)) return 'in_transit';
+  // The hub row many forwarders' tracking platform writes, as ParcelsApp relays one: "The shipment is being transshipped via the hub".
+  if (/^(?:the )?(?:shipment|parcel|package) is being trans-?s?hipped (?:via|through|at) (?:the |a )?hub\.?$/.test(text)) return 'in_transit';
   // So is an export clearance or declaration started or under way, a routine step before the flight: "Export
   // customs clearance started", "出口报关中". Customs holding, inspecting or detaining the parcel there still counts.
   if (EXPORT_CLEARANCE_UNDER_WAY.test(text) && !EXPORT_HOLD.test(text)) return 'in_transit';
