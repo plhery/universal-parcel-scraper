@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { ChallengeError, IndeterminateError, MaintenanceError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -62,11 +62,12 @@ export class AirmeeTracker {
   }
 }
 
-// No recognition: no detection rule offers Airmee for its ids, which share other carriers' shapes.
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new AirmeeTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return {
     id: CARRIER, recordsSteps: true, steps: ['direct', 'retry'],
     track: (input, context) => tracker.fetch(input.number, context),
+    // The tracker's own answer settles a number its rule offers: it repeats the id and answers an unknown one empty.
+    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeAirmeeNumber(number))),
   };
 };

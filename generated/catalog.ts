@@ -8053,7 +8053,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Stockholm",
     "tracking": {
       "mode": "automatic",
-      "adapter": "airmee"
+      "adapter": "airmee",
+      "recognitionRank": 751
     },
     "canaryUrl": "https://tracking.airmee.com/",
     "trackingUrlTemplate": "https://tracking.airmee.com/#/shipment-track/{trackingNumber}?startDate=2018-01-01&endDate=2099-12-31",
@@ -8067,7 +8068,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "fragment": "^/shipment-track/([A-Za-z0-9]{4,40})(?:\\?.*)?$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^AM\\d{9}$",
+        "confidence": "low"
+      }
+    ]
   },
   "airpak-express": {
     "displayName": "Airpak Express",
@@ -82846,7 +82852,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "air-star-xpress": [],
   "air-tahiti-nui-cargo": [],
   "airasia-cargo": [],
-  "airmee": [],
+  "airmee": ["airmee-1"],
   "airpak-express": [],
   "airroad": [],
   "airspeed": [],

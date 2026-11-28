@@ -9051,5 +9051,13 @@
       "whiz-delivery"
     ],
     "reason": "Bester Express's waybills print SWE and nine digits, which Purolator's lettered PINs and TNT Australia's domestic consignments share, and SW with ten hexadecimal characters is Whiz Delivery's shape, so no rule decides; recognition asks them in turn. Bester Express is not offered for it."
+  },
+  {
+    "shape": "AM and nine digits",
+    "carriers": [
+      "airmee",
+      "gls-it"
+    ],
+    "reason": "AM and nine digits is the reference Amazon gives the parcels it hands to Airmee, and GLS Italy's rule takes any two letters and nine digits. Both are low-confidence suggestions; recognition asks Airmee's tracker, which repeats the reference it holds."
   }
 ]

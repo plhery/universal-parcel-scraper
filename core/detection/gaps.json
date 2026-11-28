@@ -160,12 +160,6 @@
   },
   {
     "carrier": "airmee",
-    "pattern": "^AM\\d{9}$",
-    "kind": "by_design",
-    "reason": "AM and nine digits is the shipment id Amazon gives the parcels it hands to Airmee, and the shape names Amazon's series rather than Airmee."
-  },
-  {
-    "carrier": "airmee",
     "pattern": "^\\d{9}$",
     "kind": "by_design",
     "reason": "Airmee tracks a retailer's parcel by the retailer's own order number; nine digits are many carriers' numbers and nothing in them points to Airmee."

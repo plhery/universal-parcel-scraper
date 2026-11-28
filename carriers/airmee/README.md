@@ -6,10 +6,13 @@ points and parcel lockers. Its site is airmee.com; its tracker is tracking.airme
 ## Numbers
 
 The tracker finds a shipment by the id its retailer gave it: AM and nine digits for Amazon's
-parcels, a retailer's own order number, or one of Airmee's six-character codes. Each shape is
-another carrier's too, so no rule names Airmee and declared gaps say why. The adapter takes 4 to
-40 letters and digits with at least one digit, in capitals. The samples and their sources are in
-[`numbers.json`](numbers.json).
+parcels, a retailer's own order number, or one of Airmee's six-character codes. AM and nine digits
+is the shipment id Amazon gives the parcels it hands to Airmee, and every such parcel seen was
+Airmee's, but GLS Italy's rule takes any two letters and nine digits, so `airmee-1` offers Airmee
+for it at low confidence and recognition settles it. Order numbers and the short codes are other
+carriers' shapes too, so no rule takes them; a declared gap gives the reason for nine-digit order
+numbers. The adapter takes 4 to 40 letters and digits with at least one digit, in capitals. The
+samples and their sources are in [`numbers.json`](numbers.json).
 
 ## Retrieval
 
@@ -27,7 +30,8 @@ status code, or HTTP 400, leaves the answer open; a refusal or a browser check i
 503 maintenance, a redirect or a missing route a moved tracker, and anything that is not the
 wrapper a changed reply.
 
-There is no recognition: no detection rule offers Airmee for a number, so preflight never asks it.
+Recognition makes the same lookup for the numbers `airmee-1` offers: a shipment is known, the empty
+shipment unknown, and anything else stays open.
 
 ## Status
 

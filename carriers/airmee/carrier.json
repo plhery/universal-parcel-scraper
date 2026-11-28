@@ -23,7 +23,10 @@
     "steps": [
       "direct",
       "retry"
-    ]
+    ],
+    "recognition": {
+      "rank": 751
+    }
   },
   "capabilities": [
     "history",
@@ -79,5 +82,11 @@
       "fragment": "^/shipment-track/([A-Za-z0-9]{4,40})(?:\\?.*)?$"
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "airmee-1",
+      "pattern": "^AM\\d{9}$",
+      "confidence": "low"
+    }
+  ]
 }

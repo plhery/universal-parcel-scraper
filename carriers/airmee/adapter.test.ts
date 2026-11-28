@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, AIRMEE_LOOKUP, AirmeeTracker, airmeeLookupUrl } from './adapter.js';
 import { normalizeAirmeeNumber, parseAirmee } from './parser.js';
@@ -44,6 +45,18 @@ describe('Airmee tracking adapter', () => {
     expect(init).toMatchObject({ method: 'GET', redirect: 'manual', signal: expect.any(AbortSignal),
       headers: expect.objectContaining({ Origin: 'https://tracking.airmee.com', Referer: 'https://tracking.airmee.com/' }) });
     expect(carrier(fetcher)).toMatchObject({ id: 'airmee', recordsSteps: true, steps: ['direct', 'retry'] });
+  });
+
+  it('recognizes a shipment the tracker holds, an empty shipment as unknown, and leaves other answers open', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(fixture('delivered'))).mockResolvedValueOnce(json(fixture('not-found')))
+      .mockResolvedValueOnce(json({ statusCode: 500, body: '{}' }));
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toMatchObject({ known: true, finished: true, lastActivityAt: expect.any(String) });
+    await expect(carrier(fetcher).recognize!(INVENTED)).resolves.toEqual({ known: false });
+    await expect(carrier(fetcher).recognize!(INVENTED)).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(carrier(fetcher).recognize!('AM1')).resolves.toEqual({ known: false });
+    expect(fetcher).toHaveBeenCalledTimes(3);
+    expect(detectCarrierMatch(INVENTED)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: expect.arrayContaining(['airmee']) });
+    expect(detectCarrierMatch(`AM${'0'.repeat(10)}`).candidates ?? []).not.toContain('airmee');
   });
 
   it("reads the tracker's empty shipment as not found", async () => {
