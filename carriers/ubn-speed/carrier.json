@@ -1,0 +1,47 @@
+{
+  "id": "ubn-speed",
+  "displayName": "UBN Speed",
+  "aliases": [
+    "UBN Speed Service France",
+    "UBN Speed Réunion",
+    "Speed24"
+  ],
+  "region": {
+    "countries": [
+      "FR",
+      "RE"
+    ]
+  },
+  "brand": {
+    "color": "#d40511"
+  },
+  "selectable": true,
+  "timezone": "Europe/Paris",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://ubn-speed.fr/suivi-colis/?ubn_tracking={trackingNumber}",
+    "searchUrl": "https://ubn-speed.fr/suivi-colis/",
+    "canaryUrl": "https://ubn-speed.fr/suivi-colis/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "ubn-speed.fr"
+      ],
+      "pathPattern": "^/suivi-colis/?$",
+      "params": [
+        "ubn_tracking"
+      ]
+    }
+  ],
+  "detection": []
+}

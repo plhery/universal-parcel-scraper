@@ -1,0 +1,44 @@
+{
+  "id": "upela",
+  "displayName": "Upela",
+  "aliases": [
+    "MPG Upela"
+  ],
+  "region": {
+    "countries": [
+      "FR"
+    ]
+  },
+  "brand": {
+    "color": "#ef670e"
+  },
+  "selectable": true,
+  "timezone": "Europe/Paris",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.upela.com/fr/suivi.html?tracking_number={trackingNumber}",
+    "searchUrl": "https://www.upela.com/fr/suivi.html",
+    "canaryUrl": "https://www.upela.com/fr/suivi.html",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "upela.com"
+      ],
+      "pathPattern": "^/fr/suivi\\.html$",
+      "params": [
+        "tracking_number"
+      ]
+    }
+  ],
+  "detection": []
+}

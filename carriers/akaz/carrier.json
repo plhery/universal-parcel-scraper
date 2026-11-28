@@ -1,0 +1,48 @@
+{
+  "id": "akaz",
+  "displayName": "AKAZ",
+  "aliases": [
+    "A-KAZ"
+  ],
+  "region": {
+    "countries": [
+      "FR",
+      "MQ",
+      "GP",
+      "GF",
+      "RE"
+    ]
+  },
+  "brand": {
+    "color": "#f15a24"
+  },
+  "selectable": true,
+  "timezone": "Europe/Paris",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://a-kaz.com/suivi/?trackingCode={trackingNumber}",
+    "searchUrl": "https://a-kaz.com/suivi/",
+    "canaryUrl": "https://a-kaz.com/suivi/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "a-kaz.com"
+      ],
+      "pathPattern": "^/suivi/?$",
+      "params": [
+        "trackingCode"
+      ]
+    }
+  ],
+  "detection": []
+}

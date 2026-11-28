@@ -1,0 +1,36 @@
+{
+  "id": "guisnel",
+  "displayName": "Guisnel",
+  "aliases": [
+    "Groupe Guisnel",
+    "Maison Guisnel",
+    "Guisnel Distribution",
+    "Transporter mon meuble"
+  ],
+  "region": {
+    "countries": [
+      "FR"
+    ]
+  },
+  "brand": {
+    "color": "#f7ad42"
+  },
+  "selectable": true,
+  "timezone": "Europe/Paris",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.traplus.com/profoundui/traplus?pgm=TRAPLUSPUI/PUITRAPCL&p1=TRACKWEB%20%20----WebTrackingGUISN&l1=256&p2=fr_FR&l2=15&lang=fr_FR",
+    "canaryUrl": "https://www.traplus.com/profoundui/traplus",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

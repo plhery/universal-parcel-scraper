@@ -1,0 +1,45 @@
+{
+  "id": "boxme",
+  "displayName": "Boxme",
+  "aliases": [
+    "Boxme Asia"
+  ],
+  "region": {
+    "countries": [
+      "VN",
+      "TH"
+    ]
+  },
+  "brand": {
+    "color": "#2454dd"
+  },
+  "selectable": true,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://track.boxme.asia/?tracking_number={trackingNumber}",
+    "searchUrl": "https://track.boxme.asia/",
+    "canaryUrl": "https://track.boxme.asia/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "track.boxme.asia"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "tracking_number"
+      ]
+    }
+  ],
+  "detection": []
+}

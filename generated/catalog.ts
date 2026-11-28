@@ -1528,7 +1528,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "Chronopost",
     "color": "#0056a7",
     "aliases": [
-      "Chrono Shop2Shop"
+      "Chrono Shop2Shop",
+      "Chronopost Nouvelle-Calédonie"
     ],
     "countries": [
       "FR"
@@ -7894,6 +7895,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "air-tahiti-nui-cargo": {
+    "displayName": "Air Tahiti Nui Cargo",
+    "color": "#003565",
+    "aliases": [
+      "Air Tahiti Nui"
+    ],
+    "countries": [
+      "PF",
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Tahiti",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://fr.airtahitinui.com/notre-service-fret-et-suivi-de-fret",
+    "trackingSearchUrl": "https://fr.airtahitinui.com/notre-service-fret-et-suivi-de-fret",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "airasia-cargo": {
     "displayName": "AirAsia Cargo",
     "color": "#ff0000",
@@ -8332,6 +8354,41 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "params": [
           "AWB",
           "ConNo"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "akaz": {
+    "displayName": "AKAZ",
+    "color": "#f15a24",
+    "aliases": [
+      "A-KAZ"
+    ],
+    "countries": [
+      "FR",
+      "MQ",
+      "GP",
+      "GF",
+      "RE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Paris",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://a-kaz.com/suivi/",
+    "trackingUrlTemplate": "https://a-kaz.com/suivi/?trackingCode={trackingNumber}",
+    "trackingSearchUrl": "https://a-kaz.com/suivi/",
+    "linkRules": [
+      {
+        "domains": [
+          "a-kaz.com"
+        ],
+        "pathPattern": "^/suivi/?$",
+        "params": [
+          "trackingCode"
         ]
       }
     ],
@@ -13370,6 +13427,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "bm-express": {
+    "displayName": "BM Express",
+    "color": "#ec4b40",
+    "aliases": [
+      "BM Express International Services",
+      "BM Express International Services Pty. Ltd."
+    ],
+    "countries": [
+      "AU",
+      "NZ",
+      "SG",
+      "GB",
+      "PG",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.bmexpress.com/au-tracking",
+    "trackingSearchUrl": "https://www.bmexpress.com/au-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "bob-go": {
     "displayName": "Bob Go",
     "color": "#139e83",
@@ -13871,12 +13954,46 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "boxme": {
+    "displayName": "Boxme",
+    "color": "#2454dd",
+    "aliases": [
+      "Boxme Asia"
+    ],
+    "countries": [
+      "VN",
+      "TH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.boxme.asia/",
+    "trackingUrlTemplate": "https://track.boxme.asia/?tracking_number={trackingNumber}",
+    "trackingSearchUrl": "https://track.boxme.asia/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.boxme.asia"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "tracking_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "boxtal": {
     "displayName": "Boxtal",
     "color": "#1e5fa6",
     "aliases": [
       "Boxtal Connect",
-      "Boxtal Shipping"
+      "Boxtal Shipping",
+      "Envoimoinscher",
+      "EnvoiMoinsCher.com"
     ],
     "countries": [
       "FR"
@@ -26870,6 +26987,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "eurosender": {
+    "displayName": "Eurosender",
+    "color": "#007bff",
+    "aliases": [
+      "Eurosender SARL"
+    ],
+    "countries": [
+      "LU",
+      "FR",
+      "DE",
+      "ES",
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Luxembourg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.eurosender.com/fr/suivi-colis",
+    "trackingSearchUrl": "https://www.eurosender.com/fr/suivi-colis",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "eushipments": {
     "displayName": "euShipments",
     "color": "#0a8fcf",
@@ -33820,6 +33961,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.guernseypost.com/track-trace",
     "trackingSearchUrl": "https://www.guernseypost.com/track-trace",
     "helpUrl": "https://www.guernseypost.com/contact-us",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "guisnel": {
+    "displayName": "Guisnel",
+    "color": "#f7ad42",
+    "aliases": [
+      "Groupe Guisnel",
+      "Maison Guisnel",
+      "Guisnel Distribution",
+      "Transporter mon meuble"
+    ],
+    "countries": [
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Paris",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.traplus.com/profoundui/traplus",
+    "trackingSearchUrl": "https://www.traplus.com/profoundui/traplus?pgm=TRAPLUSPUI/PUITRAPCL&p1=TRACKWEB%20%20----WebTrackingGUISN&l1=256&p2=fr_FR&l2=15&lang=fr_FR",
     "linkRules": [],
     "detectionRules": []
   },
@@ -70221,6 +70385,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "ubn-speed": {
+    "displayName": "UBN Speed",
+    "color": "#d40511",
+    "aliases": [
+      "UBN Speed Service France",
+      "UBN Speed Réunion",
+      "Speed24"
+    ],
+    "countries": [
+      "FR",
+      "RE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Paris",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ubn-speed.fr/suivi-colis/",
+    "trackingUrlTemplate": "https://ubn-speed.fr/suivi-colis/?ubn_tracking={trackingNumber}",
+    "trackingSearchUrl": "https://ubn-speed.fr/suivi-colis/",
+    "linkRules": [
+      {
+        "domains": [
+          "ubn-speed.fr"
+        ],
+        "pathPattern": "^/suivi-colis/?$",
+        "params": [
+          "ubn_tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "ubsend": {
     "displayName": "UBsend",
     "color": "#212934",
@@ -70798,6 +70996,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "rawPattern": "^[A-Z]{6}\\d{4,5}-\\d{7}$"
       }
     ]
+  },
+  "upela": {
+    "displayName": "Upela",
+    "color": "#ef670e",
+    "aliases": [
+      "MPG Upela"
+    ],
+    "countries": [
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Paris",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.upela.com/fr/suivi.html",
+    "trackingUrlTemplate": "https://www.upela.com/fr/suivi.html?tracking_number={trackingNumber}",
+    "trackingSearchUrl": "https://www.upela.com/fr/suivi.html",
+    "linkRules": [
+      {
+        "domains": [
+          "upela.com"
+        ],
+        "pathPattern": "^/fr/suivi\\.html$",
+        "params": [
+          "tracking_number"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "ural-express": {
     "displayName": "Ural Express",
@@ -71637,7 +71866,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#bcd252",
     "aliases": [
       "Vert Chez Vous (Labatut Group)",
-      "Vert Chez Vous SAS"
+      "Vert Chez Vous SAS",
+      "Labatut Group"
     ],
     "countries": [
       "FR"
@@ -73361,6 +73591,23 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "wing": {
+    "displayName": "Wing",
+    "color": "#2058f8",
+    "countries": [
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Paris",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.wing.eu/",
+    "trackingSearchUrl": "https://tracking.wing.eu/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "winion-logis": {
     "displayName": "WINION LOGIS",
@@ -77045,6 +77292,7 @@ export const CARRIER_IDS = [
   "air-greenland",
   "air-inuit",
   "air-star-xpress",
+  "air-tahiti-nui-cargo",
   "airasia-cargo",
   "airmee",
   "airpak-express",
@@ -77058,6 +77306,7 @@ export const CARRIER_IDS = [
   "ajex",
   "akasa-air-cargo",
   "akash-ganga",
+  "akaz",
   "akis-express",
   "akropost",
   "aks-express",
@@ -77204,6 +77453,7 @@ export const CARRIER_IDS = [
   "bluesky-parcel",
   "bluestreak-couriers",
   "bm-cargo",
+  "bm-express",
   "bob-go",
   "bolt-kargo",
   "bombax",
@@ -77217,6 +77467,7 @@ export const CARRIER_IDS = [
   "botswana-post",
   "box-now",
   "boxc",
+  "boxme",
   "boxtal",
   "boyuan",
   "bqc-logistics",
@@ -77589,6 +77840,7 @@ export const CARRIER_IDS = [
   "euroexpress-ba",
   "europochta",
   "europoshta",
+  "eurosender",
   "eushipments",
   "evdemo-lojistik",
   "evergreen-line",
@@ -77787,6 +78039,7 @@ export const CARRIER_IDS = [
   "guatex",
   "guepex",
   "guernsey-post",
+  "guisnel",
   "gyujtoszallitas",
   "gzyl",
   "hadeland-bud",
@@ -78866,6 +79119,7 @@ export const CARRIER_IDS = [
   "u-post",
   "u-speed-express",
   "ubi-smart-parcel",
+  "ubn-speed",
   "ubsend",
   "ubx-uk",
   "uello",
@@ -78884,6 +79138,7 @@ export const CARRIER_IDS = [
   "uof-express",
   "uparcel",
   "upaya",
+  "upela",
   "ural-express",
   "urbano",
   "urbano-ar",
@@ -78962,6 +79217,7 @@ export const CARRIER_IDS = [
   "whwdt",
   "widect",
   "wiio",
+  "wing",
   "winion-logis",
   "winit",
   "wise-express",
@@ -79243,6 +79499,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "air-greenland": [],
   "air-inuit": [],
   "air-star-xpress": [],
+  "air-tahiti-nui-cargo": [],
   "airasia-cargo": [],
   "airmee": [],
   "airpak-express": [],
@@ -79256,6 +79513,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ajex": ["ajex-1"],
   "akasa-air-cargo": [],
   "akash-ganga": [],
+  "akaz": [],
   "akis-express": [],
   "akropost": [],
   "aks-express": [],
@@ -79402,6 +79660,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bluesky-parcel": [],
   "bluestreak-couriers": [],
   "bm-cargo": [],
+  "bm-express": [],
   "bob-go": [],
   "bolt-kargo": [],
   "bombax": [],
@@ -79415,6 +79674,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "botswana-post": [],
   "box-now": ["box-now-1"],
   "boxc": [],
+  "boxme": [],
   "boxtal": ["boxtal-1"],
   "boyuan": ["boyuan-1"],
   "bqc-logistics": [],
@@ -79787,6 +80047,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "euroexpress-ba": [],
   "europochta": ["europochta-1"],
   "europoshta": [],
+  "eurosender": [],
   "eushipments": [],
   "evdemo-lojistik": [],
   "evergreen-line": [],
@@ -79985,6 +80246,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "guatex": [],
   "guepex": [],
   "guernsey-post": [],
+  "guisnel": [],
   "gyujtoszallitas": [],
   "gzyl": ["gzyl-1","gzyl-2"],
   "hadeland-bud": [],
@@ -81064,6 +81326,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "u-post": [],
   "u-speed-express": [],
   "ubi-smart-parcel": ["ubi-smart-parcel-1"],
+  "ubn-speed": [],
   "ubsend": [],
   "ubx-uk": [],
   "uello": [],
@@ -81082,6 +81345,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "uof-express": [],
   "uparcel": [],
   "upaya": ["upaya-1"],
+  "upela": [],
   "ural-express": [],
   "urbano": ["urbano-1"],
   "urbano-ar": [],
@@ -81160,6 +81424,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "whwdt": [],
   "widect": [],
   "wiio": ["wiio-1"],
+  "wing": [],
   "winion-logis": [],
   "winit": ["winit-1","winit-2","winit-3"],
   "wise-express": [],

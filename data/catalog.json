@@ -1523,7 +1523,8 @@
     "displayName": "Chronopost",
     "color": "#0056a7",
     "aliases": [
-      "Chrono Shop2Shop"
+      "Chrono Shop2Shop",
+      "Chronopost Nouvelle-Calédonie"
     ],
     "countries": [
       "FR"
@@ -7889,6 +7890,27 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "air-tahiti-nui-cargo": {
+    "displayName": "Air Tahiti Nui Cargo",
+    "color": "#003565",
+    "aliases": [
+      "Air Tahiti Nui"
+    ],
+    "countries": [
+      "PF",
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Tahiti",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://fr.airtahitinui.com/notre-service-fret-et-suivi-de-fret",
+    "trackingSearchUrl": "https://fr.airtahitinui.com/notre-service-fret-et-suivi-de-fret",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "airasia-cargo": {
     "displayName": "AirAsia Cargo",
     "color": "#ff0000",
@@ -8327,6 +8349,41 @@
         "params": [
           "AWB",
           "ConNo"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "akaz": {
+    "displayName": "AKAZ",
+    "color": "#f15a24",
+    "aliases": [
+      "A-KAZ"
+    ],
+    "countries": [
+      "FR",
+      "MQ",
+      "GP",
+      "GF",
+      "RE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Paris",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://a-kaz.com/suivi/",
+    "trackingUrlTemplate": "https://a-kaz.com/suivi/?trackingCode={trackingNumber}",
+    "trackingSearchUrl": "https://a-kaz.com/suivi/",
+    "linkRules": [
+      {
+        "domains": [
+          "a-kaz.com"
+        ],
+        "pathPattern": "^/suivi/?$",
+        "params": [
+          "trackingCode"
         ]
       }
     ],
@@ -13365,6 +13422,32 @@
     ],
     "detectionRules": []
   },
+  "bm-express": {
+    "displayName": "BM Express",
+    "color": "#ec4b40",
+    "aliases": [
+      "BM Express International Services",
+      "BM Express International Services Pty. Ltd."
+    ],
+    "countries": [
+      "AU",
+      "NZ",
+      "SG",
+      "GB",
+      "PG",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.bmexpress.com/au-tracking",
+    "trackingSearchUrl": "https://www.bmexpress.com/au-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "bob-go": {
     "displayName": "Bob Go",
     "color": "#139e83",
@@ -13866,12 +13949,46 @@
     ],
     "detectionRules": []
   },
+  "boxme": {
+    "displayName": "Boxme",
+    "color": "#2454dd",
+    "aliases": [
+      "Boxme Asia"
+    ],
+    "countries": [
+      "VN",
+      "TH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.boxme.asia/",
+    "trackingUrlTemplate": "https://track.boxme.asia/?tracking_number={trackingNumber}",
+    "trackingSearchUrl": "https://track.boxme.asia/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.boxme.asia"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "tracking_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "boxtal": {
     "displayName": "Boxtal",
     "color": "#1e5fa6",
     "aliases": [
       "Boxtal Connect",
-      "Boxtal Shipping"
+      "Boxtal Shipping",
+      "Envoimoinscher",
+      "EnvoiMoinsCher.com"
     ],
     "countries": [
       "FR"
@@ -26865,6 +26982,30 @@
     ],
     "detectionRules": []
   },
+  "eurosender": {
+    "displayName": "Eurosender",
+    "color": "#007bff",
+    "aliases": [
+      "Eurosender SARL"
+    ],
+    "countries": [
+      "LU",
+      "FR",
+      "DE",
+      "ES",
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Luxembourg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.eurosender.com/fr/suivi-colis",
+    "trackingSearchUrl": "https://www.eurosender.com/fr/suivi-colis",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "eushipments": {
     "displayName": "euShipments",
     "color": "#0a8fcf",
@@ -33815,6 +33956,29 @@
     "canaryUrl": "https://www.guernseypost.com/track-trace",
     "trackingSearchUrl": "https://www.guernseypost.com/track-trace",
     "helpUrl": "https://www.guernseypost.com/contact-us",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "guisnel": {
+    "displayName": "Guisnel",
+    "color": "#f7ad42",
+    "aliases": [
+      "Groupe Guisnel",
+      "Maison Guisnel",
+      "Guisnel Distribution",
+      "Transporter mon meuble"
+    ],
+    "countries": [
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Paris",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.traplus.com/profoundui/traplus",
+    "trackingSearchUrl": "https://www.traplus.com/profoundui/traplus?pgm=TRAPLUSPUI/PUITRAPCL&p1=TRACKWEB%20%20----WebTrackingGUISN&l1=256&p2=fr_FR&l2=15&lang=fr_FR",
     "linkRules": [],
     "detectionRules": []
   },
@@ -70216,6 +70380,40 @@
       }
     ]
   },
+  "ubn-speed": {
+    "displayName": "UBN Speed",
+    "color": "#d40511",
+    "aliases": [
+      "UBN Speed Service France",
+      "UBN Speed Réunion",
+      "Speed24"
+    ],
+    "countries": [
+      "FR",
+      "RE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Paris",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ubn-speed.fr/suivi-colis/",
+    "trackingUrlTemplate": "https://ubn-speed.fr/suivi-colis/?ubn_tracking={trackingNumber}",
+    "trackingSearchUrl": "https://ubn-speed.fr/suivi-colis/",
+    "linkRules": [
+      {
+        "domains": [
+          "ubn-speed.fr"
+        ],
+        "pathPattern": "^/suivi-colis/?$",
+        "params": [
+          "ubn_tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "ubsend": {
     "displayName": "UBsend",
     "color": "#212934",
@@ -70793,6 +70991,37 @@
         "rawPattern": "^[A-Z]{6}\\d{4,5}-\\d{7}$"
       }
     ]
+  },
+  "upela": {
+    "displayName": "Upela",
+    "color": "#ef670e",
+    "aliases": [
+      "MPG Upela"
+    ],
+    "countries": [
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Paris",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.upela.com/fr/suivi.html",
+    "trackingUrlTemplate": "https://www.upela.com/fr/suivi.html?tracking_number={trackingNumber}",
+    "trackingSearchUrl": "https://www.upela.com/fr/suivi.html",
+    "linkRules": [
+      {
+        "domains": [
+          "upela.com"
+        ],
+        "pathPattern": "^/fr/suivi\\.html$",
+        "params": [
+          "tracking_number"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "ural-express": {
     "displayName": "Ural Express",
@@ -71632,7 +71861,8 @@
     "color": "#bcd252",
     "aliases": [
       "Vert Chez Vous (Labatut Group)",
-      "Vert Chez Vous SAS"
+      "Vert Chez Vous SAS",
+      "Labatut Group"
     ],
     "countries": [
       "FR"
@@ -73356,6 +73586,23 @@
         "confidence": "low"
       }
     ]
+  },
+  "wing": {
+    "displayName": "Wing",
+    "color": "#2058f8",
+    "countries": [
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Paris",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.wing.eu/",
+    "trackingSearchUrl": "https://tracking.wing.eu/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "winion-logis": {
     "displayName": "WINION LOGIS",

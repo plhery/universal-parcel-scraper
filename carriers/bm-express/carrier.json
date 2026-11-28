@@ -1,0 +1,39 @@
+{
+  "id": "bm-express",
+  "displayName": "BM Express",
+  "aliases": [
+    "BM Express International Services",
+    "BM Express International Services Pty. Ltd."
+  ],
+  "region": {
+    "countries": [
+      "AU",
+      "NZ",
+      "SG",
+      "GB",
+      "PG",
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#ec4b40"
+  },
+  "selectable": true,
+  "timezone": "Australia/Sydney",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.bmexpress.com/au-tracking",
+    "canaryUrl": "https://www.bmexpress.com/au-tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

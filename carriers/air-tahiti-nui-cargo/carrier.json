@@ -1,0 +1,34 @@
+{
+  "id": "air-tahiti-nui-cargo",
+  "displayName": "Air Tahiti Nui Cargo",
+  "aliases": [
+    "Air Tahiti Nui"
+  ],
+  "region": {
+    "countries": [
+      "PF",
+      "FR"
+    ]
+  },
+  "brand": {
+    "color": "#003565"
+  },
+  "selectable": true,
+  "timezone": "Pacific/Tahiti",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://fr.airtahitinui.com/notre-service-fret-et-suivi-de-fret",
+    "canaryUrl": "https://fr.airtahitinui.com/notre-service-fret-et-suivi-de-fret",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

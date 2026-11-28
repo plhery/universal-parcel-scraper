@@ -1,0 +1,37 @@
+{
+  "id": "eurosender",
+  "displayName": "Eurosender",
+  "aliases": [
+    "Eurosender SARL"
+  ],
+  "region": {
+    "countries": [
+      "LU",
+      "FR",
+      "DE",
+      "ES",
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#007bff"
+  },
+  "selectable": true,
+  "timezone": "Europe/Luxembourg",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.eurosender.com/fr/suivi-colis",
+    "canaryUrl": "https://www.eurosender.com/fr/suivi-colis",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
