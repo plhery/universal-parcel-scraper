@@ -13631,6 +13631,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "bmxps": {
+    "displayName": "BMXPS",
+    "color": "#3164AF",
+    "aliases": [
+      "北美快运",
+      "北美国际物流"
+    ],
+    "countries": [
+      "US",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bmxps"
+    },
+    "canaryUrl": "https://www.bmxps.com/Home/OrderTracking",
+    "trackingUrlTemplate": "https://www.bmxps.com/Home/OrderTracking?orderNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.bmxps.com/Home/OrderTracking",
+    "linkRules": [
+      {
+        "domains": [
+          "bmxps.com"
+        ],
+        "pathPattern": "^/Home/OrderTracking/?$",
+        "params": [
+          "orderNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "bob-go": {
     "displayName": "Bob Go",
     "color": "#139e83",
@@ -36025,6 +36058,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "hltop": {
+    "displayName": "Hailian Express",
+    "color": "#004080",
+    "aliases": [
+      "上海海联快递",
+      "上海海联快递有限公司",
+      "海联快递"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hltop",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hmm": {
     "displayName": "HMM",
     "color": "#f26522",
@@ -48796,6 +48851,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "morelink56": {
+    "displayName": "MoreLink",
+    "color": "#FF0000",
+    "aliases": [
+      "无限链接",
+      "广东无限链接信息科技有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "morelink56",
+      "localClocks": true
+    },
+    "canaryUrl": "https://client.morelink56.com/homepage/order_tracking",
+    "trackingSearchUrl": "https://client.morelink56.com/homepage/order_tracking",
+    "linkRules": [],
     "detectionRules": []
   },
   "morning-global": {
@@ -66664,6 +66741,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "sunspeedy": {
+    "displayName": "Sunspeedy",
+    "color": "#2684B7",
+    "aliases": [
+      "新速航",
+      "香港新速航",
+      "新速航香港國際轉運"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Hong_Kong",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sunspeedy",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.sunspeedy.hk/",
+    "trackingSearchUrl": "https://www.sunspeedy.hk/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "suocang": {
     "displayName": "Suoexpress",
     "color": "#a264cd",
@@ -66909,6 +67009,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ],
     "detectionRules": []
+  },
+  "sutongst": {
+    "displayName": "Sutong International Express",
+    "color": "#1E50A2",
+    "aliases": [
+      "香港速通国际快运",
+      "香港速通国际物流",
+      "速通国际快运",
+      "速通国际物流",
+      "香港速通"
+    ],
+    "countries": [
+      "HK",
+      "CN",
+      "US",
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Hong_Kong",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sutongst",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.sutongst.com/list-1793.html",
+    "trackingSearchUrl": "https://www.sutongst.com/list-1793.html",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^ST\\d{12}$",
+        "confidence": "low"
+      }
+    ]
   },
   "svenns-transport": {
     "displayName": "Svenns Transport",
@@ -79604,6 +79737,7 @@ export const CARRIER_IDS = [
   "bluestreak-couriers",
   "bm-cargo",
   "bm-express",
+  "bmxps",
   "bob-go",
   "bolt-kargo",
   "bombax",
@@ -80254,6 +80388,7 @@ export const CARRIER_IDS = [
   "hjyt",
   "hkd-express",
   "hlog-transportes",
+  "hltop",
   "hmm",
   "hoegh-autoliners",
   "holisol",
@@ -80640,6 +80775,7 @@ export const CARRIER_IDS = [
   "moova",
   "moovin",
   "moran-transportation",
+  "morelink56",
   "morning-global",
   "motorex",
   "mountain-movers",
@@ -81161,6 +81297,7 @@ export const CARRIER_IDS = [
   "sundarban-courier",
   "suning-logistics",
   "sunson",
+  "sunspeedy",
   "suocang",
   "super-parcel-track",
   "superb-express",
@@ -81168,6 +81305,7 @@ export const CARRIER_IDS = [
   "surat-kargo",
   "suteng-express",
   "suto-logistics",
+  "sutongst",
   "svenns-transport",
   "svuum",
   "sway",
@@ -81889,6 +82027,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bluestreak-couriers": [],
   "bm-cargo": [],
   "bm-express": [],
+  "bmxps": [],
   "bob-go": [],
   "bolt-kargo": [],
   "bombax": [],
@@ -82539,6 +82678,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hjyt": [],
   "hkd-express": [],
   "hlog-transportes": ["hlog-transportes-1"],
+  "hltop": [],
   "hmm": [],
   "hoegh-autoliners": [],
   "holisol": [],
@@ -82925,6 +83065,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "moova": [],
   "moovin": [],
   "moran-transportation": [],
+  "morelink56": [],
   "morning-global": ["morning-global-1"],
   "motorex": [],
   "mountain-movers": [],
@@ -83446,6 +83587,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sundarban-courier": [],
   "suning-logistics": [],
   "sunson": ["sunson-1"],
+  "sunspeedy": [],
   "suocang": [],
   "super-parcel-track": [],
   "superb-express": [],
@@ -83453,6 +83595,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "surat-kargo": [],
   "suteng-express": [],
   "suto-logistics": [],
+  "sutongst": ["sutongst-1"],
   "svenns-transport": [],
   "svuum": [],
   "sway": [],

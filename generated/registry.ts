@@ -129,6 +129,7 @@ import { adapter as blueExpress } from '../carriers/blue-express/adapter.js';
 import { adapter as blueex } from '../carriers/blueex/adapter.js';
 import { adapter as bluegraceLogistics } from '../carriers/bluegrace-logistics/adapter.js';
 import { adapter as bmCargo } from '../carriers/bm-cargo/adapter.js';
+import { adapter as bmxps } from '../carriers/bmxps/adapter.js';
 import { adapter as bobGo } from '../carriers/bob-go/adapter.js';
 import { adapter as bombino } from '../carriers/bombino/adapter.js';
 import { adapter as bookurier } from '../carriers/bookurier/adapter.js';
@@ -535,6 +536,7 @@ import { adapter as hitCargoNicaragua } from '../carriers/hit-cargo-nicaragua/ad
 import { adapter as hitch } from '../carriers/hitch/adapter.js';
 import { adapter as hjwl } from '../carriers/hjwl/adapter.js';
 import { adapter as hjyt } from '../carriers/hjyt/adapter.js';
+import { adapter as hltop } from '../carriers/hltop/adapter.js';
 import { adapter as hmm } from '../carriers/hmm/adapter.js';
 import { adapter as hoeghAutoliners } from '../carriers/hoegh-autoliners/adapter.js';
 import { adapter as homeDeliveryTeam } from '../carriers/home-delivery-team/adapter.js';
@@ -761,6 +763,7 @@ import { adapter as molAce } from '../carriers/mol-ace/adapter.js';
 import { adapter as mondialRelay } from '../carriers/mondial-relay/adapter.js';
 import { adapter as mongolInfinityPost } from '../carriers/mongol-infinity-post/adapter.js';
 import { adapter as moranTransportation } from '../carriers/moran-transportation/adapter.js';
+import { adapter as morelink56 } from '../carriers/morelink56/adapter.js';
 import { adapter as morningGlobal } from '../carriers/morning-global/adapter.js';
 import { adapter as mrlGlobal } from '../carriers/mrl-global/adapter.js';
 import { adapter as mrw } from '../carriers/mrw/adapter.js';
@@ -1074,10 +1077,12 @@ import { adapter as straightship } from '../carriers/straightship/adapter.js';
 import { adapter as suhu } from '../carriers/suhu/adapter.js';
 import { adapter as sundarbanCourier } from '../carriers/sundarban-courier/adapter.js';
 import { adapter as sunson } from '../carriers/sunson/adapter.js';
+import { adapter as sunspeedy } from '../carriers/sunspeedy/adapter.js';
 import { adapter as sunyou } from '../carriers/sunyou/adapter.js';
 import { adapter as suocang } from '../carriers/suocang/adapter.js';
 import { adapter as suratKargo } from '../carriers/surat-kargo/adapter.js';
 import { adapter as sutengExpress } from '../carriers/suteng-express/adapter.js';
+import { adapter as sutongst } from '../carriers/sutongst/adapter.js';
 import { adapter as sway } from '../carriers/sway/adapter.js';
 import { adapter as swiftx } from '../carriers/swiftx/adapter.js';
 import { adapter as swireShipping } from '../carriers/swire-shipping/adapter.js';
@@ -1443,6 +1448,7 @@ export const REGISTRY: RegistryDefinition = {
     "blueex": blueex,
     "bluegrace-logistics": bluegraceLogistics,
     "bm-cargo": bmCargo,
+    "bmxps": bmxps,
     "bob-go": bobGo,
     "bombino": bombino,
     "bookurier": bookurier,
@@ -1849,6 +1855,7 @@ export const REGISTRY: RegistryDefinition = {
     "hitch": hitch,
     "hjwl": hjwl,
     "hjyt": hjyt,
+    "hltop": hltop,
     "hmm": hmm,
     "hoegh-autoliners": hoeghAutoliners,
     "home-delivery-team": homeDeliveryTeam,
@@ -2075,6 +2082,7 @@ export const REGISTRY: RegistryDefinition = {
     "mondial-relay": mondialRelay,
     "mongol-infinity-post": mongolInfinityPost,
     "moran-transportation": moranTransportation,
+    "morelink56": morelink56,
     "morning-global": morningGlobal,
     "mrl-global": mrlGlobal,
     "mrw": mrw,
@@ -2388,10 +2396,12 @@ export const REGISTRY: RegistryDefinition = {
     "suhu": suhu,
     "sundarban-courier": sundarbanCourier,
     "sunson": sunson,
+    "sunspeedy": sunspeedy,
     "sunyou": sunyou,
     "suocang": suocang,
     "surat-kargo": suratKargo,
     "suteng-express": sutengExpress,
+    "sutongst": sutongst,
     "sway": sway,
     "swiftx": swiftx,
     "swire-shipping": swireShipping,
@@ -2866,6 +2876,7 @@ export const REGISTRY: RegistryDefinition = {
     "bluestreak-couriers": "universal",
     "bm-cargo": "bm-cargo",
     "bm-express": "universal",
+    "bmxps": "bmxps",
     "bob-go": "bob-go",
     "bolt-kargo": "universal",
     "bombax": "universal",
@@ -3555,6 +3566,7 @@ export const REGISTRY: RegistryDefinition = {
     "hjyt": "hjyt",
     "hkd-express": "universal",
     "hlog-transportes": "universal",
+    "hltop": "hltop",
     "hmm": "hmm",
     "hoegh-autoliners": "hoegh-autoliners",
     "holisol": "universal",
@@ -3952,6 +3964,7 @@ export const REGISTRY: RegistryDefinition = {
     "moova": "universal",
     "moovin": "universal",
     "moran-transportation": "moran-transportation",
+    "morelink56": "morelink56",
     "morning-global": "morning-global",
     "motorex": "universal",
     "mountain-movers": "universal",
@@ -4501,6 +4514,7 @@ export const REGISTRY: RegistryDefinition = {
     "sundarban-courier": "sundarban-courier",
     "suning-logistics": "universal",
     "sunson": "sunson",
+    "sunspeedy": "sunspeedy",
     "sunyou": "sunyou",
     "suocang": "suocang",
     "super-parcel-track": "universal",
@@ -4509,6 +4523,7 @@ export const REGISTRY: RegistryDefinition = {
     "surat-kargo": "surat-kargo",
     "suteng-express": "suteng-express",
     "suto-logistics": "universal",
+    "sutongst": "sutongst",
     "svenns-transport": "universal",
     "svuum": "universal",
     "sway": "sway",
