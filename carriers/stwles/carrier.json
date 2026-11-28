@@ -1,0 +1,63 @@
+{
+  "id": "stwles",
+  "displayName": "Shengtai Logistics",
+  "aliases": [
+    "盛泰物流",
+    "北京盛泰物流有限公司",
+    "Beijing Shengtai Logistics"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#FF6600"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "stwles",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "canaryUrl": "https://www.kuaidi100.com/all/stwles.shtml",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "sender_name",
+      "office_contact_details",
+      "staff_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "sender_name",
+      "office_contact_details",
+      "staff_details"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

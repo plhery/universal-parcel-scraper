@@ -1,0 +1,65 @@
+{
+  "carrier": "stwles",
+  "records": [
+    {
+      "number": "5011518736",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for Shengtai. Shengtai's tracking page answers it with an order taken from Shanghai to Hangzhou and delivered there."
+    },
+    {
+      "number": "5663994115",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/stwles.shtml",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie"
+        ]
+      },
+      "note": "Kuaidi100's Shengtai page gives it as the example number. Shengtai's tracking page answers it with an order taken from Shenzhen to Lanzhou and delivered there."
+    }
+  ]
+}

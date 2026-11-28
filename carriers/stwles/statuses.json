@@ -1,0 +1,68 @@
+{
+  "carrier": "stwles",
+  "entries": [
+    {
+      "wording": "从[…]导入数据",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The order imported from the client's data at the hub named: nothing handed over yet."
+    },
+    {
+      "wording": "从[…]提货",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The hub named collected the goods from the supplier; the parser drops the supplier and the phone."
+    },
+    {
+      "wording": "从[…]入库",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Into the hub's warehouse."
+    },
+    {
+      "wording": "从[…]出库；下一站[…]",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Left the hub named for the next hub or station named."
+    },
+    {
+      "wording": "从[…]到货",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Arrived at the delivery station named."
+    },
+    {
+      "wording": "从[…]到错货入库",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Arrived at the station named as goods sent there by mistake, and taken in; on the sample that station delivered it."
+    },
+    {
+      "wording": "货物已从[…]分站领货",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "A courier of the station named took the parcel out; the parser drops the courier and the phone."
+    },
+    {
+      "wording": "货物已由[…]反馈为[配送成功]",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The station reported the delivery done."
+    },
+    {
+      "wording": "货物已由[…]审核",
+      "unmapped": true,
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The station's check of the feedback before it, keyed seconds after it: it keeps the stage of the row before it."
+    }
+  ]
+}

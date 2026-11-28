@@ -7686,5 +7686,11 @@
     "pattern": "^DYB\\d{13}$",
     "kind": "open",
     "reason": "DYB and thirteen digits carries DYB Express's name, but one public sample shows the series. A rule waits for more samples; the adapter answers explicit selection."
+  },
+  {
+    "carrier": "stwles",
+    "pattern": "^\\d{10}$",
+    "kind": "by_design",
+    "reason": "Shengtai Logistics' order numbers seen are ten bare digits, a shape many carriers' numbers share, so nothing in the number points to Shengtai. The adapter answers explicit selection."
   }
 ]
