@@ -1,0 +1,81 @@
+{
+  "id": "ubuy",
+  "displayName": "UBUYLOGI",
+  "aliases": [
+    "优拜物流",
+    "德国优拜物流",
+    "广州优拜科技有限公司"
+  ],
+  "region": {
+    "countries": [
+      "DE",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#003054"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ubuy",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "offset_timestamps",
+    "origin_country",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.ubuylogi.com/track/?num={trackingNumber}",
+    "searchUrl": "https://www.ubuylogi.com/",
+    "helpUrl": "https://www.ubuylogi.com/contact-us/",
+    "canaryUrl": "https://www.ubuylogi.com/",
+    "shows": [
+      "status",
+      "history",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "driver_name",
+      "contact_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "driver_name",
+      "contact_details"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "ubuylogi.com"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "num"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -7522,5 +7522,17 @@
     "pattern": "^\\d{10}$",
     "kind": "by_design",
     "reason": "Ten digits is Dayi Express's waybill on Kuaidi100's test number, a bare digit run many carriers' numbers share, so nothing in it points to the firm. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "ubuy",
+    "pattern": "^\\d{12}$",
+    "kind": "by_design",
+    "reason": "Twelve digits is UBUYLOGI's waybill on Kuaidi100's sample, a bare digit run many carriers' numbers share, so nothing in it points to the firm. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "ubuy",
+    "pattern": "^\\d{26}$",
+    "kind": "by_design",
+    "reason": "Twenty-six digits is the test number Kuaidi100 lists for UBUYLOGI, which the firm's tracker holds nothing under, and a bare digit run with nothing in it that points to the firm. The adapter answers explicit selection."
   }
 ]

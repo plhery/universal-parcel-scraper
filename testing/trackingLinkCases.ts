@@ -3113,6 +3113,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'bester', number: 'SWE990481726',
     route: /^https:\/\/www\.exbtr\.com\/waybill\.html\?orderid=SWE990481726$/,
     marker: /飞斯特运通|抱歉，没有找到符合条件的信息/ },
+  // The tracking page takes the number from its address and names it in its heading over the rows.
+  { carrier: 'ubuy', number: '107358204619',
+    route: /^https:\/\/www\.ubuylogi\.com\/track\/\?num=107358204619$/,
+    marker: /运单号107358204619的物流信息|以下是来自转运中心转运记录/ },
 ];
 
 /**

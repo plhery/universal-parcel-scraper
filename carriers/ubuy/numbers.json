@@ -1,0 +1,56 @@
+{
+  "carrier": "ubuy",
+  "records": [
+    {
+      "number": "493747265227",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/ubuy.shtml",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "Kuaidi100's page for 优拜物流 (code ubuy) gives it as an example. The firm's tracker answers it with a parcel its German warehouse sent by air to China, cleared there and delivered by SF Express under the waybill the warehouse's first row names."
+    },
+    {
+      "number": "30100755800000000673326563",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 优拜物流 (code ubuy). The firm's tracker answers it with the heading for the number over a table holding only its header row, its answer for a number it holds nothing under, so no history confirms it."
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "carrier": "ubuy",
+  "entries": [
+    {
+      "code": null,
+      "wording": "【德国仓】 国际运单已生成 单号…",
+      "language": "zh",
+      "english": "German warehouse: international waybill created, number …",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The warehouse's first row, with SF Express's waybill for the delivery in China."
+    },
+    {
+      "code": null,
+      "wording": "【德国仓】 收件人信息重复，等待发货3",
+      "language": "zh",
+      "english": "German warehouse: recipient details duplicated, waiting to ship",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "note": "The warehouse holds the parcel until the recipient's details are sorted out."
+    },
+    {
+      "code": null,
+      "wording": "【德国仓】 仓库放行",
+      "language": "zh",
+      "english": "German warehouse: released",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "【德国仓】 离开仓库，发往航空处理中心",
+      "language": "zh",
+      "english": "German warehouse: left the warehouse for the air cargo centre",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "包裹已到达法兰克福机场",
+      "language": "zh",
+      "english": "Parcel arrived at Frankfurt airport",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "包裹已发往中国",
+      "language": "zh",
+      "english": "Parcel sent to China",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "包裹已到达中国机场",
+      "language": "zh",
+      "english": "Parcel arrived at the airport in China",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "开始清关",
+      "language": "zh",
+      "english": "Customs clearance started",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "包裹已送海关清关",
+      "language": "zh",
+      "english": "Parcel handed to customs for clearance",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "顺丰速运已收取快件，您的期待，我们定竭诚守护，不负所托。",
+      "language": "zh",
+      "english": "SF Express has collected the parcel",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "SF Express takes the cleared parcel for delivery in China."
+    },
+    {
+      "code": null,
+      "wording": "快件在【…】完成分拣，准备发往【…】",
+      "language": "zh",
+      "english": "Sorted at …, about to leave for …",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "快件离开【…】，已在发往【…】的路上",
+      "language": "zh",
+      "english": "Left …, on its way to …",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "快件到达【…】",
+      "language": "zh",
+      "english": "Arrived at …",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "快件途经…",
+      "language": "zh",
+      "english": "Passing through …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "SF Express names the city the parcel passes through."
+    },
+    {
+      "code": null,
+      "wording": "我们正在为您的快件分配最合适的快递员，请您稍等。",
+      "language": "zh",
+      "english": "Assigning a courier to the parcel",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The delivering outlet has the parcel and has not sent it out yet."
+    },
+    {
+      "code": null,
+      "wording": "正在派送途中",
+      "language": "zh",
+      "english": "Out for delivery",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "您的快件已由本人签收。您的体验对于我们",
+      "language": "zh",
+      "english": "Signed for by the recipient",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "SF Express's delivery row as the page cuts it, without the courier's name and mobile it names."
+    }
+  ]
+}

@@ -1242,6 +1242,7 @@ import { statusMap as meixi } from '../../carriers/meixi/status.js';
 import { statusMap as bester } from '../../carriers/bester/status.js';
 import { statusMap as dyexpress } from '../../carriers/dyexpress/status.js';
 import { statusMap as zsda56 } from '../../carriers/zsda56/status.js';
+import { statusMap as ubuy } from '../../carriers/ubuy/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1535,6 +1536,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   bester,
   dyexpress,
   zsda56,
+  ubuy,
 };
 
 /** The carrier the app files the universal providers' scans under. */
