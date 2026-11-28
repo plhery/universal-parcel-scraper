@@ -57,7 +57,7 @@ export function normalizeValuewayNumber(raw: string): string {
 }
 
 /** A domestic courier's sentence, without the people it names, their phones, a pickup point or notes. */
-function domesticWording(text: string): string {
+export function domesticWording(text: string): string {
   let kept = text.replace(NAMED, (_match, role: string | undefined) => role ?? '').replace(HANDED, '$1')
     .replace(SIGNATORY, '$1').replace(ASIDE, '').replace(DIGITS, '');
   for (const end of [CONTACT, SENTENCE_END]) {

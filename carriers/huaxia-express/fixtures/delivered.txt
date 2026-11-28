@@ -1,0 +1,48 @@
+100
+<EMS_INFO>
+<TRCKING_NBR>HE1000147481</TRCKING_NBR>
+<NUMBER>HE1000147481</NUMBER>
+<NUMBER_T>SF3192819028046</NUMBER_T>
+<EMSKIND>华夏快递</EMSKIND>
+<NUMBER_TT></NUMBER_TT>
+<FROM>加拿大</FROM>
+<DES>中国</DES>
+<TRANSKIND>丰桥接口</TRANSKIND>
+<TRANS_NBR>SF3192819028046</TRANS_NBR>
+<REFER_NBR>SF3192819028046</REFER_NBR>
+<ITEM>1</ITEM>
+<WEIGHT>1.000</WEIGHT>
+<STATE>3</STATE>
+<ADATE>2025.07.24 15:21</ADATE>
+<SIGN>OK.</SIGN>
+
+</EMS_INFO>
+
+<TRACK_DATA>
+<DATETIME>2025-07-15 15:39</DATETIME><PLACE>Richmond</PLACE><INFO>包裹已揽收，正在安排出库，快递高峰期如有延误请谅解【Canada】</INFO>
+<DATETIME>2025-07-17 10:33</DATETIME><PLACE>Richmond</PLACE><INFO>已出库【国际快件调度中心】</INFO>
+<DATETIME>2025-07-17 12:28</DATETIME><PLACE></PLACE><INFO>已出库，送至温哥华机场，等待航班起飞 【YVR】</INFO>
+<DATETIME>2025-07-18 00:46</DATETIME><PLACE></PLACE><INFO>航班起飞，温哥华 - 中国 【国际运输途中】</INFO>
+<DATETIME>2025-07-21 17:11</DATETIME><PLACE></PLACE><INFO>到达口岸清关中，请耐心等待 【中国海关】</INFO>
+<DATETIME>2025-07-22 09:22</DATETIME><PLACE></PLACE><INFO>清关完成，转交快递派送，感谢您的耐心等待 【中国海关】</INFO>
+<DATETIME>2025-07-22 16:12</DATETIME><PLACE>哈尔滨市</PLACE><INFO>顺丰速运 已收取快件，您的期待，我们定竭诚守护，不负所托。</INFO>
+<DATETIME>2025-07-22 16:19</DATETIME><PLACE>哈尔滨市</PLACE><INFO>快件在【哈尔滨新阳财富中心店】完成分拣，准备发往 【哈尔滨龙运转运中心】</INFO>
+<DATETIME>2025-07-22 16:26</DATETIME><PLACE>哈尔滨市</PLACE><INFO>快件离开 【哈尔滨新阳财富中心店】，已在发往 【哈尔滨龙运转运中心】 的路上</INFO>
+<DATETIME>2025-07-22 17:36</DATETIME><PLACE>哈尔滨市</PLACE><INFO>快件到达 【哈尔滨龙运转运中心】</INFO>
+<DATETIME>2025-07-22 19:38</DATETIME><PLACE>大庆市</PLACE><INFO>快件在【大庆庆北创业城店】完成分拣，准备发往 【大庆世纪转运站】</INFO>
+<DATETIME>2025-07-22 19:40</DATETIME><PLACE>大庆市</PLACE><INFO>快件离开 【大庆庆北创业城店】，已在发往 【大庆世纪转运站】 的路上</INFO>
+<DATETIME>2025-07-23 05:12</DATETIME><PLACE>沈阳市/铁岭市/抚顺市</PLACE><INFO>快件途经沈阳市</INFO>
+<DATETIME>2025-07-23 11:12</DATETIME><PLACE>葫芦岛市</PLACE><INFO>快件途经葫芦岛市</INFO>
+<DATETIME>2025-07-23 11:36</DATETIME><PLACE>哈尔滨市</PLACE><INFO>您的快件运输时经过辽宁省/葫芦岛市京沈高速，遇当地交通管制，时效预计增加0.5天，我们已提前安排在快件到达目的地后为您优先派送，请您放心。</INFO>
+<DATETIME>2025-07-23 17:12</DATETIME><PLACE>天津市</PLACE><INFO>快件途经天津市</INFO>
+<DATETIME>2025-07-23 23:12</DATETIME><PLACE>菏泽市</PLACE><INFO>快件途经菏泽市</INFO>
+<DATETIME>2025-07-24 05:12</DATETIME><PLACE>信阳市</PLACE><INFO>快件途经信阳市</INFO>
+<DATETIME>2025-07-24 08:41</DATETIME><PLACE>武汉市</PLACE><INFO>快件到达 【武汉东西湖转运中心】</INFO>
+<DATETIME>2025-07-24 11:59</DATETIME><PLACE>武汉市</PLACE><INFO>快件在【武汉东西湖转运中心】完成分拣，准备发往 【武汉东西湖永旺营业店】</INFO>
+<DATETIME>2025-07-24 12:53</DATETIME><PLACE>武汉市</PLACE><INFO>快件离开 【武汉东西湖转运中心】，已在发往 【武汉东西湖永旺营业店】 的路上</INFO>
+<DATETIME>2025-07-24 13:42</DATETIME><PLACE>武汉市</PLACE><INFO>快件到达 【武汉东西湖永旺营业店，地址：东西湖区金银湖科技园16栋】</INFO>
+<DATETIME>2025-07-24 13:49</DATETIME><PLACE>武汉市</PLACE><INFO>我们正在为您的快件分配最合适的快递员，请您稍等。</INFO>
+<DATETIME>2025-07-24 14:17</DATETIME><PLACE>武汉市</PLACE><INFO>快件交给【张三，联系电话：13800000000】，正在派送途中（如有任何问题可先联系我，我将尽全力为您解决。您的认可，是我最大的动力！）</INFO>
+<DATETIME>2025-07-24 15:21</DATETIME><PLACE>武汉市</PLACE><INFO>您的快件已派送成功（家门口），如有疑问请电联快递员【张三，电话：13800000000】。您的体验对于我们至关重要，如果您对我们的服务有任何的想法和建议，请随时联系我们，我们一定用心倾听，全力改进，不辜负您的信任与支持。</INFO>
+
+</TRACK_DATA>

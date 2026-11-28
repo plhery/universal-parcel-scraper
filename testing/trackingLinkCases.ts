@@ -3103,6 +3103,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'valueway', number: 'VE900000000CA',
     route: /^https:\/\/member\.valueway\.net\/cgi-bin\/GInfo\.dll\?MfcISAPICommand=EmmisTrack&w=valueway&ntype=1000&cmodel=new:tracking&cno=VE900000000CA$/,
     marker: /运单跟踪/ },
+  // The GInfo server renders the waybill's page from its address, the number in its heading.
+  { carrier: 'huaxia-express', number: 'HE1000999990',
+    route: /^https:\/\/www\.huaxiaglobal\.ca\/cgi-bin\/GInfo\.dll\?MfcISAPICommand=EmmisTrack&w=nacv&cno=HE1000999990$/,
+    marker: /没有跟踪信息/ },
   // U-Speed's tracking page reads the number from its address and looks it up on load.
   { carrier: 'u-speed-express', number: 'RUN10009999999917',
     route: /^https:\/\/www\.u-speedex\.com\/queryTracks\?no=RUN10009999999917$/,

@@ -7614,5 +7614,11 @@
     "pattern": "^\\d{11}$",
     "kind": "by_design",
     "reason": "Eleven digits is the test number Kuaidi100 lists for Nanbei Express, a bare digit run many carriers' numbers share, so nothing in it points to Nanbei. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "huaxia-express",
+    "pattern": "^HE\\d{10}$",
+    "kind": "collision",
+    "reason": "HE and ten digits is Huaxia Express's waybill on Kuaidi100's test number, a shape Colis Privé's and Aramex's rules also take, and no source documents it as Huaxia's alone. The adapter answers explicit selection."
   }
 ]

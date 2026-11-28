@@ -1,0 +1,88 @@
+{
+  "id": "huaxia-express",
+  "displayName": "Huaxia Express",
+  "aliases": [
+    "华夏快递",
+    "华夏国际快递",
+    "加拿大华夏快递",
+    "Huaxia International Express"
+  ],
+  "region": {
+    "countries": [
+      "CA",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#3c88c6"
+  },
+  "selectable": true,
+  "timezone": "America/Vancouver",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "huaxia-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "destination_country",
+    "weight",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.huaxiaglobal.ca/cgi-bin/GInfo.dll?MfcISAPICommand=EmmisTrack&w=nacv&cno={trackingNumber}",
+    "searchUrl": "https://www.huaxiaglobal.ca/track/",
+    "canaryUrl": "https://www.huaxiaglobal.ca/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination_country",
+      "parcel_count",
+      "delivered_at",
+      "courier_name",
+      "driver_phone"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "weight",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "origin",
+      "parcel_count",
+      "delivered_at",
+      "courier_name",
+      "driver_phone"
+    ],
+    "unavailable": [
+      "eta",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.huaxiaglobal.ca",
+        "huaxiaglobal.ca"
+      ],
+      "pathPattern": "^/cgi-bin/ginfo\\.dll$",
+      "query": "^(?=(?:.*&)?MfcISAPICommand=(?:emmistrack|EmsApiTrack)(?:&|$))(?:.*&)?cno=([^&]+)(?=&|$)"
+    }
+  ],
+  "detection": []
+}

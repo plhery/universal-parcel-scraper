@@ -1,0 +1,103 @@
+{
+  "carrier": "huaxia-express",
+  "entries": [
+    {
+      "wording": "包裹已揽收，正在安排出库，快递高峰期如有延误请谅解【…】",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Huaxia's first scan, at its Richmond office."
+    },
+    {
+      "wording": "已出库【…】",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "已出库，送至温哥华机场，等待航班起飞 【…】",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "航班起飞，温哥华 - 中国 【…】",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "到达口岸清关中，请耐心等待 【…】",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Landed at the Chinese port, in import clearance."
+    },
+    {
+      "wording": "清关完成，转交快递派送，感谢您的耐心等待 【…】",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Cleared and handed to the domestic courier: not out for delivery."
+    },
+    {
+      "wording": "顺丰速运 已收取快件，…",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "SF's first scan, after customs: the hand-over, not the parcel's acceptance."
+    },
+    {
+      "wording": "快件在【…】完成分拣，准备发往 【…】",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件离开 【…】，已在发往 【…】 的路上",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件到达 【…】",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件途经…",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "您的快件运输时经过…，遇当地交通管制，…",
+      "language": "zh",
+      "unmapped": true,
+      "confirmedBy": "live",
+      "note": "A delay notice during the trip: not a movement, so the row keeps the stage of the one before it."
+    },
+    {
+      "wording": "我们正在为您的快件分配最合适的快递员，请您稍等",
+      "language": "zh",
+      "unmapped": true,
+      "confirmedBy": "live",
+      "note": "A notice at the delivery station before a courier takes the parcel: not a movement."
+    },
+    {
+      "wording": "快件交给，正在派送途中",
+      "language": "zh",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The adapter drops the courier's name and phone that SF writes after 交给."
+    },
+    {
+      "wording": "您的快件已派送成功",
+      "language": "zh",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The adapter drops where the parcel was left and the courier's contact after it. The record's STATE 3 says delivered too."
+    }
+  ]
+}
