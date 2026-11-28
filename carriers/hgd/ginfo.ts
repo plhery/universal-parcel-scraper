@@ -1,7 +1,6 @@
 /**
- * The Neoman GInfo tracking server, `GInfo.dll` on IIS, which HGD, SRJ, Yi Long Express, King
- * Delivery, Valueway Express, Qinhang Transportation, Ronghui Supply Chain and ESOWAY each run on a
- * host of their own, all but King Delivery and Valueway over plain HTTP.
+ * The Neoman GInfo tracking server, `GInfo.dll` on IIS, which HGD and a dozen other forwarders each
+ * run on a host of their own, most over plain HTTP.
  * Their sites' tracking forms post to the server's `EmmisTrack` page; the adapters read
  * `EmsApiTrack`, the record that page renders. Each carrier keeps its host, number shape and status
  * map; this module holds the request and the parser they share.
@@ -19,6 +18,7 @@ import { languageStageStatus, type ClassifiedWording, type Stage } from '../../c
 import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
+import { paddedDate } from '../../core/time/fields.js';
 import { clean, decodeText, fetchBounded, textFromHtml, userAgentOf } from '../../core/transport/index.js';
 import { itdidaCountry } from '../whwdt/itdida.js';
 
@@ -98,7 +98,8 @@ const UNKNOWN = '-102';
 const DELIVERED_STATE = '3';
 const RETURN = /^\s*(-?\d{1,5})\s*(?:\r?\n|$)/;
 const CHALLENGE = /_cf_chl_opt|cf-turnstile|<title>\s*Just a moment|acw_sc__v2|aliyun_waf|_____tmd_____|waf\.tencent|<title>\s*(?:滑动验证|验证码|安全验证|访问受限|访问被拒绝)/i;
-// A day, with its time to the minute or the second when the row gives one.
+// A day, with its time to the minute or the second when the row gives one. A tenant that pads a
+// one-digit hour with spaces ("2016-09-15   9:46") is read with the spaces collapsed and the hour padded.
 const CLOCK = /^(\d{4}-\d{2}-\d{2})(?: (\d{2}:\d{2})(?::(\d{2}))?)?$/;
 const ROW = /<DATETIME>([^<]*)<\/DATETIME>\s*<PLACE>([^<]*)<\/PLACE>\s*<INFO>([^<]*)<\/INFO>/g;
 const WEIGHT = /^\d{1,4}(?:\.\d{1,3})?$/;
@@ -159,7 +160,7 @@ function scans(tenant: GinfoTenant, rows: string, readAt: number): CarrierEvent[
   if (matches.length > MAX_ROWS) throw new SchemaError(provider, `${provider} returned an oversized history`);
   for (const [, clock, place, info] of matches) {
     if (![clock, place, info].some((part) => textFromHtml(part, 40))) continue;
-    const local = wallClock(provider, textFromHtml(clock, 40));
+    const local = wallClock(provider, paddedDate(textFromHtml(clock, 40)));
     if (firstOccurrence(DateTime.fromISO(local, { zone: ZONE })).toMillis() > readAt) continue;
     const written = textFromHtml(place, 120);
     const text = tenant.row ? tenant.row(textFromHtml(info, 1000), written) : { description: textFromHtml(info, 300) };

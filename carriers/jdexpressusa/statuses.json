@@ -1,0 +1,41 @@
+{
+  "carrier": "jdexpressusa",
+  "entries": [
+    {
+      "wording": "已到达本快递公司仓储",
+      "language": "zh",
+      "english": "Arrived at the company's warehouse",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The firm's US warehouse takes the parcel in, its first row."
+    },
+    {
+      "wording": "已到达洛杉矶国际机场仓储",
+      "language": "zh",
+      "english": "Arrived at the warehouse at Los Angeles International Airport",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "在飞往中国途中",
+      "language": "zh",
+      "english": "On the flight to China",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "已抵达中国中转口岸，等待发往清关口岸",
+      "language": "zh",
+      "english": "Arrived at the transit port in China, waiting to go on to the clearance port",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "已到达清关口岸，等待海关查验",
+      "language": "zh",
+      "english": "Arrived at the clearance port, waiting for customs inspection",
+      "stage": "customs",
+      "confirmedBy": "live"
+    }
+  ]
+}

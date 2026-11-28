@@ -1235,6 +1235,7 @@ import { statusMap as overseaex } from '../../carriers/overseaex/status.js';
 import { statusMap as shunjie } from '../../carriers/shunjie/status.js';
 import { statusMap as usasd } from '../../carriers/usasd/status.js';
 import { statusMap as express2global } from '../../carriers/express2global/status.js';
+import { statusMap as jdexpressusa } from '../../carriers/jdexpressusa/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1521,6 +1522,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   shunjie,
   usasd,
   express2global,
+  jdexpressusa,
 };
 
 /** The carrier the app files the universal providers' scans under. */

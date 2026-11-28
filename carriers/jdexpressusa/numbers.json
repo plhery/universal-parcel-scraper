@@ -1,0 +1,24 @@
+{
+  "carrier": "jdexpressusa",
+  "records": [
+    {
+      "number": "DG050020042US",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 骏达快递. JD Express USA's tracker answers it with a parcel taken in at its US warehouse, flown from Los Angeles and waiting for customs in China."
+    }
+  ]
+}

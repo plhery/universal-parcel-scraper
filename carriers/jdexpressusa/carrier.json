@@ -1,0 +1,65 @@
+{
+  "id": "jdexpressusa",
+  "displayName": "JD Express USA",
+  "aliases": [
+    "骏达快递",
+    "駿達快遞",
+    "骏达"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#EC7400"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "jdexpressusa",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "offset_timestamps",
+    "weight"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "delivery_partner"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "weight"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "delivery_partner"
+    ],
+    "unavailable": [
+      "eta",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}
