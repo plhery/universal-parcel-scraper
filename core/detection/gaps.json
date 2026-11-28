@@ -7474,5 +7474,11 @@
     "pattern": "^OE\\d{11}$",
     "kind": "collision",
     "reason": "OE and eleven digits is Oversea Express's waybill on Kuaidi100's test number, and two characters and eleven digits is a shape La Poste's rule takes, so detection does not name Oversea Express. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "shunjie",
+    "pattern": "^\\d{12}$",
+    "kind": "by_design",
+    "reason": "Passerby A Express's waybill on Kuaidi100's test number is twelve bare digits, a shape many carriers' numbers share, so nothing in it points to the firm. The adapter answers explicit selection."
   }
 ]

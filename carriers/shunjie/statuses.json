@@ -1,0 +1,165 @@
+{
+  "carrier": "shunjie",
+  "entries": [
+    {
+      "code": null,
+      "wording": "待处理",
+      "language": "zh",
+      "english": "Waiting to be processed",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The first row, written when the customer books the parcel."
+    },
+    {
+      "code": null,
+      "wording": "已审核，已入库",
+      "language": "zh",
+      "english": "Checked and taken into the warehouse",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "已揽收",
+      "language": "zh",
+      "english": "Collected",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The warehouse's row, seconds after it took the parcel in."
+    },
+    {
+      "code": null,
+      "wording": "出库扫描完毕，等待发货",
+      "language": "zh",
+      "english": "Scanned out, waiting to ship",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "包裹已出库，送往美国机场",
+      "language": "zh",
+      "english": "The parcel has left the warehouse for the airport",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "航班从美国飞往中国清关口岸",
+      "language": "zh",
+      "english": "Flying from the US to the port of clearance in China",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "航班中转，等待转机中",
+      "language": "zh",
+      "english": "In transit between flights",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "航班已到达口岸机场",
+      "language": "zh",
+      "english": "The flight has reached the port's airport",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "清关中，请耐心等待",
+      "language": "zh",
+      "english": "In customs clearance",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "顺丰速运已揽件单号:清关结束，已移交顺丰",
+      "language": "zh",
+      "english": "Cleared and handed to SF Express",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The platform's hand-off row, written before SF Express's number was known."
+    },
+    {
+      "code": null,
+      "wording": "顺丰速运已揽件单号：…",
+      "language": "zh",
+      "english": "Picked up by SF Express, waybill …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The platform's row for the hand-off, with SF Express's waybill."
+    },
+    {
+      "code": null,
+      "wording": "顺丰速运 已收取快件",
+      "language": "zh",
+      "english": "SF Express has collected the parcel",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "SF Express's first row. Its courtesy after the comma is left out."
+    },
+    {
+      "code": null,
+      "wording": "快件在【重庆两江新区三亚湾店】完成分拣，准备发往 【重庆渝北转运中心】",
+      "language": "zh",
+      "english": "Sorted at <station>, getting ready for <station>",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "快件离开 【重庆两江新区三亚湾店】，已在发往 【重庆渝北转运中心】 的路上",
+      "language": "zh",
+      "english": "Left <station> on the way to <station>",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "快件到达 【重庆渝北转运中心】",
+      "language": "zh",
+      "english": "Arrived at <station>",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A station's row may give its address after its name, which the reader leaves out."
+    },
+    {
+      "code": null,
+      "wording": "快件开始长途运输，两站距离2417KM",
+      "language": "zh",
+      "english": "Long-haul transport has begun, <distance> between the stations",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "车辆正在长途运输中，车辆临近【安康市】，距离下一站约【2030】KM，请您放心",
+      "language": "zh",
+      "english": "On the road, near <town>, about <distance> to the next stop",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "快件正在派送途中",
+      "language": "zh",
+      "english": "Out for delivery",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "SF Express's row names the courier with a mobile in a bracket after 交给, which the reader leaves out with the courtesy."
+    },
+    {
+      "code": null,
+      "wording": "您的快件已派送至本人",
+      "language": "zh",
+      "english": "Delivered to the recipient in person",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The row goes on to the courier's name and mobile and a courtesy, which the reader leaves out."
+    }
+  ]
+}

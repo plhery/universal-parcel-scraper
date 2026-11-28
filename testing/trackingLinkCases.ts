@@ -3097,6 +3097,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'overseaex', number: 'OE99010100417',
     route: /^https:\/\/www\.overseaex\.com\/index\.php\?c=index&f=search&sn=OE99010100417$/,
     marker: /运单信息不存在/, forwarding: { notFound: /运单信息不存在/ } },
+  // The same platform on Passerby A Express's host.
+  { carrier: 'shunjie', number: '300158204736',
+    route: /^https:\/\/www\.passerbyaexpress\.com\/index\.php\?c=index&f=search&sn=300158204736$/,
+    marker: /运单信息不存在/, forwarding: { notFound: /运单信息不存在/ } },
 ];
 
 /**
