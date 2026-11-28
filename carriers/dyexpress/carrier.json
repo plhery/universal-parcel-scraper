@@ -1,0 +1,80 @@
+{
+  "id": "dyexpress",
+  "displayName": "Dayi Express",
+  "aliases": [
+    "大億國際快遞",
+    "大亿国际快递",
+    "大億快遞",
+    "大亿快递",
+    "深圳大亿快递",
+    "DYE",
+    "Da Yi International Express"
+  ],
+  "region": {
+    "countries": [
+      "CN",
+      "TW",
+      "HK",
+      "MO",
+      "SG",
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#F41834"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "dyexpress",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "origin_country",
+    "destination_country"
+  ],
+  "portal": {
+    "searchUrl": "https://www.dy-express.com/query/serchi",
+    "helpUrl": "https://www.dy-express.com/contact/",
+    "canaryUrl": "https://www.dy-express.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "parcel_count",
+      "service_name",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination"
+    ],
+    "discarded": [
+      "parcel_count",
+      "service_name",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

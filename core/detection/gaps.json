@@ -7516,5 +7516,11 @@
     "pattern": "^\\d{11}$",
     "kind": "by_design",
     "reason": "Eleven digits with leading zeros is the test number Kuaidi100 lists for Bester Express under its other code, a bare digit run many carriers' numbers share, so nothing in it points to the firm. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "dyexpress",
+    "pattern": "^\\d{10}$",
+    "kind": "by_design",
+    "reason": "Ten digits is Dayi Express's waybill on Kuaidi100's test number, a bare digit run many carriers' numbers share, so nothing in it points to the firm. The adapter answers explicit selection."
   }
 ]

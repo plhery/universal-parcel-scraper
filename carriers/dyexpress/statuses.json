@@ -1,0 +1,55 @@
+{
+  "carrier": "dyexpress",
+  "entries": [
+    {
+      "code": null,
+      "wording": "已经收到寄件信息",
+      "language": "zh",
+      "english": "Shipment information received",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The sample's first row: the firm has the sender's details, not the parcel."
+    },
+    {
+      "code": null,
+      "wording": "已经离开始发地站点",
+      "language": "zh",
+      "english": "Left the origin station",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "出口作业中...",
+      "language": "zh",
+      "english": "Export processing",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The export leg out of Shenzhen, before the destination's clearance."
+    },
+    {
+      "code": null,
+      "wording": "已完成清关作业，发往目的地站点",
+      "language": "zh",
+      "english": "Customs clearance completed, sent to the destination station",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "正在派件，请耐心等待...",
+      "language": "zh",
+      "english": "Out for delivery, please wait",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "已签收，感谢您体验深圳大亿快递！",
+      "language": "zh",
+      "english": "Signed for, thank you for using Shenzhen Dayi Express",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    }
+  ]
+}
