@@ -56,6 +56,8 @@ export interface LqfastTenant {
   readonly provider: string;
   /** The tenant's encrypted company id, as its query page carries it, unescaped. */
   readonly companyId: string;
+  /** The firm's name as the waybill record's carrier (`cygsname`) gives it, when the tenant checks it. */
+  readonly company?: RegExp;
   /** A row's stage from its wording, or null to leave it open. */
   readonly stage: (wording: string) => ClassifiedWording | null;
   /** The tenant's status map, which passes over the rows it lists without a stage. */
@@ -168,7 +170,8 @@ function lqfastScans(rows: readonly unknown[], tenant: LqfastTenant, readAt: num
  * A waybill's history from the portal's `GET_TYD_DETAIL` reply, `{Sus, Data, Msg, Data2, …}`.
  * `Sus` false with `Msg` 未找到运单！ is the answer for a number the tenant holds no waybill under;
  * any other refusal is inconclusive. `Data2` is the waybill's record, whose waybill number (`unit`)
- * or cargo number (`billno`) must be the number asked; `Data` its rows. Neither the record's
+ * or cargo number (`billno`) must be the number asked, and its carrier (`cygsname`) the tenant's firm
+ * when the tenant names it; `Data` its rows. Neither the record's
  * shipper, consignee and branch contacts nor the template the page is drawn with are read.
  */
 export function parseLqfast(payload: unknown, raw: string, tenant: LqfastTenant, readAt = Date.now()): CarrierResult {
@@ -187,6 +190,9 @@ export function parseLqfast(payload: unknown, raw: string, tenant: LqfastTenant,
   if (![numberField(record, 'unit', provider), numberField(record, 'billno', provider)].includes(number)) {
     throw new SchemaError(provider, `${provider} did not answer for the parcel asked`);
   }
+  // A tenant that names itself checks that the record is its own waybill, not another firm's on the platform.
+  const firm = typeof record.cygsname === 'string' ? clean(record.cygsname, 120) : '';
+  if (tenant.company && firm && !tenant.company.test(firm)) throw new SchemaError(provider, `${provider} answered for another firm`);
   const events = lqfastScans(embedded(payload.Data, provider), tenant, readAt);
   if (!events.length) throw new NoHistoryError(provider, `${provider} lists the waybill without a row`, { reason: 'listed' });
   const latest = events[0]!;

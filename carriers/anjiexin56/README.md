@@ -19,6 +19,8 @@ waybill portal at `wx.lqfast.com` its query page at `https://www.anjiexin56.com/
   the company id. A redirect or a 404 is a moved route.
 - The record's waybill number (`unit`) or cargo number (`billno`) must be the number asked. The
   portal finds a waybill by either.
+- A tenant may also give its firm's name, which the record's carrier (`cygsname`) must then match,
+  when the record names one.
 - The request, checks and rows are the platform's, in [`lqfast.ts`](lqfast.ts), with the tenant's
   company id and wordings as parameters, so another firm on it needs only its adapter and status
   map. The portal's `POST /NewAPI/DoWork` (`Business.BZB.GET_TYD_DETAIL`) gives the same reply

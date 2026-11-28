@@ -3142,6 +3142,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'cdxinchen56', number: '1999999999',
     route: /^https:\/\/wx\.lqfast\.com\/Pub\/UnitListDetail\?companyid=6n09opswzrylt7MBDbTGSg%3D%3D&unit=1999999999$/,
     marker: /未找到运单|校验手机后四位|运单跟踪/ },
+  // The same page under Kaiqitong's company id.
+  { carrier: 'kqtwl', number: '8020199001',
+    route: /^https:\/\/wx\.lqfast\.com\/Pub\/UnitListDetail\?companyid=99HDajcB62Q8ilC47SAc0Q%3D%3D&unit=8020199001$/,
+    marker: /未找到运单|校验手机后四位|运单跟踪/ },
   // The routes page renders the waybill's timeline on the server under its number, or the line that it has none.
   { carrier: 'zgtux', number: 'TX999000017',
     route: /^https:\/\/vip\.zgtux\.com\/routes\?no=TX999000017$/,

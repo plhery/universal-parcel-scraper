@@ -1,0 +1,54 @@
+{
+  "carrier": "kqtwl",
+  "entries": [
+    {
+      "wording": "开单入库",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The waybill opened and the freight taken into the origin depot: the first row in the firm's hands."
+    },
+    {
+      "wording": "分流出库",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Sorted out of the origin depot onto its line."
+    },
+    {
+      "wording": "发车，已离开…",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The line truck left the hub the row names."
+    },
+    {
+      "wording": "在途：途经…",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "On the road, passing the district and motorway the row names."
+    },
+    {
+      "wording": "到达：…，下一站：…",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Arrived at a hub on the way, with the next stop."
+    },
+    {
+      "wording": "到达：…，预约派送",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Arrived in the destination city, where the branch books the delivery with the consignee; the round itself is not yet out."
+    },
+    {
+      "wording": "签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for at delivery."
+    }
+  ]
+}
