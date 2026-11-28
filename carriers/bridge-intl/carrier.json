@@ -19,18 +19,53 @@
   "timezone": "Australia/Perth",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "bridge-intl",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "dateOnlyScans": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "weight",
+    "origin_country",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "searchUrl": "https://www.bri-ems.com/query",
     "helpUrl": "https://www.bri-ems.com/contact-us",
     "canaryUrl": "https://www.bri-ems.com/query",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "weight",
+      "recipient_address",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "weight",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "recipient_address"
+    ],
+    "unavailable": [
+      "scan_times",
+      "offset_timestamps",
+      "location",
+      "eta",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
   "detection": []

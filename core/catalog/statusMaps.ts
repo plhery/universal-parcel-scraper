@@ -1242,6 +1242,7 @@ import { statusMap as hyeship } from '../../carriers/hyeship/status.js';
 import { statusMap as yhtlogistics } from '../../carriers/yhtlogistics/status.js';
 import { statusMap as meixi } from '../../carriers/meixi/status.js';
 import { statusMap as bester } from '../../carriers/bester/status.js';
+import { statusMap as bridgeIntl } from '../../carriers/bridge-intl/status.js';
 import { statusMap as dyexpress } from '../../carriers/dyexpress/status.js';
 import { statusMap as zsda56 } from '../../carriers/zsda56/status.js';
 import { statusMap as ubuy } from '../../carriers/ubuy/status.js';
@@ -1564,7 +1565,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   hyeship,
   yhtlogistics,
   meixi,
-  bester,
+  bester, 'bridge-intl': bridgeIntl,
   dyexpress,
   zsda56,
   ubuy,

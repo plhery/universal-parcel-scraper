@@ -1,4 +1,61 @@
 {
   "carrier": "bridge-intl",
-  "entries": []
+  "entries": [
+    {
+      "wording": "订单已生成",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Order created: the order line's status, read only when the reply lists no rows."
+    },
+    {
+      "wording": "您的包裹已经收件",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The parcel was collected."
+    },
+    {
+      "wording": "您的包裹已经收件成功，进入珀斯（Perth）分拣中心",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The parcel was received at the Perth sorting centre."
+    },
+    {
+      "wording": "您的包裹已送往Perth 国际机场",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Sent to Perth's international airport."
+    },
+    {
+      "wording": "您的包裹正在过机查验",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Screened before its flight."
+    },
+    {
+      "wording": "您的包裹在等待航班中",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Waiting for its flight."
+    },
+    {
+      "wording": "您的包裹已发往中国",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Flown to China."
+    },
+    {
+      "wording": "您的包裹已经到达中国，进入核对，正在清关",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Arrived in China and in customs clearance."
+    }
+  ]
 }

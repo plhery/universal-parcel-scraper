@@ -5795,6 +5795,12 @@
     "reason": "Only an aggregator's example shows a Bigfoot Express Freight number of two or three letters and six or seven digits, so there is no rule."
   },
   {
+    "carrier": "bridge-intl",
+    "pattern": "^[A-Z]{2}\\d{9}[A-Z]{2}$",
+    "kind": "by_design",
+    "reason": "Bridge Intl's order numbers take the shape of a UPU item number, two letters, nine digits and two letters, which names a post rather than this Perth firm."
+  },
+  {
     "carrier": "brink-transport",
     "pattern": "^\\d{13}$",
     "kind": "collision",
