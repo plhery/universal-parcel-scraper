@@ -19,6 +19,8 @@ const TRACKING_STATUS: Record<string, ClassifiedStatus> = {
   // Creation and handover: the sender posts the parcel at a locker or pickup
   // point, or a courier collects it.
   'CRE.1001': { status: 'pending', stage: 'registered' },
+  // InPost UK's notice that the parcel is on its way to InPost, before InPost or the sender's first carrier has it.
+  'INF.1006': { status: 'pending', stage: 'registered' },
   'FMD.1001': { status: 'in_transit', stage: 'accepted' },
   'FMD.1002': { status: 'in_transit', stage: 'accepted' },
   // Logistics-centre movement.

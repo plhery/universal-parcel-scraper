@@ -14,6 +14,8 @@ const received = { eventCode: 'MMD.1001', eventTitle: 'We have your parcel', tim
   location: { city: 'Exampletown', countryCode: 'GB' } };
 const out = { eventCode: 'LMD.1001', eventTitle: 'Your parcel is out for delivery', timestamp: '2026-05-03T07:30:00+01:00',
   location: { city: 'Exampletown', countryCode: 'GB' } };
+const onItsWay = (timestamp: string) => ({ eventCode: 'INF.1006', eventTitle: 'On its way to us', timestamp, location: { city: null, countryCode: 'GB' } });
+const loading = { eventCode: 'CRE.1001', eventTitle: 'Parcel loading', timestamp: '2026-05-01T09:00:00+01:00', location: null };
 const delivered = { eventCode: 'EOL.1001', eventTitle: 'Delivered', timestamp: '2026-05-03T12:10:00+01:00', location: { city: 'Exampletown', countryCode: 'GB' } };
 
 function reply(events: unknown[], overrides: Record<string, unknown> = {}) {
@@ -79,7 +81,10 @@ describe('InPost UK step', () => {
 
   it('keeps the hub\'s partial answer when the tracker cannot be read or adds nothing', async () => {
     for (const rows of [[], [{ status: 403 }], [{ error: 'challenge-html' }], [{ trackingNumberSubmitted: `JJD${'0'.repeat(15)}8` }],
-      [{ body: JSON.stringify(reply([created])) }], [{ status: 404, body: JSON.stringify({ status: 'not_found' }) }]]) {
+      [{ body: JSON.stringify(reply([created])) }],
+      // InPost UK's notice that the parcel is on its way to InPost, around its creation, adds no movement.
+      [{ body: JSON.stringify(reply([onItsWay('2026-05-01T10:00:00+01:00'), loading, onItsWay('2026-05-01T07:00:00+01:00')])) }],
+      [{ status: 404, body: JSON.stringify({ status: 'not_found' }) }]]) {
       const { trawl } = trawlAnswering(rows);
       const { instance } = instanceWith(json(hubParcel([hubCreated])), trawl);
       await expect(instance.track({ number: UK })).resolves.toMatchObject({ current_stage: 'registered', history_truncated: true });

@@ -25,7 +25,8 @@ GB). Tracked through the keyless `inposteasy.com` hub API; no postcode or link n
    Cloudflare Turnstile check and posts the number with the widget's token to
    `POST https://inpost.co.uk/tracking/api`. The [InPost UK helper](../../trawl/inpost-uk-browser.mjs)
    lets the page do both and returns the one reply bound to the whole number.
-   - Its scans carry the hub's codes, so the same map stages them.
+   - Its scans carry the hub's codes, so the same map stages them. Its own notice that the parcel is on its way to
+     InPost (`INF.1006`), before or after the creation, is registered: InPost does not have the parcel yet.
    - The tracker's answer replaces the hub's when it holds more than the creation. A tracker that
      can't be read, or adds nothing, leaves the hub's answer as it was: the partial one, still
      open to a provider, or its not-found. Both must say not-found for the lookup to say so.

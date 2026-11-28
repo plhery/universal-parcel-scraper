@@ -3,6 +3,8 @@
   "entries": [
     { "code": "CRE.1001", "language": "en", "wording": "Shipment Created", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-08-31", "note": "Shipment created." },
     { "code": "CRE.1001", "language": "en", "wording": "Parcel created", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The UK hub's wording." },
+    { "code": "CRE.1001", "language": "en", "wording": "Parcel loading", "stage": "registered", "confirmedBy": "live", "note": "InPost UK's tracker's wording." },
+    { "code": "INF.1006", "language": "en", "wording": "On its way to us", "stage": "registered", "confirmedBy": "live", "note": "InPost UK's tracker, before and after the creation: the parcel is on its way to InPost, which does not have it yet." },
     { "code": "FMD.1001", "language": "en", "wording": "Sent through Parcel Locker/Parcel Point", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-08-31", "note": "The sender posted the parcel at a locker or pickup point." },
     { "code": "FMD.1001", "language": "en", "wording": "We will collect it soon", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "A courier collection booked from the sender, before the courier collects the parcel (FMD.1002). Otherwise FMD.1001 is a posting at a locker or pickup point." },
     { "code": "FMD.1002", "language": "en", "wording": "Collected by the Courier", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-08-31", "note": "Collected by a courier, from the sender or from the locker it was posted at.", "template": "picked_up" },
