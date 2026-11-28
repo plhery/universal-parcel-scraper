@@ -1,0 +1,33 @@
+{
+  "id": "pickwings",
+  "displayName": "Pickwings",
+  "aliases": [
+    "Pickwings AG"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#1f2532"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://pickwings.ch/de",
+    "canaryUrl": "https://consignee.pickwings.ch/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,35 @@
+{
+  "id": "velokurier-st-gallen",
+  "displayName": "Velokurier St.Gallen",
+  "aliases": [
+    "Velokurier St. Gallen",
+    "die Fliege Velokurier",
+    "die Fliege Velokurier St. Gallen GmbH"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#ff640a"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://diefliege.kuz.ch/",
+    "canaryUrl": "https://velokurier.sg/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

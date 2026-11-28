@@ -1,0 +1,35 @@
+{
+  "id": "velocite",
+  "displayName": "Vélocité",
+  "aliases": [
+    "vélocité Sàrl",
+    "Vélocité Riviera",
+    "vélocité riviera sàrl"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#f83600"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.velocite.ch/",
+    "canaryUrl": "https://www.velocite.ch/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,46 @@
+{
+  "id": "fracht",
+  "displayName": "Fracht",
+  "aliases": [
+    "Fracht AG",
+    "Fracht Group"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#00539b"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://your.fracht.com/Track.php?SearchValue={trackingNumber}",
+    "searchUrl": "https://your.fracht.com/Track.php",
+    "canaryUrl": "https://your.fracht.com/Track.php",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "your.fracht.com"
+      ],
+      "pathPattern": "^/Track\\.php$",
+      "params": [
+        "SearchValue",
+        "MultiSearch"
+      ]
+    }
+  ],
+  "detection": []
+}

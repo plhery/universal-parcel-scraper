@@ -1,0 +1,33 @@
+{
+  "id": "saetta-verde",
+  "displayName": "Saetta Verde",
+  "aliases": [
+    "Associazione Saetta Verde"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#00ab4e"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://svlcrm.qstools.ch/",
+    "canaryUrl": "https://www.saettaverde.ch/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

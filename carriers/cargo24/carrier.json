@@ -1,0 +1,43 @@
+{
+  "id": "cargo24",
+  "displayName": "Cargo24",
+  "aliases": [
+    "Cargo24 AG"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#d71c2c"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.cargo24.ch/send-and-track/",
+    "canaryUrl": "https://www.cargo24.app/portal/aor/tracking.aspx",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "cargo24.app"
+      ],
+      "pathPattern": "^/portal/aor/tracking\\.aspx$",
+      "params": [
+        "id"
+      ]
+    }
+  ],
+  "detection": []
+}

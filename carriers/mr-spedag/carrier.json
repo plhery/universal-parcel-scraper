@@ -1,0 +1,35 @@
+{
+  "id": "mr-spedag",
+  "displayName": "M+R Spedag",
+  "aliases": [
+    "M + R Spedag",
+    "M+R Spedag Group",
+    "M + R Spedag Group AG"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#0060ac"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.mrspedag.com/track-and-trace/",
+    "canaryUrl": "https://www.mrspedag.com/track-and-trace/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

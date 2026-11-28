@@ -6554,10 +6554,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#163d72",
     "aliases": [
       "A Hartrodt",
-      "a. hartrodt GmbH & Co. KG"
+      "a. hartrodt GmbH & Co. KG",
+      "a. hartrodt (Schweiz) AG"
     ],
     "countries": [
-      "DE"
+      "DE",
+      "CH"
     ],
     "selectable": true,
     "timezone": "Europe/Berlin",
@@ -15469,6 +15471,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "cargo24": {
+    "displayName": "Cargo24",
+    "color": "#d71c2c",
+    "aliases": [
+      "Cargo24 AG"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.cargo24.app/portal/aor/tracking.aspx",
+    "trackingSearchUrl": "https://www.cargo24.ch/send-and-track/",
+    "linkRules": [
+      {
+        "domains": [
+          "cargo24.app"
+        ],
+        "pathPattern": "^/portal/aor/tracking\\.aspx$",
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "cargoboard": {
     "displayName": "Cargoboard",
     "color": "#03070b",
@@ -17625,7 +17657,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#ff0000",
     "aliases": [
       "Citytrans GmbH",
-      "Citytrans Kurier GmbH"
+      "Citytrans Kurier GmbH",
+      "Citytrans Bern GmbH"
     ],
     "countries": [
       "CH"
@@ -30726,6 +30759,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "fracht": {
+    "displayName": "Fracht",
+    "color": "#00539b",
+    "aliases": [
+      "Fracht AG",
+      "Fracht Group"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://your.fracht.com/Track.php",
+    "trackingUrlTemplate": "https://your.fracht.com/Track.php?SearchValue={trackingNumber}",
+    "trackingSearchUrl": "https://your.fracht.com/Track.php",
+    "linkRules": [
+      {
+        "domains": [
+          "your.fracht.com"
+        ],
+        "pathPattern": "^/Track\\.php$",
+        "params": [
+          "SearchValue",
+          "MultiSearch"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "fragilepak": {
     "displayName": "FragilePAK",
     "color": "#e65525",
@@ -33297,7 +33363,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "GO! Express & Logistics",
       "GO Express",
-      "General Overnight"
+      "General Overnight",
+      "GO! Express & Logistics (Schweiz) AG"
     ],
     "countries": [
       "DE",
@@ -33307,7 +33374,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "LU",
       "NL",
       "PL",
-      "SK"
+      "SK",
+      "CH"
     ],
     "selectable": true,
     "timezone": "Europe/Berlin",
@@ -48785,6 +48853,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "mr-spedag": {
+    "displayName": "M+R Spedag",
+    "color": "#0060ac",
+    "aliases": [
+      "M + R Spedag",
+      "M+R Spedag Group",
+      "M + R Spedag Group AG"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.mrspedag.com/track-and-trace/",
+    "trackingSearchUrl": "https://www.mrspedag.com/track-and-trace/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "mrl-global": {
     "displayName": "MRL Global",
     "color": "#0071a6",
@@ -50120,11 +50210,14 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "C.E. Noerpel",
       "C.E. Noerpel GmbH",
       "Noerpel SE",
-      "Noerpel Gruppe"
+      "Noerpel Gruppe",
+      "Lebert",
+      "Lebert AG"
     ],
     "countries": [
       "DE",
-      "AT"
+      "AT",
+      "CH"
     ],
     "selectable": true,
     "timezone": "Europe/Berlin",
@@ -54855,6 +54948,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "pickwings": {
+    "displayName": "Pickwings",
+    "color": "#1f2532",
+    "aliases": [
+      "Pickwings AG"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://consignee.pickwings.ch/",
+    "trackingSearchUrl": "https://pickwings.ch/de",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pigeon-express": {
     "displayName": "Pigeon Express",
     "color": "#00327d",
@@ -58255,7 +58368,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "DGO Express",
       "Sittam",
       "Raben Sittam",
-      "Fresh Logistics"
+      "Fresh Logistics",
+      "Raben Sieber",
+      "Raben Sieber AG"
     ],
     "countries": [
       "PL",
@@ -60263,6 +60378,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "high"
       }
     ]
+  },
+  "saetta-verde": {
+    "displayName": "Saetta Verde",
+    "color": "#00ab4e",
+    "aliases": [
+      "Associazione Saetta Verde"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.saettaverde.ch/",
+    "trackingSearchUrl": "https://svlcrm.qstools.ch/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "safeway-express-cargo": {
     "displayName": "Safe Way Express Cargo",
@@ -66852,6 +66987,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "swiss-worldcargo": {
+    "displayName": "SWISS WorldCargo",
+    "color": "#cf2026",
+    "aliases": [
+      "Swiss World Cargo",
+      "SWISS Cargo",
+      "Swiss International Air Lines Cargo"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://offerandorder.swissworldcargo.com/app/offerandorder/",
+    "trackingSearchUrl": "https://offerandorder.swissworldcargo.com/app/offerandorder/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "swissconnect": {
     "displayName": "swissconnect",
     "color": "#ff7f00",
@@ -73318,6 +73475,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "velocite": {
+    "displayName": "Vélocité",
+    "color": "#f83600",
+    "aliases": [
+      "vélocité Sàrl",
+      "Vélocité Riviera",
+      "vélocité riviera sàrl"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.velocite.ch/",
+    "trackingSearchUrl": "https://www.velocite.ch/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "velocity-express-in": {
     "displayName": "Velocity Express",
     "color": "#0366af",
@@ -73344,6 +73523,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/home-tracking/([^/?#]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "velokurier-st-gallen": {
+    "displayName": "Velokurier St.Gallen",
+    "color": "#ff640a",
+    "aliases": [
+      "Velokurier St. Gallen",
+      "die Fliege Velokurier",
+      "die Fliege Velokurier St. Gallen GmbH"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://velokurier.sg/",
+    "trackingSearchUrl": "https://diefliege.kuz.ch/",
+    "linkRules": [],
     "detectionRules": []
   },
   "vemo-logistik": {
@@ -79207,6 +79408,7 @@ export const CARRIER_IDS = [
   "cargo-international",
   "cargo-partner",
   "cargo-trans-logistik",
+  "cargo24",
   "cargoboard",
   "cargobus",
   "cargoline",
@@ -79644,6 +79846,7 @@ export const CARRIER_IDS = [
   "forza-delivery",
   "foxpost",
   "foz-post",
+  "fracht",
   "fragilepak",
   "franch-express",
   "freight-club",
@@ -80186,6 +80389,7 @@ export const CARRIER_IDS = [
   "movin",
   "movvi",
   "mr-courier-al",
+  "mr-spedag",
   "mrl-global",
   "mrw-ve",
   "msc",
@@ -80361,6 +80565,7 @@ export const CARRIER_IDS = [
   "pickup-mtaani",
   "pickupp",
   "pickupp-sg",
+  "pickwings",
   "pigeon-express",
   "pigeonship",
   "piggy-express",
@@ -80523,6 +80728,7 @@ export const CARRIER_IDS = [
   "ryder-last-mile",
   "saco-shipping-line",
   "saee",
+  "saetta-verde",
   "safeway-express-cargo",
   "safexpress",
   "sagawa",
@@ -80711,6 +80917,7 @@ export const CARRIER_IDS = [
   "swiftx",
   "swire-shipping",
   "swiss-universal-express",
+  "swiss-worldcargo",
   "swissconnect",
   "sxjd-freight",
   "sxw-express",
@@ -80908,7 +81115,9 @@ export const CARRIER_IDS = [
   "veho",
   "veloblitz",
   "veloces",
+  "velocite",
   "velocity-express-in",
+  "velokurier-st-gallen",
   "vemo-logistik",
   "venipak",
   "veoy",
@@ -81476,6 +81685,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cargo-international": [],
   "cargo-partner": [],
   "cargo-trans-logistik": [],
+  "cargo24": [],
   "cargoboard": [],
   "cargobus": [],
   "cargoline": [],
@@ -81913,6 +82123,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "forza-delivery": ["forza-delivery-1"],
   "foxpost": ["foxpost-1","foxpost-home-delivery"],
   "foz-post": [],
+  "fracht": [],
   "fragilepak": ["fragilepak-1"],
   "franch-express": [],
   "freight-club": [],
@@ -82455,6 +82666,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "movin": [],
   "movvi": [],
   "mr-courier-al": [],
+  "mr-spedag": [],
   "mrl-global": [],
   "mrw-ve": [],
   "msc": [],
@@ -82630,6 +82842,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pickup-mtaani": [],
   "pickupp": ["pickupp-1"],
   "pickupp-sg": ["pickupp-sg-1"],
+  "pickwings": [],
   "pigeon-express": [],
   "pigeonship": ["pigeonship-1"],
   "piggy-express": [],
@@ -82792,6 +83005,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ryder-last-mile": [],
   "saco-shipping-line": [],
   "saee": ["saee-1"],
+  "saetta-verde": [],
   "safeway-express-cargo": ["safeway-express-cargo-1"],
   "safexpress": [],
   "sagawa": ["sagawa-waybill"],
@@ -82980,6 +83194,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "swiftx": ["swiftx-1"],
   "swire-shipping": [],
   "swiss-universal-express": ["swiss-universal-express-sue"],
+  "swiss-worldcargo": [],
   "swissconnect": [],
   "sxjd-freight": [],
   "sxw-express": ["sxw-express-1"],
@@ -83177,7 +83392,9 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "veho": ["veho-1","veho-2"],
   "veloblitz": [],
   "veloces": [],
+  "velocite": [],
   "velocity-express-in": [],
+  "velokurier-st-gallen": [],
   "vemo-logistik": [],
   "venipak": ["venipak-1"],
   "veoy": [],

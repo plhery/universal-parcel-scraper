@@ -1,0 +1,35 @@
+{
+  "id": "swiss-worldcargo",
+  "displayName": "SWISS WorldCargo",
+  "aliases": [
+    "Swiss World Cargo",
+    "SWISS Cargo",
+    "Swiss International Air Lines Cargo"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#cf2026"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://offerandorder.swissworldcargo.com/app/offerandorder/",
+    "canaryUrl": "https://offerandorder.swissworldcargo.com/app/offerandorder/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
