@@ -17,7 +17,10 @@ Error 1004, which some numbers of the issued range return, leaves tracking incon
 data for. The service gives it only to a number with its own check digit in the issued range;
 the same digits with another check digit, or a number past the range, get the no-data
 placeholder. So ORLEN holds a number it answers 1004, and HTTP recognition, which makes the
-same lookup, reads it as known without an activity time.
+same lookup, reads it as known without an activity time. The tracker's notice gives a wrong
+number, a parcel already collected, or an Allegro Delivery parcel, which Allegro tracks, as the
+causes; Allegro's tracking service answers no scans for ORLEN's own numbers, so the adapter
+has nothing to hand such a number to.
 
 The official app (`pl.orlen.paczka`) offers no other anonymous route. It reads parcels from
 `orlenapm.azure-api.net/CustomerAPP2026/v1` under `customers/{id}/shipments`, with a token its
