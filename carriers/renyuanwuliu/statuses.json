@@ -1,0 +1,40 @@
+{
+  "carrier": "renyuanwuliu",
+  "entries": [
+    {
+      "wording": "开单入库",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The waybill opened and the freight taken into the origin depot: the first row in the firm's hands."
+    },
+    {
+      "wording": "第…次配载发车；件数:…",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Loaded onto a line truck that left, with the count of pieces; the reader drops the plate the template adds."
+    },
+    {
+      "wording": "货物到达…",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Arrived in the destination city the row names."
+    },
+    {
+      "wording": "货物已签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for at delivery."
+    },
+    {
+      "wording": "已签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The signature recorded, sometimes weeks after the delivery row; the reader drops the signer the row names."
+    }
+  ]
+}

@@ -7424,6 +7424,12 @@
     "reason": "Kaiqitong's waybills seen are seven bare digits, a counter many carriers' numbers share, so nothing in the number points to Kaiqitong."
   },
   {
+    "carrier": "renyuanwuliu",
+    "pattern": "^\\d{7}$",
+    "kind": "by_design",
+    "reason": "Renyuan's waybills seen are seven bare digits, a counter many carriers' numbers share, so nothing in the number points to Renyuan."
+  },
+  {
     "carrier": "annengyuntong",
     "pattern": "^\\d{8,10}$",
     "kind": "by_design",

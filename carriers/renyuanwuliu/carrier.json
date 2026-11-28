@@ -1,0 +1,81 @@
+{
+  "id": "renyuanwuliu",
+  "displayName": "Renyuan Logistics",
+  "aliases": [
+    "任远物流",
+    "深圳市任远物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#ff613e"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "renyuanwuliu",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://wx.lqfast.com/Pub/UnitListDetail?companyid=AKVKpwhKcTmYqx3ELFLB2g%3D%3D&unit={trackingNumber}",
+    "searchUrl": "https://wx.lqfast.com/wx/waybillquery/#/?companyid=AKVKpwhKcTmYqx3ELFLB2g%3D%3D",
+    "canaryUrl": "https://wx.lqfast.com/wx/waybillquery/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "order_contents",
+      "parcel_count",
+      "office_contact_details",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "order_contents",
+      "parcel_count",
+      "office_contact_details",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "weight",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "wx.lqfast.com"
+      ],
+      "pathPattern": "^/Pub/UnitListDetail$",
+      "query": "^(?=(?:.*&)?companyid=AKVKpwhKcTmYqx3ELFLB2g==(?:&|$))(?:.*&)?unit=([^&]+)(?=&|$)"
+    },
+    {
+      "domains": [
+        "wx.lqfast.com"
+      ],
+      "pathPattern": "^/wx/waybillquery/?$",
+      "fragment": "^/(?:waybillquery/orderDetail)?\\?(?=(?:.*&)?companyid=AKVKpwhKcTmYqx3ELFLB2g==(?:&|$))(?:.*&)?(?:unit|seek)=([^&]+)(?=&|$)"
+    }
+  ],
+  "detection": []
+}
