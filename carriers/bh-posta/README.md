@@ -10,7 +10,7 @@ An empty event table carries no explicit missing verdict, so it stays inconclusi
 
 ## Numbers
 
-The three postal operators in Bosnia and Herzegovina share the S10 suffix `BA`; it does not identify BH Pošta. Generic postal detection remains in place. The adapter confirms service ownership through actual history rather than a new number rule.
+The three postal operators in Bosnia and Herzegovina share the S10 suffix `BA`, so it does not identify BH Pošta and detection keeps its generic postal answer. A low S10 rule lets recognition ask BH Pošta about these items; its history confirms the item.
 
 ## Testing
 

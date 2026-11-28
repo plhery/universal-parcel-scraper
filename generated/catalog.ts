@@ -12968,13 +12968,20 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "bh-posta",
+      "recognitionRank": 934,
       "localClocks": true
     },
     "canaryUrl": "https://bhpwebout.posta.ba/trackwebapp/",
     "trackingSearchUrl": "https://www.posta.ba/pracenje-posiljaka/",
     "helpUrl": "https://www.posta.ba/contact/",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^[A-Z]{2}\\d{9}BA$",
+        "confidence": "low",
+        "checksum": "s10"
+      }
+    ]
   },
   "bhs-logistics": {
     "displayName": "BHS Logistics",
@@ -82166,7 +82173,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bex-express": [],
   "bfe-express": ["bfe-express-1","bfe-express-2"],
   "bft-logistik": [],
-  "bh-posta": [],
+  "bh-posta": ["bh-posta-s10"],
   "bhs-logistics": [],
   "big-smart": [],
   "bigfoot-express": [],

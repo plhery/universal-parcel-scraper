@@ -227,6 +227,15 @@ describe('Serbian S10 items', () => {
   });
 });
 
+describe('Bosnian S10 items', () => {
+  // BH Pošta, Pošte Srpske and HP Mostar share the code, so it names nobody, but recognition asks BH Pošta.
+  it('leaves them to international mail and asks BH Pošta', () => {
+    expect(detectCarrierMatch('RR123456785BA')).toMatchObject({ carrier: 'intl-post', confidence: 'high', candidates: ['intl-post'] });
+    expect(recognitionAskedCarriers('RR123456785BA')).toContain('bh-posta');
+    expect(recognitionAskedCarriers('RR123456784BA')).not.toContain('bh-posta');
+  });
+});
+
 describe('Ukrainian S10 items', () => {
   it.each(['CR123456785UA', 'EE123456785UA', 'LZ123456785UA', 'RB123456785UA'])('names Ukrposhta, which tracks %s abroad', (number) => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'ukrposhta', confidence: 'high', candidates: ['ukrposhta'] });

@@ -21,6 +21,9 @@
     "steps": [
       "direct"
     ],
+    "recognition": {
+      "rank": 934
+    },
     "localClocks": true
   },
   "capabilities": [
@@ -45,5 +48,12 @@
     "unavailable": []
   },
   "links": [],
-  "detection": []
+  "detection": [
+    {
+      "id": "bh-posta-s10",
+      "pattern": "^[A-Z]{2}\\d{9}BA$",
+      "confidence": "low",
+      "checksum": "s10"
+    }
+  ]
 }

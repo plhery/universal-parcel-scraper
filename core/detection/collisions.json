@@ -623,6 +623,15 @@
     "reason": "Chronopost's low-confidence rule accepts any S10 code with a passing check digit, and M-ONE's any Serbian one, so they overlap Pošta Srbije's own items; its high-confidence rule, for the items whose foreign legs its tracker relays, decides."
   },
   {
+    "shape": "AA9{9}BA with a valid S10 check digit",
+    "carriers": [
+      "bh-posta",
+      "chronopost",
+      "intl-post"
+    ],
+    "reason": "BH Pošta, Pošte Srpske and HP Mostar share the Bosnian issuer suffix, so it names none of them; recognition asks BH Pošta, the one with a tracker, and the postal fallback remains selected until it confirms the item."
+  },
+  {
     "shape": "C, E or L, a letter, 9{9}AU with a valid S10 check digit",
     "carriers": [
       "australia-post",

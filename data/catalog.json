@@ -12963,13 +12963,20 @@
     "tracking": {
       "mode": "automatic",
       "adapter": "bh-posta",
+      "recognitionRank": 934,
       "localClocks": true
     },
     "canaryUrl": "https://bhpwebout.posta.ba/trackwebapp/",
     "trackingSearchUrl": "https://www.posta.ba/pracenje-posiljaka/",
     "helpUrl": "https://www.posta.ba/contact/",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^[A-Z]{2}\\d{9}BA$",
+        "confidence": "low",
+        "checksum": "s10"
+      }
+    ]
   },
   "bhs-logistics": {
     "displayName": "BHS Logistics",
