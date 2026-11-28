@@ -397,6 +397,24 @@ describe('DHLink HTTP adapter', () => {
     expect(departed('LAX, US')).toMatchObject({ location: 'LAX, US' });
   });
 
+  it('keeps Beijing time for a row without a place between two rows placed in China', () => {
+    const row = (trackTime: string, place: string, info: string) => ({ trackTime, createDate: '2026-03-11 16:54:00', place, info, nodeCode: null, nodeName: null });
+    const read = (rows: Row[]) => parseDhlink(changed('swiftx-at-warehouse', (parcel) => {
+      parcel.destCountryCode = 'FR';
+      parcel.lastTurnNo = null;
+      parcel.trackinfoList = rows;
+    }), WAREHOUSE, LATER);
+    const bagged = row('2026-03-11 01:53:00', '', 'Warehouse scanned & bagged');
+    const received = row('2026-03-11 09:32:00', 'SHENZHEN, CN', 'Airline Received');
+    const dispatched = row('2026-03-10 21:35:00', 'SHENZHEN', 'Package departed from the warehouse');
+    // Recorded hours after it: Paris or Beijing could be its time, but the parcel is still in China.
+    expect(read([received, bagged, dispatched]).events![1]).toMatchObject({ time: '2026-03-11T01:53:00+08:00', description: 'Warehouse scanned & bagged' });
+    // Without a row in China after it, the parcel may have left: either clock could be the row's.
+    expect(read([bagged, dispatched]).events![0]).toMatchObject({ local_time: '2026-03-11T01:53:00' });
+    expect(read([row('2026-03-11 09:32:00', 'PARIS, FR', 'Package arrived at destination country'), bagged, dispatched]).events![1])
+      .toMatchObject({ local_time: '2026-03-11T01:53:00' });
+  });
+
   it('keeps one row of a US partner’s scan relayed on its hub’s clock and again on UTC, on the hub’s clock', () => {
     const row = (trackTime: string, createDate: string, info: string) => ({ trackTime, createDate, place: 'none', info, nodeCode: null, nodeName: null });
     const relayed = (rows: Row[], destination = 'US') => parseDhlink(changed('swiftx-at-warehouse', (parcel) => {

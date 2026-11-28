@@ -83,7 +83,9 @@ page makes.
   ([ARCHITECTURE.md](../../ARCHITECTURE.md#status-model)). A receipt after the parcel moved on,
   such as China Post's once the warehouse sent it off, is transit.
 - Clocks have no offset. DHLink records each row on Beijing time (`createDate`), seconds after
-  the clock of a row scanned in China. A scan with a place in China is read on Beijing time.
+  the clock of a row scanned in China. A scan with a place in China is read on Beijing time, and so is
+  a row without a place between two such scans, as a line's warehouse bagging the parcel for its flight
+  can be: the parcel has not left China.
   So is every scan of a parcel whose last-leg number is SwiftX's: DHLink relays its scans on its
   own clock, however late it records them, and its rounds and deliveries are recorded before a
   US reading of their clocks. On a GOFO line DHLink's own rows are on Beijing time too, but its

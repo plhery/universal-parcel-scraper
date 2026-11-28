@@ -402,6 +402,17 @@ export function parseDhlink(payload: unknown, raw: string, readAt = Date.now()):
     const time = isoTime(entry.scan.stamp, zone);
     if (time && time.timestamp <= entry.scan.recorded + CLOCK_SKEW_MS) Object.assign(entry, { zone, time });
   }
+  // A row without a place between two rows placed in China is in China too: the parcel has not left yet, as when a
+  // line's warehouse bags it for the flight between the warehouse's dispatch and the airline's receipt.
+  const placed = dated.filter((entry) => entry.scan.event.location || entry.scan.china);
+  for (const entry of dated) {
+    if (entry.zone || entry.scan.event.location || entry.scan.china) continue;
+    const newer = placed.filter((other) => other.scan.stamp > entry.scan.stamp).at(-1);
+    const older = placed.find((other) => other.scan.stamp < entry.scan.stamp);
+    if (!newer?.scan.china || !older?.scan.china) continue;
+    const time = isoTime(entry.scan.stamp, RECORD_ZONE);
+    if (time && time.timestamp <= entry.scan.recorded + CLOCK_SKEW_MS) Object.assign(entry, { zone: RECORD_ZONE, time });
+  }
   // A US partner's scan can come twice, as UniUni's do: on its hub's wall clock, often after the
   // hub's town, and on UTC. The UTC copy's clock is the other's on a US reading, to the second,
   // before DHLink recorded either: one scan, on that US clock.
