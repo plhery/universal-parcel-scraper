@@ -1,0 +1,19 @@
+{
+  "carrier": "xmlxswl",
+  "entries": [
+    {
+      "wording": "开单入库",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The waybill written and the goods booked into the branch that took them."
+    },
+    {
+      "wording": "分流出库",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The goods sorted and sent out of the branch onto their line."
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "xmlxswl",
+  "displayName": "Longxinshun Logistics",
+  "aliases": [
+    "隆新顺物流",
+    "厦门隆新顺物流",
+    "厦门隆新顺供应链有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#0653B0"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "xmlxswl",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "dateOnlyScans": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.1008656.com/index.aspx?id=73320&keyword={trackingNumber}",
+    "searchUrl": "https://www.1008656.com/index.aspx?id=73320",
+    "canaryUrl": "https://www.kuaidi100.com/all/xmlxswl.shtml",
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "vehicle"
+    ],
+    "unavailable": [
+      "scan_times",
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "signatory"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

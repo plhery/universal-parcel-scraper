@@ -3154,6 +3154,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'gjsguoji', number: 'GJS888260399001',
     route: /^https:\/\/h5\.guojisuyunjapan\.cn\/#\/pages\/public\/trackDetail\?expressNo=GJS888260399001$/,
     marker: /运送详情/ },
+  // Lanqiao's tracking platform draws the firm's page under its company id and looks the number up on load;
+  // an unknown one gets the platform's notice, then the firm's page without it.
+  { carrier: 'xmlxswl', number: '3101104',
+    route: /^https:\/\/www\.1008656\.com\/index\.aspx\?id=73320&keyword=3101104$/,
+    marker: /隆新顺物流在线查询平台/ },
   // The routes page renders the waybill's timeline on the server under its number, or the line that it has none.
   { carrier: 'zgtux', number: 'TX999000017',
     route: /^https:\/\/vip\.zgtux\.com\/routes\?no=TX999000017$/,

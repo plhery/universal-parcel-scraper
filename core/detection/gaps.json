@@ -7734,5 +7734,11 @@
     "pattern": "^\\d{8}$",
     "kind": "by_design",
     "reason": "Eight digits is the test number Kuaidi100 lists for Xinshengbang Logistics, a bare digit run many carriers' numbers share, so nothing in it points to Xinshengbang. The adapter answers explicit selection and the firm's tracking page links."
+  },
+  {
+    "carrier": "xmlxswl",
+    "pattern": "^\\d{7}$",
+    "kind": "by_design",
+    "reason": "Seven digits is the test number Kuaidi100 lists for Longxinshun Logistics, a bare digit run many carriers' numbers share, so nothing in it points to Longxinshun. The adapter answers explicit selection."
   }
 ]
