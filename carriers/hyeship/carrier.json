@@ -1,0 +1,79 @@
+{
+  "id": "hyeship",
+  "displayName": "Hongyuan Express",
+  "aliases": [
+    "鸿远快递",
+    "鸿远物流",
+    "鸿远国际物流集团",
+    "HYeship",
+    "Hongyuan Logistics Group"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#E8B828"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hyeship",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "weight",
+    "destination_country"
+  ],
+  "portal": {
+    "searchUrl": "https://www.hyeship.com/track/#/trackForm",
+    "canaryUrl": "https://www.hyeship.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination_country",
+      "parcel_count",
+      "weight",
+      "service_name",
+      "delivered_at",
+      "staff_details",
+      "contact_details",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "weight"
+    ],
+    "discarded": [
+      "origin",
+      "parcel_count",
+      "service_name",
+      "delivered_at",
+      "staff_details",
+      "contact_details",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

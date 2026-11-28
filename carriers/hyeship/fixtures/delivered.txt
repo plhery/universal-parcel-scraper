@@ -1,0 +1,35 @@
+100
+<EMS_INFO>
+<TRCKING_NBR>LB603088290US</TRCKING_NBR>
+<NUMBER>LB603088290US</NUMBER>
+<NUMBER_T>3102077320632</NUMBER_T>
+<EMSKIND>B包关税无身份证</EMSKIND>
+<NUMBER_TT></NUMBER_TT>
+<FROM>美国</FROM>
+<DES>中国</DES>
+<ITEM>1</ITEM>
+<WEIGHT>1.800</WEIGHT>
+<STATE>3</STATE>
+<ADATE>2018.11.04 12:43</ADATE>
+<SIGN>某某超市</SIGN>
+
+</EMS_INFO>
+
+<TRACK_DATA>
+<DATETIME>2018-10-17</DATETIME><PLACE>鸿远仓库</PLACE><INFO>货物已入库</INFO>
+<DATETIME>2018-10-19</DATETIME><PLACE>鸿远发货仓库</PLACE><INFO>货物已发出，发往目的地</INFO>
+<DATETIME>2018-10-26</DATETIME><PLACE>中国China</PLACE><INFO>货物今天达到中国海关，进入清关流程 (The package is awaiting China Customs clearing agency review)</INFO>
+<DATETIME>2018-10-31 21:15</DATETIME><PLACE>鸿远包裹分拣中心</PLACE><INFO>到达： 鸿远转运中心公司宝安区福永环宇集包分部 已揽件</INFO>
+<DATETIME>2018-10-31 21:24</DATETIME><PLACE>鸿远包裹分拣中心</PLACE><INFO>到达： 鸿远转运中心公司宝安区福永环宇集包分部 发往： 吉林长春网点包</INFO>
+<DATETIME>2018-10-31 21:33</DATETIME><PLACE>鸿远包裹分拣中心</PLACE><INFO>到达： 鸿远转运中心公司宝安区福永环宇集包分部 大包称重</INFO>
+<DATETIME>2018-10-31 23:58</DATETIME><PLACE>鸿远转运中心</PLACE><INFO>到达： 鸿远转运中心公司 大包称重</INFO>
+<DATETIME>2018-11-01 00:01</DATETIME><PLACE>鸿远转运中心</PLACE><INFO>到达： 鸿远转运中心公司 发往： 吉林长春分拨中心</INFO>
+<DATETIME>2018-11-01 08:21</DATETIME><PLACE>鸿远转运中心龙王庙便民一KH分部</PLACE><INFO>到达： 鸿远转运中心公司龙王庙便民一KH分部 已揽件</INFO>
+<DATETIME>2018-11-04 04:31</DATETIME><PLACE>吉林长春分拨中心</PLACE><INFO>到达： 吉林长春分拨中心 上级站点： 鸿远转运中心公司</INFO>
+<DATETIME>2018-11-04 04:39</DATETIME><PLACE>吉林长春分拨中心</PLACE><INFO>到达： 吉林长春分拨中心</INFO>
+<DATETIME>2018-11-04 04:39</DATETIME><PLACE>吉林长春分拨中心</PLACE><INFO>到达： 吉林长春分拨中心 发往： 吉林主城区公司长春宽城区庆丰服务部</INFO>
+<DATETIME>2018-11-04 07:13</DATETIME><PLACE>吉林主城庆丰服务部某某街寄存点</PLACE><INFO>到达： 吉林主城公司庆丰服务部某某街寄存点 上级站点： 吉林主城区公司长春宽城区庆丰服务部 发往：</INFO>
+<DATETIME>2018-11-04 07:33</DATETIME><PLACE>吉林主城庆丰服务部某某街寄存点</PLACE><INFO>到达： 吉林主城公司庆丰服务部某某街寄存点 指定：某某(13800000000)派送</INFO>
+<DATETIME>2018-11-04 12:43</DATETIME><PLACE></PLACE><INFO>已签收 : 由 某某超市。(某某小区1栋某某超市。 ) 代签收，如有问题联系某某(13800000000)</INFO>
+
+</TRACK_DATA>

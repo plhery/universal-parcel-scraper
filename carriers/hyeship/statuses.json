@@ -1,0 +1,79 @@
+{
+  "carrier": "hyeship",
+  "entries": [
+    {
+      "wording": "货物已入库",
+      "language": "zh",
+      "english": "The goods were taken into the warehouse",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The Los Angeles warehouse takes the parcel in, its first row, dated by its day alone."
+    },
+    {
+      "wording": "货物已发出，发往目的地",
+      "language": "zh",
+      "english": "The goods were sent off to their destination",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "货物今天达到中国海关，进入清关流程 (The package is awaiting China Customs clearing agency review)",
+      "language": "zh",
+      "english": "The goods reached Chinese customs today; clearance under way",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "到达： … 指定派送",
+      "language": "zh",
+      "english": "At the site named, assigned to a courier for delivery",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The domestic courier's sentence. The adapter leaves out the courier and the mobile, and keeps only the kind of a pickup point."
+    },
+    {
+      "wording": "到达： … 已揽件",
+      "language": "zh",
+      "english": "Collected at the domestic courier's site named",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The domestic courier takes the cleared parcel over; the firm had it since the warehouse."
+    },
+    {
+      "wording": "到达： … 发往： …",
+      "language": "zh",
+      "english": "At the site named, sent on to the next",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "到达： … 大包称重",
+      "language": "zh",
+      "english": "At the site named, weighed in a bag",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "到达： … 上级站点： …",
+      "language": "zh",
+      "english": "At the site named, from the hub above it",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "到达： …",
+      "language": "zh",
+      "english": "Arrived at the site named",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "已签收",
+      "language": "zh",
+      "english": "Signed for",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The adapter leaves out who signed, the pickup point, the courier and the mobile."
+    }
+  ]
+}

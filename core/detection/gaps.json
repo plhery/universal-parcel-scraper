@@ -7486,5 +7486,11 @@
     "pattern": "^[A-Z]{2}\\d{9}US$",
     "kind": "by_design",
     "reason": "E2G Express's newer waybills, such as the NH sample on Kuaidi100's page, have the UPU S10 layout with US as the country, which belongs to postal detection and does not point to the firm. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "hyeship",
+    "pattern": "^[A-Z]{2}\\d{9}US$",
+    "kind": "collision",
+    "reason": "Two letters, nine digits and US is the UPU S10 layout postal operators print. Kuaidi100's Hongyuan Express sample takes that layout without a valid check digit, so the shape cannot name Hongyuan Express. The adapter answers explicit selection."
   }
 ]
