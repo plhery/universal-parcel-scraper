@@ -40,7 +40,7 @@ describe('Emirates SkyCargo air waybills', () => {
     const result = await tracker(fetcher).track({ number: '176-27246796' });
 
     expect(fetcher).toHaveBeenCalledTimes(3);
-    const [[tokenUrl, tokenInit], [searchUrl, searchInit], [bookingUrl, bookingInit]] = fetcher.mock.calls as [string, RequestInit][];
+    const [[tokenUrl, tokenInit], [searchUrl, searchInit], [bookingUrl, bookingInit]] = fetcher.mock.calls as [[string, RequestInit], [string, RequestInit], [string, RequestInit]];
     expect(tokenUrl).toBe('https://eskycargo.emirates.com/api/uaa/guest/oauth/token?productName=offerandorder');
     expect(Object.fromEntries(new URLSearchParams(String(tokenInit.body)))).toEqual({ tenant: 'EK', client_id: 'mercator', client_secret: '' });
     expect(searchUrl).toBe('https://eskycargo.emirates.com/api/order/services/cargo/v1/orders/actions/search?view=summary');
