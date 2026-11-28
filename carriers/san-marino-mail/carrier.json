@@ -1,0 +1,43 @@
+{
+  "id": "san-marino-mail",
+  "displayName": "San Marino Mail",
+  "aliases": [
+    "San Marino Mail Italia",
+    "San Marino Mail Italia Srl"
+  ],
+  "region": {
+    "countries": [
+      "IT",
+      "SM"
+    ]
+  },
+  "brand": {
+    "color": "#0052a2"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.sanmarinomail.it/area/search/{trackingNumber}",
+    "searchUrl": "https://tracking.sanmarinomail.it/area/",
+    "canaryUrl": "https://tracking.sanmarinomail.it/area/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.sanmarinomail.it"
+      ],
+      "path": "^/area/search/([^/?#]+)(?:/(?:details|parcel))?/?$"
+    }
+  ],
+  "detection": []
+}

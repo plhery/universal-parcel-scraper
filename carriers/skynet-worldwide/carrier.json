@@ -10,12 +10,14 @@
     "Deltec Courier",
     "SkyNet UAE",
     "SkyNet Worldwide Express UAE",
-    "Skynet Cyprus"
+    "Skynet Cyprus",
+    "SkyNet Italy"
   ],
   "region": {
     "countries": [
       "GB",
-      "CY"
+      "CY",
+      "IT"
     ]
   },
   "brand": {

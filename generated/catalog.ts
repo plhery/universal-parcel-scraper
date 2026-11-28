@@ -3261,7 +3261,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "SDA",
       "SDA Express Courier",
       "Nexive",
-      "Nexive Network"
+      "Nexive Network",
+      "Kipoint",
+      "Punto Poste",
+      "Poste Delivery Business",
+      "Poste Delivery Express"
     ],
     "countries": [
       "IT"
@@ -16349,7 +16353,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "GEFCO"
     ],
     "countries": [
-      "FR"
+      "FR",
+      "IT"
     ],
     "selectable": true,
     "timezone": "Europe/Paris",
@@ -28269,6 +28274,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "fast-est": {
+    "displayName": "Fast.Est",
+    "color": "#6c7a89",
+    "aliases": [
+      "Fast Est",
+      "Fast.Est s.r.l."
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.fast-est.it/tracking.html",
+    "trackingUrlTemplate": "https://transitpoint.us/tracking/67/{trackingNumber}",
+    "trackingSearchUrl": "https://www.fast-est.it/tracking.html",
+    "linkRules": [
+      {
+        "domains": [
+          "transitpoint.us"
+        ],
+        "path": "^/tracking/67/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "fast-express-cargo": {
     "displayName": "Fast Express Cargo",
     "color": "#deba28",
@@ -38236,6 +38270,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "invio-home": {
+    "displayName": "Invio Home",
+    "color": "#d06434",
+    "aliases": [
+      "Invio Logistics",
+      "Invio S.A.S."
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://prologico.inviologistics.com/v/trk/",
+    "trackingSearchUrl": "https://prologico.inviologistics.com/v/trk/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ipostel": {
     "displayName": "IPOSTEL",
     "color": "#a41449",
@@ -46798,6 +46853,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "mbe-it": {
+    "displayName": "MBE Italy",
+    "color": "#e20613",
+    "aliases": [
+      "Mail Boxes Etc. Italia",
+      "MBE Italia"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.mbe.it/it/tracking",
+    "trackingUrlTemplate": "https://www.mbe.it/it/tracking?c={trackingNumber}",
+    "trackingSearchUrl": "https://www.mbe.it/it/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "mbe.it"
+        ],
+        "pathPattern": "^/it/tracking$",
+        "params": [
+          "c"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "mds-collivery": {
     "displayName": "MDS Collivery",
     "color": "#00823d",
@@ -51982,7 +52069,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "Palletways",
     "color": "#74bf43",
     "aliases": [
-      "Palletways UK"
+      "Palletways UK",
+      "Palletways Italia",
+      "Palletways Italy"
     ],
     "countries": [
       "GB",
@@ -52036,6 +52125,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/NexusTracking/(\\d{16})/[^/]+/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "pallex-it": {
+    "displayName": "Pallex Italia",
+    "color": "#e10000",
+    "aliases": [
+      "Italian Pallet Network",
+      "Italian Pallet Network S.p.A."
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.pallexitalia.it/",
+    "trackingUrlTemplate": "https://tracking.pallexitalia.it/#track-and-trace/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.pallexitalia.it/",
+    "linkRules": [],
     "detectionRules": []
   },
   "pamukkale-kargo": {
@@ -57442,7 +57553,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Raben Group",
       "Raben Logistics",
       "Raben Logistics Polska",
-      "DGO Express"
+      "DGO Express",
+      "Sittam",
+      "Raben Sittam"
     ],
     "countries": [
       "PL",
@@ -59898,6 +60011,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "san-marino-mail": {
+    "displayName": "San Marino Mail",
+    "color": "#0052a2",
+    "aliases": [
+      "San Marino Mail Italia",
+      "San Marino Mail Italia Srl"
+    ],
+    "countries": [
+      "IT",
+      "SM"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.sanmarinomail.it/area/",
+    "trackingUrlTemplate": "https://tracking.sanmarinomail.it/area/search/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.sanmarinomail.it/area/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.sanmarinomail.it"
+        ],
+        "path": "^/area/search/([^/?#]+)(?:/(?:details|parcel))?/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "sandahls": {
     "displayName": "Sandahls",
     "color": "#e30613",
@@ -60134,6 +60277,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingSearchUrl": "https://www.savarexpress.com.pe/rastrea-un-envio/",
     "helpUrl": "https://www.savarexpress.com.pe/contactanos/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "savino-del-bene": {
+    "displayName": "Savino Del Bene",
+    "color": "#07153c",
+    "aliases": [
+      "Savino Del Bene S.p.A."
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://webapps.cloud.savinodelbene.com/webtng/tracking/fastTrackingView.xhtml",
+    "trackingSearchUrl": "https://webapps.cloud.savinodelbene.com/webtng/tracking/fastTrackingView.xhtml",
+    "linkRules": [
+      {
+        "domains": [
+          "webapps.cloud.savinodelbene.com",
+          "webapps.savinodelbene.com"
+        ],
+        "pathPattern": "^/webtng/tracking/fastTrackingView\\.xhtml$",
+        "params": [
+          "value"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "sbs-sokuhai": {
@@ -62838,11 +63012,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Deltec Courier",
       "SkyNet UAE",
       "SkyNet Worldwide Express UAE",
-      "Skynet Cyprus"
+      "Skynet Cyprus",
+      "SkyNet Italy"
     ],
     "countries": [
       "GB",
-      "CY"
+      "CY",
+      "IT"
     ],
     "selectable": true,
     "timezone": "Europe/London",
@@ -63693,6 +63869,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "spediamo": {
+    "displayName": "Spediamo",
+    "color": "#41b1d8",
+    "aliases": [
+      "Spediamo.it",
+      "Salesteam S.r.l."
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://spediamo.it/ext/tracking",
+    "trackingUrlTemplate": "https://spediamo.it/ext/tracking?code={trackingNumber}",
+    "trackingSearchUrl": "https://spediamo.it/ext/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "spediamo.it"
+        ],
+        "pathPattern": "^/ext/tracking/?$",
+        "params": [
+          "code"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "spedire": {
     "displayName": "Spedire",
     "color": "#0F3460",
@@ -63722,6 +63930,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "spedire.com"
         ],
         "path": "^/tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "spedirecomodo": {
+    "displayName": "SpedireComodo",
+    "color": "#42b0df",
+    "aliases": [
+      "Spedire Comodo",
+      "METAXY S.r.l."
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.spedirecomodo.it/cms/cerca-spedizione/",
+    "trackingUrlTemplate": "https://www.spedirecomodo.it/Tracking/Track?trackingNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.spedirecomodo.it/cms/cerca-spedizione/",
+    "linkRules": [
+      {
+        "domains": [
+          "spedirecomodo.it"
+        ],
+        "pathPattern": "^/Tracking/Track/?$",
+        "params": [
+          "trackingNumber"
+        ]
       }
     ],
     "detectionRules": []
@@ -78424,6 +78664,7 @@ export const CARRIER_IDS = [
   "fare-rata",
   "fargo-courier",
   "fargo-uz",
+  "fast-est",
   "fast-express-cargo",
   "fast-express-tr",
   "fastbox",
@@ -78720,6 +78961,7 @@ export const CARRIER_IDS = [
   "intime-bg",
   "intime-hr",
   "intras-jp",
+  "invio-home",
   "ipostel",
   "iqfulfillment",
   "iran-post",
@@ -78974,6 +79216,7 @@ export const CARRIER_IDS = [
   "maystro-delivery",
   "mazet",
   "mbe-es",
+  "mbe-it",
   "mds-collivery",
   "mebel-taxi",
   "meest",
@@ -79131,6 +79374,7 @@ export const CARRIER_IDS = [
   "palletonline",
   "palletways",
   "pallex",
+  "pallex-it",
   "pamukkale-kargo",
   "pandu-logistics",
   "pannon-xp",
@@ -79361,6 +79605,7 @@ export const CARRIER_IDS = [
   "samex",
   "samoa-post",
   "samus",
+  "san-marino-mail",
   "sandahls",
   "santos-e-vale",
   "sapx-express",
@@ -79368,6 +79613,7 @@ export const CARRIER_IDS = [
   "sat-ukraine",
   "saudi-post",
   "savar-express",
+  "savino-del-bene",
   "sbs-sokuhai",
   "scan-global-logistics",
   "scg-express",
@@ -79472,7 +79718,9 @@ export const CARRIER_IDS = [
   "spark-kz",
   "spc-worldwide-express",
   "sped-trans",
+  "spediamo",
   "spedire",
+  "spedirecomodo",
   "spedition-moeller",
   "speed-and-safe",
   "speedaf",
@@ -80651,6 +80899,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "fare-rata": [],
   "fargo-courier": ["fargo-courier-1"],
   "fargo-uz": [],
+  "fast-est": [],
   "fast-express-cargo": [],
   "fast-express-tr": [],
   "fastbox": ["fastbox-1"],
@@ -80947,6 +81196,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "intime-bg": [],
   "intime-hr": [],
   "intras-jp": [],
+  "invio-home": [],
   "ipostel": [],
   "iqfulfillment": [],
   "iran-post": [],
@@ -81201,6 +81451,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "maystro-delivery": [],
   "mazet": [],
   "mbe-es": [],
+  "mbe-it": [],
   "mds-collivery": [],
   "mebel-taxi": [],
   "meest": ["meest-1","meest-2","meest-3","meest-4"],
@@ -81358,6 +81609,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "palletonline": [],
   "palletways": [],
   "pallex": [],
+  "pallex-it": [],
   "pamukkale-kargo": [],
   "pandu-logistics": [],
   "pannon-xp": ["pannon-xp-1"],
@@ -81588,6 +81840,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "samex": [],
   "samoa-post": [],
   "samus": [],
+  "san-marino-mail": [],
   "sandahls": [],
   "santos-e-vale": [],
   "sapx-express": [],
@@ -81595,6 +81848,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sat-ukraine": [],
   "saudi-post": ["saudi-post-1","saudi-post-s10"],
   "savar-express": [],
+  "savino-del-bene": [],
   "sbs-sokuhai": [],
   "scan-global-logistics": [],
   "scg-express": ["scg-express-1"],
@@ -81699,7 +81953,9 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "spark-kz": [],
   "spc-worldwide-express": [],
   "sped-trans": [],
+  "spediamo": [],
   "spedire": [],
+  "spedirecomodo": [],
   "spedition-moeller": [],
   "speed-and-safe": [],
   "speedaf": ["speedaf-12","speedaf-r"],

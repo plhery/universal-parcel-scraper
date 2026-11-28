@@ -1,0 +1,44 @@
+{
+  "id": "savino-del-bene",
+  "displayName": "Savino Del Bene",
+  "aliases": [
+    "Savino Del Bene S.p.A."
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#07153c"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://webapps.cloud.savinodelbene.com/webtng/tracking/fastTrackingView.xhtml",
+    "canaryUrl": "https://webapps.cloud.savinodelbene.com/webtng/tracking/fastTrackingView.xhtml",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "webapps.cloud.savinodelbene.com",
+        "webapps.savinodelbene.com"
+      ],
+      "pathPattern": "^/webtng/tracking/fastTrackingView\\.xhtml$",
+      "params": [
+        "value"
+      ]
+    }
+  ],
+  "detection": []
+}

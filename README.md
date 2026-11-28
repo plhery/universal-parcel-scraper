@@ -15,7 +15,7 @@ The engine behind [Peek](https://peektracker.com) ([GitHub](https://github.com/p
 <!-- GENERATED:summary -->
 **4,500+ carriers** through **1298 dedicated adapters** and **5 universal fallbacks**
 
-<sub>2222 catalog entries · 170 countries represented</sub>
+<sub>2230 catalog entries · 170 countries represented</sub>
 <!-- /GENERATED:summary -->
 
 [Try it](#try-it) · [Ways to run it](#ways-to-run-it) · [Benchmark](#benchmark) · [Carriers](carriers/) · [Add a carrier](CONTRIBUTING.md)

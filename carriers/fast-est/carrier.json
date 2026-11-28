@@ -1,0 +1,42 @@
+{
+  "id": "fast-est",
+  "displayName": "Fast.Est",
+  "aliases": [
+    "Fast Est",
+    "Fast.Est s.r.l."
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#6c7a89"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://transitpoint.us/tracking/67/{trackingNumber}",
+    "searchUrl": "https://www.fast-est.it/tracking.html",
+    "canaryUrl": "https://www.fast-est.it/tracking.html",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "transitpoint.us"
+      ],
+      "path": "^/tracking/67/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

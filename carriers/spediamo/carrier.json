@@ -1,0 +1,45 @@
+{
+  "id": "spediamo",
+  "displayName": "Spediamo",
+  "aliases": [
+    "Spediamo.it",
+    "Salesteam S.r.l."
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#41b1d8"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://spediamo.it/ext/tracking?code={trackingNumber}",
+    "searchUrl": "https://spediamo.it/ext/tracking",
+    "canaryUrl": "https://spediamo.it/ext/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "spediamo.it"
+      ],
+      "pathPattern": "^/ext/tracking/?$",
+      "params": [
+        "code"
+      ]
+    }
+  ],
+  "detection": []
+}

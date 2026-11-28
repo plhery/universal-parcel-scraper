@@ -1,0 +1,34 @@
+{
+  "id": "invio-home",
+  "displayName": "Invio Home",
+  "aliases": [
+    "Invio Logistics",
+    "Invio S.A.S."
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#d06434"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://prologico.inviologistics.com/v/trk/",
+    "canaryUrl": "https://prologico.inviologistics.com/v/trk/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

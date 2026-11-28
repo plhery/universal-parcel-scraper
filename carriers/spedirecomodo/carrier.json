@@ -1,0 +1,45 @@
+{
+  "id": "spedirecomodo",
+  "displayName": "SpedireComodo",
+  "aliases": [
+    "Spedire Comodo",
+    "METAXY S.r.l."
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#42b0df"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.spedirecomodo.it/Tracking/Track?trackingNumber={trackingNumber}",
+    "searchUrl": "https://www.spedirecomodo.it/cms/cerca-spedizione/",
+    "canaryUrl": "https://www.spedirecomodo.it/cms/cerca-spedizione/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "spedirecomodo.it"
+      ],
+      "pathPattern": "^/Tracking/Track/?$",
+      "params": [
+        "trackingNumber"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,35 @@
+{
+  "id": "pallex-it",
+  "displayName": "Pallex Italia",
+  "aliases": [
+    "Italian Pallet Network",
+    "Italian Pallet Network S.p.A."
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#e10000"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.pallexitalia.it/#track-and-trace/{trackingNumber}",
+    "searchUrl": "https://tracking.pallexitalia.it/",
+    "canaryUrl": "https://tracking.pallexitalia.it/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

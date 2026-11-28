@@ -1,0 +1,45 @@
+{
+  "id": "mbe-it",
+  "displayName": "MBE Italy",
+  "aliases": [
+    "Mail Boxes Etc. Italia",
+    "MBE Italia"
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#e20613"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.mbe.it/it/tracking?c={trackingNumber}",
+    "searchUrl": "https://www.mbe.it/it/tracking",
+    "canaryUrl": "https://www.mbe.it/it/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "mbe.it"
+      ],
+      "pathPattern": "^/it/tracking$",
+      "params": [
+        "c"
+      ]
+    }
+  ],
+  "detection": []
+}
