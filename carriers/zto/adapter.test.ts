@@ -83,7 +83,9 @@ describe('ZTO', () => {
     // Recognition's request is a recorded step too.
     expect(recorded.splice(0)).toMatchObject([{ step: 'direct', outcome: 'challenge' }]);
     await expect(carrier.track({ number }, { budgetMs: 8000 })).resolves.toMatchObject({ current_stage: 'delivered', history_truncated: true });
-    expect(recorded).toMatchObject([{ step: 'direct', outcome: 'challenge' }, { step: 'trawl', outcome: 'ok' }]);
+    // With a browser service, tracking starts there: the gateway asks every caller to verify first.
+    expect(recorded).toEqual([expect.objectContaining({ step: 'trawl', outcome: 'ok' })]);
+    expect(env.fetcher).toHaveBeenCalledOnce();
     expect(JSON.parse(String(env.fetcher.mock.calls[0]![1]!.body))).toEqual({ items: [{ billCode: number }] });
   });
   it('refuses unbound captures, final rejections and incomplete bodies', async () => {
@@ -97,6 +99,9 @@ describe('ZTO', () => {
     const env = environment();
     await expect(adapter(env).track({ number }, { signal: AbortSignal.abort(new Error('cancelled')) })).rejects.toThrow('cancelled');
     expect(env.fetcher).not.toHaveBeenCalled();
+    // Without a browser service the gateway is still asked, and its challenge goes to provider fallback.
+    await expect(adapter(env).track({ number }, { budgetMs: 8000 })).rejects.toMatchObject({ kind: 'challenge' });
+    expect(env.fetcher).toHaveBeenCalledOnce();
   });
   it('says why the browser page stayed challenged, as the service helper labels it', async () => {
     const lookup = (captures: unknown[], reason?: string) => adapter({ ...environment(), trawl: new TrawlClient('http://browser.test',

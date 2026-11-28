@@ -63,8 +63,10 @@ export class ZtoTracker {
 
   fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeZtoNumber(raw);
+    // The gateway asks every caller for Dingxiang's verification before it answers, the page's own first
+    // request included, so with a browser service the lookup starts there.
     return runSteps({ carrier: 'zto', budgetMs: context.budgetMs ?? 45000, signal: context.signal, recorder: this.environment.recorder }, [
-      { id: 'direct', run: ({ signal, remainingMs }) => this.direct(number, { signal, budgetMs: Math.min(5000, remainingMs) }) },
+      { id: 'direct', enabled: !this.environment.trawl, run: ({ signal, remainingMs }) => this.direct(number, { signal, budgetMs: Math.min(5000, remainingMs) }) },
       { id: 'trawl', enabled: !!this.environment.trawl, run: ({ signal, remainingMs }) => this.browser(number, signal, remainingMs) },
     ]);
   }

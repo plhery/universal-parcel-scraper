@@ -5,8 +5,11 @@ Number shapes overlap other carriers; only a matching response confirms ownershi
 ZTO International uses a separate network and tracker.
 Its waybills, 771 and eleven digits, are tracked as [ZTO International](../zto-international/README.md).
 
-The adapter first posts to `hdgateway.zto.com/batchGetTrace`. A verification response
-can fall back to the bundled TRAWL image. The page obtains a Dingxiang challenge
+The tracker posts to `hdgateway.zto.com/batchGetTrace`, which asks every caller for
+Dingxiang's verification code (`10201`) before it answers, from home and server networks
+alike and for the page's own first request too. So with the bundled TRAWL image configured
+a lookup starts in the browser; without one the plain post still runs and its challenge
+goes to enabled universal providers. The page obtains a Dingxiang challenge
 from `mapi.zto.com/captcha/image2`, solves a slider and, when requested, clicks
 Chinese characters in order using local OCR. It asks for another puzzle when it cannot
 read one, at most twice, and once for each refused answer, since Dingxiang shows the
