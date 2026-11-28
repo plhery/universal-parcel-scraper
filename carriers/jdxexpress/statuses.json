@@ -1,0 +1,125 @@
+{
+  "carrier": "jdxexpress",
+  "entries": [
+    {
+      "code": "G_GOT",
+      "wording": "[新界][香港九龍倉]已攬件",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The Hong Kong warehouse takes the parcel in. The first bracket is the district, the second the warehouse."
+    },
+    {
+      "code": "GFT_ARRIVAL",
+      "wording": "[新界]包裹已從[香港國際倉]出庫，等待幹線 運輸",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Packed out of the Hong Kong warehouse, waiting for the truck to the mainland."
+    },
+    {
+      "code": "GFT_DEPARTURE",
+      "wording": "[新界]包裹已離開[香港國際倉]，下一站[深 圳]",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Left the Hong Kong warehouse for Shenzhen."
+    },
+    {
+      "code": "",
+      "wording": "[新界]幹線汽運已從[香港國際倉]發出",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The truck to the mainland leaves the warehouse."
+    },
+    {
+      "code": "",
+      "wording": "[深圳市]幹線汽運已抵達",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The truck arrives in Shenzhen."
+    },
+    {
+      "code": "GIN_START",
+      "wording": "[深圳市][深圳國際港口]已提貨",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Collected at the Shenzhen port, before customs."
+    },
+    {
+      "code": "GIN_PROCESSING",
+      "wording": "[深圳市][深圳口岸]清關中",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "In customs clearance at the Shenzhen border."
+    },
+    {
+      "code": "",
+      "wording": "[深圳市]已转单，转单号：773424442583645",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Handed to the courier in China under the number after 转单号, the one OtherNum gives."
+    },
+    {
+      "code": "GLT_DEPARTURE",
+      "wording": "【佛山市】广东佛山禅城区南庄北公司 已揽收",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Relayed from STO: its branch takes the parcel over. The parcel has been with JDX Express since the Hong Kong warehouse, so this is transit. The courier the row names and the courtesy after it are left out."
+    },
+    {
+      "code": "GLT_DEPARTURE",
+      "wording": "【佛山市】快件已发往 广东中山转运中心",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Relayed from STO: sent on to a hub."
+    },
+    {
+      "code": "GLT_DEPARTURE",
+      "wording": "【中山市】快件已到达 广东中山转运中心",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Relayed from STO: arrived at a hub."
+    },
+    {
+      "code": "GLT_DEPARTURE",
+      "wording": "【中山市】预计06月02日到达【深圳市】",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Relayed from STO: the day the parcel should reach the next city. The time of the next update after it is left out."
+    },
+    {
+      "code": "GLT_DEPARTURE",
+      "wording": "【深圳市】广东深圳宝安区坪洲公司 的快递员正在为您派送",
+      "language": "zh",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "Relayed from STO: out for delivery. The courier's name and phone in brackets, and the hotlines after them, are left out."
+    },
+    {
+      "code": "GLT_DEPARTURE",
+      "wording": "快件已暂存至深圳西乡永丰八区24号店菜鸟驿站",
+      "language": "zh",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "note": "Relayed from STO: left at a Cainiao parcel station for collection. The courier's phone after it is left out."
+    },
+    {
+      "code": "G_SIGN",
+      "wording": "已签收，签收人凭取货码签收",
+      "language": "zh",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Collected with the pickup code. The station's phone after it is left out."
+    }
+  ]
+}

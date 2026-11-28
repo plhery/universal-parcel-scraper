@@ -1227,6 +1227,7 @@ import { statusMap as roh56 } from '../../carriers/roh56/status.js';
 import { statusMap as esoway } from '../../carriers/esoway/status.js';
 import { statusMap as globalexp } from '../../carriers/globalexp/status.js';
 import { statusMap as xiongda } from '../../carriers/xiongda/status.js';
+import { statusMap as jdxexpress } from '../../carriers/jdxexpress/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1505,6 +1506,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   esoway,
   globalexp,
   xiongda,
+  jdxexpress,
 };
 
 /** The carrier the app files the universal providers' scans under. */

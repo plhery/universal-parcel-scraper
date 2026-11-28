@@ -1,0 +1,80 @@
+{
+  "id": "jdxexpress",
+  "displayName": "JDX Express",
+  "aliases": [
+    "永创捷国际",
+    "永创捷"
+  ],
+  "region": {
+    "countries": [
+      "HK"
+    ]
+  },
+  "brand": {
+    "color": "#17366E"
+  },
+  "selectable": true,
+  "timezone": "Asia/Hong_Kong",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "jdxexpress",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 612,
+      "pattern": "^YCJ\\d{7}HK$"
+    }
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "courier_name",
+      "driver_phone"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "courier_name",
+      "driver_phone"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "offset_timestamps"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "jdxexpress-1",
+      "pattern": "^YCJ\\d{7}HK$",
+      "confidence": "low"
+    }
+  ]
+}
