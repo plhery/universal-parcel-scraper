@@ -35,7 +35,11 @@ describe('WooliiPorter', () => {
   it('reads the service\'s 404 as not found and keeps other failures distinct', async () => {
     await expect(carrier(async () => reply(fixture('not-found.json'), 404)).track({ number: NUMBER }, { budgetMs: 8000 }))
       .rejects.toMatchObject({ kind: 'not_found' });
+    // The service's earlier wording.
+    await expect(carrier(async () => reply('{"error":"Tracking not found"}', 404)).track({ number: NUMBER }, { budgetMs: 8000 }))
+      .rejects.toMatchObject({ kind: 'not_found' });
     for (const [response, kind] of [
+      [() => reply('{"error":"Tracking number not found anywhere"}', 404), 'transport'],
       [() => reply('{"message":"Not Found"}', 404), 'transport'],
       [() => reply('', 302), 'transport'],
       [() => reply('<html><title>Just a moment...</title></html>', 403, 'text/html'), 'challenge'],

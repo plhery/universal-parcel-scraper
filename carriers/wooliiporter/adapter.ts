@@ -22,6 +22,9 @@ function json(body: string): unknown {
   }
 }
 
+// The service's error for a number it does not know.
+const NOT_FOUND = /^Tracking (?:number )?not found$/;
+
 export class WooliiTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
@@ -34,9 +37,10 @@ export class WooliiTracker {
         fetcher: this.options.fetcher, allowHttpStatuses: [...REDIRECTS, 404, 410] });
       if (REDIRECTS.includes(response.status) || response.status === 410) throw new TransportError(PROVIDER, 'WooliiPorter tracking lookup moved');
       const payload = json(decodeText(bytes));
-      // An unknown number is HTTP 404 with the service's own error; any other 404 is a moved route.
+      // An unknown number is HTTP 404 with the service's own error, in either of its wordings; any other 404 is a moved route.
       if (response.status === 404) {
-        if (payload !== null && typeof payload === 'object' && (payload as { error?: unknown }).error === 'Tracking not found') throw new NotFoundError(PROVIDER);
+        const error = payload !== null && typeof payload === 'object' ? (payload as { error?: unknown }).error : undefined;
+        if (typeof error === 'string' && NOT_FOUND.test(error)) throw new NotFoundError(PROVIDER);
         throw new TransportError(PROVIDER, 'WooliiPorter tracking lookup is unavailable');
       }
       return parseWoolii(payload, number);

@@ -24,7 +24,8 @@ with an instant, English wording, a place and a status code. It must name the nu
 stages come from the codes the page's script lists; the scan's wording is shown, or the page's
 label for its code when it has none. The carrier's name is not read: no public reply shows what it
 holds. A shipment without scans has been created but not yet scanned and has no history. Only
-HTTP 404 with the service's `{"error":"Tracking not found"}` is not found.
+HTTP 404 with the service's error `Tracking number not found`, or its earlier `Tracking not found`, is
+not found.
 
 No public number shows a shipment, so the parser follows the page's script and synthetic fixtures.
 

@@ -41,6 +41,9 @@ sample and its source are in [`numbers.json`](numbers.json).
 ## Limitations
 
 - No delivery estimate, weight, service, recipient or proof of delivery.
+- The site's CDN answers with its own certificate instead of TOPEST's, and HTTP 418 over plain
+  HTTP, and the server behind it has no tracker, so every lookup fails to reach TOPEST. The live
+  test reports the adapter unverified while the site stays down.
 
 ## Testing
 
