@@ -71664,6 +71664,28 @@
     ]
   },
   {
+    "input": "800013858962",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express",
+      "paquetexpress",
+      "sending"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive"
+    ]
+  },
+  {
     "input": "80003280379",
     "carrier": "unknown",
     "confidence": "low",
@@ -99683,6 +99705,12 @@
       "elta",
       "chronopost"
     ]
+  },
+  {
+    "input": "HR200026347135",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "HRBC9999999980",

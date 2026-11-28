@@ -602,6 +602,7 @@ import { adapter as interparcelUk } from '../carriers/interparcel-uk/adapter.js'
 import { adapter as interrapidisimo } from '../carriers/interrapidisimo/adapter.js';
 import { adapter as intertownTransport } from '../carriers/intertown-transport/adapter.js';
 import { adapter as intexPaketdienst } from '../carriers/intex-paketdienst/adapter.js';
+import { adapter as intimeHr } from '../carriers/intime-hr/adapter.js';
 import { adapter as intrasJp } from '../carriers/intras-jp/adapter.js';
 import { adapter as iqfulfillment } from '../carriers/iqfulfillment/adapter.js';
 import { adapter as islandwideExpress } from '../carriers/islandwide-express/adapter.js';
@@ -1282,6 +1283,7 @@ import { adapter as xsExpress } from '../carriers/xs-express/adapter.js';
 import { adapter as xunTianInternational } from '../carriers/xun-tian-international/adapter.js';
 import { adapter as xylShips } from '../carriers/xyl-ships/adapter.js';
 import { adapter as xysLogistics } from '../carriers/xys-logistics/adapter.js';
+import { adapter as yadex } from '../carriers/yadex/adapter.js';
 import { adapter as yalidine } from '../carriers/yalidine/adapter.js';
 import { adapter as yamato } from '../carriers/yamato/adapter.js';
 import { adapter as yandexDelivery } from '../carriers/yandex-delivery/adapter.js';
@@ -1936,6 +1938,7 @@ export const REGISTRY: RegistryDefinition = {
     "interrapidisimo": interrapidisimo,
     "intertown-transport": intertownTransport,
     "intex-paketdienst": intexPaketdienst,
+    "intime-hr": intimeHr,
     "intras-jp": intrasJp,
     "iqfulfillment": iqfulfillment,
     "islandwide-express": islandwideExpress,
@@ -2616,6 +2619,7 @@ export const REGISTRY: RegistryDefinition = {
     "xun-tian-international": xunTianInternational,
     "xyl-ships": xylShips,
     "xys-logistics": xysLogistics,
+    "yadex": yadex,
     "yalidine": yalidine,
     "yamato": yamato,
     "yandex-delivery": yandexDelivery,
@@ -3686,7 +3690,7 @@ export const REGISTRY: RegistryDefinition = {
     "intex-paketdienst": "intex-paketdienst",
     "intigo": "universal",
     "intime-bg": "universal",
-    "intime-hr": "universal",
+    "intime-hr": "intime-hr",
     "intl-post": "universal",
     "intras-jp": "intras-jp",
     "invio-home": "universal",
@@ -4888,6 +4892,7 @@ export const REGISTRY: RegistryDefinition = {
     "xyl": "universal",
     "xyl-ships": "xyl-ships",
     "xys-logistics": "xys-logistics",
+    "yadex": "yadex",
     "yalidine": "yalidine",
     "yamato": "yamato",
     "yamato-america": "universal",

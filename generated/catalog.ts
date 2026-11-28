@@ -38936,7 +38936,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "In Time Croatia",
     "color": "#00999b",
     "aliases": [
-      "IN TIME d.o.o."
+      "IN TIME d.o.o.",
+      "Intime Express"
     ],
     "countries": [
       "HR"
@@ -38945,7 +38946,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Zagreb",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "intime-hr",
+      "localClocks": true
     },
     "canaryUrl": "https://www.in-time.hr/pracenje",
     "trackingUrlTemplate": "https://www.in-time.hr/pracenje?id={trackingNumber}",
@@ -77555,6 +77557,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "yadex": {
+    "displayName": "Yadex",
+    "color": "#0081CB",
+    "aliases": [
+      "Yuananda Express",
+      "源安达",
+      "源安达快递",
+      "源之安达",
+      "东莞市源之安达速运有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "yadex",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "yalidine": {
     "displayName": "Yalidine",
     "color": "#d62e2f",
@@ -81792,6 +81818,7 @@ export const CARRIER_IDS = [
   "xyl",
   "xyl-ships",
   "xys-logistics",
+  "yadex",
   "yalidine",
   "yamato-america",
   "yandex-delivery",
@@ -84087,6 +84114,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xyl": [],
   "xyl-ships": ["xyl-ships-1","xyl-ships-2","xyl-ships-3"],
   "xys-logistics": [],
+  "yadex": [],
   "yalidine": ["yalidine-1"],
   "yamato-america": [],
   "yandex-delivery": [],
