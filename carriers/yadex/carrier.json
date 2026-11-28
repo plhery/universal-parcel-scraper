@@ -1,0 +1,58 @@
+{
+  "id": "yadex",
+  "displayName": "Yadex",
+  "aliases": [
+    "Yuananda Express",
+    "源安达",
+    "源安达快递",
+    "源之安达",
+    "东莞市源之安达速运有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#0081CB"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "yadex",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "signatory",
+      "phone_numbers"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "signatory",
+      "phone_numbers"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

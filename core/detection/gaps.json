@@ -5264,6 +5264,12 @@
     "reason": "One reverse pickup waybill in a review starts with 2; one sample does not establish the family."
   },
   {
+    "carrier": "yadex",
+    "pattern": "^\\d{12}$",
+    "kind": "by_design",
+    "reason": "Yadex waybills are twelve bare digits, a length many carriers share, so no rule claims them."
+  },
+  {
     "carrier": "yandex-delivery",
     "pattern": "^LO\\d{9}$",
     "kind": "by_design",

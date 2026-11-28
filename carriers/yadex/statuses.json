@@ -1,0 +1,29 @@
+{
+  "carrier": "yadex",
+  "entries": [
+    {
+      "code": null,
+      "wording": "到达【{station}】",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Arrived at the station or hub in the brackets, such as the network centre or a town's station; the tracker follows it with the station's phone numbers, which are not kept."
+    },
+    {
+      "code": null,
+      "wording": "离开【{station}】发往【{station}】",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Left the first station for the second."
+    },
+    {
+      "code": null,
+      "wording": "快件已签收，签收站点【{station}】",
+      "language": "zh",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Signed for, at the station in the brackets. The tracker names the signer between them, which is not kept; the public example's signer is the courier app's photo."
+    }
+  ]
+}
