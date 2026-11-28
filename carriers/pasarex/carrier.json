@@ -23,7 +23,8 @@
     "mode": "automatic",
     "adapter": "pasarex",
     "steps": [
-      "trawl"
+      "trawl",
+      "retry"
     ],
     "browser": true,
     "localClocks": true,

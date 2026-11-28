@@ -73,6 +73,25 @@ describe('PasarEX tracking', () => {
     await expect(new PasarexTracker({ ...h.environment, trawl: null }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
   });
 
+  it('reads again through the configured proxy only after the checkbox was not passed', async () => {
+    const page = (rows: unknown[]) => new Response(JSON.stringify({ url: pasarexUrl(NUMBER), html: '', statusCode: 200, tier: 3, cookies: [], capturedResponses: rows }),
+      { headers: { 'content-type': 'application/json' } });
+    const proxied = (first: unknown[], env: Record<string, string> = { PASAREX_BROWSER_PROXY_URL: 'http://proxy.invalid:8080' }) => {
+      const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(page(first)).mockResolvedValue(page([capture()]));
+      return { fetcher, tracker: new PasarexTracker({ fetcher, recorder: NOOP_RECORDER, env, browserExecutablePath: null, trawl: new TrawlClient('https://trawl.invalid') }) };
+    };
+    const retried = proxied([]);
+    await expect(retried.tracker.fetch(NUMBER)).resolves.toMatchObject({ current_stage: 'delivered' });
+    const bodies = retried.fetcher.mock.calls.map((call) => JSON.parse(String(call[1]?.body)) as { proxy?: string });
+    expect(bodies.map((body) => body.proxy)).toEqual([undefined, 'http://proxy.invalid:8080']);
+    // A history, a rate limit or no proxy at all asks once.
+    for (const [first, env] of [[[capture()], undefined], [[capture(null, { status: 429 })], undefined], [[], {}]] as const) {
+      const once = proxied([...first], env);
+      await once.tracker.fetch(NUMBER).catch(() => undefined);
+      expect(once.fetcher).toHaveBeenCalledOnce();
+    }
+  });
+
   it('keeps refusals, rate limits and an unfinished checkbox apart from a history', async () => {
     await expect(harness([capture(null, { status: 429, headers: { 'retry-after': '120' } })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 120000 });
     await expect(harness([capture(null, { status: 403 })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });

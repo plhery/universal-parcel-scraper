@@ -6,7 +6,7 @@ is pasarex.com.
 
 ## How it works
 
-One `trawl` step: the tracker answers only after a reCAPTCHA checkbox, so the browser service
+The `trawl` step: the tracker answers only after a reCAPTCHA checkbox, so the browser service
 opens `https://tracking.pasarex.com/?awb=<number>`, ticks the checkbox and sends the form
 ([helper](../../trawl/pasarex-browser.mjs)). The checkbox has passed without a picture from a
 home network. Elsewhere it asks for pictures, which the service's picture solver answers with a
@@ -15,6 +15,12 @@ time, comes last. The form sends `GET /tracking` with `awb` and the
 checkbox's `g-recaptcha-response` token, and the page comes back rendered on the server, in
 English whatever language the browser asks for. The helper binds that one request to the whole
 number and returns the number the page names and its rows. The token stays in the browser.
+
+A `retry` step reads the page once more through the proxy `PASAREX_BROWSER_PROXY_URL` names, such
+as a residential exit Google refuses less often than the service's own address, when the first
+read did not get past the checkbox or its token was refused. Without it there is no second read,
+and a history, a not-found or a rate limit never starts one. The read through the proxy never
+falls back to the service's own address.
 
 ## Notes
 
