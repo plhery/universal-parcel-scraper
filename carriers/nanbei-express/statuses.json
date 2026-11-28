@@ -1,0 +1,45 @@
+{
+  "carrier": "nanbei-express",
+  "entries": [
+    {
+      "code": "16101",
+      "wording": "收货开单",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Goods received and the waybill written at the branch that collected them."
+    },
+    {
+      "code": "16109",
+      "wording": "网点发车",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A truck left the branch for a sorting centre."
+    },
+    {
+      "code": "16110",
+      "wording": "分拨发车",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A truck left a sorting centre for the next one."
+    },
+    {
+      "code": "16113",
+      "wording": "卸货入库",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Unloaded and booked in at a sorting centre."
+    },
+    {
+      "code": "16118",
+      "wording": "客户签收",
+      "language": "zh",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Signed for by the customer."
+    }
+  ]
+}

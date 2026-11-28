@@ -7598,5 +7598,11 @@
     "pattern": "^JPNDFE\\d{12}$",
     "kind": "open",
     "reason": "JPNDFE and twelve digits is the one public waybill, from Kuaidi100's carrier list; one sample does not establish the line's number family, so no rule claims it."
+  },
+  {
+    "carrier": "nanbei-express",
+    "pattern": "^\\d{11}$",
+    "kind": "by_design",
+    "reason": "Eleven digits is the test number Kuaidi100 lists for Nanbei Express, a bare digit run many carriers' numbers share, so nothing in it points to Nanbei. The adapter answers explicit selection."
   }
 ]

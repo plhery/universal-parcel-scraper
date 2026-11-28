@@ -1,0 +1,64 @@
+{
+  "id": "nanbei-express",
+  "displayName": "Nanbei Express",
+  "aliases": [
+    "Anhui Nanbei Express",
+    "南北快运",
+    "安徽南北快运有限责任公司",
+    "蚁链南北快运"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#183883"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "nanbei-express",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "canaryUrl": "https://www.kuaidi100.com/all/nbky.shtml",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "driver_name",
+      "vehicle",
+      "contact_details",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "offset_timestamps"
+    ],
+    "discarded": [
+      "driver_name",
+      "vehicle",
+      "contact_details",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta"
+    ]
+  },
+  "links": [],
+  "detection": []
+}
