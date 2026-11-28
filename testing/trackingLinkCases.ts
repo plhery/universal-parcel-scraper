@@ -3159,6 +3159,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'xmlxswl', number: '3101104',
     route: /^https:\/\/www\.1008656\.com\/index\.aspx\?id=73320&keyword=3101104$/,
     marker: /隆新顺物流在线查询平台/ },
+  // The same page under Mengxiangtong's company id.
+  { carrier: 'mengxiangtong', number: '3923718',
+    route: /^https:\/\/wx\.lqfast\.com\/Pub\/UnitListDetail\?companyid=shU7Eab0eKhHUXNJPh%2FoYg%3D%3D&unit=3923718$/,
+    marker: /未找到运单|校验手机后四位|运单跟踪/ },
   // The routes page renders the waybill's timeline on the server under its number, or the line that it has none.
   { carrier: 'zgtux', number: 'TX999000017',
     route: /^https:\/\/vip\.zgtux\.com\/routes\?no=TX999000017$/,

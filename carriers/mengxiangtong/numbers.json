@@ -1,0 +1,25 @@
+{
+  "carrier": "mengxiangtong",
+  "records": [
+    {
+      "number": "3023709",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["seur"]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 盟翔通物流. The firm's Lanqiao portal answers it as a road freight waybill from Shenzhen to Shangrao, signed for."
+    }
+  ]
+}

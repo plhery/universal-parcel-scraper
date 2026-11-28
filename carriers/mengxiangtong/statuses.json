@@ -1,0 +1,26 @@
+{
+  "carrier": "mengxiangtong",
+  "entries": [
+    {
+      "wording": "开单入库",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The waybill opened and the freight taken into the origin depot: the first row in the firm's hands."
+    },
+    {
+      "wording": "货物已分拣",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Sorted at the depot the row starts with, onto its line."
+    },
+    {
+      "wording": "货物已签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for at delivery."
+    }
+  ]
+}

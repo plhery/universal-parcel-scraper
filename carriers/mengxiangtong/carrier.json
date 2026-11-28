@@ -1,0 +1,79 @@
+{
+  "id": "mengxiangtong",
+  "displayName": "Mengxiangtong Logistics",
+  "aliases": [
+    "盟翔通物流",
+    "深圳市盟翔通物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#1d3a5c"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "mengxiangtong",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://wx.lqfast.com/Pub/UnitListDetail?companyid=shU7Eab0eKhHUXNJPh%2FoYg%3D%3D&unit={trackingNumber}",
+    "searchUrl": "https://wx.lqfast.com/Pub/UnitCheck?CompanyId=shU7Eab0eKhHUXNJPh%2FoYg%3D%3D",
+    "canaryUrl": "https://wx.lqfast.com/wx/waybillquery/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "order_contents",
+      "parcel_count",
+      "office_contact_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "order_contents",
+      "parcel_count",
+      "office_contact_details"
+    ],
+    "unavailable": [
+      "weight",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "wx.lqfast.com"
+      ],
+      "pathPattern": "^/Pub/UnitListDetail$",
+      "query": "^(?=(?:.*&)?companyid=shU7Eab0eKhHUXNJPh/oYg==(?:&|$))(?:.*&)?unit=([^&]+)(?=&|$)"
+    },
+    {
+      "domains": [
+        "wx.lqfast.com"
+      ],
+      "pathPattern": "^/wx/waybillquery/?$",
+      "fragment": "^/(?:waybillquery/orderDetail)?\\?(?=(?:.*&)?companyid=shU7Eab0eKhHUXNJPh/oYg==(?:&|$))(?:.*&)?(?:unit|seek)=([^&]+)(?=&|$)"
+    }
+  ],
+  "detection": []
+}

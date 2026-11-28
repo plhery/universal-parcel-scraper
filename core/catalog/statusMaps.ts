@@ -1286,6 +1286,7 @@ import { statusMap as ks2home } from '../../carriers/ks2home/status.js';
 import { statusMap as caifengwl } from '../../carriers/caifengwl/status.js';
 import { statusMap as xsb56 } from '../../carriers/xsb56/status.js';
 import { statusMap as xmlxswl } from '../../carriers/xmlxswl/status.js';
+import { statusMap as mengxiangtong } from '../../carriers/mengxiangtong/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1620,6 +1621,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   caifengwl,
   xsb56,
   xmlxswl,
+  mengxiangtong,
 };
 
 /** The carrier the app files the universal providers' scans under. */

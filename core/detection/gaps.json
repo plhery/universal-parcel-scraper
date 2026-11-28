@@ -7740,5 +7740,11 @@
     "pattern": "^\\d{7}$",
     "kind": "by_design",
     "reason": "Seven digits is the test number Kuaidi100 lists for Longxinshun Logistics, a bare digit run many carriers' numbers share, so nothing in it points to Longxinshun. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "mengxiangtong",
+    "pattern": "^\\d{7}$",
+    "kind": "by_design",
+    "reason": "Mengxiangtong's waybills on Lanqiao's portal are a seven-digit counter many carriers' numbers share, so nothing in the number points to Mengxiangtong. The adapter answers explicit selection."
   }
 ]
