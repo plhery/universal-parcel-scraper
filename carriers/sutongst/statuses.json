@@ -1,0 +1,114 @@
+{
+  "carrier": "sutongst",
+  "entries": [
+    {
+      "code": null,
+      "wording": "【…】订单已处理： 为揽件准备就绪",
+      "language": "zh",
+      "english": "Order processed at …: ready for pickup",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The first row, at the Shenzhen branch: the waybill is ready and the parcel waits to be collected."
+    },
+    {
+      "code": null,
+      "wording": "【…】到达深圳国际函运处理中心",
+      "language": "zh",
+      "english": "Arrived at the Shenzhen international processing centre",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The firm has the parcel."
+    },
+    {
+      "code": null,
+      "wording": "【…】 国际货运放行-出口",
+      "language": "zh",
+      "english": "International freight released for export",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "【…】正在安排下一站转运",
+      "language": "zh",
+      "english": "Arranging the next leg",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "【…】离开转运中心",
+      "language": "zh",
+      "english": "Left the transit centre",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "【…】国际运输中",
+      "language": "zh",
+      "english": "In international transport",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Its bracket names the leg, 中国-US."
+    },
+    {
+      "code": null,
+      "wording": "[…]Arrival on scan",
+      "language": "en",
+      "english": "Arrival on scan",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "[…]Customs clearance, waiting for customs clearance commodity inspection",
+      "language": "en",
+      "english": "Customs clearance, waiting for customs clearance commodity inspection",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "[…]International Cargo Release - Export",
+      "language": "en",
+      "english": "International Cargo Release - Export",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Written on the Californian rows after clearance: customs released the parcel."
+    },
+    {
+      "code": null,
+      "wording": "[…]Arrive at the destination sorting center",
+      "language": "en",
+      "english": "Arrive at the destination sorting center",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "[…]Delivery of global express vehicles to the next stop locally",
+      "language": "en",
+      "english": "Delivery of global express vehicles to the next stop locally",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "[…]Loaded and waiting for delivery",
+      "language": "en",
+      "english": "Loaded and waiting for delivery",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "[…]Have been delivered",
+      "language": "en",
+      "english": "Have been delivered",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The row goes on to name the signer, which is taken out."
+    }
+  ]
+}

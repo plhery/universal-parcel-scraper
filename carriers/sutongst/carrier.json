@@ -1,0 +1,72 @@
+{
+  "id": "sutongst",
+  "displayName": "Sutong International Express",
+  "aliases": [
+    "香港速通国际快运",
+    "香港速通国际物流",
+    "速通国际快运",
+    "速通国际物流",
+    "香港速通"
+  ],
+  "region": {
+    "countries": [
+      "HK",
+      "CN",
+      "US",
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#1E50A2"
+  },
+  "selectable": true,
+  "timezone": "Asia/Hong_Kong",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "sutongst",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country"
+  ],
+  "portal": {
+    "searchUrl": "https://www.sutongst.com/list-1793.html",
+    "canaryUrl": "https://www.sutongst.com/list-1793.html",
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country"
+    ],
+    "discarded": [
+      "recipient_name"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_address",
+      "offset_timestamps"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "sutongst-1",
+      "pattern": "^ST\\d{12}$",
+      "confidence": "low"
+    }
+  ]
+}
