@@ -15,9 +15,9 @@ end their waybills with YQ and open them with their own code, as [GZYL](../gzyl/
 and Juxi Express's old tracker ran on that platform. A sample on ParcelPanel's Juxi Express page
 and parcels a universal provider files under SHJX share the layout. Juxi issues them, so both rules name Juxi: `juxi-express-2` for
 the lines coded `YI`, `ZO`, `US` and `ZI` after JXC, and `juxi-express-1` for the others.
-[DHLink](../dhlink/README.md)'s tracker knows the waybills of the parcels it carries on those
-four lines, under Juxi's number. Since only universal providers track Juxi, recognition still
-asks DHLink about them, through its preferred rule, and a parcel DHLink knows is DHLink's. A
+[DHLink](../dhlink/README.md)'s tracker knows the waybills of the parcels it carries, on any
+line, under Juxi's number. Since only universal providers track Juxi, recognition still asks
+DHLink about every Juxi waybill, through its preferred rule, and a parcel DHLink knows is DHLink's. A
 provider naming DHLink beside Juxi names Juxi; one naming DHLink beside the carrier it hands the
 parcel to names DHLink.
 

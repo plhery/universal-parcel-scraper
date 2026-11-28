@@ -313,7 +313,7 @@
         "carrier": "juxi-express",
         "confidence": "high"
       },
-      "note": "Made-up number in the shape of Juxi Express's waybills, on a line whose code DHLink's tracker answered: JXC, YI, ZO, US or ZI, ten digits and YQ. Juxi Express issues them, and recognition asks DHLink. Its serial sits far beyond the range in use."
+      "note": "Made-up number in the shape of Juxi Express's waybills, JXC, two letters, ten digits and YQ. Juxi Express issues them, and recognition asks DHLink, whose tracker knows the parcels it carries. Its serial sits far beyond the range in use."
     },
     {
       "number": "YB9999999970CN",

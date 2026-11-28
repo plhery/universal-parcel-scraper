@@ -182,7 +182,7 @@
     },
     {
       "id": "dhlink-jxc",
-      "pattern": "^JXC(?:YI|ZO|US|ZI)\\d{10}YQ$",
+      "pattern": "^JXC[A-Z]{2}\\d{10}YQ$",
       "confidence": "low",
       "preferred": true
     }

@@ -32,10 +32,10 @@ page makes.
   line to Switzerland, and `LIB`, nine digits and `YN`, LiBaoTongXu's numbers on a US line, which ParcelsApp
   names LIB beside DHLink. YouBang Express's `YB`, ten digits and `CN` are DHLink's too: its
   tracker holds YouBang's warehouse rows at the same clocks and the rest of the journey, so a
-  preferred rule has recognition take DHLink over [YouBang](../youbang-express/README.md) when both know a number. Juxi Express's waybills on four of its lines, `JXC`, `YI`, `ZO`, `US` or `ZI`,
-  ten digits and `YQ`, are numbers DHLink's tracker knows when it carries the parcel. Juxi issues them and detection
-  names it, but only universal providers track Juxi, so DHLink's preferred rule still has recognition ask DHLink; the
-  tracker does not know Juxi's other lines. Their rules are low confidence, so
+  preferred rule has recognition take DHLink over [YouBang](../youbang-express/README.md) when both know a number. Juxi Express's waybills, `JXC`, two letters,
+  ten digits and `YQ`, are numbers DHLink's tracker knows when it carries the parcel, on any of Juxi's lines. Juxi
+  issues them and detection names it, but only universal providers track Juxi, so DHLink's preferred rule still has
+  recognition ask DHLink. Their rules are low confidence, so
   DHLink is asked before it is named, except YLUS's: every parcel seen with such a number has been
   DHLink's, some for days before its first scan, so that rule names DHLink at once. Providers name XZG, QYEXP, Asus International and YLE for their
   numbers, so they are aliases and their hint asks DHLink. The two letters `YF` are too thin a mark of a
