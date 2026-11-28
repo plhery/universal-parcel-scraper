@@ -122,6 +122,17 @@ describe('17FEIA HTTP adapter', () => {
       stage: 'returned', stage_source: 'carrier_map' });
   });
 
+  it('drops the estimated landing at the clearance port, so customs never comes before the landing', () => {
+    const result = parseSeventeenFeia(changed('dhl-relayed', (order) => {
+      const rows = order.currentOrderTrackInfos;
+      const landing = rows.findIndex((row) => row.status === '航班抵达清关港');
+      rows.splice(landing + 1, 0, { ...rows[landing], id: null, createTime: '2026-03-14 06:00:00', status: '预计到达清关港时间',
+        description: 'Estimated Arrival at Clearance Port on: 2026-03-16 14:00:00' });
+    }), RELAYED, LATER);
+    expect(result.events!.some((event) => event.provider_code === '预计到达清关港时间' || /estimated/i.test(event.description ?? ''))).toBe(false);
+    expect(result.events!.filter((event) => event.stage === 'customs').map((event) => event.provider_code)).toEqual(['清关中', '清关行提货到仓']);
+  });
+
   it('dates DHL’s relayed scans on Germany’s clock, keeps the flight’s and customs’ milestones local and drops the estimate', () => {
     const result = parseSeventeenFeia(fixture('dhl-relayed'), RELAYED, LATER);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',

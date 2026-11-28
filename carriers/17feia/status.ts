@@ -65,8 +65,10 @@ export const RELAYED_LABEL = '运输途中';
 export const ESTIMATE_LABEL = '预计起飞日期';
 /** The same estimate for a ship, written with the export declaration before it sails. */
 export const SAILING_ESTIMATE_LABEL = '预计开船时间';
+/** The estimated landing at the clearance port, written while the flight is in the air. */
+export const ARRIVAL_ESTIMATE_LABEL = '预计到达清关港时间';
 /** The estimates the adapter drops. */
-export const ESTIMATE_LABELS: ReadonlySet<string> = new Set([ESTIMATE_LABEL, SAILING_ESTIMATE_LABEL]);
+export const ESTIMATE_LABELS: ReadonlySet<string> = new Set([ESTIMATE_LABEL, SAILING_ESTIMATE_LABEL, ARRIVAL_ESTIMATE_LABEL]);
 /** A delayed flight, written between the estimate and the take-off: the row keeps the stage of the one before it. */
 export const DELAY_LABEL = '航班延误';
 /** The order data, the one row that comes without a label. */
@@ -116,6 +118,7 @@ export const statusMap: CarrierStatusMap = {
   gaps: [
     { code: ESTIMATE_LABEL, note: 'An estimated departure date written before the flight: no scan, so the adapter drops the row.' },
     { code: SAILING_ESTIMATE_LABEL, note: 'An estimated sailing date written with the export declaration, before the ship sails: no scan, so the adapter drops the row.' },
+    { code: ARRIVAL_ESTIMATE_LABEL, note: 'An estimated landing at the clearance port written while the flight is in the air: no scan, so the adapter drops the row.' },
     { code: DELAY_LABEL, note: 'A delayed flight, not a movement: the parcel keeps the stage it had.' },
   ],
 };

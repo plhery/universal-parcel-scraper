@@ -49,8 +49,8 @@ Tracked through the lookup its tracking page makes.
   partner's. Read so, an order's take-off and landing lie a long-haul flight apart.
 - The newest scan's instant, when it has one, is the last update, and a delivered scan's is the
   delivery time.
-- The estimated departure of a flight or a ship is written before it leaves and is no scan: the
-  adapter drops it.
+- The estimated departure of a flight or a ship, written before it leaves, and the estimated landing
+  at the clearance port, written while the flight is in the air, are no scans: the adapter drops them.
   Rows dated after the read are dropped too. A delayed flight is no movement: the row keeps the
   stage of the row before it.
 - Some orders go to Europe by truck, through Kazakhstan, Russia and Belarus, some on to the United
