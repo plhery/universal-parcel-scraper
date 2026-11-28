@@ -1,0 +1,1 @@
+`in-transit.json` is synthetic, with an invented number, wording and times, shaped as the tracking page's scripts read it; the reader is [UBX UK's](../../ubx-uk/courier-navigator.ts). `not-found.json` is the search's reply for the public number in `numbers.json`.

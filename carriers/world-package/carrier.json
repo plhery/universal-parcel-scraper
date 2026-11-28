@@ -17,19 +17,51 @@
   "timezone": "Europe/London",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "world-package",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://wpl-uk.couriernavigator-secure.com/tracking?consign_note={trackingNumber}",
     "searchUrl": "https://wpl-uk.couriernavigator-secure.com/tracking.html",
     "helpUrl": "https://www.worldpackage.co.uk/contact/",
     "canaryUrl": "https://www.worldpackage.co.uk/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "event_details",
+      "signature",
+      "recipient_address",
+      "eta_window",
+      "flight_schedule"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "event_details",
+      "signature",
+      "recipient_address",
+      "eta_window",
+      "flight_schedule"
+    ],
+    "unavailable": [
+      "location",
+      "weight",
+      "service_name"
+    ]
   },
   "links": [
     {

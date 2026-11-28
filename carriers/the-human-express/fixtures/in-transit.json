@@ -1,0 +1,39 @@
+{
+  "packages": [
+    {
+      "id": 43354,
+      "package_code": {
+        "code": "THE0000512000433544"
+      },
+      "status_string": "in-transit",
+      "country_code": "US",
+      "alert": 0
+    }
+  ],
+  "logs": [
+    {
+      "package_id": 43354,
+      "ship_time": "2022-03-22T13:59:37Z",
+      "location": "Hanoi, VN",
+      "description": "Arriving at international airport to go abroad"
+    },
+    {
+      "package_id": 43354,
+      "ship_time": "2022-03-22T13:59:29Z",
+      "location": "Hanoi, VN",
+      "description": "Departed from THE Processing Center"
+    },
+    {
+      "package_id": 43354,
+      "ship_time": "2022-03-22T13:55:48Z",
+      "location": "Hanoi, VN",
+      "description": "Accepted at THE Processing Center"
+    },
+    {
+      "package_id": 43354,
+      "ship_time": "2022-03-22T13:55:17Z",
+      "location": "",
+      "description": "Shipping label created, THE awaiting item"
+    }
+  ]
+}

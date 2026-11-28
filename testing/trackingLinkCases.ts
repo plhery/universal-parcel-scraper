@@ -34,6 +34,25 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  // Courier Navigator trackers search the consignment note from the link and answer an unknown one in the page.
+  { carrier: 'ubx-uk', number: 'UBX0000000199',
+    route: /^https:\/\/www\.ubx\.uk\.net\/tracking\/\?consign_note=UBX0000000199$/,
+    marker: /It has not been possible to find a matching consignment/ },
+  { carrier: 'world-package', number: 'WPL0000000199',
+    route: /^https:\/\/wpl-uk\.couriernavigator-secure\.com\/tracking\?consign_note=WPL0000000199$/,
+    marker: /It has not been possible to find a matching consignment/ },
+  { carrier: 'hart2hart-express', number: '800000199',
+    route: /^https:\/\/harttohart\.couriernavigator-secure\.com\/tracking\?consign_note=800000199$/,
+    marker: /It has not been possible to find a matching consignment/ },
+  { carrier: 'flight-logistics', number: 'FLG0000000199',
+    route: /^https:\/\/www\.flightlg\.com\/myflight-shipment-tracking\/\?method=tracking&consign_note=FLG0000000199$/,
+    marker: /It has not been possible to find a matching consignment/ },
+  { carrier: 'ecourier-uk', number: '10000199',
+    route: /^https:\/\/www\.ecourier\.co\.uk\/tracking\/\?consign_note=10000199$/,
+    marker: /It has not been possible to find a matching consignment/ },
+  { carrier: 'airwings-india', number: 'AW0000000199',
+    route: /^https:\/\/airwingsindia\.com\/tracking\.html\?awbno=AW0000000199$/,
+    marker: /No Record Found For AWBNo|Enter AWB Number Seperated by/ },
   { carrier: 'spedition-moeller', number: '00000000000000000000',
     route: /^https:\/\/portal\.spedition-moeller\.com\/tracking\.html$/,
     marker: /NVE \/ Packstücknummer/i, forwarding: 'none' },
@@ -3129,6 +3148,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  fastgo: 'The waybill page renders its scans in the browser from the route service the adapter reads, and no public waybill is current to check the page against.',
+  'greenway-vn': 'The tracking page renders the package logs in the browser from the service the adapter reads, and no public code is current to check the page against.',
+  'the-human-express': 'The tracking page renders the package logs in the browser from the service the adapter reads, and no public code is current to check the page against.',
   xiongda: 'The page reads the number from its address and answers an unknown one with an alert dialog alone, leaving no wording or number on the page; only a real waybill would show rows.',
   ztcce: 'The site\'s server answers some of the page\'s own script requests with HTTP 403 when a browser asks them together, so a rendered check passes or fails at random; the page reads the number from its address and asks the service once jQuery loads.',
   'emirates-skycargo': 'eSkyCargo’s result route finds a waybill only as eleven digits without a hyphen, which the link template cannot ensure, so the catalog links to its search page.',

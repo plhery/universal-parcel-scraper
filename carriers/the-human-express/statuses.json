@@ -1,4 +1,125 @@
 {
   "carrier": "the-human-express",
-  "entries": []
+  "entries": [
+    {
+      "code": null,
+      "wording": "Shipping label created, THE awaiting item",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "documentation",
+      "note": "The first log of the package history in The Human Express's API documentation, before the parcel reaches its processing center."
+    },
+    {
+      "code": null,
+      "wording": "Accepted at THE Processing Center",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "documentation",
+      "note": "A log of the package history in The Human Express's API documentation."
+    },
+    {
+      "code": null,
+      "wording": "Departed from THE Processing Center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "documentation",
+      "note": "A log of the package history in The Human Express's API documentation."
+    },
+    {
+      "code": null,
+      "wording": "Arriving at international airport to go abroad",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "documentation",
+      "note": "A log of the package history in The Human Express's API documentation: the parcel heads for its flight out of Vietnam."
+    },
+    {
+      "code": "pending",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "documentation",
+      "note": "A package status of the API documentation's package list, which the tracking page gives no tab: the order is in, without a label."
+    },
+    {
+      "code": "pre-transit",
+      "wording": "Pre-transit",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "documentation",
+      "note": "The package status and the tab the tracking page files it under: the label is created and the parcel awaited."
+    },
+    {
+      "code": "in-transit",
+      "wording": "In-Transit",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "documentation",
+      "note": "The package status and the tab the tracking page files it under. A newer log further along gives the stage instead."
+    },
+    {
+      "code": "delivered",
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "documentation",
+      "note": "The package status and the tab the tracking page files it under."
+    },
+    {
+      "code": "undelivered",
+      "wording": "Undelivered",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "documentation",
+      "note": "The package status and the tab the tracking page files it under, drawn as a stopped timeline."
+    },
+    {
+      "code": "canceled",
+      "wording": "Canceled",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "documentation",
+      "note": "The package status and the tab the tracking page files it under, drawn as a stopped timeline: the label was cancelled."
+    },
+    {
+      "code": "expired",
+      "wording": "Expired",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "documentation",
+      "note": "The package status and the tab the tracking page files it under, drawn as a stopped timeline: the label expired unused."
+    },
+    {
+      "code": "archived",
+      "wording": "Archived",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "The package status and the tab the tracking page files it under: the sender archived the package, which says nothing about where it is."
+    },
+    {
+      "code": "alert:1",
+      "wording": "Đơn hàng chậm",
+      "language": "vi",
+      "english": "Slow package",
+      "confirmedBy": "documentation",
+      "note": "The package's alert 1 in the API documentation: the package is late, which says nothing about where it is."
+    },
+    {
+      "code": "alert:2",
+      "wording": "Đơn hàng bị kho trả về",
+      "language": "vi",
+      "english": "Package returned by the warehouse",
+      "stage": "returned",
+      "confirmedBy": "documentation",
+      "note": "The package's alert 2 in the API documentation: the warehouse sent the package back."
+    },
+    {
+      "code": "alert:3",
+      "wording": "Đơn hàng bị đơn vị vận chuyển trả về",
+      "language": "vi",
+      "english": "Package returned by the carrier",
+      "stage": "returned",
+      "confirmedBy": "documentation",
+      "note": "The package's alert 3 in the API documentation: the carrier sent the package back. The tracking page's Alert tab lists these packages."
+    }
+  ]
 }

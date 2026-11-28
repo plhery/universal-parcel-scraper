@@ -1,4 +1,23 @@
 {
   "carrier": "ubx-uk",
-  "entries": []
+  "entries": [
+    {
+      "code": "11",
+      "stage": "accepted",
+      "confirmedBy": "documentation",
+      "note": "The collection: Courier Navigator's tracking page marks the collection address done and its job filters count the job collected from 11. Ids below 11 are the job waiting for its collection and read as registered; ids between 11 and 20 are the job on its way and read as in transit, or as the step their wording names."
+    },
+    {
+      "code": "19",
+      "stage": "delivered",
+      "confirmedBy": "documentation",
+      "note": "One of the two delivery ids the timeline marks as the delivery and that mark the delivery address done."
+    },
+    {
+      "code": "20",
+      "stage": "delivered",
+      "confirmedBy": "documentation",
+      "note": "The delivery the job filters count. Ids from 21 to 30 come after it and keep it; ids above 30 are a cancelled job and read as an exception."
+    }
+  ]
 }

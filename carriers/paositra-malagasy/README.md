@@ -13,9 +13,13 @@ the post's own references, whose example is two letters and eleven digits; they 
 
 ## Why there is no adapter
 
-Its domestic tracker asks an open JSON service on its own site without a session or CAPTCHA.
-International items are looked up on the UPU's Global Track and Trace page, which the site
-embeds, not on the post's own system. No public number has shown a known item's reply yet.
+Its domestic tracker asks an open JSON service on its own site without a session or CAPTCHA:
+`GET https://www.paositramalagasy.mg/api/suivi?numenvoi={number}`. The reply lists the scans under
+`Suivi_colis`, each with a free-text description, a location, the next office and a date; an
+empty list is the tracker's "no data found". The page's script holds no event codes or fixed
+wordings, and reads no item number from the reply. International items are looked up on the
+UPU's Global Track and Trace page, which the site embeds, not on the post's own system. No public
+number has shown a known item's reply yet.
 
 ## Links
 

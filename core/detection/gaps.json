@@ -5432,12 +5432,6 @@
     "reason": "DPE Express waybills are eleven digits, a length many carriers' rules accept, so the shape cannot name DPE Express."
   },
   {
-    "carrier": "hart2hart-express",
-    "pattern": "^8\\d{8}$",
-    "kind": "collision",
-    "reason": "Hart2Hart Express job numbers are nine digits starting with 8, a shape TNT, XPO, R+L Carriers and Cargus numbers share, so the shape cannot name Hart2Hart Express."
-  },
-  {
     "carrier": "holisol",
     "pattern": "^HL\\d{11}$",
     "kind": "by_design",
@@ -5663,12 +5657,6 @@
     "pattern": "^\\d{11}$",
     "kind": "collision",
     "reason": "G.L.E. guide numbers are eleven digits, a shape Swiss Post, GLS and many other networks print, so the shape cannot name G.L.E."
-  },
-  {
-    "carrier": "greenway-vn",
-    "pattern": "^G\\d{16}(?:SB)?$",
-    "kind": "collision",
-    "reason": "Greenway's documented codes, G and sixteen digits, overlap Colis Privé's numbers, so the shape cannot name Greenway."
   },
   {
     "carrier": "taqbin-sg",

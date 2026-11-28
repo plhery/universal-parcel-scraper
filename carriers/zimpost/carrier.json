@@ -18,18 +18,55 @@
   "timezone": "Africa/Harare",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "zimpost",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "offset_timestamps",
+    "weight",
+    "destination_country"
+  ],
   "portal": {
     "searchUrl": "https://www.zimpost.co.zw/",
     "helpUrl": "https://www.zimpost.co.zw/contact",
     "canaryUrl": "https://www.zimpost.co.zw/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "offset_timestamps",
+      "origin",
+      "destination",
+      "weight",
+      "service_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "offset_timestamps",
+      "weight",
+      "destination_country"
+    ],
+    "discarded": [
+      "origin",
+      "service_name"
+    ],
+    "unavailable": [
+      "eta",
+      "recipient_name",
+      "sender_name",
+      "signatory",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
   "detection": []

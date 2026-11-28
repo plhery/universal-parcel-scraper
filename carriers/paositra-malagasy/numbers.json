@@ -1,5 +1,25 @@
 {
   "carrier": "paositra-malagasy",
-  "gap": "No public page shows a Paositra Malagasy number.",
-  "records": []
+  "gap": "No public page shows a Paositra Malagasy number its tracker holds.",
+  "records": [
+    {
+      "number": "AO10101000000",
+      "role": "negative",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.paositramalagasy.mg/",
+        "date": "2026-11-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste"
+        ]
+      },
+      "note": "The example in the search box of Paositra Malagasy's domestic tracker. The tracker answers it with no scans."
+    }
+  ]
 }

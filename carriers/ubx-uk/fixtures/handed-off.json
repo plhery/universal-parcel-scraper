@@ -1,0 +1,25 @@
+{
+  "jobs": [
+    {
+      "jobid": 1000002,
+      "consign_note": "UBX0000000001",
+      "agentref": "1Z999AA10123456784",
+      "link": "courier::ups",
+      "cur_status": "14.00",
+      "events": [
+        { "time_stamp": "2026-03-02 09:15", "statusid": "1.00", "description": "Synthetic booking received" },
+        { "time_stamp": "2026-03-02 14:30:00", "statusid": 11, "description": "Synthetic collection" },
+        { "time_stamp": "2026-03-03 08:00:00", "statusid": "14.00", "description": "Synthetic hand-over to the network" }
+      ],
+      "addresses": {
+        "address": [
+          { "company": "PRIVATE-COMPANY", "addressline1": "PRIVATE-ADDRESS", "town": "PRIVATE-TOWN", "postcode": "PRIVATE" },
+          { "type": "delivery", "company": "PRIVATE-COMPANY", "addressline1": "PRIVATE-ADDRESS", "town": "PRIVATE-TOWN", "postcode": "PRIVATE",
+            "openETAWindow": "2026-03-04 09:00:00", "closeETAWindow": "2026-03-04 13:00:00" }
+        ]
+      }
+    }
+  ],
+  "GmapKey": null,
+  "request": { "consign_note": "UBX0000000001" }
+}

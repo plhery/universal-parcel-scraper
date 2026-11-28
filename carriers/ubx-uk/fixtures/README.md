@@ -1,0 +1,1 @@
+Synthetic replies with invented numbers, wording and times, shaped as the tracking page's scripts read them (the inline `trackingdownload`, `job.data.jquery.js` and `wms.timeline.js`). Addresses carry placeholders; the adapter never reads them.

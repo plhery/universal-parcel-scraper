@@ -1,0 +1,29 @@
+{
+  "result": {
+    "number": "AU111113587SG",
+    "expressalias": "EMS",
+    "expressno": "9975642011147",
+    "issign": "0",
+    "deliverystatus": "直邮装袋",
+    "list": [
+      {
+        "time": "2019-12-09 14:23:05",
+        "remark": "已经收到 包裹信息",
+        "flag": "1"
+      },
+      {
+        "time": "2019-12-10 09:24:43",
+        "remark": "包裹已经完成处理，等待出库",
+        "flag": "1"
+      },
+      {
+        "time": "2019-12-24 18:21:24",
+        "remark": "已完成清关，进入派送",
+        "flag": "1"
+      }
+    ],
+    "extinfo": null
+  },
+  "code": "0000",
+  "msg": "成功"
+}

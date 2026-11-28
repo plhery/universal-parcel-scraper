@@ -1,0 +1,36 @@
+{
+  "Response": {
+    "ResponseCode": "TD00",
+    "ErrorCode": "0",
+    "ErrorDisc": "Success",
+    "Tracking": [
+      {
+        "AWBNo": "AW0000000001",
+        "RefNo": "PRIVATE-REFERENCE",
+        "BookingDate": "02/03/2026",
+        "Shipper_Name": "PRIVATE-SHIPPER",
+        "Consignee": "PRIVATE-CONSIGNEE",
+        "Origin": "MUMBAI",
+        "Destination": "UNITED KINGDOM",
+        "Status": "IN TRANSIT",
+        "ExpectedDeliveryDate": "07/03/2026",
+        "DeliveryDate": "",
+        "DeliveryTime": "",
+        "ReceiverName": "",
+        "PODImage": "No",
+        "VendorName": "UPS",
+        "VendorAWBNo1": "1Z999AA10123456784",
+        "VendorLinkURL": "https://www.ups.com/track?loc=en_IN&tracknum=0000000000",
+        "Weight": "1.5"
+      }
+    ],
+    "Events": [
+      { "EventDate": "05/03/2026", "EventTime": "1015", "Location": "LONDON", "Status": "Synthetic arrival at destination", "Excp_Code": "AR" },
+      { "EventDate": "03/03/2026", "EventTime": "2230", "Location": "MUMBAI", "Status": "Synthetic departure from origin", "Excp_Code": "" },
+      { "EventDate": "02/03/2026", "EventTime": "1742", "Location": "MUMBAI", "Status": "SHIPMENT RECEIVED" }
+    ],
+    "AdditionalData": null,
+    "Dimensions": null,
+    "Performa": null
+  }
+}

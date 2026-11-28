@@ -1,5 +1,20 @@
 {
   "carrier": "macau-post",
-  "gap": "No public page shows a Macao Post number.",
-  "records": []
+  "gap": "No public page shows a Macao Post number its tracker still holds.",
+  "records": [
+    {
+      "number": "EK493768244MO",
+      "role": "negative",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/clooney/macao-post-tracking-golang/blob/master/trackingmore.go",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "An open-source Macao Post tracking client sends this EMS item to TrackingMore under its Macao Post code. Macao Post's tracker answers it as not found."
+    }
+  ]
 }

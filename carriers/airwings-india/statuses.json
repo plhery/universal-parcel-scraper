@@ -1,4 +1,12 @@
 {
   "carrier": "airwings-india",
-  "entries": []
+  "entries": [
+    {
+      "wording": "SHIPMENT RECEIVED",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "documentation",
+      "note": "The example scan row in the tracking page's script, at the office that booked the parcel."
+    }
+  ]
 }

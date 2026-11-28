@@ -1,4 +1,32 @@
 {
   "carrier": "fastgo",
-  "entries": []
+  "entries": [
+    {
+      "code": null,
+      "wording": "已经收到 包裹信息",
+      "language": "zh",
+      "english": "Parcel information received",
+      "stage": "registered",
+      "confirmedBy": "portal",
+      "note": "The first scan in an archived reply of Fastgo's route API: the shipment's data is in, before its warehouse scans."
+    },
+    {
+      "code": null,
+      "wording": "包裹已经完成处理，等待出库",
+      "language": "zh",
+      "english": "The parcel has been processed and waits to leave the warehouse",
+      "stage": "accepted",
+      "confirmedBy": "portal",
+      "note": "Seen in an archived reply of Fastgo's route API: the warehouse holds the parcel."
+    },
+    {
+      "code": null,
+      "wording": "已完成清关，进入派送",
+      "language": "zh",
+      "english": "Customs clearance completed, on to delivery",
+      "stage": "in_transit",
+      "confirmedBy": "portal",
+      "note": "Seen in an archived reply of Fastgo's route API, the parcel then handed to EMS under its own number: the courier's delivery is still ahead."
+    }
+  ]
 }

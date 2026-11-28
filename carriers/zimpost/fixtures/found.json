@@ -1,0 +1,158 @@
+{
+  "success": true,
+  "data": {
+    "type": "ips",
+    "trackingNumber": "CY584755815DE",
+    "status": "Receive item at office of exchange (Inb)",
+    "statusDescription": "Receive item at office of exchange (Inb)",
+    "origin": "Germany",
+    "destination": "Zimbabwe",
+    "weight": 4.95,
+    "events": [
+      {
+        "type": "Receive item at office of exchange (Inb)",
+        "location": "HARARE CENTRAL SORTING OFFICE",
+        "description": "Receive item at office of exchange (Inb)"
+      },
+      {
+        "type": "Send item to domestic location (Inb)",
+        "location": "HARARE CENTRAL SORTING OFFICE",
+        "description": "Send item to domestic location (Inb)"
+      },
+      {
+        "type": "Receive item at location (Inb)",
+        "location": "BULAWAYO",
+        "description": "Receive item at location (Inb)"
+      },
+      {
+        "type": "Send item to customs (Inb)",
+        "location": "BULAWAYO",
+        "description": "Send item to customs (Inb)"
+      },
+      {
+        "type": "Return item from customs (Inb)",
+        "location": "BULAWAYO",
+        "description": "Return item from customs (Inb)"
+      },
+      {
+        "type": "Send item to domestic location (Inb)",
+        "location": "BULAWAYO",
+        "description": "Send item to domestic location (Inb)"
+      },
+      {
+        "type": "Receive item at delivery office (Inb)",
+        "location": "BELMONT",
+        "description": "Receive item at delivery office (Inb)"
+      },
+      {
+        "type": "Receive item at delivery office (Inb)",
+        "location": "BELMONT",
+        "description": "Receive item at delivery office (Inb)"
+      }
+    ],
+    "raw": {
+      "success": true,
+      "message": "Parcel tracking information retrieved",
+      "fid": "CY584755815DE",
+      "data": {
+        "MAILITM_FID": "CY584755815DE",
+        "MAILITM_WEIGHT_KG": 4.95,
+        "MAIL_CLASS": "PARCELS (CP)",
+        "ORIG_COUNTRY": "Germany",
+        "DEST_COUNTRY": "Zimbabwe",
+        "POSTAL_STATUS": "Normal",
+        "PRODUCT_TYPE": null,
+        "CUSTOMS_CLASS": null,
+        "events": [
+          {
+            "EVENT_INDEX": 1,
+            "EVENT_TYPE_CODE": 30,
+            "EVENT_TYPE": "Receive item at office of exchange (Inb)",
+            "INB_OTB_IND": "I",
+            "EVENT_GMT_DATETIME": "2024-04-24T07:31:45.880",
+            "EVENT_LOCAL_OFFSET": 2,
+            "EVENT_OFFICE": "HARARE CENTRAL SORTING OFFICE",
+            "ITEM_CONDITION": "Item Received in good condition"
+          },
+          {
+            "EVENT_INDEX": 2,
+            "EVENT_TYPE_CODE": 35,
+            "EVENT_TYPE": "Send item to domestic location (Inb)",
+            "INB_OTB_IND": "I",
+            "EVENT_GMT_DATETIME": "2024-04-24T07:37:09.263",
+            "EVENT_LOCAL_OFFSET": 2,
+            "EVENT_OFFICE": "HARARE CENTRAL SORTING OFFICE",
+            "NEXT_OFFICE": "BULAWAYO",
+            "STATE_INDICATOR": "Unassigned (not in a bag)"
+          },
+          {
+            "EVENT_INDEX": 3,
+            "EVENT_TYPE_CODE": 33,
+            "EVENT_TYPE": "Receive item at location (Inb)",
+            "INB_OTB_IND": "I",
+            "EVENT_GMT_DATETIME": "2024-04-25T08:57:50.677",
+            "EVENT_LOCAL_OFFSET": 2,
+            "EVENT_OFFICE": "BULAWAYO",
+            "NEXT_OFFICE": "BULAWAYO",
+            "STATE_INDICATOR": "Unassigned (not in a bag)"
+          },
+          {
+            "EVENT_INDEX": 4,
+            "EVENT_TYPE_CODE": 31,
+            "EVENT_TYPE": "Send item to customs (Inb)",
+            "INB_OTB_IND": "I",
+            "EVENT_GMT_DATETIME": "2024-04-25T09:00:14.700",
+            "EVENT_LOCAL_OFFSET": 2,
+            "EVENT_OFFICE": "BULAWAYO",
+            "NEXT_OFFICE": "BULAWAYO",
+            "STATE_INDICATOR": "At customs"
+          },
+          {
+            "EVENT_INDEX": 5,
+            "EVENT_TYPE_CODE": 38,
+            "EVENT_TYPE": "Return item from customs (Inb)",
+            "INB_OTB_IND": "I",
+            "EVENT_GMT_DATETIME": "2024-04-25T09:02:21.413",
+            "EVENT_LOCAL_OFFSET": 2,
+            "EVENT_OFFICE": "BULAWAYO",
+            "NEXT_OFFICE": "BULAWAYO",
+            "STATE_INDICATOR": "Unassigned (not in a bag)"
+          },
+          {
+            "EVENT_INDEX": 6,
+            "EVENT_TYPE_CODE": 35,
+            "EVENT_TYPE": "Send item to domestic location (Inb)",
+            "INB_OTB_IND": "I",
+            "EVENT_GMT_DATETIME": "2024-04-25T09:30:10.100",
+            "EVENT_LOCAL_OFFSET": 2,
+            "EVENT_OFFICE": "BULAWAYO",
+            "NEXT_OFFICE": "BELMONT",
+            "STATE_INDICATOR": "Unassigned (not in a bag)"
+          },
+          {
+            "EVENT_INDEX": 7,
+            "EVENT_TYPE_CODE": 32,
+            "EVENT_TYPE": "Receive item at delivery office (Inb)",
+            "INB_OTB_IND": "I",
+            "EVENT_GMT_DATETIME": "2024-05-02T06:33:46.467",
+            "EVENT_LOCAL_OFFSET": 2,
+            "EVENT_OFFICE": "BELMONT",
+            "NEXT_OFFICE": "BELMONT",
+            "STATE_INDICATOR": "Unassigned (not in a bag)"
+          },
+          {
+            "EVENT_INDEX": 8,
+            "EVENT_TYPE_CODE": 32,
+            "EVENT_TYPE": "Receive item at delivery office (Inb)",
+            "INB_OTB_IND": "I",
+            "EVENT_GMT_DATETIME": "2024-05-31T07:38:17.743",
+            "EVENT_LOCAL_OFFSET": -7,
+            "EVENT_OFFICE": "BELMONT",
+            "STATE_INDICATOR": "Unassigned (not in a bag)"
+          }
+        ]
+      },
+      "timestamp": "2026-10-30T14:41:43.084Z"
+    }
+  }
+}

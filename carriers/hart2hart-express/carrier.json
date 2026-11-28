@@ -20,19 +20,52 @@
   "timezone": "Europe/London",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "hart2hart-express",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://harttohart.couriernavigator-secure.com/tracking?consign_note={trackingNumber}",
     "searchUrl": "https://harttohart.couriernavigator-secure.com/tracking",
     "helpUrl": "https://hart2hartexpress.co.uk/contact.php",
     "canaryUrl": "https://hart2hartexpress.co.uk/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "event_details",
+      "signature",
+      "recipient_address",
+      "eta_window",
+      "coordinates",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "event_details",
+      "signature",
+      "recipient_address",
+      "eta_window",
+      "coordinates"
+    ],
+    "unavailable": [
+      "location",
+      "weight",
+      "service_name"
+    ]
   },
   "links": [
     {

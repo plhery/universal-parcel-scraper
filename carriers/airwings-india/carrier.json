@@ -20,19 +20,65 @@
   "timezone": "Asia/Kolkata",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "airwings-india",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://airwingsindia.com/tracking.html?awbno={trackingNumber}",
     "searchUrl": "https://airwingsindia.com/tracking.html",
     "helpUrl": "https://airwingsindia.com/contact.html",
     "canaryUrl": "https://airwingsindia.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "customer_reference",
+      "awb_date",
+      "eta",
+      "delivered_at",
+      "signatory",
+      "proof_of_delivery",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "origin",
+      "sender_name",
+      "recipient_name",
+      "customer_reference",
+      "awb_date",
+      "eta",
+      "delivered_at",
+      "signatory",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "weight",
+      "service_name"
+    ]
   },
   "links": [
     {

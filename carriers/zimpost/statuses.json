@@ -1,4 +1,11 @@
 {
   "carrier": "zimpost",
-  "entries": []
+  "entries": [
+    {"code": "30", "wording": "Receive item at office of exchange (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The item reached Zimpost's office of exchange from abroad."},
+    {"code": "31", "wording": "Send item to customs (Inb)", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "Zimpost presented the item to customs."},
+    {"code": "32", "wording": "Receive item at delivery office (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The office that delivers the item, or keeps it for collection, received it."},
+    {"code": "33", "wording": "Receive item at location (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "An office on the way to the delivery office received the item."},
+    {"code": "35", "wording": "Send item to domestic location (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "An office sent the item on within Zimbabwe."},
+    {"code": "38", "wording": "Return item from customs (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Customs released the item into Zimpost's network; it is not a return to the sender."}
+  ]
 }

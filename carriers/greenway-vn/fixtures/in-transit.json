@@ -1,0 +1,45 @@
+{
+  "packages": [
+    {
+      "id": 43354,
+      "package_code": {
+        "code": "G0000512000433544"
+      },
+      "status_string": "in-transit",
+      "country_code": "US",
+      "alert": 0,
+      "checkin_warehouse_at": "2022-03-22T13:55:48Z",
+      "delivered_at": "0001-01-01T00:00:00Z",
+      "tracking": {
+        "tracking_number": "9200100000000000841168",
+        "last_mile_carrier": "USPS"
+      }
+    }
+  ],
+  "logs": [
+    {
+      "package_id": 43354,
+      "ship_time": "2022-03-22T13:59:37Z",
+      "location": "Hanoi, VN",
+      "description": "Arriving at international airport to go abroad"
+    },
+    {
+      "package_id": 43354,
+      "ship_time": "2022-03-22T13:59:29Z",
+      "location": "Hanoi, VN",
+      "description": "Departed from Greenway Processing Center"
+    },
+    {
+      "package_id": 43354,
+      "ship_time": "2022-03-22T13:55:48Z",
+      "location": "Hanoi, VN",
+      "description": "Accepted at Greenway Processing Center"
+    },
+    {
+      "package_id": 43354,
+      "ship_time": "2022-03-22T13:55:17Z",
+      "location": "",
+      "description": "Shipping label created, Greenway awaiting item"
+    }
+  ]
+}

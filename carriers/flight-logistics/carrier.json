@@ -17,19 +17,53 @@
   "timezone": "Europe/London",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "flight-logistics",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://www.flightlg.com/myflight-shipment-tracking/?method=tracking&consign_note={trackingNumber}",
     "searchUrl": "https://www.flightlg.com/myflight-shipment-tracking/?method=tracking",
     "helpUrl": "https://www.flightlg.com/contact-us/",
     "canaryUrl": "https://www.flightlg.com/myflight-shipment-tracking/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "event_details",
+      "signature",
+      "recipient_address",
+      "eta_window",
+      "coordinates",
+      "delivery_tracking_number",
+      "delivery_partner"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "event_details",
+      "signature",
+      "recipient_address",
+      "eta_window",
+      "coordinates"
+    ],
+    "unavailable": [
+      "location",
+      "weight",
+      "service_name"
+    ]
   },
   "links": [
     {

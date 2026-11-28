@@ -3,7 +3,7 @@
   "records": [
     {
       "number": "G0004112000252252",
-      "role": "shipment",
+      "role": "negative",
       "evidence": "official_documentation_example",
       "source": {
         "url": "https://docs.greenwayvn.com/openapi3.yaml",
@@ -18,11 +18,11 @@
           "colis-prive"
         ]
       },
-      "note": "The package code in the example reply to a package list in Greenway's API documentation; its tracker does not find it."
+      "note": "The package code in the example reply to a package list in Greenway's API documentation, a made-up order; its tracker does not find it."
     },
     {
       "number": "G0000512000433544",
-      "role": "shipment",
+      "role": "negative",
       "evidence": "official_documentation_example",
       "source": {
         "url": "https://docs.greenwayvn.com/openapi3.yaml",
@@ -37,11 +37,11 @@
           "colis-prive"
         ]
       },
-      "note": "The package code in the example reply to a package lookup in Greenway's API documentation."
+      "note": "The package code in the example reply to a package lookup in Greenway's API documentation, a made-up order; its tracker does not find it."
     },
     {
       "number": "G0000712001129543",
-      "role": "shipment",
+      "role": "negative",
       "evidence": "official_documentation_example",
       "source": {
         "url": "https://docs.greenwayvn.com/openapi3.yaml",
@@ -56,11 +56,11 @@
           "colis-prive"
         ]
       },
-      "note": "The package code in the example reply to a delivery request in Greenway's API documentation."
+      "note": "The package code in the example reply to a delivery request in Greenway's API documentation, a made-up order; its tracker does not find it."
     },
     {
       "number": "G0000712001132106SB",
-      "role": "shipment",
+      "role": "negative",
       "evidence": "official_documentation_example",
       "source": {
         "url": "https://docs.greenwayvn.com/openapi3.yaml",
@@ -72,7 +72,7 @@
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "The Greenway tracking code, with the SB suffix, in the webhook example of Greenway's API documentation."
+      "note": "The Greenway tracking code, with the SB suffix, in the webhook example of Greenway's API documentation, a made-up order; its tracker does not find it."
     }
   ]
 }

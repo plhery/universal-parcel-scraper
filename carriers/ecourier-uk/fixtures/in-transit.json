@@ -1,0 +1,16 @@
+{
+  "jobs": [
+    {
+      "jobid": 1000003,
+      "consign_note": "10000001",
+      "cur_status": "14.00",
+      "events": [
+        { "time_stamp": "2026-03-02 09:15:00", "statusid": "1.00", "description": "Synthetic booking received" },
+        { "time_stamp": "2026-03-02 14:30:00", "statusid": "11.00", "description": "Synthetic collection" },
+        { "time_stamp": "2026-03-03 08:00:00", "statusid": "14.00", "description": "Synthetic arrival at hub" }
+      ]
+    }
+  ],
+  "GmapKey": null,
+  "request": { "consign_note": "10000001" }
+}

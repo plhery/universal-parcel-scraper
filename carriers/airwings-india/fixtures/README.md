@@ -1,0 +1,1 @@
+`not-found.json` is the service's reply for the public negative number in `numbers.json`. `forwarded.json` is synthetic, with an invented number, wording and times: its fields are those the tracking page's script reads, in the reply layout PXC Pacific Global's Xpresion service returns; names carry placeholders, which the adapter never reads.

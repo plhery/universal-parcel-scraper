@@ -18,7 +18,7 @@
         "carrier": "dhl",
         "confidence": "high"
       },
-      "note": "One of the examples Zimpost's tracker offers to try: a German postal parcel to Zimbabwe, which the tracker finds with its scans."
+      "note": "One of the examples Zimpost's tracker offers to try: a German postal parcel to Zimbabwe. The tracker answered it with its IPS scans at capture, the reply kept as the adapter's found fixture, and later answers it as not found."
     },
     {
       "number": "ZPPTDZ4Y",

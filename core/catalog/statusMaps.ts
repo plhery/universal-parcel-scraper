@@ -1248,6 +1248,16 @@ import { statusMap as sutongst } from '../../carriers/sutongst/status.js';
 import { statusMap as hltop } from '../../carriers/hltop/status.js';
 import { statusMap as sunspeedy } from '../../carriers/sunspeedy/status.js';
 import { statusMap as morelink56 } from '../../carriers/morelink56/status.js';
+import { statusMap as zimpost } from '../../carriers/zimpost/status.js';
+import { statusMap as fastgo } from '../../carriers/fastgo/status.js';
+import { statusMap as greenwayVn } from '../../carriers/greenway-vn/status.js';
+import { statusMap as theHumanExpress } from '../../carriers/the-human-express/status.js';
+import { statusMap as ubxUk } from '../../carriers/ubx-uk/status.js';
+import { statusMap as worldPackage } from '../../carriers/world-package/status.js';
+import { statusMap as hart2hartExpress } from '../../carriers/hart2hart-express/status.js';
+import { statusMap as flightLogistics } from '../../carriers/flight-logistics/status.js';
+import { statusMap as ecourierUk } from '../../carriers/ecourier-uk/status.js';
+import { statusMap as airwingsIndia } from '../../carriers/airwings-india/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1547,6 +1557,16 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   hltop,
   sunspeedy,
   morelink56,
+  zimpost,
+  fastgo,
+  'greenway-vn': greenwayVn,
+  'the-human-express': theHumanExpress,
+  'ubx-uk': ubxUk,
+  'world-package': worldPackage,
+  'hart2hart-express': hart2hartExpress,
+  'flight-logistics': flightLogistics,
+  'ecourier-uk': ecourierUk,
+  'airwings-india': airwingsIndia,
 };
 
 /** The carrier the app files the universal providers' scans under. */

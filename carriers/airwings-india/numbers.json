@@ -1,5 +1,27 @@
 {
   "carrier": "airwings-india",
-  "gap": "No public page shows an Airwings India number.",
-  "records": []
+  "gap": "No public page shows an Airwings India number its tracker knows.",
+  "records": [
+    {
+      "number": "AW2314163530",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20180217010536/http://airwingsindia.com:80/Tracking.aspx?txtawbno=AW+2314163530",
+        "date": "2018-02-17",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ]
+      },
+      "note": "A lookup on Airwings India's old tracker, archived by the Wayback Machine, which found no record for it. The current tracking service answers \"AWB does not exist\" for it as an air waybill and as a reference."
+    }
+  ]
 }

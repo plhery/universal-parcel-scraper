@@ -25,19 +25,43 @@
   "timezone": "Australia/Brisbane",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "fastgo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "delivery_partner",
+    "delivery_tracking_number",
+    "destination_country"
+  ],
   "portal": {
     "url": "https://www.fastgo.com.au/WaybillQuery/?from=bs&bill={trackingNumber}",
     "searchUrl": "https://www.fastgo.com.au/WaybillQuery/",
     "helpUrl": "https://www.fastgo.com.au/ContactUs/",
     "canaryUrl": "https://www.fastgo.com.au/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "destination_country"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "location",
+      "offset_timestamps",
+      "eta",
+      "weight"
+    ]
   },
   "links": [
     {

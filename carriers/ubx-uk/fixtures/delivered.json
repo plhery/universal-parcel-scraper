@@ -1,0 +1,26 @@
+{
+  "jobs": [
+    {
+      "jobid": 1000001,
+      "consign_note": "UBX0000000001",
+      "cur_status": "25.00",
+      "sameday": false,
+      "events": [
+        { "time_stamp": "2026-03-02 09:15:00", "statusid": "1.00", "description": "Synthetic booking received" },
+        { "time_stamp": "2026-03-02 14:30:00", "statusid": "11.00", "description": "Synthetic collection" },
+        { "time_stamp": "2026-03-02 21:05:00", "statusid": "14.00", "description": "Synthetic arrival at hub" },
+        { "time_stamp": "2026-03-03 07:40:00", "statusid": "16.00", "description": "Out for delivery" },
+        { "time_stamp": "2026-03-03 11:20:00", "statusid": "20.00", "description": "Synthetic delivery", "details": "PRIVATE-DETAILS", "sign_id": "PRIVATE-SIGNATURE" },
+        { "time_stamp": "2026-03-03 18:00:00", "statusid": "25.00", "description": "Synthetic step after delivery" }
+      ],
+      "addresses": {
+        "address": [
+          { "company": "PRIVATE-COMPANY", "addressline1": "PRIVATE-ADDRESS", "town": "PRIVATE-TOWN", "postcode": "PRIVATE" },
+          { "type": "delivery", "company": "PRIVATE-COMPANY", "addressline1": "PRIVATE-ADDRESS", "town": "PRIVATE-TOWN", "postcode": "PRIVATE", "eta": "2026-03-03 12:00:00" }
+        ]
+      }
+    }
+  ],
+  "GmapKey": null,
+  "request": { "consign_note": "UBX0000000001" }
+}

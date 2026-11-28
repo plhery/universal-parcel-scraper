@@ -20,19 +20,53 @@
   "timezone": "Europe/London",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "ubx-uk",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://www.ubx.uk.net/tracking/?consign_note={trackingNumber}",
     "searchUrl": "https://www.ubx.uk.net/tracking/",
     "helpUrl": "https://www.ubx.uk.net/contact-ubx/",
     "canaryUrl": "https://www.ubx.uk.net/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "event_details",
+      "signature",
+      "recipient_address",
+      "eta_window",
+      "coordinates",
+      "delivery_tracking_number",
+      "delivery_partner"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "event_details",
+      "signature",
+      "recipient_address",
+      "eta_window",
+      "coordinates"
+    ],
+    "unavailable": [
+      "location",
+      "weight",
+      "service_name"
+    ]
   },
   "links": [
     {

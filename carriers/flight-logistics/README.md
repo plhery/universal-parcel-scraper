@@ -1,25 +1,28 @@
 # Flight Logistics
 
-Flight Logistics parcels use enabled universal providers. There is no dedicated adapter.
-
 Flight Logistics (Flight Logistics Group Ltd) is a third-party logistics provider at Heathrow and
 Wokingham in the United Kingdom, with eCommerce fulfilment, courier and freight services and art
-shipping. Its site is flightlg.com.
+shipping. Its site is flightlg.com. Select the carrier explicitly.
+
+## How it works
+
+1. `direct`: one `POST https://flightlg.couriernavigator-secure.com/json/search/trackingdownload` with the
+   airway bill or job number as `consign_note`, the search the MyFlight page on flightlg.com makes, without a
+   login, cookie, CAPTCHA or browser.
+
+The tracker runs on Courier Navigator, as [UBX UK's](../ubx-uk/README.md) does, and the adapter shares its
+reader and status ids: the job must carry the number asked, an empty job list is read as not found, events
+keep their wall clocks and are staged by their status id, and a job handed to another network hands on its
+forwarding reference.
+
+## Limitations
+
+- No found reply has been seen, so the fixtures are synthetic, shaped as the page's scripts read the reply.
 
 ## Numbers
 
 Flight Logistics publishes no number format, and no public page shows one of its airway bill or
 job numbers, so there is no rule.
-
-## Why there is no adapter
-
-Its tracker runs on Courier Navigator, as [UBX UK's](../ubx-uk/README.md),
-[World Package's](../world-package/README.md) and Hart2Hart Express's do. The MyFlight page posts
-the airway bill or job number as `consign_note` to
-`flightlg.couriernavigator-secure.com/json/search/trackingdownload`, an open JSONP endpoint without
-a session or CAPTCHA, which answers an unknown number with an empty `jobs` list. The page's script
-reads a found job's events (time stamp, description and status id) and addresses. No public number
-is known to see a found reply.
 
 ## Links
 
@@ -28,5 +31,5 @@ Courier Navigator host's own tracking page does not read the parameter.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `FLIGHT_LOGISTICS_TRACKING_NUMBER` and optionally `FLIGHT_LOGISTICS_UNKNOWN_NUMBER` outside the
+repository and run `npm run test:carriers:live -- carriers/flight-logistics`.
