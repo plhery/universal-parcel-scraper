@@ -124,9 +124,9 @@ instead.
   are cut from scan text, including a delivery row's place, which can carry the recipient's
   postcode. Wording can name it too, so the cut covers the whole row; a date's year stays. A row stored with one takes the place without it
   ([identity.ts](identity.ts)).
-- Some tenants print "SYSTEM" or "Delivery Location" in a row's place when it has none, and a
-  relayed label row can read "US, SYSTEM, SYSTEM"; those are not read as a place, and a row stored
-  with one is taken over by the same row without it.
+- Some tenants print "SYSTEM" or "Delivery Location" in a row's place when it has none, or "海关",
+  Chinese for customs, on a customs row, and a relayed label row can read "US, SYSTEM, SYSTEM"; those
+  are not read as a place, and a row stored with one is taken over by the same row without it.
 - A row can write its place again at the head of its wording ("US, SYSTEM, SYSTEM, Shipping Label
   Created"); the wording is read without it, and a tenant whose rows were stored that way takes
   them over ([identity.ts](identity.ts)).

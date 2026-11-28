@@ -33,6 +33,8 @@ The site's tracking page is SXW's own tenant of the Hualei (华磊) platform at
   the platform wrote it, and Royal Mail dates the acceptance SXW copies at that wall clock in the
   UK. The identity policy lets such a row take over the one earlier releases stored on Beijing's
   clock.
+- A customs row can give "海关", Chinese for customs, as its place. It is a word, not a place, so
+  the row has none, and it takes over the row earlier releases stored at that word.
 - Australia Post's rows are on the clock of Australia's east coast wherever the suburb lies: SXW's
   copy of a Queensland row reads an hour later than Australia Post's own, a Victorian row the
   same. They are dated on that clock, while the line's own rows at an airport keep the airport's.

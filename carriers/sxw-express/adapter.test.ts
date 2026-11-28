@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { carrierIdFromName } from '../../core/catalog/hints.js';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
@@ -36,6 +37,20 @@ it('reads the declaration under way at customs as customs, in the English the pl
   payload[0].data[0].trackDetails[0].track_content = '申报中';
   expect(parseHualeiTrack(payload, NUMBER, SXW, READ_AT)?.events?.find((event) => event.description === 'Customs declaration in progress'))
     .toMatchObject({ stage: 'customs', stage_source: 'carrier_map' });
+});
+
+it('drops "海关", Chinese for customs, as a customs row\'s place: a word, not a place', () => {
+  const payload = JSON.parse(own('track.json'));
+  Object.assign(payload[0].data[0].trackDetails[0], { track_content: '申报中', track_location: '海关' });
+  const event = parseHualeiTrack(payload, NUMBER, SXW, READ_AT)?.events?.find((row) => row.description === 'Customs declaration in progress');
+  expect(event).toMatchObject({ stage: 'customs' });
+  expect(event?.location).toBeUndefined();
+  // The row stored at that word is taken over by the same row without it, and only by that row.
+  const policy = sameInstantIdentityPolicy('sxw-express', { supportsScanMatching: true });
+  const stored = { stage: 'customs', description: 'Customs declaration in progress', location: '海关', providerCode: '' };
+  expect(policy?.matches?.({ ...stored, location: '' }, stored)).toBe(true);
+  expect(policy?.matches?.({ ...stored, location: '' }, { ...stored, location: '示例市' })).toBe(false);
+  expect(policy?.matches?.({ ...stored, location: '', stage: 'in_transit' }, stored)).toBe(false);
 });
 
 it('maps the processing and unloading it copies from DHL in Germany as onward transit', () => {

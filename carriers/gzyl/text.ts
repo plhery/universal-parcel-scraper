@@ -49,8 +49,9 @@ export function hualeiScanText(value: string, maxLength = 500, options: HualeiTe
 }
 
 // What some trackers print in a row's place when it has none: the platform's "SYSTEM", alone or after a
-// country's code as a relayed label row gives it ("US, SYSTEM, SYSTEM"), and a form's "Delivery Location".
-const NO_PLACE = /^(?:(?:[A-Z]{2}, ?)?system(?:, ?system)*|delivery location)$/i;
+// country's code as a relayed label row gives it ("US, SYSTEM, SYSTEM"), a form's "Delivery Location", and
+// "海关", Chinese for customs, on a customs row.
+const NO_PLACE = /^(?:(?:[A-Z]{2}, ?)?system(?:, ?system)*|delivery location|海关)$/i;
 
 /** A row's place as scan text, or nothing where the tracker prints a word for no place. */
 export function hualeiPlace(value: string, options: HualeiTextOptions = {}): string {
