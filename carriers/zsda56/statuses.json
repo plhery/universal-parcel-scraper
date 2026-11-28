@@ -1,0 +1,64 @@
+{
+  "carrier": "zsda56",
+  "entries": [
+    {
+      "code": null,
+      "wording": "包裹申请打包Package application",
+      "language": "zh",
+      "english": "Packing requested",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The customer asks the warehouse to pack the goods it holds into one parcel, which gets its number here and does not exist yet."
+    },
+    {
+      "code": null,
+      "wording": "包裹打包Parcel packing",
+      "language": "zh",
+      "english": "Parcel packed",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The warehouse has packed the parcel: the firm holds it."
+    },
+    {
+      "code": null,
+      "wording": "转运起始港",
+      "language": "zh",
+      "english": "At the port of departure",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "深圳集运仓库已出库",
+      "language": "zh",
+      "english": "Left the Shenzhen consolidation warehouse",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "包裹出仓Package out warehouse",
+      "language": "zh",
+      "english": "Parcel out of the warehouse",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "目的港通关中",
+      "language": "zh",
+      "english": "In customs clearance at the destination port",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "包裹付款Package payment",
+      "language": "zh",
+      "english": "Parcel paid for",
+      "stage": "pending",
+      "confirmedBy": "live",
+      "note": "The customer's payment, recorded on the sample months after the clearance row: bookkeeping that does not move the parcel."
+    }
+  ]
+}

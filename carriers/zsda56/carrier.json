@@ -1,0 +1,76 @@
+{
+  "id": "zsda56",
+  "displayName": "Zhuanshunda",
+  "aliases": [
+    "转瞬达",
+    "转瞬达集运",
+    "转瞬达国际集运",
+    "转瞬达国际集运公司",
+    "ZSD"
+  ],
+  "region": {
+    "countries": [
+      "CN",
+      "CA",
+      "US",
+      "AU",
+      "TW"
+    ]
+  },
+  "brand": {
+    "color": "#2C3088"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "zsda56",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 44,
+      "pattern": "^ZSD\\d{6}$"
+    }
+  },
+  "capabilities": [
+    "history",
+    "offset_timestamps",
+    "destination_country"
+  ],
+  "portal": {
+    "searchUrl": "https://www.zsda56.com/",
+    "helpUrl": "https://www.zsda56.com/contact_us.php",
+    "canaryUrl": "https://www.zsda56.com/",
+    "shows": [
+      "status",
+      "history",
+      "destination"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "destination"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "location",
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "zsda56-1",
+      "pattern": "^ZSD\\d{6}$",
+      "confidence": "low"
+    }
+  ]
+}
