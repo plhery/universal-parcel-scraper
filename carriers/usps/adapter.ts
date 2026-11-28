@@ -51,8 +51,10 @@ function outageRedirect(error: unknown): boolean {
  * browser service's own route land on the outage page, its reads pause for five minutes. The
  * pause spares reads; it does not wait a spell out, as a read twenty minutes on fares about as a
  * read five minutes on. While the own route is paused, other lookups read through a proxy when one
- * is configured, the datacenter one first and the fallback one after it, until USPS sends one of them
- * to the outage page too: that proxy then rests until the own route's pause ends. A lookup redirected
+ * is configured, the datacenter one first and the fallback one after it. Redirects come in runs on a
+ * datacenter address too, so the datacenter proxy pauses after three in a row as the own route does,
+ * and reads through an isolated one. The fallback one is paid by the byte, so it rests until the own
+ * route's pause ends as soon as USPS sends one of its reads to the outage page. A lookup redirected
  * on any route is not read through a proxy again. Lookups that cannot read end before any read, as the adapter's own
  * pacing (`self_paced`) with the wait, so a consumer can hold its checks until then rather than
  * count a failure of USPS. The next read after the pause pauses the own route again if it is
@@ -718,8 +720,9 @@ export class USPSTracker {
         response.url === uspsTrackingUrl(number) && response.trackingNumberSubmitted === number
         && response.status === 302 && response.headers.location === OUTAGE && !response.error
         && !response.truncated && !response.base64Encoded)) {
-        // A proxy is read only during the own route's pause, and rests for the rest of it once redirected.
-        if (proxy) pauseRun(run, own.pausedUntil);
+        // The paid fallback proxy rests for the rest of the own pause once redirected; other routes
+        // pause after a run of redirects.
+        if (proxy?.route === 'residential') pauseRun(run, own.pausedUntil);
         else if (++run.redirects >= OUTAGE_RUN) pauseRun(run, Date.now() + OUTAGE_PAUSE_MS);
         // This lookup was redirected; it does not prove every USPS lookup is down.
         throw new IndeterminateError('USPS', 'USPS sent the lookup to its service outage page', { reason: 'maintenance_page' });

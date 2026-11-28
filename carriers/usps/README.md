@@ -94,8 +94,10 @@ context through the proxy, in sessions it prepares there, and never falls back t
 Outside a pause no proxy carries anything. A refusal of the service's address leaves the proxies'
 sessions loading tracking; USPS's own outage sends all of them to its outage page. A lookup that met
 the outage page is never read again through a proxy: USPS's outage pages follow its own hours, and
-reads through a proxy met them too. Once USPS sends a read through a proxy to its outage page, or the
-service has no session there, that proxy rests until the own route's pause ends; with no proxy left,
+reads through a proxy met them too. A datacenter address gets isolated redirects among loaded pages as
+the service's own does, so the datacenter proxy pauses for five minutes only after three in a row. The
+fallback proxy rests until the own route's pause ends once USPS sends one of its reads to the outage
+page, and either proxy rests until then when the service has no session there; with no proxy left,
 lookups until then end as `self_paced`. Each read's step record names its route, `default`,
 `datacenter` or `residential`, without the proxy's address.
 

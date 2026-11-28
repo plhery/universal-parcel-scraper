@@ -1079,6 +1079,28 @@ describe('USPS lookup steps', () => {
       expect(proxies(fetcher)).toEqual(['own', DATACENTER, DATACENTER, PROXY]);
     });
 
+    it('reads through the datacenter proxy past an isolated redirect, and pauses it after three in a row', async () => {
+      const DATACENTER = 'http://datacenter.internal:3128';
+      const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(async () => redirected());
+      const { recorder, records } = routeRecorder();
+      const tracker = new USPSTracker({ trawl: ownTrawl(), datacenterProxy: DATACENTER, recorder });
+      await expect(tracker.fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ reason: 'maintenance_page' });
+      // A redirect between loaded pages leaves the datacenter proxy reading.
+      fetcher.mockResolvedValueOnce(trawlReply(TIMELINE_PAGE)).mockImplementationOnce(async () => redirected())
+        .mockResolvedValueOnce(trawlReply(TIMELINE_PAGE));
+      expect((await tracker.fetch(DELIVERED_NUMBER)).events).toHaveLength(5);
+      await expect(tracker.fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ reason: 'maintenance_page' });
+      expect((await tracker.fetch(DELIVERED_NUMBER)).events).toHaveLength(5);
+      // Three in a row pause it, and with no fallback proxy the next lookup waits.
+      for (let lookup = 0; lookup < 3; lookup++) {
+        await expect(tracker.fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ reason: 'maintenance_page' });
+      }
+      records.length = 0;
+      await expect(tracker.fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', reason: 'self_paced' });
+      expect(records).toEqual(['trawl:rate_limited:none', 'lookup:rate_limited']);
+      expect(proxies(fetcher)).toEqual(['own', 'own', 'own', ...Array<string>(6).fill(DATACENTER)]);
+    });
+
     it('keeps the fallback proxy to its daily share, and waits past it', async () => {
       const unready = () => Response.json({ error: 'No USPS browser session is ready' }, { status: 503 });
       const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(async () => unready());
@@ -1118,11 +1140,12 @@ describe('USPS lookup steps', () => {
       const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(async () => redirected());
       const usps = adapter({ trawl: ownTrawl(), recorder: NOOP_RECORDER, browserExecutablePath: null,
         env: { USPS_FALLBACK_PROXY_URL: PROXY, USPS_DATACENTER_PROXY_URL: DATACENTER, USPS_FALLBACK_PROXY_DAILY_BYTES: '1' } });
-      for (let lookup = 0; lookup < 4; lookup++) {
-        await expect(usps.track({ number: DELIVERED_NUMBER }, {})).rejects.toMatchObject({ kind: lookup < 3 ? 'indeterminate' : 'rate_limited' });
+      for (let lookup = 0; lookup < 6; lookup++) {
+        await expect(usps.track({ number: DELIVERED_NUMBER }, {})).rejects.toMatchObject({ kind: lookup < 5 ? 'indeterminate' : 'rate_limited' });
       }
-      // The datacenter proxy, then the fallback one's first read; a share of 1 byte a day refills no other.
-      expect(proxies(fetcher)).toEqual(['own', 'own', 'own', DATACENTER, PROXY]);
+      // The datacenter proxy until its third redirect in a row, then the fallback one's first read; a share
+      // of 1 byte a day refills no other.
+      expect(proxies(fetcher)).toEqual(['own', 'own', 'own', DATACENTER, DATACENTER, DATACENTER, PROXY]);
     });
   });
 
