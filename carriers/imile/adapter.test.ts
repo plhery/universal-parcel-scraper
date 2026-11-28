@@ -8,7 +8,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
 import { keepAdapterHolds, resetAdapterHolds, serviceTag, type AdapterHold } from '../../core/runner/holds.js';
-import { adapter, CAINIAO_UNKNOWN_MS, IMILE_API, IMILE_SIGNING, IMILE_SIGNING_SAMPLES, ImileTracker, imileSignature, type ImileSigning } from './adapter.js';
+import { adapter, CAINIAO_UNCONFIRMED_MS, CAINIAO_UNKNOWN_MS, IMILE_API, IMILE_SIGNING, IMILE_SIGNING_SAMPLES, ImileTracker, imileSignature, type ImileSigning } from './adapter.js';
 import { cainiaoScans, withCainiaoLeg } from './cainiao.js';
 import { imileReceiver, imileSummary, imileWording, normalizeImileNumber, parseImile } from './parser.js';
 import { imileRelayedStage, imileStage, statusMap } from './status.js';
@@ -729,6 +729,23 @@ describe('Cainiao’s leg in front of iMile’s history', () => {
     await expect(result).resolves.toEqual(parseImile(fixture('delivered'), DELIVERED));
     expect(step()).toMatchObject({ outcome: 'indeterminate' });
     expect(() => cainiaoScans(stranger, DELIVERED)).toThrow(expect.objectContaining({ kind: 'indeterminate', reason: 'carrier_unconfirmed' }));
+  });
+
+  it('leaves a number whose Cainiao record does not name iMile unasked there for some hours', async () => {
+    let now = Date.now();
+    const stranger = cainiaoFixture();
+    const module = stranger.module[0]!;
+    module.destCpInfo = { cpName: 'Sample Express' };
+    for (const trace of [module.globalCombinedLogisticsTraceDTO, module.latestTrace]) delete (trace as Row).currentStatusCpInfo;
+    const cainiao = vi.fn(() => reply(stranger));
+    const fetcher = site(FIRST, { [DELIVERED]: fixture('delivered') }, { cainiao });
+    const tracker = () => new ImileTracker({ fetcher, signing: FIRST.signing, now: () => now });
+    await tracker().fetch(DELIVERED);
+    await tracker().fetch(DELIVERED);
+    expect(cainiao).toHaveBeenCalledTimes(1);
+    now += CAINIAO_UNCONFIRMED_MS + 1;
+    await tracker().fetch(DELIVERED);
+    expect(cainiao).toHaveBeenCalledTimes(2);
   });
 
   it('takes Cainiao’s record that names no carrier for a number only iMile issues', () => {

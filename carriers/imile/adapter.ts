@@ -1,7 +1,8 @@
 import { constants, createHash, createPublicKey, publicEncrypt, type KeyObject } from 'node:crypto';
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import {
-  BudgetExceededError, carrierErrorKind, ChallengeError, NotFoundError, RateLimitedError, retryAfterMsOf, SchemaError, TransportError,
+  BudgetExceededError, carrierErrorKind, ChallengeError, IndeterminateError, NotFoundError, RateLimitedError, retryAfterMsOf, SchemaError,
+  TransportError,
 } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { HoldKind, serviceTag } from '../../core/runner/holds.js';
@@ -65,6 +66,12 @@ const GLOBAL_FETCH = {};
 
 /** How long Cainiao's answer that it has no record of a number spares the number Cainiao's read. */
 export const CAINIAO_UNKNOWN_MS = 24 * 3_600_000;
+/**
+ * How long a record Cainiao keeps under the number for a parcel it does not name iMile on spares the
+ * number Cainiao's read: once iMile has scanned the parcel, such a record is most likely another
+ * network's parcel, though Cainiao can name iMile later.
+ */
+export const CAINIAO_UNCONFIRMED_MS = 6 * 3_600_000;
 /** The most numbers one transport keeps Cainiao's answer for; the oldest answer goes first. */
 const CAINIAO_UNKNOWN_KEPT = 10_000;
 
@@ -219,7 +226,7 @@ export class ImileTracker {
       errorType: error === undefined ? null : errorTypeOf(error), durationMs: Math.max(0, performance.now() - started),
       fallbackFrom: null, fallbackReason: null, fallbackErrorType: null, ...(error === undefined ? {} : { error }),
     });
-    // A number Cainiao had no record of in the last day is not asked again.
+    // A number Cainiao had no record of in the last day, or a record that did not name iMile in the last hours, is not asked again.
     const unknown = unknownToCainiao(this.options.fetcher);
     const now = (this.options.now ?? Date.now)();
     const tag = serviceTag(number);
@@ -235,10 +242,12 @@ export class ImileTracker {
       return merged;
     } catch (error) {
       record(error);
-      if (error instanceof NotFoundError) {
-        unknown.set(number, now + CAINIAO_UNKNOWN_MS);
+      const holdMs = error instanceof NotFoundError ? CAINIAO_UNKNOWN_MS
+        : error instanceof IndeterminateError && error.reason === 'carrier_unconfirmed' ? CAINIAO_UNCONFIRMED_MS : 0;
+      if (holdMs) {
+        unknown.set(number, now + holdMs);
         if (unknown.size > CAINIAO_UNKNOWN_KEPT) unknown.delete(unknown.keys().next().value!);
-        unknownHolds.save(tag, now + CAINIAO_UNKNOWN_MS);
+        unknownHolds.save(tag, now + holdMs);
       }
       return result;
     }
