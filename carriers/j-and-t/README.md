@@ -1,9 +1,10 @@
 # J&T Express
 
 Tracks J&T Express Indonesia waybills through the tracking router of its consumer app.
-The other J&T networks (Philippines, Malaysia, Thailand, Vietnam, Singapore) have no
-direct lookup here; [J&T Cargo](../j-and-t-cargo/README.md) is a separate Indonesian
-network with its own site and carrier id.
+The other J&T networks (Philippines, Malaysia, Thailand, Vietnam) have no direct lookup
+here. [J&T Express Singapore](../j-and-t-sg/README.md) has its own entry, and
+[J&T Cargo](../j-and-t-cargo/README.md) is a separate Indonesian network with its own site
+and carrier id.
 
 ## How it works
 
@@ -64,9 +65,6 @@ approval.
   asks for the recipient's phone digits, so only the app's router is read.
 - The Philippine router answers code `500` and the Malaysian one `490`; Thailand and
   Vietnam need an account, and the websites ask for CAPTCHA or phone digits.
-- Singapore's tracker, `vipgw.jtexpress.sg/jtsvip/api/trackingList.do`, asks for a Tencent
-  CAPTCHA while its `captchaSwitch` is on. Its support chat looks a waybill up without one,
-  but posts every lookup into the chat log, so it is not used either.
 - The website's portal link stays on the Philippine tracking page.
 
 J&T Indonesia's help centre says its waybills usually start with two letters, such as `JO`

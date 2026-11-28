@@ -371,6 +371,14 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     }
   });
 
+  it('names J&T Express Singapore for JT and fourteen digits, and leaves JT and thirteen to the other J&T networks', () => {
+    expect(detectCarrierMatch('JT99999999999901')).toMatchObject({ carrier: 'j-and-t-sg', confidence: 'high', candidates: ['j-and-t-sg'] });
+    expect(detectCarrierMatch('jt 9999 9999 9999 01').carrier).toBe('j-and-t-sg');
+    for (const number of ['JT9999999999901', 'JT999999999999901', 'JTS9999999999901', 'JTAU999999999901']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('j-and-t-sg');
+    }
+  });
+
   it('asks 4PX about its dated CN references, and only whole dates', () => {
     for (const number of ['CN26112899999990', 'CN25010199999990']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['four-px'] });

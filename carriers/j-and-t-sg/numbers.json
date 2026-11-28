@@ -1,0 +1,56 @@
+{
+  "carrier": "j-and-t-sg",
+  "gap": "No public page shows a J&T Express Singapore waybill with its tracker's answer.",
+  "records": [
+    {
+      "number": "JT99999999999901",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-28",
+      "expect": {
+        "carrier": "j-and-t-sg",
+        "confidence": "high"
+      },
+      "note": "Made-up number in J&T Express Singapore's waybill shape, JT and fourteen digits, which its tracking page shows as its placeholder and EasyParcel's Singapore guide lists. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "JT43326470943122",
+      "role": "quarantined",
+      "evidence": "merchant_published_example",
+      "source": {
+        "url": "https://pkge.net/couriers/jtexpress-sg",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "J&T Express Singapore",
+        "reportedRole": "example tracking number",
+        "assessment": "review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "j-and-t-sg",
+        "confidence": "high"
+      },
+      "note": "An aggregator page lists it beside two consecutive numbers as examples. J&T Singapore's tracker holds no record of them."
+    },
+    {
+      "number": "JT9999999999901",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "j-and-t",
+          "j-and-t-cn"
+        ],
+        "not": [
+          "j-and-t-sg"
+        ]
+      },
+      "note": "Made-up number in the JT and thirteen digits shape of J&T Express in China and the Philippines, which is not a Singapore waybill."
+    }
+  ]
+}

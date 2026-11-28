@@ -1,0 +1,42 @@
+{
+  "id": "j-and-t-sg",
+  "displayName": "J&T Express Singapore",
+  "aliases": [
+    "J&T Express (SG)",
+    "J&T Express SG",
+    "J&T Singapore"
+  ],
+  "region": {
+    "countries": [
+      "SG"
+    ]
+  },
+  "brand": {
+    "color": "#ed1c24"
+  },
+  "selectable": true,
+  "timezone": "Asia/Singapore",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.jtexpress.sg/trackmyparcel",
+    "helpUrl": "https://www.jtexpress.sg/contact-us",
+    "canaryUrl": "https://www.jtexpress.sg/trackmyparcel",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "j-and-t-sg-1",
+      "pattern": "^JT\\d{14}$",
+      "confidence": "high"
+    }
+  ]
+}
