@@ -46,6 +46,8 @@ const CONTACT = new RegExp(`电话|手机|致电|联系|电联|热线|投诉|呼
 const AFTERWORD = /^(?:如有|如遇|如需|若有|关注|感谢|猜您|可更直接|无需找|获取实时)/u;
 // The courier who took the parcel, named with a phone: "由江桥二部张三（138…）".
 const PICKED_BY = /由[^，,。；;（(【】]{1,30}[（(]\s*(?:1[3-9]\d{9}|0\d{2,3}-?\d{7,8})\s*[)）]/gu;
+// A name before a mobile in brackets, after a branch, a bracket or a space: "…分部（<landline>）<name>（<mobile>）".
+const NAMED = /(?<=^|[\s）)】]|[部点站司厅心])\p{Script=Han}{2,4}[（(]\s*1[3-9]\d{9}\s*[)）]/gu;
 const ROLE = /(?:的)?(?:业务员|快递员|派件员|揽收员|收派员)\s*/gu;
 const BRACKETED = /【[^【】]*】/gu;
 const PARENTHESIZED = /[（(][^（）()]*[)）]/gu;
@@ -80,7 +82,7 @@ export function notTrackingPage(body: string): never {
  * from a row that names the courier with a mobile and goes on to the complaint line.
  */
 export function global99Text(raw: string): string {
-  const text = clean(raw, 2000).replace(PICKED_BY, '')
+  const text = clean(raw, 2000).replace(PICKED_BY, '').replace(NAMED, '')
     .replace(BRACKETED, (part) => (CONTACT.test(part) ? '' : part))
     .replace(PARENTHESIZED, (part) => (CONTACT.test(part) ? '' : part))
     .replace(ROLE, '');
