@@ -1,0 +1,65 @@
+{
+  "id": "aae",
+  "displayName": "AAE",
+  "aliases": [
+    "American Asia Express",
+    "AAE全球专递",
+    "AAE全球快递",
+    "AAE-中国件"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#158CEF"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "aae",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "canaryUrl": "https://www.kuaidi100.com/all/aae.shtml",
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "signatory"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "cn.aaeweb.com"
+      ],
+      "pathPattern": "^/searchwaybill/?$",
+      "params": [
+        "danhao"
+      ]
+    }
+  ],
+  "detection": []
+}

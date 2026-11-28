@@ -1269,6 +1269,7 @@ import { statusMap as kalittaAir } from '../../carriers/kalitta-air/status.js';
 import { statusMap as iagCargo } from '../../carriers/iag-cargo/status.js';
 import { statusMap as huaxiaExpress } from '../../carriers/huaxia-express/status.js';
 import { statusMap as hongshuExpress } from '../../carriers/hongshu-express/status.js';
+import { statusMap as aae } from '../../carriers/aae/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1589,6 +1590,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'iag-cargo': iagCargo,
   'huaxia-express': huaxiaExpress,
   'hongshu-express': hongshuExpress,
+  aae,
 };
 
 /** The carrier the app files the universal providers' scans under. */

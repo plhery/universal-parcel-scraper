@@ -7626,5 +7626,11 @@
     "pattern": "^H\\d{7}$",
     "kind": "collision",
     "reason": "H and seven digits is HongShu Express's waybill on Kuaidi100's test number, a short shape GLS's and other carriers' rules also take. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "aae",
+    "pattern": "^\\d{9,10}$",
+    "kind": "by_design",
+    "reason": "Kuaidi100 describes AAE's China waybills as nine or ten digits, a bare digit run many carriers' numbers share, so nothing in it points to AAE. The adapter answers explicit selection."
   }
 ]

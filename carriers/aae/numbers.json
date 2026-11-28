@@ -1,0 +1,30 @@
+{
+  "carrier": "aae",
+  "records": [
+    {
+      "number": "107139325",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt",
+          "dpd-ie",
+          "tforce-freight",
+          "xpo-ltl"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for AAE-中国件. AAE's tracker answers it as a shipment booked out of Los Angeles and received at the Los Angeles hub."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "carrier": "aae",
+  "entries": [
+    {
+      "code": null,
+      "wording": "[{station}] 起运地发件办理.",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The origin branch in the brackets, such as its Los Angeles one, booked the shipment out."
+    },
+    {
+      "code": null,
+      "wording": "[{station}] {station}取件入库",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Collected and booked into the origin branch, named again by its city's code such as LAX."
+    },
+    {
+      "code": null,
+      "wording": "[{station}] 货件到达{station}",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Arrived at the hub in the brackets, such as the Los Angeles hub."
+    }
+  ]
+}
