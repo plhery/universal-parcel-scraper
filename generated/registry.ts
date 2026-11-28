@@ -110,6 +110,7 @@ import { adapter as bestExpressTh } from '../carriers/best-express-th/adapter.js
 import { adapter as bestExpressVn } from '../carriers/best-express-vn/adapter.js';
 import { adapter as bestFreightCn } from '../carriers/best-freight-cn/adapter.js';
 import { adapter as bestOverniteExpress } from '../carriers/best-overnite-express/adapter.js';
+import { adapter as bester } from '../carriers/bester/adapter.js';
 import { adapter as bestfulfill } from '../carriers/bestfulfill/adapter.js';
 import { adapter as betterTrucks } from '../carriers/better-trucks/adapter.js';
 import { adapter as bexExpress } from '../carriers/bex-express/adapter.js';
@@ -331,6 +332,7 @@ import { adapter as dropp } from '../carriers/dropp/adapter.js';
 import { adapter as dsv } from '../carriers/dsv/adapter.js';
 import { adapter as dtdc } from '../carriers/dtdc/adapter.js';
 import { adapter as dx } from '../carriers/dx/adapter.js';
+import { adapter as dyexpress } from '../carriers/dyexpress/adapter.js';
 import { adapter as dyjExpress } from '../carriers/dyj-express/adapter.js';
 import { adapter as dynalogic } from '../carriers/dynalogic/adapter.js';
 import { adapter as dypaq } from '../carriers/dypaq/adapter.js';
@@ -561,6 +563,7 @@ import { adapter as hubologistics } from '../carriers/hubologistics/adapter.js';
 import { adapter as huiyu } from '../carriers/huiyu/adapter.js';
 import { adapter as hunterExpress } from '../carriers/hunter-express/adapter.js';
 import { adapter as huuneh } from '../carriers/huuneh/adapter.js';
+import { adapter as hyeship } from '../carriers/hyeship/adapter.js';
 import { adapter as hytd } from '../carriers/hytd/adapter.js';
 import { adapter as hywl } from '../carriers/hywl/adapter.js';
 import { adapter as iberomail } from '../carriers/iberomail/adapter.js';
@@ -610,6 +613,7 @@ import { adapter as jasWorldwide } from '../carriers/jas-worldwide/adapter.js';
 import { adapter as jcex } from '../carriers/jcex/adapter.js';
 import { adapter as jch } from '../carriers/jch/adapter.js';
 import { adapter as jdLogistics } from '../carriers/jd-logistics/adapter.js';
+import { adapter as jdexpressusa } from '../carriers/jdexpressusa/adapter.js';
 import { adapter as jdxexpress } from '../carriers/jdxexpress/adapter.js';
 import { adapter as jeebly } from '../carriers/jeebly/adapter.js';
 import { adapter as jerseyPost } from '../carriers/jersey-post/adapter.js';
@@ -743,6 +747,7 @@ import { adapter as mdsCollivery } from '../carriers/mds-collivery/adapter.js';
 import { adapter as meest } from '../carriers/meest/adapter.js';
 import { adapter as meihooPegasus } from '../carriers/meihoo-pegasus/adapter.js';
 import { adapter as meitongda } from '../carriers/meitongda/adapter.js';
+import { adapter as meixi } from '../carriers/meixi/adapter.js';
 import { adapter as memphisCourier } from '../carriers/memphis-courier/adapter.js';
 import { adapter as mesoGlobal } from '../carriers/meso-global/adapter.js';
 import { adapter as messengerCz } from '../carriers/messenger-cz/adapter.js';
@@ -1167,6 +1172,7 @@ import { adapter as tuskLogistics } from '../carriers/tusk-logistics/adapter.js'
 import { adapter as twsExpress } from '../carriers/tws-express/adapter.js';
 import { adapter as uSpeedExpress } from '../carriers/u-speed-express/adapter.js';
 import { adapter as ubiSmartParcel } from '../carriers/ubi-smart-parcel/adapter.js';
+import { adapter as ubuy } from '../carriers/ubuy/adapter.js';
 import { adapter as ukpWorldwide } from '../carriers/ukp-worldwide/adapter.js';
 import { adapter as ukrposhta } from '../carriers/ukrposhta/adapter.js';
 import { adapter as umacCargo } from '../carriers/umac-cargo/adapter.js';
@@ -1266,6 +1272,7 @@ import { adapter as yaoqiLogistics } from '../carriers/yaoqi-logistics/adapter.j
 import { adapter as ycex } from '../carriers/ycex/adapter.js';
 import { adapter as ycsLogistics } from '../carriers/ycs-logistics/adapter.js';
 import { adapter as ydh } from '../carriers/ydh/adapter.js';
+import { adapter as yhtlogistics } from '../carriers/yhtlogistics/adapter.js';
 import { adapter as yijiangky } from '../carriers/yijiangky/adapter.js';
 import { adapter as yilongLogistics } from '../carriers/yilong-logistics/adapter.js';
 import { adapter as yitu } from '../carriers/yitu/adapter.js';
@@ -1299,6 +1306,7 @@ import { adapter as zmcExpress } from '../carriers/zmc-express/adapter.js';
 import { adapter as znlogic } from '../carriers/znlogic/adapter.js';
 import { adapter as zoomVe } from '../carriers/zoom-ve/adapter.js';
 import { adapter as zrExpress } from '../carriers/zr-express/adapter.js';
+import { adapter as zsda56 } from '../carriers/zsda56/adapter.js';
 import { adapter as ztcce } from '../carriers/ztcce/adapter.js';
 import { adapter as zto } from '../carriers/zto/adapter.js';
 import { adapter as ztoFreight } from '../carriers/zto-freight/adapter.js';
@@ -1416,6 +1424,7 @@ export const REGISTRY: RegistryDefinition = {
     "best-express-vn": bestExpressVn,
     "best-freight-cn": bestFreightCn,
     "best-overnite-express": bestOverniteExpress,
+    "bester": bester,
     "bestfulfill": bestfulfill,
     "better-trucks": betterTrucks,
     "bex-express": bexExpress,
@@ -1637,6 +1646,7 @@ export const REGISTRY: RegistryDefinition = {
     "dsv": dsv,
     "dtdc": dtdc,
     "dx": dx,
+    "dyexpress": dyexpress,
     "dyj-express": dyjExpress,
     "dynalogic": dynalogic,
     "dypaq": dypaq,
@@ -1867,6 +1877,7 @@ export const REGISTRY: RegistryDefinition = {
     "huiyu": huiyu,
     "hunter-express": hunterExpress,
     "huuneh": huuneh,
+    "hyeship": hyeship,
     "hytd": hytd,
     "hywl": hywl,
     "iberomail": iberomail,
@@ -1916,6 +1927,7 @@ export const REGISTRY: RegistryDefinition = {
     "jcex": jcex,
     "jch": jch,
     "jd-logistics": jdLogistics,
+    "jdexpressusa": jdexpressusa,
     "jdxexpress": jdxexpress,
     "jeebly": jeebly,
     "jersey-post": jerseyPost,
@@ -2049,6 +2061,7 @@ export const REGISTRY: RegistryDefinition = {
     "meest": meest,
     "meihoo-pegasus": meihooPegasus,
     "meitongda": meitongda,
+    "meixi": meixi,
     "memphis-courier": memphisCourier,
     "meso-global": mesoGlobal,
     "messenger-cz": messengerCz,
@@ -2473,6 +2486,7 @@ export const REGISTRY: RegistryDefinition = {
     "tws-express": twsExpress,
     "u-speed-express": uSpeedExpress,
     "ubi-smart-parcel": ubiSmartParcel,
+    "ubuy": ubuy,
     "ukp-worldwide": ukpWorldwide,
     "ukrposhta": ukrposhta,
     "umac-cargo": umacCargo,
@@ -2572,6 +2586,7 @@ export const REGISTRY: RegistryDefinition = {
     "ycex": ycex,
     "ycs-logistics": ycsLogistics,
     "ydh": ydh,
+    "yhtlogistics": yhtlogistics,
     "yijiangky": yijiangky,
     "yilong-logistics": yilongLogistics,
     "yitu": yitu,
@@ -2605,6 +2620,7 @@ export const REGISTRY: RegistryDefinition = {
     "znlogic": znlogic,
     "zoom-ve": zoomVe,
     "zr-express": zrExpress,
+    "zsda56": zsda56,
     "ztcce": ztcce,
     "zto": zto,
     "zto-freight": ztoFreight,
@@ -2823,6 +2839,7 @@ export const REGISTRY: RegistryDefinition = {
     "best-freight-cn": "best-freight-cn",
     "best-overnite-express": "best-overnite-express",
     "best-transport": "universal",
+    "bester": "bester",
     "bestfulfill": "bestfulfill",
     "better-trucks": "better-trucks",
     "bex-express": "bex-express",
@@ -3193,6 +3210,7 @@ export const REGISTRY: RegistryDefinition = {
     "dtdc": "dtdc",
     "duxiuexp": "universal",
     "dx": "dx",
+    "dyexpress": "dyexpress",
     "dyj-express": "dyj-express",
     "dylo-express": "universal",
     "dynalogic": "dynalogic",
@@ -3577,6 +3595,7 @@ export const REGISTRY: RegistryDefinition = {
     "huuneh": "huuneh",
     "hy-express": "universal",
     "hye": "universal",
+    "hyeship": "hyeship",
     "hytd": "hytd",
     "hywl": "hywl",
     "hzt": "universal",
@@ -3666,6 +3685,7 @@ export const REGISTRY: RegistryDefinition = {
     "jch": "jch",
     "jcw-express": "universal",
     "jd-logistics": "jd-logistics",
+    "jdexpressusa": "jdexpressusa",
     "jdiex": "universal",
     "jdxexpress": "jdxexpress",
     "jeebly": "jeebly",
@@ -3899,6 +3919,7 @@ export const REGISTRY: RegistryDefinition = {
     "meihoo-pegasus": "meihoo-pegasus",
     "meitetsu-unyu": "universal",
     "meitongda": "meitongda",
+    "meixi": "meixi",
     "memphis-courier": "memphis-courier",
     "mensajeros-urbanos": "universal",
     "meso-global": "meso-global",
@@ -4658,6 +4679,7 @@ export const REGISTRY: RegistryDefinition = {
     "ubi-smart-parcel": "ubi-smart-parcel",
     "ubn-speed": "universal",
     "ubsend": "universal",
+    "ubuy": "ubuy",
     "ubx-uk": "universal",
     "uello": "universal",
     "ues-uy": "universal",
@@ -4829,6 +4851,7 @@ export const REGISTRY: RegistryDefinition = {
     "ydh": "ydh",
     "yfhex": "universal",
     "yha": "universal",
+    "yhtlogistics": "yhtlogistics",
     "yijiangky": "yijiangky",
     "yilong-logistics": "yilong-logistics",
     "yimidida": "universal",
@@ -4878,6 +4901,7 @@ export const REGISTRY: RegistryDefinition = {
     "znlogic": "znlogic",
     "zoom-ve": "zoom-ve",
     "zr-express": "zr-express",
+    "zsda56": "zsda56",
     "ztcce": "ztcce",
     "zto": "zto",
     "zto-freight": "zto-freight",

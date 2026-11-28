@@ -12714,6 +12714,47 @@
     ],
     "detectionRules": []
   },
+  "bester": {
+    "displayName": "Bester Express",
+    "color": "#23357F",
+    "aliases": [
+      "飛斯特運通",
+      "飞斯特运通",
+      "飛斯特",
+      "飛斯特運通股份有限公司",
+      "深圳市飞斯特运通供应链管理有限公司",
+      "BTR",
+      "Best International Transportation",
+      "exbtr"
+    ],
+    "countries": [
+      "TW",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Taipei",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bester",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.exbtr.com/",
+    "trackingUrlTemplate": "https://www.exbtr.com/waybill.html?orderid={trackingNumber}",
+    "trackingSearchUrl": "https://www.exbtr.com/waybill.html",
+    "helpUrl": "https://www.exbtr.com/customer/contact.html",
+    "linkRules": [
+      {
+        "domains": [
+          "exbtr.com"
+        ],
+        "pathPattern": "^/waybill\\.html$",
+        "params": [
+          "orderid"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "bestfulfill": {
     "displayName": "BestFulfill Packet",
     "color": "#ac1f24",
@@ -24679,6 +24720,39 @@
         "confidence": "low"
       }
     ]
+  },
+  "dyexpress": {
+    "displayName": "Dayi Express",
+    "color": "#F41834",
+    "aliases": [
+      "大億國際快遞",
+      "大亿国际快递",
+      "大億快遞",
+      "大亿快递",
+      "深圳大亿快递",
+      "DYE",
+      "Da Yi International Express"
+    ],
+    "countries": [
+      "CN",
+      "TW",
+      "HK",
+      "MO",
+      "SG",
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dyexpress",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.dy-express.com/",
+    "trackingSearchUrl": "https://www.dy-express.com/query/serchi",
+    "helpUrl": "https://www.dy-express.com/contact/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "dyj-express": {
     "displayName": "DYJ Express",
@@ -37146,6 +37220,31 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "hyeship": {
+    "displayName": "Hongyuan Express",
+    "color": "#E8B828",
+    "aliases": [
+      "鸿远快递",
+      "鸿远物流",
+      "鸿远国际物流集团",
+      "HYeship",
+      "Hongyuan Logistics Group"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hyeship",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.hyeship.com/",
+    "trackingSearchUrl": "https://www.hyeship.com/track/#/trackForm",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hytd": {
     "displayName": "HYTD Express",
     "color": "#0b3b98",
@@ -40077,6 +40176,28 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "jdexpressusa": {
+    "displayName": "JD Express USA",
+    "color": "#EC7400",
+    "aliases": [
+      "骏达快递",
+      "駿達快遞",
+      "骏达"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jdexpressusa",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
     "detectionRules": []
   },
   "jdiex": {
@@ -47725,6 +47846,41 @@
         "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
         "params": [
           "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "meixi": {
+    "displayName": "Meixi Express",
+    "color": "#1E3C72",
+    "aliases": [
+      "美西速运",
+      "美西环球速运",
+      "J-FIVE GLOBAL INC"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "meixi",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.j5ex.com/",
+    "trackingUrlTemplate": "https://www.j5ex.com/select.html?num={trackingNumber}",
+    "trackingSearchUrl": "https://www.j5ex.com/select.html",
+    "linkRules": [
+      {
+        "domains": [
+          "www.j5ex.com",
+          "j5ex.com"
+        ],
+        "pathPattern": "^/select\\.html$",
+        "params": [
+          "num"
         ]
       }
     ],
@@ -72120,6 +72276,42 @@
     ],
     "detectionRules": []
   },
+  "ubuy": {
+    "displayName": "UBUYLOGI",
+    "color": "#003054",
+    "aliases": [
+      "优拜物流",
+      "德国优拜物流",
+      "广州优拜科技有限公司"
+    ],
+    "countries": [
+      "DE",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ubuy",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.ubuylogi.com/",
+    "trackingUrlTemplate": "https://www.ubuylogi.com/track/?num={trackingNumber}",
+    "trackingSearchUrl": "https://www.ubuylogi.com/",
+    "helpUrl": "https://www.ubuylogi.com/contact-us/",
+    "linkRules": [
+      {
+        "domains": [
+          "ubuylogi.com"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "num"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "ubx-uk": {
     "displayName": "UBX UK",
     "color": "#254083",
@@ -77417,6 +77609,30 @@
     ],
     "detectionRules": []
   },
+  "yhtlogistics": {
+    "displayName": "Shanghai Aerospace Logistics",
+    "color": "#008040",
+    "aliases": [
+      "宇航通物流",
+      "宇航通",
+      "宇航通快递",
+      "上海宇航通",
+      "宇航通国际"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "yhtlogistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "yijiangky": {
     "displayName": "Yijiang Express",
     "color": "#1492DF",
@@ -78842,6 +79058,43 @@
         "pattern": "^\\d{2}[A-Z0-9]{6}(?:[A-Z0-9]|[A-Z0-9]{4})?ZR$",
         "confidence": "high",
         "rawPattern": "^\\d{2}-[A-Z0-9]{6}(?:[A-Z0-9]|[A-Z0-9]{4})?-ZR$"
+      }
+    ]
+  },
+  "zsda56": {
+    "displayName": "Zhuanshunda",
+    "color": "#2C3088",
+    "aliases": [
+      "转瞬达",
+      "转瞬达集运",
+      "转瞬达国际集运",
+      "转瞬达国际集运公司",
+      "ZSD"
+    ],
+    "countries": [
+      "CN",
+      "CA",
+      "US",
+      "AU",
+      "TW"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "zsda56",
+      "recognitionRank": 44,
+      "recognitionPattern": "^ZSD\\d{6}$",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.zsda56.com/",
+    "trackingSearchUrl": "https://www.zsda56.com/",
+    "helpUrl": "https://www.zsda56.com/contact_us.php",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^ZSD\\d{6}$",
+        "confidence": "low"
       }
     ]
   },

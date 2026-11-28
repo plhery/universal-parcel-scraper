@@ -569,5 +569,6 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "zes-express": 13,
   "znlogic": 3,
   "zr-express": 801,
+  "zsda56": 44,
   "zto-international": 998,
 };
