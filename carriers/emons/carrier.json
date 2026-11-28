@@ -5,11 +5,13 @@
     "Emons Spedition",
     "Emons Spedition GmbH",
     "Emons Logistik",
-    "myEmons"
+    "myEmons",
+    "Emons Schweiz AG"
   ],
   "region": {
     "countries": [
-      "DE"
+      "DE",
+      "CH"
     ]
   },
   "brand": {

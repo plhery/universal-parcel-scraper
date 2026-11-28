@@ -2,12 +2,14 @@
   "id": "ziegler",
   "displayName": "Ziegler",
   "aliases": [
-    "Ziegler Group"
+    "Ziegler Group",
+    "Ziegler (Schweiz) AG"
   ],
   "region": {
     "countries": [
       "BE",
-      "FR"
+      "FR",
+      "CH"
     ]
   },
   "brand": {

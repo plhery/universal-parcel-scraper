@@ -26408,10 +26408,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Emons Spedition",
       "Emons Spedition GmbH",
       "Emons Logistik",
-      "myEmons"
+      "myEmons",
+      "Emons Schweiz AG"
     ],
     "countries": [
-      "DE"
+      "DE",
+      "CH"
     ],
     "selectable": true,
     "timezone": "Europe/Berlin",
@@ -78869,11 +78871,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "Ziegler",
     "color": "#066a5d",
     "aliases": [
-      "Ziegler Group"
+      "Ziegler Group",
+      "Ziegler (Schweiz) AG"
     ],
     "countries": [
       "BE",
-      "FR"
+      "FR",
+      "CH"
     ],
     "selectable": true,
     "timezone": "Europe/Brussels",

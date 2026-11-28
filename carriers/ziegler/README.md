@@ -3,8 +3,8 @@
 Ziegler parcels use enabled universal providers. There is no dedicated adapter.
 
 Ziegler Group, founded in Brussels in 1908, forwards goods by road, air, sea and rail from its
-branches in Belgium, France and other countries. Its road shipments are tracked on Easytrack,
-which takes a tracking number without an account.
+branches in Belgium, France, Switzerland and other countries. Its road shipments are tracked on
+Easytrack, which takes a tracking number without an account.
 
 ## Numbers
 

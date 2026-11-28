@@ -2,7 +2,7 @@
 
 Emons parcels use enabled universal providers. There is no dedicated adapter.
 
-Emons is a Cologne groupage forwarder delivering pallets and parcels across Germany. Its site is emons.de.
+Emons is a Cologne groupage forwarder delivering pallets and parcels across Germany, with Emons Schweiz AG in Switzerland. Its site is emons.de.
 
 ## Numbers
 
