@@ -32233,6 +32233,31 @@
     ]
   },
   {
+    "input": "21542037706",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "old-dominion",
+      "coordinadora",
+      "dhl-ecommerce-pl",
+      "gls-at",
+      "gls-pl",
+      "mainfreight",
+      "ppl"
+    ],
+    "asked": [
+      "dhl-ecommerce-pl",
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics"
+    ]
+  },
+  {
     "input": "2160855970",
     "carrier": "unknown",
     "confidence": "low",
@@ -101730,6 +101755,12 @@
     ]
   },
   {
+    "input": "JPNDFE230201060565",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "JQ0004224658",
     "carrier": "unknown",
     "confidence": "low",
@@ -108313,6 +108344,12 @@
   },
   {
     "input": "OLS3060178681743",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "OMG2508291001",
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
@@ -118730,6 +118767,12 @@
     "asked": [
       "flash-express"
     ]
+  },
+  {
+    "input": "THATXW10000000ABC",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "THE0000512000433544",

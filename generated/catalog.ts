@@ -24455,6 +24455,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "dragonfe": {
+    "displayName": "DF Logistics",
+    "color": "#F29417",
+    "aliases": [
+      "DF物流",
+      "DragonFight",
+      "Qingdao DragonFight International Supply Chain",
+      "安贞吉",
+      "青岛安贞吉国际供应链服务有限公司"
+    ],
+    "countries": [
+      "JP",
+      "KR",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dragonfe",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.kuaidi100.com/all/dragonfe.shtml",
+    "linkRules": [
+      {
+        "domains": [
+          "dragonfe.com",
+          "www.dragonfe.com"
+        ],
+        "path": "^/index\\.php/Home/Index/getExpTrack/expNo/([A-Za-z0-9]{8,30})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "dragonfly-au": {
     "displayName": "Dragonfly Australia",
     "color": "#13a58f",
@@ -49675,6 +49709,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "nanbei-express": {
+    "displayName": "Nanbei Express",
+    "color": "#183883",
+    "aliases": [
+      "Anhui Nanbei Express",
+      "南北快运",
+      "安徽南北快运有限责任公司",
+      "蚁链南北快运"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "nanbei-express"
+    },
+    "canaryUrl": "https://www.kuaidi100.com/all/nbky.shtml",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "naqel": {
     "displayName": "Naqel Express",
     "color": "#06205c",
@@ -51740,6 +51796,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingSearchUrl": "https://omlogisticssupplychain.com/track-shipment",
     "helpUrl": "https://omlogisticssupplychain.com/contact",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "omg-express": {
+    "displayName": "OMG Express",
+    "color": "#0F766E",
+    "aliases": [
+      "OMG国际速运",
+      "OMG International Express"
+    ],
+    "countries": [
+      "US",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "omg-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://omg-exp.com/tracking",
+    "trackingUrlTemplate": "https://omg-exp.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://omg-exp.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "omg-exp.com",
+          "www.omg-exp.com"
+        ],
+        "path": "^/tracking/(OMG\\d{8,12})/?$"
+      }
+    ],
     "detectionRules": []
   },
   "omgo": {
@@ -69724,6 +69812,42 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "tobkk": {
+    "displayName": "Thai Bear Logistics",
+    "color": "#0084FF",
+    "aliases": [
+      "泰熊物流",
+      "Tobkk",
+      "Thai Bear"
+    ],
+    "countries": [
+      "CN",
+      "TH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "tobkk",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.tobkk.cn/track.php",
+    "trackingUrlTemplate": "https://www.tobkk.cn/track.php?order_num={trackingNumber}",
+    "trackingSearchUrl": "https://www.tobkk.cn/track.php",
+    "linkRules": [
+      {
+        "domains": [
+          "tobkk.cn",
+          "www.tobkk.cn"
+        ],
+        "pathPattern": "^/track(?:-int)?\\.php$",
+        "params": [
+          "order_num"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "today-kr": {
     "displayName": "To-Day",
     "color": "#000000",
@@ -80238,6 +80362,7 @@ export const CARRIER_IDS = [
   "dpex",
   "dpx-logistics",
   "dragon-star-curier",
+  "dragonfe",
   "dragonfly-au",
   "dragonfly-nl",
   "drop2shop",
@@ -80992,6 +81117,7 @@ export const CARRIER_IDS = [
   "myanmar-post",
   "mylerz",
   "mzz-briefdienst",
+  "nanbei-express",
   "naqel",
   "nas-express",
   "nasco-express",
@@ -81051,6 +81177,7 @@ export const CARRIER_IDS = [
   "olva-courier",
   "olza-logistic",
   "om-logistics",
+  "omg-express",
   "omgo",
   "omniva",
   "ondot-courier",
@@ -81575,6 +81702,7 @@ export const CARRIER_IDS = [
   "tmw-express",
   "tnt-au",
   "tnt-it",
+  "tobkk",
   "today-kr",
   "togo-post",
   "tolos",
@@ -82534,6 +82662,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dpex": [],
   "dpx-logistics": [],
   "dragon-star-curier": [],
+  "dragonfe": [],
   "dragonfly-au": [],
   "dragonfly-nl": [],
   "drop2shop": ["drop2shop-1"],
@@ -83288,6 +83417,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "myanmar-post": [],
   "mylerz": ["mylerz-1"],
   "mzz-briefdienst": [],
+  "nanbei-express": [],
   "naqel": [],
   "nas-express": [],
   "nasco-express": [],
@@ -83347,6 +83477,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "olva-courier": ["olva-courier-3"],
   "olza-logistic": [],
   "om-logistics": [],
+  "omg-express": [],
   "omgo": ["omgo-1"],
   "omniva": ["omniva-1","omniva-2","omniva-own","omniva-s10"],
   "ondot-courier": [],
@@ -83871,6 +84002,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tmw-express": [],
   "tnt-au": ["tnt-au-1"],
   "tnt-it": ["tnt-it-1","tnt-it-check"],
+  "tobkk": [],
   "today-kr": [],
   "togo-post": [],
   "tolos": [],

@@ -328,6 +328,7 @@ import { adapter as dpdZa } from '../carriers/dpd-za/adapter.js';
 import { adapter as dpdex } from '../carriers/dpdex/adapter.js';
 import { adapter as dpex } from '../carriers/dpex/adapter.js';
 import { adapter as dragonStarCurier } from '../carriers/dragon-star-curier/adapter.js';
+import { adapter as dragonfe } from '../carriers/dragonfe/adapter.js';
 import { adapter as dragonflyAu } from '../carriers/dragonfly-au/adapter.js';
 import { adapter as dragonflyNl } from '../carriers/dragonfly-nl/adapter.js';
 import { adapter as drop2shop } from '../carriers/drop2shop/adapter.js';
@@ -785,6 +786,7 @@ import { adapter as mtscn } from '../carriers/mtscn/adapter.js';
 import { adapter as muser } from '../carriers/muser/adapter.js';
 import { adapter as mylerz } from '../carriers/mylerz/adapter.js';
 import { adapter as nacex } from '../carriers/nacex/adapter.js';
+import { adapter as nanbeiExpress } from '../carriers/nanbei-express/adapter.js';
 import { adapter as naqel } from '../carriers/naqel/adapter.js';
 import { adapter as nationex } from '../carriers/nationex/adapter.js';
 import { adapter as navex } from '../carriers/navex/adapter.js';
@@ -820,6 +822,7 @@ import { adapter as odmExpress } from '../carriers/odm-express/adapter.js';
 import { adapter as oldDominion } from '../carriers/old-dominion/adapter.js';
 import { adapter as olvaCourier } from '../carriers/olva-courier/adapter.js';
 import { adapter as omLogistics } from '../carriers/om-logistics/adapter.js';
+import { adapter as omgExpress } from '../carriers/omg-express/adapter.js';
 import { adapter as omgo } from '../carriers/omgo/adapter.js';
 import { adapter as omniva } from '../carriers/omniva/adapter.js';
 import { adapter as oneWorldExpress } from '../carriers/one-world-express/adapter.js';
@@ -1150,6 +1153,7 @@ import { adapter as tmwExpress } from '../carriers/tmw-express/adapter.js';
 import { adapter as tnt } from '../carriers/tnt/adapter.js';
 import { adapter as tntAu } from '../carriers/tnt-au/adapter.js';
 import { adapter as tntIt } from '../carriers/tnt-it/adapter.js';
+import { adapter as tobkk } from '../carriers/tobkk/adapter.js';
 import { adapter as todayKr } from '../carriers/today-kr/adapter.js';
 import { adapter as tonami } from '../carriers/tonami/adapter.js';
 import { adapter as tongxi } from '../carriers/tongxi/adapter.js';
@@ -1664,6 +1668,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpdex": dpdex,
     "dpex": dpex,
     "dragon-star-curier": dragonStarCurier,
+    "dragonfe": dragonfe,
     "dragonfly-au": dragonflyAu,
     "dragonfly-nl": dragonflyNl,
     "drop2shop": drop2shop,
@@ -2121,6 +2126,7 @@ export const REGISTRY: RegistryDefinition = {
     "muser": muser,
     "mylerz": mylerz,
     "nacex": nacex,
+    "nanbei-express": nanbeiExpress,
     "naqel": naqel,
     "nationex": nationex,
     "navex": navex,
@@ -2156,6 +2162,7 @@ export const REGISTRY: RegistryDefinition = {
     "old-dominion": oldDominion,
     "olva-courier": olvaCourier,
     "om-logistics": omLogistics,
+    "omg-express": omgExpress,
     "omgo": omgo,
     "omniva": omniva,
     "one-world-express": oneWorldExpress,
@@ -2486,6 +2493,7 @@ export const REGISTRY: RegistryDefinition = {
     "tnt": tnt,
     "tnt-au": tntAu,
     "tnt-it": tntIt,
+    "tobkk": tobkk,
     "today-kr": todayKr,
     "tonami": tonami,
     "tongxi": tongxi,
@@ -3246,6 +3254,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpex": "dpex",
     "dpx-logistics": "universal",
     "dragon-star-curier": "dragon-star-curier",
+    "dragonfe": "dragonfe",
     "dragonfly-au": "dragonfly-au",
     "dragonfly-nl": "dragonfly-nl",
     "drop2shop": "drop2shop",
@@ -4028,6 +4037,7 @@ export const REGISTRY: RegistryDefinition = {
     "mylerz": "mylerz",
     "mzz-briefdienst": "universal",
     "nacex": "nacex",
+    "nanbei-express": "nanbei-express",
     "naqel": "naqel",
     "nas-express": "universal",
     "nasco-express": "universal",
@@ -4090,6 +4100,7 @@ export const REGISTRY: RegistryDefinition = {
     "olva-courier": "olva-courier",
     "olza-logistic": "universal",
     "om-logistics": "om-logistics",
+    "omg-express": "omg-express",
     "omgo": "omgo",
     "omniva": "omniva",
     "ondot-courier": "universal",
@@ -4644,6 +4655,7 @@ export const REGISTRY: RegistryDefinition = {
     "tnt": "tnt",
     "tnt-au": "tnt-au",
     "tnt-it": "tnt-it",
+    "tobkk": "tobkk",
     "today-kr": "today-kr",
     "togo-post": "universal",
     "tolos": "universal",
