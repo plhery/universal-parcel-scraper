@@ -2927,6 +2927,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'hpexpress', number: 'HP000000017',
     route: /^https:\/\/www\.hpexpress\.com\.au\/express\/trackingInfo\?orderSns=HP000000017$/,
     marker: /快递单号:\s*HP000000017/ },
+  // The server renders an order's rows under the number in its search box; an unknown number gets a notice
+  // that does not repeat it and leaves for the home page after three seconds.
+  { carrier: 'globalexp', number: 'GX999999999999JY',
+    route: /^https:\/\/www\.global-express168\.com\/search_kuai_di\/search\/orderid\/GX999999999999JY$/,
+    marker: /未查询到对应订单|查询结果/, reads: 1, forwarding: { notFound: /未查询到对应订单，请确认您输入的单号无误/ } },
   // The English page names the number over its history, or over the notice that it is incorrect.
   { carrier: 'swiss-universal-express', number: 'SUE9999000000017FR',
     route: /^https:\/\/swiss-universal-express\.ch\/tracking\/SUE9999000000017FR\?lang=en$/,

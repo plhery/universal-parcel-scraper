@@ -1,0 +1,50 @@
+{
+  "carrier": "globalexp",
+  "records": [
+    {
+      "number": "GX003364354335JY",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/globalexp.shtml",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "globalexp"
+        ]
+      },
+      "note": "Kuaidi100's page for 全球捷运 links it as the example number. The firm's tracker answers it with a parcel collected in Hong Kong, cleared at Guangzhou and delivered by ZTO to a pickup point."
+    },
+    {
+      "number": "JY505112372318GX",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "quarantine"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "globalexp"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 全球捷运. The firm's tracker no longer holds an order under it."
+    }
+  ]
+}

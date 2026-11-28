@@ -1,0 +1,89 @@
+{
+  "id": "globalexp",
+  "displayName": "Global Express",
+  "aliases": [
+    "全球捷运",
+    "全球捷运国际快运",
+    "全球捷运国际快运有限公司"
+  ],
+  "region": {
+    "countries": [
+      "HK"
+    ]
+  },
+  "brand": {
+    "color": "#FF6600"
+  },
+  "selectable": true,
+  "timezone": "Asia/Hong_Kong",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "globalexp",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 88
+    }
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.global-express168.com/search_kuai_di/search/orderid/{trackingNumber}",
+    "searchUrl": "https://www.global-express168.com/cms/c/orders",
+    "canaryUrl": "https://www.global-express168.com/cms/c/orders",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "courier_name",
+      "driver_phone",
+      "pickup_point"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "courier_name",
+      "driver_phone",
+      "pickup_point"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "global-express168.com"
+      ],
+      "path": "^/search_kuai_di/search/orderid/([^/?#]+)/?$"
+    }
+  ],
+  "detection": [
+    {
+      "id": "globalexp-1",
+      "pattern": "^(?:GX\\d{12}JY|JY\\d{12}GX)$",
+      "confidence": "low"
+    }
+  ]
+}

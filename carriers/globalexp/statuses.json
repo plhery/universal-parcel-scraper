@@ -1,0 +1,104 @@
+{
+  "carrier": "globalexp",
+  "entries": [
+    {
+      "wording": "… 已揽收",
+      "language": "zh",
+      "english": "Collected by the branch named",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The firm's Hong Kong branch takes the parcel in, and ZTO's branch once ZTO has it; the adapter leaves out ZTO's courier and phones."
+    },
+    {
+      "wording": "【…】包裹已到达【…】",
+      "language": "zh",
+      "english": "The parcel reached the warehouse in brackets",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The New Territories warehouse in Hong Kong."
+    },
+    {
+      "wording": "【…】包裹已从【…】出库，等待干线运输",
+      "language": "zh",
+      "english": "The parcel left the warehouse in brackets for the trunk route",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "到达：【…】，国际干线运输已从【…】启程",
+      "language": "zh",
+      "english": "The international trunk route left the place in brackets",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "到达：【…】国际干线运输已到达【…】，等待清关",
+      "language": "zh",
+      "english": "The international trunk route reached the place in brackets; awaiting clearance",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "At the Guangzhou border, before import clearance."
+    },
+    {
+      "wording": "【…】包裹清关完成，进入国内运输环节",
+      "language": "zh",
+      "english": "Cleared at the port in brackets; on to domestic transport",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "【…】分拣完成，转国内中通快递，单号：…",
+      "language": "zh",
+      "english": "Sorted at the centre in brackets and handed to ZTO under the number given",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "ZTO's waybill becomes the delivery number. ZTO's scans follow."
+    },
+    {
+      "wording": "快件已揽收",
+      "language": "zh",
+      "english": "Collected by ZTO",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "ZTO's first scan, once the adapter leaves out the branch's courier."
+    },
+    {
+      "wording": "快件已发往 …",
+      "language": "zh",
+      "english": "Sent to the ZTO centre or branch named",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "快件已到达 …",
+      "language": "zh",
+      "english": "Arrived at the ZTO centre or branch named",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "… 快递员正在为您派件",
+      "language": "zh",
+      "english": "Out for delivery from the ZTO branch named",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The adapter leaves out the courier and the phones."
+    },
+    {
+      "wording": "快件已送达，请及时取件",
+      "language": "zh",
+      "english": "Left at a pickup point; please collect it",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "note": "The adapter leaves out the pickup point, its address and phone, and the courier."
+    },
+    {
+      "wording": "您的快件已妥投，已在代收点取出",
+      "language": "zh",
+      "english": "Delivered: collected from the pickup point",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The adapter leaves out the pickup point and the phones."
+    }
+  ]
+}

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+   <title>全球捷运国际快运有限公司</title>
+	<meta name="keywords"  content="全球捷运国际快运有限公司"/>
+	<meta name="description" content="全球捷运国际快运有限公司,快捷的快递查询"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <!-- Favicon -->
+    <!-- Google Web Fonts -->
+    <!-- Font Awesome -->
+
+
+
+    <!-- Libraries Stylesheet -->
+    <link href="/template/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link rel="stylesheet" href="/static/css/amazeui.min.css" />
+    <link rel="stylesheet" href="/static/css/amazeui.flat.css" />
+    <link rel="stylesheet" href="/static/css/zui.css" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/imagehover.css" />
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/amazeui.min.js"></script>
+    <script src="/static/js/zui.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+
+    <header class="am-topbar">
+      <div class="am-container">
+        <h1 class="am-topbar-brand">
+          <a href="/" class="am-text-ir"> {cms:config name="cms.sitename"/}</a>
+        </h1>
+        <button
+          class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+          data-am-collapse="{target: '#doc-topbar-collapse'}"
+        >
+          <span class="am-sr-only">导航切换</span>
+          <span class="am-icon-bars"></span>
+        </button>
+        <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+          <ul class="am-nav am-nav-pills am-topbar-nav">
+            <li><a href="/" class="am-active">网站首页</a></li>
+            <li><a href="/cms/c/aboutus" class="">关于我们</a></li>
+            <li><a href="/cms/c/news" class="">新闻动态</a></li>
+            <li><a href="/cms/c/services" class="">运营项目</a></li>
+            <li><a href="/cms/c/orders" class="">订单查询</a></li>
+            <li><a href="/cms/c/contactus" class="">联系我们</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <div class="am-g">
+      <link href="/assets/css/search.css" rel="stylesheet" />
+<link href="/template/css/style.css" rel="stylesheet" />
+<style type="text/css">
+  body {
+    padding-top: 0px;
+    font-size: 16px;
+  }
+  .bordertable td {
+    border: 3px solid white;
+  }
+  main.content {
+    min-height: calc(100vh - 75px);
+  }
+</style>
+<img
+  src="/uploads/20250707/f7ef427c1a3c80e0fac45d8357b78336.jpg"
+  draggable="false"
+/>
+<div class="am-container mt-2">
+  <div class="am-g">
+    <aside class="am-u-sm-3"><div class="cate-name">
+
+  <h3>订单查询</h3>
+  <span>orders</span>
+
+</div>
+
+
+
+<div class="cate-name">
+  <h3 style="font-size: 20px">WE HAVE BEEN HERE</h3>
+  <h3>联系我们</h3>
+  <p style="color: #ffffff; font-size: 10px; margin-top: 10px">
+    如果您对我们的产品有任何疑问,请联系客服，我们将竭诚为您服务.
+  </p>
+</div>
+<div class="am-panel am-panel-default left-contact">
+  <div class="am-panel-bd">
+    <span>电话： （852）26681868</span>
+  </div>
+  <img
+    src="/uploads/20250703/lxwm.png"
+    alt=""
+    class="am-img-responsive"
+  />
+</div>
+</aside>
+    <div class="am-u-sm-9">
+      <ol class="am-breadcrumb">
+        <li><a href="/" class="am-icon-home">首页</a></li>
+        <li class="am-active">订单查询</li>
+      </ol>
+
+      <div class="items">
+        <article class="article1" style="padding: 50px 0px">
+          <div class="am-u-sm-8 am-u-sm-centered">
+            <div class="am-input-group">
+              <span class="am-input-group-label">订单号：</span>
+              <input
+                type="text"
+                name="orderid"
+                id="orderid"
+                class="am-form-field"
+                placeholder="CY00000000000000"
+                value="GX003364354335JY"
+              />
+              <span class="am-input-group-btn">
+                <button
+                  class="am-btn am-btn-primary"
+                  type="button"
+                  onclick="searchOrders()"
+                >
+                  查询
+                </button>
+                <button
+                  class="am-btn am-btn-default"
+                  type="button"
+                  onclick="clearJg()"
+                >
+                  <span class="am-icon-undo"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+
+          <div id="result">
+                        <section class="am-panel am-panel-default">
+              <header class="am-panel-hd">
+                <h3 class="am-panel-title" style="line-height: 30px">
+                  查询结果
+                </h3>
+              </header>
+              <table class="am-table am-table-bordered am-table-hover">
+                <thead>
+                  <tr>
+                    <th width="150">日期</th>
+                    <th>快件状态</th>
+                  </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                    <td>2026-11-20 13:19:38</td>
+                    <td>您的快件已妥投，已在代收点取出。如遇问题请联系【菜鸟-某某学院菜鸟驿站，电话：13800000000】,无需找商家/平台。网点电话：020-12345678，投诉电话：13900000000。关注“中通快递”微信公众号反馈问题，处理更快捷！感谢使用中通快递，期待再次为您服务！</td>
+                  </tr>
+                                    <tr>
+                    <td>2026-11-12 08:40:44</td>
+                    <td>快件已送达【菜鸟-某某学院菜鸟驿站，电话：13800000000】，取件地址：某某路一号，请及时取件。如遇取件码问题或找不到包裹等问题请联系快递员【某某某：13800000001】，无需找商家/平台。网点电话：020-12345678，投诉电话：13900000000。关注“中通快递”微信公众号获取实时物流信息</td>
+                  </tr>
+                                    <tr>
+                    <td>2026-11-12 08:40:39</td>
+                    <td>广州荔城 快递员【某某某,13800000001】正在为您派件（95720为中通快递员外呼专属号码，请放心接听。如遇问题无需找商家/平台，请联系快递员为您解决，网点电话：020-12345678，投诉电话：13900000000，或关注“中通快递”官方微信公众号获取实时物流信息）</td>
+                  </tr>
+                                    <tr>
+                    <td>2026-11-12 07:06:07</td>
+                    <td>【广州市】 快件已到达 广州荔城 ，如遇问题请致电【客服热线：020-12345678】</td>
+                  </tr>
+                                    <tr>
+                    <td>2026-11-12 04:13:25</td>
+                    <td>【广州市】 快件已发往 广州荔城 ，如遇问题请致电【客服热线：95311】</td>
+                  </tr>
+                                    <tr>
+                    <td>2026-11-12 03:56:31</td>
+                    <td>【广州市】 快件已到达 广州转运中心 ，如遇问题请致电【客服热线：95311】</td>
+                  </tr>
+                                    <tr>
+                    <td>2026-11-11 21:45:49</td>
+                    <td>【广州市】 快件已发往 广州转运中心 ，如遇问题请致电【客服热线：020-87654321】</td>
+                  </tr>
+                                    <tr>
+                    <td>2026-11-11 21:39:32</td>
+                    <td>【广州市】 快件已由广州钟落潭某某某（13800000002）揽收（如遇问题无需找商家/平台，请致电【客服热线：020-87654321】更快解决，或关注“中通快递”官方微信公众号获取实时物流信息）</td>
+                  </tr>
+                                    <tr>
+                    <td>2026-11-11 16:19:26</td>
+                    <td>【广州国际函运中心】分拣完成，转国内中通快递，单号：79046946748137 </td>
+                  </tr>
+                                    <tr>
+                    <td>2026-11-11 12:40:00</td>
+                    <td>【广州口岸】包裹清关完成，进入国内运输环节</td>
+                  </tr>
+                                    <tr>
+                    <td>2026-11-11 09:37:14</td>
+                    <td>到达：【中国 - 广州】国际干线运输已到达【广州】，等待清关</td>
+                  </tr>
+                                    <tr>
+                    <td>2026-11-11 02:10:40</td>
+                    <td>到达：【中国香港地区 - 香港】，国际干线运输已从【香港】启程</td>
+                  </tr>
+                                    <tr>
+                    <td>2026-11-10 23:13:48</td>
+                    <td>【中国香港地区 - 香港】包裹已从【香港新界海外仓】出库，等待干线运输</td>
+                  </tr>
+                                    <tr>
+                    <td>2026-11-10 22:13:29</td>
+                    <td>【中国香港地区 - 香港】包裹已到达【香港新界海外仓】</td>
+                  </tr>
+                                    <tr>
+                    <td>2026-11-10 20:06:03</td>
+                    <td>中国香港新界九龙湾分部 已揽收</td>
+                  </tr>
+                                  </tbody>
+              </table>
+            </section>
+                      </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    $(document).ready(function () {
+      $("#orderid").hover(function () {
+        this.select();
+      });
+    });
+
+
+
+    function searchOrders() {
+      var ordersId = $("#orderid").val();
+
+      if (ordersId && ordersId.length > 0) {
+        var orders = ordersId.split(";");
+        for (var i = 0; i < orders.length; i++) {
+          window.location.replace(
+            "/search_kuai_di/search/orderid/" + orders[i]
+          );
+        }
+      }
+    }
+  </script>
+</div>
+
+    </div>
+
+    <!-- Footer Start -->
+    <div><div class="footer">
+    <div class="am-container">
+        <div class="am-g">
+
+            <div class="am-u-sm-12 footer-link">
+                <h3 class="mb-20">友情链接</h3>
+
+            </div>
+
+        </div>
+        <div class="am-text-center">
+            <p>Copyright ©2025 全球捷运国际快运有限公司 All rights reserved 版权所有 未经许可 严禁复制</p>
+        </div>
+    </div>
+</div>
+
+
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+    <a href="#top" title="回到顶部">
+        <span class="am-gotop-title">回到顶部</span>
+        <i class="am-gotop-icon am-icon-chevron-up"></i>
+    </a>
+</div>
+<script src="/static/js/vue.js"></script></div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+
+
+
+    <!-- JavaScript Libraries -->
+
+
+    <!-- Contact Javascript File -->
+
+
+
+
+</body>
+
+</html>
