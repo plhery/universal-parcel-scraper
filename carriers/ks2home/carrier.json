@@ -1,0 +1,64 @@
+{
+  "id": "ks2home",
+  "displayName": "Ks2Home",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "DE",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#ff5f13"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ks2home",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "weight"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.ks2home.de",
+        "ks2home.de"
+      ],
+      "pathPattern": "^/express/query/?$",
+      "query": "^(?:.*&)?code=([^&]+)(?=&|$)"
+    }
+  ],
+  "detection": []
+}

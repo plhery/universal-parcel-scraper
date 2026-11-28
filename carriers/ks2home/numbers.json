@@ -1,0 +1,24 @@
+{
+  "carrier": "ks2home",
+  "records": [
+    {
+      "number": "DE2602041059",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for Ks2Home. The firm's waybill page answers it as a parcel from Germany, in import clearance in China."
+    }
+  ]
+}

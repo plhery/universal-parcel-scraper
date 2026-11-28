@@ -7436,6 +7436,12 @@
     "reason": "GJS Express's parcel numbers seen are GJS and twelve digits. The prefix is the firm's initials and no other carrier's rule or sample has it, but the firm does not publish the format, so no rule claims it yet."
   },
   {
+    "carrier": "ks2home",
+    "pattern": "^DE\\d{10}$",
+    "kind": "collision",
+    "reason": "DE and ten digits is Amazon Logistics' German marketplace shape, whose high-confidence rule decides; Ks2Home's waybills seen have that shape."
+  },
+  {
     "carrier": "annengyuntong",
     "pattern": "^\\d{8,10}$",
     "kind": "by_design",

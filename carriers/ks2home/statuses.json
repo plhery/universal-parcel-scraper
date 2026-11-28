@@ -1,0 +1,54 @@
+{
+  "carrier": "ks2home",
+  "entries": [
+    {
+      "wording": "仓库处理中 - 分拣打包中 / Packaging at munich",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The firm's warehouse in Germany sorts and packs the goods: the first row in its hands."
+    },
+    {
+      "wording": "快递已揽收 - 已打包完成交付快递 / Packaged and delivered express",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Packed and handed to the courier that takes it to the airport."
+    },
+    {
+      "wording": "货物已发往机场 - 货物已发往机场 / To the Airport",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "On its way to the airport."
+    },
+    {
+      "wording": "货物已到达机场 - 货物已到达机场，等待起飞 / Deliver to the Airport, Awaiting Departure",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "At the airport, waiting for its flight."
+    },
+    {
+      "wording": "航班已起飞 - 货物已发往中国 / Deliver to China",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The flight to China left."
+    },
+    {
+      "wording": "已抵达 - 货物抵达中国 / Arrive in China",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The parcel reached China."
+    },
+    {
+      "wording": "清关中 - 包裹清关中，请耐心等待",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Import clearance in China; the domestic courier takes over after it, in rows the page asks a relay for."
+    }
+  ]
+}
