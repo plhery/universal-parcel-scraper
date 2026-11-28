@@ -1,0 +1,41 @@
+{
+  "carrier": "chinaqingguan",
+  "entries": [
+    {
+      "code": null,
+      "wording": "（个人物品）广州白云机场已送仓库",
+      "language": "zh",
+      "english": "(Personal goods) taken to the warehouse at Guangzhou Baiyun airport",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The firm's first row: the parcel has landed and reached its clearance warehouse."
+    },
+    {
+      "code": null,
+      "wording": "（个人物品）广州白云机场已送海关、排队待通关",
+      "language": "zh",
+      "english": "(Personal goods) taken to customs at Guangzhou Baiyun airport, queuing for clearance",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Waiting for import clearance."
+    },
+    {
+      "code": null,
+      "wording": "（个人物品）广州白云机场已清关",
+      "language": "zh",
+      "english": "(Personal goods) cleared at Guangzhou Baiyun airport",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Import clearance done: the parcel goes on."
+    },
+    {
+      "code": null,
+      "wording": "（个人物品）广州白云机场清关完毕，货物进入国内快递，荣通公司尽快将货物送到客户手上",
+      "language": "zh",
+      "english": "(Personal goods) clearance at Guangzhou Baiyun airport finished, the goods enter domestic express, Rongtong will bring them to the customer as soon as it can",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The firm's last row: handed on for delivery in China."
+    }
+  ]
+}

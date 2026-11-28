@@ -1,0 +1,33 @@
+{
+  "carrier": "chinaqingguan",
+  "records": [
+    {
+      "number": "7790005375465",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "econt",
+          "fan-courier",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 荣通国际, and its page for the firm as its example (https://www.kuaidi100.com/all/chinaqingguan.shtml). The firm's tracker answers it with a parcel of personal goods cleared at Guangzhou Baiyun airport and handed on under the same number."
+    }
+  ]
+}

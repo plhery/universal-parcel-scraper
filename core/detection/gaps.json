@@ -7462,5 +7462,11 @@
     "pattern": "^TX\\d{9}$",
     "kind": "collision",
     "reason": "TX and nine digits is Tuxing Supply Chain's waybill on Kuaidi100's samples, and two letters and nine digits is a shape GLS Italy's rule takes, so detection does not name Tuxing. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "chinaqingguan",
+    "pattern": "^\\d{13}$",
+    "kind": "collision",
+    "reason": "Rongtong International's one public waybill is thirteen bare digits, a shape Yunda, Delhivery, Correos Chile and other carriers' rules take, and it is handed on for delivery in China under the same number, so detection does not name Rongtong. The adapter answers explicit selection."
   }
 ]

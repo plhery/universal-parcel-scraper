@@ -1,0 +1,64 @@
+{
+  "id": "chinaqingguan",
+  "displayName": "Rongtong International",
+  "aliases": [
+    "荣通国际",
+    "荣通清关",
+    "荣通国际货运",
+    "荣通国际货运有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#ED1C24"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "chinaqingguan",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

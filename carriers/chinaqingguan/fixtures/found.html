@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0025)./ -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>运单查询</title>
+    <meta name="Keywords" content="" />
+    <meta name="Description" content=""/>
+    <link href="/cha/home/Tpl/Public/css/global.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/cha/home/Tpl/Public/js/jquery.js"></script>
+    <script language="javascript" src="/cha/home/Tpl/Public/js/jquery.js"></script>
+    <script language="javascript" src="/cha/home/Tpl/Public/js/global.js"></script>
+    <script language="javascript" src="/cha/home/Tpl/Public/js/checkinput.js"></script>
+<!--<script language="javascript" src="/cha/home/Tpl/Public/js/ad.js"></script>-->
+    <style type="text/css">
+        #newslink {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            display: block;
+        }
+    </style>
+<!--
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-21491711-1']);
+        _gaq.push(['_trackPageview']);
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+-->
+</head>
+<body onload="val();">
+
+<link href="/cha/home/Tpl/Public/css/page.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            .table{
+                width: 680px;
+                text-align: left;
+                border: 1px solid #EDEDED;
+                padding: 3px 10px;
+            }
+            .table tr,td{
+                border: 1px solid #EDEDED;
+            }
+            .table th{
+                height: 35px;
+               background:#fcf2f3;
+                color: #c71f25;
+            }
+            .bg_new{
+                background: #F7F7F7;
+                min-height: 30px;
+            }
+            .content li{
+                margin-left: 0px;
+                line-height: 26px;
+            }
+        </style>
+		
+		
+<div id="content" class="basic">
+
+    <div id="left">
+        <div id="menu">
+            <h2>运单查询</h2>
+            <ul>
+                 <li><a href="/cha/index.php?m=Index&a=search">运单查询</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="right">
+        <!--div id="news_info">
+            <h1>运单号查询结果</h1>
+        </div-->
+        <div id="news_show" class="content">
+                                                <div style="height:8px"></div>
+                    <table class="table">
+                     <tr style="height: 38px;line-height: 38px;">
+                         <td style="text-align: left; padding-left: 10px;" colspan="2">
+                             <ul>
+                                 <li>您的快递运单号<b style="font-size: 14px;color: red;">7790005375465</b>的查询结果如下:</li>
+                             <!--<li>始发地: <font color="blue"><strong></strong></font></li>-->
+                             </ul>
+                         </td>
+                     </tr>
+                    <tr>
+                        <th  style="width: 200px;">时间</th>
+                        <th>状态</th>
+                    </tr>			
+                                                <tr  style="height: 38px;line-height: 38px;">
+                            <td style="text-align: left;padding-left: 10px;" colspan="2"><font color="blue">您的包裹已顺利完成中国海关清关手续，现已转交<strong><font color="blue">荣通国际货运（或合作伙伴）进行国内派送，
+							运单号是：</font><strong style="font-size: 14px;color: green;">7790005375465</strong>
+							</td>
+						</tr>
+						<tr>
+							<td>NULL</td>
+							<td style="text-align: left; padding: 2px 6px;">查询无结果，请隔段时间再查</td>
+                        </tr>                         
+                        <tr>
+                            <td>------------------</td>
+                            <td>-------------------------------------------------------------------</td>
+                        </tr>							
+						<tr>
+								<td>2021.06.21 17:56</td>
+								<td>（个人物品）广州白云机场已送仓库</td>
+							</tr><tr>
+								<td>2021.06.23 02:14</td>
+								<td>（个人物品）广州白云机场已送海关、排队待通关</td>
+							</tr><tr>
+								<td>2021.06.26 14:30</td>
+								<td>（个人物品）广州白云机场已清关</td>
+							</tr><tr>
+								<td>2021.06.26 22:03</td>
+								<td>（个人物品）广州白云机场清关完毕，货物进入国内快递，荣通公司尽快将货物送到客户手上</td>
+							</tr>							
+                    </table>
+                                        </div>
+    </div>
+</div>
