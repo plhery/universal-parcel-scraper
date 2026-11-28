@@ -3059,6 +3059,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'latam-you', number: 'LTYZZPD9900000017',
     route: /^https:\/\/latamyou\.com\/#\/(?:newTrack\?no=LTYZZPD9900000017|user\/login)$/,
     marker: /没有查询到订单信息/ },
+  // The FlowLink tracking page reads the number from its address, looks it up on load and heads its rows with it.
+  { carrier: 'meixi', number: '99999999990',
+    route: /^https:\/\/www\.j5ex\.com\/select\.html\?num=99999999990$/,
+    marker: /运单编号：99999999990/ },
   // The tracker reads the number from its address, looks it up on load and shows the service's answer.
   { carrier: 'ecparcel', number: 'YOTN20991231900000017',
     route: /^https:\/\/track\.ec-parcel\.com\/track\?trackingNumber=YOTN20991231900000017$/,

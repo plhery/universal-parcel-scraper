@@ -18,7 +18,9 @@ Tracked through the Changyunda FlowLink system its tracking page asks.
   request the system refuses.
 - [`flowlink.ts`](flowlink.ts) holds the request, the reader and the adapter for any tenant of the system, each on
   its own `flowlink<tenant>.changyunda.cn` host. A tenant brings its subdomain, its tracking page, the zone of its
-  rows and its status map; [`adapter.ts`](adapter.ts) is JDX Express's.
+  rows and its status map; [`adapter.ts`](adapter.ts) is JDX Express's. A tenant whose rows mix several countries'
+  clocks also reads each row's bracketed place for its location and zone, as [Meixi Express](../meixi/README.md)
+  does.
 
 ## Notes
 

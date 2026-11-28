@@ -1,0 +1,36 @@
+{
+  "carrier": "meixi",
+  "records": [
+    {
+      "number": "80011150639",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/meixi.shtml",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dpd-ro",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "ppl"
+        ]
+      },
+      "note": "Kuaidi100's page for 美西速运 gives it as the example number. Meixi Express's tracker answers it with a parcel taken in at Los Angeles, flown to China, cleared there and handed to SF Express."
+    }
+  ]
+}

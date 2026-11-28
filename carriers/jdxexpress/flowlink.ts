@@ -63,6 +63,20 @@ const AFTERWORD = /^(?:如有|如遇|如需|若有|若出现|若|可关注|关�
 // A place at the start of a row: "[新界]", "【佛山市】".
 const PLACE = /^(?:\[([^[\]]{1,20})\]|【([^【】]{1,20})】)/u;
 
+/** The zone a row's wall clock is read on, and how it was chosen. */
+export interface FlowLinkZone {
+  readonly zone: string;
+  readonly basis: 'carrier' | 'destination' | 'place';
+}
+
+/** What the bracketed place a row opens with says, for a tenant that reads it itself. */
+export interface FlowLinkPlace {
+  /** The row's place, or '' when the brackets name none, such as the firm's own name or a route. */
+  readonly location: string;
+  /** The zone of the row's wall clock, or null for the tenant's. */
+  readonly zone: FlowLinkZone | null;
+}
+
 /** A FlowLink tenant. */
 export interface FlowLinkSite {
   /** The catalog id. */
@@ -73,10 +87,16 @@ export interface FlowLinkSite {
   readonly tenant: string;
   /** The tenant's tracking page, sent as Referer. */
   readonly page?: string;
-  /** The zone every row's wall clock is read on, and how it was chosen. */
+  /** The zone a row's wall clock is read on, and how it was chosen. */
   readonly zone: string;
   readonly zoneBasis: 'carrier' | 'destination' | 'place';
   readonly statusMap: CarrierStatusMap;
+  /**
+   * A row's place and zone from the bracketed place its text opens with ('' without one) and its code, for a
+   * tenant whose rows mix several countries' clocks. Without it, the brackets are the row's place and every row
+   * is on `zone`.
+   */
+  readonly place?: (bracketed: string, code: string) => FlowLinkPlace;
 }
 
 /** A waybill on a FlowLink tenant's tracker, without spaces or hyphens. */
@@ -180,8 +200,9 @@ function waybillOf(site: FlowLinkSite, payload: Record<string, unknown>, number:
  * A tenant's history for one waybill, newest first, from the route's reply: `{code, msg, data}` with `code` 0 and
  * one entry per number asked, `{CNum, OtherName, OtherNum, list, ErrorCode, ...}`. `ErrorCode` `NotExistsCNum` on
  * the number asked is the system's only answer for a number it does not know. The rows come oldest first, each a
- * wall clock without a zone, a text and a code (`CNCode`); every row is read on the tenant's zone, and a zone that
- * would date a row after the lookup leaves it its wall clock alone. The recipient's name, address and phone
+ * wall clock without a zone, a text and a code (`CNCode`); a row is read on the tenant's zone, or the one its
+ * bracketed place gives for a tenant that reads it, and a zone that would date a row after the lookup leaves it its
+ * wall clock alone. The recipient's name, address and phone
  * digits beside the rows are never read. The courier in China `OtherName` names becomes the delivery carrier,
  * with `OtherNum`.
  */
@@ -219,12 +240,15 @@ export function parseFlowLink(site: FlowLinkSite, body: string, raw: string, rea
     if (seen.has(key)) continue;
     seen.add(key);
     const place = PLACE.exec(description);
-    const location = clean(place?.[1] ?? place?.[2], 20);
-    const instant = firstOccurrence(DateTime.fromISO(local, { zone: site.zone }));
+    const bracketed = clean(place?.[1] ?? place?.[2], 20);
+    const placed = site.place?.(bracketed, code);
+    const location = placed ? clean(placed.location, 20) : bracketed;
+    const zone = placed?.zone ?? { zone: site.zone, basis: site.zoneBasis };
+    const instant = firstOccurrence(DateTime.fromISO(local, { zone: zone.zone }));
     const staged = flowlinkStage(site, description, code);
     read.push({
       ...(instant.toMillis() <= readAt + CLOCK_SKEW_MS
-        ? { time: instant.toISO({ suppressMilliseconds: true })!, time_zone: site.zone, time_zone_basis: site.zoneBasis } : {}),
+        ? { time: instant.toISO({ suppressMilliseconds: true })!, time_zone: zone.zone, time_zone_basis: zone.basis } : {}),
       local_time: local, ...(location ? { location } : {}), description, ...(code ? { provider_code: code } : {}),
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
     });

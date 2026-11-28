@@ -1,0 +1,73 @@
+{
+  "carrier": "meixi",
+  "entries": [
+    {
+      "code": "",
+      "wording": "包裹已制单，暂未揽收",
+      "language": "zh",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The label is made; the firm has not taken the parcel in."
+    },
+    {
+      "code": "G_GOT",
+      "wording": "【美西速运】包裹已称重揽收",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Weighed and taken in. The brackets name the firm."
+    },
+    {
+      "code": "GFT_ARRIVAL",
+      "wording": "【美国洛杉矶】包裹已扣款，核验身份证信息运往分拣仓库",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Paid for and the recipient's ID checked, on its way to the sorting warehouse."
+    },
+    {
+      "code": "GFT_DEPARTURE",
+      "wording": "【美国洛杉矶】包裹美国仓分拣中",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "GEX_START",
+      "wording": "【美国洛杉矶】包裹送往LAX国际机场",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "GM_DEPARTURE",
+      "wording": "【美国-中国】包裹美国运往中国途中",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The flight from the United States to China. The brackets name the route."
+    },
+    {
+      "code": "GIN_START",
+      "wording": "【中国】包裹到达中国，等待转运至清关口岸",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "GIN_PROCESSING",
+      "wording": "【中国】包裹转至清关口岸，开始清关",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "GIN_SUCCESS",
+      "wording": "【中国】包裹清关完成，进入国内物流环节。请耐心等待派送",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Cleared; the parcel goes on to the courier in China."
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "id": "meixi",
+  "displayName": "Meixi Express",
+  "aliases": [
+    "美西速运",
+    "美西环球速运",
+    "J-FIVE GLOBAL INC"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#1E3C72"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "meixi",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "provider_code",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.j5ex.com/select.html?num={trackingNumber}",
+    "searchUrl": "https://www.j5ex.com/select.html",
+    "canaryUrl": "https://www.j5ex.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.j5ex.com",
+        "j5ex.com"
+      ],
+      "pathPattern": "^/select\\.html$",
+      "params": [
+        "num"
+      ]
+    }
+  ],
+  "detection": []
+}

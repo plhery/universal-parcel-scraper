@@ -7498,5 +7498,11 @@
     "pattern": "^\\d{12}$",
     "kind": "collision",
     "reason": "Twelve-digit Shanghai Aerospace Logistics waybills share their shape with many carriers' numeric waybills, so the shape cannot name the firm. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "meixi",
+    "pattern": "^\\d{11}$",
+    "kind": "collision",
+    "reason": "Eleven-digit Meixi Express waybills share their shape with other carriers' numeric numbers, so the shape cannot name Meixi Express. The adapter answers explicit selection."
   }
 ]
