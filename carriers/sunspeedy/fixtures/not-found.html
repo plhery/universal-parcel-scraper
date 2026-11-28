@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" lang="EN" dir="ltr">
+<head profile="http://gmpg.org/xfn/11">
+<title>香港新速航  物流查詢 香港國際物流新速航 單號查詢</title>
+ <meta content="香港新速航  物流查詢 香港國際物流新速航 單號查詢" name="keywords" />
+    <meta content="香港新速航  物流查詢 香港國際物流新速航 單號查詢" name="description" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="imagetoolbar" content="no" />
+<link rel="stylesheet" href="/static/140913/styles/layout.css" type="text/css" />
+
+<style type="text/css">
+  .box{width:380px;margin:0px auto; height:173px;}
+  .cont{height:173px;overflow:hidden;}
+  .item{color:#fff;font-size:12px;}
+  .switcher{position:absolute;bottom:10px;right:10px;float:right;z-index:99;}
+.switcher a{background:#fff;border:1px solid #D00000;cursor:pointer;float:left;font-family:arial;height:18px;line-height:18px;width:18px;margin:4px;text-align:center;color:#D00000;}
+.switcher a.cur,.switcher a:hover{background:#FF0000;border:1px solid #D00000;height:22px;line-height:22px;width:22px;margin:0 2px;color:#fff;font-weight:800;}
+.STYLE1 {color: #FF0000}
+</style>
+
+<script src="/static/140913/scripts/jquery-1.11.0.min.js"></script>
+<script src="/static/140913/scripts/jquery.Xslider.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+  $("#slider").Xslider({
+    affect:'fade',
+    speed: 800, //动画速度
+    space: 6000, //时间间隔
+    auto: true, //自动滚动
+    trigger: 'mouseover', //触发事件 注意用mouseover代替hover
+    conbox: '.cont', //内容容器id或class
+    ctag: 'a', //内容标签 默认为<a>
+    switcher: '.switcher', //切换触发器id或class
+    stag: 'a', //切换器标签 默认为a
+    current:'cur', //当前切换器样式名称
+    rand:false //是否随机指定默认幻灯图片
+  });
+});
+</script>
+
+<script type="text/javascript">
+        $(function () {
+            $("#search").click(function () {
+                var url = "inquiry.html?no=" + $("#InternationalNO").val();
+                window.location.href = url;
+                //var InternationalNO = $("#InternationalNO").val();
+                //$("#main").text("");
+                //$.post("GetMainList.ashx?str=" + InternationalNO, function (data) {
+                //    $("#main").append(data);
+                //});
+            }); 
+        });
+    </script>
+
+
+
+</head>
+<body id="top" onMouseOver="window.status='';return true">
+
+<div class="wrapper col1">
+  <div id="header">
+  
+
+    <div id="logo">
+    
+      <h1><img src="/static/140913/images/logo.jpg" border="0" usemap="#Map" />
+        <map name="Map" id="Map">
+          <area shape="rect" coords="1,2,393,55" href="/index.html" />
+        </map>
+      </h1>
+      
+    </div>
+   
+    <br class="clear" />
+  </div>
+</div>
+<div class="wrapper col2">
+  <div id="topbar">
+    <div id="topnav">
+           <ul>
+        <li class="active"><a href="/default.html">首頁</a></li>
+        <li><a href="/about.html">關於新速航</a></li>
+        <li><a href="/sevice.html">服務範圍</a></li>
+        <li><a href="/partner.html">合作申請</a></li>
+        <li class="last"><a href="/partner.html">聯繫我們</a></li>
+      </ul>
+    </div>
+    <br class="clear" />
+  </div>
+</div>
+<div class="wrapper col4">
+  <div style="width:950px; margin:0px auto; padding:20px 0px;">
+          <h2>快件查詢</h2>
+          <div style="height:20px; line-height:20px; font-size:14px; color:#F30; white-space:930px; text-align:center;padding:8px 0px;">沒有找到相關記錄</div>
+          <form action="https://www.sunspeedy.hk/delivery.php/web/info" method="post">
+        <table style="width:500px; margin:0px auto;">
+              <tr>
+            <td class="title">請輸入運單號</td>
+            <td align="left"><input type="text" name="delivery_id" id="delivery_id" value="ZZ314159265HK" style=" border:1px solid #333; width:300px; height:30px; line-height:30px; font-size:14px; color:#F60; font-weight:bold; padding-left:3px;" /></td>
+          </tr>
+              <tr>
+            <td class="title">請輸入驗證碼</td>
+            <td align="left"><input type="text" name="delivery_captcha" id="delivery_captcha" style="border:1px solid #333; width:150px; height:30px; line-height:30px; font-size:14px; color:#F60; font-weight:bold; padding-left:3px; float:left; margin-right:10px;" /><img src="https://www.sunspeedy.hk/delivery.php/web/Auth" alt="點擊刷新" onClick="javascript:this.src='https://www.sunspeedy.hk/delivery.php/web/Auth?' + new Date().getTime();" title="點擊刷新" style="cursor:pointer;" /></td>
+          </tr>
+              <tr>
+            <td></td>
+            <td><input type="submit" name="submit" value="提交" style="height:30px; width:50px; cursor:pointer;" /></td>
+          </tr>
+            </table>
+      </form>
+   </div>
+</div>
+<div class="wrapper col6">
+  <div id="footer">
+    
+    <div class="footbox">
+      <h2>國內著名快遞</h2>
+      <ul>
+        <li><a href="http://www.sf-express.com/" target="_blank">順豐速遞</a></li>
+        <li><a href="http://www.sto.cn" target="_blank">申通快遞</a></li>
+        <li><a href="http://www.yto.net.cn" target="_blank">圓通快遞</a></li>
+        <li><a href="http://www.yundaex.com/" target="_blank">韻達快遞</a></li>
+        <li class="last"><a href="http://www.kuaidi100.com/" target="_blank">國內快遞查詢</a></li>
+      </ul>
+    </div>
+    <div class="footbox">
+      <h2>國際著名快遞</h2>
+      <ul>
+        <li><a href="HTTP://www.dhl.com" target="_blank">DHL</a></li>
+        <li><a href="HTTP://www.ups.com" target="_blank">UPS</a></li>
+        <li><a href="http://www.tnt.com" target="_blank">TNT</a></li>
+        <li><a href="http://www.fedex.com" target="_blank">聯邦快遞</a></li>
+        <li class="last"><a href="http://www.speedpost.hk" target="_blank">EMS特快專遞</a></li>
+      </ul>
+    </div>
+    <div class="footbox">
+      <h2>國內知名電商網站</h2>
+      <ul>
+        <li><a href="http://www.tmall.hk/" target="_blank">天貓國際</a></li>
+        <li><a href="http://www.jd.com/" target="_blank">京東商城</a></li>
+        <li><a href="http://www.vip.com/" target="_blank">唯品會</a></li>
+        <li><a href="http://www.amazon.cn/" target="_blank">亞馬遜中國</a></li>
+        <li class="last"><a href="http://www.yhd.com/" target="_blank">1號店</a></li>
+      </ul>
+    </div>
+    <div class="footbox">
+      <h2>境外知名電商網站</h2>
+      <ul>
+        <li><a href="http://www.boots.com/" target="_blank">BOOTS</a></li>
+        <li><a href="http://www.beauty.com/" target="_blank">BEAUTY</a></li>
+        <li><a href="http://www.amazon.com/" target="_blank">AMAZON</a></li>
+        <li><a href="http://www.drugstore.com/" target="_blank">DRUGSTORE</a></li>
+        <li class="last"><a href="http://www.neweggs.com/" target="_blank">NEWEGGS</a></li>
+      </ul>
+    </div>
+    
+    <br class="clear" />
+  </div>
+</div>
+<div class="wrapper col7">
+  <div id="copyright">
+    <p align="center"><a href="http://www.ickd.cn/" target="_blank">快遞查詢</a> | <a href="/about.html">公司簡介</a> | <a href="/partner.html">聯繫我們</a> | <a href="http://www.aikuaidi.cn" target="_blank">快遞單號查詢</a></p>
+    <p align="center">香港電話：852-64797448 美國電話：212-8762398</p>
+    <p align="center">Copyright &copy; 2011 - All Rights Reserved - <a href="/index.html" target="_blank">香港新速航</a>&nbsp;&nbsp;本網站屬於<span class="STYLE1">新速航</span> 所有</p>
+  </div>
+</div>
+</body>
+</html>

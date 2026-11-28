@@ -18,6 +18,7 @@ const profiles = {
   // Rongtong's small GIF reads best kept to its proportions, without the grey frame drawn round it.
   chinaqingguan: { width: 50, height: 24, format: 'gif', crop: { left: 1, top: 1, width: 48, height: 22 }, keepAspect: true },
   'professional-couriers': { width: 160, height: 44, format: 'png' },
+  sunspeedy: { width: 90, height: 30, format: 'png' },
   // MTCaptcha's photographic pictures run to tens of kilobytes. The text keeps to the middle, and the
   // model reads it best cut from the margins and stretched to its input.
   mtcaptcha: { width: 350, height: 100, format: 'gif', maxBytes: 200_000, crop: { left: 30, top: 10, width: 300, height: 80 }, fit: 'fill' },

@@ -7464,6 +7464,12 @@
     "reason": "TX and nine digits is Tuxing Supply Chain's waybill on Kuaidi100's samples, and two letters and nine digits is a shape GLS Italy's rule takes, so detection does not name Tuxing. The adapter answers explicit selection."
   },
   {
+    "carrier": "sunspeedy",
+    "pattern": "^PL\\d{12}CN$",
+    "kind": "by_design",
+    "reason": "Sunspeedy's one public waybill is two letters, twelve digits and CN, the letters-digits-country form of a post's numbers, with nothing in it that names Sunspeedy, so detection does not offer the firm. The adapter answers explicit selection."
+  },
+  {
     "carrier": "chinaqingguan",
     "pattern": "^\\d{13}$",
     "kind": "collision",

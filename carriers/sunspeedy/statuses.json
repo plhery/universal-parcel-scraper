@@ -1,0 +1,50 @@
+{
+  "carrier": "sunspeedy",
+  "entries": [
+    {
+      "code": null,
+      "wording": "包裹已入庫,裝箱掃瞄",
+      "language": "zh",
+      "english": "Parcel taken into the warehouse, packing scan",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The parcel's first row: the firm has it."
+    },
+    {
+      "code": null,
+      "wording": "Legionowo已收件,安排至Warszawa境外包裹中轉中心",
+      "language": "zh",
+      "english": "Received at Legionowo, sent on to the Warszawa overseas parcel hub",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A Polish collection point hands the parcel to the firm's hub."
+    },
+    {
+      "code": null,
+      "wording": "包裹已到達Warszawa境外包裹中轉中心",
+      "language": "zh",
+      "english": "Parcel arrived at the Warszawa overseas parcel hub",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Arrival at the hub abroad."
+    },
+    {
+      "code": null,
+      "wording": "包裹拆封分派",
+      "language": "zh",
+      "english": "Parcel unpacked and sorted",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Sorting at a hub."
+    },
+    {
+      "code": null,
+      "wording": "已過機,安排出庫",
+      "language": "zh",
+      "english": "X-rayed, sent out of the warehouse",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The parcel leaves the warehouse after its security scan."
+    }
+  ]
+}

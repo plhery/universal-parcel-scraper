@@ -1,0 +1,57 @@
+{
+  "id": "sunspeedy",
+  "displayName": "Sunspeedy",
+  "aliases": [
+    "新速航",
+    "香港新速航",
+    "新速航香港國際轉運"
+  ],
+  "region": {
+    "countries": [
+      "HK"
+    ]
+  },
+  "brand": {
+    "color": "#2684B7"
+  },
+  "selectable": true,
+  "timezone": "Asia/Hong_Kong",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "sunspeedy",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "searchUrl": "https://www.sunspeedy.hk/",
+    "canaryUrl": "https://www.sunspeedy.hk/",
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "destination_country",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}
