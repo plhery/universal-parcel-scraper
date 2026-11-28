@@ -1,0 +1,139 @@
+{
+  "carrier": "lot-cargo",
+  "records": [
+    {
+      "number": "080-36325940",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/9b1bd53f6001a4bd.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on LOT names this air waybill for puppies it flew. LOT's tracker returned the same waybill, flown from Bucharest through Warsaw and delivered at JFK.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      }
+    },
+    {
+      "number": "080-36272121",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/8556f3464e69570f.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on LOT names this air waybill for dogs it flew. LOT's tracker returned the same waybill, flown from Warsaw with its arrival documents delivered at JFK.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "old-dominion",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      }
+    },
+    {
+      "number": "080-36085943",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/81679211a48a3d6c.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on LOT names this air waybill for a dog it flew from Warsaw to JFK. LOT's tracker returned the same waybill with its arrival documents delivered at JFK.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      }
+    },
+    {
+      "number": "080-35549791",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/1dc7796f6099d31b.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on LOT names this air waybill for a dog it flew to JFK. LOT's tracker returned the same waybill, flown from Budapest with its arrival documents delivered at JFK.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      }
+    },
+    {
+      "number": "080-97850196",
+      "role": "negative",
+      "evidence": "merchant_published_example",
+      "source": {
+        "url": "https://github.com/razizaheer/yamlogistics-website/blob/main/tracking/lot-cargo-080-awb-tracking.html",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "A customs broker's page gives it as an example LOT Cargo waybill. LOT's tracker answers that it cannot find it."
+    }
+  ]
+}

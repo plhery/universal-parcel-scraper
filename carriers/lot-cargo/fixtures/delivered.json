@@ -1,0 +1,1563 @@
+{
+  "_declaration": {
+    "_attributes": {
+      "version": "1.0",
+      "encoding": "utf-8"
+    }
+  },
+  "Cargo": {
+    "Awb": {
+      "_attributes": {
+        "num": "080-36325940"
+      },
+      "AwbOrigin": {
+        "_text": "OTP"
+      },
+      "AwbDestination": {
+        "_text": "JFK"
+      },
+      "AwbPieces": {
+        "_text": "2"
+      },
+      "AwbWeight": {
+        "_text": "24.0"
+      },
+      "AwbVolume": {
+        "_text": "0.27"
+      },
+      "Routing": {
+        "line": [
+          {
+            "_attributes": {
+              "sequence": "1"
+            },
+            "FlightOrigin": {
+              "_text": "OTP"
+            },
+            "FlightDest": {
+              "_text": "WAW"
+            },
+            "FlightNum": {
+              "_text": "LO642"
+            },
+            "FlightDate": {
+              "_text": "10APR22"
+            },
+            "Alloc": {
+              "_text": "KK"
+            },
+            "Status": {
+              "_text": "RCF"
+            },
+            "Pieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "FlightCat": {
+              "_text": "P"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "2"
+            },
+            "FlightOrigin": {
+              "_text": "WAW"
+            },
+            "FlightDest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "Alloc": {
+              "_text": "KK"
+            },
+            "Status": {
+              "_text": "DLV"
+            },
+            "Pieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "FlightCat": {
+              "_text": "P"
+            }
+          }
+        ]
+      },
+      "Segments": {
+        "Segment": [
+          {
+            "_attributes": {
+              "sequence": "1"
+            },
+            "Origin": {
+              "_text": "OTP"
+            },
+            "Dest": {
+              "_text": "WAW"
+            },
+            "FlightNum": {
+              "_text": "LO642"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalTime": {
+              "_text": "15:28"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Booked"
+            },
+            "EventDate": {
+              "_text": "28MAR22"
+            },
+            "EventTime": {
+              "_text": "10:20"
+            },
+            "StatusCode": {
+              "_text": "KK"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "2"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Booking On Hold"
+            },
+            "EventDate": {
+              "_text": "28MAR22"
+            },
+            "EventTime": {
+              "_text": "10:20"
+            },
+            "StatusCode": {
+              "_text": "NN"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "3"
+            },
+            "Origin": {
+              "_text": "OTP"
+            },
+            "Dest": {
+              "_text": "WAW"
+            },
+            "FlightNum": {
+              "_text": "LO642"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalTime": {
+              "_text": "15:28"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Booked"
+            },
+            "EventDate": {
+              "_text": "28MAR22"
+            },
+            "EventTime": {
+              "_text": "10:20"
+            },
+            "StatusCode": {
+              "_text": "KK"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "4"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Booking On Hold"
+            },
+            "EventDate": {
+              "_text": "28MAR22"
+            },
+            "EventTime": {
+              "_text": "10:20"
+            },
+            "StatusCode": {
+              "_text": "NN"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "5"
+            },
+            "Origin": {
+              "_text": "OTP"
+            },
+            "Dest": {
+              "_text": "WAW"
+            },
+            "FlightNum": {
+              "_text": "LO642"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalTime": {
+              "_text": "15:28"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Booked"
+            },
+            "EventDate": {
+              "_text": "28MAR22"
+            },
+            "EventTime": {
+              "_text": "10:22"
+            },
+            "StatusCode": {
+              "_text": "KK"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "6"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Booking On Hold"
+            },
+            "EventDate": {
+              "_text": "28MAR22"
+            },
+            "EventTime": {
+              "_text": "10:22"
+            },
+            "StatusCode": {
+              "_text": "NN"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "7"
+            },
+            "Origin": {
+              "_text": "OTP"
+            },
+            "Dest": {
+              "_text": "WAW"
+            },
+            "FlightNum": {
+              "_text": "LO642"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalTime": {
+              "_text": "15:28"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Booked"
+            },
+            "EventDate": {
+              "_text": "28MAR22"
+            },
+            "EventTime": {
+              "_text": "09:42"
+            },
+            "StatusCode": {
+              "_text": "KK"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "8"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Booked"
+            },
+            "EventDate": {
+              "_text": "28MAR22"
+            },
+            "EventTime": {
+              "_text": "09:42"
+            },
+            "StatusCode": {
+              "_text": "KK"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "9"
+            },
+            "Origin": {
+              "_text": "OTP"
+            },
+            "Dest": {
+              "_text": "WAW"
+            },
+            "FlightNum": {
+              "_text": "LO642"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalTime": {
+              "_text": "15:28"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "1.0"
+            },
+            "Status": {
+              "_text": "Booked"
+            },
+            "EventDate": {
+              "_text": "29MAR22"
+            },
+            "EventTime": {
+              "_text": "14:37"
+            },
+            "StatusCode": {
+              "_text": "KK"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "10"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "1.0"
+            },
+            "Status": {
+              "_text": "Booked"
+            },
+            "EventDate": {
+              "_text": "29MAR22"
+            },
+            "EventTime": {
+              "_text": "14:37"
+            },
+            "StatusCode": {
+              "_text": "KK"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "11"
+            },
+            "Origin": {
+              "_text": "OTP"
+            },
+            "Dest": {
+              "_text": "WAW"
+            },
+            "FlightNum": {
+              "_text": "LO642"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalTime": {
+              "_text": "15:28"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "1.0"
+            },
+            "Status": {
+              "_text": "Pre-Manifested on Flight"
+            },
+            "EventDate": {
+              "_text": "10APR22"
+            },
+            "EventTime": {
+              "_text": "11:31"
+            },
+            "StatusCode": {
+              "_text": "PRE"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "12"
+            },
+            "Origin": {
+              "_text": "OTP"
+            },
+            "Dest": {
+              "_text": "WAW"
+            },
+            "FlightNum": {
+              "_text": "LO642"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalTime": {
+              "_text": "15:28"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "1.0"
+            },
+            "Status": {
+              "_text": "Manifested on Flight"
+            },
+            "EventDate": {
+              "_text": "10APR22"
+            },
+            "EventTime": {
+              "_text": "11:32"
+            },
+            "StatusCode": {
+              "_text": "MAN"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "13"
+            },
+            "Origin": {
+              "_text": "OTP"
+            },
+            "Dest": {
+              "_text": "WAW"
+            },
+            "FlightNum": {
+              "_text": "LO642"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalTime": {
+              "_text": "15:28"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Departed"
+            },
+            "EventDate": {
+              "_text": "10APR22"
+            },
+            "EventTime": {
+              "_text": "11:40"
+            },
+            "StatusCode": {
+              "_text": "DEP"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "14"
+            },
+            "Origin": {
+              "_text": "OTP"
+            },
+            "Dest": {
+              "_text": "WAW"
+            },
+            "FlightNum": {
+              "_text": "LO642"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalTime": {
+              "_text": "15:28"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Departed on Flight"
+            },
+            "EventDate": {
+              "_text": "10APR22"
+            },
+            "EventTime": {
+              "_text": "11:40"
+            },
+            "StatusCode": {
+              "_text": "DEP"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "15"
+            },
+            "Origin": {
+              "_text": "OTP"
+            },
+            "Dest": {
+              "_text": "WAW"
+            },
+            "FlightNum": {
+              "_text": "LO642"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalTime": {
+              "_text": "15:28"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Received From Flight"
+            },
+            "EventDate": {
+              "_text": "10APR22"
+            },
+            "EventTime": {
+              "_text": "16:28"
+            },
+            "StatusCode": {
+              "_text": "RCF"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "16"
+            },
+            "Origin": {
+              "_text": "OTP"
+            },
+            "Dest": {
+              "_text": "WAW"
+            },
+            "FlightNum": {
+              "_text": "LO642"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalTime": {
+              "_text": "15:28"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Arrived"
+            },
+            "EventDate": {
+              "_text": "10APR22"
+            },
+            "EventTime": {
+              "_text": "16:28"
+            },
+            "StatusCode": {
+              "_text": "ARR"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "17"
+            },
+            "Origin": {
+              "_text": "OTP"
+            },
+            "Dest": {
+              "_text": "WAW"
+            },
+            "FlightNum": {
+              "_text": "LO642"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalDate": {
+              "_text": "10APR22"
+            },
+            "ArrivalTime": {
+              "_text": "15:28"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Received From Flight"
+            },
+            "EventDate": {
+              "_text": "10APR22"
+            },
+            "EventTime": {
+              "_text": "16:28"
+            },
+            "StatusCode": {
+              "_text": "RCF"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "18"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Planned For Flight"
+            },
+            "EventDate": {
+              "_text": "10APR22"
+            },
+            "EventTime": {
+              "_text": "19:50"
+            },
+            "StatusCode": {}
+          },
+          {
+            "_attributes": {
+              "sequence": "19"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Booked"
+            },
+            "EventDate": {
+              "_text": "10APR22"
+            },
+            "EventTime": {
+              "_text": "21:08"
+            },
+            "StatusCode": {
+              "_text": "KK"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "20"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Pre-Manifested on Flight"
+            },
+            "EventDate": {
+              "_text": "11APR22"
+            },
+            "EventTime": {
+              "_text": "08:52"
+            },
+            "StatusCode": {
+              "_text": "PRE"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "21"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Manifested on Flight"
+            },
+            "EventDate": {
+              "_text": "11APR22"
+            },
+            "EventTime": {
+              "_text": "12:48"
+            },
+            "StatusCode": {
+              "_text": "MAN"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "22"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Manifested on Flight"
+            },
+            "EventDate": {
+              "_text": "11APR22"
+            },
+            "EventTime": {
+              "_text": "14:00"
+            },
+            "StatusCode": {
+              "_text": "MAN"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "23"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Departed on Flight"
+            },
+            "EventDate": {
+              "_text": "11APR22"
+            },
+            "EventTime": {
+              "_text": "17:24"
+            },
+            "StatusCode": {
+              "_text": "DEP"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "24"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Departed"
+            },
+            "EventDate": {
+              "_text": "11APR22"
+            },
+            "EventTime": {
+              "_text": "17:52"
+            },
+            "StatusCode": {
+              "_text": "DEP"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "25"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Departed on Flight"
+            },
+            "EventDate": {
+              "_text": "11APR22"
+            },
+            "EventTime": {
+              "_text": "17:24"
+            },
+            "StatusCode": {
+              "_text": "DEP"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "26"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Arrived"
+            },
+            "EventDate": {
+              "_text": "11APR22"
+            },
+            "EventTime": {
+              "_text": "16:31"
+            },
+            "StatusCode": {
+              "_text": "ARR"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "27"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.27"
+            },
+            "Status": {
+              "_text": "Received From Flight"
+            },
+            "EventDate": {
+              "_text": "11APR22"
+            },
+            "EventTime": {
+              "_text": "16:31"
+            },
+            "StatusCode": {
+              "_text": "RCF"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "28"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.0"
+            },
+            "Status": {
+              "_text": "Received From Flight"
+            },
+            "EventDate": {
+              "_text": "11APR22"
+            },
+            "EventTime": {
+              "_text": "16:31"
+            },
+            "StatusCode": {
+              "_text": "RCF"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "29"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.0"
+            },
+            "Status": {
+              "_text": "Consignee/Agent notified of arrival"
+            },
+            "EventDate": {
+              "_text": "11APR22"
+            },
+            "EventTime": {
+              "_text": "16:52"
+            },
+            "StatusCode": {
+              "_text": "NFD"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "30"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.0"
+            },
+            "Status": {
+              "_text": "Arrival documents delivered to Consignee/Agent"
+            },
+            "EventDate": {
+              "_text": "11APR22"
+            },
+            "EventTime": {
+              "_text": "16:52"
+            },
+            "StatusCode": {
+              "_text": "AWD"
+            }
+          },
+          {
+            "_attributes": {
+              "sequence": "31"
+            },
+            "Origin": {
+              "_text": "WAW"
+            },
+            "Dest": {
+              "_text": "JFK"
+            },
+            "FlightNum": {
+              "_text": "LO026"
+            },
+            "FlightCat": {
+              "_text": "P"
+            },
+            "FlightDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalDate": {
+              "_text": "11APR22"
+            },
+            "ArrivalTime": {
+              "_text": "20:41"
+            },
+            "NumPieces": {
+              "_text": "2"
+            },
+            "Weight": {
+              "_text": "24.0"
+            },
+            "Volume": {
+              "_text": "0.0"
+            },
+            "Status": {
+              "_text": "Delivered"
+            },
+            "EventDate": {
+              "_text": "11APR22"
+            },
+            "EventTime": {
+              "_text": "19:55"
+            },
+            "StatusCode": {
+              "_text": "DLV"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

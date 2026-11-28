@@ -3135,6 +3135,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   marken: 'The carrier accepts overlapping numeric shipment references. A published job verifies the rendered link separately.',
   'citilink-cargo': 'The public iCMS form posts the Citilink prefix and serial separately and embeds the result.',
   'garuda-indonesia-cargo': 'Garuda’s public form posts the airline prefix and serial separately and embeds the iCMS result.',
+  'lot-cargo': 'LOT’s tracker opens on an empty form and searches the waybill through its API with a page token.',
   'thai-airways-cargo': 'The public THAI Cargo form posts the prefix and serial, so the tracking link opens the form.',
   'china-airlines-cargo': 'The iCargo portal signs in as a guest and posts the air waybill through GraphQL, so the tracking link opens its search form.',
   'srilankan-cargo': 'The iCargo portal signs in as a guest and posts the air waybill through GraphQL, so the tracking link opens its search form.',

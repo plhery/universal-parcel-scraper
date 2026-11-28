@@ -1,0 +1,18 @@
+{
+  "_declaration": {
+    "_attributes": {
+      "version": "1.0",
+      "encoding": "utf-8"
+    }
+  },
+  "Cargo": {
+    "Awb": {
+      "_attributes": {
+        "num": "080-97850196"
+      },
+      "ErrorMessage": {
+        "_text": "Could not find AWB 080-97850196. Please check your request and try again."
+      }
+    }
+  }
+}

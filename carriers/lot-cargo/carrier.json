@@ -1,0 +1,65 @@
+{
+  "id": "lot-cargo",
+  "displayName": "LOT Cargo",
+  "aliases": [
+    "LOT Polish Airlines Cargo",
+    "LOT Polish Airlines",
+    "Polskie Linie Lotnicze LOT"
+  ],
+  "region": {
+    "countries": [
+      "PL"
+    ]
+  },
+  "brand": {
+    "color": "#252668"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "lot-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://cargo-tracking.lot.com/",
+    "searchUrl": "https://cargo-tracking.lot.com/",
+    "helpUrl": "https://www.lot.com/pl/en/cargo/cargo-offices",
+    "canaryUrl": "https://cargo-tracking.lot.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

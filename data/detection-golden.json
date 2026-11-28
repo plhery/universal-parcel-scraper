@@ -11583,6 +11583,114 @@
     ]
   },
   {
+    "input": "080-35549791",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "coordinadora",
+      "gls-at",
+      "gls-pl",
+      "mainfreight"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics"
+    ]
+  },
+  {
+    "input": "080-36085943",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "coordinadora",
+      "gls-at",
+      "gls-pl",
+      "mainfreight"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics"
+    ]
+  },
+  {
+    "input": "080-36272121",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "old-dominion",
+      "coordinadora",
+      "dhl-ecommerce-pl",
+      "gls-at",
+      "gls-pl",
+      "mainfreight"
+    ],
+    "asked": [
+      "dhl-ecommerce-pl",
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics"
+    ]
+  },
+  {
+    "input": "080-36325940",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "coordinadora",
+      "gls-at",
+      "gls-pl",
+      "mainfreight"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics"
+    ]
+  },
+  {
+    "input": "080-97850196",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "coordinadora",
+      "gls-at",
+      "gls-pl",
+      "mainfreight"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics"
+    ]
+  },
+  {
     "input": "08000F422387",
     "carrier": "mrw",
     "confidence": "high",

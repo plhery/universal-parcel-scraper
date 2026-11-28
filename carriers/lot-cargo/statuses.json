@@ -1,0 +1,89 @@
+{
+  "carrier": "lot-cargo",
+  "entries": [
+    {
+      "code": "KK",
+      "wording": "Booked",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "NN",
+      "wording": "Booking On Hold",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "RCS",
+      "wording": "Received From Shipper",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "PRE",
+      "wording": "Pre-Manifested on Flight",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "MAN",
+      "wording": "Manifested on Flight",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "DEP",
+      "wording": "Departed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "DEP",
+      "wording": "Departed on Flight",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "ARR",
+      "wording": "Arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "RCF",
+      "wording": "Received From Flight",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "NFD",
+      "wording": "Consignee/Agent notified of arrival",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "AWD",
+      "wording": "Arrival documents delivered to Consignee/Agent",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "DLV",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
+}

@@ -2887,6 +2887,11 @@
     "reason": "Logistiq airwaybills start with letters that vary by client and service, and two public numbers do not show which letters are fixed, so no rule claims them."
   },
   {
+    "carrier": "lot-cargo",
+    "kind": "open",
+    "reason": "Select LOT Cargo for its master air waybills. The public air waybills have LOT's IATA prefix 080, an eleven-digit shape many carriers print."
+  },
+  {
     "carrier": "lotte-global",
     "pattern": "^\\d{12}$",
     "kind": "by_design",
