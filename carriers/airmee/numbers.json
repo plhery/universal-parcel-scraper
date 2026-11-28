@@ -1,5 +1,93 @@
 {
   "carrier": "airmee",
-  "gap": "No public page shows an Airmee shipment id.",
-  "records": []
+  "records": [
+    {
+      "number": "AM010034806",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://se.trustpilot.com/reviews/674df3962c5fee6a227020e7",
+        "date": "2024-12-02",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "A Trustpilot review of Airmee names two Amazon shipments. Airmee's tracker answers this one with a failed attempt, a parcel missing when the van was loaded, and a delivery the day after the review."
+    },
+    {
+      "number": "AM010009836",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://se.trustpilot.com/reviews/674df3962c5fee6a227020e7",
+        "date": "2024-12-02",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "The other shipment of the same review. Airmee's tracker answers it with two deliveries a week apart, the second after another warehouse scan and loading."
+    },
+    {
+      "number": "AM016047991",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://se.trustpilot.com/reviews/68c328ac3717d3997fecaee6",
+        "date": "2025-09-11",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "A Trustpilot review of Airmee names this Amazon shipment. Airmee's tracker answers it with two failed attempts and the return to the sender."
+    },
+    {
+      "number": "902298568",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://se.trustpilot.com/reviews/69466312e56a3780fd9b7322",
+        "date": "2025-12-20",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "A Trustpilot review of Airmee names this Vinoteket order as one it could not find. Airmee's tracker answers it with the retailer as Vinoteket and a delivery three days after the review."
+    }
+  ]
 }

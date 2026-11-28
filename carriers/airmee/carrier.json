@@ -19,19 +19,65 @@
   "timezone": "Europe/Stockholm",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "airmee",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "eta",
+    "eta_window",
+    "sender_name",
+    "destination_country"
+  ],
   "portal": {
+    "url": "https://tracking.airmee.com/#/shipment-track/{trackingNumber}?startDate=2018-01-01&endDate=2099-12-31",
     "searchUrl": "https://tracking.airmee.com/#/shipment-search",
     "helpUrl": "https://www.airmee.com/en/support/",
     "canaryUrl": "https://tracking.airmee.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "eta_window",
+      "sender_name",
+      "destination",
+      "delivery_attempts",
+      "delivery_instructions"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "eta_window",
+      "sender_name",
+      "destination_country"
+    ],
+    "discarded": [
+      "destination",
+      "delivery_attempts",
+      "delivery_instructions",
+      "coordinates"
+    ],
+    "unavailable": [
+      "weight",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "tracking.airmee.com"
+      ],
+      "fragment": "^/shipment-track/([A-Za-z0-9]{4,40})(?:\\?.*)?$"
+    }
+  ],
   "detection": []
 }

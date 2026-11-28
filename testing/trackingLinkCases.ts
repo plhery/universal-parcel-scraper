@@ -312,6 +312,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/delivro\.dsapp\.io\/customer\/DEL0000000$/,
     marker: /Unable to find order|Track an order/, renderTimeoutMs: 20_000,
     forwarding: { notFound: /Unable to find order/ } },
+  // Airmee's shipment page asks its public lookup for the id in its fragment over the date range there,
+  // and shows an empty history for an unknown one.
+  { carrier: 'airmee', number: 'ZZ000000000',
+    route: /^https:\/\/tracking\.airmee\.com\/#\/shipment-track\/ZZ000000000\?startDate=2018-01-01&endDate=2099-12-31$/,
+    marker: /No parcel history available|Parcel history/ },
   { carrier: 'parcel-one', number: '4002109876543',
     route: /^https:\/\/parcel\.one\/(?:de|en)\/tracking\/\?trackno=4002109876543$/,
     marker: /Sendung verfolgen|Track (?:a |your )?shipment/i },

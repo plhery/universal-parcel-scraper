@@ -1,4 +1,259 @@
 {
   "carrier": "airmee",
-  "entries": []
+  "entries": [
+    {
+      "code": "UNASSIGNED",
+      "wording": "Shipment Booked",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The retailer booked the delivery; Airmee does not have the parcel yet."
+    },
+    {
+      "code": "WAITING",
+      "wording": "Shipment Booked",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The page labels WAITING as it labels UNASSIGNED."
+    },
+    {
+      "code": "UNASSIGNED",
+      "wording": "Return in progress",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "On the return leg, after the allowed delivery attempts were used up or the parcel was not collected in time: it goes back to the sender."
+    },
+    {
+      "code": "WAITING",
+      "wording": "Return in progress",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "UNASSIGNED",
+      "wording": "Return Initiated Due to Packaging Issue",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "On the return leg, when the reason says the parcel was damaged: it cannot be delivered and goes back to the retailer."
+    },
+    {
+      "code": "WAITING",
+      "wording": "Return Initiated Due to Packaging Issue",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "UNASSIGNED",
+      "wording": "Pickup Booked",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Any other booking on the return leg: a return Airmee will collect from the customer."
+    },
+    {
+      "code": "WAITING",
+      "wording": "Pickup Booked",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "POSTPONED_OTHER",
+      "wording": "Awaiting Handover",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The parcel did not arrive at Airmee's warehouse from the retailer."
+    },
+    {
+      "code": "POSTPONED_OTHER",
+      "wording": "Delivery Delayed",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Any other postponement on the way out, such as a parcel missing when the van was loaded."
+    },
+    {
+      "code": "POSTPONED_OTHER",
+      "wording": "In Return Transit",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "SCAN",
+      "wording": "In Transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A scan at one of Airmee's warehouses, which the row names."
+    },
+    {
+      "code": "SCAN",
+      "wording": "In Return Transit",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A warehouse scan on the return leg once the parcel is on its way back."
+    },
+    {
+      "code": "SCAN",
+      "wording": "Label printed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A scan on the return leg before the parcel is on its way back: the label for the collection."
+    },
+    {
+      "code": "PICKUP_CONFIRMED",
+      "wording": "Out for Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The parcel is loaded into the courier's van for the delivery round."
+    },
+    {
+      "code": "PICKUP_CONFIRMED",
+      "wording": "In Return Transit",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A return collected from a parcel locker."
+    },
+    {
+      "code": "PICKUP_CONFIRMED",
+      "wording": "Return Collected",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A return collected from the customer."
+    },
+    {
+      "code": "ON_WAY_TO_DROPOFF",
+      "wording": "Delivery in progress",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The courier is driving to the recipient; the tracker repeats it as the van moves."
+    },
+    {
+      "code": "ON_WAY_TO_DROPOFF",
+      "wording": "In Return Transit",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "On the return leg the page shows the bare code; the adapter words it as the page words the other moves back to the sender."
+    },
+    {
+      "code": "ON_WAY_TO_PICKUP",
+      "wording": "Pickup in Progress",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The courier is on the way to collect the parcel. The page words it so on the return leg and shows the bare code on the way out; the adapter words both alike."
+    },
+    {
+      "code": "DROPOFF_CONFIRMED",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "DROPOFF_CONFIRMED",
+      "wording": "Returned",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The drop-off of the return leg: the parcel is back with the sender."
+    },
+    {
+      "code": "POSTPONED_UNREACHABLE_CUSTOMER",
+      "wording": "Delivery Attempt Failed",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The courier did not reach the recipient; a new attempt is booked while attempts remain."
+    },
+    {
+      "code": "POSTPONED_UNREACHABLE_CUSTOMER",
+      "wording": "Pickup Attempt Failed",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The courier did not reach the customer to collect a return."
+    },
+    {
+      "code": "POSTPONED_ATTEMPT",
+      "wording": "Delivery Delayed",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "An operational delay; the delivery date moves."
+    },
+    {
+      "code": "POSTPONED_ATTEMPT",
+      "wording": "Pickup Delayed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "An operational delay before a return is collected; the pickup date moves."
+    },
+    {
+      "code": "CANCELLED",
+      "wording": "Delivery Cancelled",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Cancelled by the retailer or by Airmee."
+    },
+    {
+      "code": "READY_FOR_CUSTOMER_PICKUP",
+      "wording": "Ready for Pickup",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "At a service point or locker for the recipient to collect."
+    },
+    {
+      "code": "EDIT",
+      "wording": "Delivery Date Updated by Customer",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A change to the booking, not a move: the parcel keeps its stage."
+    },
+    {
+      "code": "EDIT",
+      "wording": "Delivery Date Updated by Retailer",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A change to the booking, not a move: the parcel keeps its stage."
+    },
+    {
+      "code": "EDIT",
+      "wording": "Return Date Updated by Customer",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A change to the booking, not a move: the parcel keeps its stage."
+    },
+    {
+      "code": "EDIT",
+      "wording": "Return Date Updated by Retailer",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A change to the booking, not a move: the parcel keeps its stage."
+    },
+    {
+      "code": "EDIT",
+      "wording": "Packaging Issue Reported",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Damaged packaging reported while the delivery goes on as planned: the parcel keeps its stage."
+    }
+  ]
 }

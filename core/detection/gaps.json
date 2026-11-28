@@ -159,6 +159,18 @@
     "reason": "AirAsia's master air waybills share the eleven-digit airline format with every airline; only the 807 and 975 prefixes name the AirAsia airlines. Select AirAsia Cargo explicitly."
   },
   {
+    "carrier": "airmee",
+    "pattern": "^AM\\d{9}$",
+    "kind": "by_design",
+    "reason": "AM and nine digits is the shipment id Amazon gives the parcels it hands to Airmee, and the shape names Amazon's series rather than Airmee."
+  },
+  {
+    "carrier": "airmee",
+    "pattern": "^\\d{9}$",
+    "kind": "by_design",
+    "reason": "Airmee tracks a retailer's parcel by the retailer's own order number; nine digits are many carriers' numbers and nothing in them points to Airmee."
+  },
+  {
     "carrier": "airpak-express",
     "pattern": "^\\d{12}$",
     "kind": "by_design",
