@@ -4,6 +4,8 @@ import { sameInstantIdentityPolicy } from '../../app.js';
 import { carrierInfo } from '../../core/catalog/index.js';
 import { SchemaError, InvalidInputError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
+import { fillPartialAnswer } from '../../core/result/partial.js';
 import {
   normalizeInpostTrackingNumber,
   parseInpostTrackingResponse,
@@ -165,6 +167,27 @@ describe('InPost response parsing', () => {
     expect(statusMap.stage('FMD.1001', normalizeStatusWording('We will collect it soon'))).toBe('registered');
     expect(statusMap.stage('FMD.1001', normalizeStatusWording('Sent through Parcel Locker/Parcel Point'))).toBe('accepted');
     expect(statusMap.stage(null, normalizeStatusWording('We will collect it soon'))).toBe('registered');
+  });
+
+  it('leaves a UK parcel the hub knows only by its creation open to a fuller provider history', () => {
+    const uk = `JJD${'0'.repeat(15)}2`;
+    const created = { status: 'CRE.1001', statusTitle: 'Parcel created', datetime: '2026-05-01T08:00:00+01:00' };
+    const waiting = parseInpostTrackingResponse(parcel({ trackingNumber: uk, status: 'CRE.1001', statusTitle: 'Parcel created', trackingDetails: [created] }), uk);
+    expect(waiting).toMatchObject({ current_stage: 'registered', history_truncated: true });
+    // A provider relaying InPost UK's tracker under InPost's UK name replaces it, so the parcel stays on its way.
+    const relayed = { status: 'in_transit', current_stage: 'in_transit', discovered_carrier: 'inpost', tracking_provider: '17TRACK',
+      last_status_text: 'We have your parcel', last_update: '2026-05-02T09:00:00+01:00', events: [
+        { time: '2026-05-02T09:00:00+01:00', description: 'We have your parcel' },
+        { time: '2026-05-01T08:00:00+01:00', description: 'Your parcel is on its way to InPost. Please check back for updates' },
+      ] } satisfies CarrierResult;
+    expect(fillPartialAnswer('inpost', uk, waiting, relayed)).toMatchObject({ current_stage: 'in_transit', tracking_provider: '17TRACK' });
+    const received = parseInpostTrackingResponse(parcel({ trackingNumber: uk, status: 'MMD.1001', statusTitle: 'Parcel at our warehouse', trackingDetails: [created,
+      { status: 'MMD.1001', statusTitle: 'Parcel at our warehouse', datetime: '2026-05-06T01:00:00+01:00', place: 'Exampletown (GB)' }] }), uk);
+    expect(received.current_stage).toBe('accepted');
+    expect(received.history_truncated).toBeUndefined();
+    // The hub holds every scan of a parcel in InPost's own layout from its creation.
+    const polish = parseInpostTrackingResponse(parcel({ status: 'CRE.1001', statusTitle: 'Parcel created', trackingDetails: [created] }), TRACKING_NUMBER);
+    expect(polish.history_truncated).toBeUndefined();
   });
 
   it('reports unmapped codes as unknown with their raw wording preserved', () => {

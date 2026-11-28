@@ -65,6 +65,11 @@ GB). Tracked through the keyless `inposteasy.com` hub API; no postcode or link n
   is low confidence too.
 - Links carry the number. The Polish page does not find Yodel's layouts, so those open
   InPost UK's page, where Yodel's former tracker now forwards them.
+- For days the hub can know a parcel in Yodel's layouts only by its creation, while InPost UK's
+  own tracker, which the providers relay, has it on its way and received. Such an answer is
+  marked `history_truncated`, so a fuller provider history naming InPost replaces it instead of
+  sending the parcel back to registered. The hub's first warehouse scan ends this. InPost UK's
+  tracker (`POST https://inpost.co.uk/tracking/api`) needs a Cloudflare Turnstile token.
 - Each event keeps its place, a town or hub with its country. A delivered parcel keeps
   its delivery time, and the destination country is kept; the origin country is not.
 - The hub's recipient name and address are read, and on a delivered parcel the name given as its

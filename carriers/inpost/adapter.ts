@@ -160,6 +160,11 @@ export function parseInpostTrackingResponse(payload: unknown, trackingNumber: st
       events,
     };
   }
+  // A parcel in one of InPost UK's layouts that the hub knows only by its creation: InPost UK's own tracker, which the
+  // providers relay, has the parcel on its way and received ("We have your parcel") days before the hub's first warehouse
+  // scan, so the answer is partial and a fuller provider history may replace it.
+  const ukCreationOnly = INPOST_UK_NUMBER.test(requested) && current.stage === 'registered'
+    && parsed.every((entry) => entry.classified?.stage === 'registered');
   const delivery = current.status === 'delivered' ? events.find((event) => event.stage === 'delivered') : undefined;
   // The name the hub gives for a delivery's signature; an image or a link is not one.
   const signature = clean(payload.signature, 121);
@@ -175,6 +180,7 @@ export function parseInpostTrackingResponse(payload: unknown, trackingNumber: st
     ...destination,
     ...recipient,
     ...(signedBy ? { signed_by: signedBy } : {}),
+    ...(ukCreationOnly ? { history_truncated: true } : {}),
     events,
   };
 }
