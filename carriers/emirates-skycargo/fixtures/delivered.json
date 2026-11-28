@@ -1,0 +1,1842 @@
+{
+  "data": {
+    "orderItems": {
+      "orderItem": [
+        {
+          "orderSource": "WEB",
+          "productInfo": {
+            "airCapacity": {
+              "documentInfo": {
+                "documentNumber": "27246796",
+                "documentPrefix": "176",
+                "documentType": "AWB"
+              },
+              "origin": {
+                "code": "ALC",
+                "name": "ALICANTE"
+              },
+              "destination": {
+                "code": "JNB",
+                "name": "JOHANNESBURG"
+              },
+              "routes": [],
+              "participant": [],
+              "cargoInfo": {
+                "cargoCategory": "F",
+                "commodityCode": {
+                  "code": "E0063",
+                  "description": "DANGEROUS GOODS"
+                },
+                "quantityInfo": [
+                  {
+                    "piece": 3,
+                    "weight": {
+                      "value": 70,
+                      "unit": {
+                        "code": "K"
+                      }
+                    },
+                    "volume": {
+                      "value": 0.14,
+                      "unit": {
+                        "code": "CM"
+                      }
+                    },
+                    "chargeableWeight": {
+                      "value": 70,
+                      "unit": {
+                        "code": "K"
+                      }
+                    },
+                    "dimension": [],
+                    "specialHandling": [
+                      {
+                        "code": "RMD",
+                        "description": "Miscellaneous Dangerous Goods"
+                      },
+                      {
+                        "code": "ECC",
+                        "description": "Consignment establ. with an electronically concluded cargo contract with no accompanying paper AWB"
+                      }
+                    ]
+                  }
+                ],
+                "customsInformation": {
+                  "customsReferenceInfo": [
+                    {
+                      "hawbInfo": [],
+                      "regimeType": "IMPORT",
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "0142",
+                        "origin": "DXB",
+                        "destination": "DXB",
+                        "date": "2026-06-29 00:00:00"
+                      },
+                      "airport": {
+                        "code": "DXB"
+                      },
+                      "actionStatus": {
+                        "code": "CO",
+                        "description": "ASSESSMENT COMPLETE"
+                      },
+                      "statusDate": "2026-06-25 15:03:30",
+                      "entryNumber": "NAIC",
+                      "piece": 3,
+                      "participant": {
+                        "account": [],
+                        "otherIdentifier": []
+                      },
+                      "weight": {
+                        "unit": {
+                          "code": "K",
+                          "description": ""
+                        }
+                      },
+                      "volume": {
+                        "unit": {
+                          "code": "CM",
+                          "description": ""
+                        }
+                      }
+                    }
+                  ],
+                  "otherCustomsInfo": []
+                },
+                "goodsDescription": "RAW AROMATIC",
+                "cargoReference": "65713370",
+                "hamonizedCommodityCode": [],
+                "additionalInfo": []
+              },
+              "product": {
+                "product": {
+                  "code": "GCR",
+                  "description": "Emirates AirFreigh is developed to bring speed, reliability and care to non-hazardous general cargo. This service offers the ideal combination of cost, speed and global coverage and is ideal for dry cargo, consolidation, household goods, personal effects and other articles that don't require special handling.  ",
+                  "name": "Emirates AirFreight"
+                }
+              },
+              "offerItinerary": {
+                "journeyTime": "77 Hour(s) 35 Minute(s)",
+                "itinerary": [
+                  {
+                    "boardPoint": {
+                      "code": "ALC",
+                      "description": "ALICANTE"
+                    },
+                    "offPoint": {
+                      "code": "MAD",
+                      "description": "MADRID"
+                    },
+                    "transportInfo": {
+                      "carrier": "EK",
+                      "extensionNumber": "T",
+                      "number": "4469",
+                      "origin": "ALC",
+                      "destination": "MAD",
+                      "date": "2026-06-26 00:00:00",
+                      "vehicle": {
+                        "type": {
+                          "code": "RFS"
+                        },
+                        "body": {
+                          "code": "W"
+                        }
+                      }
+                    },
+                    "departureDateTimeLocal": {
+                      "schedule": "2026-06-26 15:00:00",
+                      "estimated": "2026-06-26 15:00:00",
+                      "actual": "2026-06-26 15:58:00"
+                    },
+                    "departureDateTimeUTC": {
+                      "schedule": "2026-06-26 13:00:00",
+                      "estimated": "2026-06-26 13:00:00",
+                      "actual": "2026-06-26 13:58:00"
+                    },
+                    "arrivalDateTimeLocal": {
+                      "schedule": "2026-06-26 21:55:00",
+                      "estimated": "2026-06-26 21:55:00",
+                      "actual": "2026-06-27 13:02:00"
+                    },
+                    "arrivalDateTimeUTC": {
+                      "schedule": "2026-06-26 19:55:00",
+                      "estimated": "2026-06-26 19:55:00",
+                      "actual": "2026-06-27 11:02:00"
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    },
+                    "movementStatus": {
+                      "code": "RCF"
+                    },
+                    "loadingType": "BLK",
+                    "addonInfo": []
+                  },
+                  {
+                    "boardPoint": {
+                      "code": "MAD",
+                      "description": "MADRID"
+                    },
+                    "offPoint": {
+                      "code": "DXB",
+                      "description": "DUBAI"
+                    },
+                    "transportInfo": {
+                      "carrier": "EK",
+                      "number": "0142",
+                      "origin": "MAD",
+                      "destination": "DXB",
+                      "date": "2026-06-28 00:00:00",
+                      "vehicle": {
+                        "type": {
+                          "code": "388L"
+                        },
+                        "body": {
+                          "code": "W"
+                        },
+                        "registrationNumber": "A6-EEC"
+                      }
+                    },
+                    "departureDateTimeLocal": {
+                      "schedule": "2026-06-28 15:25:00",
+                      "estimated": "2026-06-28 15:25:00",
+                      "actual": "2026-06-28 15:44:00"
+                    },
+                    "departureDateTimeUTC": {
+                      "schedule": "2026-06-28 13:25:00",
+                      "estimated": "2026-06-28 13:25:00",
+                      "actual": "2026-06-28 13:44:54"
+                    },
+                    "arrivalDateTimeLocal": {
+                      "schedule": "2026-06-29 00:45:00",
+                      "estimated": "2026-06-29 00:48:00",
+                      "actual": "2026-06-29 00:54:00"
+                    },
+                    "arrivalDateTimeUTC": {
+                      "schedule": "2026-06-28 20:45:00",
+                      "estimated": "2026-06-28 20:48:45",
+                      "actual": "2026-06-28 20:54:45"
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    },
+                    "movementStatus": {
+                      "code": "RCF"
+                    },
+                    "loadingType": "BLK",
+                    "addonInfo": []
+                  },
+                  {
+                    "boardPoint": {
+                      "code": "DXB",
+                      "description": "DUBAI"
+                    },
+                    "offPoint": {
+                      "code": "JNB",
+                      "description": "JOHANNESBURG"
+                    },
+                    "transportInfo": {
+                      "carrier": "EK",
+                      "number": "0765",
+                      "origin": "DXB",
+                      "destination": "JNB",
+                      "date": "2026-06-29 00:00:00",
+                      "vehicle": {
+                        "type": {
+                          "code": "77WEM"
+                        },
+                        "body": {
+                          "code": "W"
+                        },
+                        "registrationNumber": "A6-ENX"
+                      }
+                    },
+                    "departureDateTimeLocal": {
+                      "schedule": "2026-06-29 14:25:00",
+                      "estimated": "2026-06-29 14:25:00",
+                      "actual": "2026-06-29 14:22:00"
+                    },
+                    "departureDateTimeUTC": {
+                      "schedule": "2026-06-29 10:25:00",
+                      "estimated": "2026-06-29 10:25:00",
+                      "actual": "2026-06-29 10:22:25"
+                    },
+                    "arrivalDateTimeLocal": {
+                      "schedule": "2026-06-29 20:35:00",
+                      "estimated": "2026-06-29 20:18:00",
+                      "actual": "2026-06-29 20:29:00"
+                    },
+                    "arrivalDateTimeUTC": {
+                      "schedule": "2026-06-29 18:35:00",
+                      "estimated": "2026-06-29 18:18:00",
+                      "actual": "2026-06-29 18:29:29"
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    },
+                    "movementStatus": {
+                      "code": "RCF"
+                    },
+                    "loadingType": "ULD",
+                    "addonInfo": []
+                  }
+                ],
+                "itinerarySegments": [],
+                "staffIndicator": false
+              },
+              "capacityAncillaries": [],
+              "ancillaryCompletion": [],
+              "embargo": [],
+              "accountingInfo": []
+            }
+          },
+          "remark": [],
+          "egmigmdetails": [],
+          "fulfillmentInfo": {
+            "discrepency": [],
+            "embargo": [],
+            "serviceInfo": {
+              "milestone": [
+                {
+                  "code": {
+                    "code": "DLV",
+                    "description": "Delivered to the Consignee"
+                  },
+                  "importStatusMessage": "Shipment is Delivered",
+                  "station": {
+                    "code": "JNB"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-11-19 11:10:00",
+                    "achievedUTC": 1795065000000
+                  },
+                  "latestMilestone": true,
+                  "statusData": {
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 141108289
+                },
+                {
+                  "code": {
+                    "code": "NFD",
+                    "description": "Agent has been Notified of arrival of Shipment at JNB "
+                  },
+                  "station": {
+                    "code": "JNB"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-30 00:19:00",
+                    "achievedUTC": 1782757140000
+                  },
+                  "statusData": {
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 136906531
+                },
+                {
+                  "code": {
+                    "code": "RCF",
+                    "description": "Received at JNB from Flight No. EK-0765, 29 Jun 2026, DXB-JNB"
+                  },
+                  "station": {
+                    "code": "JNB"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-30 00:17:00",
+                    "achievedUTC": 1782757020000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "DXB",
+                        "description": "DUBAI INTL"
+                      },
+                      "offPoint": {
+                        "code": "JNB",
+                        "description": "O R TAMBO INTL"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "0765"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-29 14:25:00",
+                        "estimated": "2026-06-29 14:25:00",
+                        "actual": "2026-06-29 14:22:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-29 10:25:00",
+                        "estimated": "2026-06-29 10:25:00",
+                        "actual": "2026-06-29 10:22:25"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-29 20:35:00",
+                        "estimated": "2026-06-29 20:18:00",
+                        "actual": "2026-06-29 20:29:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-29 18:35:00",
+                        "estimated": "2026-06-29 18:18:00",
+                        "actual": "2026-06-29 18:29:29"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "RCF",
+                        "description": "The consignment has been physically received from a given flight or surface transport"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 666185512
+                },
+                {
+                  "code": {
+                    "code": "ARR",
+                    "description": "Arrived at JNB on Flight EK-0765, 29 Jun 2026, DXB-JNB"
+                  },
+                  "delayOntime": {
+                    "code": "O",
+                    "description": "On Time"
+                  },
+                  "station": {
+                    "code": "JNB"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-29 20:29:29",
+                    "achievedUTC": 1782743369000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "DXB",
+                        "description": "DUBAI INTL"
+                      },
+                      "offPoint": {
+                        "code": "JNB",
+                        "description": "O R TAMBO INTL"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "0765"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-29 14:25:00",
+                        "estimated": "2026-06-29 14:25:00",
+                        "actual": "2026-06-29 14:22:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-29 10:25:00",
+                        "estimated": "2026-06-29 10:25:00",
+                        "actual": "2026-06-29 10:22:25"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-29 20:35:00",
+                        "estimated": "2026-06-29 20:18:00",
+                        "actual": "2026-06-29 20:29:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-29 18:35:00",
+                        "estimated": "2026-06-29 18:18:00",
+                        "actual": "2026-06-29 18:29:29"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "ARR",
+                        "description": "The Consignment has arrived on a scheduled flight at this location"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 666169423
+                },
+                {
+                  "code": {
+                    "code": "NFD",
+                    "description": "Agent has been Notified of arrival of Shipment at JNB "
+                  },
+                  "station": {
+                    "code": "JNB"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-29 20:25:56",
+                    "achievedUTC": 1782743156000
+                  },
+                  "statusData": {
+                    "quantity": {
+                      "piece": 0,
+                      "weight": {
+                        "value": 0,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 136901267
+                },
+                {
+                  "code": {
+                    "code": "DEP",
+                    "description": "Departed to JNB on Flight EK-0765, 29 Jun 2026, DXB-JNB"
+                  },
+                  "station": {
+                    "code": "DXB"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-29 14:22:00",
+                    "achievedUTC": 1782714120000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "DXB",
+                        "description": "DUBAI INTL"
+                      },
+                      "offPoint": {
+                        "code": "JNB",
+                        "description": "O R TAMBO INTL"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "0765"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-29 14:25:00",
+                        "estimated": "2026-06-29 14:25:00",
+                        "actual": "2026-06-29 14:22:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-29 10:25:00",
+                        "estimated": "2026-06-29 10:25:00",
+                        "actual": "2026-06-29 10:22:25"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-29 20:35:00",
+                        "estimated": "2026-06-29 20:18:00",
+                        "actual": "2026-06-29 20:29:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-29 18:35:00",
+                        "estimated": "2026-06-29 18:18:00",
+                        "actual": "2026-06-29 18:29:29"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "DEP",
+                        "description": "The consignment has been physically departed this location on this scheduled date and flight"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 666134536
+                },
+                {
+                  "code": {
+                    "code": "MAN",
+                    "description": "Manifested on Flight EK-0765, 29 Jun 2026, DXB-JNB"
+                  },
+                  "station": {
+                    "code": "DXB"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-29 12:53:00",
+                    "achievedUTC": 1782708780000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "DXB",
+                        "description": "DUBAI INTL"
+                      },
+                      "offPoint": {
+                        "code": "JNB",
+                        "description": "O R TAMBO INTL"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "0765"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-29 14:25:00",
+                        "estimated": "2026-06-29 14:25:00",
+                        "actual": "2026-06-29 14:22:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-29 10:25:00",
+                        "estimated": "2026-06-29 10:25:00",
+                        "actual": "2026-06-29 10:22:25"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-29 20:35:00",
+                        "estimated": "2026-06-29 20:18:00",
+                        "actual": "2026-06-29 20:29:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-29 18:35:00",
+                        "estimated": "2026-06-29 18:18:00",
+                        "actual": "2026-06-29 18:29:29"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "MAN",
+                        "description": "The consignment has been manifested for this flight"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 666118678
+                },
+                {
+                  "code": {
+                    "code": "RCF",
+                    "description": "Received at DXB from Flight No. EK-0142, 29 Jun 2026, MAD-DXB"
+                  },
+                  "station": {
+                    "code": "DXB"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-29 04:28:11",
+                    "achievedUTC": 1782678491000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "MAD",
+                        "description": "MADRIS BARAJAS"
+                      },
+                      "offPoint": {
+                        "code": "DXB",
+                        "description": "DUBAI INTL"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "0142"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-28 15:25:00",
+                        "estimated": "2026-06-28 15:25:00",
+                        "actual": "2026-06-28 15:44:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-28 13:25:00",
+                        "estimated": "2026-06-28 13:25:00",
+                        "actual": "2026-06-28 13:44:54"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-29 00:45:00",
+                        "estimated": "2026-06-29 00:48:00",
+                        "actual": "2026-06-29 00:54:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-28 20:45:00",
+                        "estimated": "2026-06-28 20:48:45",
+                        "actual": "2026-06-28 20:54:45"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "RCF",
+                        "description": "The consignment has been physically received from a given flight or surface transport"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 666071691
+                },
+                {
+                  "code": {
+                    "code": "ARR",
+                    "description": "Arrived at DXB on Flight EK-0142, 29 Jun 2026, MAD-DXB"
+                  },
+                  "delayOntime": {
+                    "code": "O",
+                    "description": "On Time"
+                  },
+                  "station": {
+                    "code": "DXB"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-29 00:48:00",
+                    "achievedUTC": 1782665280000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "MAD",
+                        "description": "MADRIS BARAJAS"
+                      },
+                      "offPoint": {
+                        "code": "DXB",
+                        "description": "DUBAI INTL"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "0142"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-28 15:25:00",
+                        "estimated": "2026-06-28 15:25:00",
+                        "actual": "2026-06-28 15:44:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-28 13:25:00",
+                        "estimated": "2026-06-28 13:25:00",
+                        "actual": "2026-06-28 13:44:54"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-29 00:45:00",
+                        "estimated": "2026-06-29 00:48:00",
+                        "actual": "2026-06-29 00:54:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-28 20:45:00",
+                        "estimated": "2026-06-28 20:48:45",
+                        "actual": "2026-06-28 20:54:45"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "ARR",
+                        "description": "The Consignment has arrived on a scheduled flight at this location"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 666061988
+                },
+                {
+                  "code": {
+                    "code": "DEP",
+                    "description": "Departed to DXB on Flight EK-0142, 28 Jun 2026, MAD-DXB"
+                  },
+                  "station": {
+                    "code": "MAD"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-28 15:44:00",
+                    "achievedUTC": 1782639840000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "MAD",
+                        "description": "MADRIS BARAJAS"
+                      },
+                      "offPoint": {
+                        "code": "DXB",
+                        "description": "DUBAI INTL"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "0142"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-28 15:25:00",
+                        "estimated": "2026-06-28 15:25:00",
+                        "actual": "2026-06-28 15:44:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-28 13:25:00",
+                        "estimated": "2026-06-28 13:25:00",
+                        "actual": "2026-06-28 13:44:54"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-29 00:45:00",
+                        "estimated": "2026-06-29 00:48:00",
+                        "actual": "2026-06-29 00:54:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-28 20:45:00",
+                        "estimated": "2026-06-28 20:48:45",
+                        "actual": "2026-06-28 20:54:45"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "DEP",
+                        "description": "The consignment has been physically departed this location on this scheduled date and flight"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 666039074
+                },
+                {
+                  "code": {
+                    "code": "RCF",
+                    "description": "Received at MAD from Flight No. EK-4469T, 26 Jun 2026, ALC-MAD"
+                  },
+                  "station": {
+                    "code": "MAD"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-28 09:07:56",
+                    "achievedUTC": 1782616076000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "ALC",
+                        "description": "ALICANTE"
+                      },
+                      "offPoint": {
+                        "code": "MAD",
+                        "description": "MADRIS BARAJAS"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "4469T"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-26 15:00:00",
+                        "estimated": "2026-06-26 15:00:00",
+                        "actual": "2026-06-26 15:58:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-26 13:00:00",
+                        "estimated": "2026-06-26 13:00:00",
+                        "actual": "2026-06-26 13:58:00"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-26 21:55:00",
+                        "estimated": "2026-06-26 21:55:00",
+                        "actual": "2026-06-27 13:02:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-26 19:55:00",
+                        "estimated": "2026-06-26 19:55:00",
+                        "actual": "2026-06-27 11:02:00"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "RCF",
+                        "description": "The consignment has been physically received from a given flight or surface transport"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 665996826
+                },
+                {
+                  "code": {
+                    "code": "MAN",
+                    "description": "Manifested on Flight EK-0142, 28 Jun 2026, MAD-DXB"
+                  },
+                  "station": {
+                    "code": "MAD"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-28 06:40:00",
+                    "achievedUTC": 1782607200000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "MAD",
+                        "description": "MADRIS BARAJAS"
+                      },
+                      "offPoint": {
+                        "code": "DXB",
+                        "description": "DUBAI INTL"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "0142"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-28 15:25:00",
+                        "estimated": "2026-06-28 15:25:00",
+                        "actual": "2026-06-28 15:44:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-28 13:25:00",
+                        "estimated": "2026-06-28 13:25:00",
+                        "actual": "2026-06-28 13:44:54"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-29 00:45:00",
+                        "estimated": "2026-06-29 00:48:00",
+                        "actual": "2026-06-29 00:54:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-28 20:45:00",
+                        "estimated": "2026-06-28 20:48:45",
+                        "actual": "2026-06-28 20:54:45"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "MAN",
+                        "description": "The consignment has been manifested for this flight"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 665993999
+                },
+                {
+                  "code": {
+                    "code": "ARR",
+                    "description": "Arrived at MAD on Flight EK-4469T, 26 Jun 2026, ALC-MAD"
+                  },
+                  "delayOntime": {
+                    "code": "D",
+                    "description": "Delayed 15Hrs 7min"
+                  },
+                  "station": {
+                    "code": "MAD"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-27 21:55:00",
+                    "achievedUTC": 1782575700000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "ALC",
+                        "description": "ALICANTE"
+                      },
+                      "offPoint": {
+                        "code": "MAD",
+                        "description": "MADRIS BARAJAS"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "4469T"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-26 15:00:00",
+                        "estimated": "2026-06-26 15:00:00",
+                        "actual": "2026-06-26 15:58:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-26 13:00:00",
+                        "estimated": "2026-06-26 13:00:00",
+                        "actual": "2026-06-26 13:58:00"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-26 21:55:00",
+                        "estimated": "2026-06-26 21:55:00",
+                        "actual": "2026-06-27 13:02:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-26 19:55:00",
+                        "estimated": "2026-06-26 19:55:00",
+                        "actual": "2026-06-27 11:02:00"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "ARR",
+                        "description": "The Consignment has arrived on a scheduled flight at this location"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 665908468
+                },
+                {
+                  "code": {
+                    "code": "DEP",
+                    "description": "Departed to MAD on Flight EK-4469T, 26 Jun 2026, ALC-MAD"
+                  },
+                  "delayOntime": {
+                    "code": "D",
+                    "description": "Delayed 0Hrs 58min"
+                  },
+                  "station": {
+                    "code": "ALC"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-26 15:58:00",
+                    "achievedUTC": 1782467880000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "ALC",
+                        "description": "ALICANTE"
+                      },
+                      "offPoint": {
+                        "code": "MAD",
+                        "description": "MADRIS BARAJAS"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "4469T"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-26 15:00:00",
+                        "estimated": "2026-06-26 15:00:00",
+                        "actual": "2026-06-26 15:58:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-26 13:00:00",
+                        "estimated": "2026-06-26 13:00:00",
+                        "actual": "2026-06-26 13:58:00"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-26 21:55:00",
+                        "estimated": "2026-06-26 21:55:00",
+                        "actual": "2026-06-27 13:02:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-26 19:55:00",
+                        "estimated": "2026-06-26 19:55:00",
+                        "actual": "2026-06-27 11:02:00"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "DEP",
+                        "description": "The consignment has been physically departed this location on this scheduled date and flight"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 665848800
+                },
+                {
+                  "code": {
+                    "code": "MAN",
+                    "description": "Manifested on Flight EK-4469T, 26 Jun 2026, ALC-MAD"
+                  },
+                  "station": {
+                    "code": "ALC"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-27 02:28:00",
+                    "achievedUTC": 1782505680000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "ALC",
+                        "description": "ALICANTE"
+                      },
+                      "offPoint": {
+                        "code": "MAD",
+                        "description": "MADRIS BARAJAS"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "4469T"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-26 15:00:00",
+                        "estimated": "2026-06-26 15:00:00",
+                        "actual": "2026-06-26 15:58:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-26 13:00:00",
+                        "estimated": "2026-06-26 13:00:00",
+                        "actual": "2026-06-26 13:58:00"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-26 21:55:00",
+                        "estimated": "2026-06-26 21:55:00",
+                        "actual": "2026-06-27 13:02:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-26 19:55:00",
+                        "estimated": "2026-06-26 19:55:00",
+                        "actual": "2026-06-27 11:02:00"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "MAN",
+                        "description": "The consignment has been manifested for this flight"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 665848771
+                },
+                {
+                  "code": {
+                    "code": "RCS",
+                    "description": "Ready for Carriage at ALC"
+                  },
+                  "station": {
+                    "code": "ALC"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-25 14:58:15",
+                    "achievedUTC": 1782377895000
+                  },
+                  "statusData": {
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 136769317
+                },
+                {
+                  "code": {
+                    "code": "BKD",
+                    "description": "Booked on Flight EK-0765, 29 Jun 2026, DXB-JNB"
+                  },
+                  "station": {
+                    "code": "MAD"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-23 11:34:57",
+                    "achievedUTC": 1782192897000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "DXB",
+                        "description": "DUBAI INTL"
+                      },
+                      "offPoint": {
+                        "code": "JNB",
+                        "description": "O R TAMBO INTL"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "0765"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-29 14:25:00",
+                        "estimated": "2026-06-29 14:25:00",
+                        "actual": "2026-06-29 14:22:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-29 10:25:00",
+                        "estimated": "2026-06-29 10:25:00",
+                        "actual": "2026-06-29 10:22:25"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-29 20:35:00",
+                        "estimated": "2026-06-29 20:18:00",
+                        "actual": "2026-06-29 20:29:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-29 18:35:00",
+                        "estimated": "2026-06-29 18:18:00",
+                        "actual": "2026-06-29 18:29:29"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "BKD",
+                        "description": "The consignment has been booked for transportation between these locations on the scheduled date/flt"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 665355874
+                },
+                {
+                  "code": {
+                    "code": "BKD",
+                    "description": "Booked on Flight EK-0142, 28 Jun 2026, MAD-DXB"
+                  },
+                  "station": {
+                    "code": "MAD"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-23 11:34:57",
+                    "achievedUTC": 1782192897000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "MAD",
+                        "description": "MADRIS BARAJAS"
+                      },
+                      "offPoint": {
+                        "code": "DXB",
+                        "description": "DUBAI INTL"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "0142"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-28 15:25:00",
+                        "estimated": "2026-06-28 15:25:00",
+                        "actual": "2026-06-28 15:44:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-28 13:25:00",
+                        "estimated": "2026-06-28 13:25:00",
+                        "actual": "2026-06-28 13:44:54"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-29 00:45:00",
+                        "estimated": "2026-06-29 00:48:00",
+                        "actual": "2026-06-29 00:54:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-28 20:45:00",
+                        "estimated": "2026-06-28 20:48:45",
+                        "actual": "2026-06-28 20:54:45"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "BKD",
+                        "description": "The consignment has been booked for transportation between these locations on the scheduled date/flt"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 665351276
+                },
+                {
+                  "code": {
+                    "code": "BKD",
+                    "description": "Booked on Flight EK-4469T, 26 Jun 2026, ALC-MAD"
+                  },
+                  "station": {
+                    "code": "MAD"
+                  },
+                  "statusDate": {
+                    "achieved": "2026-06-23 11:33:27",
+                    "achievedUTC": 1782192807000
+                  },
+                  "statusData": {
+                    "itinerary": {
+                      "boardPoint": {
+                        "code": "ALC",
+                        "description": "ALICANTE"
+                      },
+                      "offPoint": {
+                        "code": "MAD",
+                        "description": "MADRIS BARAJAS"
+                      },
+                      "transportInfo": {
+                        "carrier": "EK",
+                        "number": "4469T"
+                      },
+                      "departureDateTimeLocal": {
+                        "schedule": "2026-06-26 15:00:00",
+                        "estimated": "2026-06-26 15:00:00",
+                        "actual": "2026-06-26 15:58:00"
+                      },
+                      "departureDateTimeUTC": {
+                        "schedule": "2026-06-26 13:00:00",
+                        "estimated": "2026-06-26 13:00:00",
+                        "actual": "2026-06-26 13:58:00"
+                      },
+                      "arrivalDateTimeLocal": {
+                        "schedule": "2026-06-26 21:55:00",
+                        "estimated": "2026-06-26 21:55:00",
+                        "actual": "2026-06-27 13:02:00"
+                      },
+                      "arrivalDateTimeUTC": {
+                        "schedule": "2026-06-26 19:55:00",
+                        "estimated": "2026-06-26 19:55:00",
+                        "actual": "2026-06-27 11:02:00"
+                      },
+                      "quantity": {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": []
+                      },
+                      "movementStatus": {
+                        "code": "BKD",
+                        "description": "The consignment has been booked for transportation between these locations on the scheduled date/flt"
+                      },
+                      "addonInfo": []
+                    },
+                    "quantity": {
+                      "piece": 3,
+                      "weight": {
+                        "value": 70,
+                        "unit": {
+                          "code": "K"
+                        }
+                      },
+                      "volume": {
+                        "value": 0.14,
+                        "unit": {
+                          "code": "CM"
+                        }
+                      },
+                      "dimension": [],
+                      "specialHandling": []
+                    }
+                  },
+                  "id": 665351275
+                }
+              ]
+            },
+            "temperature": {
+              "requiredTemperatures": []
+            }
+          },
+          "reference": {
+            "orderNumber": "1782205242007",
+            "bookingReferenceNumber": "65713370",
+            "jobReferenceNumber": "64963771",
+            "awbReferenceNumber": "43412248"
+          },
+          "businessErrorAccepted": false,
+          "status": {
+            "cancelled": false,
+            "completed": true,
+            "voided": false,
+            "additionalStatuses": []
+          },
+          "allowedActions": [],
+          "hsNumbers": [],
+          "customsStatusList": []
+        }
+      ]
+    },
+    "orderNumber": "1782205242007",
+    "orderStatus": {
+      "code": "C",
+      "description": "Your order is confirmed"
+    },
+    "referenceContacts": []
+  },
+  "status": "success"
+}

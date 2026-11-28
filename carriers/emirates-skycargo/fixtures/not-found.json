@@ -1,0 +1,22 @@
+{
+  "errors": [
+    {
+      "error_code": "BOOKING_NOT_FOUND",
+      "error_message": "There is no matching result found for your shipment reference.",
+      "display_message": "There is no matching result found for your shipment reference.",
+      "error_data": {
+        "errorList": [
+          {
+            "severity": "HARD",
+            "type": "Error",
+            "code": "",
+            "shortMessage": "There is no matching result found for your shipment reference.",
+            "customMessage": "There is no matching result found for your shipment reference.",
+            "override": false
+          }
+        ]
+      }
+    }
+  ],
+  "status": "failure"
+}

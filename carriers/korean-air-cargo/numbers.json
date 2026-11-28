@@ -1,0 +1,63 @@
+{
+  "carrier": "korean-air-cargo",
+  "gap": "No published Korean Air waybill recent enough for the tracker has been found.",
+  "records": [
+    {
+      "number": "180-33544873",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/851b3a27ea047a14.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on Korean Air names this air waybill for a dog it accepted in Seoul for a flight to Dallas–Fort Worth.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "Korean Air's tracker answers it \"No tracking data available.\": the waybill is older than the tracker keeps."
+    },
+    {
+      "number": "180-33580503",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/851b3a27ea047a14.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on Korean Air names this air waybill for a dog it accepted in Seoul for a flight to Dallas–Fort Worth.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "Korean Air's tracker answers it \"No tracking data available.\": the waybill is older than the tracker keeps."
+    }
+  ]
+}

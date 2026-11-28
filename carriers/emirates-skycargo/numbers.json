@@ -1,0 +1,82 @@
+{
+  "carrier": "emirates-skycargo",
+  "records": [
+    {
+      "number": "176-27246796",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sars.gov.za/wp-content/uploads/Ops/Tables/SC-CW-01-02-A20-Weekly-List-of-Unentered-Goods-External-Table.pdf",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "The South African Revenue Service's weekly list of unentered goods names this air waybill for goods held at OR Tambo. Emirates SkyCargo's tracker shows its flights from Alicante through Madrid and Dubai to Johannesburg and its delivery."
+    },
+    {
+      "number": "176-63344960",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260923115505/https://www.sars.gov.za/wp-content/uploads/Ops/Tables/SC-CW-01-02-A20-Weekly-List-of-Unentered-Goods-External-Table.pdf",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "The South African Revenue Service's weekly list of unentered goods names this air waybill for goods held at OR Tambo. Emirates SkyCargo's tracker shows it from Dubai World Central to Johannesburg, delivered."
+    },
+    {
+      "number": "176-80060923",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/183c264f95eddfa0.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on Emirates names this air waybill for a cat booked on an Emirates flight from New York JFK to Dubai.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "Emirates SkyCargo's search no longer finds a booking for this older waybill and answers that no result matches."
+    }
+  ]
+}

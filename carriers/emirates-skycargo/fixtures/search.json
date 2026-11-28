@@ -1,0 +1,169 @@
+{
+  "data": {
+    "order": [
+      {
+        "orderItems": {
+          "orderItem": [
+            {
+              "productInfo": {
+                "airCapacity": {
+                  "documentInfo": {
+                    "documentNumber": "27246796",
+                    "documentPrefix": "176",
+                    "documentType": "AWB"
+                  },
+                  "origin": {
+                    "code": "ALC",
+                    "name": "ALICANTE"
+                  },
+                  "destination": {
+                    "code": "JNB",
+                    "name": "JOHANNESBURG"
+                  },
+                  "routes": [],
+                  "participant": [],
+                  "cargoInfo": {
+                    "cargoType": "AWB",
+                    "cargoCategory": "F",
+                    "commodityCode": {
+                      "code": "E0063",
+                      "description": "DANGEROUS GOODS"
+                    },
+                    "quantityInfo": [
+                      {
+                        "piece": 3,
+                        "weight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "volume": {
+                          "value": 0.14,
+                          "unit": {
+                            "code": "CM"
+                          }
+                        },
+                        "chargeableWeight": {
+                          "value": 70,
+                          "unit": {
+                            "code": "K"
+                          }
+                        },
+                        "dimension": [],
+                        "specialHandling": [
+                          {
+                            "code": "RMD",
+                            "description": "Miscellaneous Dangerous Goods",
+                            "system": true,
+                            "auto": true
+                          },
+                          {
+                            "code": "ECC",
+                            "description": "Consignment establ. with an electronically concluded cargo contract with no accompanying paper AWB",
+                            "system": true,
+                            "auto": true
+                          }
+                        ]
+                      }
+                    ],
+                    "goodsDescription": "RAW AROMATIC",
+                    "cargoReference": "65713370",
+                    "hamonizedCommodityCode": [],
+                    "additionalInfo": []
+                  },
+                  "product": {
+                    "product": {
+                      "code": "GCR",
+                      "description": "Emirates AirFreight"
+                    }
+                  },
+                  "capacityAncillaries": [],
+                  "ancillaryCompletion": [],
+                  "embargo": [],
+                  "accountingInfo": []
+                }
+              },
+              "remark": [],
+              "egmigmdetails": [],
+              "fulfillmentInfo": {
+                "documentInfo": {
+                  "awbInfo": [
+                    {
+                      "participant": [],
+                      "hawbInfo": []
+                    }
+                  ]
+                },
+                "discrepency": [],
+                "embargo": [],
+                "serviceInfo": {
+                  "milestone": [
+                    {
+                      "code": {
+                        "code": "DLV",
+                        "description": "Delivered to the Consignee"
+                      },
+                      "station": {
+                        "code": "JNB"
+                      },
+                      "statusDate": {
+                        "achieved": "2026-11-19 11:10:00"
+                      },
+                      "latestMilestone": true,
+                      "statusData": {
+                        "quantity": {
+                          "piece": 3,
+                          "weight": {
+                            "value": 70,
+                            "unit": {
+                              "code": "K"
+                            }
+                          },
+                          "dimension": [],
+                          "specialHandling": []
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "reference": {
+                "bookingReferenceNumber": "65713370",
+                "jobReferenceNumber": "64963771",
+                "awbReferenceNumber": "43412248"
+              },
+              "status": {
+                "cancelled": false,
+                "completed": true,
+                "voided": false,
+                "additionalStatuses": [
+                  {
+                    "code": "RCSDONE",
+                    "description": "N"
+                  }
+                ]
+              },
+              "allowedActions": [],
+              "hsNumbers": [],
+              "customsStatusList": []
+            }
+          ]
+        },
+        "orderNumber": "1782205242007",
+        "orderStatus": {
+          "code": "C",
+          "description": "Your order is confirmed"
+        },
+        "referenceContacts": []
+      }
+    ],
+    "pageInfo": {
+      "pageNumber": 1,
+      "totalCount": 1,
+      "pageSize": 10,
+      "totalElements": 1
+    }
+  },
+  "status": "success"
+}

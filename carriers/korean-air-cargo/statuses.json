@@ -1,0 +1,109 @@
+{
+  "carrier": "korean-air-cargo",
+  "entries": [
+    {
+      "code": "BKD",
+      "wording": "Booked",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "Named in the tracker's script; the wording is the Cargo-IMP meaning, Korean Air's own not yet seen live."
+    },
+    {
+      "code": "FOH",
+      "wording": "Freight on hand",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "Named in the tracker's script; the wording is the Cargo-IMP meaning, Korean Air's own not yet seen live."
+    },
+    {
+      "code": "RCS",
+      "wording": "Received from shipper",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "Named in the tracker's script; the wording is the Cargo-IMP meaning, Korean Air's own not yet seen live."
+    },
+    {
+      "code": "RCT",
+      "wording": "Received from another carrier",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "Named in the tracker's script; the wording is the Cargo-IMP meaning, Korean Air's own not yet seen live."
+    },
+    {
+      "code": "PRE",
+      "wording": "Pre-manifested",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "The Cargo-IMP meaning; Korean Air's own wording not yet seen live."
+    },
+    {
+      "code": "MAN",
+      "wording": "Manifested",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "Named in the tracker's script; the wording is the Cargo-IMP meaning, Korean Air's own not yet seen live."
+    },
+    {
+      "code": "DEP",
+      "wording": "Departed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "Named in the tracker's script; the wording is the Cargo-IMP meaning, Korean Air's own not yet seen live."
+    },
+    {
+      "code": "ARR",
+      "wording": "Arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "Named in the tracker's script; the wording is the Cargo-IMP meaning, Korean Air's own not yet seen live."
+    },
+    {
+      "code": "RCF",
+      "wording": "Received from flight",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "Named in the tracker's script; the wording is the Cargo-IMP meaning, Korean Air's own not yet seen live."
+    },
+    {
+      "code": "TFD",
+      "wording": "Transferred to another carrier",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "Named in the tracker's script; the wording is the Cargo-IMP meaning, Korean Air's own not yet seen live."
+    },
+    {
+      "code": "NFD",
+      "wording": "Consignee notified",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "The Cargo-IMP meaning; Korean Air's own wording not yet seen live."
+    },
+    {
+      "code": "AWD",
+      "wording": "Documents delivered to the consignee",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "The Cargo-IMP meaning; Korean Air's own wording not yet seen live."
+    },
+    {
+      "code": "DLV",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "Named in the tracker's script; the wording is the Cargo-IMP meaning, Korean Air's own not yet seen live."
+    }
+  ]
+}

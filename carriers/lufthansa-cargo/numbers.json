@@ -1,0 +1,113 @@
+{
+  "carrier": "lufthansa-cargo",
+  "records": [
+    {
+      "number": "020-45286732",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260721165928/https://www.sars.gov.za/wp-content/uploads/Ops/Tables/SC-CW-01-02-A20-Weekly-List-of-Unentered-Goods-External-Table.pdf",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "The South African Revenue Service's weekly list of unentered goods names this air waybill for goods held at OR Tambo. Lufthansa Cargo's tracker no longer shows it to guests and answers it as not found or needing a login."
+    },
+    {
+      "number": "020-90306996",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/1015023c685d40fc.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on Lufthansa Cargo names this air waybill for cats booked on a Lufthansa flight.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "Lufthansa Cargo's tracker no longer shows this older waybill to guests and answers it as not found or needing a login."
+    },
+    {
+      "number": "020-90295575",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/1015023c685d40fc.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on Lufthansa Cargo names this air waybill for a dog it accepted for carriage.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "Lufthansa Cargo's tracker no longer shows this older waybill to guests and answers it as not found or needing a login."
+    },
+    {
+      "number": "020-37349432",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/79077f3627e2445f.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on a pet relocation company names this air waybill for a dog and a cat delivered to the cargo facilities at Boston for transport.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "Lufthansa Cargo's tracker no longer shows this older waybill to guests and answers it as not found or needing a login."
+    }
+  ]
+}

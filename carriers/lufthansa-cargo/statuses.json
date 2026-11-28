@@ -1,0 +1,17 @@
+{
+  "carrier": "lufthansa-cargo",
+  "entries": [
+    {"code": "BKD", "wording": "Booking confirmed", "stage": "registered", "language": "en", "confirmedBy": "bundle"},
+    {"code": "FOH", "wording": "Received", "stage": "accepted", "language": "en", "confirmedBy": "bundle", "note": "Freight on hand: the goods are at Lufthansa Cargo's warehouse while its ready-for-carriage checks run."},
+    {"code": "RCS", "wording": "Shipment accepted", "stage": "accepted", "language": "en", "confirmedBy": "bundle"},
+    {"code": "MAN", "wording": "Manifested", "stage": null, "language": "en", "confirmedBy": "bundle", "note": "A flight manifest records an assignment before the departure, so it keeps the stage before it."},
+    {"code": "DEP", "wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "ARR", "wording": "Arrived", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "RCF", "wording": "Received from flight", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "RCT", "wording": "Received from another airline", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "TFD", "wording": "Transferred", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "Handed to another airline at a transfer."},
+    {"code": "NFD", "wording": "Ready for pick-up", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "bundle", "note": "The consignee or its agent collects the goods from the cargo terminal. Away from the waybill's destination the parser files it in transit."},
+    {"code": "DLV", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "bundle", "note": "Away from the waybill's destination the parser files it in transit."},
+    {"code": "DIS", "wording": "Exception", "stage": null, "language": "en", "confirmedBy": "bundle", "note": "A discrepancy names pieces offloaded, missing, found or overcarried on a flight or at a station; the rest of the waybill moves on, so it keeps the stage before it."}
+  ]
+}

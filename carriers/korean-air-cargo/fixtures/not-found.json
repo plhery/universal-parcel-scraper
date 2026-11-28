@@ -1,0 +1,27 @@
+{
+  "payLoad": [
+    {
+      "awbPrefix": "180",
+      "awbDocNo": "33544873",
+      "sequenceNo": 0,
+      "duplicateNo": 0,
+      "isNonStandard": false,
+      "isPreciousCargo": "N",
+      "checkSpotRate": "N",
+      "ccShipmentIndicator": false,
+      "totalRecordCount": 1,
+      "bookingMessages": [
+        {
+          "type": "ERROR",
+          "code": "EET600",
+          "text": "No tracking data available."
+        }
+      ]
+    }
+  ],
+  "generalInfo": {
+    "sessionId": "guest-session-id",
+    "time": "28 Nov 2026 14:31",
+    "txnId": "guesttxn1795843909000"
+  }
+}

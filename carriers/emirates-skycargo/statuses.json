@@ -1,0 +1,18 @@
+{
+  "carrier": "emirates-skycargo",
+  "entries": [
+    {"code": "BKD", "wording": "Booked on Flight", "stage": "registered", "language": "en", "confirmedBy": "live"},
+    {"code": "FOH", "wording": "Freight on hand", "stage": "accepted", "language": "en", "confirmedBy": "bundle"},
+    {"code": "RCS", "wording": "Ready for Carriage", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Received from the shipper or its agent."},
+    {"code": "MAN", "wording": "Manifested on Flight", "stage": null, "language": "en", "confirmedBy": "live", "note": "A flight manifest records an assignment, sometimes after the departure, so it keeps the stage before it."},
+    {"code": "DEP", "wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "ARR", "wording": "Arrived", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "RCF", "wording": "Received from Flight", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "AWR", "wording": "Shipment documentation received from flight", "stage": null, "language": "en", "confirmedBy": "bundle", "note": "It concerns the papers, not the goods."},
+    {"code": "AWD", "wording": "Physical delivery of shipment documentation to consignee or consignee's agent", "stage": null, "language": "en", "confirmedBy": "bundle", "note": "It concerns the papers, not the goods."},
+    {"code": "NFD", "wording": "Agent has been Notified of arrival of Shipment", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "The consignee or its agent collects the goods from the cargo terminal. Away from the waybill's destination the parser files it in transit."},
+    {"code": "DLV", "wording": "Delivered to the Consignee", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Away from the waybill's destination the parser files it in transit."},
+    {"code": "DDL", "wording": "Physical delivery of shipment to consignee's door", "stage": "delivered", "language": "en", "confirmedBy": "bundle", "note": "Away from the waybill's destination the parser files it in transit."},
+    {"code": "DIS", "wording": "Shipment Discrepancy", "stage": null, "language": "en", "confirmedBy": "bundle", "note": "A discrepancy concerns some pieces; the rest of the waybill moves on, so it keeps the stage before it."}
+  ]
+}

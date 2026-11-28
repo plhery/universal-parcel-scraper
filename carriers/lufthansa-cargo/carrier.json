@@ -1,0 +1,82 @@
+{
+  "id": "lufthansa-cargo",
+  "displayName": "Lufthansa Cargo",
+  "aliases": [
+    "Lufthansa Cargo AG",
+    "LH Cargo"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#05164D"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "lufthansa-cargo",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://www.lufthansa-cargo.com/en/eservices/etracking",
+    "searchUrl": "https://www.lufthansa-cargo.com/en/eservices/etracking",
+    "canaryUrl": "https://www.lufthansa-cargo.com/en/eservices/etracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "provider_code",
+      "origin",
+      "destination",
+      "flight",
+      "parcel_count",
+      "weight",
+      "future_milestones",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "provider_code",
+      "flight",
+      "future_milestones"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "eta"
+    ],
+    "unavailable": [
+      "proof_of_delivery",
+      "recipient_name",
+      "sender_name"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.lufthansa-cargo.com",
+        "lufthansa-cargo.com"
+      ],
+      "pathPattern": "^/(?:[a-z]{2}/)?eservices/etracking/tracking/-/awb/020/\\d{8}/?$",
+      "path": "^/(?:[a-z]{2}/)?eservices/etracking/tracking/-/awb/020/(\\d{8})/?$"
+    }
+  ],
+  "detection": []
+}

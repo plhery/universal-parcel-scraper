@@ -1,0 +1,41 @@
+{
+  "availabilityDetails": {
+    "isAvailable": false
+  },
+  "awbDetails": null,
+  "awbNumber": {
+    "airlineCode": "020",
+    "serialNumber": "45286732"
+  },
+  "bookingDetailsInformation": {
+    "bookingDetailsAtGoodsAcceptance": null,
+    "lastBookingDetails": null
+  },
+  "cargoPouchDetails": {
+    "isPermittedToDownloadDocument": false
+  },
+  "customsDetails": {
+    "isAvailable": false
+  },
+  "favoriteDetails": {
+    "favoriteStatus": "NOT_ELIGIBLE"
+  },
+  "featuresConfiguration": {
+    "isTdFlashSupportEnabled": false
+  },
+  "flightInformation": [],
+  "lastSegmentDetails": null,
+  "milestonePlan": null,
+  "shipmentReferenceDetails": {
+    "referenceName": null,
+    "shouldShowReferenceDetails": false
+  },
+  "statusHistories": [],
+  "subscriptionDetails": {
+    "isEligibleForSubscription": true,
+    "isSubscribed": false
+  },
+  "timeOfAvailabilityMessageDetails": {
+    "shouldShowToaMessage": false
+  }
+}

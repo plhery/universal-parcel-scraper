@@ -1,0 +1,149 @@
+{
+  "payLoad": [
+    {
+      "awbPrefix": "180",
+      "awbDocNo": "12345675",
+      "origin": "ICN",
+      "destination": "DFW",
+      "pieces": "1",
+      "wgtDetail": {
+        "quantity": "12.0",
+        "unit": "K"
+      },
+      "routes": [
+        "ICN-DFW"
+      ],
+      "commodityDetail": {
+        "shipmentDesc": "LIVE ANIMAL"
+      },
+      "sccList": [
+        "AVI"
+      ],
+      "product": "GENERAL",
+      "eventDetails": [
+        {
+          "eventCode": "BKD",
+          "eventDesc": "Booking Confirmed",
+          "arpCode": "ICN",
+          "eventDate": "20 Nov 2026 09:12",
+          "eventDateTime": "20 Nov 2026 09:12",
+          "eventDateTimeUTC": "20 Nov 2026 00:12",
+          "pieces": "1",
+          "weight": "12.0",
+          "fltDetail": {
+            "carCode": "KE",
+            "fltNo": "031"
+          }
+        },
+        {
+          "eventCode": "BKD",
+          "eventDesc": "Booking Confirmed",
+          "arpCode": "ICN",
+          "eventDate": "20 Nov 2026 09:12",
+          "eventDateTime": "20 Nov 2026 09:12",
+          "eventDateTimeUTC": "20 Nov 2026 00:12",
+          "pieces": "1",
+          "weight": "12.0",
+          "fltDetail": {
+            "carCode": "KE",
+            "fltNo": "033"
+          }
+        },
+        {
+          "eventCode": "RCS",
+          "eventDesc": "Received from Shipper",
+          "arpCode": "ICN",
+          "eventDate": "21 Nov 2026 18:03",
+          "eventDateTime": "21 Nov 2026 18:03",
+          "eventDateTimeUTC": "21 Nov 2026 09:03",
+          "pieces": "1",
+          "weight": "12.0"
+        },
+        {
+          "eventCode": "DEP",
+          "eventDesc": "Departed",
+          "arpCode": "ICN",
+          "eventDate": "22 Nov 2026 00:40",
+          "eventDateTime": "22 Nov 2026 00:40",
+          "eventDateTimeUTC": "21 Nov 2026 15:40",
+          "pieces": "1",
+          "weight": "12.0",
+          "fltDetail": {
+            "carCode": "KE",
+            "fltNo": "031"
+          },
+          "uldNo": [
+            "AKE00000KE"
+          ]
+        },
+        {
+          "eventCode": "ARR",
+          "eventDesc": "Arrived",
+          "arpCode": "DFW",
+          "eventDate": "21 Nov 2026 23:10",
+          "eventDateTime": "21 Nov 2026 23:10",
+          "eventDateTimeUTC": "22 Nov 2026 05:10",
+          "pieces": "1",
+          "weight": "12.0",
+          "fltDetail": {
+            "carCode": "KE",
+            "fltNo": "031"
+          }
+        },
+        {
+          "eventCode": "RCF",
+          "eventDesc": "Received from Flight",
+          "arpCode": "DFW",
+          "eventDate": "22 Nov 2026 01:05",
+          "eventDateTime": "22 Nov 2026 01:05",
+          "eventDateTimeUTC": "22 Nov 2026 07:05",
+          "pieces": "1",
+          "weight": "12.0",
+          "fltDetail": {
+            "carCode": "KE",
+            "fltNo": "031"
+          }
+        },
+        {
+          "eventCode": "NFD",
+          "eventDesc": "Consignee Notified",
+          "arpCode": "DFW",
+          "eventDate": "22 Nov 2026 01:30",
+          "eventDateTime": "22 Nov 2026 01:30",
+          "eventDateTimeUTC": "22 Nov 2026 07:30",
+          "pieces": "1",
+          "weight": "12.0"
+        },
+        {
+          "eventCode": "DLV",
+          "eventDesc": "Delivered",
+          "arpCode": "DFW",
+          "eventDate": "22 Nov 2026 03:15",
+          "eventDateTime": "22 Nov 2026 03:15",
+          "eventDateTimeUTC": "22 Nov 2026 09:15",
+          "pieces": "1",
+          "weight": "12.0"
+        }
+      ],
+      "fltDetails": [
+        {
+          "fltDetail": {
+            "carCode": "KE",
+            "fltNo": "031",
+            "fltType": "PASSENGER"
+          },
+          "origin": "ICN",
+          "destination": "DFW",
+          "pieces": "1",
+          "weight": "12.0",
+          "bookingStatus": "CONFIRMED"
+        }
+      ]
+    }
+  ],
+  "generalInfo": {
+    "sessionId": "guest-session-id",
+    "time": "28 Nov 2026 14:31",
+    "txnId": "guesttxn1795843909000"
+  }
+}

@@ -1512,6 +1512,11 @@
     "reason": "Thirteen-digit domestic numbers share their shape with many carriers, and Emirates Post documents no prefix."
   },
   {
+    "carrier": "emirates-skycargo",
+    "kind": "open",
+    "reason": "Select Emirates SkyCargo for its master air waybills. They carry Emirates' IATA prefix 176, an eleven-digit shape many carriers print."
+  },
+  {
     "carrier": "emo-trans",
     "pattern": "^S\\d{4}[A-Z]\\d{8}$",
     "kind": "by_design",

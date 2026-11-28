@@ -1,0 +1,565 @@
+{
+  "availabilityDetails": {
+    "isAvailable": true
+  },
+  "awbDetails": {
+    "product": {
+      "productName": "td.Pro"
+    },
+    "piecesInformation": {
+      "piecesCount": 2,
+      "piecesWeight": 150.0,
+      "piecesWeightUnit": "KILOGRAM"
+    },
+    "originAirport": {
+      "airportCode": "MUC",
+      "airportName": "Munich"
+    },
+    "destinationAirport": {
+      "airportCode": "ORD",
+      "airportName": "Chicago"
+    },
+    "latestAcceptanceTime": "2026-11-17T14:00:00+01:00",
+    "plannedTimeOfAvailability": "2026-11-19T17:30:00-06:00",
+    "actualTimeOfAvailability": "2026-11-19T18:05:00-06:00",
+    "latestEvent": "DLV",
+    "lastEventMessageDescriptor": {
+      "messageType": "DLV",
+      "piecesInformation": {
+        "piecesCount": 2
+      },
+      "stationAirport": {
+        "airportCode": "ORD",
+        "airportName": "Chicago"
+      },
+      "flight": null
+    }
+  },
+  "awbNumber": {
+    "airlineCode": "020",
+    "serialNumber": "12345675"
+  },
+  "bookingDetailsInformation": {
+    "bookingDetailsAtGoodsAcceptance": null,
+    "lastBookingDetails": null
+  },
+  "cargoPouchDetails": {
+    "isPermittedToDownloadDocument": false
+  },
+  "customsDetails": {
+    "isAvailable": false
+  },
+  "favoriteDetails": {
+    "favoriteStatus": "NOT_ELIGIBLE"
+  },
+  "featuresConfiguration": {
+    "isTdFlashSupportEnabled": false
+  },
+  "flightInformation": [],
+  "lastSegmentDetails": {
+    "lastSegmentFlightNumber": "LH8160",
+    "lastSegmentDate": "2026-11-19"
+  },
+  "milestonePlan": null,
+  "shipmentReferenceDetails": {
+    "referenceName": null,
+    "shouldShowReferenceDetails": false
+  },
+  "statusHistories": [
+    {
+      "cargoEventType": "BKD",
+      "stationAirport": {
+        "airportCode": "MUC",
+        "airportName": "Munich"
+      },
+      "flight": {
+        "flightDesignator": {
+          "carrierCode": "LH",
+          "flightNumber": "9341",
+          "suffix": null
+        },
+        "flightDate": "2026-11-17T00:00:00+01:00",
+        "originAirport": {
+          "airportCode": "MUC",
+          "airportName": "Munich"
+        },
+        "destinationAirport": {
+          "airportCode": "FRA",
+          "airportName": "Frankfurt"
+        }
+      },
+      "planedCargoEvent": {
+        "eventDateTime": "2026-11-16T10:12:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      },
+      "actualCargoEvent": {
+        "eventDateTime": "2026-11-16T10:12:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      }
+    },
+    {
+      "cargoEventType": "RCS",
+      "stationAirport": {
+        "airportCode": "MUC",
+        "airportName": "Munich"
+      },
+      "flight": null,
+      "planedCargoEvent": {
+        "eventDateTime": "2026-11-17T14:00:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      },
+      "actualCargoEvent": {
+        "eventDateTime": "2026-11-17T11:41:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      }
+    },
+    {
+      "cargoEventType": "MAN",
+      "stationAirport": {
+        "airportCode": "MUC",
+        "airportName": "Munich"
+      },
+      "flight": {
+        "flightDesignator": {
+          "carrierCode": "LH",
+          "flightNumber": "9341",
+          "suffix": null
+        },
+        "flightDate": "2026-11-17T00:00:00+01:00",
+        "originAirport": {
+          "airportCode": "MUC",
+          "airportName": "Munich"
+        },
+        "destinationAirport": {
+          "airportCode": "FRA",
+          "airportName": "Frankfurt"
+        }
+      },
+      "planedCargoEvent": {
+        "eventDateTime": "2026-11-17T18:00:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      },
+      "actualCargoEvent": {
+        "eventDateTime": "2026-11-17T17:22:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      }
+    },
+    {
+      "cargoEventType": "DEP",
+      "stationAirport": {
+        "airportCode": "MUC",
+        "airportName": "Munich"
+      },
+      "flight": {
+        "flightDesignator": {
+          "carrierCode": "LH",
+          "flightNumber": "9341",
+          "suffix": null
+        },
+        "flightDate": "2026-11-17T00:00:00+01:00",
+        "originAirport": {
+          "airportCode": "MUC",
+          "airportName": "Munich"
+        },
+        "destinationAirport": {
+          "airportCode": "FRA",
+          "airportName": "Frankfurt"
+        }
+      },
+      "planedCargoEvent": {
+        "eventDateTime": "2026-11-17T20:00:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      },
+      "actualCargoEvent": {
+        "eventDateTime": "2026-11-17T20:16:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      }
+    },
+    {
+      "cargoEventType": "ARR",
+      "stationAirport": {
+        "airportCode": "FRA",
+        "airportName": "Frankfurt"
+      },
+      "flight": {
+        "flightDesignator": {
+          "carrierCode": "LH",
+          "flightNumber": "9341",
+          "suffix": null
+        },
+        "flightDate": "2026-11-17T00:00:00+01:00",
+        "originAirport": {
+          "airportCode": "MUC",
+          "airportName": "Munich"
+        },
+        "destinationAirport": {
+          "airportCode": "FRA",
+          "airportName": "Frankfurt"
+        }
+      },
+      "planedCargoEvent": {
+        "eventDateTime": "2026-11-18T01:00:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      },
+      "actualCargoEvent": {
+        "eventDateTime": "2026-11-18T00:48:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      }
+    },
+    {
+      "cargoEventType": "RCF",
+      "stationAirport": {
+        "airportCode": "FRA",
+        "airportName": "Frankfurt"
+      },
+      "flight": {
+        "flightDesignator": {
+          "carrierCode": "LH",
+          "flightNumber": "9341",
+          "suffix": null
+        },
+        "flightDate": "2026-11-17T00:00:00+01:00",
+        "originAirport": {
+          "airportCode": "MUC",
+          "airportName": "Munich"
+        },
+        "destinationAirport": {
+          "airportCode": "FRA",
+          "airportName": "Frankfurt"
+        }
+      },
+      "planedCargoEvent": {
+        "eventDateTime": "2026-11-18T04:00:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      },
+      "actualCargoEvent": {
+        "eventDateTime": "2026-11-18T03:05:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      }
+    },
+    {
+      "cargoEventType": "MAN",
+      "stationAirport": {
+        "airportCode": "FRA",
+        "airportName": "Frankfurt"
+      },
+      "flight": {
+        "flightDesignator": {
+          "carrierCode": "LH",
+          "flightNumber": "430",
+          "suffix": null
+        },
+        "flightDate": "2026-11-18T00:00:00+01:00",
+        "originAirport": {
+          "airportCode": "FRA",
+          "airportName": "Frankfurt"
+        },
+        "destinationAirport": {
+          "airportCode": "ORD",
+          "airportName": "Chicago"
+        }
+      },
+      "planedCargoEvent": {
+        "eventDateTime": "2026-11-18T09:30:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      },
+      "actualCargoEvent": {
+        "eventDateTime": "2026-11-18T09:02:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      }
+    },
+    {
+      "cargoEventType": "DIS",
+      "stationAirport": {
+        "airportCode": "FRA",
+        "airportName": "Frankfurt"
+      },
+      "flight": {
+        "flightDesignator": {
+          "carrierCode": "LH",
+          "flightNumber": "430",
+          "suffix": null
+        },
+        "flightDate": "2026-11-18T00:00:00+01:00",
+        "originAirport": {
+          "airportCode": "FRA",
+          "airportName": "Frankfurt"
+        },
+        "destinationAirport": {
+          "airportCode": "ORD",
+          "airportName": "Chicago"
+        }
+      },
+      "planedCargoEvent": null,
+      "actualCargoEvent": {
+        "eventDateTime": "2026-11-18T13:40:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        },
+        "discrepancyCode": "OFLD"
+      }
+    },
+    {
+      "cargoEventType": "MAN",
+      "stationAirport": {
+        "airportCode": "FRA",
+        "airportName": "Frankfurt"
+      },
+      "flight": {
+        "flightDesignator": {
+          "carrierCode": "LH",
+          "flightNumber": "8160",
+          "suffix": null
+        },
+        "flightDate": "2026-11-19T00:00:00+01:00",
+        "originAirport": {
+          "airportCode": "FRA",
+          "airportName": "Frankfurt"
+        },
+        "destinationAirport": {
+          "airportCode": "ORD",
+          "airportName": "Chicago"
+        }
+      },
+      "planedCargoEvent": {
+        "eventDateTime": "2026-11-19T08:30:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      },
+      "actualCargoEvent": {
+        "eventDateTime": "2026-11-19T08:11:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      }
+    },
+    {
+      "cargoEventType": "DEP",
+      "stationAirport": {
+        "airportCode": "FRA",
+        "airportName": "Frankfurt"
+      },
+      "flight": {
+        "flightDesignator": {
+          "carrierCode": "LH",
+          "flightNumber": "8160",
+          "suffix": null
+        },
+        "flightDate": "2026-11-19T00:00:00+01:00",
+        "originAirport": {
+          "airportCode": "FRA",
+          "airportName": "Frankfurt"
+        },
+        "destinationAirport": {
+          "airportCode": "ORD",
+          "airportName": "Chicago"
+        }
+      },
+      "planedCargoEvent": {
+        "eventDateTime": "2026-11-19T10:05:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      },
+      "actualCargoEvent": {
+        "eventDateTime": "2026-11-19T10:21:00+01:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      }
+    },
+    {
+      "cargoEventType": "ARR",
+      "stationAirport": {
+        "airportCode": "ORD",
+        "airportName": "Chicago"
+      },
+      "flight": {
+        "flightDesignator": {
+          "carrierCode": "LH",
+          "flightNumber": "8160",
+          "suffix": null
+        },
+        "flightDate": "2026-11-19T00:00:00+01:00",
+        "originAirport": {
+          "airportCode": "FRA",
+          "airportName": "Frankfurt"
+        },
+        "destinationAirport": {
+          "airportCode": "ORD",
+          "airportName": "Chicago"
+        }
+      },
+      "planedCargoEvent": {
+        "eventDateTime": "2026-11-19T12:50:00-06:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      },
+      "actualCargoEvent": {
+        "eventDateTime": "2026-11-19T12:44:00-06:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      }
+    },
+    {
+      "cargoEventType": "RCF",
+      "stationAirport": {
+        "airportCode": "ORD",
+        "airportName": "Chicago"
+      },
+      "flight": {
+        "flightDesignator": {
+          "carrierCode": "LH",
+          "flightNumber": "8160",
+          "suffix": null
+        },
+        "flightDate": "2026-11-19T00:00:00+01:00",
+        "originAirport": {
+          "airportCode": "FRA",
+          "airportName": "Frankfurt"
+        },
+        "destinationAirport": {
+          "airportCode": "ORD",
+          "airportName": "Chicago"
+        }
+      },
+      "planedCargoEvent": {
+        "eventDateTime": "2026-11-19T16:50:00-06:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      },
+      "actualCargoEvent": {
+        "eventDateTime": "2026-11-19T15:58:00-06:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      }
+    },
+    {
+      "cargoEventType": "NFD",
+      "stationAirport": {
+        "airportCode": "ORD",
+        "airportName": "Chicago"
+      },
+      "flight": null,
+      "planedCargoEvent": {
+        "eventDateTime": "2026-11-19T17:30:00-06:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      },
+      "actualCargoEvent": {
+        "eventDateTime": "2026-11-19T18:05:00-06:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      }
+    },
+    {
+      "cargoEventType": "DLV",
+      "stationAirport": {
+        "airportCode": "ORD",
+        "airportName": "Chicago"
+      },
+      "flight": null,
+      "planedCargoEvent": null,
+      "actualCargoEvent": {
+        "eventDateTime": "2026-11-20T09:26:00-06:00",
+        "pieceInformation": {
+          "piecesCount": 2,
+          "piecesWeight": 150.0,
+          "piecesWeightUnit": "KILOGRAM"
+        }
+      }
+    }
+  ],
+  "subscriptionDetails": {
+    "isEligibleForSubscription": true,
+    "isSubscribed": false
+  },
+  "timeOfAvailabilityMessageDetails": {
+    "shouldShowToaMessage": false
+  }
+}

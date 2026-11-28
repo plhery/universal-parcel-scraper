@@ -1,0 +1,65 @@
+{
+  "id": "korean-air-cargo",
+  "displayName": "Korean Air Cargo",
+  "aliases": [
+    "Korean Air",
+    "Korean Air Lines",
+    "대한항공 화물"
+  ],
+  "region": {
+    "countries": [
+      "KR"
+    ]
+  },
+  "brand": {
+    "color": "#00256C"
+  },
+  "selectable": true,
+  "timezone": "Asia/Seoul",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "korean-air-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://cargo.koreanair.com/en/home",
+    "searchUrl": "https://cargo.koreanair.com/en/tracking",
+    "helpUrl": "https://cargo.koreanair.com/en/Branch-Information",
+    "canaryUrl": "https://cargo.koreanair.com/en/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

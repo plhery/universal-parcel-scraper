@@ -1,0 +1,77 @@
+{
+  "id": "emirates-skycargo",
+  "displayName": "Emirates SkyCargo",
+  "aliases": [
+    "Emirates Cargo",
+    "eSkyCargo"
+  ],
+  "region": {
+    "countries": [
+      "AE"
+    ]
+  },
+  "brand": {
+    "color": "#D71921"
+  },
+  "selectable": true,
+  "timezone": "Asia/Dubai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "emirates-skycargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://eskycargo.emirates.com/app/offerandorder/#/home/find-offer",
+    "searchUrl": "https://eskycargo.emirates.com/app/offerandorder/#/home/find-offer",
+    "canaryUrl": "https://eskycargo.emirates.com/app/offerandorder/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "origin",
+      "destination",
+      "flight",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "flight"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "unavailable": [
+      "proof_of_delivery",
+      "recipient_name",
+      "sender_name"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "eskycargo.emirates.com"
+      ],
+      "pathPattern": "^/app/offerandorder/?$",
+      "fragment": "^/shipments/list\\?(?:[^#]*&)?values=(176\\d{8})(?:&|$)"
+    }
+  ],
+  "detection": []
+}
