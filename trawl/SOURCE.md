@@ -14,3 +14,7 @@ ZTO's offline character worker uses [ddddocr](https://github.com/sml2h3/ddddocr)
 bundled models. The Dockerfile pins the Python runtime and package versions;
 the installed distributions retain their license files. Models run locally and
 are confined to the optional TRAWL image.
+
+The reCAPTCHA picture solver uses [YOLOX](https://github.com/Megvii-BaseDetection/YOLOX)'s
+YOLOX-M COCO model (Apache-2.0), release `0.1.1rc0`. The Dockerfile fetches the ONNX model and
+the license by checksum into `/opt/recaptcha-image` and runs it with the pinned ONNX Runtime.

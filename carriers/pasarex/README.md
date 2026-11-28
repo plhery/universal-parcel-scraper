@@ -8,8 +8,10 @@ is pasarex.com.
 
 One `trawl` step: the tracker answers only after a reCAPTCHA checkbox, so the browser service
 opens `https://tracking.pasarex.com/?awb=<number>`, ticks the checkbox and sends the form
-([helper](../../trawl/pasarex-browser.mjs)). The checkbox has passed without a picture; the
-service's audio solver is the fallback. The form sends `GET /tracking` with `awb` and the
+([helper](../../trawl/pasarex-browser.mjs)). The checkbox has passed without a picture from a
+home network. Elsewhere it asks for pictures, which the service's picture solver answers with a
+local object detector; audio, which Google refuses from the service's address for hours at a
+time, comes last. The form sends `GET /tracking` with `awb` and the
 checkbox's `g-recaptcha-response` token, and the page comes back rendered on the server, in
 English whatever language the browser asks for. The helper binds that one request to the whole
 number and returns the number the page names and its rows. The token stays in the browser.

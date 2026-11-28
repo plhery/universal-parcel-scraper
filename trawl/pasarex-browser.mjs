@@ -1,6 +1,7 @@
 import { withHelperContext } from './helper-context.mjs';
 import { parseHTML } from 'linkedom';
 import { recaptchaAudioBackoff } from './recaptcha-backoff.mjs';
+import { RECAPTCHA_ANCHOR, solveRecaptchaImages } from './recaptcha-image.mjs';
 
 export const PASAREX_PAGE = 'https://tracking.pasarex.com/';
 export const PASAREX_RESULT = 'https://tracking.pasarex.com/tracking';
@@ -9,6 +10,8 @@ const MAX_BODY = 1_000_000;
 const MISSING = 'Guía no encontrada';
 const COLUMNS = 'Description|City|Date|Hour';
 const clean = node => (node?.textContent ?? '').replace(/\s+/g, ' ').trim();
+// The picture solver's outcome and counts, with no number, picture or token.
+const reportPictures = fields => console.warn(JSON.stringify({ level: 'warn', event: 'pasarex.recaptcha_images', ...fields }));
 
 export function pasarexBrowserNumber(rawUrl, capture = {}) {
   let url; try { url = new URL(rawUrl); } catch { return null; }
@@ -67,7 +70,7 @@ export function pasarexRequestMatches(request, page, number) {
 
 /** Tick the official form's checkbox, send its GET and read the page it returns, bound to the whole number. */
 export async function runPasarexBrowser({ url, capture, handle, tier, maxTimeout, installPolicy, signal,
-  solveNativeCaptcha, audioBackoff = recaptchaAudioBackoff }) {
+  solveNativeCaptcha, audioBackoff = recaptchaAudioBackoff, solveImages = solveRecaptchaImages, reportImages = reportPictures }) {
   const number = pasarexBrowserNumber(url, capture);
   if (!number) return undefined;
   const start = Date.now(), cleanupMs = Math.min(1500, Math.max(1, Math.floor(maxTimeout / 5)));
@@ -119,12 +122,15 @@ export async function runPasarexBrowser({ url, capture, handle, tier, maxTimeout
     statusCode = (await page.goto(url, { waitUntil: 'domcontentloaded', timeout: remaining() }))?.status() ?? 0;
     if (statusCode >= 400 || expired) return result();
     await page.locator('#awb').fill(number, { timeout: remaining() });
-    // The checkbox passes without a picture from a home network; the audio solver is the fallback, within its pause.
-    if (await audioBackoff.remainingMs() > 0 || !solveNativeCaptcha) {
-      await page.frameLocator('iframe[src*="recaptcha"][src*="anchor"]').first().locator('#recaptcha-anchor').click({ timeout: Math.min(10000, remaining()) });
-      await page.waitForFunction(() => !!document.querySelector('[name="g-recaptcha-response"]')?.value, null, { timeout: Math.min(7000, remaining()) }).catch(() => {});
-    } else await solveNativeCaptcha(page, Math.max(1, Math.min(30000, remaining() - 5000)), event => { if (event === 'audio_blocked') audioBackoff.block(); });
-    if (expired || !await page.locator('[name="g-recaptcha-response"]').inputValue({ timeout: remaining() }).then(v => !!v, () => false)) return result();
+    // The checkbox passes without a picture from a home network. The pictures it asks for elsewhere go to the local
+    // detector; the audio solver comes last, within its pause, since audio from a refused address only adds to the block.
+    const token = () => page.locator('[name="g-recaptcha-response"]').inputValue({ timeout: remaining() }).then(v => !!v, () => false);
+    await page.frameLocator(RECAPTCHA_ANCHOR).first().locator('#recaptcha-anchor').click({ timeout: Math.min(10000, remaining()) });
+    if (await solveImages(page, { timeoutMs: Math.max(1, Math.min(35000, remaining() - 5000)), signal, report: reportImages }))
+      await page.waitForFunction(() => !!document.querySelector('[name="g-recaptcha-response"]')?.value, null, { timeout: Math.min(3000, remaining()) }).catch(() => {});
+    if (!expired && solveNativeCaptcha && remaining() > 15000 && !await token() && await audioBackoff.remainingMs() <= 0)
+      await solveNativeCaptcha(page, Math.max(1, Math.min(30000, remaining() - 5000)), event => { if (event === 'audio_blocked') audioBackoff.block(); });
+    if (expired || !await token()) return result();
     // The token is a few seconds old when the form sends it, well within its two minutes.
     await page.locator('form button[type="submit"]').click({ timeout: remaining() });
     await terminal; await Promise.allSettled([...pending]); return result();

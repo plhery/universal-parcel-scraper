@@ -538,10 +538,22 @@ redirected result document, then returns only the shipment identity and movement
 Signer details, cookies, verification fields and page HTML stay in the context. An audio
 pause leaves one checkbox-only attempt; an unfinished verification keeps provider fallback.
 
-PasarEX ticks its tracking form's reCAPTCHA checkbox in a fresh context, or solves it by
-audio outside the audio pause, and sends the form's own GET. The helper binds that one
-main-frame request to the whole number and returns the order's number and its status groups
-of rows. The token, cookies and page HTML stay in the context.
+PasarEX ticks its tracking form's reCAPTCHA checkbox in a fresh context and sends the form's
+own GET. Pictures the checkbox asks for go to the picture solver below; audio comes last, outside
+the audio pause and with 15 seconds left. The helper binds that one main-frame request to the
+whole number and returns the order's number and its status groups of rows. The token, cookies and
+page HTML stay in the context.
+
+The reCAPTCHA picture solver finds the challenge's target with YOLOX-M, an object detector
+trained on COCO, run locally on the tiles of a screenshot of the challenge. It covers the targets
+COCO names (bicycles, buses, cars, motorcycles, boats, traffic lights, fire hydrants, parking
+meters) by the English words of the instruction, and takes a new challenge for any other target
+or language. A whole picture split into squares takes the squares a detected box covers; a tile
+that fades out is checked again once its new picture shows. It plays at most six challenges and
+four waves of new tiles per lookup, within the time given, and stops on Google's block. Each
+detection runs in a worker of its own, at most two at once, and keeps no picture. It logs only
+its outcome, counts and target class (`pasarex.recaptcha_images`). The model and its license are
+fetched by checksum when the image is built.
 
 Biman's waybills go through CHAMP's freight.aero tracker. The helper picks the airline its
 prefix names in the page's own list, enters the serial and asks; the page then shows its

@@ -13,8 +13,8 @@ const html = `<html><body><form action="${RESULT}"><input name="awb" value="PRIV
 const target = (value = number, token = 'PRIVATE', extra = '') => `${RESULT}?old_awb=${value}&awb=${value}&g-recaptcha-response=${token}${extra}`;
 const request = (page, address = target(), extra = {}) => ({ url: () => address, method: () => 'GET', frame: () => page.mainFrame(), ...extra });
 
-function fixture({ status = 200, data = html, token = true, delay = 0, cooldown = 0, abort = null } = {}) {
-  const state = { closed: 0, native: 0, checkbox: 0, filled: null, sent: 0, aborted: 0, observerBeforeNavigation: false, opened: null }; const frame = {};
+function fixture({ status = 200, data = html, token = true, delay = 0, cooldown = 0, abort = null, pictures = token } = {}) {
+  const state = { closed: 0, native: 0, checkbox: 0, images: 0, filled: null, sent: 0, aborted: 0, observerBeforeNavigation: false, opened: null }; const frame = {};
   let responseHandler, routeHandler;
   const page = { route: async (_, fn) => { routeHandler = fn; }, mainFrame: () => frame, on: (event, fn) => { if (event === 'response') responseHandler = fn; }, off: () => {},
     goto: async address => { state.opened = address; state.observerBeforeNavigation = !!responseHandler; return { status: () => 200 }; },
@@ -28,7 +28,8 @@ function fixture({ status = 200, data = html, token = true, delay = 0, cooldown 
     } }) };
   const context = { newPage: async () => page, close: async () => { state.closed++; } };
   return { state, page, options: { url, capture, handle: { browser: { newContext: async () => context } }, tier: 3, maxTimeout: 1000,
-    signal: abort, audioBackoff: { remainingMs: async () => cooldown, block: () => {} }, solveNativeCaptcha: async () => { state.native++; } } };
+    signal: abort, audioBackoff: { remainingMs: async () => cooldown, block: () => {} }, solveNativeCaptcha: async () => { state.native++; },
+    solveImages: async (_, { timeoutMs }) => { state.images++; assert(timeoutMs >= 1); return pictures; }, reportImages: () => {} } };
 }
 
 test('takes only the tracking page with the whole number and the result capture', () => {
@@ -74,10 +75,15 @@ test('keeps status refusals separate from history', async () => {
   for (const status of [403, 429, 503]) { const f = fixture({ status }); const r = await runPasarexBrowser(f.options); assert.equal(r.capturedResponses.at(-1).status, status); assert.equal(r.capturedResponses.at(-1).body, null); assert.equal(f.state.closed, 1); }
 });
 
-test('does not send the form without a token, and never overrides the audio pause', async () => {
-  const f = fixture({ token: false, cooldown: 1000 }); const r = await runPasarexBrowser(f.options);
-  assert.equal(f.state.native, 0); assert.equal(f.state.checkbox, 1); assert.equal(f.state.sent, 0); assert.equal(r.capturedResponses.length, 0); assert.equal(f.state.closed, 1);
-  const g = fixture(); await runPasarexBrowser(g.options); assert.equal(g.state.native, 1); assert.equal(g.state.checkbox, 0);
+test('ticks the checkbox and answers its pictures, leaving audio as the last resort within its pause', async () => {
+  const f = fixture(); await runPasarexBrowser(f.options);
+  assert.equal(f.state.checkbox, 1); assert.equal(f.state.images, 1); assert.equal(f.state.native, 0); assert.equal(f.state.sent, 1);
+  const g = fixture({ token: false, cooldown: 1000 }); g.options.maxTimeout = 60_000; const r = await runPasarexBrowser(g.options);
+  assert.equal(g.state.images, 1); assert.equal(g.state.native, 0); assert.equal(g.state.sent, 0); assert.equal(r.capturedResponses.length, 0); assert.equal(g.state.closed, 1);
+  const h = fixture({ token: false }); h.options.maxTimeout = 60_000; await runPasarexBrowser(h.options);
+  assert.equal(h.state.images, 1); assert.equal(h.state.native, 1); assert.equal(h.state.sent, 0);
+  const i = fixture({ token: false }); await runPasarexBrowser(i.options);
+  assert.equal(i.state.native, 0, 'audio needs time the lookup no longer has');
 });
 
 test('deadline and cancellation close the context and discard unfinished bodies', async () => {

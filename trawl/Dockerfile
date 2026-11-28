@@ -3,6 +3,14 @@ RUN python3 -m venv /opt/zto-ocr \
     && /opt/zto-ocr/bin/pip install --no-cache-dir numpy==2.5.4 pillow==13.0.0 onnxruntime==1.31.0 \
        opencv-python-headless==5.0.0.93 pyyaml==6.0.3 shapely==2.2.0 pyclipper==1.4.0 six==1.17.0 tqdm==4.70.1 \
     && /opt/zto-ocr/bin/pip install --no-cache-dir --no-deps ddddocr==1.6.1 rapidocr-onnxruntime==1.4.4
+# The reCAPTCHA picture solver's object detector, YOLOX-M trained on COCO, and its license, by checksum.
+ENV FETCH="import hashlib, sys, urllib.request; data = urllib.request.urlopen(sys.argv[1], timeout=300).read(); \
+hashlib.sha256(data).hexdigest() == sys.argv[2] or sys.exit('checksum: ' + sys.argv[1]); open(sys.argv[3], 'wb').write(data)"
+RUN mkdir /opt/recaptcha-image \
+    && python3 -c "$FETCH" https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_m.onnx \
+       21ff6cfdeb53b013bac2249599e55f00bff3cfdfdab37ed7a4620818c1d15b3f /opt/recaptcha-image/yolox_m.onnx \
+    && python3 -c "$FETCH" https://raw.githubusercontent.com/Megvii-BaseDetection/YOLOX/0.1.1rc0/LICENSE \
+       577c03d505ec80f667ebf96ebd0cc4f6825c817ca1088ee348c48aaabd51bd92 /opt/recaptcha-image/LICENSE
 
 FROM ghcr.io/germondai/trawl:1.12.0@sha256:da3f25e18d6c5884c5db51d7d05c2dc5a197818b25f03d3dfbb8c3994177cf41
 LABEL org.opencontainers.image.source="https://github.com/plhery/universal-parcel-scraper" \
@@ -14,7 +22,8 @@ ENV LOG_LEVEL=warn
 ENV BROWSER_BLOCK_ADS=false
 COPY --from=zto-ocr /usr/local /usr/local
 COPY --from=zto-ocr /opt/zto-ocr /opt/zto-ocr
-RUN /opt/zto-ocr/bin/python -c 'import ddddocr, rapidocr_onnxruntime, cv2'
+COPY --from=zto-ocr /opt/recaptcha-image /opt/recaptcha-image
+RUN /opt/zto-ocr/bin/python -c 'import ddddocr, rapidocr_onnxruntime, cv2, onnxruntime; onnxruntime.InferenceSession("/opt/recaptcha-image/yolox_m.onnx")'
 COPY license.mjs /app/packages/tiers/src/utils/license.mjs
 COPY tracking-capture.mjs /app/packages/tiers/src/utils/tracking-capture.mjs
 COPY helper-context.mjs /app/packages/tiers/src/utils/helper-context.mjs
@@ -65,6 +74,8 @@ COPY paxel-browser.mjs /app/packages/tiers/src/utils/paxel-browser.mjs
 COPY viettel-post-browser.mjs /app/packages/tiers/src/utils/viettel-post-browser.mjs
 COPY recaptcha-audio.mjs /app/packages/tiers/src/utils/recaptcha-audio.mjs
 COPY recaptcha-backoff.mjs /app/packages/tiers/src/utils/recaptcha-backoff.mjs
+COPY recaptcha-image.mjs /app/packages/tiers/src/utils/recaptcha-image.mjs
+COPY recaptcha-image.py /app/packages/tiers/src/utils/recaptcha-image.py
 COPY dhl-poland-native.mjs /app/packages/tiers/src/utils/dhl-poland-native.mjs
 COPY dhl-poland-browser.mjs /app/packages/tiers/src/utils/dhl-poland-browser.mjs
 COPY track718-juxi.mjs /app/packages/tiers/src/utils/track718-juxi.mjs
