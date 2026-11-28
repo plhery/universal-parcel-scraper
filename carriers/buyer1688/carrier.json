@@ -1,0 +1,62 @@
+{
+  "id": "buyer1688",
+  "displayName": "1688 International Logistics",
+  "aliases": [
+    "1688国际物流",
+    "buyer1688"
+  ],
+  "region": {
+    "countries": [
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#15337B"
+  },
+  "selectable": true,
+  "timezone": "America/Toronto",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "buyer1688",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "searchUrl": "https://www.buyer1688.ca/api86/waybill_query2.htm",
+    "canaryUrl": "https://www.buyer1688.ca/api86/waybill_query2.htm",
+    "shows": [
+      "status",
+      "history",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "location",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "offset_timestamps"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

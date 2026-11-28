@@ -1,0 +1,46 @@
+{
+  "carrier": "buyer1688",
+  "records": [
+    {
+      "number": "J900656799CA",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/buyer1688.shtml",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Kuaidi100's page for 1688国际物流 gives it as its example. The platform answers it with a parcel taken in at the Toronto warehouse, flown to China and being cleared there, with a JD Logistics waybill for the delivery."
+    },
+    {
+      "number": "900345897",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 1688国际物流. The platform answers it with no rows, as it answers a number it holds nothing under or a parcel whose rows have gone. DPD Ireland's rules also take its shape."
+    }
+  ]
+}

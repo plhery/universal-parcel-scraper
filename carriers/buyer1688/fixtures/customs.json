@@ -1,0 +1,46 @@
+{
+  "flag": "1",
+  "retCompany": "",
+  "packid": "J900656799CA",
+  "exressno1": "JDV020251457567",
+  "list": {
+    "Traces": [
+      {
+        "Action": "1",
+        "AcceptStation": "Canada多伦多总仓 已揽收",
+        "AcceptTime": "2025-03-24 19:14:49.0",
+        "Location": ""
+      },
+      {
+        "Action": "1",
+        "AcceptStation": "到达加拿大多伦多总仓",
+        "AcceptTime": "2025-03-24 19:14:49.0",
+        "Location": ""
+      },
+      {
+        "Action": "1",
+        "AcceptStation": "包裹已分拣出库，等待干线运输",
+        "AcceptTime": "2025-04-02 15:49:43.0",
+        "Location": ""
+      },
+      {
+        "Action": "1",
+        "AcceptStation": "包裹已从国际干线运输启程离境",
+        "AcceptTime": "2025-04-05 15:25:30.0",
+        "Location": ""
+      },
+      {
+        "Action": "1",
+        "AcceptStation": "已到达国内等待转关",
+        "AcceptTime": "2025-04-08 14:11:02.0",
+        "Location": ""
+      },
+      {
+        "Action": "1",
+        "AcceptStation": "已到达口岸，国际运输环节中，正在办理清关手续",
+        "AcceptTime": "2025-04-11 09:17:42.0",
+        "Location": ""
+      }
+    ]
+  }
+}

@@ -7444,5 +7444,17 @@
     "pattern": "^XD\\d{10}$",
     "kind": "collision",
     "reason": "Xiong Da's waybills seen are XD, the booking's date as six digits and a four-digit counter, a shape Colis Privé's and Aramex's low rules also suggest, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "buyer1688",
+    "pattern": "^J\\d{9}CA$",
+    "kind": "open",
+    "reason": "J, nine digits and CA is 1688 International Logistics' parcel number on Kuaidi100's example. One sample does not establish the shape, and the platform also runs other firms' trackers, so the adapter answers explicit selection for it."
+  },
+  {
+    "carrier": "buyer1688",
+    "pattern": "^\\d{9}$",
+    "kind": "by_design",
+    "reason": "Nine digits is the test number Kuaidi100 lists for 1688 International Logistics, which the platform answers with no rows, and a bare counter many carriers' numbers share, so nothing in it points to the firm."
   }
 ]

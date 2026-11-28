@@ -1,0 +1,59 @@
+{
+  "carrier": "buyer1688",
+  "entries": [
+    {
+      "code": null,
+      "wording": "Canada多伦多总仓 已揽收",
+      "language": "zh",
+      "english": "Picked up by the Toronto main warehouse in Canada",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The first row, when the Toronto warehouse takes the parcel in."
+    },
+    {
+      "code": null,
+      "wording": "到达加拿大多伦多总仓",
+      "language": "zh",
+      "english": "Arrived at the Toronto main warehouse in Canada",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Written at the same minute as the pick-up."
+    },
+    {
+      "code": null,
+      "wording": "包裹已分拣出库，等待干线运输",
+      "language": "zh",
+      "english": "Sorted and out of the warehouse, waiting for the line haul",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Packed out of the Toronto warehouse for the flight to China."
+    },
+    {
+      "code": null,
+      "wording": "包裹已从国际干线运输启程离境",
+      "language": "zh",
+      "english": "Left the country on the international line haul",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The departure from Canada, the last row on Toronto's clock."
+    },
+    {
+      "code": null,
+      "wording": "已到达国内等待转关",
+      "language": "zh",
+      "english": "Arrived in China, waiting for the customs transfer",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "The arrival in China, held for the bonded transfer to the port where it is cleared. The first row on China's clock."
+    },
+    {
+      "code": null,
+      "wording": "已到达口岸，国际运输环节中，正在办理清关手续",
+      "language": "zh",
+      "english": "Arrived at the port, in international transit, being cleared through customs",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Customs clearance in China, before the hand-off to JD Logistics."
+    }
+  ]
+}
