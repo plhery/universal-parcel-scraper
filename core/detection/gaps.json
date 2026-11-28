@@ -7540,5 +7540,17 @@
     "pattern": "^BM\\d{10}$",
     "kind": "collision",
     "reason": "BM and ten digits is BMXPS's order number on Kuaidi100's sample, and two letters and ten digits is a shape Colis Privé's and Aramex's rules take, so detection does not name BMXPS. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "hltop",
+    "pattern": "^\\d{10}$",
+    "kind": "by_design",
+    "reason": "Ten digits is Hailian Express's waybill on Kuaidi100's example, a bare digit run many carriers' numbers share, so nothing in it points to Hailian. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "hltop",
+    "pattern": "^\\d{12}$",
+    "kind": "by_design",
+    "reason": "Twelve digits is the test number Kuaidi100 lists for Hailian Express, a bare digit run many carriers' numbers share, so nothing in it points to Hailian. The adapter answers explicit selection."
   }
 ]

@@ -1,0 +1,60 @@
+{
+  "id": "hltop",
+  "displayName": "Hailian Express",
+  "aliases": [
+    "上海海联快递",
+    "上海海联快递有限公司",
+    "海联快递"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#004080"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hltop",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "parcel_count",
+      "destination",
+      "recipient_address"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "parcel_count",
+      "destination",
+      "recipient_address"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "offset_timestamps"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

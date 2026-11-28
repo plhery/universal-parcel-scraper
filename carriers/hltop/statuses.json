@@ -1,0 +1,50 @@
+{
+  "carrier": "hltop",
+  "entries": [
+    {
+      "code": null,
+      "wording": "上海分拨中心 进行收件确认",
+      "language": "zh",
+      "english": "Shanghai sorting centre confirms the pickup order",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The first row: the order is confirmed before a courier collects the parcel. Listed under its words after the station."
+    },
+    {
+      "code": null,
+      "wording": "已揽收, 已收取快件",
+      "language": "zh",
+      "english": "Picked up: the parcel was collected",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Listed under its status word 已揽收, which every pickup row starts with."
+    },
+    {
+      "code": null,
+      "wording": "运送中, 快件到达 上海浦江中转场",
+      "language": "zh",
+      "english": "In transit: the parcel arrived at a transit hub",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Listed under its status word 运送中; the rows under it name the hubs and branches the parcel passes."
+    },
+    {
+      "code": null,
+      "wording": "派送中, 正在派送途中",
+      "language": "zh",
+      "english": "Out for delivery",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "Listed under its status word 派送中. The live row names the courier, which is taken out."
+    },
+    {
+      "code": null,
+      "wording": "客户签收: 已签收",
+      "language": "zh",
+      "english": "Signed for by the customer",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Listed under its status word 客户签收."
+    }
+  ]
+}
