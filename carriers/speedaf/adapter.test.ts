@@ -4,8 +4,8 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
-import { adapter, SPEEDAF_API, SpeedafTracker } from './adapter.js';
-import { normalizeSpeedafNumber, parseSpeedaf, speedafCode, speedafSigner, speedafStageWording, speedafWording } from './parser.js';
+import { adapter, SPEEDAF_API, SPEEDAF_PIECE_API, SpeedafTracker } from './adapter.js';
+import { normalizeSpeedafNumber, parseSpeedaf, speedafCode, speedafListsPiece, speedafSigner, speedafStageWording, speedafWording } from './parser.js';
 import { speedafStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -172,6 +172,35 @@ describe('Speedaf HTTP adapter', () => {
     }), IN_TRANSIT)).toThrow(expect.objectContaining({ kind: 'indeterminate', message: 'Speedaf answered with scans of another shipment' }));
     const mixed = parseSpeedaf(changed('in-transit', (_body, entry) => { entry.tracks[0]!.mailNo = 'NG000000009R'; }), IN_TRANSIT);
     expect(mixed.events).toHaveLength(6);
+  });
+
+  it('follows a multi-piece waybill’s piece to its own scans, as the tracking page asks for them', async () => {
+    const main = `GH${'0'.repeat(11)}1`;
+    const piece = `${main}000002`;
+    // The waybill's entry, as Speedaf lists it for its main number or any piece: no number or scan of its own.
+    const summary = { success: true, error: null, data: [{ mailNo: null, countryCode: null, waybillType: '1', mainCode: main, subTotalQty: 2,
+      transitQty: 2, signQty: 0, blExceptionSign: false, taxPayStatus: 0, signList: [], tracks: [], payUrl: '',
+      transitList: [{ subMailNo: `${main}000001`, status: '1' }, { subMailNo: piece, status: '1' }] }] };
+    const details = changed('in-transit', (_body, entry) => {
+      for (const key of Object.keys(entry)) if (!['mailNo', 'tracks', 'payUrl'].includes(key)) delete entry[key];
+      entry.mailNo = piece;
+      for (const row of entry.tracks) row.mailNo = piece;
+    });
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(summary)).mockResolvedValueOnce(reply(details));
+    await expect(carrier(fetcher).track({ number: piece.toLowerCase() })).resolves.toMatchObject({ current_stage: 'customs', events: expect.any(Array) });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(String(fetcher.mock.calls[1]![0])).toBe(`${SPEEDAF_PIECE_API}?mailNo=${piece}`);
+    expect(fetcher.mock.calls[1]![1]).toMatchObject({ redirect: 'manual', signal: expect.any(AbortSignal), headers: { Accept: 'application/json' } });
+    expect(fetcher.mock.calls[1]![1]!.method).toBeUndefined();
+    // A piece Speedaf lists without a scan has no history to show; the main number lists its pieces under their own numbers.
+    const listed = expect.objectContaining({ name: 'NoHistoryError', reason: 'listed' });
+    expect(() => parseSpeedaf({ success: true, error: null, data: [{ mailNo: piece, tracks: [], payUrl: '' }] }, piece, { piece: true })).toThrow(listed);
+    expect(() => parseSpeedaf(summary, main)).toThrow(listed);
+    expect(speedafListsPiece(summary, main)).toBe(false);
+    // A number the waybill does not list, or a waybill entry without its main number, is not one.
+    expect(speedafListsPiece(summary, `${main}000009`)).toBe(false);
+    expect(() => parseSpeedaf(summary, `${main}000009`)).toThrow(expect.objectContaining({ name: 'IndeterminateError' }));
+    expect(() => parseSpeedaf({ ...summary, data: [{ ...summary.data[0], mainCode: null }] }, piece)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
   it('keeps a failed lookup apart from a throttled one', () => {

@@ -50,6 +50,13 @@ own but use the same tracker. Tracked through the lookup its tracking page makes
 - The reply's duty payment link, proof-of-delivery photo and scanning device are not kept.
 - A multi-piece waybill lists its pieces under other numbers. Only scans carrying the number
   asked are read; the pieces are not followed.
+- A piece's number, its main waybill's and six more digits, gets the waybill's entry instead:
+  no number or scan of its own, the main waybill (`mainCode`) and its pieces (`transitList`,
+  `signList`, each a `subMailNo`). When the asked number is one of those pieces, the adapter asks
+  for its scans as the tracking page does, with
+  `GET https://www.speedaf.com/publicservice/v1/api/express/track/expressTrack/details?mailNo={piece}`,
+  in the same step and budget. The main waybill's number gets the same entry and has no scans of
+  its own: it is listed with no history.
 
 ## Limitations
 

@@ -149,14 +149,20 @@ function projectRow(row: Record<string, unknown>): { key: string; event: Carrier
 }
 
 /**
- * The reply of `listExpressTrack` for one number. It always answers HTTP 200
- * with `success`, `error` and `data`, one entry per number asked. The entry
- * must name the number asked. An entry without a destination country or a
- * scan is a number Speedaf does not know; a record with its country but no
- * scan is listed with no history to show.
+ * A multi-piece waybill's entry: no number or scan of its own, its main waybill (`mainCode`) and its
+ * pieces, in transit and signed for, under their own numbers. Null for any other entry.
  */
-export function parseSpeedaf(payload: unknown, raw: string): CarrierResult {
-  const number = normalizeSpeedafNumber(raw);
+function piecesOf(entry: Record<string, unknown>): { main: string; pieces: string[] } | null {
+  if (entry.mailNo !== null || typeof entry.mainCode !== 'string') return null;
+  const lists = [entry.transitList, entry.signList];
+  if (lists.some((list) => list !== null && list !== undefined && !Array.isArray(list))) return null;
+  const pieces = lists.flatMap((list): unknown[] => (Array.isArray(list) ? list : []))
+    .flatMap((piece) => (isRecord(piece) && typeof piece.subMailNo === 'string' ? [piece.subMailNo.toUpperCase()] : []));
+  return { main: entry.mainCode.toUpperCase(), pieces };
+}
+
+/** The reply's shipments, after its envelope; each names its number or is a multi-piece waybill's. */
+function shipments(payload: unknown): Record<string, unknown>[] {
   if (!isRecord(payload) || typeof payload.success !== 'boolean') throw new SchemaError(PROVIDER, 'Speedaf returned an invalid envelope');
   if (!payload.success) {
     const message = isRecord(payload.error) ? clean(payload.error.message, 200) : '';
@@ -164,16 +170,45 @@ export function parseSpeedaf(payload: unknown, raw: string): CarrierResult {
     throw new IndeterminateError(PROVIDER, 'Speedaf did not complete the lookup');
   }
   if (!Array.isArray(payload.data)) throw new SchemaError(PROVIDER, 'Speedaf returned a reply without shipments');
-  if (payload.data.some((entry) => !isRecord(entry) || typeof entry.mailNo !== 'string')) {
+  if (payload.data.some((entry) => !isRecord(entry) || (typeof entry.mailNo !== 'string' && !piecesOf(entry)))) {
     throw new SchemaError(PROVIDER, 'Speedaf returned a shipment without its number');
   }
-  const entry = (payload.data as Record<string, unknown>[]).find((candidate) => candidate.mailNo === number);
-  if (!entry) throw new IndeterminateError(PROVIDER, 'Speedaf did not answer for the shipment');
+  return payload.data as Record<string, unknown>[];
+}
+
+/**
+ * Whether the reply of `listExpressTrack` lists the number as a piece of a multi-piece waybill. The
+ * tracking page then asks for that piece's scans (`expressTrack/details`).
+ */
+export function speedafListsPiece(payload: unknown, raw: string): boolean {
+  const number = normalizeSpeedafNumber(raw);
+  const entries = shipments(payload);
+  return !entries.some((entry) => entry.mailNo === number)
+    && entries.some((entry) => piecesOf(entry)?.pieces.includes(number) === true);
+}
+
+/**
+ * The reply of `listExpressTrack` for one number, or of `expressTrack/details` for one piece
+ * (`piece`). It always answers HTTP 200 with `success`, `error` and `data`, one entry per number
+ * asked. The entry must name the number asked. An entry without a destination country or a scan
+ * is a number Speedaf does not know; a record with its country but no scan, a multi-piece
+ * waybill's main number, or a piece without a scan, is listed with no history to show.
+ */
+export function parseSpeedaf(payload: unknown, raw: string, options: { piece?: boolean } = {}): CarrierResult {
+  const number = normalizeSpeedafNumber(raw);
+  const entries = shipments(payload);
+  const entry = entries.find((candidate) => candidate.mailNo === number);
+  if (!entry) {
+    if (entries.some((candidate) => piecesOf(candidate)?.main === number)) {
+      throw new NoHistoryError(PROVIDER, 'Speedaf lists the waybill\'s pieces under their own numbers', { reason: 'listed' });
+    }
+    throw new IndeterminateError(PROVIDER, 'Speedaf did not answer for the shipment');
+  }
   const rows = entry.tracks ?? [];
   if (!Array.isArray(rows)) throw new SchemaError(PROVIDER, 'Speedaf returned a shipment with invalid scans');
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Speedaf returned an oversized history');
   const country = text(entry, 'countryCode', 8).toUpperCase();
-  if (!rows.length && !country) throw new NotFoundError(PROVIDER);
+  if (!rows.length && !country && !options.piece) throw new NotFoundError(PROVIDER);
 
   const flagged = entry.blExceptionSign === true;
   const seen = new Set<string>();
