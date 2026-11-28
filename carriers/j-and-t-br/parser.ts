@@ -4,7 +4,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay, explicitOffsetTime } from '../../core/time/index.js';
 import { isRecord } from '../../core/types.js';
-import { jAndTBrStage } from './status.js';
+import { isJAndTBrPageLine, jAndTBrStage } from './status.js';
 export const PROVIDER = 'J&T Express Brazil';
 export const JT_BR_PAGE = 'https://www.jtexpress.com.br/trajectoryQuery';
 export const JT_BR_API = 'https://official.jtjms-br.com/official/logisticsTracking/queryPodTracking';
@@ -22,6 +22,34 @@ function clock(raw: unknown): Pick<CarrierEvent, 'time' | 'local_time'> {
   const time = wall + m[7];
   if (!explicitOffsetTime(time)) throw new SchemaError(PROVIDER, 'J&T Brazil returned an invalid stated offset');
   return { time };
+}
+/** The text before the first full stop outside brackets, so a centre named "[AG. EXEMPLO]" stays whole. */
+function firstSentence(text: string): string {
+  let depth = 0;
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    if (char === '[') depth++;
+    else if (char === ']') depth = Math.max(0, depth - 1);
+    else if (char === '.' && depth === 0 && (i + 1 === text.length || /\s/.test(text[i + 1]!))) return text.slice(0, i);
+  }
+  return text;
+}
+/**
+ * The line the tracking page shows for a scan (`customerTracking`): the scan's city in brackets, then J&T's words with
+ * its centres in brackets ("[City] Saída da encomenda expressa [CD A] enviada para [CD B]"). J&T's own status says
+ * "Em transferencia" for every arrival and departure alike. A collection names the courier, masked, then adds a note
+ * with a phone number: both are dropped. Null for a line of another shape or with nothing left, and the status stands in.
+ */
+function scanLine(raw: unknown): Pick<CarrierEvent, 'description' | 'location'> | null {
+  if (typeof raw !== 'string' || raw.length > 300) return null;
+  const lead = /^\s*\[([^\]]{1,60})\]\s*/.exec(raw);
+  const text = firstSentence((lead ? raw.slice(lead[0].length) : raw)
+    .replace(/\[[^\]]*\*[^\]]*\]/g, ' ')
+    .replace(/[^\s[\]]*\*{2,}[^\s[\]]*/g, ' '))
+    .replace(/\s+/g, ' ').trim();
+  if (!text || /\d{6,}|https?:|[<>@*]/.test(text) || !isJAndTBrPageLine(text)) return null;
+  const city = lead?.[1]!.replace(/\s+/g, ' ').trim();
+  return { description: text, ...(city && !/[\d*@<>]/.test(city) ? { location: city } : {}) };
 }
 /** A reply's code or flag as the message shows it: a short number, word or boolean, else its type. */
 function replyScalar(value: unknown): string {
@@ -53,8 +81,9 @@ export function parseJAndTBr(data: unknown, raw: string): CarrierResult {
       : typeof value.code === 'string' && /^[A-Z0-9_-]{1,30}$/.test(value.code) ? value.code : null;
     if (!code) throw new SchemaError(PROVIDER, 'J&T Brazil returned an invalid milestone code');
     const stage = jAndTBrStage(code);
-    return { ...clock(value.scanTime), provider_code: code, description: value.status.trim(),
-      ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
+    const line = scanLine(value.customerTracking);
+    return { ...clock(value.scanTime), provider_code: code, description: line?.description ?? value.status.trim(),
+      ...(line?.location ? { location: line.location } : {}), ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
   });
   if (!events.length) throw new NoHistoryError(PROVIDER, 'J&T Brazil returned a waybill without dated history');
   const newest = events[0]!, stage = newest.stage as Stage | undefined;

@@ -25,6 +25,11 @@ refusals, rate limits and other HTTP failures stay distinct. A refusal that is n
 challenge nor a rate limit stays a schema failure that keeps J&T's code and flag. An
 unavailable tracking page or browser service is a transport failure. The adapter
 retains every dated milestone and its provider code, preserving offset-free wall clocks.
+Each scan is worded with the line the tracking page shows for it, its bracketed city becoming
+the place: J&T's status reads "Em transferencia" for every arrival and departure alike, while the
+line names the centres. A collection's line names the courier, masked, then adds a contact note
+with a phone number; both are dropped. A line of another shape, which could name a recipient or a
+signer, gives way to J&T's status.
 Staff, recipient fields, free-form remarks, signatures and proof-of-delivery data are omitted.
 
 ## Numbers

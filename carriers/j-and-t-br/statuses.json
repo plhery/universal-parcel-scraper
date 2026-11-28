@@ -30,6 +30,27 @@
       "note": "The courier is delivering the parcel; the event reads 'O entregador' with the branch and masked courier name, then 'está enviando a encomenda'. Seen in a shared printout of J&T Express Brasil's tracking page."
     },
     {
+      "wording": "[Example] Seu entregador retirou a encomenda",
+      "stage": "accepted",
+      "language": "pt",
+      "confirmedBy": "live",
+      "note": "The tracking page's line for the collection, naming the agency; the courier it names and its contact note are dropped."
+    },
+    {
+      "wording": "Chegada da encomenda expressa [Example]",
+      "stage": "in_transit",
+      "language": "pt",
+      "confirmedBy": "live",
+      "note": "The tracking page's line for an arrival at the centre it names."
+    },
+    {
+      "wording": "Saída da encomenda expressa [Example] enviada para [Example]",
+      "stage": "in_transit",
+      "language": "pt",
+      "confirmedBy": "live",
+      "note": "The tracking page's line for a departure, naming the next centre."
+    },
+    {
       "code": "10",
       "wording": "Coletado",
       "stage": "accepted",

@@ -32,6 +32,34 @@ describe('J&T Brazil guest history', () => {
     expect(result.summary_only).toBeUndefined(); expect(result.history_truncated).toBeUndefined();
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|private\.invalid|remark|signature|staff/i);
   });
+  it("words each scan with the tracking page's line and its city, without the courier or the contact note", () => {
+    const data = fixture();
+    const lines = [
+      '[EXEMPLOPOLIS] Chegada da encomenda expressa [CD EXEMPLO]',
+      '[EXEMPLOPOLIS] Saída da encomenda expressa [CD EXEMPLO] enviada para [CD OUTRO]',
+      '[EXEMPLOPOLIS] [AG. EXEMPLO] Seu entregador A****1 retirou a encomenda. Se tiver dúvidas, ligue para a agência: (11) 9000-0000',
+      '[EXEMPLOPOLIS] [AG EXEMPLO] [B***o] Seu entregador retirou a encomenda',
+      '[EXEMPLOPOLIS] O entregador [AG EXEMPLO] B****o está enviando a encomenda',
+      'Chegada da encomenda expressa [CD EXEMPLO]',
+      '[EXEMPLOPOLIS] Pedido entregue para Fulano Exemplo',
+      '[EXEMPLOPOLIS] Contato 1190000',
+      'x'.repeat(301),
+    ];
+    data.data[0].details = lines.map((customerTracking) => ({ ...data.data[0].details[0], code: 90, status: 'Em transferencia', customerTracking }));
+    data.data[0].details.push({ ...data.data[0].details[0], customerTracking: undefined });
+    expect(parseJAndTBr(data, NUMBER).events!.map(({ description, location }) => ({ description, location }))).toEqual([
+      { description: 'Chegada da encomenda expressa [CD EXEMPLO]', location: 'EXEMPLOPOLIS' },
+      { description: 'Saída da encomenda expressa [CD EXEMPLO] enviada para [CD OUTRO]', location: 'EXEMPLOPOLIS' },
+      { description: '[AG. EXEMPLO] Seu entregador retirou a encomenda', location: 'EXEMPLOPOLIS' },
+      { description: '[AG EXEMPLO] Seu entregador retirou a encomenda', location: 'EXEMPLOPOLIS' },
+      { description: 'O entregador [AG EXEMPLO] está enviando a encomenda', location: 'EXEMPLOPOLIS' },
+      { description: 'Chegada da encomenda expressa [CD EXEMPLO]', location: undefined },
+      { description: 'Em transferencia', location: undefined },
+      { description: 'Em transferencia', location: undefined },
+      { description: 'Em transferencia', location: undefined },
+      { description: 'Em transferencia', location: undefined },
+    ]);
+  });
   it('preserves stated offsets and rejects invalid clocks, including rows beyond the result cap', () => {
     const data = fixture(); data.data[0].details[0].scanTime = '2026-01-20 16:33:39-03:00';
     expect(parseJAndTBr(data, NUMBER).events![0]).toMatchObject({ time: '2026-01-20T16:33:39-03:00' });

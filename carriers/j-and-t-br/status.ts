@@ -12,5 +12,21 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['retirou a encomenda', 'accepted'], ['Chegada da encomenda expressa', 'in_transit'],
   ['Saída da encomenda expressa', 'in_transit'], ['enviando a encomenda', 'out_for_delivery'],
 ].map(([wording, stage]) => [normalizeStatusWording(wording!), stage as Stage]));
+/**
+ * The tracking page's lines the parser keeps, without their bracketed city, centres and agency. Any other line, which
+ * could name a recipient or a signer, gives way to J&T's status.
+ */
+const PAGE_LINES = new Set(['Seu entregador retirou a encomenda', 'Chegada da encomenda expressa', 'Saída da encomenda expressa',
+  'Saída da encomenda expressa enviada para', 'O entregador está enviando a encomenda'].map(normalizeStatusWording));
+export const isJAndTBrPageLine = (text: string): boolean => PAGE_LINES.has(normalizeStatusWording(text.replace(/\[[^\]]*\]/g, ' ')));
+/**
+ * The tracking page's line words a scan around its centres, in brackets: "[CD A] Seu entregador retirou a encomenda",
+ * "Saída da encomenda expressa [CD A] enviada para [CD B]". Without the brackets it opens or ends with J&T's words.
+ */
+function wordingStage(wording: string): Stage | undefined {
+  const text = normalizeStatusWording(wording.replace(/\[[^\]]*\]/g, ' '));
+  for (const [words, stage] of WORDINGS) if (text === words || text.startsWith(`${words} `) || text.endsWith(` ${words}`)) return stage;
+  return undefined;
+}
 export const statusMap: CarrierStatusMap = { stage: (code, wording) =>
-  (code === null ? undefined : jAndTBrStage(code)) ?? WORDINGS.get(normalizeStatusWording(wording)), gaps: [] };
+  (code === null ? undefined : jAndTBrStage(code)) ?? wordingStage(wording), gaps: [] };
