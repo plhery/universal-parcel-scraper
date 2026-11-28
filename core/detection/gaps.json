@@ -7668,5 +7668,11 @@
     "pattern": "^\\d{7}$",
     "kind": "by_design",
     "reason": "Xinchen's waybills on Lanqiao's portal are a seven-digit counter many carriers' numbers share, so nothing in the number points to Xinchen. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "parcel100",
+    "pattern": "^PK\\d{8}$",
+    "kind": "by_design",
+    "reason": "PK and eight digits is Parcel100's own parcel number, a short counter behind a prefix other carriers' references share, so nothing in it points to Parcel100. The adapter answers explicit selection."
   }
 ]

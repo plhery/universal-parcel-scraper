@@ -1,0 +1,64 @@
+{
+  "id": "parcel100",
+  "displayName": "Parcel100",
+  "aliases": [
+    "Parcel100 B.V.",
+    "Parcel100物流"
+  ],
+  "region": {
+    "countries": [
+      "NL",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#F07D1A"
+  },
+  "selectable": true,
+  "timezone": "Europe/Amsterdam",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "parcel100",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://track.parcel100.com/",
+    "canaryUrl": "https://track.parcel100.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "office_contact_details",
+      "staff_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "office_contact_details",
+      "staff_details"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "offset_timestamps",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

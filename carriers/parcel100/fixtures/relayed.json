@@ -1,0 +1,192 @@
+{
+  "status": true,
+  "msg": "操作成功",
+  "code": 1000,
+  "data": [
+    {
+      "parcel_number": "BH034304258PL",
+      "logs": [
+        {
+          "created_at": "2025-03-29 21:24:30",
+          "status_name": "签收成功",
+          "status_code": 90,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2025-01-27 10:36:16",
+          "status_name": "您的快件已签收【南口孝柱便利店中邮驿站】，如有疑问请电联快递员【电话:13800000000】。连接美好，无处不在，感谢您使用中国邮政，期待再次为您服务。",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-25 17:29:38",
+          "status_name": "您的快件已派送至【南口孝柱便利店中邮驿站】，自提点电话:13800000000，请您凭取件码领取快件，如有疑问请电联快递员【电话:13800000000】或揽投部【电话:0577-00000000】，投诉请致电11183。",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-25 11:25:22",
+          "status_name": "您的快件已安排派送，节日期间快件较多，我们将尽快送达，感谢您的理解和耐心等待。请保持电话畅通，如急需投递请电联快递员【某某，电话:13800000000】，揽投部【电话:0577-00000000】，更快更方便，少一次投诉，多一份感恩。监督电话11183。",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-25 11:20:22",
+          "status_name": "快件到达【瑞安市陶山第四揽投部】",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-25 05:19:36",
+          "status_name": "快件离开【瑞安市松桥第十揽投部】，正在发往下一站",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-25 05:12:49",
+          "status_name": "快件到达【瑞安市松桥第十揽投部】",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-25 02:43:25",
+          "status_name": "快件离开【温州市滨海包件车间】，正在发往下一站",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-25 02:27:35",
+          "status_name": "快件到达【温州市滨海包件车间】",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-24 02:23:14",
+          "status_name": "快件离开【广州市江高包件车间】，正在发往下一站",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-23 21:32:09",
+          "status_name": "快件到达【广州市江高包件车间】",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-23 19:45:03",
+          "status_name": "快件离开【广州市国际快件营业部】，正在发往【广州市江高包件车间】",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-23 19:34:02",
+          "status_name": "快件已在【广州市国际快件营业部】完成分拣，准备发出",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-23 19:21:29",
+          "status_name": "中国邮政 已收取快件",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-23 09:38:43",
+          "status_name": "派送中",
+          "status_code": 80,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2025-01-23 09:38:43",
+          "status_name": "清关完成",
+          "status_code": 78,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2025-01-22 11:29:40",
+          "status_name": "包裹已申报，等待海关清关",
+          "status_code": 70,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2025-01-21 07:04:22",
+          "status_name": "包裹到达清关口岸，等待监管车提货",
+          "status_code": 68,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2025-01-19 01:25:44",
+          "status_name": "航班抵达中国【GUANGZHOU】",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-18 02:25:38",
+          "status_name": "已离港",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-17 14:31:41",
+          "status_name": "包裹已经送达荷兰阿姆斯特丹机场，航班即将飞行中",
+          "status_code": 60,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2025-01-17 12:12:14",
+          "status_name": "司机已装车，卡车送往机场途中",
+          "status_code": 55,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2025-01-17 12:10:25",
+          "status_name": "包裹完成组批次，等待出库",
+          "status_code": 50,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2025-01-17 02:13:51",
+          "status_name": "快件到达处理中心",
+          "status_code": 0,
+          "is_sys_time": false
+        },
+        {
+          "created_at": "2025-01-16 17:12:54",
+          "status_name": "仓库扫描称重完毕，等待组批次",
+          "status_code": 45,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2025-01-16 16:12:35",
+          "status_name": "荷兰仓库 仓库揽收完成，等待仓库操作",
+          "status_code": 30,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2025-01-08 19:39:29",
+          "status_name": "已下载1次面单",
+          "status_code": 11,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2025-01-08 18:07:11",
+          "status_name": "包裹支付",
+          "status_code": 25,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2025-01-08 18:05:23",
+          "status_name": "波兰仓库已收寄",
+          "status_code": 20,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2025-01-08 18:05:23",
+          "status_name": "包裹预报成功",
+          "status_code": 10,
+          "is_sys_time": true
+        }
+      ]
+    }
+  ]
+}

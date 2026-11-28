@@ -1,0 +1,47 @@
+{
+  "carrier": "parcel100",
+  "records": [
+    {
+      "number": "PK00073381",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it",
+          "tnt-it"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for Parcel100. Parcel100's tracker answers it with a parcel taken in at its Dutch warehouse, flown from Amsterdam, cleared by Chinese customs and signed for."
+    },
+    {
+      "number": "BH034304258PL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/parcel100.shtml",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Kuaidi100's Parcel100 page gives it as the example number. Parcel100's tracker answers it with a parcel taken in at its Polish warehouse, flown to Guangzhou and delivered by China Post, whose rows it relays."
+    }
+  ]
+}

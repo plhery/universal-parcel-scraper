@@ -1,0 +1,78 @@
+{
+  "status": true,
+  "msg": "操作成功",
+  "code": 1000,
+  "data": [
+    {
+      "parcel_number": "PK00073381",
+      "logs": [
+        {
+          "created_at": "2024-04-06 08:12:32",
+          "status_name": "签收成功",
+          "status_code": 90,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2024-03-13 11:46:01",
+          "status_name": "派送中",
+          "status_code": 80,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2024-03-13 11:46:01",
+          "status_name": "清关完成",
+          "status_code": 78,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2024-03-12 03:30:35",
+          "status_name": "包裹已申报，等待海关清关",
+          "status_code": 70,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2024-03-09 05:35:53",
+          "status_name": "包裹到达清关口岸，等待监管车提货",
+          "status_code": 68,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2024-03-06 04:32:15",
+          "status_name": "包裹已经送达荷兰阿姆斯特丹机场，航班即将飞行中",
+          "status_code": 60,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2024-03-06 04:31:43",
+          "status_name": "司机已装车，卡车送往机场途中",
+          "status_code": 55,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2024-03-05 10:08:20",
+          "status_name": "包裹完成组批次，等待出库",
+          "status_code": 50,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2024-03-05 06:44:30",
+          "status_name": "仓库扫描称重完毕，等待组批次",
+          "status_code": 45,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2024-03-05 06:43:58",
+          "status_name": "荷兰仓库 仓库揽收完成，等待仓库操作",
+          "status_code": 30,
+          "is_sys_time": true
+        },
+        {
+          "created_at": "2024-03-05 06:35:30",
+          "status_name": "包裹预报成功",
+          "status_code": 10,
+          "is_sys_time": true
+        }
+      ]
+    }
+  ]
+}

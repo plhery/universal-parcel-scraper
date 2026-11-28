@@ -1,0 +1,117 @@
+{
+  "carrier": "parcel100",
+  "entries": [
+    {
+      "code": "10",
+      "wording": "包裹预报成功",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The sender's pre-advice of the parcel is in: nothing handed over yet."
+    },
+    {
+      "code": "11",
+      "wording": "已下载…次面单",
+      "unmapped": true,
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The sender downloaded the label, with how many times: paperwork that moves nothing."
+    },
+    {
+      "code": "20",
+      "wording": "波兰仓库已收寄",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Taken in at the Polish warehouse."
+    },
+    {
+      "code": "25",
+      "wording": "包裹支付",
+      "unmapped": true,
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The parcel paid for: an account notice that moves nothing."
+    },
+    {
+      "code": "30",
+      "wording": "荷兰仓库 仓库揽收完成，等待仓库操作",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Taken in at the Dutch warehouse, waiting to be handled there."
+    },
+    {
+      "code": "45",
+      "wording": "仓库扫描称重完毕，等待组批次",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Scanned and weighed at the warehouse, waiting to be put in a batch."
+    },
+    {
+      "code": "50",
+      "wording": "包裹完成组批次，等待出库",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Put in a batch, waiting to leave the warehouse."
+    },
+    {
+      "code": "55",
+      "wording": "司机已装车，卡车送往机场途中",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Loaded on the truck to the airport."
+    },
+    {
+      "code": "60",
+      "wording": "包裹已经送达荷兰阿姆斯特丹机场，航班即将飞行中",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "At Amsterdam airport for the flight to China."
+    },
+    {
+      "code": "68",
+      "wording": "包裹到达清关口岸，等待监管车提货",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Landed at the Chinese port of entry, waiting for the bonded truck to the customs warehouse."
+    },
+    {
+      "code": "70",
+      "wording": "包裹已申报，等待海关清关",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Declared to Chinese customs, waiting for clearance."
+    },
+    {
+      "code": "78",
+      "wording": "清关完成",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Cleared by customs."
+    },
+    {
+      "code": "80",
+      "wording": "派送中",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Handed to the courier in China the second it clears customs; that courier's own rows, a delivery round among them, follow for days, so it is not the delivery round."
+    },
+    {
+      "code": "90",
+      "wording": "签收成功",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for. Parcel100 may close the parcel weeks after the courier's own delivery row."
+    }
+  ]
+}
