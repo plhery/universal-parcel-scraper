@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>网上单票_查货</title>
+<script type="text/javascript" src="XBM_Issuer.js"></script>
+<script type="text/javascript" src="XBM_Widget.js"></script>
+<script type="text/javascript" src="XBM_Grider.js"></script>
+<link rel="stylesheet" href="XBM_Issuer.css" type="text/css" />
+<link rel="stylesheet" href="XBM_Browser.css" type="text/css" />
+</head>
+<body onmousedown="OnCloseGrider()" style="background-color:#FAF0FF;font-family:宋体;font-size:0.750rem;">
+<form id="theForm" method="POST">
+<input type="hidden" id="Center" name="Center" value="3201" />
+<input type="hidden" name="ViewState" id="ViewState" value="%(pBd9SZS47y8vB4gZ3TDquuVQ)" />
+<input type="hidden" name="Action" id="Action" value="%(elK4qxR4S0vdSCwop1);%(elK4qxR4S0vdSCwpp1)" />
+<div id="ST_1006" style="color:#0000A0;border:none;text-align:center;vertical-align:middle;font-family:楷体_GB2312;font-size:1.313rem;font-weight:bold;">业务承接单运输跟踪</div>
+<div id="Layout_X">
+<style type="text/css">
+#Layout td { border-color:#0080C0; }
+</style>
+<table id="Layout" class="layout" style="width:49.188rem;border:1px solid #0080C0;" cellpadding="0" cellspacing="0">
+<tr style="height:1.563rem;">
+<td class="border" style="width:9.5%;background-color:#E6E6FF;border:none;text-align:center;vertical-align:middle;">运单编号</td>
+<td class="border" style="width:15.1%;">
+<input type="text" id="TB_2590" name="TB_3S01E86F11" xname="运单编号" readonly="readonly" style="width:7.125rem;height:1.125rem;background-color:#FFFFFF;border:none;text-align:center;vertical-align:top;" /></td>
+<td class="border" style="width:9.4%;background-color:#E6E6FF;border:none;text-align:center;vertical-align:middle;">始&#32;发&#32;地</td>
+<td class="border" style="width:15.5%;">
+<input type="text" id="TB_2590" name="TB_3S01E86F25" xname="始发网点名称" readonly="readonly" style="width:7.313rem;height:1.125rem;background-color:#FFFFFF;border:none;text-align:center;vertical-align:top;" /></td>
+<td class="border" style="width:8.6%;background-color:#E6E6FF;border:none;text-align:center;vertical-align:middle;">目&#32;的&#32;地</td>
+<td class="border" style="width:17.2%;">
+<input type="text" id="TB_2798" name="TB_3S01E86F27" xname="目的区域名称" readonly="readonly" style="width:8.125rem;height:1.063rem;background-color:#FFFFFF;border:none;text-align:center;vertical-align:top;" /></td>
+<td class="border" style="width:8.6%;background-color:#E6E6FF;border:none;text-align:center;vertical-align:middle;">手工单号</td>
+<td class="border">
+<input type="text" id="TB_2689" name="TB_3S01E86F1B" xname="手工单号" readonly="readonly" style="width:7.500rem;height:1.125rem;background-color:#FFFFFF;border:none;text-align:center;vertical-align:top;" /></td>
+</tr>
+<tr style="height:1.500rem;">
+<td class="border" style="background-color:#E6E6FF;border:none;text-align:center;vertical-align:middle;">发&#32;货&#32;人</td>
+<td class="border">
+<input type="text" id="TB_2677" name="TB_3S01E86F3A" xname="发货人名称" readonly="readonly" style="width:7.125rem;height:1.125rem;background-color:#FFFFFF;border:none;text-align:center;vertical-align:top;" /></td>
+<td class="border" style="background-color:#E6E6FF;border:none;text-align:center;vertical-align:middle;">收&#32;货&#32;人</td>
+<td class="border">
+<input type="text" id="TB_2803" name="TB_3S01E86F44" xname="收货人名称" readonly="readonly" style="width:7.313rem;height:1.125rem;background-color:#FFFFFF;border:none;text-align:center;vertical-align:top;" /></td>
+<td class="border" style="background-color:#E6E6FF;border:none;text-align:center;vertical-align:middle;">货物名称</td>
+<td colspan="3" class="border">
+<input type="text" id="TB_2689" name="TB_3S01E86F5C" xname="货物名称" readonly="readonly" style="width:20.188rem;height:1.125rem;background-color:#FFFFFF;border:none;text-align:center;vertical-align:top;" /></td>
+</tr>
+<tr style="height:1.563rem;">
+<td class="border" style="background-color:#E6E6FF;border:none;text-align:center;vertical-align:middle;">承运日期</td>
+<td class="border">
+<input type="text" id="TB_2444" name="TB_3T01E86F30" xname="承运日期" masker="$$$$-$$-$$" readonly="readonly" onchange="OnEditMasker(this, '$$$$-$$-$$')" style="width:7.125rem;height:1.063rem;background-color:#FFFFFF;border:none;text-align:center;vertical-align:top;" /></td>
+<td class="border" style="background-color:#E6E6FF;border:none;text-align:center;vertical-align:middle;">服务方式</td>
+<td class="border">
+<select id="CB_2691" name="CB_3I01E86F4E" xname="送货方式" disabled="disabled" style="width:7.313rem;background-color:#FFFFFF;border:none;text-align:center;vertical-align:top;">
+<option value="0">站&#32;→&#32;站</option>
+<option value="1">站&#32;→&#32;门</option>
+<option value="2">门&#32;→&#32;站</option>
+<option value="3">门&#32;→&#32;门</option>
+<option value="7">整车直送</option>
+</select></td>
+<td class="border" style="color:#AD07E4;background-color:#E6E6FF;border:none;text-align:center;vertical-align:middle;">运输状态</td>
+<td class="border">
+<select id="CB_2691" name="CB_3I01E86F15" xname="运单状态" disabled="disabled" style="width:8.125rem;background-color:#FFFFFF;border:none;text-align:center;vertical-align:top;">
+<option value="8">接货录单</option>
+<option value="10">始发入库</option>
+<option value="20">运输途中</option>
+<option value="21">中途入库</option>
+<option value="30">到站待提</option>
+<option value="41">配送出库</option>
+<option value="42">外包出库</option>
+<option value="43">托运出库</option>
+<option value="51">自提出库</option>
+<option value="52">退货原返</option>
+<option value="53">配送签收</option>
+<option value="54">外包签收</option>
+<option value="55">托运签收</option>
+</select></td>
+<td class="border" style="color:#AD07E4;background-color:#E6E6FF;border:none;text-align:center;vertical-align:middle;">货款状态</td>
+<td class="border">
+<select id="CB_2691" name="CB_3I01E86F55" xname="货款状态" disabled="disabled" style="width:7.500rem;background-color:#FFFFFF;border:none;text-align:center;vertical-align:top;">
+<option value="0">未提货</option>
+<option value="1">未到账</option>
+<option value="2">已到账</option>
+<option value="3">已支付</option>
+</select></td>
+</tr>
+</table>
+</div>
+<div id="DataGrider_X" class="border" style="border-color:#0080C0;background-color:#FFFFFF;color:#000080;width:49.188rem;height:20.125rem;overflow:auto;">
+<style type="text/css">
+#DataGrider tr { height:1.250rem; }
+#DataGrider thead>tr>td { background-color:#A8E0D8; }
+#DataGrider tr>td:nth-child(1) { width:2rem; text-align:right; }
+#DataGrider tr>td:nth-child(2) { width:16.495%; text-align:center; }
+#DataGrider tr>td:nth-child(3) { width:23.196%; }
+#DataGrider tr>td:nth-child(4) { width:10.309%; text-align:center; }
+#DataGrider tr>td:nth-child(5) { width:10.309%; text-align:center; }
+#DataGrider tr>td:nth-child(6) { width:8.247%; text-align:center; }
+#DataGrider tr>td:nth-child(7) { width:12.887%; text-align:center; }
+#DataGrider tr>td:nth-child(8) { width:15.464%; }
+</style>
+<table id="DataGrider" name="GH_3G_DataGrider" class="grider" xname="跟踪记录" choice="" monter="1" style="width:100%;">
+<thead>
+<tr>
+<td name="S0_0I00000000" class="header" xname="_INDEX_" xsize="4"></td>
+<td name="S0_3T03B259AB" xname="跟踪时间" xsize="8" class="header">跟踪时点</td>
+<td name="S0_3S03B259AC" xname="跟踪记录" xsize="64" class="header">跟踪记录</td>
+<td name="S0_3S03B259BF" xname="经办人" xsize="32" class="header">经办人</td>
+<td name="S0_3S03B259C1" xname="车牌号码" xsize="32" class="header">车牌号码</td>
+<td name="S0_3S03B259C2" xname="司机姓名" xsize="32" class="header">司机姓名</td>
+<td name="S0_3S03B259C3" xname="联系电话" xsize="32" class="header">联系电话</td>
+<td name="S0_3S03B259C4" xname="跟踪备注" xsize="128" class="header">备注</td>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</div>
+</form>
+<iframe id="Hidden_Frame" name="Hidden_Frame" style="display:none"></iframe>
+</body>
+</html>

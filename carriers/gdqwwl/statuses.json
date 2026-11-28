@@ -1,0 +1,45 @@
+{
+  "carrier": "gdqwwl",
+  "entries": [
+    {
+      "code": null,
+      "wording": "在{place}收货",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Taken in from the shipper the row names."
+    },
+    {
+      "code": null,
+      "wording": "发货离开全网物流",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Left Quanwang's depot on the line to the destination."
+    },
+    {
+      "code": null,
+      "wording": "货物已到达{place}",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Reached the destination city the row names."
+    },
+    {
+      "code": null,
+      "wording": "货物正在派送中",
+      "language": "zh",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "Out for delivery."
+    },
+    {
+      "code": null,
+      "wording": "货物已签收",
+      "language": "zh",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Signed for; the tracker names the signatory after it, which the adapter leaves out."
+    }
+  ]
+}

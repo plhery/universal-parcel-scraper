@@ -1,0 +1,58 @@
+{
+  "id": "gdqwwl",
+  "displayName": "Quanwang Logistics",
+  "aliases": [
+    "全网物流",
+    "广东全网物流",
+    "广东全网物流有限公司",
+    "Guangdong Quanwang Logistics"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#E60012"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "gdqwwl",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country"
+  ],
+  "portal": {
+    "canaryUrl": "https://www.kuaidi100.com/all/gdqwwl.shtml",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country"
+    ],
+    "discarded": [
+      "signatory"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

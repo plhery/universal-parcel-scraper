@@ -7632,5 +7632,11 @@
     "pattern": "^\\d{9,10}$",
     "kind": "by_design",
     "reason": "Kuaidi100 describes AAE's China waybills as nine or ten digits, a bare digit run many carriers' numbers share, so nothing in it points to AAE. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "gdqwwl",
+    "pattern": "^\\d{12}$",
+    "kind": "by_design",
+    "reason": "Twelve digits is the test number Kuaidi100 lists for Quanwang Logistics, a bare digit run many carriers' numbers share, so nothing in it points to Quanwang. The adapter answers explicit selection."
   }
 ]
