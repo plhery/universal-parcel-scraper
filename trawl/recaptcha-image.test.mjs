@@ -109,7 +109,7 @@ test('checks the pictures that replace clicked tiles until none shows the target
 test('takes a new challenge for a target no class covers, within its rounds', async () => {
   const f = frames({ challenges: [{ grid: '33', target: 'crosswalks' }] });
   const { result, report } = await run(f, { detect: async () => assert.fail('no detection') });
-  assert.equal(result, false); assert.equal(f.state.reloads, 6); assert.equal(report.target, 'other'); assert.equal(report.rounds, 6);
+  assert.equal(result, false); assert.equal(f.state.reloads, 8); assert.equal(report.target, 'other'); assert.equal(report.rounds, 8);
 });
 
 test('ends on Google\'s block, a failed detector or the deadline', async () => {
@@ -119,6 +119,14 @@ test('ends on Google\'s block, a failed detector or the deadline', async () => {
   assert.equal(result, false); assert.equal(report.outcome, 'detector'); assert.deepEqual(f.state.clicks, []);
   const g = frames({ challenges: [{ grid: '33', target: 'buses' }] });
   assert.equal((await run(g, { timeoutMs: 2000, detect: async () => [] })).result, false); assert.equal(g.state.verifies, 0);
+});
+
+test('takes a new challenge rather than answer none on a grid of separate pictures', async () => {
+  const f = frames({ challenges: [{ grid: '33', target: 'buses' }, { grid: '33', target: 'buses', solved: state => state.clicks.join() === '3' }] });
+  let calls = 0;
+  const detect = async ({ crops }) => { calls++; return crops.map((_, index) => calls > 1 && index === 3 ? [[0, 0, 10, 10, 0.5]] : []); };
+  const { result } = await run(f, { detect });
+  assert.equal(result, true); assert.equal(f.state.reloads, 1); assert.equal(f.state.verifies, 1); assert.deepEqual(f.state.clicks, [3]);
 });
 
 test('a refused answer on the same pictures takes a new challenge', async () => {

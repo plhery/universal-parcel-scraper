@@ -75,13 +75,13 @@ test('keeps status refusals separate from history', async () => {
   for (const status of [403, 429, 503]) { const f = fixture({ status }); const r = await runPasarexBrowser(f.options); assert.equal(r.capturedResponses.at(-1).status, status); assert.equal(r.capturedResponses.at(-1).body, null); assert.equal(f.state.closed, 1); }
 });
 
-test('gives the pictures the audio solver\'s time while audio waits out its pause', async () => {
+test('gives the pictures most of the time, in or out of the audio pause', async () => {
   const budgets = [];
   for (const cooldown of [0, 60_000]) {
     const f = fixture({ cooldown });
     await runPasarexBrowser({ ...f.options, maxTimeout: 60_000, solveImages: async (_, { timeoutMs }) => { budgets.push(timeoutMs); return true; } });
   }
-  assert(budgets[0] <= 35_000, String(budgets[0])); assert(budgets[1] > 45_000, String(budgets[1]));
+  assert(budgets.every(budget => budget > 45_000 && budget <= 55_000), String(budgets));
 });
 
 test('ticks the checkbox and answers its pictures, leaving audio as the last resort within its pause', async () => {

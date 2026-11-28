@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 export const RECAPTCHA_ANCHOR = 'iframe[src*="recaptcha"][src*="anchor"]';
 const BFRAME = 'iframe[src*="recaptcha"][src*="bframe"]';
 const MAX_IMAGE = 1_500_000;
-const MAX_ROUNDS = 6;
+const MAX_ROUNDS = 8;
 const MAX_WAVES = 4;
 // The challenge's targets that COCO's classes cover, by the English words of its instruction.
 // Taxis, crosswalks, stairs, chimneys, bridges, palm trees, mountains and tractors have none.
@@ -149,8 +149,12 @@ export async function solveRecaptchaImages(page, { timeoutMs, signal, detect = d
       const shot = await shoot(state);
       if (!shot) { outcome = 'geometry'; return false; }
       const boxes = await detect({ image: shot.image, cls, crops: whole ? [[0, 0, shot.width, shot.height]] : shot.tiles }, signal, Math.min(10_000, left() - 2000));
-      if (!boxes) { outcome = 'detector'; return false; }
+      // A detector given too little time answers nothing, as a failed one does.
+      if (!boxes) { outcome = left() <= 2500 ? 'timeout' : 'detector'; return false; }
       let picks = whole ? coveredTiles(boxes[0], shot.tiles) : boxes.flatMap((found, index) => found.length ? [index] : []);
+      // A grid of separate pictures always shows the target: Google refuses an answer that finds none, so a new
+      // challenge costs less than that refusal.
+      if (!whole && !picks.length) { await control('#recaptcha-reload-button'); await sleep(1500, signal); continue; }
       for (const index of picks) { await tile(index); await sleep(120 + Math.floor(Math.random() * 180), signal); }
       // A tile that fades out takes a new picture, which must be checked in turn until none shows the target.
       for (let wave = 0; wave < MAX_WAVES && picks.length && !whole && left() > 3000; wave++) {
