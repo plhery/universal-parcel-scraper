@@ -95,7 +95,7 @@ numbers `shouwu-1` offers.
   scan ("Delivery failed, Carrier note: Delivery failed"). Such wording is read once, and a row
   stored with it said twice keeps its identity.
 - A last mile's notice can name the recipient's e-mail address, as DPD's "Predict information sent
-  to: …". The wording is read without it, and a row stored with it keeps its identity.
+  to: …". Results drop it, as they do for every carrier.
 - The destination is `order.countryCodeTwo`. The status text (`traceStatusDesc`) and the
   destination's name are not read.
 - The request carries the page's `x-locale`, `zh-cn` unless a visitor chose another language.

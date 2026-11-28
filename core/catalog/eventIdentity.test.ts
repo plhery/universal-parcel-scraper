@@ -112,9 +112,30 @@ describe('same-instant identity policies', () => {
     });
   });
 
-  it.each(['dhl-ecommerce-nl', 'gls', '', 'toString'])('does not opt in %s', (source) => {
+  it.each(['', 'toString', 'gls'])('does not opt in %s', (source) => {
     expect(sameInstantIdentityPolicy(source)).toBeUndefined();
     expect(sameInstantIdentityPolicy(source, { supportsScanMatching: true })).toBeUndefined();
+  });
+
+  it.each(['dhl-ecommerce-nl', 'gls-de'])('lets a %s scan take over only the row stored with an e-mail address', (source) => {
+    expect(sameInstantIdentityPolicy(source)).toBeUndefined();
+    const policy = sameInstantIdentityPolicy(source, { supportsScanMatching: true });
+    expect(policy).toMatchObject({ sourceCarrierId: source, storedSources: [source], requireProviderCode: false, matchEachScan: true });
+    const incoming = { stage: 'in_transit', description: 'Notification sent', location: 'Example Town', providerCode: '' };
+    expect(policy?.matches?.(incoming, { ...incoming, description: 'Notification sent to: someone@example.com' })).toBe(true);
+    expect(policy?.matches?.({ ...incoming, location: '' }, { ...incoming, location: 'Example Town, someone@example.com 0100' })).toBe(true);
+    expect(policy?.matches?.(incoming, { ...incoming, location: 'Example Town, someone@example.com 0100' })).toBe(false);
+    // Without an address, a scan read twice is no rewording an instant identifies.
+    expect(policy?.matches?.(incoming, incoming)).toBe(false);
+    expect(policy?.matches?.(incoming, { ...incoming, description: 'Notification sent to someone else@example' })).toBe(false);
+    expect(policy?.matches?.(incoming, { ...incoming, description: 'Delivered to: someone@example.com' })).toBe(false);
+  });
+
+  it("matches a row stored with an e-mail address by its source's own evidence", () => {
+    const policy = sameInstantIdentityPolicy('gofo-it', { supportsScanMatching: true });
+    const stored = { stage: 'in_transit', description: 'Arrivato alla struttura di destinazione regionale GOFO', location: 'FI-ARS', providerCode: '201' };
+    expect(policy?.matches?.({ ...stored, location: '' }, { ...stored, description: `${stored.description} (hub@example.com)` })).toBe(true);
+    expect(policy?.matches?.({ ...stored, location: '' }, { ...stored, description: 'Preparazione alla consegna (hub@example.com)' })).toBe(false);
   });
 
   it("lets a GOFO Italy scan that lost its hub's code take over its stored row", () => {
@@ -669,8 +690,8 @@ describe('same-instant identity policies', () => {
     ]) expect(policy?.matches?.(incoming, different)).toBe(false);
     expect(policy?.matches?.({ ...incoming, providerCode: 'A1' }, { ...stored, providerCode: 'B2' })).toBe(false);
     expect(policy?.matches?.({ ...incoming, description: '' }, { ...stored, description: '' })).toBe(false);
-    // A carrier whose scans carry their own offsets keeps no policy.
-    expect(sameInstantIdentityPolicy('dhl-ecommerce-nl', { supportsScanMatching: true })).toBeUndefined();
+    // A carrier whose scans carry their own offsets matches no wall clock.
+    expect(sameInstantIdentityPolicy('dhl-ecommerce-nl', { supportsScanMatching: true })?.matchWallClock).toBeUndefined();
   });
 
   it('lets a 4PX row its facility\'s offset re-dates take over the row stored under the partner\'s, by wall clock', () => {

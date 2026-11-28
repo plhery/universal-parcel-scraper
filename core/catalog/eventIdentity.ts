@@ -90,6 +90,7 @@ import { sameInstantIdentityPolicy as yunExpress } from '../../carriers/yunexpre
 import { sameInstantIdentityPolicy as zto } from '../../carriers/zto/identity.js';
 import { sameInstantIdentityPolicy as ztoInternational } from '../../carriers/zto-international/identity.js';
 import { sameInstantIdentityPolicy as universal } from '../../providers/shared/app.js';
+import { namesEmail, withoutEmail } from '../result/email.js';
 import { CARRIER_DEFINITIONS } from './definitions.js';
 import type { CarrierDefinition } from './types.js';
 
@@ -172,12 +173,40 @@ function localClockPolicy(sourceCarrierId: string, policy: SameInstantIdentityPo
   };
 }
 
+/**
+ * A stored scan as a release that drops e-mail addresses reads it: its words without one, and no
+ * place for a place naming one. None when it names none.
+ */
+function withoutEmails(scan: SameInstantScan): SameInstantScan | undefined {
+  const description = withoutEmail(scan.description), location = namesEmail(scan.location) ? '' : scan.location;
+  return description === scan.description && location === scan.location ? undefined : { ...scan, description, location };
+}
+
+/**
+ * Results drop the e-mail addresses scan words and places name. A scan takes over the row an
+ * earlier release stored with one, as its source's policy would match the row without it; a
+ * source with no policy needs the same wording and place without it.
+ */
+function emailPolicy(sourceCarrierId: string, policy: SameInstantIdentityPolicy | undefined): SameInstantIdentityPolicy | undefined {
+  if (policy && !policy.matches) return policy;
+  if (!policy && !Object.hasOwn(CARRIER_DEFINITIONS, sourceCarrierId)) return undefined;
+  const matches = policy?.matches ?? (() => false);
+  return {
+    ...(policy ?? { sourceCarrierId, storedSources: [sourceCarrierId], requireProviderCode: false, matchEachScan: true }),
+    matches: (incoming, stored) => {
+      if (matches(incoming, stored)) return true;
+      const read = withoutEmails(stored);
+      return read !== undefined && (policy ? matches(incoming, read) : sameScan(incoming, read));
+    },
+  };
+}
+
 /** Unlisted sources cannot identify a reworded scan by its instant alone. */
 export function sameInstantIdentityPolicy(
   sourceCarrierId: string,
   options: { supportsScanMatching?: boolean } = {},
 ): SameInstantIdentityPolicy | undefined {
-  const policy = localClockPolicy(sourceCarrierId, policies.get(sourceCarrierId));
+  const policy = emailPolicy(sourceCarrierId, localClockPolicy(sourceCarrierId, policies.get(sourceCarrierId)));
   // Older app versions only check the clock and provider code.
   return policy?.matches && !options.supportsScanMatching ? undefined : policy;
 }

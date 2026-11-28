@@ -9,7 +9,8 @@ import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { countryZones } from '../../places/zones.js';
 import { isShouwuFlightBooked, shouwuSendsBack, shouwuStage, shouwuStatusLabel, shouwuStatusStage } from './status.js';
-import { withoutCountryCode, withoutEmail, withoutRelayedPlace, withoutRepeat } from './place.js';
+import { withoutEmail } from '../../core/result/email.js';
+import { withoutCountryCode, withoutRelayedPlace, withoutRepeat } from './place.js';
 
 export const PROVIDER = 'Shouwu International';
 // One parcel's reply is a few kilobytes.

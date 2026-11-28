@@ -14,6 +14,7 @@ import { CARRIER_CATALOG, STAGES } from '../../generated/catalog.js';
 import { normalizeTrackingNumber } from '../detection/normalize.js';
 import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../detection/usps.js';
 import { deliveredToDoor } from './pickup.js';
+import { namesEmail, withoutEmail } from './email.js';
 import { isRecipientAction, recipientAction, type RecipientAction } from '../status/action.js';
 import { withTieOrder } from './order.js';
 import { windowOpens, writtenWindow } from './window.js';
@@ -259,6 +260,7 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
       throw new TypeError(`The carrier adapter returned an invalid ${field.replaceAll('_', ' ')}`);
     }
   }
+  if (normalized.last_status_text) normalized.last_status_text = withoutEmail(normalized.last_status_text);
   // A window across days written as one text gives both its ends, and a start that opens no
   // window with the estimate, alone or after it, says nothing.
   const written = writtenWindow(normalized.expected_delivery);
@@ -342,6 +344,13 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
       }
     }
     const event = { ...rawEvent };
+    // An e-mail address in a scan's words, the recipient's, goes wherever the history is shown. A place
+    // naming one is someone's contact details.
+    for (const field of ['description', 'original_description'] as const) {
+      if (event[field]) event[field] = withoutEmail(event[field]);
+    }
+    if (event.original_description === '') delete event.original_description;
+    if (event.location && namesEmail(event.location)) delete event.location;
     // A blank place is no place, and a place joined from parts keeps the parts it has: ",,,CA" is "CA", ",,," none.
     if (typeof event.location === 'string') {
       const place = EMPTY_PART.test(event.location) ? event.location.split(',').filter((part) => part.trim()).join(',').trim() : event.location;

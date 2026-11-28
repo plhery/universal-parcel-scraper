@@ -320,6 +320,9 @@ read them as the carrier gives them, masked or not. Adapters and universal provi
 scan's wording and place as the carrier gives them too. `hasPrivateDeliveryDetails` tells whether
 they name a code, a door number or a signature, for a host that shows the history to people other
 than the parcel's owner: it shows such a scan only to the owner.
+Result normalization drops an e-mail address from scan words, places and `last_status_text`,
+with the "to" or brackets around it: it says nothing about the parcel, and a scan's words go
+wherever the history is shown.
 
 A result's `pickup_point` is the point the parcel waits at for collection: its name, then its
 address on the following lines. On a delivered parcel it is the point the recipient collected
@@ -712,7 +715,9 @@ different offsets on one scan's wall clock: a scan takes over the row showing it
 under another offset, by location and wording. Every carrier flagged `tracking.localClocks`
 has it, so a scan a release dates on a better deduced zone takes over its stored row; one
 with no policy of its own gets one that matches only that way or by the same wording and
-location at the same instant. A policy's `matchWithinMinute` serves a source whose feeds
+location at the same instant. A scan takes over the row an earlier release stored with an e-mail address
+as its source's policy would match the row without it; any carrier's scan does, by the same
+wording and location without it, when its source has no policy. A policy's `matchWithinMinute` serves a source whose feeds
 date one scan apart, one to the minute and one to the second, in their own wording: a scan
 takes over a row less than a minute away that the policy's comparison accepts, as DPD
 Germany's app service and guest API do, or Chronopost's service and the La Poste feed
