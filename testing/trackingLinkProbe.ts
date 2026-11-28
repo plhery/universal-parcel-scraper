@@ -37,6 +37,15 @@ export function trackingPageVerdict(
   return trackingContent.test(page.text) ? 'tracking-page' : 'unverified';
 }
 
+/**
+ * Alibaba's firewall marks a reply it refused for its slider check with a `bxpunish` header. LEX
+ * answers its page's own search that way for some datacenter networks, then never shows a result.
+ * Takes a browser capture's headers, whose names are lower case.
+ */
+export function isAlibabaSliderCheck(headers: Readonly<Record<string, string>>): boolean {
+  return 'bxpunish' in headers;
+}
+
 export type SearchPageVerdict = 'search-page' | 'blocked' | 'unverified' | 'broken';
 
 /**

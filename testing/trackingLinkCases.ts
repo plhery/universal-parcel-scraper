@@ -2324,11 +2324,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/www\.sekologistics\.com\/en\/track\/\?trackingNumbers=ZZ0000000000$/,
     marker: /No results found for tracking number|Enter up to 30 tracking numbers/i },
   // The tracker looks the number in its address up and answers an unknown one with a notice that
-  // does not name it.
+  // does not name it, in English or Spanish as the browser's language asks.
   { carrier: 'szendex', number: '999999999999999999',
     route: /^https:\/\/erp\.szendex\.com\/DlWebTrackingVWE\/\?seg=999999999999999999$/,
-    marker: /No se ha encontrado el envío solicitado/,
-    forwarding: { notFound: /No se ha encontrado el envío solicitado/ } },
+    marker: /No se ha encontrado el envío solicitado|The requested shipment was not found/,
+    forwarding: { notFound: /No se ha encontrado el envío solicitado|The requested shipment was not found/ } },
   // The Wix page frames Islandwide's OutSystems tracker, which looks the number in its address up as it opens.
   { carrier: 'islandwide-express', number: '999000999QZQZQZ9990009',
     route: /^https:\/\/www\.islandwide\.com\/tracking\?TrackingNumber=999000999QZQZQZ9990009$/,
@@ -2642,10 +2642,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'mailplus-au', number: 'MPX000000000',
     route: /^https:\/\/track\.mailplus\.com\.au\/MPX000000000$/,
     marker: /Add your tracking ID|There are no results for this tracking/ },
-  // The page looks the number in its address up and answers an unknown one with "No shipment found for" and the number.
+  // The page looks the number in its address up and answers an unknown one with "No shipment found for" and the number,
+  // sometimes more than ten seconds after it opens.
   { carrier: 'precision-deliveries', number: 'ASL0000000000',
     route: /^https:\/\/track\.precisiondeliveries\.com\/ASL0000000000$/,
-    marker: /No shipment found for "ASL0000000000"|No Shipment Found/ },
+    marker: /No shipment found for "ASL0000000000"|No Shipment Found/, renderTimeoutMs: 20_000 },
   // The quick trace page renders the PRO in its address on the server, keeps it in hidden fields
   // and answers an unknown one with its support notice.
   { carrier: 'oak-harbor', number: '99999999',

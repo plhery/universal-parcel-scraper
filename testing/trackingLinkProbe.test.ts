@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { landedAddress, searchPageVerdict, trackingPageVerdict } from './trackingLinkProbe.js';
+import { isAlibabaSliderCheck, landedAddress, searchPageVerdict, trackingPageVerdict } from './trackingLinkProbe.js';
 
 const route = /^https:\/\/carrier\.example\/tracking(?:\?|$)/;
 const marker = /track your parcel/i;
@@ -42,6 +42,11 @@ describe('tracking link page validation', () => {
       text: 'Click the button below to continue shopping\nContinue shopping\nConditions of Use\nPrivacy Policy' };
     expect(trackingPageVerdict(check, signIn, /Sign in|Your Orders/i)).toBe('blocked');
   });
+  it('knows a reply Alibaba\'s firewall refused for its slider check by its header alone', () => {
+    expect(isAlibabaSliderCheck({ 'content-type': 'application/json;charset=UTF-8', bxpunish: '1', bxuuid: 'synthetic' })).toBe(true);
+    expect(isAlibabaSliderCheck({ 'content-type': 'application/json;charset=UTF-8', server: 'Tengine/Aserver' })).toBe(false);
+  });
+
   it('reports a page titled only "Verification", Europochta\'s bot check, as blocked', () => {
     const check = { status: 200, url: 'https://evropochta.by/', title: 'Verification', text: '' };
     expect(trackingPageVerdict(check, /^https:\/\/evropochta\.by\/\?number=BY080731593842$/, /Отслеживание/)).toBe('blocked');

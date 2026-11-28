@@ -3,7 +3,7 @@ import { chromium, type Browser } from 'playwright-core';
 import { parcelTrackingLinks } from '../core/catalog/parcel.js';
 import { awsWafAction } from '../core/transport/awsWaf.js';
 import { trackingLinkCases } from './trackingLinkCases.js';
-import { landedAddress, trackingPageVerdict } from './trackingLinkProbe.js';
+import { isAlibabaSliderCheck, landedAddress, trackingPageVerdict } from './trackingLinkProbe.js';
 
 // Navigation and the HTTP fallback get 25 s on top of the longest render window.
 const TEST_TIMEOUT_MS = 25_000 + Math.max(...trackingLinkCases.map(testCase => testCase.renderTimeoutMs ?? 10_000));
@@ -34,7 +34,10 @@ describe('UI tracking links (rendered public pages)', () => {
     let lookupObserved = false;
     let documentStatus: number | undefined;
     let wafAction: string | null = null;
+    let sliderCheck = false;
     page.on('response', (response) => {
+      // The page's own search can be the reply refused, with the page itself served.
+      if (isAlibabaSliderCheck(response.headers())) sliderCheck = true;
       if (response.request().isNavigationRequest() && response.frame() === page.mainFrame()) {
         documentStatus = response.status();
         // AWS WAF answers its check in place of the page, often with HTTP 202 and an empty document.
@@ -107,7 +110,7 @@ describe('UI tracking links (rendered public pages)', () => {
           const status = documentStatus ?? response!.status();
           verdict = trackingPageVerdict({ status, url: page.url(), title: await page.title(), text },
             testCase.route, testCase.marker, testCase.shipmentNotFound);
-          if (wafAction !== null && verdict !== 'tracking-page') verdict = 'blocked';
+          if ((wafAction !== null || sliderCheck) && verdict !== 'tracking-page') verdict = 'blocked';
           // A tracker that serves its route with its not-found status can show the
           // notice only after its lookup answers, so keep reading until it does.
           const noticePending = testCase.shipmentNotFound?.status === status && testCase.route.test(page.url());
