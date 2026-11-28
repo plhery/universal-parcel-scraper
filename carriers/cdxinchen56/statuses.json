@@ -1,0 +1,47 @@
+{
+  "carrier": "cdxinchen56",
+  "entries": [
+    {
+      "wording": "…已开单入库",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The waybill opened and the freight taken in at the branch the row names: the first row in the firm's hands."
+    },
+    {
+      "wording": "从…配载中心发车",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Loaded onto a line truck that left the named branch's loading centre."
+    },
+    {
+      "wording": "货物到达…",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Arrived at the destination branch the row names."
+    },
+    {
+      "wording": "已送货",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Sent out for delivery from the destination branch; the signature is a later row."
+    },
+    {
+      "wording": "已经签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for; the reader drops the signer the row names between 由 and 签收."
+    },
+    {
+      "wording": "货物已提货签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Collected and signed for, at the same minute as the row before; the reader drops the signer it names."
+    }
+  ]
+}

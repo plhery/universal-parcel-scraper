@@ -42,6 +42,8 @@ const PHONE_BLOCK = /[【（(][^【】（）()]{0,12}(?:电话|手机|热线|联
 const LABEL = '(?:签收人|收货人|提货人|收件人|经办人|联系人|司机|驾驶员|师傅|车牌号?|(?:联系|查询|咨询)?电话|手机(?:号码?)?)';
 // A label with its value in brackets or after a colon: 签收人【…】, 车牌号【…】, 司机：….
 const LABELLED = new RegExp(`[，,；;。\\s]*${LABEL}\\s*(?:【[^】]{0,40}】|[:：]\\s*[^\\s，,；;。【】]{1,20})`, 'gu');
+// A signer the row names between 由 and 签收, as in 已经由…签收 and 货物已由…提货签收.
+const SIGNED_BY = /由(?:【[^】]{1,40}】|[^\s，,；;。【】]{1,20}?)(提货)?签收/gu;
 // A signer or contact named some other way, or anything that reads as a phone number: the wording stops before it.
 const CONTACT = /签收人|联系人|(?<!\d)1[3-9]\d{9}(?!\d)|(?<!\d)0\d{2,3}-?\d{7,8}(?!\d)/u;
 // The place a row starts with, as the platform's templates put it: 【深圳】开单入库.
@@ -120,7 +122,7 @@ function wallClock(value: unknown, provider: string): string {
  * other phone number.
  */
 export function lqfastWording(content: string): { description: string; location?: string } {
-  const stripped = content.replace(PHONE_BLOCK, '').replace(LABELLED, '');
+  const stripped = content.replace(PHONE_BLOCK, '').replace(LABELLED, '').replace(SIGNED_BY, '$1签收');
   const contact = CONTACT.exec(stripped);
   const kept = clean((contact ? stripped.slice(0, contact.index) : stripped), 500).replace(/[\s，,；;。:：/]+$/u, '');
   const place = LEADING_PLACE.exec(kept);

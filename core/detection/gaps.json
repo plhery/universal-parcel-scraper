@@ -7638,5 +7638,11 @@
     "pattern": "^\\d{12}$",
     "kind": "by_design",
     "reason": "Twelve digits is the test number Kuaidi100 lists for Quanwang Logistics, a bare digit run many carriers' numbers share, so nothing in it points to Quanwang. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "cdxinchen56",
+    "pattern": "^\\d{7}$",
+    "kind": "by_design",
+    "reason": "Xinchen's waybills on Lanqiao's portal are a seven-digit counter many carriers' numbers share, so nothing in the number points to Xinchen. The adapter answers explicit selection."
   }
 ]

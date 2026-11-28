@@ -1,0 +1,69 @@
+{
+  "id": "cdxinchen56",
+  "displayName": "Xinchen Logistics",
+  "aliases": [
+    "鑫宸物流",
+    "成都鑫宸物流",
+    "成都鑫宸物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#009966"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "cdxinchen56",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://wx.lqfast.com/Pub/UnitListDetail?companyid=6n09opswzrylt7MBDbTGSg%3D%3D&unit={trackingNumber}",
+    "searchUrl": "https://wx.lqfast.com/Pub/UnitCheck?CompanyId=6n09opswzrylt7MBDbTGSg%3D%3D",
+    "canaryUrl": "https://wx.lqfast.com/wx/waybillquery/",
+    "shows": [
+      "status",
+      "history",
+      "origin",
+      "destination",
+      "order_contents",
+      "parcel_count",
+      "office_contact_details"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "order_contents",
+      "parcel_count",
+      "office_contact_details"
+    ],
+    "unavailable": [
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "wx.lqfast.com"
+      ],
+      "pathPattern": "^/Pub/UnitListDetail$",
+      "query": "^(?=(?:.*&)?companyid=6n09opswzrylt7MBDbTGSg==(?:&|$))(?:.*&)?unit=([^&]+)(?=&|$)"
+    }
+  ],
+  "detection": []
+}
