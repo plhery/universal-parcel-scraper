@@ -1,0 +1,30 @@
+{
+  "carrier": "xiongda",
+  "entries": [
+    {"code": "1020", "wording": "订单创建", "english": "Order Created", "stage": "registered", "language": "zh", "confirmedBy": "live", "note": "The booking, the first box of the tracking page's progress rail."},
+    {"code": "2020", "wording": "订单审核成功", "english": "Order Validation Successful", "stage": "registered", "language": "zh", "confirmedBy": "live"},
+    {"code": "2097", "wording": "尾程已下单", "stage": "registered", "language": "zh", "confirmedBy": "live", "note": "The last-mile label booked, before the firm's warehouse has the cartons; its note is UPS's label notice."},
+    {"code": "2030", "wording": "到达国内仓", "english": "Arrive at Warehouse", "stage": "accepted", "language": "zh", "confirmedBy": "live", "note": "The firm's warehouse in China has the cartons; the progress rail's second box."},
+    {"code": "2035", "wording": "已核重", "english": "Measurement Complete", "stage": "accepted", "language": "zh", "confirmedBy": "live", "note": "Weighed and measured at the warehouse."},
+    {"code": "2088", "wording": "Ship Track入库", "english": "Ship Track Inbound", "stage": "accepted", "language": "zh", "confirmedBy": "live", "note": "Booked into the warehouse system, beside the arrival."},
+    {"code": "6001", "wording": "同行接单", "english": "Accepted by Peer", "stage": "accepted", "language": "zh", "confirmedBy": "live", "note": "A partner forwarder takes the order on, while the cartons are at the warehouse."},
+    {"code": "2045", "wording": "已装柜", "english": "Loading finished", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Loaded for the line haul."},
+    {"code": "2060", "wording": "已打托", "english": "Palletized", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "The code of the progress rail's 出库, the cartons leaving the warehouse. UPS's first scan in the United States carries it too, as 快递交付."},
+    {"code": "2060", "wording": "快递交付", "english": "Parcel Transfer", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "UPS takes the cartons in the United States; its note is UPS's first scan."},
+    {"code": "2049", "wording": "出口报关放行", "english": "Export Customs Cleared", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "China's export release before the flight, not a hold."},
+    {"code": "2071", "wording": "离开中转机场", "english": "Leave Airport of Transit", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"code": "2070", "wording": "离开始发机场", "english": "Leave Airport of Departure", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"code": "2078", "wording": "到达中转机场", "english": "Arrive at Airport of Transit", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"code": "2080", "wording": "到达目的机场", "english": "Arrive at Airport of Destination", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"code": "2090", "wording": "进口清关完成", "english": "Import Customs Clearance", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Import customs released the cartons; its note says so."},
+    {"code": "9070", "wording": "到达海外仓", "english": "Arrival at Overseas Warehouse", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "The cargo collected from the airport for the firm's warehouse abroad."},
+    {"code": "9050", "wording": "其他异常", "english": "Other Exception", "stage": "exception", "language": "zh", "confirmedBy": "live", "note": "A problem the note names, such as cartons missing from the delivery at the airport."},
+    {"code": "9060", "wording": "Out for Delivery, Out For Delivery Today", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "UPS's scan, after the label 正在派送."},
+    {"code": "9060", "wording": "On the Way, Loaded on Delivery Vehicle", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "UPS's scan, after the label 正在派送."},
+    {"code": "9060", "wording": "Processing at UPS Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "UPS's scan, after the label 正在派送."},
+    {"code": "9060", "wording": "Arrived at Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "UPS's scan, after the label 正在派送, which every copied scan carries."},
+    {"code": "9060", "wording": "Departed from Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "UPS's scan, after the label 正在派送."},
+    {"code": "9060", "wording": "On the Way, Departed from Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "UPS's scan, after the label 正在派送."},
+    {"code": "2115", "wording": "妥投", "english": "Shipment Complete", "stage": "delivered", "language": "zh", "confirmedBy": "live", "note": "Delivered; its note is UPS's delivery scan."}
+  ]
+}

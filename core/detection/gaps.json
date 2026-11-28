@@ -7438,5 +7438,11 @@
     "pattern": "^DD\\d{8}$",
     "kind": "collision",
     "reason": "ESOWAY's tracker also holds waybills of DD and eight digits, a shape GLS Italy's and TNT Italy's low rules also suggest, and one tracking directory example does not establish the series, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "xiongda",
+    "pattern": "^XD\\d{10}$",
+    "kind": "collision",
+    "reason": "Xiong Da's waybills seen are XD, the booking's date as six digits and a four-digit counter, a shape Colis Privé's and Aramex's low rules also suggest, so the adapter answers explicit selection."
   }
 ]

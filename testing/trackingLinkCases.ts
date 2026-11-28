@@ -3097,6 +3097,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  xiongda: 'The page reads the number from its address and answers an unknown one with an alert dialog alone, leaving no wording or number on the page; only a real waybill would show rows.',
   ztcce: 'The site\'s server answers some of the page\'s own script requests with HTTP 403 when a browser asks them together, so a rendered check passes or fails at random; the page reads the number from its address and asks the service once jQuery loads.',
   'high-energy-transport': 'The DispatchTrack page draws its answer inside a frame, so the page\'s own text holds none of the tracker\'s wording; native retrieval asks the lookup the frame makes',
   marken: 'The carrier accepts overlapping numeric shipment references. A published job verifies the rendered link separately.',

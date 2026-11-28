@@ -1,0 +1,83 @@
+{
+  "id": "xiongda",
+  "displayName": "Xiong Da International Logistics",
+  "aliases": [
+    "雄达国际物流",
+    "雄达国际物流有限公司",
+    "上海雄达国际物流有限公司",
+    "Xiong Da",
+    "XD International"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#EB2E2F"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "xiongda",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "offset_timestamps",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.xdint.com/no/EmmisTrack.aspx?no={trackingNumber}",
+    "searchUrl": "https://www.xdint.com/",
+    "canaryUrl": "https://www.xdint.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "progress_rail"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country"
+    ],
+    "discarded": [
+      "progress_rail",
+      "customer_reference",
+      "flight",
+      "origin_country"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "xdint.com"
+      ],
+      "pathPattern": "^/no/EmmisTrack\\.aspx$",
+      "params": [
+        "no"
+      ]
+    }
+  ],
+  "detection": []
+}

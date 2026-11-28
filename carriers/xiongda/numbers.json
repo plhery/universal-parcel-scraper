@@ -1,0 +1,49 @@
+{
+  "carrier": "xiongda",
+  "records": [
+    {
+      "number": "XD2610170002",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/xiongda.shtml",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ]
+      },
+      "note": "Kuaidi100's page for 雄达国际物流 gives it as the example number. Xiong Da's tracker answers it with cartons flown from Shanghai to Chicago and delivered by UPS."
+    },
+    {
+      "number": "XDMG220207",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "quarantine"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 雄达国际物流. The firm's tracker no longer holds rows under it."
+    }
+  ]
+}

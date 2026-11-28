@@ -1,0 +1,19 @@
+{
+	"code":"0",
+	"data":{
+		"event":[
+			{
+				"eventdetail":[],
+				"mileStones":"",
+				"orderNo":"XD9999999999",
+				"referenceNo":"XD9999999999",
+				"waybillInfoList":""
+			}
+		]
+	},
+	"errors":"",
+	"message":"",
+	"messageId":"",
+	"success":true,
+	"warnList":""
+}
