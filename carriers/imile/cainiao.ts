@@ -7,6 +7,7 @@
  * number, then relays iMile's own scans at their own clocks. Those older scans
  * go in front of iMile's history; iMile's own scans stay as iMile gave them.
  */
+import { detectCarrierMatch } from '../../core/detection/detect.js';
 import { IndeterminateError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
@@ -21,16 +22,25 @@ const WALL_CLOCK = /^\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}:\d{2})?$/;
 const EARLIEST_OFFSET_MS = 14 * 3_600_000;
 const SUMMARY_KEYS = ['status', 'current_stage', 'current_stage_source', 'last_status_text', 'last_update', 'last_update_local'] as const;
 
+/** A number in a layout only iMile issues (`IM0601…`), as iMile's high-confidence rule claims it. */
+function imileOnlyNumber(number: string): boolean {
+  const detected = detectCarrierMatch(number);
+  return detected.confidence === 'high' && detected.carrier === 'imile';
+}
+
 /**
  * Cainiao's scans of an iMile parcel, from its `detail.json` reply for the
  * number. The record must name iMile as a carrier of the parcel: the same
- * number in Cainiao's feed may be another network's parcel. A scan Cainiao
- * does not place keeps its wall clock in `local_time`, as iMile's do.
+ * number in Cainiao's feed may be another network's parcel. A record that
+ * names no carrier at all, as Cainiao's can once the parcel is on its way to
+ * iMile, is enough for a number only iMile issues. A scan Cainiao does not
+ * place keeps its wall clock in `local_time`, as iMile's do.
  */
 export function cainiaoScans(payload: unknown, number: string): CarrierEvent[] {
   const events = parseCainiaoTrackingResponse(payload, number).events ?? [];
   if (!events.length) return [];
-  if (![...cainiaoCarrierNames(payload, number)].some((name) => IMILE_NAME.test(name))) {
+  const names = [...cainiaoCarrierNames(payload, number)];
+  if (!names.some((name) => IMILE_NAME.test(name)) && (names.length > 0 || !imileOnlyNumber(number))) {
     throw new IndeterminateError(CAINIAO, 'Cainiao does not name iMile as a carrier of the parcel', { reason: 'carrier_unconfirmed' });
   }
   return events.flatMap(({ time, local_time, location, stage, stage_source, ...event }): CarrierEvent[] => {

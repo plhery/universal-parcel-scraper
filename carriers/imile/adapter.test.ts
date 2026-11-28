@@ -731,6 +731,23 @@ describe('Cainiao’s leg in front of iMile’s history', () => {
     expect(() => cainiaoScans(stranger, DELIVERED)).toThrow(expect.objectContaining({ kind: 'indeterminate', reason: 'carrier_unconfirmed' }));
   });
 
+  it('takes Cainiao’s record that names no carrier for a number only iMile issues', () => {
+    const unnamed = (number: string, carrier?: string) => {
+      const reply = cainiaoFixture();
+      const module = reply.module[0]!;
+      module.mailNo = number;
+      if (carrier) module.destCpInfo = { cpName: carrier };
+      else delete module.destCpInfo;
+      for (const trace of [module.globalCombinedLogisticsTraceDTO, module.latestTrace, ...module.detailList]) delete (trace as Row).currentStatusCpInfo;
+      return reply;
+    };
+    const own = `IM0601${'0'.repeat(9)}1`;
+    expect(cainiaoScans(unnamed(own), own)).toEqual(cainiaoScans(cainiaoFixture(), DELIVERED));
+    // A number other networks may also print still needs Cainiao to name iMile, and a record naming another carrier never counts.
+    expect(() => cainiaoScans(unnamed(DELIVERED), DELIVERED)).toThrow(expect.objectContaining({ reason: 'carrier_unconfirmed' }));
+    expect(() => cainiaoScans(unnamed(own, 'Sample Express'), own)).toThrow(expect.objectContaining({ reason: 'carrier_unconfirmed' }));
+  });
+
   it.each([
     ['its slider', () => new Response('<!DOCTYPE html><html><body><punish-component />\n<!--rgv587_flag:sm-->\n</body></html>',
       { headers: { 'Content-Type': 'text/html' } }), 'challenge'],

@@ -49,8 +49,10 @@ makes, with the China leg Cainiao's global tracker holds under the same number.
 ## Cainiao's leg
 
 - Cainiao's record must name iMile as the destination carrier or a scan's carrier; another
-  network's parcel under the same number adds nothing. Cainiao never makes a number iMile's: a
-  number iMile does not know, or knows without scans, stays iMile's answer.
+  network's parcel under the same number adds nothing. A record that names no carrier at all, as
+  Cainiao's can once the parcel is on its way to iMile, is enough for an `IM0601` number, which only
+  iMile issues. Cainiao never makes a number iMile's: a number iMile does not know, or knows
+  without scans, stays iMile's answer.
 - Cainiao relays iMile's own scans on its own clocks, sometimes reworded. iMile's first scan
   past its order record, such as a pickup, a centre or a flight, marks where iMile has the
   parcel. Cainiao's scans count up to the newest one older than that scan, comparing instants;
