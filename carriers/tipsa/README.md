@@ -32,8 +32,9 @@ not ask.
   stay unmapped when those don't know them either.
 - The destination agency reads the parcel again as it loads the van, mostly at the round's
   (`REPARTO`) minute, sometimes minutes or hours later. Agency reads that follow the round
-  on its day, with no other activity between, belong to it and are out for delivery. After
-  any other activity, an agency read means the parcel is in transit again.
+  on its day, with no other activity between, belong to it: they keep its out-for-delivery
+  stage as notices (`stage_source` `none`), so the wording itself reads one stage, in transit.
+  After any other activity, an agency read means the parcel is in transit again.
 - A parcel waiting at the agency ("Pendiente de recoger en Tipsa") and collected there gets an
   agency read and a `REPARTO` minutes before `ENTREGADO`: the counter handing it out, not a
   round. Those rows keep the wait's stage; a round that delivers later is a round.

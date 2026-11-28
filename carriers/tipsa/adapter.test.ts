@@ -2,6 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
+import { resolveResult } from '../../core/result/resolve.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter } from './adapter.js';
 import { normalizeTipsaNumber, parseTipsaDetail, tipsaDetailUrl, tipsaLookupNotFound } from './parser.js';
@@ -101,7 +102,7 @@ describe('TIPSA shipment page', () => {
     ]);
   });
 
-  it("reads the agency's reads after the round, on its day, as out for delivery", () => {
+  it("keeps the round's stage on the agency's reads after it, on its day, as notices", () => {
     const loading = (minute: string, description: string) => `<tr><td class="mdl-data-table__cell--non-numeric">30/03/26 09:${minute}</td>`
       + `<td class="mdl-data-table__cell--non-numeric ellipsis"><span id="est_traz_des_0">${description}</span></td>`
       + '<td class="mdl-data-table__cell--non-numeric ellipsis"><span id="est_traz_pob_0">VILLA EJEMPLO</span></td></tr>';
@@ -109,11 +110,14 @@ describe('TIPSA shipment page', () => {
     const read = parseTipsaDetail(page(loading('06', 'LEIDO EN DESTINO'), loading('06', 'LECTURA EN AGENCIA DESTINO EJEMPLO 01')), NUMBER);
     expect(read).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'LEIDO EN DESTINO' });
     expect(read.events?.slice(0, 4).map(({ description, stage, stage_source }) => [description, stage, stage_source])).toEqual([
-      ['LEIDO EN DESTINO', 'out_for_delivery', undefined],
-      ['LECTURA EN AGENCIA DESTINO EJEMPLO 01', 'out_for_delivery', undefined],
+      ['LEIDO EN DESTINO', 'out_for_delivery', 'none'],
+      ['LECTURA EN AGENCIA DESTINO EJEMPLO 01', 'out_for_delivery', 'none'],
       ['REPARTO', 'out_for_delivery', undefined],
       ['LECTURA EN AGENCIA DESTINO EJEMPLO 01', 'in_transit', undefined],
     ]);
+    // The reads keep the round's stage without reading it: the wording itself reads one stage, transit.
+    const stated = resolveResult(read).events?.slice(0, 4).map(({ stage, stage_source }) => [stage, stage_source]);
+    expect(stated).toEqual([['out_for_delivery', 'none'], ['out_for_delivery', 'none'], ['out_for_delivery', 'carrier_map'], ['in_transit', 'carrier_map']]);
     // Any other activity between them ends the round, whether the status map knows it or not.
     for (const interruption of ['FIN DE REPARTO', 'ACTIVIDAD DESCONOCIDA']) {
       const ended = page(loading('45', 'LEIDO EN DESTINO'), loading('20', interruption));

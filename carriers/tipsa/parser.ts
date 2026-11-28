@@ -134,6 +134,7 @@ export function parseTipsaDetail(html: string, raw: string): CarrierResult {
   events.sort((left, right) => Date.parse(right.time) - Date.parse(left.time));
   // An agency read after the round (REPARTO), on its day and before its outcome, is part of the
   // round: the van's loading at its minute or later, out for delivery rather than back in transit.
+  // It keeps the round's stage as a notice (`stage_source` none); the wording's own stage stays transit.
   const loading = new Set<CarrierEvent>();
   let round: string | undefined;
   for (const event of [...events].reverse()) {
@@ -141,7 +142,7 @@ export function parseTipsaDetail(html: string, raw: string): CarrierResult {
     const key = comparable(event.description!);
     if (key === 'REPARTO') round = day;
     else if (round !== undefined && AGENCY_READ.test(key) && day === round) {
-      event.stage = 'out_for_delivery';
+      Object.assign(event, { stage: 'out_for_delivery', stage_source: 'none' });
       loading.add(event);
     } else round = undefined;
   }
