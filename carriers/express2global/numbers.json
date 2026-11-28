@@ -1,0 +1,46 @@
+{
+  "carrier": "express2global",
+  "records": [
+    {
+      "number": "E2G580184904US",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "express2global"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for E2G速递. The firm's tracker answers it with a parcel flown from the US, cleared in China and handed to SF Express under the number its last row gives."
+    },
+    {
+      "number": "NH719386212US",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/express2global.shtml",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Kuaidi100's page for E2G速递 gives it as the number to try. The firm's tracker answers it with a parcel flown from the US, cleared in China and handed to ZTO under the number its last row gives."
+    }
+  ]
+}

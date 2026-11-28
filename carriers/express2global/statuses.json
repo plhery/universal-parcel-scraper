@@ -1,0 +1,155 @@
+{
+  "carrier": "express2global",
+  "entries": [
+    {
+      "code": null,
+      "wording": "下单成功，待身份证实名认证",
+      "language": "zh",
+      "english": "Order placed, waiting for the recipient's ID check",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The first row of the older waybills, written when the customer books the parcel."
+    },
+    {
+      "code": null,
+      "wording": "运单创建成功，待身份证实名认证",
+      "language": "zh",
+      "english": "Waybill created, waiting for the recipient's ID check",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The first row of the newer waybills."
+    },
+    {
+      "code": null,
+      "wording": "身份证已认证，待打印面单",
+      "language": "zh",
+      "english": "ID checked, waiting to print the label",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "已打印待发货",
+      "language": "zh",
+      "english": "Label printed, waiting to ship",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "Written a minute after the waybill, before the warehouse charges the parcel."
+    },
+    {
+      "code": null,
+      "wording": "包裹已扣费/正在组建出库批次",
+      "language": "zh",
+      "english": "Parcel charged, being put in an outbound batch",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The warehouse holds the parcel and has charged the shipment."
+    },
+    {
+      "code": null,
+      "wording": "包裹送往国际机场途中",
+      "language": "zh",
+      "english": "On the way to the international airport",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "等待航班起飞",
+      "language": "zh",
+      "english": "Waiting for the flight to leave",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "航空运输中",
+      "language": "zh",
+      "english": "In the air",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "航空运输",
+      "language": "zh",
+      "english": "Air transport",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "航班落地",
+      "language": "zh",
+      "english": "The flight has landed",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "航班落地/等待办理提货手续",
+      "language": "zh",
+      "english": "The flight has landed, waiting for the release from the airline",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "卡班运输至清关口岸途中",
+      "language": "zh",
+      "english": "By truck to the port of clearance",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "正在办理提货手续",
+      "language": "zh",
+      "english": "Being released from the airline",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "正在办理提货",
+      "language": "zh",
+      "english": "Being released from the airline",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "等待海关清关",
+      "language": "zh",
+      "english": "Waiting for customs clearance",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "审单中/办理清关手续",
+      "language": "zh",
+      "english": "Documents under review, in customs clearance",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "海关放行/包裹将由国内快递派送/顺丰速运/…",
+      "language": "zh",
+      "english": "Released by customs, a courier in China delivers the parcel: <courier>/<number>",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The last row of the older waybills, with the courier in China and its number."
+    },
+    {
+      "code": null,
+      "wording": "包裹清关完成，正匹配快递单号/中通国际/…；进入国内物流环节，等待派送",
+      "language": "zh",
+      "english": "Cleared, matched to a courier number <courier>/<number>; on to the network in China, waiting for delivery",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The last row of the newer waybills, with the courier in China and its number."
+    }
+  ]
+}
