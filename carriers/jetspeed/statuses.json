@@ -246,6 +246,13 @@
       "language": "en",
       "confirmedBy": "live",
       "note": "The destination country's warehouse receiving the parcel from the origin hub, before the last mile."
+    },
+    {
+      "wording": "Move to the next Example Branch office",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The last mile sending the parcel on to the branch it names, hours after the destination warehouse's sort."
     }
   ]
 }

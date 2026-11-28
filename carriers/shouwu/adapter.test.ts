@@ -85,6 +85,7 @@ it.each([
   ['FR, Votre envoi est sur son site de distribution. Nous le préparons pour le mettre en livraison.,派送中', 'out_for_delivery'],
   ['FR, Votre envoi a été distribué dans la boîte à lettres.,已签收', 'delivered'],
   ['FR, Votre envoi a été distribué dans la boîte à lettres.', 'delivered'],
+  ['FR, Votre envoi a été distribué.,已签收', 'delivered'],
 ] as const)('reads the French sentence Shouwu relays in %s', (wording, stage) => {
   const payload = changed((rows) => rows.splice(0, rows.length, trace(1775990469, wording)));
   expect(parseShouwu(payload, DELIVERED).events?.[0]).toMatchObject({

@@ -97,6 +97,7 @@ describe('JETSPEED tracking adapter', () => {
 
   it('reads the other line’s shorter rows, with the place in brackets before or after the words', () => {
     const result = parseJetspeedPage(rowsPage([
+      ['2026-05-09 09:00:00', 'Move to the next Example Branch office'],
       ['2026-05-08 09:00:00', 'Clearance in the destination country has been completed'],
       ['2026-05-07 18:00:00', 'Inspection documents are being submitted'],
       ['2026-05-06 10:00:00', 'Arrive at airport [Example]'],
@@ -106,7 +107,7 @@ describe('JETSPEED tracking adapter', () => {
     ]), NUMBER);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map' });
     expect(result.events?.map((event) => [event.stage, event.stage_source, event.location])).toEqual([
-      ['in_transit', 'carrier_map', undefined], ['customs', 'carrier_map', undefined], ['in_transit', 'carrier_map', 'Example'],
+      ['in_transit', 'carrier_map', undefined], ['in_transit', 'carrier_map', undefined], ['customs', 'carrier_map', undefined], ['in_transit', 'carrier_map', 'Example'],
       ['in_transit', 'carrier_map', 'Example'], ['accepted', 'carrier_map', 'Example Hub'], ['registered', 'carrier_map', 'Example Hub'],
     ]);
   });
