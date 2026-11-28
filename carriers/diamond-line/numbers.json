@@ -1,5 +1,26 @@
 {
   "carrier": "diamond-line",
-  "gap": "No public page shows a Diamond Line Delivery Systems shipment number.",
-  "records": []
+  "records": [
+    {
+      "number": "173007016",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/diamond-line-delivery/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt",
+          "dpd-ie"
+        ]
+      },
+      "note": "TrackShip's Diamond Line Delivery page gives it as a tracking number example. Diamond Line's tracking API answers it as an LTL shipment picked up in Spokane and delivered in Clinton, Washington."
+    }
+  ]
 }

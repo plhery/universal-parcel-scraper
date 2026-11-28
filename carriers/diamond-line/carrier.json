@@ -18,17 +18,53 @@
   "timezone": "America/Boise",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "diamond-line",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "signed_by",
+    "weight"
+  ],
   "portal": {
     "searchUrl": "https://www.dlds.com/manage/track-shipment/",
     "canaryUrl": "https://www.dlds.com/manage/track-shipment/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "departure_date",
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "signatory",
+      "progress_rail"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "signatory",
+      "weight"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "departure_date",
+      "parcel_count",
+      "customer_reference",
+      "progress_rail"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta"
+    ]
   },
   "links": [],
   "detection": []

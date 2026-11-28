@@ -1,4 +1,45 @@
 {
   "carrier": "diamond-line",
-  "entries": []
+  "entries": [
+    {
+      "code": null,
+      "wording": "Pickup Request Received",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The first row of the public example, at the Customer Care Center: the shipper booked the pickup, before the driver has the freight."
+    },
+    {
+      "code": null,
+      "wording": "Picked Up",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The driver collected the freight at the origin town."
+    },
+    {
+      "code": null,
+      "wording": "Trailer Departed For {terminal}",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The trailer left a terminal for the one the wording names, such as Seattle or the Vantage meet point."
+    },
+    {
+      "code": null,
+      "wording": "Trailer Arrived",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The trailer reached the next terminal; the public example's row gives In Transit as its place."
+    },
+    {
+      "code": null,
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The public example lists it twice: at the delivery's time, and on the day of the proof of delivery without a time."
+    }
+  ]
 }

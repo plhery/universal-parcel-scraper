@@ -1,0 +1,63 @@
+{
+  "shipment": {
+    "pro_number": "173007016",
+    "bol_number": "56858456",
+    "po_number": "4003546",
+    "ship_date": "01/25/2024",
+    "origin": "Spokane, WA",
+    "destination": "Clinton, WA",
+    "pieces": "0",
+    "pallets": "1",
+    "weight": "130",
+    "delivered": "Yes",
+    "del_date": "01/31/2024",
+    "del_time": "  :  ",
+    "received_by": "SEE SCANNED POD",
+    "status": "DELIVERED 01/31/24 DELIVERED CLEAR Signed: SEE SCANNED POD",
+    "lifecycle": "Delivered"
+  },
+  "history": [
+    {
+      "code": "Delivered",
+      "date": "2024-01-31",
+      "time": "  :  ",
+      "remarks": "Clinton, WA"
+    },
+    {
+      "code": "Delivered",
+      "date": "2024-01-26",
+      "time": "15:35",
+      "remarks": "Clinton, WA"
+    },
+    {
+      "code": "Trailer Arrived",
+      "date": "2024-01-26",
+      "time": "02:20",
+      "remarks": "In Transit"
+    },
+    {
+      "code": "Trailer Departed For Seattle",
+      "date": "2024-01-26",
+      "time": "01:26",
+      "remarks": "Vantage Meet Point"
+    },
+    {
+      "code": "Trailer Departed For Vantage Meet Point",
+      "date": "2024-01-25",
+      "time": "19:21",
+      "remarks": "Spokane"
+    },
+    {
+      "code": "Picked Up",
+      "date": "2024-01-25",
+      "time": "15:12",
+      "remarks": "Spokane, WA"
+    },
+    {
+      "code": "Pickup Request Received",
+      "date": "2024-01-25",
+      "time": "13:16",
+      "remarks": "Customer Care Center"
+    }
+  ]
+}

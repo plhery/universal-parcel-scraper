@@ -1276,6 +1276,12 @@
     "reason": "Twelve-digit Diálogo Logística numbers share their shape with other carriers' numeric numbers, so the shape cannot name Diálogo Logística."
   },
   {
+    "carrier": "diamond-line",
+    "pattern": "^\\d{9}$",
+    "kind": "by_design",
+    "reason": "Nine digits are shared by several carriers and nothing in the number points to Diamond Line."
+  },
+  {
     "carrier": "direct-freight-express",
     "pattern": "^\\d{13}$",
     "kind": "by_design",

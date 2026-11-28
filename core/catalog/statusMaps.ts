@@ -1258,6 +1258,7 @@ import { statusMap as hart2hartExpress } from '../../carriers/hart2hart-express/
 import { statusMap as flightLogistics } from '../../carriers/flight-logistics/status.js';
 import { statusMap as ecourierUk } from '../../carriers/ecourier-uk/status.js';
 import { statusMap as airwingsIndia } from '../../carriers/airwings-india/status.js';
+import { statusMap as diamondLine } from '../../carriers/diamond-line/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1567,6 +1568,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'flight-logistics': flightLogistics,
   'ecourier-uk': ecourierUk,
   'airwings-india': airwingsIndia,
+  'diamond-line': diamondLine,
 };
 
 /** The carrier the app files the universal providers' scans under. */
