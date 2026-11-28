@@ -1,0 +1,65 @@
+{
+  "id": "xsb56",
+  "displayName": "Xinshengbang Logistics",
+  "aliases": [
+    "鑫圣邦物流",
+    "深圳鑫圣邦物流",
+    "深圳市鑫圣邦物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#009961"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "xsb56",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "canaryUrl": "https://www.kuaidi100.com/all/xsb56.shtml",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "office_contact_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "office_contact_details"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "signatory"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "xsb56.cn",
+        "www.xsb56.cn"
+      ],
+      "path": "^/Tracking_([A-Za-z0-9]{5,30})\\.shtml$"
+    }
+  ],
+  "detection": []
+}

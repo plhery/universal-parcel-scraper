@@ -7728,5 +7728,11 @@
     "pattern": "^\\d{13}$",
     "kind": "by_design",
     "reason": "Thirteen digits is the test number Kuaidi100 lists for Caifeng Logistics, a bare digit run many carriers' numbers share, so nothing in it points to Caifeng. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "xsb56",
+    "pattern": "^\\d{8}$",
+    "kind": "by_design",
+    "reason": "Eight digits is the test number Kuaidi100 lists for Xinshengbang Logistics, a bare digit run many carriers' numbers share, so nothing in it points to Xinshengbang. The adapter answers explicit selection and the firm's tracking page links."
   }
 ]

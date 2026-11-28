@@ -1,0 +1,40 @@
+{
+  "carrier": "xsb56",
+  "entries": [
+    {
+      "wording": "已开单入库",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The waybill written and the goods booked into the branch that took them."
+    },
+    {
+      "wording": "转送出库",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The goods left the branch for the line or a partner carrying them on."
+    },
+    {
+      "wording": "今日到达站点",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Arrived at the station that delivers them."
+    },
+    {
+      "wording": "今日派送",
+      "language": "zh",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "Out for delivery today."
+    },
+    {
+      "wording": "…回访客户已签收",
+      "language": "zh",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The branch called the customer back on the day it names, who had signed for the goods."
+    }
+  ]
+}
