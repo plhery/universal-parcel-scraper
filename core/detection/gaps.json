@@ -7752,5 +7752,11 @@
     "pattern": "^\\d{5,6}$",
     "kind": "by_design",
     "reason": "Huaxintai's waybills on its Keppon page are a counter of five and six digits, too short and too common to point to any carrier. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "szhst56",
+    "pattern": "^\\d{7}$",
+    "kind": "by_design",
+    "reason": "Hongshuntong's waybills seen are seven bare digits, a counter many carriers' numbers share, so nothing in the number points to Hongshuntong. The adapter answers explicit selection."
   }
 ]

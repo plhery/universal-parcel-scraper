@@ -1,0 +1,47 @@
+{
+  "carrier": "szhst56",
+  "entries": [
+    {
+      "wording": "目的地：…，…件，货物由…开单入库",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The waybill opened at the branch the row names, with its destination city and piece count; the reader drops the consignee the page names between them."
+    },
+    {
+      "wording": "货物己发车，下一站…",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The line truck left for the hub the row names. The firm writes 己 for 已."
+    },
+    {
+      "wording": "货物己到…，正在卸货",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Arrived at the hub the row names and being unloaded."
+    },
+    {
+      "wording": "己和收货人联系好今天派送",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The destination branch arranged the delivery with the consignee for the day; the round itself is the next row."
+    },
+    {
+      "wording": "正在派送中",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Out on the delivery round."
+    },
+    {
+      "wording": "己和收货人核实下午己签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The branch confirmed with the consignee that the freight was signed for that afternoon."
+    }
+  ]
+}

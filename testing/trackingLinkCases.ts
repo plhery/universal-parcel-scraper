@@ -3159,6 +3159,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'xmlxswl', number: '3101104',
     route: /^https:\/\/www\.1008656\.com\/index\.aspx\?id=73320&keyword=3101104$/,
     marker: /隆新顺物流在线查询平台/ },
+  // Hongshuntong's tracking page renders the number's heading on the server, or the line that it holds no record under it.
+  { carrier: 'szhst56', number: '9281593',
+    route: /^https:\/\/www\.szhst56\.com\/tracking\.php\?s=9281593$/,
+    marker: /单号9281593(?:跟踪扫描记录|无效或暂无追踪记录)/ },
   // The same page under Mengxiangtong's company id.
   { carrier: 'mengxiangtong', number: '3923718',
     route: /^https:\/\/wx\.lqfast\.com\/Pub\/UnitListDetail\?companyid=shU7Eab0eKhHUXNJPh%2FoYg%3D%3D&unit=3923718$/,

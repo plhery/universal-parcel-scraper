@@ -1,0 +1,68 @@
+{
+  "id": "szhst56",
+  "displayName": "Hongshuntong Logistics",
+  "aliases": [
+    "鸿顺通物流",
+    "深圳市鸿顺通物流服务有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#1a82cb"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "szhst56",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.szhst56.com/tracking.php?s={trackingNumber}",
+    "searchUrl": "https://www.szhst56.com/tracking.php",
+    "canaryUrl": "https://www.szhst56.com/tracking.php",
+    "shows": [
+      "status",
+      "history",
+      "destination",
+      "parcel_count",
+      "recipient_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "destination",
+      "parcel_count",
+      "recipient_name"
+    ],
+    "unavailable": [
+      "weight",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.szhst56.com",
+        "szhst56.com"
+      ],
+      "pathPattern": "^/tracking\\.php$",
+      "query": "^(?:.*&)?s=([A-Za-z0-9]{5,30})(?=&|$)"
+    }
+  ],
+  "detection": []
+}
