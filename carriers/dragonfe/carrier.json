@@ -1,0 +1,67 @@
+{
+  "id": "dragonfe",
+  "displayName": "DF Logistics",
+  "aliases": [
+    "DF物流",
+    "DragonFight",
+    "Qingdao DragonFight International Supply Chain",
+    "安贞吉",
+    "青岛安贞吉国际供应链服务有限公司"
+  ],
+  "region": {
+    "countries": [
+      "JP",
+      "KR",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#F29417"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "dragonfe",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country"
+  ],
+  "portal": {
+    "canaryUrl": "https://www.kuaidi100.com/all/dragonfe.shtml",
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "signatory"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "dragonfe.com",
+        "www.dragonfe.com"
+      ],
+      "path": "^/index\\.php/Home/Index/getExpTrack/expNo/([A-Za-z0-9]{8,30})/?$"
+    }
+  ],
+  "detection": []
+}

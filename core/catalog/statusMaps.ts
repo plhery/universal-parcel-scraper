@@ -1263,6 +1263,7 @@ import { statusMap as intimeHr } from '../../carriers/intime-hr/status.js';
 import { statusMap as yadex } from '../../carriers/yadex/status.js';
 import { statusMap as omgExpress } from '../../carriers/omg-express/status.js';
 import { statusMap as tobkk } from '../../carriers/tobkk/status.js';
+import { statusMap as dragonfe } from '../../carriers/dragonfe/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1577,6 +1578,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   yadex,
   'omg-express': omgExpress,
   tobkk,
+  dragonfe,
 };
 
 /** The carrier the app files the universal providers' scans under. */

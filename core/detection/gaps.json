@@ -7592,5 +7592,11 @@
     "pattern": "^THATXW\\d{8}[A-Z]{3}$",
     "kind": "open",
     "reason": "The one public waybill is Kuaidi100's test number for Thai Bear, a demonstration order; it does not establish the line's number family, so no rule claims it."
+  },
+  {
+    "carrier": "dragonfe",
+    "pattern": "^JPNDFE\\d{12}$",
+    "kind": "open",
+    "reason": "JPNDFE and twelve digits is the one public waybill, from Kuaidi100's carrier list; one sample does not establish the line's number family, so no rule claims it."
   }
 ]

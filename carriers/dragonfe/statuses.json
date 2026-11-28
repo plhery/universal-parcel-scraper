@@ -1,0 +1,61 @@
+{
+  "carrier": "dragonfe",
+  "entries": [
+    {
+      "code": null,
+      "wording": "【{station}】仓库中心已揽收包裹",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Collected by the overseas warehouse in the brackets, such as Osaka."
+    },
+    {
+      "code": null,
+      "wording": "包裹已入库【{station}】",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Booked into the overseas warehouse in the brackets."
+    },
+    {
+      "code": null,
+      "wording": "包裹已从【{station}】出库，等待干线运输",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Left the overseas warehouse for the international flight."
+    },
+    {
+      "code": null,
+      "wording": "干线航班起飞,已起运正在发往中国",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The international flight to China took off."
+    },
+    {
+      "code": null,
+      "wording": "干线航班已落地,包裹已到达国内机场",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The flight landed at the Chinese airport."
+    },
+    {
+      "code": null,
+      "wording": "提货成功,等待清关",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Collected from the airline, waiting for customs clearance."
+    },
+    {
+      "code": null,
+      "wording": "包裹清关中，请耐心等待",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Customs clearance in progress."
+    }
+  ]
+}
