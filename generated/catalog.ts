@@ -6807,6 +6807,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "aae": {
+    "displayName": "AAE",
+    "color": "#158CEF",
+    "aliases": [
+      "American Asia Express",
+      "AAE全球专递",
+      "AAE全球快递",
+      "AAE-中国件"
+    ],
+    "countries": [
+      "US",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "aae",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.kuaidi100.com/all/aae.shtml",
+    "linkRules": [
+      {
+        "domains": [
+          "cn.aaeweb.com"
+        ],
+        "pathPattern": "^/searchwaybill/?$",
+        "params": [
+          "danhao"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "ab-courier": {
     "displayName": "A&B Courier",
     "color": "#004890",
@@ -8019,12 +8053,20 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Stockholm",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "airmee"
     },
     "canaryUrl": "https://tracking.airmee.com/",
+    "trackingUrlTemplate": "https://tracking.airmee.com/#/shipment-track/{trackingNumber}?startDate=2018-01-01&endDate=2099-12-31",
     "trackingSearchUrl": "https://tracking.airmee.com/#/shipment-search",
     "helpUrl": "https://www.airmee.com/en/support/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.airmee.com"
+        ],
+        "fragment": "^/shipment-track/([A-Za-z0-9]{4,40})(?:\\?.*)?$"
+      }
+    ],
     "detectionRules": []
   },
   "airpak-express": {
@@ -14523,7 +14565,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Australia/Perth",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "bridge-intl",
+      "localClocks": true,
+      "dateOnlyScans": true
     },
     "canaryUrl": "https://www.bri-ems.com/query",
     "trackingSearchUrl": "https://www.bri-ems.com/query",
@@ -16282,6 +16326,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "rawPattern": "^\\d{9}-\\d$"
       }
     ]
+  },
+  "cdxinchen56": {
+    "displayName": "Xinchen Logistics",
+    "color": "#009966",
+    "aliases": [
+      "鑫宸物流",
+      "成都鑫宸物流",
+      "成都鑫宸物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cdxinchen56",
+      "localClocks": true
+    },
+    "canaryUrl": "https://wx.lqfast.com/wx/waybillquery/",
+    "trackingUrlTemplate": "https://wx.lqfast.com/Pub/UnitListDetail?companyid=6n09opswzrylt7MBDbTGSg%3D%3D&unit={trackingNumber}",
+    "trackingSearchUrl": "https://wx.lqfast.com/Pub/UnitCheck?CompanyId=6n09opswzrylt7MBDbTGSg%3D%3D",
+    "linkRules": [
+      {
+        "domains": [
+          "wx.lqfast.com"
+        ],
+        "pathPattern": "^/Pub/UnitListDetail$",
+        "query": "^(?=(?:.*&)?companyid=6n09opswzrylt7MBDbTGSg==(?:&|$))(?:.*&)?unit=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
   },
   "cel-changda": {
     "displayName": "CEL Changda",
@@ -24809,6 +24885,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "dyb-express": {
+    "displayName": "DYB Express",
+    "color": "#1B2A5C",
+    "aliases": [
+      "DYB",
+      "DYB Logistics",
+      "dybservice"
+    ],
+    "countries": [
+      "CA",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dyb-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.kuaidi100.com/all/dybservice.shtml",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dyexpress": {
     "displayName": "Dayi Express",
     "color": "#F41834",
@@ -25069,9 +25168,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "e24metro-ca"
     },
-    "canaryUrl": "https://www.metroscg.com/contact-us/",
+    "canaryUrl": "https://tracking-ca.fareye.co/universal-search",
+    "trackingUrlTemplate": "https://tracking-ca.fareye.co/universal-search?encodedString=Qg8NNI2PxmSa3TWy2asu6u3MzTI0ThS54ELjfozEWy2Wvg%3D%3D&lang=en&param1={trackingNumber}",
+    "trackingSearchUrl": "https://tracking-ca.fareye.co/universal-search?encodedString=Qg8NNI2PxmSa3TWy2asu6u3MzTI0ThS54ELjfozEWy2Wvg%3D%3D&lang=en",
+    "helpUrl": "https://www.metroscg.com/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -31903,6 +32005,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "gdqwwl": {
+    "displayName": "Quanwang Logistics",
+    "color": "#E60012",
+    "aliases": [
+      "全网物流",
+      "广东全网物流",
+      "广东全网物流有限公司",
+      "Guangdong Quanwang Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gdqwwl",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.kuaidi100.com/all/gdqwwl.shtml",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "gebrueder-weiss": {
     "displayName": "Gebrüder Weiss",
     "color": "#ff6600",
@@ -36341,6 +36466,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "hongshu-express": {
+    "displayName": "HongShu Express",
+    "color": "#f7cea0",
+    "aliases": [
+      "红树国际快递",
+      "红树快递",
+      "小红树集运",
+      "HongShu International Express"
+    ],
+    "countries": [
+      "CA",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hongshu-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hongsuda": {
     "displayName": "HSD Express",
     "color": "#fdaa05",
@@ -37008,6 +37157,41 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.huaqiex.com/",
     "trackingSearchUrl": "https://www.huaqiex.com/tracking",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "huaxia-express": {
+    "displayName": "Huaxia Express",
+    "color": "#3c88c6",
+    "aliases": [
+      "华夏快递",
+      "华夏国际快递",
+      "加拿大华夏快递",
+      "Huaxia International Express"
+    ],
+    "countries": [
+      "CA",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "America/Vancouver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "huaxia-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.huaxiaglobal.ca/",
+    "trackingUrlTemplate": "https://www.huaxiaglobal.ca/cgi-bin/GInfo.dll?MfcISAPICommand=EmmisTrack&w=nacv&cno={trackingNumber}",
+    "trackingSearchUrl": "https://www.huaxiaglobal.ca/track/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.huaxiaglobal.ca",
+          "huaxiaglobal.ca"
+        ],
+        "pathPattern": "^/cgi-bin/ginfo\\.dll$",
+        "query": "^(?=(?:.*&)?MfcISAPICommand=(?:emmistrack|EmsApiTrack)(?:&|$))(?:.*&)?cno=([^&]+)(?=&|$)"
+      }
+    ],
     "detectionRules": []
   },
   "huaya-express": {
@@ -53760,6 +53944,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "parcel100": {
+    "displayName": "Parcel100",
+    "color": "#F07D1A",
+    "aliases": [
+      "Parcel100 B.V.",
+      "Parcel100物流"
+    ],
+    "countries": [
+      "NL",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Amsterdam",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "parcel100",
+      "localClocks": true
+    },
+    "canaryUrl": "https://track.parcel100.com/",
+    "trackingSearchUrl": "https://track.parcel100.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "parcel2go": {
     "displayName": "Parcel2Go",
     "color": "#015db9",
@@ -66898,6 +67105,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "stwles": {
+    "displayName": "Shengtai Logistics",
+    "color": "#FF6600",
+    "aliases": [
+      "盛泰物流",
+      "北京盛泰物流有限公司",
+      "Beijing Shengtai Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "stwles",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.kuaidi100.com/all/stwles.shtml",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "suhu": {
     "displayName": "Suhu Express",
     "color": "#e8501a",
@@ -76882,6 +77111,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "xhongda56": {
+    "displayName": "Xinhongda Logistics",
+    "color": "#FBA84A",
+    "aliases": [
+      "新宏达物流",
+      "乐清市新宏达物流有限公司",
+      "Yueqing Xinhongda Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xhongda56",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.kuaidi100.com/all/xhongda56.shtml",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "xindus": {
     "displayName": "Xindus",
     "color": "#1262af",
@@ -79910,6 +80161,7 @@ export const CARRIER_IDS = [
   "a2b-fi",
   "a3-transport",
   "aaa-cooper",
+  "aae",
   "ab-courier",
   "abc-cargo-express",
   "abest-express",
@@ -80192,6 +80444,7 @@ export const CARRIER_IDS = [
   "ccfs",
   "cdek",
   "cdl",
+  "cdxinchen56",
   "cel-changda",
   "celeritas",
   "celero",
@@ -80434,6 +80687,7 @@ export const CARRIER_IDS = [
   "dtd-pk",
   "duxiuexp",
   "dx",
+  "dyb-express",
   "dyexpress",
   "dyj-express",
   "dylo-express",
@@ -80643,6 +80897,7 @@ export const CARRIER_IDS = [
   "gbs-broker",
   "gcx",
   "gdex",
+  "gdqwwl",
   "gebrueder-weiss",
   "geis",
   "geis-pl",
@@ -80773,6 +81028,7 @@ export const CARRIER_IDS = [
   "home-delivery-team",
   "homexpress",
   "honducor",
+  "hongshu-express",
   "hongsuda",
   "hongtai-logistics",
   "honour-lane-shipping",
@@ -80795,6 +81051,7 @@ export const CARRIER_IDS = [
   "huahai-express",
   "huahan",
   "huaqi-express",
+  "huaxia-express",
   "huaya-express",
   "huayutong",
   "hub-delivery",
@@ -81298,6 +81555,7 @@ export const CARRIER_IDS = [
   "paquetexpress",
   "paquexpress-urgente",
   "parcel-one",
+  "parcel100",
   "parcel2go",
   "parcelabc",
   "parceljet",
@@ -81678,6 +81936,7 @@ export const CARRIER_IDS = [
   "stop-start",
   "straightship",
   "streck",
+  "stwles",
   "suhu",
   "sumxpress",
   "sundarban-courier",
@@ -81985,6 +82244,7 @@ export const CARRIER_IDS = [
   "xdp",
   "xendnow",
   "xgs",
+  "xhongda56",
   "xindus",
   "xinghe-freight",
   "xingyou",
@@ -82212,6 +82472,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "a2b-fi": [],
   "a3-transport": [],
   "aaa-cooper": [],
+  "aae": [],
   "ab-courier": [],
   "abc-cargo-express": [],
   "abest-express": [],
@@ -82494,6 +82755,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ccfs": [],
   "cdek": ["cdek-1"],
   "cdl": ["cdl-1","cdl-2"],
+  "cdxinchen56": [],
   "cel-changda": [],
   "celeritas": [],
   "celero": [],
@@ -82736,6 +82998,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dtd-pk": [],
   "duxiuexp": [],
   "dx": ["dx-1","dx-2"],
+  "dyb-express": [],
   "dyexpress": [],
   "dyj-express": ["dyj-express-1"],
   "dylo-express": [],
@@ -82945,6 +83208,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gbs-broker": ["gbs-broker-1"],
   "gcx": [],
   "gdex": ["gdex-1"],
+  "gdqwwl": [],
   "gebrueder-weiss": [],
   "geis": [],
   "geis-pl": [],
@@ -83075,6 +83339,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "home-delivery-team": [],
   "homexpress": [],
   "honducor": [],
+  "hongshu-express": [],
   "hongsuda": [],
   "hongtai-logistics": [],
   "honour-lane-shipping": [],
@@ -83097,6 +83362,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "huahai-express": [],
   "huahan": ["huahan-1"],
   "huaqi-express": [],
+  "huaxia-express": [],
   "huaya-express": ["huaya-express-1"],
   "huayutong": [],
   "hub-delivery": [],
@@ -83600,6 +83866,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "paquetexpress": ["paquetexpress-1","paquetexpress-2"],
   "paquexpress-urgente": [],
   "parcel-one": [],
+  "parcel100": [],
   "parcel2go": [],
   "parcelabc": [],
   "parceljet": [],
@@ -83980,6 +84247,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "stop-start": [],
   "straightship": ["straightship-1","straightship-ca","straightship-2"],
   "streck": [],
+  "stwles": [],
   "suhu": ["suhu-1"],
   "sumxpress": [],
   "sundarban-courier": [],
@@ -84287,6 +84555,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xdp": ["xdp-1"],
   "xendnow": [],
   "xgs": [],
+  "xhongda56": [],
   "xindus": [],
   "xinghe-freight": ["xinghe-freight-1","xinghe-freight-truncated","xinghe-freight-mistyped"],
   "xingyou": [],
