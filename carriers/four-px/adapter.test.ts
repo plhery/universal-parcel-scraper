@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { readLateRegistrations } from '../../core/result/registration.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { adapter, FourPxTracker, parse } from './adapter.js';
 import { statusMap } from './status.js';
 import { InvalidInputError } from '../../core/errors/index.js';
@@ -400,6 +401,10 @@ describe('4PX result projection', () => {
     expect(statusMap.stage(null, 'shipment info received')).toBe('registered');
     expect(statusMap.stage(null, 'export customs clearance started')).toBe('in_transit');
     expect(statusMap.stage(null, '货物电子信息已经收到')).toBe('registered');
+    // A partner's pre-advice, before the parcel reaches it; a code or other words leave it to the shared rules.
+    expect(statusMap.stage(null, normalizeStatusWording('Shipment received in Example systems (not arrive in Sampleland)'))).toBe('registered');
+    expect(statusMap.stage('FPX_NEW', normalizeStatusWording('Shipment received in Example systems (not arrive in Sampleland)'))).toBeUndefined();
+    expect(statusMap.stage(null, normalizeStatusWording('Shipment received in Example warehouse'))).toBeUndefined();
     expect(statusMap.stage('FPX_NEW', 'manifest created')).toBeUndefined();
   });
 

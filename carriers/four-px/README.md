@@ -56,7 +56,9 @@ partner reported, from a label to an arrival abroad, so their wording decides.
 "Parcel arrival notified" is Helthjem's notice that the shop announced the parcel, a
 label rather than an arrival.
 A partner's transit scans relayed without a code are staged by their whole
-wording. A partner's "In transit" under the delivery code `FPX_D_SD` is a move
+wording. "Shipment received in … systems (not arrive in …)", whatever partner and
+place it names, is that partner's pre-advice, read as transit once the parcel has
+moved. A partner's "In transit" under the delivery code `FPX_D_SD` is a move
 toward the office that delivers, days before the round, so it reads as in
 transit. Other unknown codes stay unstaged. A partner's qualifier left after an
 underscore at the end of a wording, as DPD's (`…_nabn`), is dropped. A

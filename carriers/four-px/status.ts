@@ -89,6 +89,12 @@ const UNCODED: ReadonlyMap<string, Stage> = new Map([
   ['departed gofo regional hub', 'in_transit'],
 ]);
 
+// A partner's systems holding the shipment's data before the parcel reaches it, relayed without a code:
+// "Shipment received in … systems (not arrive in …)". A pre-advice before the pickup; when 4PX hands the
+// parcel on and the next partner's systems get it, the shared result reads that late registration as transit.
+const PRE_ADVICE = /^shipment received in \S+ systems \(not arrive in [^)]+\)$/;
+const uncodedStage = (wording: string): Stage | undefined => UNCODED.get(wording) ?? (PRE_ADVICE.test(wording) ? 'registered' : undefined);
+
 export interface FourPxStatus extends ClassifiedStatus {
   source: string;
 }
@@ -98,7 +104,7 @@ export function fourPxStatus(code: string, description = ''): FourPxStatus | und
   if (restaged) return { status: languageStageStatus(restaged), stage: restaged, source: 'carrier_map' };
   const mapped = CODES.get(code);
   if (mapped) return { ...mapped, source: 'carrier_map' };
-  const uncoded = code ? undefined : UNCODED.get(normalizeStatusWording(description));
+  const uncoded = code ? undefined : uncodedStage(normalizeStatusWording(description));
   if (uncoded) return { status: languageStageStatus(uncoded), stage: uncoded, source: 'carrier_map' };
   if (!WORDED.has(code)) return undefined;
   const exact = wordedStage(normalizeStatusWording(description));
@@ -118,7 +124,7 @@ function wordedStage(wording: string): Stage | undefined {
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {
-    if (!code) return UNCODED.get(wording);
+    if (!code) return uncodedStage(wording);
     return RESTAGED.get(`${code}\u0000${wording}`) ?? CODES.get(code)?.stage ?? (WORDED.has(code) ? wordedStage(wording) : undefined);
   },
   gaps: [],
