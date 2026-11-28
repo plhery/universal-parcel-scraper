@@ -3093,6 +3093,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'zgtux', number: 'TX999000017',
     route: /^https:\/\/vip\.zgtux\.com\/routes\?no=TX999000017$/,
     marker: /运单号：\s*TX999000017/ },
+  // DsyExpress's search answers an unknown waybill with its tips page, which does not repeat the number.
+  { carrier: 'overseaex', number: 'OE99010100417',
+    route: /^https:\/\/www\.overseaex\.com\/index\.php\?c=index&f=search&sn=OE99010100417$/,
+    marker: /运单信息不存在/, forwarding: { notFound: /运单信息不存在/ } },
 ];
 
 /**

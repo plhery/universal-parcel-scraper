@@ -1,0 +1,85 @@
+{
+  "id": "overseaex",
+  "displayName": "Oversea Express",
+  "aliases": [
+    "Overseaex",
+    "波音速递",
+    "Oversea Express Boston Corp"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#00185A"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "overseaex",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "origin_country",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.overseaex.com/index.php?c=index&f=search&sn={trackingNumber}",
+    "searchUrl": "https://www.overseaex.com/",
+    "canaryUrl": "https://www.overseaex.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "signatory",
+      "driver_name",
+      "driver_phone"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "signatory",
+      "driver_name",
+      "driver_phone"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "overseaex.com",
+        "www.overseaex.com"
+      ],
+      "pathPattern": "^/index\\.php$",
+      "params": [
+        "sn"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -7468,5 +7468,11 @@
     "pattern": "^\\d{13}$",
     "kind": "collision",
     "reason": "Rongtong International's one public waybill is thirteen bare digits, a shape Yunda, Delhivery, Correos Chile and other carriers' rules take, and it is handed on for delivery in China under the same number, so detection does not name Rongtong. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "overseaex",
+    "pattern": "^OE\\d{11}$",
+    "kind": "collision",
+    "reason": "OE and eleven digits is Oversea Express's waybill on Kuaidi100's test number, and two characters and eleven digits is a shape La Poste's rule takes, so detection does not name Oversea Express. The adapter answers explicit selection."
   }
 ]

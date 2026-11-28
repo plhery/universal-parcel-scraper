@@ -1,0 +1,92 @@
+{
+  "carrier": "overseaex",
+  "entries": [
+    {
+      "code": null,
+      "wording": "运单创建成功，等待扣款处理",
+      "language": "zh",
+      "english": "Waybill created, waiting for the charge",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The first row, written when the customer books the parcel."
+    },
+    {
+      "code": null,
+      "wording": "运单扣款成功，等待出库",
+      "language": "zh",
+      "english": "Waybill charged, waiting to leave the warehouse",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The warehouse holds the parcel and has charged the shipment."
+    },
+    {
+      "code": null,
+      "wording": "包裹已出库，送往机场途中",
+      "language": "zh",
+      "english": "The parcel has left the warehouse for the airport",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "美国海关，配载航班",
+      "language": "zh",
+      "english": "US customs, loaded on a flight",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Export from the US, before the flight to China."
+    },
+    {
+      "code": null,
+      "wording": "青岛市【青岛李沧站】，已揽收",
+      "language": "zh",
+      "english": "Picked up at <station>",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "BEST Express's first row after clearance: the courier in China takes the parcel on."
+    },
+    {
+      "code": null,
+      "wording": "百世快递已揽件，快递单号：…",
+      "language": "zh",
+      "english": "Picked up by BEST Express, courier number …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The platform's row for the hand-off to the courier in China, with that courier's number."
+    },
+    {
+      "code": null,
+      "wording": "到青岛市【青岛转运中心】",
+      "language": "zh",
+      "english": "Arrived at <station>",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "青岛市【青岛转运中心】，正发往【北京转运中心】",
+      "language": "zh",
+      "english": "Leaving <station> for <station>",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "北京市【北京房山区窦店分部】，正在派件",
+      "language": "zh",
+      "english": "Out for delivery from <station>",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The row names the courier with a mobile in a bracket, which the reader leaves out."
+    },
+    {
+      "code": null,
+      "wording": "北京市【北京房山区窦店分部】，已签收",
+      "language": "zh",
+      "english": "Signed for, <station>",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The row names the person who signed, whom the reader leaves out."
+    }
+  ]
+}
