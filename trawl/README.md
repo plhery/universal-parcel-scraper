@@ -539,8 +539,9 @@ Signer details, cookies, verification fields and page HTML stay in the context. 
 pause leaves one checkbox-only attempt; an unfinished verification keeps provider fallback.
 
 PasarEX ticks its tracking form's reCAPTCHA checkbox in a fresh context and sends the form's
-own GET. Pictures the checkbox asks for go to the picture solver below; audio comes last, outside
-the audio pause and with 15 seconds left. The helper binds that one main-frame request to the
+own GET. Pictures the checkbox asks for go to the picture solver below, with up to 35 seconds, or
+55 during the audio pause, since Google can ask for several challenges in a row; audio comes last,
+outside the audio pause and with 15 seconds left. The helper binds that one main-frame request to the
 whole number and returns the order's number and its status groups of rows. The token, cookies and
 page HTML stay in the context.
 

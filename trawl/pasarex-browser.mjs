@@ -126,9 +126,11 @@ export async function runPasarexBrowser({ url, capture, handle, tier, maxTimeout
     // detector; the audio solver comes last, within its pause, since audio from a refused address only adds to the block.
     const token = () => page.locator('[name="g-recaptcha-response"]').inputValue({ timeout: remaining() }).then(v => !!v, () => false);
     await page.frameLocator(RECAPTCHA_ANCHOR).first().locator('#recaptcha-anchor').click({ timeout: Math.min(10000, remaining()) });
-    if (await solveImages(page, { timeoutMs: Math.max(1, Math.min(35000, remaining() - 5000)), signal, report: reportImages }))
+    // While audio waits out its pause, the pictures get the time it would have had: Google can ask for several in a row.
+    const audio = !!solveNativeCaptcha && await audioBackoff.remainingMs() <= 0;
+    if (await solveImages(page, { timeoutMs: Math.max(1, Math.min(audio ? 35000 : 55000, remaining() - 5000)), signal, report: reportImages }))
       await page.waitForFunction(() => !!document.querySelector('[name="g-recaptcha-response"]')?.value, null, { timeout: Math.min(3000, remaining()) }).catch(() => {});
-    if (!expired && solveNativeCaptcha && remaining() > 15000 && !await token() && await audioBackoff.remainingMs() <= 0)
+    if (!expired && audio && remaining() > 15000 && !await token() && await audioBackoff.remainingMs() <= 0)
       await solveNativeCaptcha(page, Math.max(1, Math.min(30000, remaining() - 5000)), event => { if (event === 'audio_blocked') audioBackoff.block(); });
     if (expired || !await token()) return result();
     // The token is a few seconds old when the form sends it, well within its two minutes.
