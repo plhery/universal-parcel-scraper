@@ -90,6 +90,11 @@
       "preferred": true
     },
     {
+      "id": "four-px-dated",
+      "pattern": "^CN\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{8}$",
+      "confidence": "low"
+    },
+    {
       "id": "four-px-waybill",
       "pattern": "^311\\d{9}$",
       "confidence": "low",

@@ -191,7 +191,8 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
       JXCYT0000000001YQ: 'juxi-express', FARZZ9999999980YQ: 'far-international' };
     for (const [number, carrier] of Object.entries(owners)) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier, confidence: 'high', candidates: [carrier] });
-      expect(recognitionCandidates(number), number).toEqual([]);
+      // DHLink carries some of Juxi's parcels under Juxi's number, so recognition asks it about Juxi's alone.
+      expect(recognitionCandidates(number).map((candidate) => candidate.carrier), number).toEqual(carrier === 'juxi-express' ? ['dhlink'] : []);
     }
     // BUFFALO's second layout keeps its prefix and the YQ ending, whatever its two letter codes.
     for (const number of ['BUFZA1SK23456BUYQ', 'BUFZA1CL23456ABYQ']) {
@@ -370,8 +371,19 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     }
   });
 
-  it('names Juxi Express for its waybills and asks DHLink about those on the lines its tracker knows, and no other', () => {
-    for (const number of ['JXCYI0000000001YQ', 'JXCZO0000000001YQ', 'JXCUS0000000001YQ', 'JXCZI0000000001YQ']) {
+  it('asks 4PX about its dated CN references, and only whole dates', () => {
+    for (const number of ['CN26112899999990', 'CN25010199999990']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['four-px'] });
+      expect(recognitionAskedCarriers(number), number).toEqual(['four-px']);
+    }
+    for (const number of ['CN26132899999990', 'CN26113299999990', 'CN2611289999999', 'CN261128999999990', 'CX26112899999990']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('four-px');
+    }
+  });
+
+  it('names Juxi Express for its waybills and asks DHLink, whose tracker knows the parcels it carries on any line', () => {
+    for (const number of ['JXCYI0000000001YQ', 'JXCZO0000000001YQ', 'JXCUS0000000001YQ', 'JXCZI0000000001YQ',
+      'JXCYT0000000001YQ', 'JXCYQ0000000001YQ', 'JXCYG0000000001YQ', 'JXCNI0000000001YQ', 'JXCOZ0000000001YQ', 'JXCSU0000000001YQ']) {
       expect(detectCarrierMatch(number), number).toMatchObject({
         carrier: 'juxi-express', confidence: 'high', candidates: ['juxi-express'],
       });
@@ -379,11 +391,6 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
       expect(recognitionCandidates(number)[0], number).toMatchObject({ carrier: 'dhlink', preferred: true });
     }
     expect(recognitionAskedCarriers('jxczo 0000 0000 01 yq')).toEqual(['dhlink']);
-    // Juxi's other lines are its own: DHLink's tracker does not know them, and nobody is asked.
-    for (const number of ['JXCYT0000000001YQ', 'JXCYQ0000000001YQ', 'JXCYG0000000001YQ', 'JXCNI0000000001YQ', 'JXCOZ0000000001YQ', 'JXCSU0000000001YQ']) {
-      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'juxi-express', confidence: 'high', candidates: ['juxi-express'] });
-      expect(recognitionAskedCarriers(number), number).toEqual([]);
-    }
     // A carrier whose check a number passes by chance is not asked beside a carrier without a tracker.
     const pargo = Array.from({ length: 10 }, (_, digit) => `PAR428605173${digit}`);
     expect(pargo.some((number) => CHECKSUMS['magyar-posta'](number))).toBe(true);

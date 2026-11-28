@@ -13,6 +13,8 @@ Emile's barcodes of `EM`, sixteen digits and `CA`, on parcels 4PX hands to Emile
 suggest 4PX ahead of [Emile](../emile/README.md): Emile's history names 4PX as the shipper,
 and 4PX's feed holds the whole journey where Emile's holds the Canadian leg, so recognition
 settles on 4PX when both know the number. Emile's twelve-digit barcodes stay Emile's.
+References of `CN`, a six-digit date and eight digits are ones 4PX's tracker answers. The shape is
+generic, so `four-px-dated` only suggests 4PX and recognition asks it.
 HTTP recognition uses the same identity-bound feed to confirm matching shipment activity.
 
 The portal displays each scan's `tkDateStr` with `tkTimezone`, an offset or,
