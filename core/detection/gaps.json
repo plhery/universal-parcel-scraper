@@ -7464,6 +7464,12 @@
     "reason": "TX and nine digits is Tuxing Supply Chain's waybill on Kuaidi100's samples, and two letters and nine digits is a shape GLS Italy's rule takes, so detection does not name Tuxing. The adapter answers explicit selection."
   },
   {
+    "carrier": "morelink56",
+    "pattern": "^\\d{15}$",
+    "kind": "collision",
+    "reason": "MoreLink's one public order number is fifteen bare digits, a shape BRT, Yunda, Ozon and other carriers' rules take, so detection does not name MoreLink. The adapter answers explicit selection."
+  },
+  {
     "carrier": "sunspeedy",
     "pattern": "^PL\\d{12}CN$",
     "kind": "by_design",

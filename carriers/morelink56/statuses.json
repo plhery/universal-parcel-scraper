@@ -1,0 +1,113 @@
+{
+  "carrier": "morelink56",
+  "entries": [
+    {
+      "code": null,
+      "wording": "您提交了订单，请等待系统受理",
+      "language": "zh",
+      "english": "You submitted the order, please wait for the system to accept it",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The order exists; the firm does not have the goods yet."
+    },
+    {
+      "code": null,
+      "wording": "转运中心已收货",
+      "language": "zh",
+      "english": "Received at the transit centre",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The firm's warehouse in China has the goods; the remark names it."
+    },
+    {
+      "code": null,
+      "wording": "货物已装柜",
+      "language": "zh",
+      "english": "Goods loaded into the container",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Loaded for the sea crossing."
+    },
+    {
+      "code": null,
+      "wording": "出口查验",
+      "language": "zh",
+      "english": "Export inspection",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "China's customs inspect the export."
+    },
+    {
+      "code": null,
+      "wording": "出口报关已放行",
+      "language": "zh",
+      "english": "Export declaration released",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Export clearance done; the remark names the vessel and voyage."
+    },
+    {
+      "code": null,
+      "wording": "已开船",
+      "language": "zh",
+      "english": "Vessel departed",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The ship has left China."
+    },
+    {
+      "code": null,
+      "wording": "已到港",
+      "language": "zh",
+      "english": "Arrived at the port",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Arrival at the destination port."
+    },
+    {
+      "code": null,
+      "wording": "目的港清关中",
+      "language": "zh",
+      "english": "Clearing customs at the destination port",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Import clearance under way."
+    },
+    {
+      "code": null,
+      "wording": "货物清关已放行",
+      "language": "zh",
+      "english": "Goods released by customs",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Import clearance done."
+    },
+    {
+      "code": null,
+      "wording": "已拆柜",
+      "language": "zh",
+      "english": "Container unloaded",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The container is unpacked at the destination; the remark may give the planned warehouse delivery day."
+    },
+    {
+      "code": null,
+      "wording": "货物已签收",
+      "language": "zh",
+      "english": "Goods signed for",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Delivered to the destination warehouse."
+    },
+    {
+      "code": null,
+      "wording": "订单预受理",
+      "language": "zh",
+      "english": "Order pre-accepted",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "A system notice naming the order, which the firm may write at any time: the sample's is dated after delivery. It moves nothing."
+    }
+  ]
+}

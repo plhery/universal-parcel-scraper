@@ -1,0 +1,29 @@
+{
+  "carrier": "morelink56",
+  "records": [
+    {
+      "number": "810086200300213",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cdn.kuaidi100.com/js/share/company.js",
+        "date": "2026-11-28",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "brt",
+          "yunda",
+          "ozon-logistics"
+        ]
+      },
+      "note": "Kuaidi100's carrier list gives it as the test number for 无限链接. The firm's tracker answers it with a sea freight order from its Shenzhen warehouse to an Amazon warehouse in Japan."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "id": "morelink56",
+  "displayName": "MoreLink",
+  "aliases": [
+    "无限链接",
+    "广东无限链接信息科技有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#FF0000"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "morelink56",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "destination_country"
+  ],
+  "portal": {
+    "searchUrl": "https://client.morelink56.com/homepage/order_tracking",
+    "canaryUrl": "https://client.morelink56.com/homepage/order_tracking",
+    "shows": [
+      "status",
+      "history",
+      "destination_country",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country"
+    ],
+    "discarded": [
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

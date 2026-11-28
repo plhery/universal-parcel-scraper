@@ -19,6 +19,8 @@ const profiles = {
   chinaqingguan: { width: 50, height: 24, format: 'gif', crop: { left: 1, top: 1, width: 48, height: 22 }, keepAspect: true },
   'professional-couriers': { width: 160, height: 44, format: 'png' },
   sunspeedy: { width: 90, height: 30, format: 'png' },
+  // MoreLink's letters read best kept to the picture's proportions.
+  morelink56: { width: 131, height: 41, format: 'jpeg', keepAspect: true },
   // MTCaptcha's photographic pictures run to tens of kilobytes. The text keeps to the middle, and the
   // model reads it best cut from the margins and stretched to its input.
   mtcaptcha: { width: 350, height: 100, format: 'gif', maxBytes: 200_000, crop: { left: 30, top: 10, width: 300, height: 80 }, fit: 'fill' },
