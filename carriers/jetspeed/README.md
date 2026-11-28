@@ -21,7 +21,8 @@ Recognition asks the same lookup.
 - The rows follow a plan, a steady day or two apart at any hour, as Quick Fort's do. One dated after
   the lookup waits until it is due.
 - Some rows name a place in the wording itself: the origin's town, the origin hub, the country of
-  the airport or facility the parcel reached, the town the delivery station serves. The adapter
+  the airport or facility the parcel reached, the town the delivery station serves, or the station's
+  own town and area before its postcode. The adapter
   reads it as the row's place, and the destination facility's country as the destination.
 - Another line writes shorter rows, with the origin hub or town, or the destination's country, in
   brackets before, among or after the words; the adapter reads the brackets as the row's place. Its first

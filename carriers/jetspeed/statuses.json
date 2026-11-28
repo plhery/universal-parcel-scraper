@@ -253,6 +253,13 @@
       "language": "en",
       "confirmedBy": "live",
       "note": "The last mile sending the parcel on to the branch it names, hours after the destination warehouse's sort."
+    },
+    {
+      "wording": "Arrived at the delivery station Example Town,Example Area,00000",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The last mile's delivery station, named by its town, area and postcode, hours after the parcel moved on to the branch."
     }
   ]
 }
