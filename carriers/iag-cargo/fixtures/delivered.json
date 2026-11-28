@@ -1,0 +1,327 @@
+{
+  "awb": {
+    "awbNumber": "125-12345675",
+    "totalPackages": 3,
+    "totalWeight": 120.5,
+    "unitOfTotalWeight": "K",
+    "destinationCity": "Johannesburg",
+    "destinationCode": "JNB",
+    "originCity": "Manchester",
+    "originCode": "MAN"
+  },
+  "journeyStations": [
+    {
+      "location": {
+        "airportName": "Manchester Airport",
+        "countryCode": "GB",
+        "cityName": "Manchester",
+        "locationCode": "MAN"
+      },
+      "flightNumber": "BA9620",
+      "milestones": [
+        {
+          "milestoneCode": "RCS",
+          "flightNumber": "",
+          "packages": 3,
+          "weight": 120.5,
+          "unitOfWeight": "K",
+          "eventTime": "2026-11-16T14:05:00.000Z",
+          "receptionTime": "2026-11-16T14:05:00.000Z",
+          "duplicated": false,
+          "status": "FINE",
+          "timeIndicator": "A",
+          "location": {
+            "airportName": "Manchester Airport",
+            "countryCode": "GB",
+            "cityName": "Manchester",
+            "locationCode": "MAN"
+          },
+          "sectorOrigin": {
+            "airportName": "",
+            "countryCode": "",
+            "cityName": "",
+            "locationCode": ""
+          },
+          "sectorDestination": {
+            "airportName": "",
+            "countryCode": "",
+            "cityName": "",
+            "locationCode": ""
+          },
+          "discrepancy": false
+        },
+        {
+          "milestoneCode": "DEP",
+          "flightNumber": "BA9620",
+          "packages": 3,
+          "weight": 120.5,
+          "unitOfWeight": "K",
+          "eventTime": "2026-11-16T20:30:00.000Z",
+          "receptionTime": "2026-11-16T20:30:00.000Z",
+          "duplicated": false,
+          "status": "FINE",
+          "timeIndicator": "A",
+          "location": {
+            "airportName": "Manchester Airport",
+            "countryCode": "GB",
+            "cityName": "Manchester",
+            "locationCode": "MAN"
+          },
+          "sectorOrigin": {
+            "airportName": "Manchester Airport",
+            "countryCode": "GB",
+            "cityName": "Manchester",
+            "locationCode": "MAN"
+          },
+          "sectorDestination": {
+            "airportName": "London Heathrow Airport",
+            "countryCode": "GB",
+            "cityName": "London",
+            "locationCode": "LHR"
+          },
+          "discrepancy": false
+        }
+      ]
+    },
+    {
+      "location": {
+        "airportName": "London Heathrow Airport",
+        "countryCode": "GB",
+        "cityName": "London",
+        "locationCode": "LHR"
+      },
+      "flightNumber": "BA0055",
+      "milestones": [
+        {
+          "milestoneCode": "ARR",
+          "flightNumber": "BA9620",
+          "packages": 3,
+          "weight": 120.5,
+          "unitOfWeight": "K",
+          "eventTime": "2026-11-17T01:10:00.000Z",
+          "receptionTime": "2026-11-17T01:10:00.000Z",
+          "duplicated": false,
+          "status": "FINE",
+          "timeIndicator": "A",
+          "location": {
+            "airportName": "London Heathrow Airport",
+            "countryCode": "GB",
+            "cityName": "London",
+            "locationCode": "LHR"
+          },
+          "sectorOrigin": {
+            "airportName": "Manchester Airport",
+            "countryCode": "GB",
+            "cityName": "Manchester",
+            "locationCode": "MAN"
+          },
+          "sectorDestination": {
+            "airportName": "London Heathrow Airport",
+            "countryCode": "GB",
+            "cityName": "London",
+            "locationCode": "LHR"
+          },
+          "discrepancy": false
+        },
+        {
+          "milestoneCode": "ARR",
+          "flightNumber": "BA9620",
+          "packages": 3,
+          "weight": 120.5,
+          "unitOfWeight": "K",
+          "eventTime": "2026-11-17T01:10:00.000Z",
+          "receptionTime": "2026-11-17T01:10:00.000Z",
+          "duplicated": true,
+          "status": "FINE",
+          "timeIndicator": "A",
+          "location": {
+            "airportName": "London Heathrow Airport",
+            "countryCode": "GB",
+            "cityName": "London",
+            "locationCode": "LHR"
+          },
+          "sectorOrigin": {
+            "airportName": "Manchester Airport",
+            "countryCode": "GB",
+            "cityName": "Manchester",
+            "locationCode": "MAN"
+          },
+          "sectorDestination": {
+            "airportName": "London Heathrow Airport",
+            "countryCode": "GB",
+            "cityName": "London",
+            "locationCode": "LHR"
+          },
+          "discrepancy": false
+        },
+        {
+          "milestoneCode": "DEP",
+          "flightNumber": "BA0055",
+          "packages": 3,
+          "weight": 120.5,
+          "unitOfWeight": "K",
+          "eventTime": "2026-11-18T19:40:00.000Z",
+          "receptionTime": "2026-11-18T19:40:00.000Z",
+          "duplicated": false,
+          "status": "FINE",
+          "timeIndicator": "A",
+          "location": {
+            "airportName": "London Heathrow Airport",
+            "countryCode": "GB",
+            "cityName": "London",
+            "locationCode": "LHR"
+          },
+          "sectorOrigin": {
+            "airportName": "London Heathrow Airport",
+            "countryCode": "GB",
+            "cityName": "London",
+            "locationCode": "LHR"
+          },
+          "sectorDestination": {
+            "airportName": "O. R. Tambo International Airport",
+            "countryCode": "ZA",
+            "cityName": "Johannesburg",
+            "locationCode": "JNB"
+          },
+          "discrepancy": true,
+          "discrepancies": [
+            {
+              "discrepancyType": "OFLD",
+              "flightNumber": "BA0057",
+              "packages": 3,
+              "weight": 120.5,
+              "discrepancyDate": "2026-11-17T19:55:00.000Z",
+              "isOrphanedDiscrepancy": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "location": {
+        "airportName": "O. R. Tambo International Airport",
+        "countryCode": "ZA",
+        "cityName": "Johannesburg",
+        "locationCode": "JNB"
+      },
+      "flightNumber": "",
+      "milestones": [
+        {
+          "milestoneCode": "ARR",
+          "flightNumber": "BA0055",
+          "packages": 3,
+          "weight": 120.5,
+          "unitOfWeight": "K",
+          "eventTime": "2026-11-19T07:40:00.000Z",
+          "receptionTime": "2026-11-19T07:40:00.000Z",
+          "duplicated": false,
+          "status": "FINE",
+          "timeIndicator": "A",
+          "location": {
+            "airportName": "O. R. Tambo International Airport",
+            "countryCode": "ZA",
+            "cityName": "Johannesburg",
+            "locationCode": "JNB"
+          },
+          "sectorOrigin": {
+            "airportName": "London Heathrow Airport",
+            "countryCode": "GB",
+            "cityName": "London",
+            "locationCode": "LHR"
+          },
+          "sectorDestination": {
+            "airportName": "O. R. Tambo International Airport",
+            "countryCode": "ZA",
+            "cityName": "Johannesburg",
+            "locationCode": "JNB"
+          },
+          "discrepancy": false
+        },
+        {
+          "milestoneCode": "NFD",
+          "flightNumber": "",
+          "packages": 3,
+          "weight": 120.5,
+          "unitOfWeight": "K",
+          "eventTime": "2026-11-19T11:15:00.000Z",
+          "receptionTime": "2026-11-19T11:15:00.000Z",
+          "duplicated": false,
+          "status": "FINE",
+          "timeIndicator": "A",
+          "location": {
+            "airportName": "O. R. Tambo International Airport",
+            "countryCode": "ZA",
+            "cityName": "Johannesburg",
+            "locationCode": "JNB"
+          },
+          "sectorOrigin": {
+            "airportName": "",
+            "countryCode": "",
+            "cityName": "",
+            "locationCode": ""
+          },
+          "sectorDestination": {
+            "airportName": "",
+            "countryCode": "",
+            "cityName": "",
+            "locationCode": ""
+          },
+          "discrepancy": false
+        },
+        {
+          "milestoneCode": "DLV",
+          "flightNumber": "",
+          "packages": 3,
+          "weight": 120.5,
+          "unitOfWeight": "K",
+          "eventTime": "2026-11-19T14:02:00.000Z",
+          "receptionTime": "2026-11-19T14:02:00.000Z",
+          "duplicated": false,
+          "status": "FINE",
+          "timeIndicator": "A",
+          "location": {
+            "airportName": "O. R. Tambo International Airport",
+            "countryCode": "ZA",
+            "cityName": "Johannesburg",
+            "locationCode": "JNB"
+          },
+          "sectorOrigin": {
+            "airportName": "",
+            "countryCode": "",
+            "cityName": "",
+            "locationCode": ""
+          },
+          "sectorDestination": {
+            "airportName": "",
+            "countryCode": "",
+            "cityName": "",
+            "locationCode": ""
+          },
+          "discrepancy": false
+        }
+      ]
+    }
+  ],
+  "transportInfos": [
+    {
+      "flightNumber": "BA9620",
+      "truckTransport": true
+    },
+    {
+      "flightNumber": "BA0055",
+      "truckTransport": false
+    },
+    {
+      "flightNumber": "BA0057",
+      "truckTransport": false
+    }
+  ],
+  "shipmentStatusDetails": {
+    "status": "COLLECTED",
+    "statusUpdatedDateTime": "2026-11-19T14:02:00.000Z",
+    "plannedDepartureDate": "2026-11-17T19:30:00.000Z",
+    "scheduledDepartureDateTime": "2026-11-17T19:30:00.000Z",
+    "bookingDateTime": "2026-11-15T10:12:00.000Z",
+    "collectionDateTime": "2026-11-19T14:02:00.000Z"
+  }
+}

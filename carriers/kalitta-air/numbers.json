@@ -1,0 +1,287 @@
+{
+  "carrier": "kalitta-air",
+  "records": [
+    {
+      "number": "272-73471845",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/2187d3d6ed68c040.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on Kalitta Air names this air waybill for dogs and cats flown from Qingdao to JFK. Kalitta Air's tracker returned the same waybill, from Qingdao through Anchorage to JFK, where customs cleared it.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "ppl"
+        ]
+      }
+    },
+    {
+      "number": "272-73359613",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/28125439c4084fd1.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on Kalitta Air names this air waybill for dogs and a cat flown from Qingdao to JFK. Kalitta Air's tracker returned the same waybill, from Qingdao through Anchorage to JFK, where customs cleared it.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "ppl"
+        ]
+      }
+    },
+    {
+      "number": "272-73364034",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/8239e394fbf730a4.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on Kalitta Air names this air waybill for dogs flown from Qingdao to JFK. Kalitta Air's tracker returned the same waybill, received from the flight at JFK and cleared by customs there.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "ppl"
+        ]
+      }
+    },
+    {
+      "number": "272-73025470",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/eea71f0b05be1d61.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on Kalitta Air names this air waybill for dogs flown from Zhengzhou to JFK on flight K4815. Kalitta Air's tracker returned the same waybill, booked on K4815 from Zhengzhou through Anchorage to JFK, where customs cleared it.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "ppl"
+        ]
+      }
+    },
+    {
+      "number": "272-72852522",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/eea71f0b05be1d61.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on Kalitta Air names this air waybill for dogs flown from Zhengzhou to JFK on flight K4815. Kalitta Air's tracker returned the same waybill, booked on K4815 from Zhengzhou through Anchorage to JFK, where customs cleared it.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "ppl"
+        ]
+      }
+    },
+    {
+      "number": "272-72491112",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/07d3ba4036b5fe9d.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on Kalitta Air names this air waybill for dogs and cats flown from Qingdao to JFK. Kalitta Air's tracker returned the same waybill, manifested on K4925 from Qingdao and cleared by customs at JFK.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "old-dominion",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "ppl"
+        ]
+      }
+    },
+    {
+      "number": "272-73357653",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/3b1e7e4bbf916a56.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on Kalitta Air names this air waybill for dogs flown from Qingdao to JFK on flight K4923. Kalitta Air's tracker returned the same waybill, from Qingdao through Anchorage to JFK, where customs cleared it.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "ppl"
+        ]
+      }
+    },
+    {
+      "number": "272-73357675",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/3b1e7e4bbf916a56.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on Kalitta Air names this air waybill for dogs flown from Qingdao to JFK on flight K4923. Kalitta Air's tracker returned the same waybill, from Qingdao through Anchorage to JFK, where customs cleared it.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "ppl"
+        ]
+      }
+    },
+    {
+      "number": "272-73519051",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/8f789877346105f6.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on Kalitta Air names this air waybill for dogs flown from Qingdao to JFK on flight K4925. Kalitta Air's tracker returned the same waybill, from Qingdao through Anchorage to JFK, where customs cleared it.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "old-dominion",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "ppl"
+        ]
+      }
+    },
+    {
+      "number": "272-12345678",
+      "role": "negative",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://kalitta-cnm.com/tracktrace/",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "ppl"
+        ]
+      },
+      "note": "The example on Kalitta Air's tracking form, not a real shipment. Its last digit is not the serial's remainder by seven, and the tracker answers that it cannot find it."
+    }
+  ]
+}

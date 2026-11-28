@@ -1,0 +1,64 @@
+{
+  "id": "kalitta-air",
+  "displayName": "Kalitta Air",
+  "aliases": [
+    "Kalitta Air LLC",
+    "Kalitta Airlines"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#b53835"
+  },
+  "selectable": true,
+  "timezone": "America/Detroit",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "kalitta-air",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://www.kalittaair.com/utilities/track-cargo",
+    "searchUrl": "https://www.kalittaair.com/utilities/track-cargo",
+    "helpUrl": "https://www.kalittaair.com/services/cargo-services/sales-contacts",
+    "canaryUrl": "https://www.kalittaair.com/utilities/track-cargo",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

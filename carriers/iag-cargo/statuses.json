@@ -1,0 +1,17 @@
+{
+  "carrier": "iag-cargo",
+  "entries": [
+    {"code": "BOOKED", "wording": "Your shipment has been booked", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "The shipment status of a booking; the parser dates it by its booking time."},
+    {"code": "RCS", "wording": "Ready for carriage", "stage": "accepted", "language": "en", "confirmedBy": "bundle"},
+    {"code": "DEP", "wording": "Flight departed", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "A truck leg keeps the same wording; the tracker marks its number as a truck."},
+    {"code": "ARR", "wording": "Flight arrived", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "RCT", "wording": "Ready for transit to other airline(s)", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "TFD", "wording": "Transferred to other airline(s)", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "Handed to another airline at a transfer."},
+    {"code": "TRM", "wording": "Manifest to other airline(s)", "stage": null, "language": "en", "confirmedBy": "bundle", "note": "A transfer manifest names the airline that will take the goods before it does, so it keeps the stage before it."},
+    {"code": "NFD", "wording": "Ready for delivery", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "bundle", "note": "The consignee or its agent collects the goods from the cargo terminal. Away from the waybill's destination the parser files it in transit."},
+    {"code": "DLV", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "bundle", "note": "Away from the waybill's destination the parser files it in transit. A delivery of part of the pieces delivers the waybill only once all its pieces are delivered."},
+    {"code": "CANCELLED", "wording": "Your booking was cancelled", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "The shipment status of a cancelled booking; the parser dates it by the status's update time."},
+    {"code": "OFLD", "wording": "Offloaded", "stage": null, "language": "en", "confirmedBy": "bundle", "note": "Pieces offloaded from a flight travel on a later one, so the alert keeps the stage before it."},
+    {"code": "SSPD", "wording": "Short-shipped", "stage": null, "language": "en", "confirmedBy": "bundle", "note": "Pieces missing from a flight follow on a later one, so the alert keeps the stage before it."}
+  ]
+}

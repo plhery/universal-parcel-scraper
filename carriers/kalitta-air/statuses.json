@@ -1,0 +1,65 @@
+{
+  "carrier": "kalitta-air",
+  "entries": [
+    {
+      "code": "manifested",
+      "wording": "Manifested {pieces} packages, {weight}K on flight {flight}, {origin}-{destination}",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Dated in the visitor's zone, which the adapter asks to be UTC."
+    },
+    {
+      "code": "arrived",
+      "wording": "{pieces} packages, {weight}K received from flight {flight} at {airport} on {date} {time} ({pieces} pieces)",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "consignmentcustoms",
+      "wording": "Consignment has been reported to customs at {airport} on {date}, {time} ({pieces} pieces)",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "customs",
+      "wording": "TRANSFER AUTHORIZED, {pieces} pieces, on {date} {time}",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "US Customs authorizes the move under bond from the airport of entry."
+    },
+    {
+      "code": "customs",
+      "wording": "CLEARED, {pieces} pieces, on {date} {time}",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "US Customs' release, listed beside the tracker's own cleared row."
+    },
+    {
+      "code": "cargocleared",
+      "wording": "Consignment has been cleared by customs at {airport} on {date}, {time} ({pieces} pieces)",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "cargocleared",
+      "wording": "{pieces} packages transferred to carrier {carrier} at {airport} on {date}, {time} ({pieces} pieces)",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "awbdelivered",
+      "wording": "Documentation delivered to {name} at {airport} on {date}, {time} ({pieces} pieces)",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Seen at Anchorage, the airport of entry, before the flight on to the destination. At the waybill's destination the adapter reads it as ready_for_pickup."
+    }
+  ]
+}

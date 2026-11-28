@@ -1,0 +1,130 @@
+<!DOCTYPE HTML SYSTEM "about:legacy-compat">
+<title>Tracking</title><div id='trackPanel' class='widget' ><script type="text/javascript">
+			requirejs.config({
+				paths : {
+					tracking : '/icargoportal/mtResources/iCO_4.10.10.1.944.11_1/resources/AS/js/tracking/tracking.js'.substring(0, '/icargoportal/mtResources/iCO_4.10.10.1.944.11_1/resources/AS/js/tracking/tracking.js'.indexOf('.js'))
+				},
+				shim : {
+					tracking : {
+						deps : [ "widget", "jqMigrate", "page", "uiblockui",
+								"jqueryui", "date", "bootstrap",
+								"bootstrapmodalmanager", "bootstrapmodal",
+								"layout", "tccui", , "toObject", "json2",
+								"form2js", "chosen", "modalDialog",
+								"portalMenu", "portalHeader" ],
+						exportsFn : function() {
+
+							return new icargo.portal.tracking();
+						}
+					}
+				}
+			});
+
+			require([ "domReady", "tracking" ], function(domReady) {
+				var tracking = new icargo.portal.tracking();
+				domReady(function() {
+					tracking.initialize('trackPanel', '[{action:"getAwbSubscriptionDetails",target:"trackPanel"},{action:"saveAwbSubscriptionDetails",target:"trackPanel"}]', 'trackingInformationWidgetModel');
+					tracking.handleInformationWidget();
+				})
+			});
+		</script><!DOCTYPE HTML SYSTEM "about:legacy-compat">
+<div class="portlet-body form"><form action="#"><div id="trackingInfoDetails" class="form-wizard"><input id="trackingInformationWidgetModel.trackingVO.selectedShipment" name="trackingInformationWidgetModel.trackingVO.selectedShipment" type="hidden" value="027-37241971"/><input id="trackingInformationWidgetModel.trackingVO.shipments" name="trackingInformationWidgetModel.trackingVO.shipments" type="hidden" value="027-37241971/SAN&gt;PHL"/><input id="trackingInformationWidgetModel.trackingVO.transportPlanVOs" name="trackingInformationWidgetModel.trackingVO.transportPlanVOs" type="hidden" value="[com.ibsplc.icargo.portal.tracking.defaults.web.widget.vo.TransportationPlanVO@28b28434]"/><input id="trackingInfoStatus" name="trackingInformationWidgetModel.trackingVO.screenStatus" type="hidden" value="showAWB"/><input id="trackingInformationWidgetModel.trackingVO.transportPlanVO.displayTracnsactionCode" name="trackingInformationWidgetModel.trackingVO.transportPlanVO.displayTracnsactionCode" type="hidden" value=""/><input id="trackingInformationWidgetModel.trackingVO.transportPlanVO.displayTracnsactionName" name="trackingInformationWidgetModel.trackingVO.transportPlanVO.displayTracnsactionName" type="hidden" value=""/><input id="trackingInformationWidgetModel.trackingVO.transportPlanVO.displayRCSDetails" name="trackingInformationWidgetModel.trackingVO.transportPlanVO.displayRCSDetails" type="hidden" value="Y"/><input id="trackingInformationWidgetModel.trackingVO.transportPlanVO.displayARRDetails" name="trackingInformationWidgetModel.trackingVO.transportPlanVO.displayARRDetails" type="hidden" value=""/><input id="trackingInformationWidgetModel.trackingVO.transportPlanVO.displayDEPDetails" name="trackingInformationWidgetModel.trackingVO.transportPlanVO.displayDEPDetails" type="hidden" value="Y"/><input id="trackingInformationWidgetModel.trackingVO.transportPlanVO.displayDLVDetails" name="trackingInformationWidgetModel.trackingVO.transportPlanVO.displayDLVDetails" type="hidden" value=""/><ul id="trkShpTabs" class="nav nav-tabs nav-justified responsive Tabs-flight remove-top-padding  hidden-xs hidden-sm "><li class="active"><a class="Tabs-flight-a" data-toggle="tab" href="#027-37241971"><span class="desc fligh-number-tab">027-37241971</span><button class="close-tab closeTab" type="button"/><span class=" pull-right fligh-way-tab">SAN>PHL</span></a></li></ul><div class="tab-content responsive tab-content-border"><div id="027-37241971" class="tab-pane active"><div class="form-body"><div class="panel "><div class="row"><div class="itinerary"><div class="row"><div class="col-md-12   "><div class="col-md-6 margin-bottom-10  "><div class="panel panel-default panel-heading-new "><div class="panel-heading panel-heading-new LATEST">Latest Status<a href="#SubscribeNotification_027-37241971-1027-1-1" data-toggle="modal" id="subscribe_027-37241971-1027-1-1" class=" label label-primary pull-right ">Subscribe Notification</a></div><div data-keyboard="false" data-backdrop="static" data-width="760" tabindex="-1" class="modal fade" id="SubscribeNotification_027-37241971-1027-1-1"><div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button"/><h4 class="modal-title">Subscribe Notifications</h4></div><div style="overflow-y:auto !important" class="modal-body"><div class="row"><div class="col-md-5"><div class="panel panel-default notification-panel"><div style="padding:30px" class="bckgrnd"><div class="first-div"></div></div></div></div><div class="col-md-7"><div class="panel panel-default "><div style="text-align: center;" id="notificationError" class="alert alert-danger display-hide"><span id="notificationErrorSpan"></span></div><div class="row"><div class="form-group"><div class="input-group padding-top-15 padding-left-30"><div class="col-md-2 padding-top-5"><label class="control-label">Email</label></div><div class="col-md-8 "><input id="notificationContactValue_027-37241971-1027-1-1" placeholder="Email" class="form-control " maxlength="100" type="text"/></div><div class="col-md-2  "><a href="javascript:;" class="btn grey" id="addBtn_027-37241971-1027-1-1">&nbsp;Add</a></div></div></div></div><div class="row no-margin cont-info"><div class="col-md-12 "><div class="notification-contact-header"><h3 class="panel-title color-black">Email</h3></div><div class="form-group "><div id="emailsSelected_027-37241971-1027-1-1" class="padding-both-10"/></div></div></div></div></div></div></div><div class="modal-footer"><button data-dismiss="modal" class="btn default" type="button">Cancel</button><button id="027-37241971-1027-1-1" class="btn green saveAwbSubscriptionBtn" type="button">Submit</button></div></div><div style="background-color: #fff;" class="flightListScrollMain flightListScrollMain-new"><ul class="feeds"><li><div class="col1  even-row "><div class="cont"><div class="cont-col1"><div class="label label-sm label-success">
+																												PHL</div></div><div class="cont-col2"><div class="desc"><span class="word-1">
+																															1
+																														</span><span class="word-2"> PCS in </span><span class="label label-success">
+																															Notified
+																														</span><span class="word-4"> status</span></div></div></div></div><div class="col2"><div class="date"/></div></li></ul></div></div></div><div class="  col-md-6 margin-bottom-10  "><div class="dashboard-stat new-start "><div data-ride="carousel" class="carousel slide " id="carousel-example-generic-027-37241971"><div role="listbox" class="carousel-inner customInner"><div class="item active"><div class="row more-news-heading"><a class=" more-new custom"><H5><span>Shipment</span></H5></a></div><div class="carousel-caption"><label><strong>
+																									DOG </strong></label><label><strong>
+																									1 </strong> PCS | <strong>
+																									33.0 </strong> L</label></div></div></div></div></div></div></div></div></div><div class="col-md-12  margin-bottom-30"><div class="col-md-1 "></div><div class="col-md-10 "></div><div class="col-md-1 "></div></div><div class="col-md-12 "><div class="portlet box blue-madison"><div class="portlet-title portlet-less-pad"><div class="caption-small"><i style="margin-top: 4px;" class="fa fa-file-text"></i>History</div><div class="tools"><a class="search collapse" href="javascript:;"></a></div></div><div class="portlet-body   borderBoth"><div class="row"><div class="col-md-12  "><div class="panel panel-default margin-0"><div class="flightListScrollMain  "><div class="row flightList "><div class="col-md-12"><div class="col-md-4"><span style="display:block;"><span style="text-align:center;" class="badge-history"><i class="fa fa-check"></i></span><label><h5 class="margin-left-5">Booked
+																											at SAN</h5></label></span></div><div class="col-md-2"><label><h5 style="text-align: left;">16-Apr 2025
+																											| 11:14</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5">1P
+																											| 33.0 L</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5"><a onClick="changeHyperLink(&apos;0442&apos;,&apos;2025-04-17&apos;)" target="_blank">
+																													AS 0442 | 
+																													17-Apr|SEA-PHL</a></h5></label></div><div class="col-md-2"><label><h5 style="word-break: break-word;" class="margin-left-5">
+																											
+																											</h5></label></div></div></div><div class="row flightList "><div class="col-md-12"><div class="col-md-4"><span style="display:block;"><span style="text-align:center;" class="badge-history"><i class="fa fa-check"></i></span><label><h5 class="margin-left-5">Booked
+																											at SAN</h5></label></span></div><div class="col-md-2"><label><h5 style="text-align: left;">16-Apr 2025
+																											| 11:14</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5">1P
+																											| 33.0 L</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5"><a onClick="changeHyperLink(&apos;1033&apos;,&apos;2025-04-16&apos;)" target="_blank">
+																													AS 1033 | 
+																													16-Apr|SAN-SEA</a></h5></label></div><div class="col-md-2"><label><h5 style="word-break: break-word;" class="margin-left-5">
+																											
+																											</h5></label></div></div></div><div class="row flightList "><div class="col-md-12"><div class="col-md-4"><span style="display:block;"><span style="text-align:center;" class="badge-history"><i class="fa fa-check"></i></span><label><h5 class="margin-left-5">Accepted
+																											at SAN</h5></label></span></div><div class="col-md-2"><label><h5 style="text-align: left;">16-Apr 2025
+																											| 11:15</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5">1P
+																											| 33.0 L</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5"></h5></label></div><div class="col-md-2"><label><h5 style="word-break: break-word;" class="margin-left-5">
+																											
+																											</h5></label></div></div></div><div class="row flightList "><div class="col-md-12"><div class="col-md-4"><span style="display:block;"><span style="text-align:center;" class="badge-history"><i class="fa fa-check"></i></span><label><h5 class="margin-left-5">Manifested
+																											at SAN</h5></label></span></div><div class="col-md-2"><label><h5 style="text-align: left;">16-Apr 2025
+																											| 11:53</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5">1P
+																											| 33.0 L</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5"><a onClick="changeHyperLink(&apos;1033&apos;,&apos;2025-04-16&apos;)" target="_blank">
+																													AS 1033 | 
+																													16-Apr|S-SEA</a></h5></label></div><div class="col-md-2"><label><h5 style="word-break: break-word;" class="margin-left-5">
+																											0447SAN
+																											</h5></label></div></div></div><div class="row flightList "><div class="col-md-12"><div class="col-md-4"><span style="display:block;"><span style="text-align:center;" class="badge-history"><i class="fa fa-check"></i></span><label><h5 class="margin-left-5">Departed
+																											at SAN</h5></label></span></div><div class="col-md-2"><label><h5 style="text-align: left;">16-Apr 2025
+																											| 14:11</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5">1P
+																											| 33.0 L</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5"><a onClick="changeHyperLink(&apos;1033&apos;,&apos;2025-04-16&apos;)" target="_blank">
+																													AS 1033 | 
+																													16-Apr|E-SEA</a></h5></label></div><div class="col-md-2"><label><h5 style="word-break: break-word;" class="margin-left-5">
+																											BULK
+																											</h5></label></div></div></div><div class="row flightList "><div class="col-md-12"><div class="col-md-4"><span style="display:block;"><span style="text-align:center;" class="badge-history"><i class="fa fa-check"></i></span><label><h5 class="margin-left-5">Shipment received from flight
+																											at SEA</h5></label></span></div><div class="col-md-2"><label><h5 style="text-align: left;">16-Apr 2025
+																											| 18:42</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5">1P
+																											| 33.0 L</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5"><a onClick="changeHyperLink(&apos;1033&apos;,&apos;2025-04-16&apos;)" target="_blank">
+																													AS 1033 | 
+																													16-Apr|A-SAN</a></h5></label></div><div class="col-md-2"><label><h5 style="word-break: break-word;" class="margin-left-5">
+																											BULK
+																											</h5></label></div></div></div><div class="row flightList "><div class="col-md-12"><div class="col-md-4"><span style="display:block;"><span style="text-align:center;" class="badge-history"><i class="fa fa-check"></i></span><label><h5 class="margin-left-5">Shipment Transferred-in
+																											at SEA</h5></label></span></div><div class="col-md-2"><label><h5 style="text-align: left;">16-Apr 2025
+																											| 18:47</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5">1P
+																											| 33.0 L</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5"></h5></label></div><div class="col-md-2"><label><h5 style="word-break: break-word;" class="margin-left-5">
+																											
+																											</h5></label></div></div></div><div class="row flightList "><div class="col-md-12"><div class="col-md-4"><span style="display:block;"><span style="text-align:center;" class="badge-history"><i class="fa fa-check"></i></span><label><h5 class="margin-left-5">Manifested
+																											at SEA</h5></label></span></div><div class="col-md-2"><label><h5 style="text-align: left;">17-Apr 2025
+																											| 06:22</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5">1P
+																											| 33.0 L</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5"><a onClick="changeHyperLink(&apos;0442&apos;,&apos;2025-04-17&apos;)" target="_blank">
+																													AS 0442 | 
+																													17-Apr|S-PHL</a></h5></label></div><div class="col-md-2"><label><h5 style="word-break: break-word;" class="margin-left-5">
+																											HC3S442
+																											</h5></label></div></div></div><div class="row flightList "><div class="col-md-12"><div class="col-md-4"><span style="display:block;"><span style="text-align:center;" class="badge-history"><i class="fa fa-check"></i></span><label><h5 class="margin-left-5">Departed
+																											at SEA</h5></label></span></div><div class="col-md-2"><label><h5 style="text-align: left;">17-Apr 2025
+																											| 08:24</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5">1P
+																											| 33.0 L</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5"><a onClick="changeHyperLink(&apos;0442&apos;,&apos;2025-04-17&apos;)" target="_blank">
+																													AS 0442 | 
+																													17-Apr|E-PHL</a></h5></label></div><div class="col-md-2"><label><h5 style="word-break: break-word;" class="margin-left-5">
+																											BULK
+																											</h5></label></div></div></div><div class="row flightList "><div class="col-md-12"><div class="col-md-4"><span style="display:block;"><span style="text-align:center;" class="badge-history"><i class="fa fa-check"></i></span><label><h5 class="margin-left-5">Notified
+																											at PHL</h5></label></span></div><div class="col-md-2"><label><h5 style="text-align: left;">17-Apr 2025
+																											| 17:16</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5">1P
+																											| 33.0 L</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5"><a onClick="changeHyperLink(&apos;0442&apos;,&apos;2025-04-17&apos;)" target="_blank">
+																													AS 0442 | 
+																													17-Apr|SAN-PHL</a></h5></label></div><div class="col-md-2"><label><h5 style="word-break: break-word;" class="margin-left-5">
+																											BULK
+																											</h5></label></div></div></div><div class="row flightList "><div class="col-md-12"><div class="col-md-4"><span style="display:block;"><span style="text-align:center;" class="badge-history"><i class="fa fa-check"></i></span><label><h5 class="margin-left-5">Shipment received from flight
+																											at PHL</h5></label></span></div><div class="col-md-2"><label><h5 style="text-align: left;">17-Apr 2025
+																											| 17:16</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5">1P
+																											| 33.0 L</h5></label></div><div class="col-md-2"><label><h5 class="margin-left-5"><a onClick="changeHyperLink(&apos;0442&apos;,&apos;2025-04-17&apos;)" target="_blank">
+																													AS 0442 | 
+																													17-Apr|A-SEA</a></h5></label></div><div class="col-md-2"><label><h5 style="word-break: break-word;" class="margin-left-5">
+																											BULK
+																											</h5></label></div></div></div></div></div></div></div></div></div></div></div></div></div></div><div data-keyboard="false" data-backdrop="static" data-width="760" tabindex="-1" class="modal fade" id="flt_027-37241971"><div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button"></button><h4 class="modal-title">Flight Route Details</h4></div><div class="modal-body"><div class="row-fluid"><div class="row"><div class="col-md-6 "><div class="flightListScrollMain flightListScrollMain-new"><ul class="feeds"><li><div class="col1"><div class="cont-new-heading"><div class="cont-col2"><div class="desc desc-new">Arrival flights</div></div></div></div></li><li><div class="col1"><div class="cont-new-list"><div class="cont-col2"><div class="desc desc-new MODAL-CHART">
+																										1 PCS (33.0 )
+																										</div></div></div><span class="label label-sm label-info pull-right padding-5 ">
+																							AS- 1033
+																							<i class="fa fa-fighter-jet    "></i>  16-Apr 2025 :17:23
+																						</span></div></li></ul></div></div><div class="col-md-6 "><div class="flightListScrollMain flightListScrollMain-new"><ul class="feeds"><li><div class="col1"><div class="cont-new-heading"><div class="cont-col2"><div class="desc desc-new">Departure flightsDeparture flights</div></div></div></div></li><li><div class="col1"><div class="cont-new-list"><div class="cont-col2"><div class="desc desc-new MODAL-CHART">
+																										1 PCS (33.0 )
+																										</div></div></div><span class="label label-sm label-info pull-right padding-5 ">
+																							AS- 0442
+																							<i class="fa fa-fighter-jet    "></i> 17-Apr 2025 : 08:30
+																						</span></div></li></ul></div></div></div></div></div><div class="modal-footer"><button data-dismiss="modal" class="btn default" type="button">Cancel</button></div></div><div data-keyboard="false" data-backdrop="static" data-width="760" tabindex="-1" class="modal fade" id="tracnsaction-Details_027-37241971"><div class="modal-header"><div style="display: none;" class="RCSModalHeader" id="RCSModalHeader_027-37241971"><button onClick="changeDispaly()" aria-hidden="true" data-dismiss="modal" class="close" type="button"></button><h4 class="modal-title">Accepted Details</h4></div><div style="display: none;" class="DEPModalHeader" id="DEPModalHeader_027-37241971"><button onClick="changeDispaly()" aria-hidden="true" data-dismiss="modal" class="close" type="button"></button><h4 class="modal-title">Departed Details</h4></div><div style="display: none;" class="ARRModalHeader" id="ARRModalHeader_027-37241971"><button onClick="changeDispaly()" aria-hidden="true" data-dismiss="modal" class="close" type="button"></button><h4 class="modal-title">Arrived Details</h4></div><div style="display: none;" class="DLVModalHeader" id="DLVModalHeader_027-37241971"><button onClick="changeDispaly()" aria-hidden="true" data-dismiss="modal" class="close" type="button"></button><h4 class="modal-title">Delivered Details</h4></div></div><div class="modal-body"><div style="display: none;" id="RCSModalBody_027-37241971" class="row RCSModalBody"><div class="col-md-12 "><div class="flightListScrollMain flightListScrollMain-new"><ul class="feeds"><li><div class="col1"><div class="cont"><div class="cont-col2"><div class="desc desc-new MODAL-CHART">
+																							1 PCS |
+																							16-Apr 2025</div></div></div></div><div class="col2"><div class="date MODAL-DATE-NEW">11:15</div></div></li></ul></div></div></div><div style="display: none;" id="DEPModalBody_027-37241971" class="row DEPModalBody"><div class="col-md-12 "><div class="flightListScrollMain flightListScrollMain-new"><ul class="feeds"><li><div class="col1"><div class="cont"><div class="cont-col2"><div class="desc desc-new MODAL-CHART">
+																							1 PCS |
+																							
+																			AS 1033
+																			
+																							16-Apr 2025
+																						</div></div></div></div><div class="col2"><div class="date MODAL-DATE-NEW">14:11</div></div></li></ul></div></div></div><div style="display: none;" id="ARRModalBody_027-37241971" class="row ARRModalBody"><div class="col-md-12 "><div class="flightListScrollMain flightListScrollMain-new"></div></div></div><div style="display: none;" id="DLVModalBody_027-37241971" class="row DLVModalBody"><div class="col-md-12 "><div class="flightListScrollMain flightListScrollMain-new"></div></div></div></div><div class="modal-footer"><button onClick="changeDispaly()" data-dismiss="modal" class="btn default" type="button">Cancel</button></div></div></div></div></form></div></div>

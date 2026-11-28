@@ -149,6 +149,7 @@ const UNSAMPLED: Readonly<Record<string, readonly string[]>> = {
   'skynet-in': ['SKY000000001'],
   'lufthansa-cargo': ['020-00000000'],
   'korean-air-cargo': ['180-00000000'],
+  'iag-cargo': ['125-00000000'],
   'greenway-vn': ['G0000000000000001'],
   'the-human-express': ['THE0000000000000001'],
   'ubx-uk': ['UBX0000000001'],

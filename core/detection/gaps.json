@@ -212,6 +212,11 @@
     "reason": "Ten digits are printed by many carriers, and AKS publishes no prefix that would set its numbers apart."
   },
   {
+    "carrier": "alaska-air-cargo",
+    "kind": "open",
+    "reason": "Select Alaska Air Cargo for its master air waybills. They carry Alaska's IATA prefix 027, an eleven-digit shape many carriers print."
+  },
+  {
     "carrier": "alem-tat",
     "pattern": "^\\d{8}$",
     "kind": "by_design",
@@ -2635,6 +2640,11 @@
     "carrier": "k-line-roro",
     "kind": "open",
     "reason": "The carrier confirms its KKLU-prefixed RoRo bills. A detection rule is pending review of other bill formats and collisions."
+  },
+  {
+    "carrier": "kalitta-air",
+    "kind": "open",
+    "reason": "Select Kalitta Air for its master air waybills. They carry Kalitta's IATA prefix 272, an eleven-digit shape many carriers print."
   },
   {
     "carrier": "kargoist",

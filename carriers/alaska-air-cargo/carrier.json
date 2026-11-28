@@ -19,17 +19,50 @@
   "timezone": "America/Los_Angeles",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "alaska-air-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
+    "url": "https://www.alaskacargo.com/",
     "searchUrl": "https://alaska-icargo.ibsplc.aero/icargoportal/portal/loginFlow",
+    "helpUrl": "https://www.alaskacargo.com/faqs",
     "canaryUrl": "https://alaska-icargo.ibsplc.aero/icargoportal/portal/loginFlow",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "flight",
+      "parcel_count",
+      "weight",
+      "order_contents"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "flight",
+      "parcel_count",
+      "weight",
+      "order_contents"
+    ],
+    "unavailable": [
+      "proof_of_delivery",
+      "recipient_name",
+      "sender_name"
+    ]
   },
   "links": [],
   "detection": []

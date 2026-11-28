@@ -1,0 +1,106 @@
+{
+  "carrier": "iag-cargo",
+  "records": [
+    {
+      "number": "125-47701614",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/data-liberation-project/aphis-inspection-reports/blob/main/data/parsed/inspections/f6b90455fdc4a0bb.json",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "A USDA APHIS inspection report on British Airways names this air waybill for a dog flown from London Heathrow to Newark.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "British Airways' prefix 125. IAG Cargo's tracker answers \"There was no AWB found with the following number\" for it."
+    },
+    {
+      "number": "125-20510534",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260923115505/https://www.sars.gov.za/wp-content/uploads/Ops/Tables/SC-CW-01-02-A20-Weekly-List-of-Unentered-Goods-External-Table.pdf",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "The South African Revenue Service's weekly list of unentered goods names this British Airways air waybill for aircraft turbine parts held at OR Tambo. IAG Cargo's tracker answers \"There was no AWB found with the following number\" for it."
+    },
+    {
+      "number": "125-20308175",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260923115505/https://www.sars.gov.za/wp-content/uploads/Ops/Tables/SC-CW-01-02-A20-Weekly-List-of-Unentered-Goods-External-Table.pdf",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "The South African Revenue Service's weekly list of unentered goods names this British Airways air waybill for aircraft turbine parts held at OR Tambo. IAG Cargo's tracker answers \"There was no AWB found with the following number\" for it."
+    },
+    {
+      "number": "125-19836950",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260314050934/https://www.sars.gov.za/wp-content/uploads/Ops/Tables/SC-CW-01-02-A20-Weekly-List-of-Unentered-Goods-External-Table.pdf",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight"
+        ]
+      },
+      "note": "The South African Revenue Service's weekly list of unentered goods names this British Airways air waybill for spare parts held at OR Tambo. IAG Cargo's tracker answers \"There was no AWB found with the following number\" for it."
+    }
+  ]
+}

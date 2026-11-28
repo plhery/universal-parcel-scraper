@@ -1,4 +1,65 @@
 {
   "carrier": "alaska-air-cargo",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Booked",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Each booked flight of the waybill gives its own row at the origin station."
+    },
+    {
+      "wording": "Accepted",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Manifested",
+      "stage": null,
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A flight manifest records an assignment before the departure, so it keeps the stage before it."
+    },
+    {
+      "wording": "Departed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "The tracker's milestone headings name it."
+    },
+    {
+      "wording": "Shipment received from flight",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Shipment Transferred-in",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Taken in at a connecting station for the next flight."
+    },
+    {
+      "wording": "Notified",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The consignee is told the freight has arrived. Away from the waybill's destination it is a step on the way."
+    },
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "The tracker's milestone headings name it. Away from the waybill's destination it is a step on the way."
+    }
+  ]
 }

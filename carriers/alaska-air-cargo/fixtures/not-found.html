@@ -1,0 +1,31 @@
+<!DOCTYPE HTML SYSTEM "about:legacy-compat">
+<title>Tracking</title><div id='trackPanel' class='widget' ><script type="text/javascript">
+			requirejs.config({
+				paths : {
+					tracking : '/icargoportal/mtResources/iCO_4.10.10.1.944.11_1/resources/AS/js/tracking/tracking.js'.substring(0, '/icargoportal/mtResources/iCO_4.10.10.1.944.11_1/resources/AS/js/tracking/tracking.js'.indexOf('.js'))
+				},
+				shim : {
+					tracking : {
+						deps : [ "widget", "jqMigrate", "page", "uiblockui",
+								"jqueryui", "date", "bootstrap",
+								"bootstrapmodalmanager", "bootstrapmodal",
+								"layout", "tccui", , "toObject", "json2",
+								"form2js", "chosen", "modalDialog",
+								"portalMenu", "portalHeader" ],
+						exportsFn : function() {
+
+							return new icargo.portal.tracking();
+						}
+					}
+				}
+			});
+
+			require([ "domReady", "tracking" ], function(domReady) {
+				var tracking = new icargo.portal.tracking();
+				domReady(function() {
+					tracking.initialize('trackPanel', '[{action:"getAwbSubscriptionDetails",target:"trackPanel"},{action:"saveAwbSubscriptionDetails",target:"trackPanel"}]', 'trackingInformationWidgetModel');
+					tracking.handleInformationWidget();
+				})
+			});
+		</script><!DOCTYPE HTML SYSTEM "about:legacy-compat">
+<div class="portlet-body form"></div></div>

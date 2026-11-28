@@ -1,0 +1,210 @@
+{
+  "awb": {
+    "awbNumber": "075-12345686",
+    "totalPackages": 4,
+    "totalWeight": 310,
+    "unitOfTotalWeight": "K",
+    "destinationCity": "Bogota",
+    "destinationCode": "BOG",
+    "originCity": "Madrid",
+    "originCode": "MAD"
+  },
+  "journeyStations": [
+    {
+      "location": {
+        "airportName": "Adolfo Suarez Madrid-Barajas Airport",
+        "countryCode": "ES",
+        "cityName": "Madrid",
+        "locationCode": "MAD"
+      },
+      "flightNumber": "IB6585",
+      "milestones": [
+        {
+          "milestoneCode": "RCS",
+          "flightNumber": "",
+          "packages": 4,
+          "weight": 310,
+          "unitOfWeight": "K",
+          "eventTime": "2026-11-26T09:20:00.000Z",
+          "receptionTime": "2026-11-26T09:20:00.000Z",
+          "duplicated": false,
+          "status": "FINE",
+          "timeIndicator": "A",
+          "location": {
+            "airportName": "Adolfo Suarez Madrid-Barajas Airport",
+            "countryCode": "ES",
+            "cityName": "Madrid",
+            "locationCode": "MAD"
+          },
+          "sectorOrigin": {
+            "airportName": "",
+            "countryCode": "",
+            "cityName": "",
+            "locationCode": ""
+          },
+          "sectorDestination": {
+            "airportName": "",
+            "countryCode": "",
+            "cityName": "",
+            "locationCode": ""
+          },
+          "discrepancy": false
+        },
+        {
+          "milestoneCode": "DEP",
+          "flightNumber": "IB6585",
+          "packages": 3,
+          "weight": 232.5,
+          "unitOfWeight": "K",
+          "eventTime": "2026-11-27T23:55:00.000Z",
+          "receptionTime": "2026-11-27T23:55:00.000Z",
+          "duplicated": false,
+          "status": "PARTIAL",
+          "timeIndicator": "A",
+          "location": {
+            "airportName": "Adolfo Suarez Madrid-Barajas Airport",
+            "countryCode": "ES",
+            "cityName": "Madrid",
+            "locationCode": "MAD"
+          },
+          "sectorOrigin": {
+            "airportName": "Adolfo Suarez Madrid-Barajas Airport",
+            "countryCode": "ES",
+            "cityName": "Madrid",
+            "locationCode": "MAD"
+          },
+          "sectorDestination": {
+            "airportName": "El Dorado International Airport",
+            "countryCode": "CO",
+            "cityName": "Bogota",
+            "locationCode": "BOG"
+          },
+          "discrepancy": false
+        },
+        {
+          "milestoneCode": "DEP",
+          "flightNumber": "IB6587",
+          "packages": 1,
+          "weight": 77.5,
+          "unitOfWeight": "K",
+          "eventTime": "2026-11-28T23:55:00.000Z",
+          "receptionTime": "2026-11-28T23:55:00.000Z",
+          "duplicated": false,
+          "status": "INCOMPLETE",
+          "timeIndicator": "S",
+          "location": {
+            "airportName": "Adolfo Suarez Madrid-Barajas Airport",
+            "countryCode": "ES",
+            "cityName": "Madrid",
+            "locationCode": "MAD"
+          },
+          "sectorOrigin": {
+            "airportName": "Adolfo Suarez Madrid-Barajas Airport",
+            "countryCode": "ES",
+            "cityName": "Madrid",
+            "locationCode": "MAD"
+          },
+          "sectorDestination": {
+            "airportName": "El Dorado International Airport",
+            "countryCode": "CO",
+            "cityName": "Bogota",
+            "locationCode": "BOG"
+          },
+          "discrepancy": false
+        }
+      ]
+    },
+    {
+      "location": {
+        "airportName": "El Dorado International Airport",
+        "countryCode": "CO",
+        "cityName": "Bogota",
+        "locationCode": "BOG"
+      },
+      "flightNumber": "",
+      "milestones": [
+        {
+          "milestoneCode": "ARR",
+          "flightNumber": "IB6585",
+          "packages": 3,
+          "weight": 232.5,
+          "unitOfWeight": "K",
+          "eventTime": "2026-11-28T09:50:00.000Z",
+          "receptionTime": "2026-11-28T09:50:00.000Z",
+          "duplicated": false,
+          "status": "INCOMPLETE",
+          "timeIndicator": "E",
+          "location": {
+            "airportName": "El Dorado International Airport",
+            "countryCode": "CO",
+            "cityName": "Bogota",
+            "locationCode": "BOG"
+          },
+          "sectorOrigin": {
+            "airportName": "Adolfo Suarez Madrid-Barajas Airport",
+            "countryCode": "ES",
+            "cityName": "Madrid",
+            "locationCode": "MAD"
+          },
+          "sectorDestination": {
+            "airportName": "El Dorado International Airport",
+            "countryCode": "CO",
+            "cityName": "Bogota",
+            "locationCode": "BOG"
+          },
+          "discrepancy": false,
+          "arrivalTime": "2026-11-28T04:50:00"
+        },
+        {
+          "milestoneCode": "NFD",
+          "flightNumber": "",
+          "packages": 4,
+          "weight": 310,
+          "unitOfWeight": "K",
+          "eventTime": "2026-11-29T15:00:00.000Z",
+          "receptionTime": "2026-11-29T15:00:00.000Z",
+          "duplicated": false,
+          "status": "INCOMPLETE",
+          "timeIndicator": "S",
+          "location": {
+            "airportName": "El Dorado International Airport",
+            "countryCode": "CO",
+            "cityName": "Bogota",
+            "locationCode": "BOG"
+          },
+          "sectorOrigin": {
+            "airportName": "",
+            "countryCode": "",
+            "cityName": "",
+            "locationCode": ""
+          },
+          "sectorDestination": {
+            "airportName": "",
+            "countryCode": "",
+            "cityName": "",
+            "locationCode": ""
+          },
+          "discrepancy": false
+        }
+      ]
+    }
+  ],
+  "transportInfos": [
+    {
+      "flightNumber": "IB6585",
+      "truckTransport": false
+    },
+    {
+      "flightNumber": "IB6587",
+      "truckTransport": false
+    }
+  ],
+  "shipmentStatusDetails": {
+    "status": "IN_TRANSIT",
+    "statusUpdatedDateTime": "2026-11-27T23:55:00.000Z",
+    "plannedDepartureDate": "2026-11-27T23:55:00.000Z",
+    "scheduledDepartureDateTime": "2026-11-27T23:55:00.000Z",
+    "bookingDateTime": "2026-11-25T16:48:00.000Z",
+    "collectionDateTime": ""
+  }
+}

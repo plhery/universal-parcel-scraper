@@ -1,0 +1,89 @@
+{
+  "id": "iag-cargo",
+  "displayName": "IAG Cargo",
+  "aliases": [
+    "British Airways World Cargo",
+    "British Airways Cargo",
+    "BA Cargo",
+    "Iberia Cargo",
+    "Aer Lingus Cargo"
+  ],
+  "region": {
+    "countries": [
+      "GB",
+      "ES",
+      "IE"
+    ]
+  },
+  "brand": {
+    "color": "#40C1AC"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "iag-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "provider_code",
+    "destination_country"
+  ],
+  "portal": {
+    "url": "https://www.iagcargo.com/en/track-landing/",
+    "searchUrl": "https://www.iagcargo.com/en/track-landing/",
+    "canaryUrl": "https://ui.tracking.iagcargo.com/en",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "provider_code",
+      "origin",
+      "destination",
+      "flight",
+      "parcel_count",
+      "weight",
+      "future_milestones",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "provider_code",
+      "flight",
+      "future_milestones",
+      "destination_country"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "eta"
+    ],
+    "unavailable": [
+      "proof_of_delivery",
+      "recipient_name",
+      "sender_name"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "ui.tracking.iagcargo.com"
+      ],
+      "pathPattern": "^/(?:en|es)/(?:125|075|053)-\\d{8}(?:/details)?/?$",
+      "path": "^/(?:en|es)/((?:125|075|053)-\\d{8})(?:/details)?/?$"
+    }
+  ],
+  "detection": []
+}
