@@ -62,6 +62,9 @@ this adapter reads. The app shows history only by opening the suspended inquiry 
   whose last digit is the remainder of the first eleven divided by seven. Choose the
   carrier explicitly for a ten-digit waybill or to skip the other suggestions.
 - A revoked key needs a new release; there is no automatic refresh.
+- The API's host serves Japan only: from elsewhere it answers every request, its root included
+  and with or without the key, with Akamai's `403` Access Denied page, which reads as a
+  challenge. Lookups need a Japanese exit.
 
 ## Testing
 
