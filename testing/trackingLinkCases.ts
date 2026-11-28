@@ -3117,6 +3117,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'ubuy', number: '107358204619',
     route: /^https:\/\/www\.ubuylogi\.com\/track\/\?num=107358204619$/,
     marker: /运单号107358204619的物流信息|以下是来自转运中心转运记录/ },
+  // The page posts the number in its address to the tracker, keeps it in the box and shows the tracker's answer for an unknown order.
+  { carrier: 'bmxps', number: 'BM9999000017',
+    route: /^https:\/\/www\.bmxps\.com\/Home\/OrderTracking\?orderNumber=BM9999000017$/,
+    marker: /订单不存在/ },
 ];
 
 /**

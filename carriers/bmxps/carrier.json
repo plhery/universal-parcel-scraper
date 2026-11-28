@@ -1,0 +1,76 @@
+{
+  "id": "bmxps",
+  "displayName": "BMXPS",
+  "aliases": [
+    "北美快运",
+    "北美国际物流"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#3164AF"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "bmxps",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.bmxps.com/Home/OrderTracking?orderNumber={trackingNumber}",
+    "searchUrl": "https://www.bmxps.com/Home/OrderTracking",
+    "canaryUrl": "https://www.bmxps.com/Home/OrderTracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "bmxps.com"
+      ],
+      "pathPattern": "^/Home/OrderTracking/?$",
+      "params": [
+        "orderNumber"
+      ]
+    }
+  ],
+  "detection": []
+}

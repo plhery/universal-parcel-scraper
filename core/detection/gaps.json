@@ -7534,5 +7534,11 @@
     "pattern": "^\\d{26}$",
     "kind": "by_design",
     "reason": "Twenty-six digits is the test number Kuaidi100 lists for UBUYLOGI, which the firm's tracker holds nothing under, and a bare digit run with nothing in it that points to the firm. The adapter answers explicit selection."
+  },
+  {
+    "carrier": "bmxps",
+    "pattern": "^BM\\d{10}$",
+    "kind": "collision",
+    "reason": "BM and ten digits is BMXPS's order number on Kuaidi100's sample, and two letters and ten digits is a shape Colis Privé's and Aramex's rules take, so detection does not name BMXPS. The adapter answers explicit selection."
   }
 ]

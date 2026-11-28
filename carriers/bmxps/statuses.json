@@ -1,0 +1,115 @@
+{
+  "carrier": "bmxps",
+  "entries": [
+    {
+      "code": null,
+      "wording": "您的订单已创建成功",
+      "language": "zh",
+      "english": "Your order was created",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The order is in the system; the parcel has not reached the warehouse yet."
+    },
+    {
+      "code": null,
+      "wording": "您的货物在仓库【…】已经打包完成",
+      "language": "zh",
+      "english": "Your goods were packed at the warehouse …",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The Baltimore warehouse has the parcel and packs it."
+    },
+    {
+      "code": null,
+      "wording": "您的货物在仓库【…】正在集货，等待送往机场",
+      "language": "zh",
+      "english": "Your goods are being consolidated at the warehouse …, waiting to go to the airport",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "您的货物在仓库【…】已经完成装箱",
+      "language": "zh",
+      "english": "Your goods were boxed at the warehouse …",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "您的货物在仓库【…】已经完成集货，转交航空公司",
+      "language": "zh",
+      "english": "Your goods were consolidated at the warehouse … and handed to the airline",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "飞往中国",
+      "language": "zh",
+      "english": "Flying to China",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "您的货物已经到达中国，正在海关清关",
+      "language": "zh",
+      "english": "Your goods arrived in China and are in customs clearance",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "清关完成",
+      "language": "zh",
+      "english": "Customs clearance completed",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Customs released the parcel; SF Express takes it next."
+    },
+    {
+      "code": null,
+      "wording": "顺丰速运 已收取快件",
+      "language": "zh",
+      "english": "SF Express picked up the parcel",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "SF Express's own scans are relayed from here on."
+    },
+    {
+      "code": null,
+      "wording": "快件在【…】完成分拣,准备发往 【…】",
+      "language": "zh",
+      "english": "The parcel was sorted at …, leaving for …",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "已转【顺丰速递】派送，运单号 …",
+      "language": "zh",
+      "english": "Handed to SF Express for delivery, waybill …",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The waybill is SF Express's; the result gives it as the delivery tracking number."
+    },
+    {
+      "code": null,
+      "wording": "快件到达 【…】",
+      "language": "zh",
+      "english": "The parcel arrived at …",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": null,
+      "wording": "已签收(丰巢签收),感谢使用顺丰,期待再次为您服务（主单总件数：1件）",
+      "language": "zh",
+      "english": "Signed for (Hive Box locker), thank you for using SF Express (pieces on the waybill: 1)",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "SF Express's delivery, through a Hive Box locker."
+    }
+  ]
+}
