@@ -713,9 +713,30 @@ interface Located {
  * place we can be confident about. A wrong dot is worse than no dot.
  */
 export function locatePlace(location: string | null | undefined, hints: PlaceHints = {}): EventPlace | null {
-  const found = locate(location, hints);
+  const found = locateGlossed(location, hints);
   // Alone, a name two towns of a country share alike says neither.
   return found && !found.twins ? found.place : null;
+}
+
+// A Chinese site's name with its English after it in brackets, as Cainiao writes its sites abroad:
+// "比利时示例航空站点（BE Liege Example Team）". The English can open with its country's code.
+const GLOSSED = /^[^()（）]*\p{Script=Han}[^()（）]*[(（]([^()（）]*\p{Script=Latin}[^()（）]*)[)）]$/u;
+const CODE_OPENED = /^([A-Z]{2})\s+(?=\p{Lu}\p{Ll})/u;
+
+/**
+ * `locate`, or, where it finds nothing in a Chinese name, the English the name gives in brackets.
+ * A code opening the English is its town's country.
+ */
+function locateGlossed(location: string | null | undefined, hints: PlaceHints): Located | null {
+  const found = locate(location, hints);
+  const gloss = found ? undefined : GLOSSED.exec(location?.trim() ?? '')?.[1]?.trim();
+  if (!gloss) return found;
+  const code = CODE_OPENED.exec(gloss)?.[1];
+  if (code && gazetteer().countries.has(code)) {
+    const town = locate(gloss.slice(code.length), { ...hints, countries: [code, ...(hints.countries ?? []).filter((other) => other !== code)] });
+    if (town?.place.precision === 'city' && town.place.country === code) return town;
+  }
+  return locate(gloss, hints);
 }
 
 const LOST = '\uFFFD';
@@ -1514,7 +1535,7 @@ const CACHE_SIZE = 20_000;
 function cachedPlace(location: string | null | undefined, countries: readonly string[], carriers: readonly string[]): Located | null {
   const key = `${countries.join(',')}|${carriers.join(',')}|${location ?? ''}`;
   if (cache.has(key)) return cache.get(key)!;
-  const place = locate(location, { countries, carriers });
+  const place = locateGlossed(location, { countries, carriers });
   if (cache.size >= CACHE_SIZE) cache.clear();
   cache.set(key, place);
   return place;

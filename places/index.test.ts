@@ -430,6 +430,12 @@ describe('locatePlace', () => {
     expectPlace('悉尼示例中心', { country: 'AU', name: 'Sydney', latitude: -33.87, longitude: 151.21 });
     expect(place('安克雷奇国际机场')).toMatchObject({ country: 'US', name: 'Anchorage', site: 'Ted Stevens Anchorage International Airport' });
     expect(place('新郑国际机场')).toMatchObject({ country: 'CN', name: 'Zhengzhou', site: 'Zhengzhou Xinzheng International Airport' });
+    // Taiwan as Chinese posts write it, as part of China or in its formal characters.
+    for (const location of ['中国台湾', '臺灣']) expect(place(location), location).toMatchObject({ precision: 'country', country: 'TW' });
+    // A site abroad by its Chinese name with its English in brackets, which can open with the country's code.
+    expect(place('比利时示例航空站点（BE Liege Example Team）', ['FR'])).toMatchObject({ country: 'BE', name: 'Liege' });
+    expect(place('比利时示例关务站(Belgium Antwerp Example)', ['FR'])).toMatchObject({ country: 'BE', name: 'Antwerp' });
+    expect(place('示例站点（Example Team）')).toBeNull();
   });
 
   it('reads a town of a country written in Cyrillic by its Cyrillic name', () => {

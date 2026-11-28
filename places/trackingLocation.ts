@@ -100,7 +100,8 @@ const displayNames = new Map<string, Intl.DisplayNames>();
 
 function namedCountry(name: string, display: boolean): string | null {
   if (!countryNames) {
-    countryNames = new Map([['usa', 'US'], ['uk', 'GB']]);
+    // Chinese posts also name Taiwan as part of China, or in its formal characters, which Intl does not.
+    countryNames = new Map([['usa', 'US'], ['uk', 'GB'], ['中国台湾', 'TW'], ['中國台灣', 'TW'], ['中國臺灣', 'TW'], ['臺灣', 'TW']]);
     // Ukrposhta names countries in Ukrainian ("КИТАЙ", "Україна"), Chinese posts in Chinese ("日本").
     for (const language of ['en', 'de', 'fr', 'it', 'es', 'pt', 'pl', 'uk', 'zh', 'zh-Hant', 'ja']) {
       const names = new Intl.DisplayNames([language], { type: 'region' });

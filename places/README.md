@@ -63,10 +63,13 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   owner's possessive ("菜鸟的杭州…店") or a carrier's name ("顺丰无锡…"); a word for a facility
   or a part of town ("中心", "新城") names no town. Latin letters next to such script are a
   word: "Changsha市". GeoNames keeps Chinese names for towns of China, Japan and Korea alone,
-  so `hubs.json` names the foreign cities and airports Chinese scans give in Chinese.
+  so `hubs.json` names the foreign cities and airports Chinese scans give in Chinese. A site
+  whose Chinese name places nothing is placed by the English after it in brackets, a country's
+  code opening it naming the town's country ("…航空站点（BE Liege …）").
 - A larger town of a country written in Cyrillic, Greek or Thai also matches by its names in
   that script ("Тюмень", "ΑΘΗΝΑ", "เชียงใหม่"). Thai's vowel and tone marks are part of its words.
-- A country also goes by its Chinese or Japanese name ("日本").
+- A country also goes by its Chinese or Japanese name ("日本"), and Taiwan as Chinese posts
+  write it, as part of China ("中国台湾") or in its formal characters ("臺灣").
 - A smaller town in the same region that ends the part of the text a city begins, within
   30 km of the city, is the carrier's site there: "TORINO MONCALIERI (999)" is in Moncalieri.
   So is one the city follows alone in brackets, within 100 km: "Kerpen (Köln)" is in Kerpen.
