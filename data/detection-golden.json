@@ -68085,6 +68085,16 @@
     ]
   },
   {
+    "input": "73489114",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colisweb",
+      "heppner"
+    ]
+  },
+  {
     "input": "7353875937",
     "carrier": "unknown",
     "confidence": "low",
@@ -76581,6 +76591,14 @@
     ]
   },
   {
+    "input": "900345897",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-ie"
+    ]
+  },
+  {
     "input": "900556998",
     "carrier": "unknown",
     "confidence": "low",
@@ -80087,6 +80105,16 @@
     ],
     "asked": [
       "austrian-post"
+    ]
+  },
+  {
+    "input": "96110286",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colisweb",
+      "heppner"
     ]
   },
   {
@@ -91645,6 +91673,19 @@
     ]
   },
   {
+    "input": "DD20251202",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it",
+      "tnt-it"
+    ],
+    "asked": [
+      "gls-it",
+      "tnt-it"
+    ]
+  },
+  {
     "input": "DDGYL99000002YQ",
     "carrier": "unknown",
     "confidence": "low",
@@ -94703,6 +94744,17 @@
     ]
   },
   {
+    "input": "ES2002471990CA",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "esoway"
+    ],
+    "asked": [
+      "esoway"
+    ]
+  },
+  {
     "input": "ES2024COM0000457118",
     "carrier": "packlink",
     "confidence": "high",
@@ -97536,6 +97588,17 @@
     "candidates": []
   },
   {
+    "input": "GX003364354335JY",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "globalexp"
+    ],
+    "asked": [
+      "globalexp"
+    ]
+  },
+  {
     "input": "GX155430071018191323",
     "carrier": "unknown",
     "confidence": "none",
@@ -99657,6 +99720,12 @@
     ]
   },
   {
+    "input": "J900656799CA",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "JAE20000000457212SG",
     "carrier": "unknown",
     "confidence": "none",
@@ -101583,6 +101652,17 @@
     ],
     "asked": [
       "uniuni"
+    ]
+  },
+  {
+    "input": "JY505112372318GX",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "globalexp"
+    ],
+    "asked": [
+      "globalexp"
     ]
   },
   {
@@ -118479,6 +118559,28 @@
     ]
   },
   {
+    "input": "TX100153998",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
+    ]
+  },
+  {
+    "input": "TX100714511",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
+    ]
+  },
+  {
     "input": "TXAQ243268174TX",
     "carrier": "total-express",
     "confidence": "high",
@@ -121582,7 +121684,28 @@
     ]
   },
   {
+    "input": "XD2610170002",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive",
+      "aramex-au",
+      "aramex-nz"
+    ],
+    "asked": [
+      "colis-prive",
+      "aramex-au",
+      "aramex-nz"
+    ]
+  },
+  {
     "input": "XD91510978AU",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "XDMG220207",
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
@@ -122072,6 +122195,17 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "YCJ1040200HK",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "jdxexpress"
+    ],
+    "asked": [
+      "jdxexpress"
+    ]
   },
   {
     "input": "YD292005015BR",

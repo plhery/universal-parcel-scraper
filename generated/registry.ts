@@ -145,6 +145,7 @@ import { adapter as bulgarianPosts } from '../carriers/bulgarian-posts/adapter.j
 import { adapter as bulongguoji } from '../carriers/bulongguoji/adapter.js';
 import { adapter as burdDelivery } from '../carriers/burd-delivery/adapter.js';
 import { adapter as bussgods } from '../carriers/bussgods/adapter.js';
+import { adapter as buyer1688 } from '../carriers/buyer1688/adapter.js';
 import { adapter as bvcLogistics } from '../carriers/bvc-logistics/adapter.js';
 import { adapter as byhd } from '../carriers/byhd/adapter.js';
 import { adapter as bypost } from '../carriers/bypost/adapter.js';
@@ -364,6 +365,7 @@ import { adapter as epexColombia } from '../carriers/epex-colombia/adapter.js';
 import { adapter as epostGlobal } from '../carriers/epost-global/adapter.js';
 import { adapter as equick } from '../carriers/equick/adapter.js';
 import { adapter as esmLogistica } from '../carriers/esm-logistica/adapter.js';
+import { adapter as esoway } from '../carriers/esoway/adapter.js';
 import { adapter as estafeta } from '../carriers/estafeta/adapter.js';
 import { adapter as estes } from '../carriers/estes/adapter.js';
 import { adapter as estesForwarding } from '../carriers/estes-forwarding/adapter.js';
@@ -458,6 +460,7 @@ import { adapter as gigLogistics } from '../carriers/gig-logistics/adapter.js';
 import { adapter as gintracom } from '../carriers/gintracom/adapter.js';
 import { adapter as globalDeliveryNetwork } from '../carriers/global-delivery-network/adapter.js';
 import { adapter as global99 } from '../carriers/global99/adapter.js';
+import { adapter as globalexp } from '../carriers/globalexp/adapter.js';
 import { adapter as globalpost } from '../carriers/globalpost/adapter.js';
 import { adapter as globkurier } from '../carriers/globkurier/adapter.js';
 import { adapter as glsCa } from '../carriers/gls-ca/adapter.js';
@@ -605,6 +608,7 @@ import { adapter as jasWorldwide } from '../carriers/jas-worldwide/adapter.js';
 import { adapter as jcex } from '../carriers/jcex/adapter.js';
 import { adapter as jch } from '../carriers/jch/adapter.js';
 import { adapter as jdLogistics } from '../carriers/jd-logistics/adapter.js';
+import { adapter as jdxexpress } from '../carriers/jdxexpress/adapter.js';
 import { adapter as jeebly } from '../carriers/jeebly/adapter.js';
 import { adapter as jerseyPost } from '../carriers/jersey-post/adapter.js';
 import { adapter as jetLogistic } from '../carriers/jet-logistic/adapter.js';
@@ -937,6 +941,7 @@ import { adapter as roadie } from '../carriers/roadie/adapter.js';
 import { adapter as roadrunner } from '../carriers/roadrunner/adapter.js';
 import { adapter as rocketShipping } from '../carriers/rocket-shipping/adapter.js';
 import { adapter as rodonaves } from '../carriers/rodonaves/adapter.js';
+import { adapter as roh56 } from '../carriers/roh56/adapter.js';
 import { adapter as rohligSuus } from '../carriers/rohlig-suus/adapter.js';
 import { adapter as romocean } from '../carriers/romocean/adapter.js';
 import { adapter as rosaliaExpress } from '../carriers/rosalia-express/adapter.js';
@@ -1236,6 +1241,7 @@ import { adapter as xindus } from '../carriers/xindus/adapter.js';
 import { adapter as xingheFreight } from '../carriers/xinghe-freight/adapter.js';
 import { adapter as xingyou } from '../carriers/xingyou/adapter.js';
 import { adapter as xingyunyi } from '../carriers/xingyunyi/adapter.js';
+import { adapter as xiongda } from '../carriers/xiongda/adapter.js';
 import { adapter as xlcourier } from '../carriers/xlcourier/adapter.js';
 import { adapter as xlsFutar } from '../carriers/xls-futar/adapter.js';
 import { adapter as xpoLtl } from '../carriers/xpo-ltl/adapter.js';
@@ -1280,6 +1286,7 @@ import { adapter as zajil } from '../carriers/zajil/adapter.js';
 import { adapter as zecheng } from '../carriers/zecheng/adapter.js';
 import { adapter as zeleris } from '../carriers/zeleris/adapter.js';
 import { adapter as zesExpress } from '../carriers/zes-express/adapter.js';
+import { adapter as zgtux } from '../carriers/zgtux/adapter.js';
 import { adapter as zheldor } from '../carriers/zheldor/adapter.js';
 import { adapter as zhongzhouLogistics } from '../carriers/zhongzhou-logistics/adapter.js';
 import { adapter as zim } from '../carriers/zim/adapter.js';
@@ -1439,6 +1446,7 @@ export const REGISTRY: RegistryDefinition = {
     "bulongguoji": bulongguoji,
     "burd-delivery": burdDelivery,
     "bussgods": bussgods,
+    "buyer1688": buyer1688,
     "bvc-logistics": bvcLogistics,
     "byhd": byhd,
     "bypost": bypost,
@@ -1658,6 +1666,7 @@ export const REGISTRY: RegistryDefinition = {
     "epost-global": epostGlobal,
     "equick": equick,
     "esm-logistica": esmLogistica,
+    "esoway": esoway,
     "estafeta": estafeta,
     "estes": estes,
     "estes-forwarding": estesForwarding,
@@ -1752,6 +1761,7 @@ export const REGISTRY: RegistryDefinition = {
     "gintracom": gintracom,
     "global-delivery-network": globalDeliveryNetwork,
     "global99": global99,
+    "globalexp": globalexp,
     "globalpost": globalpost,
     "globkurier": globkurier,
     "gls-ca": glsCa,
@@ -1899,6 +1909,7 @@ export const REGISTRY: RegistryDefinition = {
     "jcex": jcex,
     "jch": jch,
     "jd-logistics": jdLogistics,
+    "jdxexpress": jdxexpress,
     "jeebly": jeebly,
     "jersey-post": jerseyPost,
     "jet-logistic": jetLogistic,
@@ -2231,6 +2242,7 @@ export const REGISTRY: RegistryDefinition = {
     "roadrunner": roadrunner,
     "rocket-shipping": rocketShipping,
     "rodonaves": rodonaves,
+    "roh56": roh56,
     "rohlig-suus": rohligSuus,
     "romocean": romocean,
     "rosalia-express": rosaliaExpress,
@@ -2530,6 +2542,7 @@ export const REGISTRY: RegistryDefinition = {
     "xinghe-freight": xingheFreight,
     "xingyou": xingyou,
     "xingyunyi": xingyunyi,
+    "xiongda": xiongda,
     "xlcourier": xlcourier,
     "xls-futar": xlsFutar,
     "xpo-ltl": xpoLtl,
@@ -2574,6 +2587,7 @@ export const REGISTRY: RegistryDefinition = {
     "zecheng": zecheng,
     "zeleris": zeleris,
     "zes-express": zesExpress,
+    "zgtux": zgtux,
     "zheldor": zheldor,
     "zhongzhou-logistics": zhongzhouLogistics,
     "zim": zim,
@@ -2861,6 +2875,7 @@ export const REGISTRY: RegistryDefinition = {
     "burundi-post": "universal",
     "buslog": "universal",
     "bussgods": "bussgods",
+    "buyer1688": "buyer1688",
     "bvc-logistics": "bvc-logistics",
     "byhd": "byhd",
     "bypost": "bypost",
@@ -3218,6 +3233,7 @@ export const REGISTRY: RegistryDefinition = {
     "equick": "equick",
     "esbjerg-gods": "universal",
     "esm-logistica": "esm-logistica",
+    "esoway": "esoway",
     "espeedpost": "universal",
     "espoirer": "universal",
     "estafeta": "estafeta",
@@ -3385,6 +3401,7 @@ export const REGISTRY: RegistryDefinition = {
     "global-delivery-network": "global-delivery-network",
     "global-parcel-service": "universal",
     "global99": "global99",
+    "globalexp": "globalexp",
     "globalpost": "globalpost",
     "globex-post": "universal",
     "globkurier": "globkurier",
@@ -3615,6 +3632,7 @@ export const REGISTRY: RegistryDefinition = {
     "jcw-express": "universal",
     "jd-logistics": "jd-logistics",
     "jdiex": "universal",
+    "jdxexpress": "jdxexpress",
     "jeebly": "jeebly",
     "jersey-post": "jersey-post",
     "jet-dp": "universal",
@@ -4201,6 +4219,7 @@ export const REGISTRY: RegistryDefinition = {
     "roadrunner": "roadrunner",
     "rocket-shipping": "rocket-shipping",
     "rodonaves": "rodonaves",
+    "roh56": "roh56",
     "rohlig": "universal",
     "rohlig-suus": "rohlig-suus",
     "rojas-express": "universal",
@@ -4704,6 +4723,7 @@ export const REGISTRY: RegistryDefinition = {
     "xingyou": "xingyou",
     "xingyunyi": "xingyunyi",
     "xinsu": "universal",
+    "xiongda": "xiongda",
     "xlcourier": "xlcourier",
     "xlmiles": "universal",
     "xls-futar": "xls-futar",
@@ -4772,6 +4792,7 @@ export const REGISTRY: RegistryDefinition = {
     "zeleris": "zeleris",
     "zerodistanze": "universal",
     "zes-express": "zes-express",
+    "zgtux": "zgtux",
     "zheldor": "zheldor",
     "zhongzhou-logistics": "zhongzhou-logistics",
     "ziegler": "universal",

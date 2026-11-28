@@ -14774,6 +14774,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "buyer1688": {
+    "displayName": "1688 International Logistics",
+    "color": "#15337B",
+    "aliases": [
+      "1688国际物流",
+      "buyer1688"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "buyer1688",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.buyer1688.ca/api86/waybill_query2.htm",
+    "trackingSearchUrl": "https://www.buyer1688.ca/api86/waybill_query2.htm",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "bvc-logistics": {
     "displayName": "BVC Logistics",
     "color": "#2b3775",
@@ -26517,6 +26539,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "esoway": {
+    "displayName": "ESOWAY",
+    "color": "#FF7200",
+    "aliases": [
+      "易速递",
+      "加拿大易速递",
+      "ESOWAY.COM"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Vancouver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "esoway",
+      "recognitionRank": 87,
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^ES\\d{10}CA$",
+        "confidence": "low"
+      }
+    ]
+  },
   "espeedpost": {
     "displayName": "Espeedpost",
     "color": "#ff0000",
@@ -31948,6 +31998,43 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^TK\\d{12}$",
+        "confidence": "low"
+      }
+    ]
+  },
+  "globalexp": {
+    "displayName": "Global Express",
+    "color": "#FF6600",
+    "aliases": [
+      "全球捷运",
+      "全球捷运国际快运",
+      "全球捷运国际快运有限公司"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Hong_Kong",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "globalexp",
+      "recognitionRank": 88,
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.global-express168.com/cms/c/orders",
+    "trackingUrlTemplate": "https://www.global-express168.com/search_kuai_di/search/orderid/{trackingNumber}",
+    "trackingSearchUrl": "https://www.global-express168.com/cms/c/orders",
+    "linkRules": [
+      {
+        "domains": [
+          "global-express168.com"
+        ],
+        "path": "^/search_kuai_di/search/orderid/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^(?:GX\\d{12}JY|JY\\d{12}GX)$",
         "confidence": "low"
       }
     ]
@@ -39376,6 +39463,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ],
     "detectionRules": []
+  },
+  "jdxexpress": {
+    "displayName": "JDX Express",
+    "color": "#17366E",
+    "aliases": [
+      "永创捷国际",
+      "永创捷"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Hong_Kong",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jdxexpress",
+      "recognitionRank": 612,
+      "recognitionPattern": "^YCJ\\d{7}HK$",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^YCJ\\d{7}HK$",
+        "confidence": "low"
+      }
+    ]
   },
   "jeebly": {
     "displayName": "Jeebly",
@@ -58352,6 +58467,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "roh56": {
+    "displayName": "Ronghui Supply Chain",
+    "color": "#0090CB",
+    "aliases": [
+      "融辉供应链",
+      "融辉物流",
+      "广东省融辉供应链管理有限公司",
+      "Guangdong Ronghui Supply Chain Management"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "roh56",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "rohlig": {
     "displayName": "Röhlig Logistics",
     "color": "#002c61",
@@ -74576,6 +74714,42 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "xiongda": {
+    "displayName": "Xiong Da International Logistics",
+    "color": "#EB2E2F",
+    "aliases": [
+      "雄达国际物流",
+      "雄达国际物流有限公司",
+      "上海雄达国际物流有限公司",
+      "Xiong Da",
+      "XD International"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xiongda",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.xdint.com/",
+    "trackingUrlTemplate": "https://www.xdint.com/no/EmmisTrack.aspx?no={trackingNumber}",
+    "trackingSearchUrl": "https://www.xdint.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "xdint.com"
+        ],
+        "pathPattern": "^/no/EmmisTrack\\.aspx$",
+        "params": [
+          "no"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "xlcourier": {
     "displayName": "XLCourier",
     "color": "#044ad6",
@@ -76564,6 +76738,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "zgtux": {
+    "displayName": "Tuxing Supply Chain",
+    "color": "#C30D23",
+    "aliases": [
+      "途兴供应链",
+      "广东途兴供应链管理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "zgtux",
+      "localClocks": true
+    },
+    "canaryUrl": "https://vip.zgtux.com/routes",
+    "trackingUrlTemplate": "https://vip.zgtux.com/routes?no={trackingNumber}",
+    "trackingSearchUrl": "https://vip.zgtux.com/routes",
+    "linkRules": [
+      {
+        "domains": [
+          "vip.zgtux.com"
+        ],
+        "pathPattern": "^/routes$",
+        "params": [
+          "no"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "zheldor": {
     "displayName": "Zheldorexpeditsia",
     "color": "#e6332a",
@@ -77492,6 +77699,7 @@ export const CARRIER_IDS = [
   "burundi-post",
   "buslog",
   "bussgods",
+  "buyer1688",
   "bvc-logistics",
   "byhd",
   "bypost",
@@ -77825,6 +78033,7 @@ export const CARRIER_IDS = [
   "equick",
   "esbjerg-gods",
   "esm-logistica",
+  "esoway",
   "espeedpost",
   "espoirer",
   "estes",
@@ -77987,6 +78196,7 @@ export const CARRIER_IDS = [
   "global-delivery-network",
   "global-parcel-service",
   "global99",
+  "globalexp",
   "globalpost",
   "globex-post",
   "globkurier",
@@ -78203,6 +78413,7 @@ export const CARRIER_IDS = [
   "jch",
   "jcw-express",
   "jdiex",
+  "jdxexpress",
   "jeebly",
   "jersey-post",
   "jet-dp",
@@ -78766,6 +78977,7 @@ export const CARRIER_IDS = [
   "roadrunner",
   "rocket-shipping",
   "rodonaves",
+  "roh56",
   "rohlig",
   "rohlig-suus",
   "rojas-express",
@@ -79248,6 +79460,7 @@ export const CARRIER_IDS = [
   "xingyou",
   "xingyunyi",
   "xinsu",
+  "xiongda",
   "xlcourier",
   "xlmiles",
   "xls-futar",
@@ -79311,6 +79524,7 @@ export const CARRIER_IDS = [
   "zeleris",
   "zerodistanze",
   "zes-express",
+  "zgtux",
   "zheldor",
   "zhongzhou-logistics",
   "ziegler",
@@ -79699,6 +79913,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "burundi-post": [],
   "buslog": [],
   "bussgods": ["bussgods-1"],
+  "buyer1688": [],
   "bvc-logistics": [],
   "byhd": ["byhd-1"],
   "bypost": [],
@@ -80032,6 +80247,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "equick": ["equick-eqk"],
   "esbjerg-gods": [],
   "esm-logistica": [],
+  "esoway": ["esoway-1"],
   "espeedpost": [],
   "espoirer": [],
   "estes": [],
@@ -80194,6 +80410,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "global-delivery-network": [],
   "global-parcel-service": [],
   "global99": ["global99-1"],
+  "globalexp": ["globalexp-1"],
   "globalpost": ["globalpost-1"],
   "globex-post": [],
   "globkurier": [],
@@ -80410,6 +80627,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jch": ["jch-1"],
   "jcw-express": [],
   "jdiex": [],
+  "jdxexpress": ["jdxexpress-1"],
   "jeebly": ["jeebly-1"],
   "jersey-post": ["jersey-post-s10"],
   "jet-dp": [],
@@ -80973,6 +81191,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "roadrunner": [],
   "rocket-shipping": [],
   "rodonaves": [],
+  "roh56": [],
   "rohlig": [],
   "rohlig-suus": [],
   "rojas-express": [],
@@ -81455,6 +81674,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xingyou": [],
   "xingyunyi": [],
   "xinsu": [],
+  "xiongda": [],
   "xlcourier": ["xlcourier-1"],
   "xlmiles": [],
   "xls-futar": [],
@@ -81518,6 +81738,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "zeleris": ["zeleris-1"],
   "zerodistanze": [],
   "zes-express": ["zes-express-1"],
+  "zgtux": [],
   "zheldor": [],
   "zhongzhou-logistics": [],
   "ziegler": [],

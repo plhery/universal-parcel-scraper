@@ -14769,6 +14769,28 @@
       }
     ]
   },
+  "buyer1688": {
+    "displayName": "1688 International Logistics",
+    "color": "#15337B",
+    "aliases": [
+      "1688国际物流",
+      "buyer1688"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "buyer1688",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.buyer1688.ca/api86/waybill_query2.htm",
+    "trackingSearchUrl": "https://www.buyer1688.ca/api86/waybill_query2.htm",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "bvc-logistics": {
     "displayName": "BVC Logistics",
     "color": "#2b3775",
@@ -26512,6 +26534,34 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "esoway": {
+    "displayName": "ESOWAY",
+    "color": "#FF7200",
+    "aliases": [
+      "易速递",
+      "加拿大易速递",
+      "ESOWAY.COM"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Vancouver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "esoway",
+      "recognitionRank": 87,
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^ES\\d{10}CA$",
+        "confidence": "low"
+      }
+    ]
+  },
   "espeedpost": {
     "displayName": "Espeedpost",
     "color": "#ff0000",
@@ -31943,6 +31993,43 @@
     "detectionRules": [
       {
         "pattern": "^TK\\d{12}$",
+        "confidence": "low"
+      }
+    ]
+  },
+  "globalexp": {
+    "displayName": "Global Express",
+    "color": "#FF6600",
+    "aliases": [
+      "全球捷运",
+      "全球捷运国际快运",
+      "全球捷运国际快运有限公司"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Hong_Kong",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "globalexp",
+      "recognitionRank": 88,
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.global-express168.com/cms/c/orders",
+    "trackingUrlTemplate": "https://www.global-express168.com/search_kuai_di/search/orderid/{trackingNumber}",
+    "trackingSearchUrl": "https://www.global-express168.com/cms/c/orders",
+    "linkRules": [
+      {
+        "domains": [
+          "global-express168.com"
+        ],
+        "path": "^/search_kuai_di/search/orderid/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^(?:GX\\d{12}JY|JY\\d{12}GX)$",
         "confidence": "low"
       }
     ]
@@ -39371,6 +39458,34 @@
       }
     ],
     "detectionRules": []
+  },
+  "jdxexpress": {
+    "displayName": "JDX Express",
+    "color": "#17366E",
+    "aliases": [
+      "永创捷国际",
+      "永创捷"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Hong_Kong",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jdxexpress",
+      "recognitionRank": 612,
+      "recognitionPattern": "^YCJ\\d{7}HK$",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^YCJ\\d{7}HK$",
+        "confidence": "low"
+      }
+    ]
   },
   "jeebly": {
     "displayName": "Jeebly",
@@ -58347,6 +58462,29 @@
     ],
     "detectionRules": []
   },
+  "roh56": {
+    "displayName": "Ronghui Supply Chain",
+    "color": "#0090CB",
+    "aliases": [
+      "融辉供应链",
+      "融辉物流",
+      "广东省融辉供应链管理有限公司",
+      "Guangdong Ronghui Supply Chain Management"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "roh56",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "rohlig": {
     "displayName": "Röhlig Logistics",
     "color": "#002c61",
@@ -74571,6 +74709,42 @@
     ],
     "detectionRules": []
   },
+  "xiongda": {
+    "displayName": "Xiong Da International Logistics",
+    "color": "#EB2E2F",
+    "aliases": [
+      "雄达国际物流",
+      "雄达国际物流有限公司",
+      "上海雄达国际物流有限公司",
+      "Xiong Da",
+      "XD International"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xiongda",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.xdint.com/",
+    "trackingUrlTemplate": "https://www.xdint.com/no/EmmisTrack.aspx?no={trackingNumber}",
+    "trackingSearchUrl": "https://www.xdint.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "xdint.com"
+        ],
+        "pathPattern": "^/no/EmmisTrack\\.aspx$",
+        "params": [
+          "no"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "xlcourier": {
     "displayName": "XLCourier",
     "color": "#044ad6",
@@ -76558,6 +76732,39 @@
         "confidence": "low"
       }
     ]
+  },
+  "zgtux": {
+    "displayName": "Tuxing Supply Chain",
+    "color": "#C30D23",
+    "aliases": [
+      "途兴供应链",
+      "广东途兴供应链管理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "zgtux",
+      "localClocks": true
+    },
+    "canaryUrl": "https://vip.zgtux.com/routes",
+    "trackingUrlTemplate": "https://vip.zgtux.com/routes?no={trackingNumber}",
+    "trackingSearchUrl": "https://vip.zgtux.com/routes",
+    "linkRules": [
+      {
+        "domains": [
+          "vip.zgtux.com"
+        ],
+        "pathPattern": "^/routes$",
+        "params": [
+          "no"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "zheldor": {
     "displayName": "Zheldorexpeditsia",
