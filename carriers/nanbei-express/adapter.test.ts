@@ -91,6 +91,7 @@ describe('Nanbei Express tracker', () => {
     expect(() => parseNanbei('{"code":"200","msg":"操作成功!"}', number)).toThrow(expect.objectContaining({ kind: 'schema' }));
     expect(() => parseNanbei(withRows((rows) => { rows[0]!.eventTime = '2025-04-08 10:57'; }), number)).toThrow(expect.objectContaining({ kind: 'schema' }));
     expect(() => parseNanbei(withRows((rows) => { rows[0]!.eventLog = ''; rows[0]!.eventNodeValue = ''; }), number)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    expect(() => parseNanbei(withRows((rows) => { rows[2]!.tenantId = '102'; }), number)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     const challenged = vi.fn<typeof fetch>().mockResolvedValueOnce(reply('<html><head><title>Just a moment...</title></head></html>', 403, 'text/html'));
     await expect(tracker(challenged).track({ number })).rejects.toMatchObject({ kind: 'challenge' });
     const blocked = vi.fn<typeof fetch>().mockResolvedValueOnce(reply('<html><body>请输入验证码</body></html>', 200, 'text/html'));

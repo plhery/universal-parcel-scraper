@@ -14,7 +14,8 @@ Its site is nbky.com.cn.
 The reply is JSON: `rows`, oldest first, each naming its waybill (`eventNo`), an epoch clock, an event code
 (`eventNode`) and its name, the sentence the site shows (`eventLog`) and the branch or sorting centre that
 recorded it (`deptName`). A number without records gets `code` 200 and no rows, read as not found. A row
-naming another waybill makes the answer indeterminate.
+naming another waybill, or another tenant of the platform than Nanbei's (`tenantId` 101), makes the answer
+indeterminate.
 
 ## Notes
 
@@ -30,8 +31,9 @@ naming another waybill makes the answer indeterminate.
 No delivery estimate, weight, piece count, sender or recipient. The site shows results under its form, so no
 portal link is published, and the canary checks Kuaidi100's page for the firm.
 
-The route service belongs to the Yilian platform, and every public row so far is Nanbei's. A waybill another
-company keeps on the same platform would come back the same way.
+The route service belongs to the Yilian platform, and every public row so far is Nanbei's tenant. A waybill
+another tenant keeps on the platform is not read as Nanbei's; one Nanbei keeps for a partner under its own
+tenant would be.
 
 ## Numbers
 

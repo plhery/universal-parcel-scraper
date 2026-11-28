@@ -20,6 +20,8 @@ const NUMBER = /^(?=[A-Z]*\d)[A-Z0-9]{6,30}$/;
 const EARLIEST = Date.UTC(2000, 0, 1);
 const LATEST = Date.UTC(2100, 0, 1);
 const MAX_SCANS = 300;
+// The platform's tenant every public row names: Nanbei Express itself.
+const NANBEI_TENANT = '101';
 
 // The platform writes a station's phone into its name, as in "【芜湖分公司--0553-…】".
 const MOBILE = String.raw`1[3-9]\d{9}`;
@@ -61,6 +63,10 @@ function scan(row: unknown, number: string, index: number): Scan {
   if (!isRecord(row)) return invalid('Nanbei Express returned an invalid row');
   if (normalizeTrackingNumber(cleanScalar(row.eventNo, 64)) !== number) {
     throw new IndeterminateError(PROVIDER, 'Nanbei Express answered about another number');
+  }
+  // Another tenant's waybill under the same number is not a Nanbei shipment.
+  if (row.tenantId !== undefined && row.tenantId !== null && cleanScalar(row.tenantId, 16) !== NANBEI_TENANT) {
+    throw new IndeterminateError(PROVIDER, 'Nanbei Express answered with another company\'s waybill');
   }
   const millis = row.eventTime;
   if (typeof millis !== 'number' || !Number.isSafeInteger(millis) || millis < EARLIEST || millis >= LATEST) {
